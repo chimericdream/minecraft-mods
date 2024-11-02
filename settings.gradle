@@ -8,3 +8,8 @@ pluginManagement {
 }
 
 rootProject.name = 'chimeric-mods'
+
+include ':bannertweaks'
+include ':bannertweaks:common'
+include ':bannertweaks:fabric'
+include ':bannertweaks:neoforge'
