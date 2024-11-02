@@ -33,3 +33,8 @@ include ':houdini-block'
 include ':houdini-block:common'
 include ':houdini-block:fabric'
 include ':houdini-block:neoforge'
+
+include ':minekea'
+include ':minekea:common'
+include ':minekea:fabric'
+include ':minekea:neoforge'

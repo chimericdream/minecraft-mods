@@ -1,0 +1,9 @@
+{
+  "parent": "minekea:block/storage/dye_block",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "minekea:block/storage/dyes/brown/bottom",
+    "side": "minekea:block/storage/dyes/brown/side",
+    "top": "minekea:block/storage/dyes/brown/top"
+  }
+}

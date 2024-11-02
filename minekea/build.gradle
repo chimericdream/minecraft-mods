@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":minekea").maven_group
+    version = project(":minekea").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":minekea").archives_name + "-" + project.name
+    }
+}

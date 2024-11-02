@@ -36,6 +36,8 @@ subprojects {
             url = "https://maven.terraformersmc.com/"
         }
 
+        maven { url 'https://maven.blamejared.com' }
+
         mavenLocal()
     }
 

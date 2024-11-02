@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "package": "com.chimericdream.minekea.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "MilkBucketItemMixin",
+        "PointOfInterestTypesAccessor"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
