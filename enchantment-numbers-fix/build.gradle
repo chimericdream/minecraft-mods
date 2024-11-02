@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":enchantment-numbers-fix").maven_group
+    version = project(":enchantment-numbers-fix").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":enchantment-numbers-fix").archives_name + "-" + project.name
+    }
+}

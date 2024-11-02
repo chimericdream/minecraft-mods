@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "com.chimericdream.flatbedrock.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "FlatBedrockMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

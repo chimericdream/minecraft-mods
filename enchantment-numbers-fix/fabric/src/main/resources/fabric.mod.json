@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "enchantnumfix",
+    "version": "${version}",
+    "name": "Enchantment Numbers Fix",
+    "description": "Simple mod that converts enchantment levels above 10 to Roman numerals instead of their decimal version.",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://github.com/chimericdream/enchantment-numbers-fix",
+        "sources": "https://github.com/chimericdream/enchantment-numbers-fix"
+    },
+    "license": "MIT",
+    "icon": "assets/enchantnumfix/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.enchantnumfix.fabric.EnchantNumFixFabric"
+        ],
+        "client": [
+            "com.chimericdream.enchantnumfix.fabric.client.EnchantNumFixFabricClient"
+        ]
+    },
+    "mixins": [
+        "enchantnumfix.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.0",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*"
+    }
+}

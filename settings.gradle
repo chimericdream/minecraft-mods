@@ -24,6 +24,16 @@ include ':chimeric-lib:common'
 include ':chimeric-lib:fabric'
 include ':chimeric-lib:neoforge'
 
+include ':enchantment-numbers-fix'
+include ':enchantment-numbers-fix:common'
+include ':enchantment-numbers-fix:fabric'
+include ':enchantment-numbers-fix:neoforge'
+
+include ':flat-bedrock'
+include ':flat-bedrock:common'
+include ':flat-bedrock:fabric'
+include ':flat-bedrock:neoforge'
+
 include ':hopper-xtreme'
 include ':hopper-xtreme:common'
 include ':hopper-xtreme:fabric'

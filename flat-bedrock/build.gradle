@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":flat-bedrock").maven_group
+    version = project(":flat-bedrock").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":flat-bedrock").archives_name + "-" + project.name
+    }
+}
