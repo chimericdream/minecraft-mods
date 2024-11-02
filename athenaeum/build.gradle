@@ -1,0 +1,15 @@
+allprojects {
+    group = project(":athenaeum").maven_group
+    version = project(":athenaeum").mod_version
+}
+
+subprojects {
+    base {
+        // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
+        archivesName = project(":athenaeum").archives_name + "-" + project.name
+    }
+
+    repositories {
+        maven { url = uri("https://maven.shedaniel.me/") }
+    }
+}

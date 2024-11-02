@@ -9,6 +9,11 @@ pluginManagement {
 
 rootProject.name = 'chimeric-mods'
 
+include ':athenaeum'
+include ':athenaeum:common'
+include ':athenaeum:fabric'
+include ':athenaeum:neoforge'
+
 include ':banner-tweaks'
 include ':banner-tweaks:common'
 include ':banner-tweaks:fabric'
