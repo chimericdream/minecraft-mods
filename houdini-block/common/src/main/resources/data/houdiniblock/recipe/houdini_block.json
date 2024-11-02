@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "pattern": [
+        "DED",
+        "N#N",
+        "DED"
+    ],
+    "key": {
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "E": {
+            "item": "minecraft:ender_eye"
+        },
+        "N": {
+            "item": "minecraft:nether_star"
+        },
+        "#": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "id": "houdiniblock:houdini_block",
+        "count": 1
+    }
+}

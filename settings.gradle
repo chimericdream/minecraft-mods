@@ -23,3 +23,8 @@ include ':hopper-xtreme'
 include ':hopper-xtreme:common'
 include ':hopper-xtreme:fabric'
 include ':hopper-xtreme:neoforge'
+
+include ':houdini-block'
+include ':houdini-block:common'
+include ':houdini-block:fabric'
+include ':houdini-block:neoforge'

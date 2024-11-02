@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "com.chimericdream.houdiniblock.neoforge.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "HoudiniWorldMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

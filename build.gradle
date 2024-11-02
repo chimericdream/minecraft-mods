@@ -4,6 +4,10 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
 }
 
+ext {
+    GITHUB_TOKEN = System.getenv("GITHUB_TOKEN")
+}
+
 architectury {
     minecraft = project.minecraft_version
 }
@@ -14,11 +18,14 @@ subprojects {
     apply plugin: 'maven-publish'
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
+        maven {
+            url = uri("https://maven.pkg.github.com/chimericdream/*")
+            credentials {
+                username "chimericdream"
+                password GITHUB_TOKEN
+            }
+        }
+
         maven {
             name 'Xander Maven'
             url 'https://maven.isxander.dev/releases'
@@ -28,6 +35,8 @@ subprojects {
             name = "Terraformers"
             url = "https://maven.terraformersmc.com/"
         }
+
+        mavenLocal()
     }
 
     dependencies {

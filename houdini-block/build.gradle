@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":houdini-block").maven_group
+    version = project(":houdini-block").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":houdini-block").archives_name + "-" + project.name
+    }
+}
