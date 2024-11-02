@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":_templatemod").maven_group
+    version = project(":_templatemod").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":_templatemod").archives_name + "-" + project.name
+    }
+}

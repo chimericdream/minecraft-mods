@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "templatemod",
+    "version": "${version}",
+    "name": "TemplateMod",
+    "description": "Description of the mod",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/LINK_HERE",
+        "sources": "https://github.com/chimericdream/minecraft-mods"
+    },
+    "license": "MIT",
+    "icon": "assets/templatemod/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.templatemod.fabric.TemplateModFabric"
+        ],
+        "client": [
+            "com.chimericdream.templatemod.fabric.client.TemplateModFabricClient"
+        ]
+    },
+    "mixins": [
+        "templatemod.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.15",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*"
+    }
+}
