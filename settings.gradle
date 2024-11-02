@@ -13,3 +13,8 @@ include ':bannertweaks'
 include ':bannertweaks:common'
 include ':bannertweaks:fabric'
 include ':bannertweaks:neoforge'
+
+include ':chimericlib'
+include ':chimericlib:common'
+include ':chimericlib:fabric'
+include ':chimericlib:neoforge'

@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "chimericlib",
+    "version": "${version}",
+    "name": "chimericlib",
+    "description": "Shared library with common code for chimericdream's mods.",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/chimericlib",
+        "sources": "https://github.com/chimericdream/chimericlib-mc"
+    },
+    "license": "MIT",
+    "icon": "assets/chimericlib/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.lib.fabric.ChimericLibFabric"
+        ],
+        "client": [
+            "com.chimericdream.lib.fabric.client.ChimericLibFabricClient"
+        ]
+    },
+    "mixins": [
+        "chimericlib.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.15",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*"
+    }
+}
