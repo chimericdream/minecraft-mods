@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":hopper-xtreme").maven_group
+    version = project(":hopper-xtreme").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":hopper-xtreme").archives_name + "-" + project.name
+    }
+}

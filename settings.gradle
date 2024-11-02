@@ -23,3 +23,8 @@ include ':chimeric-lib'
 include ':chimeric-lib:common'
 include ':chimeric-lib:fabric'
 include ':chimeric-lib:neoforge'
+
+include ':hopper-xtreme'
+include ':hopper-xtreme:common'
+include ':hopper-xtreme:fabric'
+include ':hopper-xtreme:neoforge'
