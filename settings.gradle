@@ -9,11 +9,6 @@ pluginManagement {
 
 rootProject.name = 'chimeric-mods'
 
-include ':_templatemod'
-include ':_templatemod:common'
-include ':_templatemod:fabric'
-include ':_templatemod:neoforge'
-
 include ':banner-tweaks'
 include ':banner-tweaks:common'
 include ':banner-tweaks:fabric'
