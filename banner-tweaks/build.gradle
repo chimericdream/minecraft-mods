@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":banner-tweaks").maven_group
+    version = project(":banner-tweaks").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":banner-tweaks").archives_name + "-" + project.name
+    }
+}

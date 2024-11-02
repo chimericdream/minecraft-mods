@@ -1,11 +1,11 @@
 allprojects {
-    group = project(":chimericlib").maven_group
-    version = project(":chimericlib").mod_version
+    group = project(":chimeric-lib").maven_group
+    version = project(":chimeric-lib").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":chimericlib").archives_name + "-" + project.name
+        archivesName = project(":chimeric-lib").archives_name + "-" + project.name
     }
 
     // Configure Maven publishing.
