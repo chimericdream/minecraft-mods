@@ -5,9 +5,7 @@
     "minVersion": "0.8",
     "client": [
     ],
-    "mixins": [
-        "ShearsItemMixin"
-    ],
+    "mixins": [],
     "injectors": {
         "defaultRequire": 1
     }
