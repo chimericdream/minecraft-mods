@@ -1,11 +1,17 @@
 {
     "required": true,
+    "minVersion": "0.8",
     "package": "com.chimericdream.villagertweaks.mixin",
     "compatibilityLevel": "JAVA_21",
-    "minVersion": "0.8",
+    "mixins": [
+        "VTEmeraldTemptationMixin",
+        "VTTradeOfferMixin",
+        "VTVillagerEntityMixin",
+        "VTZombieEntityMixin",
+        "VTZombieVillagerEntityMixin"
+    ],
     "client": [
     ],
-    "mixins": [],
     "injectors": {
         "defaultRequire": 1
     }
