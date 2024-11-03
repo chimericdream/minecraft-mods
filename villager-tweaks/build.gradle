@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":villager-tweaks").maven_group
+    version = project(":villager-tweaks").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":villager-tweaks").archives_name + "-" + project.name
+    }
+}

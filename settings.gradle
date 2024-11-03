@@ -18,7 +18,8 @@ def projectList = [
     'hopper-xtreme',
     'houdini-block',
     'minekea',
-    'sponj'
+    'sponj',
+    'villager-tweaks'
 ]
 
 projectList.each {
