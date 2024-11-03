@@ -9,47 +9,21 @@ pluginManagement {
 
 rootProject.name = 'chimeric-mods'
 
-include ':athenaeum'
-include ':athenaeum:common'
-include ':athenaeum:fabric'
-include ':athenaeum:neoforge'
+def projectList = [
+    'athenaeum',
+    'banner-tweaks',
+    'chimeric-lib',
+    'enchantment-numbers-fix',
+    'flat-bedrock',
+    'hopper-xtreme',
+    'houdini-block',
+    'minekea',
+    'sponj'
+]
 
-include ':banner-tweaks'
-include ':banner-tweaks:common'
-include ':banner-tweaks:fabric'
-include ':banner-tweaks:neoforge'
-
-include ':chimeric-lib'
-include ':chimeric-lib:common'
-include ':chimeric-lib:fabric'
-include ':chimeric-lib:neoforge'
-
-include ':enchantment-numbers-fix'
-include ':enchantment-numbers-fix:common'
-include ':enchantment-numbers-fix:fabric'
-include ':enchantment-numbers-fix:neoforge'
-
-include ':flat-bedrock'
-include ':flat-bedrock:common'
-include ':flat-bedrock:fabric'
-include ':flat-bedrock:neoforge'
-
-include ':hopper-xtreme'
-include ':hopper-xtreme:common'
-include ':hopper-xtreme:fabric'
-include ':hopper-xtreme:neoforge'
-
-include ':houdini-block'
-include ':houdini-block:common'
-include ':houdini-block:fabric'
-include ':houdini-block:neoforge'
-
-include ':minekea'
-include ':minekea:common'
-include ':minekea:fabric'
-include ':minekea:neoforge'
-
-include ':sponj'
-include ':sponj:common'
-include ':sponj:fabric'
-include ':sponj:neoforge'
+projectList.each {
+    include ":$it"
+    include ":$it:common"
+    include ":$it:fabric"
+    include ":$it:neoforge"
+}
