@@ -36,7 +36,7 @@ public class BannerTweaksConfig {
                 .option(Option.<Integer>createBuilder()
                     .name(Text.literal("Max. banner layers"))
                     .description(OptionDescription.of(Text.literal("The maximum number of layers a banner can have. Default: 12")))
-                    .binding(12, () -> config.maxBannerLayers, newVal -> config.maxBannerLayers = newVal)
+                    .binding(Defaults.MAX_BANNER_LAYERS, () -> config.maxBannerLayers, newVal -> config.maxBannerLayers = newVal)
                     .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                         .range(1, 32)
                         .step(1))
