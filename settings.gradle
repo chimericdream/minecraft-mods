@@ -48,3 +48,8 @@ include ':minekea'
 include ':minekea:common'
 include ':minekea:fabric'
 include ':minekea:neoforge'
+
+include ':sponj'
+include ':sponj:common'
+include ':sponj:fabric'
+include ':sponj:neoforge'

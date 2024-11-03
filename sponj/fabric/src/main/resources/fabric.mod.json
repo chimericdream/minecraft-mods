@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "id": "sponj",
+    "version": "${version}",
+    "name": "Sponj Block",
+    "description": "A magical block that doesn't trigger block updates when broken!",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/sponj",
+        "sources": "https://github.com/chimericdream/sponj"
+    },
+    "license": "MIT",
+    "icon": "assets/sponj/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.sponj.fabric.SponjFabric"
+        ],
+        "client": [
+            "com.chimericdream.sponj.fabric.client.SponjFabricClient"
+        ]
+    },
+    "mixins": [
+        "sponj.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.5",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*",
+        "chimericlib": ">=2"
+    }
+}

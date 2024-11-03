@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":sponj").maven_group
+    version = project(":sponj").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":sponj").archives_name + "-" + project.name
+    }
+}

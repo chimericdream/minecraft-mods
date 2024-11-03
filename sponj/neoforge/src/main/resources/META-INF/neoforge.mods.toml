@@ -1,0 +1,48 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/chimericdream/sponj/issues"
+license = "MIT"
+
+[[mods]]
+modId = "sponj"
+version = "${version}"
+displayName = "Sponj Block"
+authors = "chimericdream"
+description = '''
+A magical block that doesn't trigger block updates when broken!
+'''
+#logoFile = ""
+
+[[dependencies.sponj]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.sponj]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.sponj]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.sponj]]
+modId = "chimericlib"
+type = "required"
+versionRange = "[2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "META-INF/sponj.neoforge.mixins.json"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
