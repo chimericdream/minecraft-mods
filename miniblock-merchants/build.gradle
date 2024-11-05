@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":miniblock-merchants").maven_group
+    version = project(":miniblock-merchants").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":miniblock-merchants").archives_name + "-" + project.name
+    }
+}

@@ -18,6 +18,7 @@ def projectList = [
     'hopper-xtreme',
     'houdini-block',
     'minekea',
+    'miniblock-merchants',
     'sponj',
     'villager-tweaks'
 ]
