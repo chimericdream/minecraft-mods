@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":archaeology-tweaks").maven_group
+    version = project(":archaeology-tweaks").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":archaeology-tweaks").archives_name + "-" + project.name
+    }
+}

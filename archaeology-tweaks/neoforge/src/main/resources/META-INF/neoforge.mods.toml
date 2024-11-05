@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/chimericdream/minecraft-mods/issues"
+license = "MIT"
+
+[[mods]]
+modId = "archaeologytweaks"
+version = "${version}"
+displayName = "archaeologytweaks"
+authors = "chimericdream"
+description = '''
+Some description here
+'''
+#logoFile = ""
+
+[[dependencies.archaeologytweaks]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.archaeologytweaks]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.archaeologytweaks]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "archaeologytweaks.mixins.json"
