@@ -4,30 +4,30 @@ issueTrackerURL = "https://github.com/chimericdream/minecraft-mods/issues"
 license = "MIT"
 
 [[mods]]
-modId = "archaeologytweaks"
+modId = "archtweaks"
 version = "${version}"
-displayName = "archaeologytweaks"
+displayName = "Archaeology Tweaks"
 authors = "chimericdream"
 description = '''
 Some description here
 '''
 #logoFile = ""
 
-[[dependencies.archaeologytweaks]]
+[[dependencies.archtweaks]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.archaeologytweaks]]
+[[dependencies.archtweaks]]
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.archaeologytweaks]]
+[[dependencies.archtweaks]]
 modId = "architectury"
 type = "required"
 versionRange = "[13.0.2,)"
@@ -36,3 +36,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "archaeologytweaks.mixins.json"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"

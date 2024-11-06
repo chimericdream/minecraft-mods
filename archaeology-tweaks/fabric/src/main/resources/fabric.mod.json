@@ -1,18 +1,18 @@
 {
     "schemaVersion": 1,
-    "id": "archaeologytweaks",
+    "id": "archtweaks",
     "version": "${version}",
-    "name": "TemplateMod",
-    "description": "Description of the mod",
+    "name": "Arcaheology Tweaks",
+    "description": "Small, vanilla-friendly tweaks to Minecraft's archaeology system.",
     "authors": [
         "chimericdream"
     ],
     "contact": {
-        "homepage": "https://www.curseforge.com/minecraft/mc-mods/LINK_HERE",
-        "sources": "https://github.com/chimericdream/minecraft-mods"
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/archaeology-tweaks",
+        "sources": "https://github.com/chimericdream/archaeology-tweaks"
     },
     "license": "MIT",
-    "icon": "assets/archaeologytweaks/icon.png",
+    "icon": "assets/archtweaks/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -23,6 +23,7 @@
     "mixins": [
         "archaeologytweaks.mixins.json"
     ],
+    "accessWidener": "archaeologytweaks.accesswidener",
     "depends": {
         "fabricloader": ">=0.15",
         "minecraft": "~1.21",

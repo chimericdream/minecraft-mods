@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "archtweaks:block/suspicious_rooted_dirt_0"
+    }
+}
