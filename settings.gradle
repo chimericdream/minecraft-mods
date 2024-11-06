@@ -13,6 +13,7 @@ def projectList = [
     'archaeology-tweaks',
     'athenaeum',
     'banner-tweaks',
+    'beacon-conduit-tweaks',
     'chimeric-lib',
     'enchantment-numbers-fix',
     'flat-bedrock',

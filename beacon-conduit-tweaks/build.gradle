@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":beacon-conduit-tweaks").maven_group
+    version = project(":beacon-conduit-tweaks").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":beacon-conduit-tweaks").archives_name + "-" + project.name
+    }
+}

@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/chimericdream/minecraft-mods/issues"
+license = "MIT"
+
+[[mods]]
+modId = "beaconconduittweaks"
+version = "${version}"
+displayName = "beaconconduittweaks"
+authors = "chimericdream"
+description = '''
+Some description here
+'''
+#logoFile = ""
+
+[[dependencies.beaconconduittweaks]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.beaconconduittweaks]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.beaconconduittweaks]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "beaconconduittweaks.mixins.json"
