@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":cobblicious").maven_group
+    version = project(":cobblicious").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":cobblicious").archives_name + "-" + project.name
+    }
+}
