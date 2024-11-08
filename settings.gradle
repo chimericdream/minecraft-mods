@@ -19,6 +19,7 @@ def projectList = [
     'flat-bedrock',
     'hopper-xtreme',
     'houdini-block',
+    'jdcrafte',
     'minekea',
     'miniblock-merchants',
     'sponj',

@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":jdcrafte").maven_group
+    version = project(":jdcrafte").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":jdcrafte").archives_name + "-" + project.name
+    }
+}

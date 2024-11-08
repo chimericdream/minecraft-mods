@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "jdcrafte"
+version = "${version}"
+displayName = "JD Crafte"
+authors = "chimericdream"
+description = '''
+One stop shop for all your farming and agricultural needs!
+'''
+#logoFile = ""
+
+[[dependencies.jdcrafte]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.jdcrafte]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.jdcrafte]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "jdcrafte.mixins.json"
