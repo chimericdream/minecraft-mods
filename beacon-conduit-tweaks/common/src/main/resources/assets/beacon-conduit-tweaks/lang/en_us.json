@@ -1,0 +1,8 @@
+{
+    "text.config.bctweaks.title": "Beacon & Conduit Tweaks Config",
+    "text.config.bctweaks.option.beaconBaseRange": "Base Beacon Range (default 10)",
+    "text.config.bctweaks.option.beaconRangePerLevel": "Beacon Range / Level (default 10)",
+    "text.config.bctweaks.option.beaconRangePerBlock": "Beacon Range / Block",
+    "text.config.bctweaks.option.conduitAddVanillaRange": "Conduit: Add Vanilla Range",
+    "text.config.bctweaks.option.conduitRangePerBlock": "Conduit Range / Block"
+}
