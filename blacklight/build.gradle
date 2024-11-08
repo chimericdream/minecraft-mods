@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":blacklight").maven_group
+    version = project(":blacklight").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":blacklight").archives_name + "-" + project.name
+    }
+}
