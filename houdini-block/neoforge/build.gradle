@@ -41,6 +41,11 @@ dependencies {
     shadowBundle project(path: ':houdini-block:common', configuration: 'transformProductionNeoForge')
 
     modImplementation "com.chimericdream.lib:chimericlib-neoforge:${project.chimericlib_version}"
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
+
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
 }
 
 processResources {

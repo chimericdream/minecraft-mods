@@ -40,7 +40,10 @@ dependencies {
     common(project(path: ':athenaeum:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':athenaeum:common', configuration: 'transformProductionNeoForge')
 
-    modApi "me.shedaniel.cloth:cloth-config-neoforge:${project(":athenaeum").cloth_config_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
+
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
 }
 
 processResources {

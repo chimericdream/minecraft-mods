@@ -35,6 +35,10 @@ dependencies {
 
     common(project(path: ':jdcrafte:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':jdcrafte:common', configuration: 'transformProductionFabric')
+
+    modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}")
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 }
 
 processResources {

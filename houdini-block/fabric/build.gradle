@@ -41,6 +41,10 @@ dependencies {
     shadowBundle project(path: ':houdini-block:common', configuration: 'transformProductionFabric')
 
     modImplementation "com.chimericdream.lib:chimericlib-fabric:${project.chimericlib_version}"
+
+    modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}")
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 }
 
 processResources {

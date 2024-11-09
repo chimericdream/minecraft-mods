@@ -44,9 +44,14 @@ dependencies {
     common(project(path: ':minekea:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':minekea:common', configuration: 'transformProductionNeoForge')
 
-    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${project(":minekea:common").chimericlib_version}"
+    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${project.chimericlib_version}"
 
-    modImplementation "vazkii.patchouli:Patchouli:${project(":minekea:common").patchouli_version}-NEOFORGE"
+    modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-NEOFORGE"
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
+
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))
+    forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
 }
 
 processResources {

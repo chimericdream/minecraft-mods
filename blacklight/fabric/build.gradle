@@ -35,6 +35,10 @@ dependencies {
 
     common(project(path: ':blacklight:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':blacklight:common', configuration: 'transformProductionFabric')
+
+    modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}")
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 }
 
 processResources {
