@@ -13,5 +13,5 @@ dependencies {
 
     modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 
-    modImplementation "com.chimericdream.lib:chimericlib-common:${project.chimericlib_version}"
+    modImplementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
 }

@@ -44,7 +44,7 @@ dependencies {
     common(project(path: ':minekea:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':minekea:common', configuration: 'transformProductionNeoForge')
 
-    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${project.chimericlib_version}"
+    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
 
     modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-NEOFORGE"
 

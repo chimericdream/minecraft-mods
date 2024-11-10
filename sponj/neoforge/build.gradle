@@ -40,7 +40,7 @@ dependencies {
     common(project(path: ':sponj:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':sponj:common', configuration: 'transformProductionNeoForge')
 
-    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${project.chimericlib_version}"
+    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
 }
 
 processResources {

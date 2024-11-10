@@ -55,7 +55,7 @@ dependencies {
     common(project(path: ':minekea:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':minekea:common', configuration: 'transformProductionFabric')
 
-    modImplementation "com.chimericdream.lib:chimericlib-fabric:${project.chimericlib_version}"
+    modImplementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
 
     modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-FABRIC"
 
