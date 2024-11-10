@@ -17,6 +17,10 @@ subprojects {
     apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'
 
+    base {
+        archivesName = project.archives_name + "-" + project.name
+    }
+
     repositories {
         maven {
             url = uri("https://maven.pkg.github.com/chimericdream/*")
@@ -63,15 +67,12 @@ subprojects {
         it.options.release = 21
     }
 
-    jar {
-        archivesBaseName += "-${project.minecraft_compatibility}"
-    }
-
     // Configure Maven publishing.
     publishing {
         publications {
             mavenJava(MavenPublication) {
                 artifactId = base.archivesName.get()
+                version = "${rootProject.minecraft_compatibility}-${project.mod_version}"
                 from components.java
             }
         }

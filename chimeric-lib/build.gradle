@@ -4,10 +4,6 @@ allprojects {
 }
 
 subprojects {
-    base {
-        archivesName = project(":chimeric-lib").archives_name + "-" + project.name
-    }
-
     // Configure Maven publishing.
     publishing {
         // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
