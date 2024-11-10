@@ -1,11 +1,11 @@
 package com.chimericdream.bannertweaks;
 
 import com.chimericdream.bannertweaks.config.BannerTweaksConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class BannerTweaksMod {
-    public static final Logger LOGGER = LoggerFactory.getLogger(ModInfo.MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
 
     public static void init() {
         BannerTweaksConfig.HANDLER.load();
