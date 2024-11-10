@@ -35,6 +35,13 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.villagertweaks]]
+modId = "chimericlib"
+type = "required"
+versionRange = "[2.2.0-beta.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.villagertweaks]]
 modId = "yet_another_config_lib_v3"
 type = "required"
 versionRange = "[3.6.1,)"
