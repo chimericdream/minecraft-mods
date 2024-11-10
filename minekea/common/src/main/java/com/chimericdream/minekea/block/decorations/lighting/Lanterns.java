@@ -11,17 +11,18 @@ import net.minecraft.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Lanterns implements ModThingGroup {
+    @SuppressWarnings("UnstableApiUsage")
     public static final Item.Settings DEFAULT_LANTERN_SETTINGS = new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
     static {
-        BLOCKS.add(registerWithItem(LanternBlock.makeId("ancient"), () -> new LanternBlock(new BlockConfig().name("Ancient Lantern").item(Items.ECHO_SHARD), "ancient"), DEFAULT_LANTERN_SETTINGS));
-        BLOCKS.add(registerWithItem(LanternBlock.makeId("doom"), () -> new LanternBlock(new BlockConfig().name("Doom Lantern").item(Items.CRIMSON_FUNGUS), "doom"), DEFAULT_LANTERN_SETTINGS));
-        BLOCKS.add(registerWithItem(LanternBlock.makeId("end"), () -> new LanternBlock(new BlockConfig().name("End Lantern").item(Items.ENDER_PEARL), "end"), DEFAULT_LANTERN_SETTINGS));
+        BLOCKS.add(REGISTRY_HELPER.registerWithItem(LanternBlock.makeId("ancient"), () -> new LanternBlock(new BlockConfig().name("Ancient Lantern").item(Items.ECHO_SHARD), "ancient"), DEFAULT_LANTERN_SETTINGS));
+        BLOCKS.add(REGISTRY_HELPER.registerWithItem(LanternBlock.makeId("doom"), () -> new LanternBlock(new BlockConfig().name("Doom Lantern").item(Items.CRIMSON_FUNGUS), "doom"), DEFAULT_LANTERN_SETTINGS));
+        BLOCKS.add(REGISTRY_HELPER.registerWithItem(LanternBlock.makeId("end"), () -> new LanternBlock(new BlockConfig().name("End Lantern").item(Items.ENDER_PEARL), "end"), DEFAULT_LANTERN_SETTINGS));
 
         // auto-suggested ideas from copilot
 //        BLOCKS.add(registerWithItem(LanternBlock.makeId("crystal"), () -> new LanternBlock(new BlockConfig().name("Crystal Lantern").item(Items.ECHO_SHARD), "crystal"), DEFAULT_LANTERN_SETTINGS));

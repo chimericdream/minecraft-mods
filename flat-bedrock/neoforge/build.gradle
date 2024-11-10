@@ -40,6 +40,8 @@ dependencies {
     common(project(path: ':flat-bedrock:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':flat-bedrock:common', configuration: 'transformProductionNeoForge')
 
+    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
+
     modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
 
     forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))

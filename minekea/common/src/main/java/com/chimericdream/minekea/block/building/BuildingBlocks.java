@@ -28,7 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 @SuppressWarnings("UnstableApiUsage")
 public class BuildingBlocks implements ModThingGroup {
@@ -38,31 +38,31 @@ public class BuildingBlocks implements ModThingGroup {
     public static final Item.Settings DEFAULT_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
     public static final Item.Settings WAX_BLOCK_SETTINGS = new Item.Settings().arch$tab(ItemGroups.COLORED_BLOCKS);
 
-    public static final RegistrySupplier<Block> BASALT_BRICKS = registerWithItem(BasaltBricksBlock.BLOCK_ID, BasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CHISELED_BASALT_BRICKS = registerWithItem(ChiseledBasaltBricksBlock.BLOCK_ID, ChiseledBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CRACKED_BASALT_BRICKS = registerWithItem(CrackedBasaltBricksBlock.BLOCK_ID, CrackedBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CRIMSON_BASALT_BRICKS = registerWithItem(CrimsonBasaltBricksBlock.BLOCK_ID, CrimsonBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> MOSSY_BASALT_BRICKS = registerWithItem(MossyBasaltBricksBlock.BLOCK_ID, MossyBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> WARPED_BASALT_BRICKS = registerWithItem(WarpedBasaltBricksBlock.BLOCK_ID, WarpedBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> WARPED_NETHER_BRICKS = registerWithItem(WarpedNetherBricksBlock.BLOCK_ID, WarpedNetherBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(BasaltBricksBlock.BLOCK_ID, BasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> CHISELED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(ChiseledBasaltBricksBlock.BLOCK_ID, ChiseledBasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> CRACKED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(CrackedBasaltBricksBlock.BLOCK_ID, CrackedBasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> CRIMSON_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(CrimsonBasaltBricksBlock.BLOCK_ID, CrimsonBasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> MOSSY_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(MossyBasaltBricksBlock.BLOCK_ID, MossyBasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> WARPED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(WarpedBasaltBricksBlock.BLOCK_ID, WarpedBasaltBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> WARPED_NETHER_BRICKS = REGISTRY_HELPER.registerWithItem(WarpedNetherBricksBlock.BLOCK_ID, WarpedNetherBricksBlock::new, DEFAULT_SETTINGS);
 
-    public static final RegistrySupplier<Block> PLAIN_WAX_BLOCK = registerWithItem(WaxBlock.makeId("plain"), () -> new WaxBlock("plain"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> WHITE_WAX_BLOCK = registerWithItem(WaxBlock.makeId("white"), () -> new WaxBlock("white"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> LIGHT_GRAY_WAX_BLOCK = registerWithItem(WaxBlock.makeId("light_gray"), () -> new WaxBlock("light_gray"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> GRAY_WAX_BLOCK = registerWithItem(WaxBlock.makeId("gray"), () -> new WaxBlock("gray"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> BLACK_WAX_BLOCK = registerWithItem(WaxBlock.makeId("black"), () -> new WaxBlock("black"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> BROWN_WAX_BLOCK = registerWithItem(WaxBlock.makeId("brown"), () -> new WaxBlock("brown"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> RED_WAX_BLOCK = registerWithItem(WaxBlock.makeId("red"), () -> new WaxBlock("red"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> ORANGE_WAX_BLOCK = registerWithItem(WaxBlock.makeId("orange"), () -> new WaxBlock("orange"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> YELLOW_WAX_BLOCK = registerWithItem(WaxBlock.makeId("yellow"), () -> new WaxBlock("yellow"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> LIME_WAX_BLOCK = registerWithItem(WaxBlock.makeId("lime"), () -> new WaxBlock("lime"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> GREEN_WAX_BLOCK = registerWithItem(WaxBlock.makeId("green"), () -> new WaxBlock("green"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> CYAN_WAX_BLOCK = registerWithItem(WaxBlock.makeId("cyan"), () -> new WaxBlock("cyan"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> LIGHT_BLUE_WAX_BLOCK = registerWithItem(WaxBlock.makeId("light_blue"), () -> new WaxBlock("light_blue"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> BLUE_WAX_BLOCK = registerWithItem(WaxBlock.makeId("blue"), () -> new WaxBlock("blue"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> PURPLE_WAX_BLOCK = registerWithItem(WaxBlock.makeId("purple"), () -> new WaxBlock("purple"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> MAGENTA_WAX_BLOCK = registerWithItem(WaxBlock.makeId("magenta"), () -> new WaxBlock("magenta"), WAX_BLOCK_SETTINGS);
-    public static final RegistrySupplier<Block> PINK_WAX_BLOCK = registerWithItem(WaxBlock.makeId("pink"), () -> new WaxBlock("pink"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> PLAIN_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("plain"), () -> new WaxBlock("plain"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> WHITE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("white"), () -> new WaxBlock("white"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> LIGHT_GRAY_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("light_gray"), () -> new WaxBlock("light_gray"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> GRAY_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("gray"), () -> new WaxBlock("gray"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> BLACK_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("black"), () -> new WaxBlock("black"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> BROWN_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("brown"), () -> new WaxBlock("brown"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> RED_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("red"), () -> new WaxBlock("red"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> ORANGE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("orange"), () -> new WaxBlock("orange"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> YELLOW_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("yellow"), () -> new WaxBlock("yellow"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> LIME_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("lime"), () -> new WaxBlock("lime"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> GREEN_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("green"), () -> new WaxBlock("green"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> CYAN_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("cyan"), () -> new WaxBlock("cyan"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> LIGHT_BLUE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("light_blue"), () -> new WaxBlock("light_blue"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> BLUE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("blue"), () -> new WaxBlock("blue"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> PURPLE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("purple"), () -> new WaxBlock("purple"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> MAGENTA_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("magenta"), () -> new WaxBlock("magenta"), WAX_BLOCK_SETTINGS);
+    public static final RegistrySupplier<Block> PINK_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("pink"), () -> new WaxBlock("pink"), WAX_BLOCK_SETTINGS);
 
     static {
         BLOCKS.add(BASALT_BRICKS);

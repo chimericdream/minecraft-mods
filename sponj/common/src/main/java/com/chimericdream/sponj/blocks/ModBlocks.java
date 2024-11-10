@@ -7,30 +7,31 @@ import net.minecraft.item.ItemGroups;
 
 import java.util.List;
 
-import static com.chimericdream.sponj.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.sponj.SponjMod.REGISTRY_HELPER;
 
 public class ModBlocks {
+    @SuppressWarnings("UnstableApiUsage")
     public static final Item.Settings DEFAULT_ITEM_SETTINGS = new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL);
 
-    public static final RegistrySupplier<Block> SPONJ_BLOCK = registerWithItem(
+    public static final RegistrySupplier<Block> SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         SponjBlock.BLOCK_ID,
         SponjBlock::new,
         DEFAULT_ITEM_SETTINGS
     );
 
-    public static final RegistrySupplier<Block> WET_SPONJ_BLOCK = registerWithItem(
+    public static final RegistrySupplier<Block> WET_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         WetSponjBlock.BLOCK_ID,
         WetSponjBlock::new,
         DEFAULT_ITEM_SETTINGS
     );
 
-    public static final RegistrySupplier<Block> LAVA_SPONJ_BLOCK = registerWithItem(
+    public static final RegistrySupplier<Block> LAVA_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         LavaSponjBlock.BLOCK_ID,
         LavaSponjBlock::new,
         DEFAULT_ITEM_SETTINGS
     );
 
-    public static final RegistrySupplier<Block> WET_LAVA_SPONJ_BLOCK = registerWithItem(
+    public static final RegistrySupplier<Block> WET_LAVA_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         WetLavaSponjBlock.BLOCK_ID,
         WetLavaSponjBlock::new,
         DEFAULT_ITEM_SETTINGS

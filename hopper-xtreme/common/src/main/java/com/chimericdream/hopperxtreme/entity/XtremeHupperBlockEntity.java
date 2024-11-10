@@ -34,11 +34,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HUPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HUPPER_BLOCK_ENTITY;
 
 
 public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implements Hopper {
-    private final Box INPUT_AREA_SHAPE = (Box)Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
+    private final Box INPUT_AREA_SHAPE = (Box) Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
 
     private final int cooldownInTicks;
 

@@ -17,9 +17,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Bookshelves implements ModThingGroup {
+    @SuppressWarnings("UnstableApiUsage")
     public static final Item.Settings DEFAULT_BOOKSHELF_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
@@ -62,7 +63,7 @@ public class Bookshelves implements ModThingGroup {
         BOOKSHELF_CONFIGS.put("tuff_brick", new BlockConfig().material("tuff_brick").materialName("Tuff Brick").ingredient(Blocks.TUFF_BRICKS));
         BOOKSHELF_CONFIGS.put("warped_nether_brick", new BlockConfig().material("warped_nether_brick").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS).texture("default", WarpedNetherBricksBlock.BLOCK_ID.withPrefixedPath("block/")));
 
-        BOOKSHELF_CONFIGS.forEach((key, value) -> BOOKSHELVES.put(key, registerWithItem(BookshelfBlock.makeId(key), () -> new BookshelfBlock(value), DEFAULT_BOOKSHELF_SETTINGS)));
+        BOOKSHELF_CONFIGS.forEach((key, value) -> BOOKSHELVES.put(key, REGISTRY_HELPER.registerWithItem(BookshelfBlock.makeId(key), () -> new BookshelfBlock(value), DEFAULT_BOOKSHELF_SETTINGS)));
 
         BLOCKS.addAll(BOOKSHELVES.values());
     }

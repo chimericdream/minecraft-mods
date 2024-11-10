@@ -38,7 +38,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HOPPER_BLOCK_ENTITY;
 
 public class XtremeHopperBlock extends BlockWithEntity {
     public static final MapCodec<XtremeHopperBlock> CODEC = createCodec(XtremeHopperBlock::create);
@@ -72,7 +72,8 @@ public class XtremeHopperBlock extends BlockWithEntity {
     private final String baseKey;
 
     static XtremeHopperBlock create(Settings settings) {
-        return new XtremeHopperBlock(8, "default") {};
+        return new XtremeHopperBlock(8, "default") {
+        };
     }
 
     public XtremeHopperBlock(int cooldownInTicks, String translationKey) {
@@ -81,7 +82,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = translationKey;
 
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.DOWN)).with(ENABLED, true));
+        this.setDefaultState((BlockState) ((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(FACING, Direction.DOWN)).with(ENABLED, true));
     }
 
     public int getCooldownInTicks() {
@@ -94,7 +95,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
 
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch ((Direction)state.get(FACING)) {
+        switch ((Direction) state.get(FACING)) {
             case DOWN -> {
                 return DOWN_SHAPE;
             }
@@ -118,7 +119,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
 
     @Override
     protected VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
-        switch ((Direction)state.get(FACING)) {
+        switch ((Direction) state.get(FACING)) {
             case DOWN -> {
                 return DOWN_RAYCAST_SHAPE;
             }
@@ -143,7 +144,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getSide().getOpposite();
-        return (BlockState)((BlockState)this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)).with(ENABLED, true);
+        return (BlockState) ((BlockState) this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)).with(ENABLED, true);
     }
 
     @Override
@@ -170,7 +171,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof XtremeHopperBlockEntity) {
-                player.openHandledScreen((XtremeHopperBlockEntity)blockEntity);
+                player.openHandledScreen((XtremeHopperBlockEntity) blockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
@@ -189,8 +190,8 @@ public class XtremeHopperBlock extends BlockWithEntity {
         }
 
         boolean bl = !world.isReceivingRedstonePower(pos);
-        if (bl != (Boolean)state.get(ENABLED)) {
-            world.setBlockState(pos, (BlockState)state.with(ENABLED, bl), 2);
+        if (bl != (Boolean) state.get(ENABLED)) {
+            world.setBlockState(pos, (BlockState) state.with(ENABLED, bl), 2);
         }
 
     }
@@ -218,12 +219,12 @@ public class XtremeHopperBlock extends BlockWithEntity {
 
     @Override
     protected BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
+        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
     }
 
     @Override
     protected BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation((Direction)state.get(FACING)));
+        return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
     }
 
     @Override
@@ -235,7 +236,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeHopperBlockEntity) {
-            XtremeHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeHopperBlockEntity)blockEntity);
+            XtremeHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeHopperBlockEntity) blockEntity);
         }
 
     }

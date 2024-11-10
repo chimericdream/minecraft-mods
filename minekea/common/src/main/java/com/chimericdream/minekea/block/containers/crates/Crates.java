@@ -22,11 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerBlockEntity;
-import static com.chimericdream.minekea.registry.ModRegistries.registerScreenHandler;
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Crates implements ModThingGroup {
+    @SuppressWarnings("UnstableApiUsage")
     public static final Item.Settings DEFAULT_CRATE_SETTINGS = new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL);
 
     public static RegistrySupplier<BlockEntityType<CrateBlockEntity>> CRATE_BLOCK_ENTITY;
@@ -37,11 +36,11 @@ public class Crates implements ModThingGroup {
     public static final Map<String, RegistrySupplier<Block>> CRATES = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> TRAPPED_CRATES = new LinkedHashMap<>();
 
-    public static final RegistrySupplier<ScreenHandlerType<CrateScreenHandler>> CRATE_SCREEN_HANDLER = registerScreenHandler(
+    public static final RegistrySupplier<ScreenHandlerType<CrateScreenHandler>> CRATE_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         CrateScreenHandler.SCREEN_ID,
         () -> new ScreenHandlerType<>(CrateScreenHandler::new, FeatureSet.empty())
     );
-    public static final RegistrySupplier<ScreenHandlerType<DoubleCrateScreenHandler>> DOUBLE_CRATE_SCREEN_HANDLER = registerScreenHandler(
+    public static final RegistrySupplier<ScreenHandlerType<DoubleCrateScreenHandler>> DOUBLE_CRATE_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         DoubleCrateScreenHandler.SCREEN_ID,
         () -> new ScreenHandlerType<>(DoubleCrateScreenHandler::new, FeatureSet.empty())
     );
@@ -59,34 +58,34 @@ public class Crates implements ModThingGroup {
         CONFIGS.put("spruce", new BlockConfig().material("spruce").materialName("Spruce").ingredient(Blocks.SPRUCE_PLANKS).tagIngredient(ItemTags.SPRUCE_LOGS).texture("brace", TextureUtils.block(Blocks.STRIPPED_SPRUCE_LOG)).flammable());
         CONFIGS.put("warped", new BlockConfig().material("warped").materialName("Warped").ingredient(Blocks.WARPED_PLANKS).tagIngredient(ItemTags.WARPED_STEMS).texture("brace", TextureUtils.block(Blocks.STRIPPED_WARPED_STEM)));
 
-        CRATES.put("acacia", registerWithItem(CrateBlock.makeId("acacia"), () -> new CrateBlock(CONFIGS.get("acacia")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("bamboo", registerWithItem(CrateBlock.makeId("bamboo"), () -> new CrateBlock(CONFIGS.get("bamboo")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("birch", registerWithItem(CrateBlock.makeId("birch"), () -> new CrateBlock(CONFIGS.get("birch")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("cherry", registerWithItem(CrateBlock.makeId("cherry"), () -> new CrateBlock(CONFIGS.get("cherry")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("crimson", registerWithItem(CrateBlock.makeId("crimson"), () -> new CrateBlock(CONFIGS.get("crimson")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("dark_oak", registerWithItem(CrateBlock.makeId("dark_oak"), () -> new CrateBlock(CONFIGS.get("dark_oak")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("jungle", registerWithItem(CrateBlock.makeId("jungle"), () -> new CrateBlock(CONFIGS.get("jungle")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("mangrove", registerWithItem(CrateBlock.makeId("mangrove"), () -> new CrateBlock(CONFIGS.get("mangrove")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("oak", registerWithItem(CrateBlock.makeId("oak"), () -> new CrateBlock(CONFIGS.get("oak")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("spruce", registerWithItem(CrateBlock.makeId("spruce"), () -> new CrateBlock(CONFIGS.get("spruce")), DEFAULT_CRATE_SETTINGS));
-        CRATES.put("warped", registerWithItem(CrateBlock.makeId("warped"), () -> new CrateBlock(CONFIGS.get("warped")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("acacia", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("acacia"), () -> new CrateBlock(CONFIGS.get("acacia")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("bamboo", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("bamboo"), () -> new CrateBlock(CONFIGS.get("bamboo")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("birch", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("birch"), () -> new CrateBlock(CONFIGS.get("birch")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("cherry", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("cherry"), () -> new CrateBlock(CONFIGS.get("cherry")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("crimson", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("crimson"), () -> new CrateBlock(CONFIGS.get("crimson")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("dark_oak", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("dark_oak"), () -> new CrateBlock(CONFIGS.get("dark_oak")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("jungle", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("jungle"), () -> new CrateBlock(CONFIGS.get("jungle")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("mangrove", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("mangrove"), () -> new CrateBlock(CONFIGS.get("mangrove")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("oak", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("oak"), () -> new CrateBlock(CONFIGS.get("oak")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("spruce", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("spruce"), () -> new CrateBlock(CONFIGS.get("spruce")), DEFAULT_CRATE_SETTINGS));
+        CRATES.put("warped", REGISTRY_HELPER.registerWithItem(CrateBlock.makeId("warped"), () -> new CrateBlock(CONFIGS.get("warped")), DEFAULT_CRATE_SETTINGS));
 
-        TRAPPED_CRATES.put("acacia", registerWithItem(TrappedCrateBlock.makeId("acacia"), () -> new TrappedCrateBlock(CONFIGS.get("acacia"), CRATES.get("acacia")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("bamboo", registerWithItem(TrappedCrateBlock.makeId("bamboo"), () -> new TrappedCrateBlock(CONFIGS.get("bamboo"), CRATES.get("bamboo")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("birch", registerWithItem(TrappedCrateBlock.makeId("birch"), () -> new TrappedCrateBlock(CONFIGS.get("birch"), CRATES.get("birch")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("cherry", registerWithItem(TrappedCrateBlock.makeId("cherry"), () -> new TrappedCrateBlock(CONFIGS.get("cherry"), CRATES.get("cherry")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("crimson", registerWithItem(TrappedCrateBlock.makeId("crimson"), () -> new TrappedCrateBlock(CONFIGS.get("crimson"), CRATES.get("crimson")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("dark_oak", registerWithItem(TrappedCrateBlock.makeId("dark_oak"), () -> new TrappedCrateBlock(CONFIGS.get("dark_oak"), CRATES.get("dark_oak")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("jungle", registerWithItem(TrappedCrateBlock.makeId("jungle"), () -> new TrappedCrateBlock(CONFIGS.get("jungle"), CRATES.get("jungle")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("mangrove", registerWithItem(TrappedCrateBlock.makeId("mangrove"), () -> new TrappedCrateBlock(CONFIGS.get("mangrove"), CRATES.get("mangrove")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("oak", registerWithItem(TrappedCrateBlock.makeId("oak"), () -> new TrappedCrateBlock(CONFIGS.get("oak"), CRATES.get("oak")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("spruce", registerWithItem(TrappedCrateBlock.makeId("spruce"), () -> new TrappedCrateBlock(CONFIGS.get("spruce"), CRATES.get("spruce")), DEFAULT_CRATE_SETTINGS));
-        TRAPPED_CRATES.put("warped", registerWithItem(TrappedCrateBlock.makeId("warped"), () -> new TrappedCrateBlock(CONFIGS.get("warped"), CRATES.get("warped")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("acacia", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("acacia"), () -> new TrappedCrateBlock(CONFIGS.get("acacia"), CRATES.get("acacia")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("bamboo", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("bamboo"), () -> new TrappedCrateBlock(CONFIGS.get("bamboo"), CRATES.get("bamboo")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("birch", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("birch"), () -> new TrappedCrateBlock(CONFIGS.get("birch"), CRATES.get("birch")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("cherry", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("cherry"), () -> new TrappedCrateBlock(CONFIGS.get("cherry"), CRATES.get("cherry")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("crimson", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("crimson"), () -> new TrappedCrateBlock(CONFIGS.get("crimson"), CRATES.get("crimson")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("dark_oak", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("dark_oak"), () -> new TrappedCrateBlock(CONFIGS.get("dark_oak"), CRATES.get("dark_oak")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("jungle", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("jungle"), () -> new TrappedCrateBlock(CONFIGS.get("jungle"), CRATES.get("jungle")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("mangrove", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("mangrove"), () -> new TrappedCrateBlock(CONFIGS.get("mangrove"), CRATES.get("mangrove")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("oak", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("oak"), () -> new TrappedCrateBlock(CONFIGS.get("oak"), CRATES.get("oak")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("spruce", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("spruce"), () -> new TrappedCrateBlock(CONFIGS.get("spruce"), CRATES.get("spruce")), DEFAULT_CRATE_SETTINGS));
+        TRAPPED_CRATES.put("warped", REGISTRY_HELPER.registerWithItem(TrappedCrateBlock.makeId("warped"), () -> new TrappedCrateBlock(CONFIGS.get("warped"), CRATES.get("warped")), DEFAULT_CRATE_SETTINGS));
 
         BLOCKS.addAll(CRATES.values());
         BLOCKS.addAll(TRAPPED_CRATES.values());
 
-        CRATE_BLOCK_ENTITY = registerBlockEntity(
+        CRATE_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
             CrateBlockEntity.ENTITY_ID,
             () -> BlockEntityType.Builder
                 .create(

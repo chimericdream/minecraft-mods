@@ -1,6 +1,8 @@
 package com.chimericdream.hopperxtreme;
 
-import com.chimericdream.hopperxtreme.registry.ModRegistries;
+import com.chimericdream.hopperxtreme.block.ModBlocks;
+import com.chimericdream.hopperxtreme.item.ModItems;
+import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -12,9 +14,14 @@ public final class HopperXtremeMod {
     public static Supplier<RegistrarManager> MANAGER;
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
 
+    public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
+
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
-        ModRegistries.init();
+        ModBlocks.init();
+        ModItems.init();
+
+        REGISTRY_HELPER.init();
     }
 }

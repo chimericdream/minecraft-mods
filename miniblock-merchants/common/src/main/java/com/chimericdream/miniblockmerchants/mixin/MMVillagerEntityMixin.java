@@ -4,8 +4,8 @@ package com.chimericdream.miniblockmerchants.mixin;
 import com.chimericdream.miniblockmerchants.ModInfo;
 import com.chimericdream.miniblockmerchants.advancement.MMAdvancements;
 import com.chimericdream.miniblockmerchants.item.VillagerConversionItem;
-import com.chimericdream.miniblockmerchants.registry.MMProfessions;
-import com.chimericdream.miniblockmerchants.registry.MMStats;
+import com.chimericdream.miniblockmerchants.registry.ModProfessions;
+import com.chimericdream.miniblockmerchants.registry.ModStats;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
@@ -92,14 +92,14 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
             } else {
                 VillagerProfession currentProfession = this.getVillagerData().getProfession();
                 if (currentProfession == VillagerProfession.NONE) {
-                    VillagerProfession newProfession = MMProfessions.get(item.profession);
+                    VillagerProfession newProfession = ModProfessions.get(item.profession);
 
                     if (this.getWorld().isClient) {
                         this.getWorld().playSoundFromEntity(player, this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                     } else {
                         ((ServerPlayerEntity) player).sendMessage(getPlayerMessage(item.profession), false);
 
-                        TradeOfferList offers = MMProfessions.getOffersForProfession(item.profession);
+                        TradeOfferList offers = ModProfessions.getOffersForProfession(item.profession);
 
                         this.setVillagerData(new VillagerData(VillagerType.PLAINS, newProfession, 5));
                         this.setOffers(offers);
@@ -132,20 +132,20 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
         }
 
         mm_setBaseXp(nbt);
-        TradeOfferList offers = MMProfessions.getOffersForProfession(profession);
+        TradeOfferList offers = ModProfessions.getOffersForProfession(profession);
         nbt.put("Offers", (NbtElement) TradeOfferList.CODEC.encodeStart(this.getRegistryManager().getOps(NbtOps.INSTANCE), offers).getOrThrow());
     }
 
     @Inject(method = "afterUsing", at = @At("TAIL"))
     private void mm_incrementMiniblockTrade(TradeOffer offer, CallbackInfo ci) {
-        if (this.getCustomer() instanceof ServerPlayerEntity player && MMProfessions.PROFESSION_LIST.contains(this.getVillagerData().getProfession())) {
-            player.incrementStat(MMStats.TRADE_FOR_MINIBLOCK_ID);
+        if (this.getCustomer() instanceof ServerPlayerEntity player && ModProfessions.PROFESSION_LIST.contains(this.getVillagerData().getProfession())) {
+            player.incrementStat(ModStats.TRADE_FOR_MINIBLOCK_ID);
             checkPlayerAdvancements(player);
         }
     }
 
     private void checkPlayerAdvancements(ServerPlayerEntity player) {
-        int tradeCount = player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(MMStats.TRADE_FOR_MINIBLOCK_ID));
+        int tradeCount = player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(ModStats.TRADE_FOR_MINIBLOCK_ID));
         MinecraftServer server = player.getServer();
 
         // Theoretically, this shouldn't be possible. But the interfaces/IDE say this is technically nullable, so...

@@ -16,23 +16,22 @@ import net.minecraft.screen.ScreenHandlerType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerItem;
-import static com.chimericdream.minekea.registry.ModRegistries.registerScreenHandler;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Tools implements ModThingGroup {
     public static final List<RegistrySupplier<Item>> ITEMS = new ArrayList<>();
     public static final List<RegistrySupplier<Item>> HAMMERS = new ArrayList<>();
 
-    public static final RegistrySupplier<Item> STONE_HAMMER_ITEM = registerItem(HammerItem.makeId("stone"), () -> new HammerItem(ToolMaterials.STONE, 4, "Stone", null, ItemTags.STONE_TOOL_MATERIALS));
-    public static final RegistrySupplier<Item> IRON_HAMMER_ITEM = registerItem(HammerItem.makeId("iron"), () -> new HammerItem(ToolMaterials.IRON, 5, "Iron", Items.IRON_INGOT, null));
-    public static final RegistrySupplier<Item> GOLD_HAMMER_ITEM = registerItem(HammerItem.makeId("gold"), () -> new HammerItem(ToolMaterials.GOLD, 6, "Gold", Items.GOLD_INGOT, null));
-    public static final RegistrySupplier<Item> DIAMOND_HAMMER_ITEM = registerItem(HammerItem.makeId("diamond"), () -> new HammerItem(ToolMaterials.DIAMOND, 7, "Diamond", Items.DIAMOND, null));
-    public static final RegistrySupplier<Item> NETHERITE_HAMMER_ITEM = registerItem(HammerItem.makeId("netherite"), () -> new HammerItem(ToolMaterials.NETHERITE, 8, "Netherite", Items.NETHERITE_INGOT, null, new Item.Settings().fireproof()));
+    public static final RegistrySupplier<Item> STONE_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("stone"), () -> new HammerItem(ToolMaterials.STONE, 4, "Stone", null, ItemTags.STONE_TOOL_MATERIALS));
+    public static final RegistrySupplier<Item> IRON_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("iron"), () -> new HammerItem(ToolMaterials.IRON, 5, "Iron", Items.IRON_INGOT, null));
+    public static final RegistrySupplier<Item> GOLD_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("gold"), () -> new HammerItem(ToolMaterials.GOLD, 6, "Gold", Items.GOLD_INGOT, null));
+    public static final RegistrySupplier<Item> DIAMOND_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("diamond"), () -> new HammerItem(ToolMaterials.DIAMOND, 7, "Diamond", Items.DIAMOND, null));
+    public static final RegistrySupplier<Item> NETHERITE_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("netherite"), () -> new HammerItem(ToolMaterials.NETHERITE, 8, "Netherite", Items.NETHERITE_INGOT, null, new Item.Settings().fireproof()));
 
-    public static final RegistrySupplier<Item> BLOCK_PAINTER_ITEM = registerItem(BlockPainterItem.ITEM_ID, BlockPainterItem::new);
-    public static final RegistrySupplier<Item> WRENCH_ITEM = registerItem(WrenchItem.ITEM_ID, WrenchItem::new);
+    public static final RegistrySupplier<Item> BLOCK_PAINTER_ITEM = REGISTRY_HELPER.registerItem(BlockPainterItem.ITEM_ID, BlockPainterItem::new);
+    public static final RegistrySupplier<Item> WRENCH_ITEM = REGISTRY_HELPER.registerItem(WrenchItem.ITEM_ID, WrenchItem::new);
 
-    public static final RegistrySupplier<ScreenHandlerType<BlockPainterScreenHandler>> BLOCK_PAINTER_SCREEN_HANDLER = registerScreenHandler(BlockPainterScreenHandler.SCREEN_ID, () -> new ScreenHandlerType<>(BlockPainterScreenHandler::new, FeatureSet.empty()));
+    public static final RegistrySupplier<ScreenHandlerType<BlockPainterScreenHandler>> BLOCK_PAINTER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(BlockPainterScreenHandler.SCREEN_ID, () -> new ScreenHandlerType<>(BlockPainterScreenHandler::new, FeatureSet.empty()));
 
     static {
         HAMMERS.add(STONE_HAMMER_ITEM);

@@ -12,13 +12,15 @@ import net.minecraft.item.ItemGroups;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class DecorationBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    public static final RegistrySupplier<Block> ENDLESS_ROD = registerWithItem(EndlessRodBlock.BLOCK_ID, EndlessRodBlock::new, new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL));
-    public static final RegistrySupplier<Block> FAKE_CAKE = registerWithItem(FakeCakeBlock.BLOCK_ID, FakeCakeBlock::new, new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS));
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> ENDLESS_ROD = REGISTRY_HELPER.registerWithItem(EndlessRodBlock.BLOCK_ID, EndlessRodBlock::new, new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL));
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> FAKE_CAKE = REGISTRY_HELPER.registerWithItem(FakeCakeBlock.BLOCK_ID, FakeCakeBlock::new, new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS));
 
     static {
         BLOCKS.add(ENDLESS_ROD);

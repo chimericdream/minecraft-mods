@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
     private final int cooldownInTicks;
@@ -153,28 +153,28 @@ public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity i
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case SOUTH:
                 if (this.eastConnected) {
                     lastDirection = Direction.EAST;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case EAST:
                 if (this.westConnected) {
                     lastDirection = Direction.WEST;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case WEST:
                 if (this.downConnected) {
                     lastDirection = Direction.DOWN;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             default:
                 if (this.northConnected) {
                     lastDirection = Direction.NORTH;

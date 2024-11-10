@@ -9,7 +9,7 @@ import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock
 import com.chimericdream.minekea.block.building.general.MossyBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.WarpedBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
-import com.chimericdream.minekea.registry.ModRegistries;
+import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
@@ -26,10 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.chimericdream.minekea.registry.ModRegistries.registerWithItem;
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class CompressedBlocks implements ModThingGroup {
-    public static final Item.Settings DEFAULT_COMPRESSED_BLOCK_SETTINGS = new Item.Settings().arch$tab(ModRegistries.COMPRESSED_BLOCK_ITEM_GROUP);
+    @SuppressWarnings("UnstableApiUsage")
+    public static final Item.Settings DEFAULT_COMPRESSED_BLOCK_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.COMPRESSED_BLOCK_ITEM_GROUP);
 
     public static final Map<String, List<RegistrySupplier<Block>>> BLOCK_MAP = new LinkedHashMap<>();
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
@@ -178,7 +179,7 @@ public class CompressedBlocks implements ModThingGroup {
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
                 compressedBlocks.add(
-                    registerWithItem(
+                    REGISTRY_HELPER.registerWithItem(
                         CompressedBlock.makeId(material, compressionLevel),
                         () -> new CompressedBlock(
                             new BlockConfig()
@@ -228,7 +229,7 @@ public class CompressedBlocks implements ModThingGroup {
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
                 compressedBlocks.add(
-                    registerWithItem(
+                    REGISTRY_HELPER.registerWithItem(
                         CompressedBlock.makeId(material, compressionLevel),
                         () -> new CompressedColumnBlock(
                             new BlockConfig()
@@ -268,7 +269,7 @@ public class CompressedBlocks implements ModThingGroup {
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
                 compressedBlocks.add(
-                    registerWithItem(
+                    REGISTRY_HELPER.registerWithItem(
                         CompressedBlock.makeId(material, compressionLevel),
                         () -> new CompressedMinekeaBlock(
                             new BlockConfig()

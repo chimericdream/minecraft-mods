@@ -1,7 +1,7 @@
 package com.chimericdream.miniblockmerchants.mixin;
 
 import com.chimericdream.miniblockmerchants.ModInfo;
-import com.chimericdream.miniblockmerchants.registry.MMProfessions;
+import com.chimericdream.miniblockmerchants.registry.ModProfessions;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -21,7 +21,8 @@ abstract public class MMZombieVillagerEntityMixin extends MMEntityMixin {
     @Shadow
     public TradeOfferList offerData;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     public static TrackedData<VillagerData> VILLAGER_DATA;
 
     @Inject(method = "setVillagerData", at = @At("TAIL"))
@@ -34,7 +35,7 @@ abstract public class MMZombieVillagerEntityMixin extends MMEntityMixin {
 
         this.dataTracker.set(VILLAGER_DATA, data.withLevel(5));
 
-        this.offerData = MMProfessions.getOffersForProfession(profession);
+        this.offerData = ModProfessions.getOffersForProfession(profession);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
@@ -51,8 +52,8 @@ abstract public class MMZombieVillagerEntityMixin extends MMEntityMixin {
         data.putInt("level", 5);
         nbt.put("VillagerData", data);
 
-        TradeOfferList offers = MMProfessions.getOffersForProfession(profession);
-        nbt.put("Offers", (NbtElement)TradeOfferList.CODEC.encodeStart(this.getWorld().getRegistryManager().getOps(NbtOps.INSTANCE), offers).getOrThrow());
+        TradeOfferList offers = ModProfessions.getOffersForProfession(profession);
+        nbt.put("Offers", (NbtElement) TradeOfferList.CODEC.encodeStart(this.getWorld().getRegistryManager().getOps(NbtOps.INSTANCE), offers).getOrThrow());
     }
 
     @Inject(method = "finishConversion", at = @At("TAIL"))

@@ -47,7 +47,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHopperBlock extends BlockWithEntity {
     public static final MapCodec<XtremeMultiHopperBlock> CODEC = createCodec(XtremeMultiHopperBlock::create);
@@ -226,7 +226,7 @@ public class XtremeMultiHopperBlock extends BlockWithEntity {
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
-                player.openHandledScreen((XtremeMultiHopperBlockEntity)blockEntity);
+                player.openHandledScreen((XtremeMultiHopperBlockEntity) blockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
@@ -290,8 +290,8 @@ public class XtremeMultiHopperBlock extends BlockWithEntity {
 
     private void updateEnabled(World world, BlockPos pos, BlockState state) {
         boolean bl = !world.isReceivingRedstonePower(pos);
-        if (bl != (Boolean)state.get(ENABLED)) {
-            world.setBlockState(pos, (BlockState)state.with(ENABLED, bl), 2);
+        if (bl != (Boolean) state.get(ENABLED)) {
+            world.setBlockState(pos, (BlockState) state.with(ENABLED, bl), 2);
         }
 
     }
@@ -336,7 +336,7 @@ public class XtremeMultiHopperBlock extends BlockWithEntity {
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
-            XtremeMultiHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHopperBlockEntity)blockEntity);
+            XtremeMultiHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHopperBlockEntity) blockEntity);
         }
 
     }

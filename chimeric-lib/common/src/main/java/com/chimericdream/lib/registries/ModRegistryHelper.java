@@ -1,8 +1,8 @@
 package com.chimericdream.lib.registries;
 
 import dev.architectury.platform.Platform;
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
@@ -11,11 +11,14 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.village.VillagerProfession;
 import org.apache.logging.log4j.Logger;
 
 import java.util.function.Supplier;
@@ -31,6 +34,8 @@ public class ModRegistryHelper {
     public final DeferredRegister<ItemGroup> ITEM_GROUPS;
     public final DeferredRegister<EntityType<?>> ENTITY_TYPES;
     public final DeferredRegister<ScreenHandlerType<?>> SCREEN_HANDLERS;
+    public final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
+    public final DeferredRegister<Identifier> CUSTOM_STATS;
 
     @SuppressWarnings("unchecked")
     public ModRegistryHelper(String modId, Logger logger) {
@@ -44,6 +49,8 @@ public class ModRegistryHelper {
         ITEM_GROUPS = DeferredRegister.create(modId, (RegistryKey<Registry<ItemGroup>>) Registries.ITEM_GROUP.getKey());
         ENTITY_TYPES = DeferredRegister.create(modId, (RegistryKey<Registry<EntityType<?>>>) Registries.ENTITY_TYPE.getKey());
         SCREEN_HANDLERS = DeferredRegister.create(modId, (RegistryKey<Registry<ScreenHandlerType<?>>>) Registries.SCREEN_HANDLER.getKey());
+        VILLAGER_PROFESSIONS = DeferredRegister.create(modId, (RegistryKey<Registry<VillagerProfession>>) Registries.VILLAGER_PROFESSION.getKey());
+        CUSTOM_STATS = DeferredRegister.create(modId, (RegistryKey<Registry<Identifier>>) Registries.CUSTOM_STAT.getKey());
     }
 
     public void init() {
@@ -67,6 +74,12 @@ public class ModRegistryHelper {
 
         LOGGER.debug("Registering screen handlers");
         SCREEN_HANDLERS.register();
+
+        LOGGER.debug("Registering villager professions");
+        VILLAGER_PROFESSIONS.register();
+
+        LOGGER.debug("Registering custom stats");
+        CUSTOM_STATS.register();
     }
 
     public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String name, final Supplier<T> supplier) {
@@ -74,9 +87,7 @@ public class ModRegistryHelper {
     }
 
     public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final Identifier id, final Supplier<T> supplier) {
-        Registrar<BlockEntityType<?>> registrar = BLOCK_ENTITY_TYPES.getRegistrar();
-
-        return registrar.register(id, supplier);
+        return BLOCK_ENTITY_TYPES.register(id, supplier);
     }
 
     public RegistrySupplier<Block> registerWithItem(String name, Supplier<Block> supplier) {
@@ -99,43 +110,94 @@ public class ModRegistryHelper {
         return block;
     }
 
-    public <T extends Block> RegistrySupplier<T> registerBlock(Identifier path, Supplier<T> block) {
-        Registrar<Block> registrar = BLOCKS.getRegistrar();
-
-        if (Platform.isNeoForge()) {
-            return BLOCKS.register(path.getPath(), block);
-        }
-
-        return registrar.register(path, block);
+    public <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
+        return registerBlock(Identifier.of(this.modId, name), block);
     }
 
-    public <T extends Item> RegistrySupplier<T> registerItem(Identifier path, Supplier<T> itemSupplier) {
-        Registrar<Item> registrar = ITEMS.getRegistrar();
-
+    public <T extends Block> RegistrySupplier<T> registerBlock(Identifier id, Supplier<T> block) {
         if (Platform.isNeoForge()) {
-            return ITEMS.register(path.getPath(), itemSupplier);
+            return BLOCKS.register(id.getPath(), block);
         }
 
-        return registrar.register(path, itemSupplier);
+        return BLOCKS.register(id, block);
     }
 
-    public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(Identifier path, Supplier<T> entitySupplier) {
-        Registrar<EntityType<?>> registrar = ENTITY_TYPES.getRegistrar();
-
-        if (Platform.isNeoForge()) {
-            return ENTITY_TYPES.register(path.getPath(), entitySupplier);
-        }
-
-        return registrar.register(path, entitySupplier);
+    public <T extends Fluid> RegistrySupplier<T> registerFluid(String name, Supplier<T> fluidSupplier) {
+        return registerFluid(Identifier.of(this.modId, name), fluidSupplier);
     }
 
-    public <T extends ScreenHandlerType<?>> RegistrySupplier<T> registerScreenHandler(Identifier path, Supplier<T> screenHandlerSupplier) {
-        Registrar<ScreenHandlerType<?>> registrar = SCREEN_HANDLERS.getRegistrar();
+    public <T extends Fluid> RegistrySupplier<T> registerFluid(Identifier id, Supplier<T> fluidSupplier) {
+        return FLUIDS.register(id, fluidSupplier);
+    }
 
+    public <T extends Item> RegistrySupplier<T> registerItem(String name, Supplier<T> itemSupplier) {
+        return registerItem(Identifier.of(this.modId, name), itemSupplier);
+    }
+
+    public <T extends Item> RegistrySupplier<T> registerItem(Identifier id, Supplier<T> itemSupplier) {
         if (Platform.isNeoForge()) {
-            return SCREEN_HANDLERS.register(path.getPath(), screenHandlerSupplier);
+            return ITEMS.register(id.getPath(), itemSupplier);
         }
 
-        return registrar.register(path, screenHandlerSupplier);
+        return ITEMS.register(id, itemSupplier);
+    }
+
+    public RegistrySupplier<ItemGroup> registerItemGroup(String id, Supplier<Block> iconBlock) {
+        return ITEM_GROUPS.register(
+            id,
+            () -> CreativeTabRegistry.create(
+                Text.translatable(id),
+                () -> new ItemStack(iconBlock.get())
+            )
+        );
+    }
+
+    public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(String name, Supplier<T> entitySupplier) {
+        return registerEntityType(Identifier.of(this.modId, name), entitySupplier);
+    }
+
+    public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(Identifier id, Supplier<T> entitySupplier) {
+        if (Platform.isNeoForge()) {
+            return ENTITY_TYPES.register(id.getPath(), entitySupplier);
+        }
+
+        return ENTITY_TYPES.register(id, entitySupplier);
+    }
+
+    public <T extends ScreenHandlerType<?>> RegistrySupplier<T> registerScreenHandler(String name, Supplier<T> screenHandlerSupplier) {
+        return registerScreenHandler(Identifier.of(this.modId, name), screenHandlerSupplier);
+    }
+
+    public <T extends ScreenHandlerType<?>> RegistrySupplier<T> registerScreenHandler(Identifier id, Supplier<T> screenHandlerSupplier) {
+        if (Platform.isNeoForge()) {
+            return SCREEN_HANDLERS.register(id.getPath(), screenHandlerSupplier);
+        }
+
+        return SCREEN_HANDLERS.register(id, screenHandlerSupplier);
+    }
+
+    public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(String name, Supplier<T> professionSupplier) {
+        return registerVillagerProfession(Identifier.of(this.modId, name), professionSupplier);
+    }
+
+    public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(Identifier id, Supplier<T> professionSupplier) {
+        if (Platform.isNeoForge()) {
+            return VILLAGER_PROFESSIONS.register(id.getPath(), professionSupplier);
+        }
+
+        return VILLAGER_PROFESSIONS.register(id, professionSupplier);
+    }
+
+    public void registerCustomStat(String name) {
+        registerCustomStat(Identifier.of(this.modId, name));
+    }
+
+    public void registerCustomStat(Identifier id) {
+        if (Platform.isNeoForge()) {
+            CUSTOM_STATS.register(id.getPath(), () -> id);
+            return;
+        }
+
+        CUSTOM_STATS.register(id, () -> id);
     }
 }

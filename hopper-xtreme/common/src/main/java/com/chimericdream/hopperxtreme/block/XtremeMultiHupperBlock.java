@@ -18,8 +18,6 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
@@ -49,7 +47,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHupperBlock extends BlockWithEntity {
     public static final MapCodec<XtremeMultiHupperBlock> CODEC = createCodec(XtremeMultiHupperBlock::create);
@@ -228,7 +226,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof XtremeMultiHupperBlockEntity) {
-                player.openHandledScreen((XtremeMultiHupperBlockEntity)blockEntity);
+                player.openHandledScreen((XtremeMultiHupperBlockEntity) blockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
@@ -292,8 +290,8 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
 
     private void updateEnabled(World world, BlockPos pos, BlockState state) {
         boolean bl = !world.isReceivingRedstonePower(pos);
-        if (bl != (Boolean)state.get(ENABLED)) {
-            world.setBlockState(pos, (BlockState)state.with(ENABLED, bl), 2);
+        if (bl != (Boolean) state.get(ENABLED)) {
+            world.setBlockState(pos, (BlockState) state.with(ENABLED, bl), 2);
         }
 
     }
@@ -338,7 +336,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeMultiHupperBlockEntity) {
-            XtremeMultiHupperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHupperBlockEntity)blockEntity);
+            XtremeMultiHupperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHupperBlockEntity) blockEntity);
         }
 
     }

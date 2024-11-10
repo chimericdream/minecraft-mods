@@ -48,6 +48,8 @@ dependencies {
     common(project(path: ':miniblock-merchants:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':miniblock-merchants:common', configuration: 'transformProductionNeoForge')
 
+    modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
+
     modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
 
     forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))

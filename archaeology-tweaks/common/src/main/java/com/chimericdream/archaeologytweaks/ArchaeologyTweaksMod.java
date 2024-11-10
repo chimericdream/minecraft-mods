@@ -1,7 +1,7 @@
 package com.chimericdream.archaeologytweaks;
 
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
-import com.chimericdream.archaeologytweaks.registry.ModRegistries;
+import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -13,33 +13,12 @@ public final class ArchaeologyTweaksMod {
     public static Supplier<RegistrarManager> MANAGER;
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
 
-    public static final ModBlocks BLOCKS;
-
-    static {
-        BLOCKS = new ModBlocks();
-    }
-
-//    @Override
-//    public void onInitialize() {
-//        LOGGER.info("[archtweaks] Registering blocks");
-//        BLOCKS.register();
-//
-//        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content -> content.addAfter(
-//            Items.SUSPICIOUS_GRAVEL,
-//            ModBlocks.SUSPICIOUS_CLAY,
-//            ModBlocks.SUSPICIOUS_DIRT,
-//            ModBlocks.SUSPICIOUS_MUD,
-//            ModBlocks.SUSPICIOUS_PACKED_MUD,
-//            ModBlocks.SUSPICIOUS_RED_SAND,
-//            ModBlocks.SUSPICIOUS_ROOTED_DIRT,
-//            ModBlocks.SUSPICIOUS_SOUL_SAND,
-//            ModBlocks.SUSPICIOUS_SOUL_SOIL
-//        ));
-//    }
+    public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
-        ModRegistries.init();
+        REGISTRY_HELPER.init();
+        ModBlocks.init();
     }
 }

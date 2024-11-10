@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HOPPER_BLOCK_ENTITY;
 
 public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
     private final int cooldownInTicks;

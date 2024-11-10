@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.chimericdream.miniblockmerchants.registry.ModRegistries.registerVillagerProfession;
+import static com.chimericdream.miniblockmerchants.MiniblockMerchantsMod.REGISTRY_HELPER;
 
-public class MMProfessions {
+public class ModProfessions {
     public static final Map<String, RegistrySupplier<VillagerProfession>> PROFESSIONS = new HashMap<>();
     public static final Map<String, TradeOfferList> TRADES = new HashMap<>();
 
@@ -1189,12 +1189,12 @@ public class MMProfessions {
         TRADES.put(makeId(TAILOR_ID).toString(), tailorTrades);
     }
 
-    public static Identifier makeId(String id) {
-        return Identifier.of(ModInfo.MOD_ID, id);
+    public static Identifier makeId(String name) {
+        return Identifier.of(ModInfo.MOD_ID, name);
     }
 
-    public static VillagerProfession get(String id) {
-        RegistrySupplier<VillagerProfession> supplier = PROFESSIONS.get(id);
+    public static VillagerProfession get(String name) {
+        RegistrySupplier<VillagerProfession> supplier = PROFESSIONS.get(name);
 
         if (supplier == null) {
             return VillagerProfession.NONE;
@@ -1203,12 +1203,12 @@ public class MMProfessions {
         return supplier.get();
     }
 
-    public static RegistrySupplier<VillagerProfession> register(String id) {
-        Identifier ident = makeId(id);
-        RegistrySupplier<VillagerProfession> prof = registerVillagerProfession(
-            ident,
+    public static RegistrySupplier<VillagerProfession> register(String name) {
+        Identifier id = makeId(name);
+        RegistrySupplier<VillagerProfession> prof = REGISTRY_HELPER.registerVillagerProfession(
+            id,
             () -> new VillagerProfession(
-                ident.toString(),
+                id.toString(),
                 PointOfInterestType.NONE,
                 PointOfInterestType.NONE,
                 ImmutableSet.of(),
@@ -1217,7 +1217,7 @@ public class MMProfessions {
             )
         );
 
-        PROFESSIONS.put(id, prof);
+        PROFESSIONS.put(name, prof);
 
         return prof;
     }
@@ -1227,7 +1227,7 @@ public class MMProfessions {
     }
 
     public static TradeOfferList getOffersForProfession(String profession) {
-        if (TRADES.values().size() == 0) {
+        if (TRADES.values().isEmpty()) {
             populateTrades();
         }
 

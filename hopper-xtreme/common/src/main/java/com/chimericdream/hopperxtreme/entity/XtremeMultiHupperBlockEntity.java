@@ -34,10 +34,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity implements Hopper {
-    private final Box INPUT_AREA_SHAPE = (Box)Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
+    private final Box INPUT_AREA_SHAPE = (Box) Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
 
     private final int cooldownInTicks;
 
@@ -160,28 +160,28 @@ public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity i
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case SOUTH:
                 if (this.eastConnected) {
                     lastDirection = Direction.EAST;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case EAST:
                 if (this.westConnected) {
                     lastDirection = Direction.WEST;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             case WEST:
                 if (this.upConnected) {
                     lastDirection = Direction.UP;
                     return lastDirection;
                 }
 
-            // deliberately fall through
+                // deliberately fall through
             default:
                 if (this.northConnected) {
                     lastDirection = Direction.NORTH;
