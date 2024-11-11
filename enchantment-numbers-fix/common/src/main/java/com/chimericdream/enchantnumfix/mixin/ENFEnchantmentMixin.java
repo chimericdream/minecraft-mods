@@ -15,6 +15,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(Enchantment.class)
 public abstract class ENFEnchantmentMixin {
+    /**
+     * @author chimericdream
+     * @reason Replace numbers with Roman numerals
+     */
     @Overwrite
     public static Text getName(RegistryEntry<Enchantment> enchantment, int level) {
         MutableText mutableText = enchantment.value().description.copy();
