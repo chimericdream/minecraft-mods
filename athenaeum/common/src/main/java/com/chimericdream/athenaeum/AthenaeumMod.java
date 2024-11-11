@@ -13,11 +13,11 @@ import org.apache.logging.log4j.Logger;
 public final class AthenaeumMod {
     public static final Logger LOGGER = LogManager.getLogger("athenaeum");
 
-    public static Supplier<AthenaeumConfig> CONFIG = AthenaeumConfig::new;
-
-    public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(AthenaeumModInfo.MOD_ID));
+    public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
     public static void init() {
+        AthenaeumConfig.load();
+
         AthenaeumRegistries.init();
         AthenaeumLootFunctionTypes.register();
         AthenaeumLootTables.init();

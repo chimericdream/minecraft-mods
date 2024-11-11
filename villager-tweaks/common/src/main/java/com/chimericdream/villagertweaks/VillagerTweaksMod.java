@@ -1,6 +1,7 @@
 package com.chimericdream.villagertweaks;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
+import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.chimericdream.villagertweaks.item.ModItems;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -16,6 +17,8 @@ public class VillagerTweaksMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
+        VillagerTweaksConfig.load();
+
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();

@@ -1,6 +1,6 @@
 package com.chimericdream.athenaeum.loot;
 
-import com.chimericdream.athenaeum.AthenaeumModInfo;
+import com.chimericdream.athenaeum.ModInfo;
 import net.minecraft.loot.function.LootFunctionType;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -14,7 +14,7 @@ public class AthenaeumLootFunctionTypes {
         MANAGER.get()
             .get(Registries.LOOT_FUNCTION_TYPE)
             .register(
-                Identifier.of(AthenaeumModInfo.MOD_ID, id),
+                Identifier.of(ModInfo.MOD_ID, id),
                 () -> lootFunctionType
             );
     }

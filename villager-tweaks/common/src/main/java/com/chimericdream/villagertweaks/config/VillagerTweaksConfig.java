@@ -49,6 +49,10 @@ public class VillagerTweaksConfig {
             .build())
         .build();
 
+    public static void load() {
+        HANDLER.load();
+    }
+
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(HANDLER, ((defaults, config, builder) -> builder
             .title(Text.translatable("text.config.title"))

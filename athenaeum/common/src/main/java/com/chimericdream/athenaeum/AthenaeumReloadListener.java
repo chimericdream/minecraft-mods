@@ -40,6 +40,6 @@ public class AthenaeumReloadListener implements SynchronousResourceReloader {
 
     @Override
     public String getName() {
-        return Identifier.of(AthenaeumModInfo.MOD_ID, "athenaeum_book_resource_listener").toString();
+        return Identifier.of(ModInfo.MOD_ID, "athenaeum_book_resource_listener").toString();
     }
 }
