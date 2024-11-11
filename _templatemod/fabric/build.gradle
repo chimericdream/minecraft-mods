@@ -33,8 +33,14 @@ dependencies {
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
-    common(project(path: ':_templatemod:common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':_templatemod:common', configuration: 'transformProductionFabric')
+    common(project(path: ':template:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':template:common', configuration: 'transformProductionFabric')
+
+    modImplementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
+
+    modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}")
+
+    modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 }
 
 processResources {

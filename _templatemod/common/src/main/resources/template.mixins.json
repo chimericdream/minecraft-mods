@@ -1,11 +1,12 @@
 {
     "required": true,
-    "package": "com.chimericdream.lib.mixin",
+    "package": "com.chimericdream.template.mixin",
     "compatibilityLevel": "JAVA_21",
     "minVersion": "0.8",
     "client": [
     ],
-    "mixins": [],
+    "mixins": [
+    ],
     "injectors": {
         "defaultRequire": 1
     }
