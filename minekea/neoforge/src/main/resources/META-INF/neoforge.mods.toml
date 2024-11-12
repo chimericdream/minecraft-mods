@@ -37,7 +37,14 @@ side = "BOTH"
 [[dependencies.minekea]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.1.0,)"
+versionRange = "[2.2.0-beta.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.minekea]]
+modId = "yet_another_config_lib_v3"
+type = "required"
+versionRange = "[3.6.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
@@ -52,4 +59,4 @@ side = "BOTH"
 config = "minekea.mixins.json"
 
 [[accessTransformers]]
-file="META-INF/accesstransformer.cfg"
+file = "META-INF/accesstransformer.cfg"
