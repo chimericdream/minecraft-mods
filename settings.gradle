@@ -24,6 +24,7 @@ def projectList = [
     'jdcrafte',
     'minekea',
     'miniblock-merchants',
+    'pannotia-companion',
     'sponj',
     'villager-tweaks'
 ]

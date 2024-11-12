@@ -35,6 +35,7 @@
         "java": ">=21",
         "architectury": ">=13.0.2",
         "fabric-api": "*",
+        "chimericlib": ">=2",
         "yet_another_config_lib_v3": ">=3.6.1"
     },
     "recommends": {

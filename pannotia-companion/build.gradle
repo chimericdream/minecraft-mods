@@ -1,0 +1,10 @@
+allprojects {
+    group = project(":pannotia-companion").maven_group
+    version = project(":pannotia-companion").mod_version
+}
+
+subprojects {
+    base {
+        archivesName = project(":pannotia-companion").archives_name + "-" + project.name
+    }
+}

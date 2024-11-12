@@ -1,0 +1,41 @@
+{
+    "schemaVersion": 1,
+    "id": "pannotiacompanion",
+    "version": "${version}",
+    "name": "Pannotia Companion",
+    "description": "Companion mod for the World of Pannotia modpack",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://fabricmc.net/",
+        "sources": "https://github.com/FabricMC/fabric-example-mod"
+    },
+    "license": "MIT",
+    "icon": "assets/pannotiacompanion/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.pannotiacompanion.fabric.PannotiaCompanionFabric"
+        ],
+        "client": [
+            "com.chimericdream.pannotiacompanion.fabric.client.PannotiaCompanionFabricClient"
+        ]
+    },
+    "mixins": [
+        "pannotiacompanion.mixins.json"
+    ],
+    "accessWidener": "pannotiacompanion.accesswidener",
+    "depends": {
+        "fabricloader": ">=0.16.5",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*",
+        "chimericlib": ">=2",
+        "yet_another_config_lib_v3": ">=3.6.1"
+    },
+    "recommends": {
+        "modmenu": ">=11.0.0"
+    }
+}

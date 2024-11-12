@@ -1,0 +1,7 @@
+{
+    "name": "@chimericdream/mc-mods",
+    "private": true,
+    "devDependencies": {
+        "bun-types": "1.1.34"
+    }
+}

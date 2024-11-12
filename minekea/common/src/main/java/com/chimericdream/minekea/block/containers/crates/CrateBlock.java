@@ -359,7 +359,7 @@ public class CrateBlock extends BlockWithEntity {
 
     @Nullable
     protected NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return (NamedScreenHandlerFactory) ((Optional) this.getBlockEntitySource(state, world, pos).apply(SCREEN_RETRIEVER)).orElse(null);
+        return this.getBlockEntitySource(state, world, pos).apply(SCREEN_RETRIEVER).orElse(null);
     }
 
     @Override

@@ -22,20 +22,39 @@ import java.util.Optional;
 
 @Mixin(MapState.class)
 abstract public class MapStateMixin {
-    @Shadow @Final public RegistryKey<World> dimension;
+    @Shadow
+    @Final
+    public RegistryKey<World> dimension;
 
-    @Shadow abstract protected void markDecorationsDirty();
-    @Shadow abstract protected void removeDecoration(String id);
-    @Shadow abstract public boolean decorationCountNotLessThan(int iconCount);
+    @Shadow
+    abstract protected void markDecorationsDirty();
 
-    @Shadow @Final public int centerX;
-    @Shadow @Final public int centerZ;
-    @Shadow @Final public byte scale;
-    @Shadow @Final private boolean unlimitedTracking;
-    @Shadow private int decorationCount;
+    @Shadow
+    abstract protected void removeDecoration(String id);
 
-    @Shadow @Final Map<String, MapDecoration> decorations;
-    @Shadow private @Final Map<String, MapBannerMarker> banners;
+    @Shadow
+    abstract public boolean decorationCountNotLessThan(int iconCount);
+
+    @Shadow
+    @Final
+    public int centerX;
+    @Shadow
+    @Final
+    public int centerZ;
+    @Shadow
+    @Final
+    public byte scale;
+    @Shadow
+    @Final
+    private boolean unlimitedTracking;
+    @Shadow
+    private int decorationCount;
+
+    @Shadow
+    @Final
+    Map<String, MapDecoration> decorations;
+    @Shadow
+    private @Final Map<String, MapBannerMarker> banners;
 
     /**
      * @author chimericdream (with additional credit to @jason-green-io)
@@ -58,7 +77,8 @@ abstract public class MapStateMixin {
                 d = (byte) (k * k * 34187121 + k * 121 >> 15 & 15);
             }
         } else {
-            if (!type.matches(MapDecorationTypes.PLAYER)) {
+            Optional<RegistryKey<MapDecorationType>> playerDecorationType = MapDecorationTypes.PLAYER.getKey();
+            if (playerDecorationType.isPresent() && !type.matchesKey(playerDecorationType.get())) {
                 this.removeDecoration(key);
                 return;
             }

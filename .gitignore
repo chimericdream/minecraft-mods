@@ -36,3 +36,4 @@ run/
 .cache
 
 .architectury-transformer
+node_modules

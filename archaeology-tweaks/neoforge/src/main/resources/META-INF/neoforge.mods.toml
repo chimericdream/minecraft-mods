@@ -34,6 +34,13 @@ versionRange = "[13.0.2,)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.archtweaks]]
+modId = "chimericlib"
+type = "required"
+versionRange = "[2.2.0-beta.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "archaeologytweaks.mixins.json"
 
