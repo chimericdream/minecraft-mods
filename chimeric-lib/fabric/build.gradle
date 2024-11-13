@@ -37,16 +37,7 @@ dependencies {
     shadowBundle project(path: ':chimeric-lib:common', configuration: 'transformProductionFabric')
 
     modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}")
-
     modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
-}
-
-processResources {
-    inputs.property 'version', project.version
-
-    filesMatching('fabric.mod.json') {
-        expand version: project.version
-    }
 }
 
 shadowJar {

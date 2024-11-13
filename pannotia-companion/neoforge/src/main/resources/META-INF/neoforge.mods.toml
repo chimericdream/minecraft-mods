@@ -4,47 +4,47 @@ loaderVersion = "[4,)"
 license = "MIT"
 
 [[mods]]
-modId = "pannotiacompanion"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Pannotia Companion"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-Companion mod for the World of Pannotia modpack
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.pannotiacompanion]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.pannotiacompanion]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.pannotiacompanion]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.pannotiacompanion]]
+[[dependencies.${mod_id}]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.2.0-beta.0,)"
+versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.pannotiacompanion]]
+[[dependencies.${mod_id}]]
 modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange = "[3.6.1,)"
+versionRange = "[${yacl_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

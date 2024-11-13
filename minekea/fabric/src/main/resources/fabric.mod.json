@@ -1,9 +1,9 @@
 {
     "schemaVersion": 1,
-    "id": "minekea",
+    "id": "${mod_id}",
     "version": "${version}",
-    "name": "Minekea",
-    "description": "Simple, functional, decorative blocks for all your building and storage needs (some assembly required)",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
     "authors": [
         "chimericdream"
     ],
@@ -30,15 +30,16 @@
     ],
     "accessWidener": "minekea.accesswidener",
     "depends": {
-        "fabricloader": ">=0.15.0",
-        "minecraft": "~1.21",
+        "fabricloader": ">=${fabric_compat}",
+        "minecraft": "~${minecraft_compat}",
         "java": ">=21",
-        "fabric": "*",
-        "chimericlib": ">=2.2.0-beta.0",
-        "yet_another_config_lib_v3": ">=3.6.1"
+        "fabric-api": "*",
+        "architectury": ">=${architectury_compat}",
+        "chimericlib": ">=${chimericlib_compat}",
+        "yet_another_config_lib_v3": ">=${yacl_compat}"
     },
     "recommends": {
-        "modmenu": ">=11.0.0",
-        "patchouli": "*"
+        "modmenu": ">=${modmenu_compat}",
+        "patchouli": ">=${patchouli_compat}"
     }
 }

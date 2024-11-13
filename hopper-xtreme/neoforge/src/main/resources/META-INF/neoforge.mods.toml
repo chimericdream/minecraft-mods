@@ -4,40 +4,40 @@ issueTrackerURL = "https://github.com/chimericdream/hopper-extreme/issues"
 license = "MIT"
 
 [[mods]]
-modId = "hopperxtreme"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Hopper X-Treme"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-Upgrade your hoppers!
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.hopperxtreme]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.hopperxtreme]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.hopperxtreme]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.hopperxtreme]]
+[[dependencies.${mod_id}]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.2.0-beta.0,)"
+versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

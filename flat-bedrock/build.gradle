@@ -7,4 +7,21 @@ subprojects {
     base {
         archivesName = project(":flat-bedrock").archives_name + "-" + project.name
     }
+
+    processResources {
+        inputs.property 'version', project.version
+
+        filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
+            expand version: project.version,
+                architectury_compat: project.architectury_compat,
+                chimericlib_compat: project.chimericlib_compat,
+                fabric_compat: project.fabric_compat,
+                minecraft_compat: project.minecraft_compat,
+                mod_id: project.mod_id,
+                mod_name: project.mod_name,
+                mod_description: project.mod_description,
+                modmenu_compat: project.modmenu_compat,
+                yacl_compat: project.yacl_compat
+        }
+    }
 }

@@ -4,40 +4,40 @@ issueTrackerURL = "https://github.com/chimericdream/blacklight-mod/issues"
 license = "MIT"
 
 [[mods]]
-modId = "blacklight"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "blacklight"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-This mod adds a variety of custom written books and related content to the game.
+${mod_description}
 '''
 logoFile = "/assets/blacklight/icon.png"
 
-[[dependencies.blacklight]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.blacklight]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.blacklight]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.blacklight]]
+[[dependencies.${mod_id}]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.2.0-beta.0,)"
+versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

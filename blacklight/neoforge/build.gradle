@@ -41,19 +41,10 @@ dependencies {
     shadowBundle project(path: ':blacklight:common', configuration: 'transformProductionNeoForge')
 
     modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
-
     modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge"
 
     forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))
     forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
-}
-
-processResources {
-    inputs.property 'version', project.version
-
-    filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version
-    }
 }
 
 shadowJar {

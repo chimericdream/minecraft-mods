@@ -4,33 +4,33 @@ issueTrackerURL = "https://github.com/chimericdream/chimericlib-mc/issues"
 license = "MIT"
 
 [[mods]]
-modId = "chimericlib"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "chimericlib"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-Shared library with common code for chimericdream's mods.
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.chimericlib]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.chimericlib]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.chimericlib]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

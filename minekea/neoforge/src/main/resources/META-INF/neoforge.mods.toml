@@ -1,57 +1,57 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 issueTrackerURL = "https://github.com/chimericdream/minekea-fabric/issues"
-license = "Insert License Here"
+license = "MIT"
 
 [[mods]]
-modId = "minekea"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Minekea"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-Simple, functional, decorative blocks for all your building and storage needs (some assembly required)
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.2.0-beta.0,)"
+versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange = "[3.6.1,)"
+versionRange = "[${yacl_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.minekea]]
+[[dependencies.${mod_id}]]
 modId = "patchouli"
 type = "optional"
-versionRange = "[1.21-87,)"
+versionRange = "[${patchouli_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

@@ -46,14 +46,6 @@ dependencies {
     forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
 }
 
-processResources {
-    inputs.property 'version', project.version
-
-    filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version
-    }
-}
-
 shadowJar {
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'

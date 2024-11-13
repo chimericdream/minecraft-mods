@@ -1,36 +1,36 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "MIT"
 
 [[mods]]
-modId = "flatbedrock"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Flat Bedrock"
-authors = "Me!"
+displayName = "${mod_name}"
+authors = "chimericdream"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.flatbedrock]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.flatbedrock]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.flatbedrock]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
