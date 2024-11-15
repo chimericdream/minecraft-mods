@@ -25,7 +25,6 @@
     "mixins": [
         "hopperxtreme.mixins.json"
     ],
-    "accessWidener": "hopperxtreme.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",

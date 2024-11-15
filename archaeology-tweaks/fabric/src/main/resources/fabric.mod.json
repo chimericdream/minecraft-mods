@@ -23,7 +23,6 @@
     "mixins": [
         "archaeologytweaks.mixins.json"
     ],
-    "accessWidener": "archaeologytweaks.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",

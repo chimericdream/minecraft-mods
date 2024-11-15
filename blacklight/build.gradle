@@ -1,11 +1,21 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
 allprojects {
     group = project(":blacklight").maven_group
     version = project(":blacklight").mod_version
 }
 
 subprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
+
     base {
         archivesName = project(":blacklight").archives_name + "-" + project.name
+    }
+
+    architectury {
+        platformSetupLoomIde()
     }
 
     processResources {
@@ -23,5 +33,14 @@ subprojects {
                 modmenu_compat: project.modmenu_compat,
                 yacl_compat: project.yacl_compat
         }
+    }
+
+    shadowJar {
+        configurations = [project.configurations.shadowBundle]
+        archiveClassifier = 'dev-shadow'
+    }
+
+    remapJar {
+        input.set shadowJar.archiveFile
     }
 }

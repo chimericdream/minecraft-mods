@@ -25,7 +25,6 @@
     "mixins": [
         "pannotiacompanion.mixins.json"
     ],
-    "accessWidener": "pannotiacompanion.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",

@@ -1,11 +1,21 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
 allprojects {
     group = project(":minekea").maven_group
     version = project(":minekea").mod_version
 }
 
 subprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
+
     base {
         archivesName = project(":minekea").archives_name + "-" + project.name
+    }
+
+    architectury {
+        platformSetupLoomIde()
     }
 
     processResources {
@@ -24,5 +34,14 @@ subprojects {
                 patchouli_compat: project.patchouli_compat,
                 yacl_compat: project.yacl_compat
         }
+    }
+
+    shadowJar {
+        configurations = [project.configurations.shadowBundle]
+        archiveClassifier = 'dev-shadow'
+    }
+
+    remapJar {
+        input.set shadowJar.archiveFile
     }
 }
