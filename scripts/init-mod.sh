@@ -14,7 +14,6 @@ mv "./$foldername/common/src/main/resources/assets/{{MOD_ID}}" "./$foldername/co
 mv "./$foldername/fabric/src/main/java/com/chimericdream/{{MOD_ID}}" "./$foldername/fabric/src/main/java/com/chimericdream/$modid"
 mv "./$foldername/neoforge/src/main/java/com/chimericdream/{{MOD_ID}}" "./$foldername/neoforge/src/main/java/com/chimericdream/$modid"
 
-mv "./$foldername/fabric/src/main/resources/{{MOD_ID}}.accesswidener" "./$foldername/fabric/src/main/resources/$modid.accesswidener"
 mv "./$foldername/common/src/main/resources/{{MOD_ID}}.accesswidener" "./$foldername/common/src/main/resources/$modid.accesswidener"
 mv "./$foldername/common/src/main/resources/{{MOD_ID}}.mixins.json.tpl" "./$foldername/common/src/main/resources/$modid.mixins.json.tpl"
 mv "./$foldername/neoforge/src/main/java/com/chimericdream/$modid/neoforge/{{CLASS_NAME}}NeoForge.java.tpl" "./$foldername/neoforge/src/main/java/com/chimericdream/$modid/neoforge/${classname}NeoForge.java.tpl"

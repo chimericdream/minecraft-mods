@@ -1,9 +1,9 @@
 {
     "schemaVersion": 1,
-    "id": "{{MOD_ID}}",
+    "id": "${mod_id}",
     "version": "${version}",
-    "name": "{{MOD_NAME}}",
-    "description": "{{MOD_DESC}}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
     "authors": [
         "chimericdream"
     ],
@@ -25,17 +25,16 @@
     "mixins": [
         "{{MOD_ID}}.mixins.json"
     ],
-    "accessWidener": "{{MOD_ID}}.accesswidener",
     "depends": {
-        "fabricloader": ">=0.16.5",
-        "minecraft": "~1.21",
+        "fabricloader": ">=${fabric_compat}",
+        "minecraft": "~${minecraft_compat}",
         "java": ">=21",
-        "architectury": ">=13.0.2",
         "fabric-api": "*",
-        "chimericlib": ">=2",
-        "yet_another_config_lib_v3": ">=3.6.1"
+        "architectury": ">=${architectury_compat}",
+        "chimericlib": ">=${chimericlib_compat}",
+        "yet_another_config_lib_v3": ">=${yacl_compat}"
     },
     "recommends": {
-        "modmenu": ">=11.0.0"
+        "modmenu": ">=${modmenu_compat}"
     }
 }

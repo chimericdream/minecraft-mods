@@ -1,55 +1,52 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/chimericdream/minecraft-mods/issues"
 license = "MIT"
 
 [[mods]]
-modId = "{{MOD_ID}}"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "{{MOD_NAME}}"
+displayName = "${mod_name}"
 authors = "chimericdream"
 description = '''
-{{MOD_DESC}}
+${mod_description}
 '''
 #logoFile = ""
 
-[[dependencies.{{MOD_ID}}]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.{{MOD_ID}}]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${minecraft_compat},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.{{MOD_ID}}]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.2,)"
+versionRange = "[${architectury_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.{{MOD_ID}}]]
+[[dependencies.${mod_id}]]
 modId = "chimericlib"
 type = "required"
-versionRange = "[2.1.0,)"
+versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.{{MOD_ID}}]]
+[[dependencies.${mod_id}]]
 modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange = "[3.6.1,)"
+versionRange = "[${yacl_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mixins]]
 config = "{{MOD_ID}}.mixins.json"
-
-[[accessTransformers]]
-file = "META-INF/accesstransformer.cfg"
