@@ -1,3 +1,7 @@
 architectury {
     common project(':jdcrafte').enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/jdcrafte.accesswidener")
+}

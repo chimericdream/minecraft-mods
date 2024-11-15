@@ -2,6 +2,10 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":beacon-conduit-tweaks:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentFabric.extendsFrom common
 }

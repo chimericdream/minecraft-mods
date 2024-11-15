@@ -1,3 +1,7 @@
 architectury {
     common project(':cobblicious').enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/cobblicious.accesswidener")
+}

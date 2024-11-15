@@ -1,3 +1,7 @@
 architectury {
     common project(":chimeric-lib").enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/chimericlib.accesswidener")
+}

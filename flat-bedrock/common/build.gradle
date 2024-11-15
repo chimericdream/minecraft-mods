@@ -1,3 +1,7 @@
 architectury {
     common project(":flat-bedrock").enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/flatbedrock.accesswidener")
+}

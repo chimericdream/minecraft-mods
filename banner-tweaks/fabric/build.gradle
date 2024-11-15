@@ -2,6 +2,10 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":banner-tweaks:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentFabric.extendsFrom common
 }

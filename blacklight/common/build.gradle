@@ -1,3 +1,7 @@
 architectury {
     common project(':blacklight').enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/blacklight.accesswidener")
+}

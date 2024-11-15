@@ -2,6 +2,10 @@ architectury {
     neoForge()
 }
 
+loom {
+    accessWidenerPath = project(":banner-tweaks:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentNeoForge.extendsFrom common
 }
@@ -9,4 +13,8 @@ configurations {
 dependencies {
     common(project(path: ':banner-tweaks:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':banner-tweaks:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("bannertweaks.accesswidener")
 }

@@ -2,6 +2,10 @@ architectury {
     neoForge()
 }
 
+loom {
+    accessWidenerPath = project(":beacon-conduit-tweaks:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentNeoForge.extendsFrom common
 }
@@ -9,4 +13,8 @@ configurations {
 dependencies {
     common(project(path: ':beacon-conduit-tweaks:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':beacon-conduit-tweaks:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("beaconconduittweaks.accesswidener")
 }

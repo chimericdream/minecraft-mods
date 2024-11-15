@@ -1,3 +1,7 @@
 architectury {
     common project(":banner-tweaks").enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/bannertweaks.accesswidener")
+}

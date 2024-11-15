@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v2 named
 accessible method net/minecraft/block/entity/BrushableBlockEntity readNbt (Lnet/minecraft/nbt/NbtCompound;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;)V
 accessible method net/minecraft/block/entity/BlockEntityType create (Ljava/lang/String;Lnet/minecraft/block/entity/BlockEntityType$Builder;)Lnet/minecraft/block/entity/BlockEntityType;
 accessible field net/minecraft/block/entity/BlockEntityType$Builder blocks Ljava/util/Set;

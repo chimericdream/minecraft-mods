@@ -2,6 +2,10 @@ architectury {
     neoForge()
 }
 
+loom {
+    accessWidenerPath = project(":cobblicious:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentNeoForge.extendsFrom common
 }
@@ -9,4 +13,8 @@ configurations {
 dependencies {
     common(project(path: ':cobblicious:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':cobblicious:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("cobblicious.accesswidener")
 }

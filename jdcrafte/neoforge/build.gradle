@@ -2,6 +2,10 @@ architectury {
     neoForge()
 }
 
+loom {
+    accessWidenerPath = project(":jdcrafte:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentNeoForge.extendsFrom common
 }
@@ -9,4 +13,8 @@ configurations {
 dependencies {
     common(project(path: ':jdcrafte:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':jdcrafte:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("jdcrafte.accesswidener")
 }

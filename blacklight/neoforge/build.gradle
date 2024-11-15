@@ -2,6 +2,10 @@ architectury {
     neoForge()
 }
 
+loom {
+    accessWidenerPath = project(":blacklight:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentNeoForge.extendsFrom common
 }
@@ -9,4 +13,8 @@ configurations {
 dependencies {
     common(project(path: ':blacklight:common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':blacklight:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("blacklight.accesswidener")
 }

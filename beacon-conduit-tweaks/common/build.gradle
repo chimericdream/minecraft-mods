@@ -1,3 +1,7 @@
 architectury {
     common project(":beacon-conduit-tweaks").enabled_platforms.split(',')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/beaconconduittweaks.accesswidener")
+}

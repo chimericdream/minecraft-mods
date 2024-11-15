@@ -2,6 +2,10 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":cobblicious:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentFabric.extendsFrom common
 }

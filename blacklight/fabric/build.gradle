@@ -2,6 +2,10 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":blacklight:common").loom.accessWidenerPath
+}
+
 configurations {
     developmentFabric.extendsFrom common
 }
