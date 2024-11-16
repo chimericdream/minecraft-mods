@@ -1,0 +1,20 @@
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":shulker-stuff:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':shulker-stuff:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':shulker-stuff:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("shulkerstuff.accesswidener")
+}

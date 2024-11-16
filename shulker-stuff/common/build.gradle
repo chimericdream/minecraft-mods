@@ -1,0 +1,7 @@
+architectury {
+    common project(':shulker-stuff').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/shulkerstuff.accesswidener")
+}

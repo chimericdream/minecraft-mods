@@ -1,0 +1,40 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://fabricmc.net/",
+        "sources": "https://github.com/FabricMC/fabric-example-mod"
+    },
+    "license": "MIT",
+    "icon": "assets/shulkerstuff/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.shulkerstuff.fabric.ShulkerStuffFabric"
+        ],
+        "client": [
+            "com.chimericdream.shulkerstuff.fabric.client.ShulkerStuffFabricClient"
+        ]
+    },
+    "mixins": [
+        "shulkerstuff.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_compat}",
+        "minecraft": "~${minecraft_compat}",
+        "java": ">=21",
+        "fabric-api": "*",
+        "architectury": ">=${architectury_compat}",
+        "chimericlib": ">=${chimericlib_compat}",
+        "yet_another_config_lib_v3": ">=${yacl_compat}"
+    },
+    "recommends": {
+        "modmenu": ">=${modmenu_compat}"
+    }
+}
