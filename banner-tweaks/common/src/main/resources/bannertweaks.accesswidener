@@ -1,1 +1,2 @@
 accessWidener v2 named
+accessible method net/minecraft/item/map/MapState addDecoration (Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/world/WorldAccess;Ljava/lang/String;DDDLnet/minecraft/text/Text;)V
