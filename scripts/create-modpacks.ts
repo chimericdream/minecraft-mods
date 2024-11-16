@@ -56,6 +56,7 @@ const projectList = [
     'minekea',
     'miniblock-merchants',
     'pannotia-companion',
+    'playgrounds',
     'shulker-stuff',
     'sponj',
     'villager-tweaks'

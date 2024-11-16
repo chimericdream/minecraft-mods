@@ -1,0 +1,7 @@
+architectury {
+    common project(':playgrounds').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/playgrounds.accesswidener")
+}

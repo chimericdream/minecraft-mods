@@ -1,0 +1,20 @@
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":playgrounds:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':playgrounds:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':playgrounds:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("playgrounds.accesswidener")
+}

@@ -1,0 +1,16 @@
+architectury {
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":playgrounds:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':playgrounds:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':playgrounds:common', configuration: 'transformProductionFabric')
+}
