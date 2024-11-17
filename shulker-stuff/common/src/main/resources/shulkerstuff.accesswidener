@@ -1,1 +1,3 @@
 accessWidener v2 named
+accessible method net/minecraft/component/type/ContainerComponent <init> (Lnet/minecraft/util/collection/DefaultedList;)V
+accessible field net/minecraft/component/type/ContainerComponent stacks Lnet/minecraft/util/collection/DefaultedList;
