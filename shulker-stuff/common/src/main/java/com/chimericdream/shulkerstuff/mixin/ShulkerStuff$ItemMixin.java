@@ -7,6 +7,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,6 +58,38 @@ public class ShulkerStuff$ItemMixin {
         } catch (Exception e) {
             ShulkerStuffMod.LOGGER.error("An error occurred while processing a shulker box item click.", e);
         }
+    }
+
+    @Inject(method = "onClicked", at = @At("HEAD"), cancellable = true)
+    private void onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
+        if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+            return;
+        }
+
+        if (clickType != ClickType.RIGHT || !slot.canTakePartial(player)) {
+            return;
+        }
+
+        ContainerComponent contents = stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+        ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
+
+        if (otherStack.isEmpty()) {
+            ItemStack itemStack = builder.removeFirst();
+            if (itemStack != null) {
+                this.ssItem$playRemoveOneSound(player);
+                cursorStackReference.set(itemStack);
+            }
+        } else {
+            int startingCount = otherStack.getCount();
+            ItemStack remainder = builder.addStack(otherStack);
+            if (remainder.getCount() != startingCount) {
+                this.ssItem$playInsertSound(player);
+            }
+            cursorStackReference.set(remainder);
+        }
+
+        stack.set(DataComponentTypes.CONTAINER, builder.build());
+        cir.setReturnValue(true);
     }
 
     @Unique

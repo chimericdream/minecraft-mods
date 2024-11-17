@@ -63,19 +63,19 @@ public class ContainerComponentBuilder {
         return allowedQty;
     }
 
-    public void addStack(ItemStack stack) {
+    public ItemStack addStack(ItemStack stack) {
         if (stack.isEmpty() || !stack.getItem().canBeNested()) {
-            return;
+            return stack;
         }
 
         ItemStack itemStack = stack.copy();
         this.addToExistingSlot(itemStack);
 
         if (itemStack.isEmpty()) {
-            return;
+            return itemStack;
         }
 
-        this.addToNewSlot(itemStack);
+        return this.addToNewSlot(itemStack);
     }
 
     public ItemStack removeFirst() {
@@ -103,26 +103,29 @@ public class ContainerComponentBuilder {
         stack.capCount(this.getMaxCount(stack));
     }
 
-    private void addToNewSlot(ItemStack stack) {
+    private ItemStack addToNewSlot(ItemStack stack) {
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
             if (itemStack.isEmpty()) {
                 this.setStack(i, stack.copyAndEmpty());
-                return;
+                return stack;
             }
         }
+        return stack;
     }
 
-    private void addToExistingSlot(ItemStack stack) {
+    private ItemStack addToExistingSlot(ItemStack stack) {
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
             if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
                 this.transfer(stack, itemStack);
                 if (stack.isEmpty()) {
-                    return;
+                    return stack;
                 }
             }
         }
+
+        return stack;
     }
 
     private void transfer(ItemStack source, ItemStack target) {
