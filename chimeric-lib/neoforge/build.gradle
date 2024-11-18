@@ -2,9 +2,9 @@ architectury {
     neoForge()
 }
 
-loom {
-    accessWidenerPath = project(":chimeric-lib:common").loom.accessWidenerPath
-}
+//loom {
+//    accessWidenerPath = project(":chimeric-lib:common").loom.accessWidenerPath
+//}
 
 configurations {
     developmentNeoForge.extendsFrom common
@@ -15,6 +15,6 @@ dependencies {
     shadowBundle project(path: ':chimeric-lib:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("chimericlib.accesswidener")
-}
+//remapJar {
+//    atAccessWideners.add("chimericlib.accesswidener")
+//}

@@ -6,6 +6,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
@@ -36,6 +37,7 @@ public class ModRegistryHelper {
     public final DeferredRegister<ScreenHandlerType<?>> SCREEN_HANDLERS;
     public final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
     public final DeferredRegister<Identifier> CUSTOM_STATS;
+    public final DeferredRegister<ComponentType<?>> CUSTOM_COMPONENTS;
 
     @SuppressWarnings("unchecked")
     public ModRegistryHelper(String modId, Logger logger) {
@@ -51,6 +53,7 @@ public class ModRegistryHelper {
         SCREEN_HANDLERS = DeferredRegister.create(modId, (RegistryKey<Registry<ScreenHandlerType<?>>>) Registries.SCREEN_HANDLER.getKey());
         VILLAGER_PROFESSIONS = DeferredRegister.create(modId, (RegistryKey<Registry<VillagerProfession>>) Registries.VILLAGER_PROFESSION.getKey());
         CUSTOM_STATS = DeferredRegister.create(modId, (RegistryKey<Registry<Identifier>>) Registries.CUSTOM_STAT.getKey());
+        CUSTOM_COMPONENTS = DeferredRegister.create(modId, (RegistryKey<Registry<ComponentType<?>>>) Registries.DATA_COMPONENT_TYPE.getKey());
     }
 
     public void init() {
@@ -80,6 +83,9 @@ public class ModRegistryHelper {
 
         LOGGER.debug("Registering custom stats");
         CUSTOM_STATS.register();
+
+        LOGGER.debug("Registering custom component types");
+        CUSTOM_COMPONENTS.register();
     }
 
     public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String name, final Supplier<T> supplier) {

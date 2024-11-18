@@ -2,9 +2,9 @@ architectury {
     fabric()
 }
 
-loom {
-    accessWidenerPath = project(":chimeric-lib:common").loom.accessWidenerPath
-}
+//loom {
+//    accessWidenerPath = project(":chimeric-lib:common").loom.accessWidenerPath
+//}
 
 configurations {
     developmentFabric.extendsFrom common
