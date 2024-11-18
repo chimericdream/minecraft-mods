@@ -1,3 +1,3 @@
 accessWidener v2 named
-accessible method net/minecraft/component/type/ContainerComponent <init> (Lnet/minecraft/util/collection/DefaultedList;)V
 accessible field net/minecraft/component/type/ContainerComponent stacks Lnet/minecraft/util/collection/DefaultedList;
+accessible field net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityRenderer model Lnet/minecraft/client/render/entity/model/ShulkerEntityModel;

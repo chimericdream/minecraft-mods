@@ -1,6 +1,7 @@
 package com.chimericdream.shulkerstuff;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -18,5 +19,6 @@ public final class ShulkerStuffMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
+        ShulkerStuffComponentTypes.init();
     }
 }

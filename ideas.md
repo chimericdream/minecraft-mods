@@ -109,18 +109,31 @@
 
 #### Shulker Stuff (planned)
 
-* Make shulkers behave more like bundles
-* Arbitrary dyed shulkers
-* Enchantments
-    * Vacuum (2 levels)
-        * Vacuum I: suck up items that match a non-full stack in the shulker inventory
-        * Vacuum II: suck up all items as long as there is space
-    * Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
+* [ ] Make shulkers behave more like bundles
+    * [x] Insert items by right-clicking them with the shulker in hand
+    * [x] Extract items by right-clicking an empty inventory slot with the shulker in hand
+    * [x] Extract items by right-clicking the shulker with an empty hand
+    * [x] Insert items by right-clicking the shulker with an ItemStack
+    * [ ] Throw individual stacks by shift-right-clicking the air when not in the inventory
+* [ ] Arbitrarily dyed shulkers
+    * [x] Render the shulker in the inventory with the correct color
+    * [x] Render the shulker in the world with the correct color
+    * [ ] Use correct particle colors
+    * [ ] Add new workstation to facilitate dyeing
+* [ ] Enchantments
+    * [ ] Vacuum (2 levels)
+        * [ ] Vacuum I: suck up items that match a non-full stack in the shulker inventory
+        * [ ] Vacuum II: suck up all items as long as there is space
+    * [ ] Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
       items picked up after this point are deleted
-    * Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill your
+    * [ ] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
+      your
       hand
-    * Hardened: can't be blown up by creepers or other explosions
-    * Plated: item entity form won't be destroyed by fire or lava
+    * [ ] Hardened: can't be blown up by creepers or other explosions
+    * [ ] Plated: item entity form won't be destroyed by fire or lava
+    * [ ] Deep Storage (maybe): extra rows of storage
+        * Multiple levels?
+* [ ] Apply banners to a shulker
 
 #### Sponj
 

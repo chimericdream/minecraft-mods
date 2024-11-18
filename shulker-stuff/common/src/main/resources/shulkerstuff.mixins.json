@@ -6,7 +6,9 @@
     "client": [
     ],
     "mixins": [
-        "ShulkerStuff$ItemMixin"
+        "ShulkerStuff$BlockEntityMixin",
+        "ShulkerStuff$ItemMixin",
+        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1
