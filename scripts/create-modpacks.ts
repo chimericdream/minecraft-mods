@@ -50,6 +50,7 @@ const projectList = [
     'cobblicious',
     'enchantment-numbers-fix',
     'flat-bedrock',
+    'hang-from-slabs',
     'hopper-xtreme',
     'houdini-block',
     'jdcrafte',

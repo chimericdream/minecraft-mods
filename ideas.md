@@ -58,6 +58,11 @@
 
 *
 
+#### Hang from Slabs
+
+* Allow lanterns to be hung from under a top slab
+* Allow hanging signs under top slabs
+
 #### Hopper X-Treme
 
 * Filtered hoppers
@@ -118,7 +123,7 @@
 * [ ] Arbitrarily dyed shulkers
     * [x] Render the shulker in the inventory with the correct color
     * [x] Render the shulker in the world with the correct color
-    * [ ] Use correct particle colors
+    * [x] Use correct particle colors
     * [ ] Add new workstation to facilitate dyeing
 * [ ] Enchantments
     * [ ] Vacuum (2 levels)

@@ -1,0 +1,20 @@
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":hang-from-slabs:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':hang-from-slabs:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':hang-from-slabs:common', configuration: 'transformProductionNeoForge')
+}
+
+remapJar {
+    atAccessWideners.add("hangfromslabs.accesswidener")
+}

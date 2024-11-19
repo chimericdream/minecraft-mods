@@ -1,0 +1,7 @@
+architectury {
+    common project(':hang-from-slabs').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/hangfromslabs.accesswidener")
+}
