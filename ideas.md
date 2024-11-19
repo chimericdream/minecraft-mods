@@ -1,3 +1,7 @@
+#### Mod Template
+
+* Add commented-out code to make it easier to implement data generation
+
 #### Archaeology Tweaks
 
 * Craftable pottery sherds
@@ -39,7 +43,7 @@
 
 #### ChimericLib
 
-*
+* Add more helpers for Fabric datagen
 
 #### Cobblicious (planned)
 
@@ -58,7 +62,7 @@
 
 *
 
-#### Hang from Slabs
+#### Hang from Slabs (planned)
 
 * Allow lanterns to be hung from under a top slab
 * Allow hanging signs under top slabs
@@ -132,12 +136,11 @@
     * [ ] Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
       items picked up after this point are deleted
     * [ ] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
-      your
-      hand
+      your hand
     * [ ] Hardened: can't be blown up by creepers or other explosions
-    * [ ] Plated: item entity form won't be destroyed by fire or lava
-    * [ ] Deep Storage (maybe): extra rows of storage
-        * Multiple levels?
+    * [ ] Plated: item entity form won't be destroyed by fire, lava, or explosions
+    * [ ] Deep Storage (3 levels): extra rows of storage
+        * 1 row per level
 * [ ] Apply banners to a shulker
 
 #### Sponj
