@@ -34,7 +34,7 @@ public class ShulkerBoxItemRendererLogic {
         ShulkerStuffDataComponent ssData = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
         if (ssData != null) {
             entity.setComponents(ComponentMap.builder().add(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get(), ssData).build());
-            MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(entity, matrices, vertexConsumers, light, overlay);
         }
+        MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(entity, matrices, vertexConsumers, light, overlay);
     }
 }
