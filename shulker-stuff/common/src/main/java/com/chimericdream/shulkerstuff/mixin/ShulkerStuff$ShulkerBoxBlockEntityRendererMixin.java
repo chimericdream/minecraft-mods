@@ -1,6 +1,6 @@
 package com.chimericdream.shulkerstuff.mixin;
 
-import com.chimericdream.shulkerstuff.ModInfo;
+import com.chimericdream.shulkerstuff.client.util.ShulkerBoxSprites;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
 import net.minecraft.block.BlockState;
@@ -16,7 +16,6 @@ import net.minecraft.client.render.entity.model.ShulkerEntityModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,12 +24,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.minecraft.client.render.TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE;
-
 @Mixin(ShulkerBoxBlockEntityRenderer.class)
 abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
-    private static final SpriteIdentifier GRAYSCALE_SHULKER = new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, Identifier.of(ModInfo.MOD_ID, "entity/shulker/grayscale"));
-
     @Shadow
     @Final
     public ShulkerEntityModel<?> model;
@@ -39,6 +34,7 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
     private void ss$render(ShulkerBoxBlockEntity shulkerBoxBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, CallbackInfo ci) {
         Direction direction = Direction.UP;
         if (shulkerBoxBlockEntity.hasWorld()) {
+            @SuppressWarnings("DataFlowIssue")
             BlockState blockState = shulkerBoxBlockEntity.getWorld().getBlockState(shulkerBoxBlockEntity.getPos());
             if (blockState.getBlock() instanceof ShulkerBoxBlock) {
                 direction = blockState.get(ShulkerBoxBlock.FACING);
@@ -54,7 +50,7 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
         DyeColor dyeColor = shulkerBoxBlockEntity.getColor();
         SpriteIdentifier spriteIdentifier;
         if (rgb != -1) {
-            spriteIdentifier = GRAYSCALE_SHULKER;
+            spriteIdentifier = ShulkerBoxSprites.GRAYSCALE_SHULKER;
         } else if (dyeColor == null) {
             spriteIdentifier = TexturedRenderLayers.SHULKER_TEXTURE_ID;
         } else {
@@ -63,7 +59,6 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
 
         matrixStack.push();
         matrixStack.translate(0.5F, 0.5F, 0.5F);
-        float g = 0.9995F;
         matrixStack.scale(0.9995F, 0.9995F, 0.9995F);
         matrixStack.multiply(direction.getRotationQuaternion());
         matrixStack.scale(1.0F, -1.0F, -1.0F);

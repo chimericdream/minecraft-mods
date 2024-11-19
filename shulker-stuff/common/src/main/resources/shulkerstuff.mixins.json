@@ -6,9 +6,12 @@
     "client": [
     ],
     "mixins": [
+        "ShulkerStuff$BlockDustParticleMixin",
         "ShulkerStuff$BlockEntityMixin",
         "ShulkerStuff$ItemMixin",
-        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin"
+        "ShulkerStuff$ParticleAccessor",
+        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin",
+        "ShulkerStuff$SpriteBillboardParticleAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
