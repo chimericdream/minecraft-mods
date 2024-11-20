@@ -6,8 +6,10 @@
     "client": [
     ],
     "mixins": [
+        "ShulkerStuff$AbstractBlockMixin",
         "ShulkerStuff$BlockDustParticleMixin",
         "ShulkerStuff$BlockEntityMixin",
+        "ShulkerStuff$ItemEntityMixin",
         "ShulkerStuff$ItemMixin",
         "ShulkerStuff$ParticleAccessor",
         "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin",

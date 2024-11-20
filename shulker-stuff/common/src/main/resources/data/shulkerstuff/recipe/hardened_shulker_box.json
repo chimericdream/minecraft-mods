@@ -2,7 +2,7 @@
     "type": "minecraft:smithing_transform",
     "comment": "This will not work until I update to 1.21.2+",
     "addition": {
-        "item": "minecraft:netherite_ingot"
+        "item": "minecraft:obsidian"
     },
     "base": {
         "item": "minecraft:shulker_box"
@@ -11,17 +11,16 @@
         "count": 1,
         "id": "minecraft:shulker_box",
         "components": {
-            "minecraft:fire_resistant": {},
             "minecraft:custom_data": {
                 "minecraft:damage_resistant": {
-                    "comment": "When I update to 1.21.2+, remove the custom_data tag wrapping this and the fire_resistant tag",
+                    "comment": "When I update to 1.21.2+, remove the custom_data tag wrapping this",
                     "types": [
-                        "#minecraft:is_fire"
+                        "#minecraft:is_explosion"
                     ]
                 }
             },
             "shulkerstuff:data": {
-                "plated": true
+                "hardened": true
             }
         }
     },

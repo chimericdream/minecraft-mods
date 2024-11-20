@@ -118,17 +118,25 @@
 
 #### Shulker Stuff (planned)
 
-* [ ] Make shulkers behave more like bundles
+* [x] Make shulkers behave more like bundles
     * [x] Insert items by right-clicking them with the shulker in hand
     * [x] Extract items by right-clicking an empty inventory slot with the shulker in hand
     * [x] Extract items by right-clicking the shulker with an empty hand
     * [x] Insert items by right-clicking the shulker with an ItemStack
-    * [ ] Throw individual stacks by shift-right-clicking the air when not in the inventory
+    * [x] Throw individual stacks by shift-right-clicking the air when not in the inventory
 * [ ] Arbitrarily dyed shulkers
     * [x] Render the shulker in the inventory with the correct color
     * [x] Render the shulker in the world with the correct color
     * [x] Use correct particle colors
     * [ ] Add new workstation to facilitate dyeing
+* [ ] Upgrades (smithing templates)
+    * [x] Hardened: can't be blown up by creepers or other explosions
+    * [ ] Hardened smithing template
+        * Found in end cities
+        * Found in ancient cities
+    * [x] Plated: item entity form won't be destroyed by fire, lava, or explosions
+    * [ ] Plated smithing template
+        * Found in treasure bastions
 * [ ] Enchantments
     * [ ] Vacuum (2 levels)
         * [ ] Vacuum I: suck up items that match a non-full stack in the shulker inventory
@@ -137,8 +145,6 @@
       items picked up after this point are deleted
     * [ ] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
       your hand
-    * [ ] Hardened: can't be blown up by creepers or other explosions
-    * [ ] Plated: item entity form won't be destroyed by fire, lava, or explosions
     * [ ] Deep Storage (3 levels): extra rows of storage
         * 1 row per level
 * [ ] Apply banners to a shulker

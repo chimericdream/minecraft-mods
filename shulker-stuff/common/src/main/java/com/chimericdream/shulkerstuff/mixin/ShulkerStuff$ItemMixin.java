@@ -12,8 +12,12 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ClickType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +26,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
 public class ShulkerStuff$ItemMixin {
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+        ItemStack stack = player.getStackInHand(hand);
+
+        if (!player.isSneaking() || !(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+            return;
+        }
+
+        if (this.ssItem$dropFirstItem(stack, player)) {
+            cir.setReturnValue(TypedActionResult.success(stack, world.isClient()));
+        } else {
+            cir.setReturnValue(TypedActionResult.fail(stack));
+        }
+    }
+
     @Inject(method = "onStackClicked", at = @At("HEAD"), cancellable = true)
     private void onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         try {
@@ -100,5 +119,26 @@ public class ShulkerStuff$ItemMixin {
     @Unique
     private void ssItem$playInsertSound(Entity entity) {
         entity.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 0.2F, 0.95F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+    }
+
+    @Unique
+    private boolean ssItem$dropFirstItem(ItemStack stack, PlayerEntity player) {
+        ContainerComponent contents = stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+        ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
+
+        ItemStack stack2 = builder.removeFirst();
+        if (stack2.isEmpty()) {
+            return false;
+        }
+
+        if (player instanceof ServerPlayerEntity) {
+            player.dropItem(stack2, true);
+        }
+
+        this.ssItem$playRemoveOneSound(player);
+
+        stack.set(DataComponentTypes.CONTAINER, builder.build());
+
+        return true;
     }
 }
