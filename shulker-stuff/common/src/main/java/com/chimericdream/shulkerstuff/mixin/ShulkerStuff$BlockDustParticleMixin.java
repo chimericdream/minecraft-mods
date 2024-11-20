@@ -42,11 +42,11 @@ abstract public class ShulkerStuff$BlockDustParticleMixin extends ShulkerStuff$S
         }
 
         ShulkerStuffDataComponent ssData = entity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null && ssData.dyedColor() != -1) {
+        if (ssData != null && ssData.lidColor() != -1) {
             Sprite sprite1 = ShulkerBoxSprites.GRAYSCALE_SHULKER_BOX.getSprite();
             this.setSprite(sprite1);
 
-            int rgb = ssData.dyedColor();
+            int rgb = ssData.lidColor();
 
             this.red = (float) (rgb >> 16 & 255) / 255.0F;
             this.green = (float) (rgb >> 8 & 255) / 255.0F;

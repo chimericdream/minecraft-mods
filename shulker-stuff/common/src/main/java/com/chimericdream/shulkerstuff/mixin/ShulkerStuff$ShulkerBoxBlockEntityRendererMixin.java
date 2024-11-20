@@ -24,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Iterator;
+
 @Mixin(ShulkerBoxBlockEntityRenderer.class)
 abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
     @Shadow
@@ -41,20 +43,27 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
             }
         }
 
-        int rgb = -1;
-        ShulkerStuffDataComponent ssData = shulkerBoxBlockEntity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null) {
-            rgb = ssData.dyedColor();
-        }
+        boolean useVanillaColor = false;
 
         DyeColor dyeColor = shulkerBoxBlockEntity.getColor();
-        SpriteIdentifier spriteIdentifier;
-        if (rgb != -1) {
-            spriteIdentifier = ShulkerBoxSprites.GRAYSCALE_SHULKER;
-        } else if (dyeColor == null) {
-            spriteIdentifier = TexturedRenderLayers.SHULKER_TEXTURE_ID;
-        } else {
+        SpriteIdentifier spriteIdentifier = ShulkerBoxSprites.GRAYSCALE_SHULKER;
+        if (dyeColor != null) {
             spriteIdentifier = TexturedRenderLayers.COLORED_SHULKER_BOXES_TEXTURES.get(dyeColor.getId());
+            useVanillaColor = true;
+        }
+
+        int rgb1 = -1, rgb2 = -1;
+
+        ShulkerStuffDataComponent ssData = shulkerBoxBlockEntity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
+        if (!useVanillaColor) {
+            if (ssData == null) {
+                // This is roughly the same as the default color for shulker boxes
+                rgb1 = 9922455;
+                rgb2 = 9922455;
+            } else {
+                rgb1 = ssData.lidColor();
+                rgb2 = ssData.baseColor();
+            }
         }
 
         matrixStack.push();
@@ -63,11 +72,18 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
         matrixStack.multiply(direction.getRotationQuaternion());
         matrixStack.scale(1.0F, -1.0F, -1.0F);
         matrixStack.translate(0.0F, -1.0F, 0.0F);
-        ModelPart modelPart = this.model.getLid();
-        modelPart.setPivot(0.0F, 24.0F - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5F * 16.0F, 0.0F);
-        modelPart.yaw = 270.0F * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180F);
+
+        Iterator<ModelPart> modelParts = this.model.getParts().iterator();
+        ModelPart base = modelParts.next();
+        ModelPart lid = modelParts.next();
+
+        lid.setPivot(0.0F, 24.0F - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5F * 16.0F, 0.0F);
+        lid.yaw = 270.0F * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180F);
+
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-        this.model.render(matrixStack, vertexConsumer, i, j, rgb);
+
+        lid.render(matrixStack, vertexConsumer, i, j, rgb1);
+        base.render(matrixStack, vertexConsumer, i, j, rgb2);
         matrixStack.pop();
 
         ci.cancel();

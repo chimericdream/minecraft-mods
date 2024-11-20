@@ -6,9 +6,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
-public record ShulkerStuffDataComponent(int dyedColor, boolean plated, boolean hardened) {
+public record ShulkerStuffDataComponent(int lidColor, int baseColor, boolean plated, boolean hardened) {
     public static final Codec<ShulkerStuffDataComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-        Codec.INT.optionalFieldOf("dyedColor", -1).forGetter(ShulkerStuffDataComponent::dyedColor),
+        Codec.INT.optionalFieldOf("lidColor", 9922455).forGetter(ShulkerStuffDataComponent::lidColor),
+        Codec.INT.optionalFieldOf("baseColor", 9922455).forGetter(ShulkerStuffDataComponent::baseColor),
         Codec.BOOL.optionalFieldOf("plated", false).forGetter(ShulkerStuffDataComponent::plated),
         Codec.BOOL.optionalFieldOf("hardened", false).forGetter(ShulkerStuffDataComponent::hardened)
     ).apply(builder, ShulkerStuffDataComponent::new));
@@ -17,7 +18,8 @@ public record ShulkerStuffDataComponent(int dyedColor, boolean plated, boolean h
 
     public NbtCompound toNbt() {
         NbtCompound nbt = new NbtCompound();
-        nbt.putInt("dyedColor", dyedColor);
+        nbt.putInt("lidColor", lidColor);
+        nbt.putInt("baseColor", baseColor);
         nbt.putBoolean("plated", plated);
         nbt.putBoolean("hardened", hardened);
         return nbt;

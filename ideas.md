@@ -128,6 +128,7 @@
     * [x] Render the shulker in the inventory with the correct color
     * [x] Render the shulker in the world with the correct color
     * [x] Use correct particle colors
+    * [x] Separate colors for top and bottom
     * [ ] Add new workstation to facilitate dyeing
 * [ ] Upgrades (smithing templates)
     * [x] Hardened: can't be blown up by creepers or other explosions
@@ -147,6 +148,9 @@
       your hand
     * [ ] Deep Storage (3 levels): extra rows of storage
         * 1 row per level
+    * Possible places for mixins:
+        * Vacuum and void:
+            * `ItemEntity$onPlayerCollision(PlayerEntity player)`
 * [ ] Apply banners to a shulker
 
 #### Sponj
