@@ -1,7 +1,9 @@
 package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -23,11 +25,23 @@ abstract public class ShulkerStuff$BlockEntityMixin {
         NbtCompound components = nbt.getCompound("components");
 
         ShulkerBoxBlockEntity self = (ShulkerBoxBlockEntity) (Object) this;
-        ShulkerStuffDataComponent ssData = self.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null) {
-            components.put(ShulkerStuffDataComponent.COMPONENT_ID.toString(), ssData.toNbt());
-            nbt.put("components", components);
+
+        ShulkerStuffDyedColorComponent ssDyedColorComponent = self.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
+        if (ssDyedColorComponent != null) {
+            components.put(ShulkerStuffDyedColorComponent.COMPONENT_ID.toString(), ssDyedColorComponent.toNbt());
         }
+
+        ShulkerStuffHardenedComponent ssHardenedComponent = self.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
+        if (ssHardenedComponent != null) {
+            components.put(ShulkerStuffHardenedComponent.COMPONENT_ID.toString(), ssHardenedComponent.toNbt());
+        }
+
+        ShulkerStuffPlatedComponent ssPlatedComponent = self.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
+        if (ssPlatedComponent != null) {
+            components.put(ShulkerStuffPlatedComponent.COMPONENT_ID.toString(), ssPlatedComponent.toNbt());
+        }
+
+        nbt.put("components", components);
 
         cir.setReturnValue(nbt);
     }

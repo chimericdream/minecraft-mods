@@ -1,7 +1,7 @@
 package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
@@ -18,12 +18,12 @@ public class ShulkerStuff$ItemEntityMixin {
         ItemEntity self = (ItemEntity) (Object) this;
         ItemStack stack = self.getStack();
 
-        if (stack.isEmpty() || !stack.getComponents().contains(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get())) {
+        if (stack.isEmpty() || !stack.getComponents().contains(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get())) {
             return;
         }
 
-        ShulkerStuffDataComponent ssData = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null && ssData.hardened()) {
+        ShulkerStuffHardenedComponent ssHardenedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
+        if (ssHardenedComponent != null && ssHardenedComponent.value()) {
             cir.setReturnValue(false);
         }
     }

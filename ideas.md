@@ -132,12 +132,12 @@
     * [ ] Add new workstation to facilitate dyeing
 * [ ] Upgrades (smithing templates)
     * [x] Hardened: can't be blown up by creepers or other explosions
-    * [ ] Hardened smithing template
-        * Found in end cities
-        * Found in ancient cities
+    * [x] Hardened smithing template
+        * [ ] Found in end cities
+        * [ ] Found in ancient cities
     * [x] Plated: item entity form won't be destroyed by fire, lava, or explosions
-    * [ ] Plated smithing template
-        * Found in treasure bastions
+    * [x] Plated smithing template
+        * [ ] Found in treasure bastions
 * [ ] Enchantments
     * [ ] Vacuum (2 levels)
         * [ ] Vacuum I: suck up items that match a non-full stack in the shulker inventory

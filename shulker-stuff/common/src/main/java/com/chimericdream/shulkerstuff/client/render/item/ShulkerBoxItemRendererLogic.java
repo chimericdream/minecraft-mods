@@ -1,7 +1,7 @@
 package com.chimericdream.shulkerstuff.client.render.item;
 
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
@@ -31,9 +31,9 @@ public class ShulkerBoxItemRendererLogic {
 
         ShulkerBoxBlockEntity entity = new ShulkerBoxBlockEntity(BlockPos.ORIGIN, defaultState);
 
-        ShulkerStuffDataComponent ssData = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null) {
-            entity.setComponents(ComponentMap.builder().add(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get(), ssData).build());
+        ShulkerStuffDyedColorComponent ssDyedColorComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
+        if (ssDyedColorComponent != null) {
+            entity.setComponents(ComponentMap.builder().add(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get(), ssDyedColorComponent).build());
         }
         MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(entity, matrices, vertexConsumers, light, overlay);
     }

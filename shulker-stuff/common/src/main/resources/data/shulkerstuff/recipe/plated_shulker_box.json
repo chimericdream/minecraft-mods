@@ -20,12 +20,12 @@
                     ]
                 }
             },
-            "shulkerstuff:data": {
-                "plated": true
+            "shulkerstuff:plated": {
+                "value": true
             }
         }
     },
     "template": {
-        "item": "minecraft:netherite_upgrade_smithing_template"
+        "item": "shulkerstuff:plated_shulker_upgrade_smithing_template"
     }
 }

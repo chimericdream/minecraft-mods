@@ -2,7 +2,7 @@ package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.client.util.ShulkerBoxSprites;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
@@ -54,15 +54,15 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
 
         int rgb1 = -1, rgb2 = -1;
 
-        ShulkerStuffDataComponent ssData = shulkerBoxBlockEntity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
+        ShulkerStuffDyedColorComponent ssDyedColorComponent = shulkerBoxBlockEntity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
         if (!useVanillaColor) {
-            if (ssData == null) {
+            if (ssDyedColorComponent == null) {
                 // This is roughly the same as the default color for shulker boxes
                 rgb1 = 9922455;
                 rgb2 = 9922455;
             } else {
-                rgb1 = ssData.lidColor();
-                rgb2 = ssData.baseColor();
+                rgb1 = ssDyedColorComponent.lidColor();
+                rgb2 = ssDyedColorComponent.baseColor();
             }
         }
 

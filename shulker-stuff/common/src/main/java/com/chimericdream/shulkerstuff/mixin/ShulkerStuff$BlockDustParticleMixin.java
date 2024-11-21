@@ -2,7 +2,7 @@ package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.client.util.ShulkerBoxSprites;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDataComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.particle.BlockDustParticle;
@@ -41,12 +41,12 @@ abstract public class ShulkerStuff$BlockDustParticleMixin extends ShulkerStuff$S
             return;
         }
 
-        ShulkerStuffDataComponent ssData = entity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DATA.get());
-        if (ssData != null && ssData.lidColor() != -1) {
+        ShulkerStuffDyedColorComponent ssDyedColorComponent = entity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
+        if (ssDyedColorComponent != null && ssDyedColorComponent.lidColor() != -1) {
             Sprite sprite1 = ShulkerBoxSprites.GRAYSCALE_SHULKER_BOX.getSprite();
             this.setSprite(sprite1);
 
-            int rgb = ssData.lidColor();
+            int rgb = ssDyedColorComponent.lidColor();
 
             this.red = (float) (rgb >> 16 & 255) / 255.0F;
             this.green = (float) (rgb >> 8 & 255) / 255.0F;
