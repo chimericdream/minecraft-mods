@@ -2,6 +2,7 @@ package com.chimericdream.shulkerstuff;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
+import com.chimericdream.shulkerstuff.config.ShulkerStuffConfig;
 import com.chimericdream.shulkerstuff.item.ModItems;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -18,6 +19,7 @@ public final class ShulkerStuffMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+        ShulkerStuffConfig.HANDLER.load();
 
         REGISTRY_HELPER.init();
         ModItems.init();

@@ -15,15 +15,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
 public class ShulkerBoxItemRendererLogic {
-    public static <M extends BakedModel> void render(
+    public static void render(
         ItemStack stack,
         MatrixStack matrices,
         VertexConsumerProvider vertexConsumers,
         int light,
-        int overlay,
-        M model
+        int overlay
     ) {
         BlockState defaultState = Blocks.SHULKER_BOX.getDefaultState();
+        BakedModel model = MinecraftClient.getInstance().getBlockRenderManager().getModel(defaultState);
+
         matrices.push();
         matrices.translate(0.5, 0.5, 0.5);
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.GUI, false, matrices, vertexConsumers, light, overlay, model);

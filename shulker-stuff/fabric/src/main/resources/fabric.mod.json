@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.shulkerstuff.fabric.client.ShulkerStuffFabricClient"
+        ],
+        "modmenu": [
+            "com.chimericdream.shulkerstuff.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [
