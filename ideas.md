@@ -129,15 +129,15 @@
     * [x] Render the shulker in the world with the correct color
     * [x] Use correct particle colors
     * [x] Separate colors for top and bottom
-    * [ ] Add new workstation to facilitate dyeing
-* [ ] Upgrades (smithing templates)
+    * [x] Add new workstation to facilitate dyeing
+* [x] Upgrades (smithing templates)
     * [x] Hardened: can't be blown up by creepers or other explosions
     * [x] Hardened smithing template
-        * [ ] Found in end cities
-        * [ ] Found in ancient cities
+        * [x] Found in end cities
+        * [x] Found in ancient cities
     * [x] Plated: item entity form won't be destroyed by fire, lava, or explosions
     * [x] Plated smithing template
-        * [ ] Found in treasure bastions
+        * [x] Found in treasure bastions
 * [ ] Enchantments
     * [ ] Vacuum (2 levels)
         * [ ] Vacuum I: suck up items that match a non-full stack in the shulker inventory

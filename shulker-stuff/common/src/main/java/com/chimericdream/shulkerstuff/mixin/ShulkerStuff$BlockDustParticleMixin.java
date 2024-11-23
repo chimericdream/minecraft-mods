@@ -1,14 +1,14 @@
 package com.chimericdream.shulkerstuff.mixin;
 
-import com.chimericdream.shulkerstuff.client.util.ShulkerBoxSprites;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.BlockDustParticle;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,7 +27,7 @@ abstract public class ShulkerStuff$BlockDustParticleMixin extends ShulkerStuff$S
             return;
         }
 
-        if (state.isIn(BlockTags.SHULKER_BOXES)) {
+        if (state.isOf(Blocks.SHULKER_BOX)) {
             ss$checkAndUpdateRGB(world, blockPos);
         }
 
@@ -37,13 +37,17 @@ abstract public class ShulkerStuff$BlockDustParticleMixin extends ShulkerStuff$S
     @Unique
     private void ss$checkAndUpdateRGB(ClientWorld world, BlockPos pos) {
         ShulkerBoxBlockEntity entity = (ShulkerBoxBlockEntity) world.getBlockEntity(pos);
+        if (entity == null && world.getBlockState(pos).isAir()) {
+            entity = (ShulkerBoxBlockEntity) world.getBlockEntity(pos.down());
+        }
+
         if (entity == null) {
             return;
         }
 
         ShulkerStuffDyedColorComponent ssDyedColorComponent = entity.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
-        if (ssDyedColorComponent != null && ssDyedColorComponent.lidColor() != -1) {
-            Sprite sprite1 = ShulkerBoxSprites.GRAYSCALE_SHULKER_BOX.getSprite();
+        if (ssDyedColorComponent != null) {
+            Sprite sprite1 = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.WHITE_SHULKER_BOX.getDefaultState());
             this.setSprite(sprite1);
 
             int rgb = ssDyedColorComponent.lidColor();

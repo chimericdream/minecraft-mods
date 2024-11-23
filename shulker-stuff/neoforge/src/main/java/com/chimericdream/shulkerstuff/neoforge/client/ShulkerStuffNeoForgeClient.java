@@ -1,6 +1,7 @@
 package com.chimericdream.shulkerstuff.neoforge.client;
 
 import com.chimericdream.shulkerstuff.ModInfo;
+import com.chimericdream.shulkerstuff.client.ShulkerStuffClient;
 import com.chimericdream.shulkerstuff.neoforge.client.render.item.ShulkerBoxItemRenderer;
 import net.minecraft.item.Items;
 import net.neoforged.api.distmarker.Dist;
@@ -19,6 +20,7 @@ public class ShulkerStuffNeoForgeClient {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        ShulkerStuffClient.onInitializeClient();
     }
 
     @SubscribeEvent

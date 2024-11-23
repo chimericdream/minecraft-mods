@@ -2,13 +2,34 @@ package com.chimericdream.lib.colors;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class ColorHelpers {
+    public record RGB(int r, int g, int b) {
+        public static RGB fromInt(int color) {
+            return new RGB(ColorHelper.Argb.getRed(color), ColorHelper.Argb.getGreen(color), ColorHelper.Argb.getBlue(color));
+        }
+
+        public int getColor() {
+            return ColorHelper.Argb.getArgb(0, r, g, b);
+        }
+
+        public String toHex() {
+            return String.format("#%02x%02x%02x", r, g, b);
+        }
+
+        public int toInt() {
+            return ColorHelper.Argb.getArgb(0, r, g, b);
+        }
+    }
+
     public static int[] WHITE = {0xf9fffe, 0xe4e4e4};
     public static int[] LIGHT_GRAY = {0x9d9d97, 0xa0a7a7};
     public static int[] GRAY = {0x474f52, 0x414141};
@@ -127,5 +148,40 @@ public class ColorHelpers {
             case "pink" -> Blocks.PINK_WOOL;
             default -> throw new RuntimeException(String.format("Invalid color %s", color));
         };
+    }
+
+    public static ColorHelpers.RGB mixColors(@Nullable ColorHelpers.RGB rgb, List<DyeItem> dyes) {
+        int l = rgb == null ? 0 : Math.max(rgb.r, Math.max(rgb.g, rgb.b));
+        int i = rgb == null ? 0 : rgb.r;
+        int j = rgb == null ? 0 : rgb.g;
+        int k = rgb == null ? 0 : rgb.b;
+        int m = rgb == null ? 0 : 1;
+
+        for (DyeItem dyeItem : dyes) {
+            int p = dyeItem.getColor().getEntityColor();
+            int q = ColorHelper.Argb.getRed(p);
+            int r = ColorHelper.Argb.getGreen(p);
+            int s = ColorHelper.Argb.getBlue(p);
+            l += Math.max(q, Math.max(r, s));
+            i += q;
+            j += r;
+            k += s;
+            ++m;
+        }
+
+        if (m == 0) {
+            return rgb;
+        }
+
+        int n = i / m;
+        int o = j / m;
+        int p = k / m;
+        float f = (float) l / (float) m;
+        float g = (float) Math.max(n, Math.max(o, p));
+        n = (int) ((float) n * f / g);
+        o = (int) ((float) o * f / g);
+        p = (int) ((float) p * f / g);
+
+        return new RGB(n, o, p);
     }
 }

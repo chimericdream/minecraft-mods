@@ -1,6 +1,5 @@
 package com.chimericdream.shulkerstuff.mixin;
 
-import com.chimericdream.shulkerstuff.client.util.ShulkerBoxSprites;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.block.BlockState;
@@ -46,7 +45,7 @@ abstract public class ShulkerStuff$ShulkerBoxBlockEntityRendererMixin {
         boolean useVanillaColor = false;
 
         DyeColor dyeColor = shulkerBoxBlockEntity.getColor();
-        SpriteIdentifier spriteIdentifier = ShulkerBoxSprites.GRAYSCALE_SHULKER;
+        SpriteIdentifier spriteIdentifier = TexturedRenderLayers.COLORED_SHULKER_BOXES_TEXTURES.get(DyeColor.WHITE.getId());
         if (dyeColor != null) {
             spriteIdentifier = TexturedRenderLayers.COLORED_SHULKER_BOXES_TEXTURES.get(dyeColor.getId());
             useVanillaColor = true;

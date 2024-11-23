@@ -1,6 +1,7 @@
 package com.chimericdream.shulkerstuff;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
+import com.chimericdream.shulkerstuff.block.ModBlocks;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.config.ShulkerStuffConfig;
 import com.chimericdream.shulkerstuff.item.ModItems;
@@ -22,6 +23,7 @@ public final class ShulkerStuffMod {
         ShulkerStuffConfig.HANDLER.load();
 
         REGISTRY_HELPER.init();
+        ModBlocks.init();
         ModItems.init();
         ShulkerStuffComponentTypes.init();
     }
