@@ -1,5 +1,6 @@
 package com.chimericdream.shulkerstuff.component.type;
 
+import com.chimericdream.shulkerstuff.ShulkerStuffMod;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -63,19 +64,46 @@ public class ContainerComponentBuilder {
         return allowedQty;
     }
 
-    public ItemStack addStack(ItemStack stack) {
+    public void addStackForVacuum(ItemStack stack, int level) {
+        if (level == 2) {
+            this.addStack(stack);
+            return;
+        }
+
         if (stack.isEmpty() || !stack.getItem().canBeNested()) {
-            return stack;
+            return;
         }
 
-        ItemStack itemStack = stack.copy();
-        this.addToExistingSlot(itemStack);
+        this.addToExistingSlot(stack);
+    }
 
-        if (itemStack.isEmpty()) {
-            return itemStack;
+    public void addStackForVoid(ItemStack stack) {
+        if (stack.isEmpty() || !stack.getItem().canBeNested()) {
+            return;
         }
 
-        return this.addToNewSlot(itemStack);
+        int originalCount = stack.getCount();
+        this.addToExistingSlot(stack);
+
+        if (originalCount == stack.getCount() && !this.contains(stack)) {
+            return;
+        }
+
+        stack.decrement(stack.getCount());
+    }
+
+    public void addStack(ItemStack stack) {
+        if (stack.isEmpty() || !stack.getItem().canBeNested()) {
+            return;
+        }
+
+        this.addToExistingSlot(stack);
+
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        this.addToNewSlot(stack);
     }
 
     public ItemStack removeFirst() {
@@ -103,29 +131,33 @@ public class ContainerComponentBuilder {
         stack.capCount(this.getMaxCount(stack));
     }
 
-    private ItemStack addToNewSlot(ItemStack stack) {
+    private boolean contains(ItemStack stack) {
+        return this.heldStacks.stream().anyMatch((itemStack) -> ItemStack.areItemsAndComponentsEqual(itemStack, stack));
+    }
+
+    private void addToNewSlot(ItemStack stack) {
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
             if (itemStack.isEmpty()) {
                 this.setStack(i, stack.copyAndEmpty());
-                return stack;
+                return;
             }
         }
-        return stack;
     }
 
-    private ItemStack addToExistingSlot(ItemStack stack) {
+    private void addToExistingSlot(ItemStack stack) {
+        ShulkerStuffMod.LOGGER.trace("Attempting to add {} {} to existing slots", stack.getCount(), stack.getName());
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
             if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
+                ShulkerStuffMod.LOGGER.trace("{} of {} before adding to to slot {}", stack.getCount(), stack.getName(), i);
                 this.transfer(stack, itemStack);
+                ShulkerStuffMod.LOGGER.trace("{} of {} after adding to to slot {}", stack.getCount(), stack.getName(), i);
                 if (stack.isEmpty()) {
-                    return stack;
+                    return;
                 }
             }
         }
-
-        return stack;
     }
 
     private void transfer(ItemStack source, ItemStack target) {

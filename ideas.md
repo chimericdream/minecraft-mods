@@ -138,11 +138,11 @@
     * [x] Plated: item entity form won't be destroyed by fire, lava, or explosions
     * [x] Plated smithing template
         * [x] Found in treasure bastions
-* [ ] Enchantments
-    * [ ] Vacuum (2 levels)
-        * [ ] Vacuum I: suck up items that match a non-full stack in the shulker inventory
-        * [ ] Vacuum II: suck up all items as long as there is space
-    * [ ] Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
+* [x] Enchantments
+    * [x] Vacuum (2 levels)
+        * [x] Vacuum I: suck up items that match a non-full stack in the shulker inventory
+        * [x] Vacuum II: suck up all items as long as there is space
+    * [x] Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
       items picked up after this point are deleted
     * [ ] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
       your hand

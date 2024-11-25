@@ -1,0 +1,8 @@
+{
+    "replace": false,
+    "values": [
+        "shulkerstuff:refill",
+        "shulkerstuff:vacuum",
+        "shulkerstuff:void"
+    ]
+}

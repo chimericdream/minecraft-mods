@@ -12,6 +12,7 @@
         "ShulkerStuff$ItemEntityMixin",
         "ShulkerStuff$ItemMixin",
         "ShulkerStuff$ParticleAccessor",
+        "ShulkerStuff$PlayerInventoryMixin",
         "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin",
         "ShulkerStuff$SpriteBillboardParticleAccessor"
     ],

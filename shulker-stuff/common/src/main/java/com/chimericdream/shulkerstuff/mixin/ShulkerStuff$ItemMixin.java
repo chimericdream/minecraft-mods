@@ -6,6 +6,7 @@ import com.chimericdream.shulkerstuff.component.type.ContainerComponentBuilder;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
+import com.chimericdream.shulkerstuff.tag.ShulkerStuffItemTags;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ContainerComponent;
@@ -131,15 +132,32 @@ public class ShulkerStuff$ItemMixin {
             }
         } else {
             int startingCount = otherStack.getCount();
-            ItemStack remainder = builder.addStack(otherStack);
-            if (remainder.getCount() != startingCount) {
+            builder.addStack(otherStack);
+            if (otherStack.getCount() != startingCount) {
                 this.ssItem$playInsertSound(player);
             }
-            cursorStackReference.set(remainder);
+            cursorStackReference.set(otherStack);
         }
 
         stack.set(DataComponentTypes.CONTAINER, builder.build());
         cir.setReturnValue(true);
+    }
+
+    @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
+    private void isEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (stack.isIn(ShulkerStuffItemTags.SHULKER_BOX_ITEMS)) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "getEnchantability", at = @At("HEAD"), cancellable = true)
+    private void getEnchantability(CallbackInfoReturnable<Integer> cir) {
+        //noinspection ConstantValue
+        if (!((Object) this instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+            return;
+        }
+
+        cir.setReturnValue(20);
     }
 
     @Unique
