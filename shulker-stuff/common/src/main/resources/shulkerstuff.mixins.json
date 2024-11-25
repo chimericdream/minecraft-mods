@@ -13,6 +13,7 @@
         "ShulkerStuff$ItemMixin",
         "ShulkerStuff$ParticleAccessor",
         "ShulkerStuff$PlayerInventoryMixin",
+        "ShulkerStuff$ServerPlayerEntityMixin",
         "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin",
         "ShulkerStuff$SpriteBillboardParticleAccessor"
     ],

@@ -131,8 +131,19 @@ public class ContainerComponentBuilder {
         stack.capCount(this.getMaxCount(stack));
     }
 
-    private boolean contains(ItemStack stack) {
+    public boolean contains(ItemStack stack) {
         return this.heldStacks.stream().anyMatch((itemStack) -> ItemStack.areItemsAndComponentsEqual(itemStack, stack));
+    }
+
+    public ItemStack getFirstMatchingStack(ItemStack stack) {
+        for (int i = 0; i < this.size; ++i) {
+            ItemStack itemStack = this.getStack(i);
+            if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
+                return itemStack.copyAndEmpty();
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 
     private void addToNewSlot(ItemStack stack) {

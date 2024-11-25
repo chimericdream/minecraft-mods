@@ -124,7 +124,7 @@
     * [x] Extract items by right-clicking the shulker with an empty hand
     * [x] Insert items by right-clicking the shulker with an ItemStack
     * [x] Throw individual stacks by shift-right-clicking the air when not in the inventory
-* [ ] Arbitrarily dyed shulkers
+* [x] Arbitrarily dyed shulkers
     * [x] Render the shulker in the inventory with the correct color
     * [x] Render the shulker in the world with the correct color
     * [x] Use correct particle colors
@@ -144,7 +144,7 @@
         * [x] Vacuum II: suck up all items as long as there is space
     * [x] Void: behaves like Vacuum I, but will continue picking up matching items after the stack is full. Any
       items picked up after this point are deleted
-    * [ ] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
+    * [x] Refill: when you use the last block/item in a stack, if a matching stack is in the shulker, it will refill
       your hand
     * [ ] Deep Storage (3 levels): extra rows of storage
         * 1 row per level
