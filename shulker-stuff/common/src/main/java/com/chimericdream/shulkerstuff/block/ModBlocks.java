@@ -1,6 +1,7 @@
 package com.chimericdream.shulkerstuff.block;
 
 import com.chimericdream.shulkerstuff.block.entity.DyeStationBlockEntity;
+import com.chimericdream.shulkerstuff.client.screen.DeepShulkerBoxScreenHandler;
 import com.chimericdream.shulkerstuff.client.screen.DyeStationScreenHandler;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
@@ -29,6 +30,11 @@ public class ModBlocks {
     public static final RegistrySupplier<ScreenHandlerType<DyeStationScreenHandler>> DYE_STATION_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         DyeStationScreenHandler.SCREEN_ID,
         () -> new ScreenHandlerType<>(DyeStationScreenHandler::new, FeatureSet.empty())
+    );
+
+    public static final RegistrySupplier<ScreenHandlerType<DeepShulkerBoxScreenHandler>> DEEP_SHULKER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+        DeepShulkerBoxScreenHandler.SCREEN_ID,
+        () -> new ScreenHandlerType<>(DeepShulkerBoxScreenHandler::new, FeatureSet.empty())
     );
 
     public static void init() {
