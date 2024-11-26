@@ -148,9 +148,6 @@
       your hand
     * [ ] Deep Storage (3 levels): extra rows of storage
         * 1 row per level
-    * Possible places for mixins:
-        * Vacuum and void:
-            * `ItemEntity$onPlayerCollision(PlayerEntity player)`
 * [ ] Apply banners to a shulker
 
 #### Sponj
