@@ -1,3 +1,7 @@
 accessWidener v2 named
 accessible field net/minecraft/component/type/ContainerComponent stacks Lnet/minecraft/util/collection/DefaultedList;
+
 accessible field net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityRenderer model Lnet/minecraft/client/render/entity/model/ShulkerEntityModel;
+
+accessible method net/minecraft/client/gui/screen/ingame/HandledScreens register (Lnet/minecraft/screen/ScreenHandlerType;Lnet/minecraft/client/gui/screen/ingame/HandledScreens$Provider;)V
+accessible class net/minecraft/client/gui/screen/ingame/HandledScreens$Provider
