@@ -21,7 +21,7 @@ abstract public class ShulkerStuff$BlockDustParticleMixin extends ShulkerStuff$S
     @Unique
     private boolean ss$hasProcessed = false;
 
-    @Inject(method = "<init>*", at = @At(value = "TAIL"))
+    @Inject(method = "<init>(Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", at = @At(value = "TAIL"))
     public void ss$BlockDustParticleMixin(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, BlockState state, BlockPos blockPos, CallbackInfo ci) {
         if (ss$hasProcessed) {
             return;
