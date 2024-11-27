@@ -6,7 +6,10 @@
         "build:gradle": "./gradlew build",
         "build:modpacks": "bun ./scripts/create-modpacks.ts",
         "clean": "./gradlew clean",
-        "prebuild": "bun run clean"
+        "copy:accesswideners": "bun ./scripts/copy-accesswideners.ts",
+        "prebuild": "bun run clean",
+        "update:projectlist": "bun ./scripts/update-projectlist.ts",
+        "update:settingsgradle": "bun ./scripts/update-settingsgradle.ts"
     },
     "devDependencies": {
         "@types/bun": "1.1.13",

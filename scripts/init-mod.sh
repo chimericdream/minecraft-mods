@@ -62,3 +62,6 @@ mv "./$foldername/common/src/main/java/com/chimericdream/$modid/ModInfo.java.tpl
 mv "./$foldername/common/src/main/java/com/chimericdream/$modid/${classname}Mod.java.tpl" "./$foldername/common/src/main/java/com/chimericdream/$modid/${classname}Mod.java"
 
 rm "./$foldername/package.json"
+
+bun run update:projectlist $foldername
+bun run update:settingsgradle
