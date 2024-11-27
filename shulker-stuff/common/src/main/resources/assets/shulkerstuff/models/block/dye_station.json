@@ -1,10 +1,10 @@
 {
 	"parent": "minecraft:block/block",
 	"textures": {
-		"surface": "minecraft:block/stripped_birch_log",
-		"legs": "minecraft:block/spruce_planks",
-		"lip": "minecraft:block/spruce_planks",
-		"particle": "minecraft:block/stripped_birch_log"
+		"surface": "minecraft:block/shulker_box",
+		"legs": "minecraft:block/polished_blackstone",
+		"lip": "minecraft:block/polished_blackstone",
+		"particle": "minecraft:block/shulker_box"
 	},
 	"elements": [
 		{

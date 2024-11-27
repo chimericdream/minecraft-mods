@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DSD",
+        "BCB",
+        "BRB"
+    ],
+    "key": {
+        "D": {
+            "tag": "minecraft:dyes"
+        },
+        "S": {
+            "item": "minecraft:shulker_shell"
+        },
+        "B": {
+            "item": "minecraft:polished_blackstone"
+        },
+        "C": {
+            "item": "minecraft:crafting_table"
+        },
+        "R": {
+            "item": "minecraft:brush"
+        }
+    },
+    "result": {
+        "count": 1,
+        "id": "shulkerstuff:dye_station"
+    }
+}
