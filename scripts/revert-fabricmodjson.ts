@@ -1,4 +1,4 @@
-import {copyFile, exists, readFile, writeFile} from 'node:fs/promises';
+import {exists, readFile, rm, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 
 import projectList from '../project-list.json';
@@ -14,12 +14,9 @@ for (const project of projectList) {
 
     if (fileExists) {
         const modJson = (await readFile(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', 'fabric.mod.json'))).toString();
-        const updatedJson = modJson.replace(/^( +)"depends"/gm, `$1"accessWidener": "${awFileName}",\n$1"depends"`);
-        await writeFile(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', 'fabric.mod.json'), updatedJson);
+        const updatedJson = modJson.replace(/^( +)"accessWidener"[^\n]+\n/gm, '');
 
-        await copyFile(
-            path.join(projectFolder, 'common', 'src', 'main', 'resources', awFileName),
-            path.join(projectFolder, 'fabric', 'src', 'main', 'resources', awFileName)
-        );
+        await writeFile(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', 'fabric.mod.json'), updatedJson);
+        await rm(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', awFileName), {force: true});
     }
 }
