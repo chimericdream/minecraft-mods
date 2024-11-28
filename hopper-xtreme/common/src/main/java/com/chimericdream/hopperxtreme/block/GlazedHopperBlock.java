@@ -1,6 +1,7 @@
 package com.chimericdream.hopperxtreme.block;
 
 import com.chimericdream.hopperxtreme.entity.GlazedHopperBlockEntity;
+import com.chimericdream.lib.text.TextHelpers;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,15 +11,22 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_HOPPER_BLOCK_ENTITY;
 
 public class GlazedHopperBlock extends AbstractHopperBlock {
     public static final MapCodec<GlazedHopperBlock> CODEC = createCodec(GlazedHopperBlock::create);
+    public static final String TOOLTIP_KEY = "block.hopperxtreme.honey_glazed_hopper.tooltip";
 
     private final int cooldownInTicks;
     private final String baseKey;
@@ -41,6 +49,15 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+        if (!baseKey.equals("honey_glazed_hopper")) {
+            return;
+        }
+
+        tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEY));
     }
 
     @Override

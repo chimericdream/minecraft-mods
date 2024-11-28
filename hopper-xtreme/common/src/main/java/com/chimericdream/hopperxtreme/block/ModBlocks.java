@@ -24,6 +24,10 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("netherite_hopper", () -> new XtremeHopperBlock(1, "netherite_hopper"), DEFAULT_SETTINGS);
 
     public static final RegistrySupplier<Block> GLAZED_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_hopper", () -> new GlazedHopperBlock(8, "glazed_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> HONEY_GLAZED_HOPPER = REGISTRY_HELPER.registerWithItem("honey_glazed_hopper", () -> new GlazedHopperBlock(20, "honey_glazed_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_GOLDEN_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_golden_hopper", () -> new GlazedHopperBlock(4, "glazed_golden_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_DIAMOND_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_diamond_hopper", () -> new GlazedHopperBlock(2, "glazed_diamond_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_netherite_hopper", () -> new GlazedHopperBlock(1, "glazed_netherite_hopper"), DEFAULT_SETTINGS);
 
     public static final RegistrySupplier<Block> MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("multi_hopper", () -> new XtremeMultiHopperBlock(8, "multi_hopper"), DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("golden_multi_hopper", () -> new XtremeMultiHopperBlock(4, "golden_multi_hopper"), DEFAULT_SETTINGS);
@@ -46,11 +50,11 @@ public class ModBlocks {
         "glazed_hopper_block_entity",
         () -> BlockEntityType.Builder.create(
             GlazedHopperBlockEntity::new,
-            GLAZED_HOPPER.get()//,
-//            COPPER_HOPPER.get(),
-//            GOLDEN_HOPPER.get(),
-//            DIAMOND_HOPPER.get(),
-//            NETHERITE_HOPPER.get()
+            GLAZED_HOPPER.get(),
+            HONEY_GLAZED_HOPPER.get(),
+            GLAZED_GOLDEN_HOPPER.get(),
+            GLAZED_DIAMOND_HOPPER.get(),
+            GLAZED_NETHERITE_HOPPER.get()
         ).build(null)
     );
 

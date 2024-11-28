@@ -46,7 +46,7 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
     private Direction facing;
 
     public GlazedHopperBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, 8);
+        this(pos, state, getCooldownForBlock(state.getBlock()));
     }
 
     public GlazedHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
@@ -119,8 +119,10 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     private static int getCooldownForBlock(GlazedHopperBlockEntity blockEntity) {
-        Block block = blockEntity.getCachedState().getBlock();
+        return getCooldownForBlock(blockEntity.getCachedState().getBlock());
+    }
 
+    private static int getCooldownForBlock(Block block) {
         if (block instanceof GlazedHopperBlock) {
             return ((GlazedHopperBlock) block).getCooldownInTicks();
         }
@@ -189,7 +191,7 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
 
         blockEntity.setStack(0, stack);
 
-        drop(world, stack2, blockEntity.facing, pos);
+        drop(world, stack2, pos, blockEntity.facing, blockEntity.cooldownInTicks);
 
         return true;
     }
@@ -298,7 +300,7 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
         return bl;
     }
 
-    public static void drop(World world, ItemStack stack, Direction facing, BlockPos pos) {
+    public static void drop(World world, ItemStack stack, BlockPos pos, Direction facing, int hopperSpeed) {
         double x = (double) pos.getX() + 0.5 + 0.1 * (double) facing.getOffsetX();
         double y = (double) pos.getY() + 0.1 * (double) facing.getOffsetY();
         double z = (double) pos.getZ() + 0.5 + 0.1 * (double) facing.getOffsetZ();
@@ -310,22 +312,23 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
         switch (facing) {
             case DOWN:
                 y = (double) pos.getY() - 0.6 - 0.1 * (double) facing.getOffsetX();
+                vy = -0.1 * ((double) 8 / hopperSpeed);
                 break;
             case NORTH:
                 z = (double) pos.getZ() - 0.6 - 0.1 * (double) facing.getOffsetZ();
-                vz = -0.1;
+                vz = -0.125 * ((double) 8 / hopperSpeed);
                 break;
             case SOUTH:
                 z = (double) pos.getZ() + 1.1 + 0.1 * (double) facing.getOffsetZ();
-                vz = 0.1;
+                vz = 0.125 * ((double) 8 / hopperSpeed);
                 break;
             case WEST:
                 x = (double) pos.getX() - 0.6 - 0.1 * (double) facing.getOffsetX();
-                vx = -0.1;
+                vx = -0.125 * ((double) 8 / hopperSpeed);
                 break;
             case EAST:
                 x = (double) pos.getX() + 1.1 + 0.1 * (double) facing.getOffsetX();
-                vx = 0.1;
+                vx = 0.125 * ((double) 8 / hopperSpeed);
                 break;
         }
 

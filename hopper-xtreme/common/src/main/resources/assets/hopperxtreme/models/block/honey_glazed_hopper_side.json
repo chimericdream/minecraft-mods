@@ -2,12 +2,20 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
+		"honey_inside": "hopperxtreme:block/honeyed_hopper_inside",
 		"glazed_rim": "minecraft:block/gray_glazed_terracotta",
 		"particle": "minecraft:block/hopper_outside",
 		"side": "minecraft:block/hopper_outside",
 		"inside": "minecraft:block/hopper_inside"
 	},
 	"elements": [
+		{
+			"from": [1, 11, 1],
+			"to": [15, 11, 15],
+			"faces": {
+				"up": {"uv": [1, 1, 15, 15], "texture": "#honey_inside", "cullface": "up"}
+			}
+		},
 		{
 			"from": [0, 10, 0],
 			"to": [16, 11, 16],
@@ -16,8 +24,7 @@
 				"east": {"uv": [0, 5, 16, 6], "texture": "#side", "cullface": "east"},
 				"south": {"uv": [0, 5, 16, 6], "texture": "#side", "cullface": "south"},
 				"west": {"uv": [0, 5, 16, 6], "texture": "#side", "cullface": "west"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#inside", "cullface": "up"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#inside"}
+				"down": {"uv": [0, 0, 0, 0], "texture": "#inside"}
 			}
 		},
 		{
