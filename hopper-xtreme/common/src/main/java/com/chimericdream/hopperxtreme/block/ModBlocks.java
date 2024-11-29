@@ -1,6 +1,7 @@
 package com.chimericdream.hopperxtreme.block;
 
 import com.chimericdream.hopperxtreme.entity.GlazedHopperBlockEntity;
+import com.chimericdream.hopperxtreme.entity.GlazedMultiHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeHupperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeMultiHopperBlockEntity;
@@ -33,6 +34,11 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("golden_multi_hopper", () -> new XtremeMultiHopperBlock(4, "golden_multi_hopper"), DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("diamond_multi_hopper", () -> new XtremeMultiHopperBlock(2, "diamond_multi_hopper"), DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("netherite_multi_hopper", () -> new XtremeMultiHopperBlock(1, "netherite_multi_hopper"), DEFAULT_SETTINGS);
+
+    public static final RegistrySupplier<Block> GLAZED_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_multi_hopper", () -> new GlazedMultiHopperBlock(8, "glazed_multi_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_golden_multi_hopper", () -> new GlazedMultiHopperBlock(4, "glazed_golden_multi_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_diamond_multi_hopper", () -> new GlazedMultiHopperBlock(2, "glazed_diamond_multi_hopper"), DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_netherite_multi_hopper", () -> new GlazedMultiHopperBlock(1, "glazed_netherite_multi_hopper"), DEFAULT_SETTINGS);
 
     public static final RegistrySupplier<Block> HUPPER = REGISTRY_HELPER.registerWithItem("hupper", () -> new XtremeHupperBlock(8, "hupper"), DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> HONEYED_HUPPER = REGISTRY_HELPER.registerWithItem("honeyed_hupper", () -> new XtremeHupperBlock(20, "honeyed_hupper"), DEFAULT_SETTINGS);
@@ -80,6 +86,17 @@ public class ModBlocks {
             GOLDEN_HUPPER.get(),
             DIAMOND_HUPPER.get(),
             NETHERITE_HUPPER.get()
+        ).build(null)
+    );
+
+    public static final RegistrySupplier<BlockEntityType<GlazedMultiHopperBlockEntity>> GLAZED_MULTI_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
+        "glazed_multi_hopper_block_entity",
+        () -> BlockEntityType.Builder.create(
+            GlazedMultiHopperBlockEntity::new,
+            GLAZED_MULTI_HOPPER.get(),
+            GLAZED_GOLDEN_MULTI_HOPPER.get(),
+            GLAZED_DIAMOND_MULTI_HOPPER.get(),
+            GLAZED_NETHERITE_MULTI_HOPPER.get()
         ).build(null)
     );
 

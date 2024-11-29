@@ -1,6 +1,6 @@
 package com.chimericdream.hopperxtreme.block;
 
-import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
+import com.chimericdream.hopperxtreme.entity.GlazedMultiHopperBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,24 +19,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_MULTI_HOPPER_BLOCK_ENTITY;
 
-public class XtremeHopperBlock extends AbstractHopperBlock {
-    public static final MapCodec<XtremeHopperBlock> CODEC = createCodec(XtremeHopperBlock::create);
+public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock {
+    public static final MapCodec<GlazedMultiHopperBlock> CODEC = createCodec(GlazedMultiHopperBlock::create);
 
     private final int cooldownInTicks;
     private final String baseKey;
 
-    static XtremeHopperBlock create(Settings settings) {
-        return new XtremeHopperBlock(8, "default") {
-        };
+    static GlazedMultiHopperBlock create(Settings settings) {
+        return new GlazedMultiHopperBlock(8, "default");
     }
 
-    public XtremeHopperBlock(int cooldownInTicks, String translationKey) {
+    public GlazedMultiHopperBlock(int cooldownInTicks, String baseKey) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
-        this.baseKey = translationKey;
+        this.baseKey = baseKey;
     }
 
     public int getCooldownInTicks() {
@@ -47,19 +46,19 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
         return baseKey;
     }
 
-	@Override
-    protected MapCodec<XtremeHopperBlock> getCodec() {
+    @Override
+    protected MapCodec<GlazedMultiHopperBlock> getCodec() {
         return CODEC;
     }
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new XtremeHopperBlockEntity(pos, state, cooldownInTicks);
+        return new GlazedMultiHopperBlockEntity(pos, state, cooldownInTicks);
     }
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : validateTicker(type, XTREME_HOPPER_BLOCK_ENTITY.get(), XtremeHopperBlockEntity::serverTick);
+        return world.isClient ? null : validateTicker(type, GLAZED_MULTI_HOPPER_BLOCK_ENTITY.get(), GlazedMultiHopperBlockEntity::serverTick);
     }
 
     @Override
@@ -75,8 +74,8 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof XtremeHopperBlockEntity) {
-                player.openHandledScreen((XtremeHopperBlockEntity) blockEntity);
+            if (blockEntity instanceof GlazedMultiHopperBlockEntity) {
+                player.openHandledScreen((GlazedMultiHopperBlockEntity) blockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
@@ -90,10 +89,6 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
     }
 
     private void updateEnabled(World world, BlockPos pos, BlockState state) {
-        if (baseKey.equals("copper_hopper")) {
-            return;
-        }
-
         boolean bl = !world.isReceivingRedstonePower(pos);
         if (bl != state.get(ENABLED)) {
             world.setBlockState(pos, state.with(ENABLED, bl), 2);
@@ -103,8 +98,8 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof XtremeHopperBlockEntity) {
-            XtremeHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeHopperBlockEntity) blockEntity);
+        if (blockEntity instanceof GlazedMultiHopperBlockEntity) {
+            GlazedMultiHopperBlockEntity.onEntityCollided(world, pos, state, entity, (GlazedMultiHopperBlockEntity) blockEntity);
         }
     }
 }

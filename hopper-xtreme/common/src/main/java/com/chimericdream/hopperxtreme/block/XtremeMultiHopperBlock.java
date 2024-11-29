@@ -24,10 +24,6 @@ import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HOPPER
 public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     public static final MapCodec<XtremeMultiHopperBlock> CODEC = createCodec(XtremeMultiHopperBlock::create);
 
-    public MapCodec<XtremeMultiHopperBlock> getCodec() {
-        return CODEC;
-    }
-
     private final int cooldownInTicks;
     private final String baseKey;
 
@@ -48,6 +44,11 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    protected MapCodec<XtremeMultiHopperBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
