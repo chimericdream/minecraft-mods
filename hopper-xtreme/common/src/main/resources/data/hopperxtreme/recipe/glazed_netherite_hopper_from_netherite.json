@@ -2,10 +2,11 @@
     "type": "minecraft:crafting_shapeless",
     "category": "redstone",
     "ingredients": [
+        {"item": "minecraft:gray_glazed_terracotta"},
         {"item": "hopperxtreme:netherite_hopper"}
     ],
     "result": {
         "count": 1,
-        "id": "hopperxtreme:netherite_hupper"
+        "id": "hopperxtreme:glazed_netherite_hopper"
     }
 }

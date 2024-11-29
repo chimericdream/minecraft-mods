@@ -1,16 +1,15 @@
 {
     "type": "minecraft:crafting_shaped",
-    "category": "building",
+    "category": "redstone",
     "key": {
-        "#": {
-            "item": "hopperxtreme:netherite_hupper"
-        }
+        "#": {"item": "hopperxtreme:netherite_hupper"}
     },
     "pattern": [
         "##",
         "##"
     ],
     "result": {
+        "count": 1,
         "id": "hopperxtreme:netherite_multi_hupper"
     }
 }

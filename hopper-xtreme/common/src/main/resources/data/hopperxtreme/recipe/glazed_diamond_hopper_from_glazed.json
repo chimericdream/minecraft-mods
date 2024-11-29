@@ -2,10 +2,11 @@
     "type": "minecraft:crafting_shapeless",
     "category": "redstone",
     "ingredients": [
-        {"item": "hopperxtreme:honeyed_hopper"}
+        {"item": "minecraft:diamond"},
+        {"item": "hopperxtreme:glazed_hopper"}
     ],
     "result": {
         "count": 1,
-        "id": "hopperxtreme:honeyed_hupper"
+        "id": "hopperxtreme:glazed_diamond_hopper"
     }
 }

@@ -3,10 +3,15 @@
     "category": "redstone",
     "ingredients": [
         {"item": "minecraft:hopper"},
-        {"item": "minecraft:copper_ingot"}
+        {"item": "minecraft:gray_glazed_terracotta"}
+    ],
+    "pattern": [
+        "IGI",
+        "ICI",
+        " I "
     ],
     "result": {
         "count": 1,
-        "id": "hopperxtreme:copper_hopper"
+        "id": "hopperxtreme:glazed_hopper"
     }
 }

@@ -1,15 +1,12 @@
 {
-    "type": "minecraft:smithing_transform",
-    "template": {
-        "item": "minecraft:paper"
-    },
-    "addition": {
-        "item": "minecraft:gold_ingot"
-    },
-    "base": {
-        "item": "minecraft:hopper"
-    },
+    "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
+    "ingredients": [
+        {"item": "minecraft:gold_ingot"},
+        {"item": "minecraft:hopper"}
+    ],
     "result": {
+        "count": 1,
         "id": "hopperxtreme:golden_hopper"
     }
 }
