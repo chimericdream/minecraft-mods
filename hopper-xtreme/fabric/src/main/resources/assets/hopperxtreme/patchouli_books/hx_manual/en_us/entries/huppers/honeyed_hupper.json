@@ -1,0 +1,19 @@
+{
+    "name": "Honeyed Hupper",
+    "sortnum": 2,
+    "icon": "hopperxtreme:honeyed_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)20 game ticks (1 item / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:honeyed_hupper",
+            "recipe2": "hopperxtreme:honeyed_hopper_from_hupper",
+            "title": "Recipe"
+        }
+    ]
+}

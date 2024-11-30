@@ -1,0 +1,8 @@
+{
+    "name": "Hopper X-Treme Manual",
+    "landing_text": "Welcome to the Hopper X-Treme Manual! This book will guide you through the features of the mod.",
+    "version": 1,
+    "creative_tab": "minecraft:tools_and_utilities",
+    "show_progress": false,
+    "use_resource_pack": true
+}

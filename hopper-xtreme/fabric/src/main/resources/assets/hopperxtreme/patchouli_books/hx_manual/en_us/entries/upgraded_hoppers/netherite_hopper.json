@@ -1,0 +1,19 @@
+{
+    "name": "Netherite Hopper",
+    "sortnum": 5,
+    "icon": "hopperxtreme:netherite_hopper",
+    "category": "hopperxtreme:upgraded_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "This is the ultimate hopper! It has the fastest transfer rate of any hopper, clocking in at 20 items per second!$(br2)$(l)Cooldown$()$(br)1 game tick (20 items / second)"
+        },
+        {
+            "type": "patchouli:smithing",
+            "recipe": "hopperxtreme:netherite_hopper",
+            "title": "Recipe",
+            "text": "$(o)Note:$() A netherite upgrade smithing template is also required. Patchouli does not currently display smithing templates in recipes."
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Golden Hupper",
+    "sortnum": 4,
+    "icon": "hopperxtreme:golden_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)4 game ticks (5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:golden_hupper",
+            "recipe2": "hopperxtreme:golden_hopper_from_hupper",
+            "title": "Recipe"
+        }
+    ]
+}

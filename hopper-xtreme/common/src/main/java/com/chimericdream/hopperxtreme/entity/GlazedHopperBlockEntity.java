@@ -312,7 +312,7 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
         switch (facing) {
             case DOWN:
                 y = (double) pos.getY() - 0.6 - 0.1 * (double) facing.getOffsetX();
-                vy = -0.1 * ((double) 8 / hopperSpeed);
+                vy = -0.125 * ((double) 8 / hopperSpeed);
                 break;
             case NORTH:
                 z = (double) pos.getZ() - 0.6 - 0.1 * (double) facing.getOffsetZ();

@@ -1,0 +1,19 @@
+{
+    "name": "Glazed Diamond Hopper",
+    "sortnum": 4,
+    "icon": "hopperxtreme:glazed_diamond_hopper",
+    "category": "hopperxtreme:glazed_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)2 game ticks (10 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:glazed_diamond_hopper_from_diamond",
+            "recipe2": "hopperxtreme:glazed_diamond_hopper_from_glazed",
+            "title": "Recipe"
+        }
+    ]
+}

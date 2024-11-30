@@ -1,0 +1,18 @@
+{
+    "name": "Copper Hopper",
+    "sortnum": 2,
+    "icon": "hopperxtreme:copper_hopper",
+    "category": "hopperxtreme:upgraded_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "If you've ever had problems with hopper locking in a tight build, this hopper is for you! Thanks to copper's conductivity, it can transfer a redstone signal without blocking the transfer of items! (In other words, copper hoppers cannot be locked.)$(br2)$(l)Cooldown$()$(br)8 game ticks (2.5 items / second; same as the vanilla hopper)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:copper_hopper",
+            "title": "Recipe"
+        }
+    ]
+}

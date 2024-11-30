@@ -1,0 +1,19 @@
+{
+    "name": "Golden Multi-Hopper",
+    "sortnum": 2,
+    "icon": "hopperxtreme:golden_multi_hopper",
+    "category": "hopperxtreme:multi_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)4 game ticks (5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:golden_multi_hopper",
+            "recipe2": "hopperxtreme:golden_hopper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

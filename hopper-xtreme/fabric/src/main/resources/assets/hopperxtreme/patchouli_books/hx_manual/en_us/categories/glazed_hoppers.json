@@ -1,0 +1,6 @@
+{
+    "name": "Glazed Hoppers",
+    "description": "Owing to the smooth surface of glazed terracotta, items don't stay in these hoppers for long. Any items in their inventory are ejected in the direction the hopper is facing.",
+    "icon": "hopperxtreme:glazed_hopper",
+    "sortnum": 4
+}

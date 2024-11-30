@@ -1,0 +1,19 @@
+{
+    "name": "Multi-Hupper",
+    "sortnum": 7,
+    "icon": "hopperxtreme:multi_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)8 game ticks (2.5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:multi_hupper",
+            "recipe2": "hopperxtreme:hupper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

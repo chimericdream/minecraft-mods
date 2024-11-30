@@ -1,0 +1,24 @@
+{
+    "name": "Glazed Netherite Hopper",
+    "sortnum": 5,
+    "icon": "hopperxtreme:glazed_netherite_hopper",
+    "category": "hopperxtreme:glazed_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)1 game tick (20 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:glazed_netherite_hopper_from_netherite",
+            "title": "Recipe"
+        },
+        {
+            "type": "patchouli:smithing",
+            "recipe": "hopperxtreme:glazed_netherite_hopper",
+            "title": "Smithing Recipe",
+            "text": "$(o)Note:$() A netherite upgrade smithing template is also required. Patchouli does not currently display smithing templates in recipes."
+        }
+    ]
+}
