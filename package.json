@@ -7,8 +7,11 @@
         "build:modpacks": "bun ./scripts/create-modpacks.ts",
         "clean": "./gradlew clean",
         "copy:accesswideners": "bun ./scripts/copy-accesswideners.ts",
-        "postbuild": "bun ./scripts/revert-fabricmodjson.ts",
-        "prebuild": "bun run clean && bun run copy:accesswideners",
+        "postbuild": "bun run teardown:build",
+        "prebuild": "bun run clean && bun run prepare",
+        "prepare:build": "bun run copy:accesswideners && bun run update:patchoulibooks",
+        "teardown:build": "bun ./scripts/revert-fabricmodjson.ts",
+        "update:patchoulibooks": "bun ./scripts/update-patchouli-books.ts",
         "update:projectlist": "bun ./scripts/update-projectlist.ts",
         "update:settingsgradle": "bun ./scripts/update-settingsgradle.ts"
     },
