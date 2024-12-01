@@ -47,5 +47,14 @@
     "container.golden_multi_hupper": "Golden Multi-Hupper",
     "container.diamond_multi_hupper": "Diamond Multi-Hupper",
     "container.netherite_multi_hupper": "Netherite Multi-Hupper",
+    "container.glazed_hopper": "Glazed Hopper",
+    "container.honey_glazed_hopper": "Honey Glazed Hopper",
+    "container.glazed_golden_hopper": "Glazed Golden Hopper",
+    "container.glazed_diamond_hopper": "Glazed Diamond Hopper",
+    "container.glazed_netherite_hopper": "Glazed Netherite Hopper",
+    "container.glazed_multi_hopper": "Glazed Multi-Hopper",
+    "container.glazed_golden_multi_hopper": "Glazed Golden Multi-Hopper",
+    "container.glazed_diamond_multi_hopper": "Glazed Diamond Multi-Hopper",
+    "container.glazed_netherite_multi_hopper": "Glazed Netherite Multi-Hopper",
     "item.hopperxtreme.tools.wrench": "Wrench"
 }

@@ -1,5 +1,6 @@
 package com.chimericdream.hopperxtreme.block;
 
+import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreenHandler;
 import com.chimericdream.hopperxtreme.entity.GlazedHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.GlazedMultiHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
@@ -11,6 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.screen.ScreenHandlerType;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
@@ -120,6 +123,11 @@ public class ModBlocks {
             DIAMOND_MULTI_HUPPER.get(),
             NETHERITE_MULTI_HUPPER.get()
         ).build(null)
+    );
+
+    public static final RegistrySupplier<ScreenHandlerType<GlazedHopperScreenHandler>> GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+        GlazedHopperScreenHandler.SCREEN_ID,
+        () -> new ScreenHandlerType<>(GlazedHopperScreenHandler::new, FeatureSet.empty())
     );
 
     public static void init() {

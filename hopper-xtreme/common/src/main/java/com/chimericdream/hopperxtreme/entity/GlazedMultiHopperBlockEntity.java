@@ -1,6 +1,7 @@
 package com.chimericdream.hopperxtreme.entity;
 
 import com.chimericdream.hopperxtreme.block.GlazedMultiHopperBlock;
+import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -20,7 +21,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.screen.HopperScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_HOPPER_SCREEN_HANDLER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_MULTI_HOPPER_BLOCK_ENTITY;
 
 public class GlazedMultiHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
@@ -630,6 +631,6 @@ public class GlazedMultiHopperBlockEntity extends LootableContainerBlockEntity i
     }
 
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new HopperScreenHandler(syncId, playerInventory, this);
+        return new GlazedHopperScreenHandler(GLAZED_HOPPER_SCREEN_HANDLER.get(), syncId, playerInventory, this);
     }
 }
