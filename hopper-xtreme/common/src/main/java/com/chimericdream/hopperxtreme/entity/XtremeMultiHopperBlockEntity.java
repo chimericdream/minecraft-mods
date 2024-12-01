@@ -51,7 +51,7 @@ public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity i
     private boolean downConnected;
 
     public XtremeMultiHopperBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, 8);
+        this(pos, state, getCooldownForBlock(state.getBlock()));
     }
 
     public XtremeMultiHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
@@ -136,8 +136,10 @@ public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity i
     }
 
     private static int getCooldownForBlock(XtremeMultiHopperBlockEntity blockEntity) {
-        Block block = blockEntity.getCachedState().getBlock();
+        return getCooldownForBlock(blockEntity.getCachedState().getBlock());
+    }
 
+    private static int getCooldownForBlock(Block block) {
         if (block instanceof XtremeMultiHopperBlock) {
             return ((XtremeMultiHopperBlock) block).getCooldownInTicks();
         }

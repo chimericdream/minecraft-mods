@@ -1,0 +1,19 @@
+{
+    "name": "Netherite Multi-Hopper",
+    "sortnum": 4,
+    "icon": "hopperxtreme:netherite_multi_hopper",
+    "category": "hopperxtreme:multi_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)1 game tick (20 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:netherite_multi_hopper",
+            "recipe2": "hopperxtreme:netherite_hopper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

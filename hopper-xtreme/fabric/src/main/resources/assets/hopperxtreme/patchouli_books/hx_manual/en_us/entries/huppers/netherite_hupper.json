@@ -1,0 +1,19 @@
+{
+    "name": "Netherite Hupper",
+    "sortnum": 6,
+    "icon": "hopperxtreme:netherite_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)1 game tick (20 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:netherite_hupper",
+            "recipe2": "hopperxtreme:netherite_hopper_from_hupper",
+            "title": "Recipe"
+        }
+    ]
+}

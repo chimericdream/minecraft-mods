@@ -1,0 +1,19 @@
+{
+    "name": "Diamond Multi-Hupper",
+    "sortnum": 9,
+    "icon": "hopperxtreme:diamond_multi_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)2 game ticks (10 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:diamond_multi_hupper",
+            "recipe2": "hopperxtreme:diamond_hupper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

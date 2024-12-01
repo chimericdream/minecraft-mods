@@ -1,0 +1,19 @@
+{
+    "name": "Hupper",
+    "sortnum": 1,
+    "icon": "hopperxtreme:hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)8 game ticks (2.5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:hupper",
+            "recipe2": "hopperxtreme:hopper_from_hupper",
+            "title": "Recipe"
+        }
+    ]
+}

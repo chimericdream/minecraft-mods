@@ -34,6 +34,7 @@
         "chimericlib": ">=${chimericlib_compat}"
     },
     "recommends": {
-        "modmenu": ">=${modmenu_compat}"
+        "modmenu": ">=${modmenu_compat}",
+        "patchouli": ">=${patchouli_compat}"
     }
 }

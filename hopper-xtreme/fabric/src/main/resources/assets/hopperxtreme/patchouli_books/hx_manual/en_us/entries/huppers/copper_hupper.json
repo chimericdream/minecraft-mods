@@ -1,0 +1,19 @@
+{
+    "name": "Copper Hupper",
+    "sortnum": 3,
+    "icon": "hopperxtreme:copper_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)8 game ticks (2.5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:copper_hupper",
+            "recipe2": "hopperxtreme:copper_hopper_from_hupper",
+            "title": "Recipe"
+        }
+    ]
+}

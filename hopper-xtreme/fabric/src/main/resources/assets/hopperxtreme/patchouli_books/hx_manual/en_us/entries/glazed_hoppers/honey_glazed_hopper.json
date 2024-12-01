@@ -1,0 +1,19 @@
+{
+    "name": "Honey Glazed Hopper",
+    "sortnum": 2,
+    "icon": "hopperxtreme:honey_glazed_hopper",
+    "category": "hopperxtreme:glazed_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)20 game ticks (1 item / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:honey_glazed_hopper_from_honeyed",
+            "recipe2": "hopperxtreme:honey_glazed_hopper_from_glazed",
+            "title": "Recipe"
+        }
+    ]
+}

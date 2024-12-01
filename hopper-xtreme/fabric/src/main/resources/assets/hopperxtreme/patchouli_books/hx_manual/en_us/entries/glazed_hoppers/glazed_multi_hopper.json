@@ -1,0 +1,19 @@
+{
+    "name": "Glazed Multi-Hopper",
+    "sortnum": 6,
+    "icon": "hopperxtreme:glazed_multi_hopper",
+    "category": "hopperxtreme:glazed_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)8 game ticks (2.5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:glazed_multi_hopper",
+            "recipe2": "hopperxtreme:glazed_hopper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

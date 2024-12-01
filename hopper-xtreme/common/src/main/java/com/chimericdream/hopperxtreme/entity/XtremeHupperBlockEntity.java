@@ -49,7 +49,7 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     private Direction facing;
 
     public XtremeHupperBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, 8);
+        this(pos, state, getCooldownForBlock(state.getBlock()));
     }
 
     public XtremeHupperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
@@ -127,8 +127,10 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     private static int getCooldownForBlock(XtremeHupperBlockEntity blockEntity) {
-        Block block = blockEntity.getCachedState().getBlock();
+        return getCooldownForBlock(blockEntity.getCachedState().getBlock());
+    }
 
+    private static int getCooldownForBlock(Block block) {
         if (block instanceof XtremeHupperBlock) {
             return ((XtremeHupperBlock) block).getCooldownInTicks();
         }

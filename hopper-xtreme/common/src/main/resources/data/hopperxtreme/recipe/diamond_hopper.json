@@ -1,15 +1,12 @@
 {
-    "type": "minecraft:smithing_transform",
-    "template": {
-        "item": "minecraft:paper"
-    },
-    "addition": {
-        "item": "minecraft:diamond"
-    },
-    "base": {
-        "item": "hopperxtreme:golden_hopper"
-    },
+    "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
+    "ingredients": [
+        {"item": "minecraft:diamond"},
+        {"item": "hopperxtreme:golden_hopper"}
+    ],
     "result": {
+        "count": 1,
         "id": "hopperxtreme:diamond_hopper"
     }
 }

@@ -1,10 +1,12 @@
 {
     "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
     "ingredients": [
         {"item": "minecraft:hopper"},
         {"item": "minecraft:honeycomb"}
     ],
     "result": {
+        "count": 1,
         "id": "hopperxtreme:honeyed_hopper"
     }
 }

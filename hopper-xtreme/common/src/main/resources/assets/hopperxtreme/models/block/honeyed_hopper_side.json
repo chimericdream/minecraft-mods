@@ -2,7 +2,6 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"rim": "hopperxtreme:block/honeyed_hopper_inside",
 		"particle": "minecraft:block/hopper_outside",
 		"side": "minecraft:block/hopper_outside",
 		"inside": "hopperxtreme:block/honeyed_hopper_inside"
@@ -82,40 +81,40 @@
 			"from": [0, 15, 0],
 			"to": [16, 16, 2],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#rim"},
-				"east": {"uv": [0, 0, 2, 1], "texture": "#rim"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#rim"},
-				"west": {"uv": [0, 0, 2, 1], "texture": "#rim"},
-				"up": {"uv": [0, 0, 16, 2], "texture": "#rim"}
+				"north": {"uv": [0, 0, 16, 1], "texture": "#inside"},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#inside"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#inside"},
+				"west": {"uv": [0, 0, 2, 1], "texture": "#inside"},
+				"up": {"uv": [0, 0, 16, 2], "texture": "#inside"}
 			}
 		},
 		{
 			"from": [0, 15, 2],
 			"to": [2, 16, 14],
 			"faces": {
-				"east": {"uv": [0, 0, 12, 1], "texture": "#rim"},
-				"west": {"uv": [0, 0, 12, 1], "texture": "#rim"},
-				"up": {"uv": [0, 0, 2, 12], "texture": "#rim"}
+				"east": {"uv": [0, 0, 12, 1], "texture": "#inside"},
+				"west": {"uv": [0, 0, 12, 1], "texture": "#inside"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#inside"}
 			}
 		},
 		{
 			"from": [14, 15, 2],
 			"to": [16, 16, 14],
 			"faces": {
-				"east": {"uv": [0, 0, 12, 1], "texture": "#rim"},
-				"west": {"uv": [0, 0, 12, 1], "texture": "#rim"},
-				"up": {"uv": [0, 0, 2, 12], "texture": "#rim"}
+				"east": {"uv": [0, 0, 12, 1], "texture": "#inside"},
+				"west": {"uv": [0, 0, 12, 1], "texture": "#inside"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#inside"}
 			}
 		},
 		{
 			"from": [0, 15, 14],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#rim"},
-				"east": {"uv": [0, 0, 2, 1], "texture": "#rim"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#rim"},
-				"west": {"uv": [0, 0, 2, 1], "texture": "#rim"},
-				"up": {"uv": [0, 0, 16, 2], "texture": "#rim"}
+				"north": {"uv": [0, 0, 16, 1], "texture": "#inside"},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#inside"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#inside"},
+				"west": {"uv": [0, 0, 2, 1], "texture": "#inside"},
+				"up": {"uv": [0, 0, 16, 2], "texture": "#inside"}
 			}
 		}
 	],

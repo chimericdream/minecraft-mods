@@ -1,0 +1,6 @@
+{
+    "name": "Multi-Hoppers",
+    "description": "Multi-Hoppers can transfer items to as many as 5 inventories at once. Inventories are selected in a round-robin fashion, skipping sides that are disabled or where there is no valid target inventory.",
+    "icon": "hopperxtreme:multi_hopper",
+    "sortnum": 2
+}

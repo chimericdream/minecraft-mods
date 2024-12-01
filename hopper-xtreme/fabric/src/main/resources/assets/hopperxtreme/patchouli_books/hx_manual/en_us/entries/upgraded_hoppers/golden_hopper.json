@@ -1,0 +1,18 @@
+{
+    "name": "Golden Hopper",
+    "sortnum": 3,
+    "icon": "hopperxtreme:golden_hopper",
+    "category": "hopperxtreme:upgraded_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Stylish and efficient, the golden hopper is a great choice for any build!$(br2)$(l)Cooldown$()$(br)4 game ticks (5 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:golden_hopper",
+            "title": "Recipe"
+        }
+    ]
+}

@@ -8,6 +8,7 @@ export type ModProperties = {
     maven_group: string;
     archives_name: string;
     enabled_platforms: string;
+    has_patchouli_guide?: boolean;
 };
 
 export const getProjectFolder = (project: string) => path.join(__dirname, '..', '..', project);
