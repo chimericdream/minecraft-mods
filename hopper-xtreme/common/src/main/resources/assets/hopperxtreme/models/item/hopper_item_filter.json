@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "hopperxtreme:item/hopper_item_filter_unset"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 2233000
+            },
+            "model": "hopperxtreme:item/hopper_item_filter_set"
+        }
+    ]
+}
