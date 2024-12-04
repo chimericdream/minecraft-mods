@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
+    "ingredients": [
+        {"item": "hopperxtreme:filtered_diamond_hupper"}
+    ],
+    "result": {
+        "count": 1,
+        "id": "hopperxtreme:filtered_diamond_hopper"
+    }
+}
