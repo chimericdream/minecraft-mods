@@ -5,11 +5,6 @@
         {"item": "minecraft:hopper"},
         {"item": "minecraft:gray_glazed_terracotta"}
     ],
-    "pattern": [
-        "IGI",
-        "ICI",
-        " I "
-    ],
     "result": {
         "count": 1,
         "id": "hopperxtreme:glazed_hopper"
