@@ -93,6 +93,7 @@ public class XtremeHupperBlock extends BlockWithEntity {
 
     private final int cooldownInTicks;
     private final String baseKey;
+    private final boolean withFilter;
 
     static XtremeHupperBlock create(Settings settings) {
         return new XtremeHupperBlock(8, "default") {
@@ -100,10 +101,15 @@ public class XtremeHupperBlock extends BlockWithEntity {
     }
 
     public XtremeHupperBlock(int cooldownInTicks, String translationKey) {
+        this(cooldownInTicks, translationKey, false);
+    }
+
+    public XtremeHupperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = translationKey;
+        this.withFilter = withFilter;
 
         this.setDefaultState((BlockState) ((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(FACING, Direction.UP)).with(ENABLED, true));
     }
@@ -172,7 +178,7 @@ public class XtremeHupperBlock extends BlockWithEntity {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new XtremeHupperBlockEntity(pos, state, cooldownInTicks);
+        return new XtremeHupperBlockEntity(pos, state, cooldownInTicks, withFilter);
     }
 
     @Nullable

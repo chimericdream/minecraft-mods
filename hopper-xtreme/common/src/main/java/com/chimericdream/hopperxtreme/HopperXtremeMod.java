@@ -1,7 +1,9 @@
 package com.chimericdream.hopperxtreme;
 
 import com.chimericdream.hopperxtreme.block.ModBlocks;
+import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.item.ModItems;
+import com.chimericdream.hopperxtreme.registry.ModItemGroups;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -21,6 +23,8 @@ public final class HopperXtremeMod {
 
         ModBlocks.init();
         ModItems.init();
+        ModItemGroups.init();
+        HopperXtremeComponentTypes.init();
 
         REGISTRY_HELPER.init();
     }

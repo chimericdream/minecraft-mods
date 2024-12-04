@@ -1,6 +1,10 @@
 package com.chimericdream.hopperxtreme.entity;
 
+import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.block.XtremeHopperBlock;
+import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
+import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
+import com.chimericdream.hopperxtreme.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -34,10 +38,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import static com.chimericdream.hopperxtreme.block.ModBlocks.FILTERED_HOPPER_SCREEN_HANDLER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HOPPER_BLOCK_ENTITY;
 
 public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
     private final int cooldownInTicks;
+    public boolean withFilter;
 
     private static final int[][] AVAILABLE_SLOTS_CACHE = new int[54][];
     private DefaultedList<ItemStack> inventory;
@@ -50,17 +56,24 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     public XtremeHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
+        this(pos, state, cooldownInTicks, false);
+    }
+
+    public XtremeHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks, boolean withFilter) {
         super(XTREME_HOPPER_BLOCK_ENTITY.get(), pos, state);
 
         this.cooldownInTicks = cooldownInTicks;
-        this.inventory = DefaultedList.ofSize(5, ItemStack.EMPTY);
+        this.inventory = DefaultedList.ofSize(withFilter ? 6 : 5, ItemStack.EMPTY);
         this.transferCooldown = -1;
-        this.facing = (Direction) state.get(XtremeHopperBlock.FACING);
+        this.withFilter = withFilter;
+        this.facing = state.get(XtremeHopperBlock.FACING);
     }
 
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+        this.withFilter = nbt.getBoolean(ModInfo.FILTER_NBT_KEY);
+
+        this.inventory = DefaultedList.ofSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
         if (!this.readLootTable(nbt)) {
             Inventories.readNbt(nbt, this.inventory, registryLookup);
         }
@@ -74,6 +87,7 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
             Inventories.writeNbt(nbt, this.inventory, registryLookup);
         }
 
+        nbt.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
         nbt.putInt("TransferCooldown", this.transferCooldown);
     }
 
@@ -184,6 +198,10 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
         }
 
         for (int i = 0; i < blockEntity.size(); ++i) {
+            if (blockEntity.withFilter && i == blockEntity.size() - 1) {
+                continue;
+            }
+
             ItemStack itemStack = blockEntity.getStack(i);
 
             if (!itemStack.isEmpty()) {
@@ -327,66 +345,76 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
         return bl;
     }
 
-    public static ItemStack transfer(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction side) {
+    public static ItemStack transfer(@Nullable Inventory source, Inventory hopper, ItemStack stack, @Nullable Direction side) {
         int i;
-        if (to instanceof SidedInventory sidedInventory) {
+        if (hopper instanceof SidedInventory hopperInventory) {
             if (side != null) {
-                int[] is = sidedInventory.getAvailableSlots(side);
+                int[] is = hopperInventory.getAvailableSlots(side);
 
                 for (i = 0; i < is.length && !stack.isEmpty(); ++i) {
-                    stack = transfer(from, to, stack, is[i], side);
+                    stack = transfer(source, hopper, stack, is[i], side);
                 }
 
                 return stack;
             }
         }
 
-        int j = to.size();
+        int j = hopper.size();
 
         for (i = 0; i < j && !stack.isEmpty(); ++i) {
-            stack = transfer(from, to, stack, i, side);
+            stack = transfer(source, hopper, stack, i, side);
         }
 
         return stack;
     }
 
-    private static boolean canInsert(Inventory inventory, ItemStack stack, int slot, @Nullable Direction side) {
-        if (!inventory.isValid(slot, stack)) {
+    private static boolean canInsert(Inventory target, ItemStack stack, int slot, @Nullable Direction side) {
+        if (!target.isValid(slot, stack)) {
             return false;
         }
 
-        if (inventory instanceof SidedInventory sidedInventory) {
-            if (!sidedInventory.canInsert(slot, stack, side)) {
+        if (target instanceof SidedInventory hopperInventory) {
+            if (!hopperInventory.canInsert(slot, stack, side)) {
                 return false;
             }
+        }
+
+        if (target instanceof XtremeHopperBlockEntity hopper && hopper.withFilter) {
+            return HopperItemFilterItem.matchesFilter(hopper.getStack(5), stack);
+        }
+
+        boolean isFilter = ItemStack.areItemsEqual(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
+
+        return isFilter == (slot == 5);
+    }
+
+    private static boolean canExtract(Inventory hopper, Inventory source, ItemStack stack, int slot, Direction facing) {
+        if (!source.canTransferTo(hopper, slot, stack)) {
+            return false;
+        }
+
+        if (source instanceof SidedInventory sourceInventory) {
+            if (!sourceInventory.canExtract(slot, stack, facing)) {
+                return false;
+            }
+        }
+
+        if (((XtremeHopperBlockEntity) hopper).withFilter) {
+            return HopperItemFilterItem.matchesFilter(hopper.getStack(5), stack);
         }
 
         return true;
     }
 
-    private static boolean canExtract(Inventory hopperInventory, Inventory fromInventory, ItemStack stack, int slot, Direction facing) {
-        if (!fromInventory.canTransferTo(hopperInventory, slot, stack)) {
-            return false;
-        }
+    private static ItemStack transfer(@Nullable Inventory source, Inventory hopper, ItemStack stack, int slot, @Nullable Direction side) {
+        ItemStack itemStack = hopper.getStack(slot);
 
-        if (fromInventory instanceof SidedInventory sidedInventory) {
-            if (!sidedInventory.canExtract(slot, stack, facing)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static ItemStack transfer(@Nullable Inventory from, Inventory to, ItemStack stack, int slot, @Nullable Direction side) {
-        ItemStack itemStack = to.getStack(slot);
-
-        if (canInsert(to, stack, slot, side)) {
+        if (canInsert(hopper, stack, slot, side)) {
             boolean bl = false;
-            boolean bl2 = to.isEmpty();
+            boolean bl2 = hopper.isEmpty();
 
             if (itemStack.isEmpty()) {
-                to.setStack(slot, stack);
+                hopper.setStack(slot, stack);
                 stack = ItemStack.EMPTY;
                 bl = true;
             } else if (canMergeItems(itemStack, stack)) {
@@ -398,11 +426,11 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
             }
 
             if (bl) {
-                if (bl2 && to instanceof XtremeHopperBlockEntity hopperBlockEntity) {
+                if (bl2 && hopper instanceof XtremeHopperBlockEntity hopperBlockEntity) {
                     if (!hopperBlockEntity.isDisabled()) {
                         int j = 0;
 
-                        if (from instanceof XtremeHopperBlockEntity hopperBlockEntity2) {
+                        if (source instanceof XtremeHopperBlockEntity hopperBlockEntity2) {
                             if (hopperBlockEntity.lastTickTime >= hopperBlockEntity2.lastTickTime) {
                                 j = 1;
                             }
@@ -412,7 +440,7 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
                     }
                 }
 
-                to.markDirty();
+                hopper.markDirty();
             }
         }
 
@@ -525,6 +553,10 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        if (this.withFilter) {
+            return new FilteredHopperScreenHandler(FILTERED_HOPPER_SCREEN_HANDLER.get(), syncId, playerInventory, this);
+        }
+
         return new HopperScreenHandler(syncId, playerInventory, this);
     }
 }

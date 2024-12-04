@@ -15,20 +15,20 @@ import net.minecraft.util.Identifier;
 public class GlazedHopperScreenHandler extends ScreenHandler {
     public static final Identifier SCREEN_ID = Identifier.of(ModInfo.MOD_ID, "gui/glazed_hopper");
 
-    private final Inventory inventory;
+    private final Inventory hopper;
 
     public GlazedHopperScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(null, syncId, playerInventory, new SimpleInventory(1));
     }
 
-    public GlazedHopperScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public GlazedHopperScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory hopper) {
         super(type, syncId);
 
-        this.inventory = inventory;
+        this.hopper = hopper;
 
-        inventory.onOpen(playerInventory.player);
+        hopper.onOpen(playerInventory.player);
 
-        this.addSlot(new Slot(this.inventory, 0, 80, 20));
+        this.addSlot(new Slot(this.hopper, 0, 80, 20));
 
         for (int j = 0; j < 3; ++j) {
             for (int k = 0; k < 9; ++k) {
@@ -52,12 +52,12 @@ public class GlazedHopperScreenHandler extends ScreenHandler {
     }
 
     public Inventory getInventory() {
-        return inventory;
+        return hopper;
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return this.inventory.canPlayerUse(player);
+        return this.hopper.canPlayerUse(player);
     }
 
     @Override
@@ -68,11 +68,11 @@ public class GlazedHopperScreenHandler extends ScreenHandler {
         if (slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
-            if (invSlot < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+            if (invSlot < this.hopper.size()) {
+                if (!this.insertItem(originalStack, this.hopper.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+            } else if (!this.insertItem(originalStack, 0, this.hopper.size(), false)) {
                 return ItemStack.EMPTY;
             }
 

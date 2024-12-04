@@ -26,16 +26,22 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     private final int cooldownInTicks;
     private final String baseKey;
+    private final boolean withFilter;
 
     static XtremeMultiHopperBlock create(Settings settings) {
         return new XtremeMultiHopperBlock(8, "default");
     }
 
     public XtremeMultiHopperBlock(int cooldownInTicks, String baseKey) {
+        this(cooldownInTicks, baseKey, false);
+    }
+
+    public XtremeMultiHopperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = baseKey;
+        this.withFilter = withFilter;
     }
 
     public int getCooldownInTicks() {
@@ -53,7 +59,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new XtremeMultiHopperBlockEntity(pos, state, cooldownInTicks);
+        return new XtremeMultiHopperBlockEntity(pos, state, cooldownInTicks, withFilter);
     }
 
     @Nullable

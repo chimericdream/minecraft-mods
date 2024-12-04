@@ -1,6 +1,10 @@
 package com.chimericdream.hopperxtreme.entity;
 
+import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.block.XtremeHupperBlock;
+import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
+import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
+import com.chimericdream.hopperxtreme.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -34,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import static com.chimericdream.hopperxtreme.block.ModBlocks.FILTERED_HOPPER_SCREEN_HANDLER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HUPPER_BLOCK_ENTITY;
 
 
@@ -41,6 +46,7 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     private final Box INPUT_AREA_SHAPE = (Box) Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
 
     private final int cooldownInTicks;
+    public boolean withFilter;
 
     private static final int[][] AVAILABLE_SLOTS_CACHE = new int[54][];
     private DefaultedList<ItemStack> inventory;
@@ -53,17 +59,24 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     public XtremeHupperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
+        this(pos, state, cooldownInTicks, false);
+    }
+
+    public XtremeHupperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks, boolean withFilter) {
         super(XTREME_HUPPER_BLOCK_ENTITY.get(), pos, state);
 
         this.cooldownInTicks = cooldownInTicks;
-        this.inventory = DefaultedList.ofSize(5, ItemStack.EMPTY);
+        this.inventory = DefaultedList.ofSize(withFilter ? 6 : 5, ItemStack.EMPTY);
         this.transferCooldown = -1;
-        this.facing = (Direction) state.get(XtremeHupperBlock.FACING);
+        this.withFilter = withFilter;
+        this.facing = state.get(XtremeHupperBlock.FACING);
     }
 
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+        this.withFilter = nbt.getBoolean(ModInfo.FILTER_NBT_KEY);
+
+        this.inventory = DefaultedList.ofSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
         if (!this.readLootTable(nbt)) {
             Inventories.readNbt(nbt, this.inventory, registryLookup);
         }
@@ -77,6 +90,7 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
             Inventories.writeNbt(nbt, this.inventory, registryLookup);
         }
 
+        nbt.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
         nbt.putInt("TransferCooldown", this.transferCooldown);
     }
 
@@ -192,6 +206,10 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
         }
 
         for (int i = 0; i < blockEntity.size(); ++i) {
+            if (blockEntity.withFilter && i == blockEntity.size() - 1) {
+                continue;
+            }
+
             ItemStack itemStack = blockEntity.getStack(i);
 
             if (!itemStack.isEmpty()) {
@@ -298,11 +316,11 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
         return false;
     }
 
-    private static boolean extract(Hopper hopper, Inventory inventory, int slot, Direction side) {
+    private static boolean extract(Hopper hupper, Inventory inventory, int slot, Direction side) {
         ItemStack itemStack = inventory.getStack(slot);
-        if (!itemStack.isEmpty() && canExtract(hopper, inventory, itemStack, slot, side)) {
+        if (!itemStack.isEmpty() && canExtract(hupper, inventory, itemStack, slot, side)) {
             int i = itemStack.getCount();
-            ItemStack itemStack2 = transfer(inventory, hopper, inventory.removeStack(slot, 1), null);
+            ItemStack itemStack2 = transfer(inventory, hupper, inventory.removeStack(slot, 1), null);
 
             if (itemStack2.isEmpty()) {
                 inventory.markDirty();
@@ -335,66 +353,76 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
         return bl;
     }
 
-    public static ItemStack transfer(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction side) {
+    public static ItemStack transfer(@Nullable Inventory source, Inventory hupper, ItemStack stack, @Nullable Direction side) {
         int i;
-        if (to instanceof SidedInventory sidedInventory) {
+        if (hupper instanceof SidedInventory hupperInventory) {
             if (side != null) {
-                int[] is = sidedInventory.getAvailableSlots(side);
+                int[] is = hupperInventory.getAvailableSlots(side);
 
                 for (i = 0; i < is.length && !stack.isEmpty(); ++i) {
-                    stack = transfer(from, to, stack, is[i], side);
+                    stack = transfer(source, hupper, stack, is[i], side);
                 }
 
                 return stack;
             }
         }
 
-        int j = to.size();
+        int j = hupper.size();
 
         for (i = 0; i < j && !stack.isEmpty(); ++i) {
-            stack = transfer(from, to, stack, i, side);
+            stack = transfer(source, hupper, stack, i, side);
         }
 
         return stack;
     }
 
-    private static boolean canInsert(Inventory inventory, ItemStack stack, int slot, @Nullable Direction side) {
-        if (!inventory.isValid(slot, stack)) {
+    private static boolean canInsert(Inventory target, ItemStack stack, int slot, @Nullable Direction side) {
+        if (!target.isValid(slot, stack)) {
             return false;
         }
 
-        if (inventory instanceof SidedInventory sidedInventory) {
-            if (!sidedInventory.canInsert(slot, stack, side)) {
+        if (target instanceof SidedInventory hupperInventory) {
+            if (!hupperInventory.canInsert(slot, stack, side)) {
                 return false;
             }
+        }
+
+        if (target instanceof XtremeHupperBlockEntity hupper && hupper.withFilter) {
+            return HopperItemFilterItem.matchesFilter(hupper.getStack(5), stack);
+        }
+
+        boolean isFilter = ItemStack.areItemsEqual(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
+
+        return isFilter == (slot == 5);
+    }
+
+    private static boolean canExtract(Inventory hupper, Inventory source, ItemStack stack, int slot, Direction facing) {
+        if (!source.canTransferTo(hupper, slot, stack)) {
+            return false;
+        }
+
+        if (source instanceof SidedInventory sourceInventory) {
+            if (!sourceInventory.canExtract(slot, stack, facing)) {
+                return false;
+            }
+        }
+
+        if (((XtremeHupperBlockEntity) hupper).withFilter) {
+            return HopperItemFilterItem.matchesFilter(hupper.getStack(5), stack);
         }
 
         return true;
     }
 
-    private static boolean canExtract(Inventory hopperInventory, Inventory fromInventory, ItemStack stack, int slot, Direction facing) {
-        if (!fromInventory.canTransferTo(hopperInventory, slot, stack)) {
-            return false;
-        }
+    private static ItemStack transfer(@Nullable Inventory source, Inventory hupper, ItemStack stack, int slot, @Nullable Direction side) {
+        ItemStack itemStack = hupper.getStack(slot);
 
-        if (fromInventory instanceof SidedInventory sidedInventory) {
-            if (!sidedInventory.canExtract(slot, stack, facing)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static ItemStack transfer(@Nullable Inventory from, Inventory to, ItemStack stack, int slot, @Nullable Direction side) {
-        ItemStack itemStack = to.getStack(slot);
-
-        if (canInsert(to, stack, slot, side)) {
+        if (canInsert(hupper, stack, slot, side)) {
             boolean bl = false;
-            boolean bl2 = to.isEmpty();
+            boolean bl2 = hupper.isEmpty();
 
             if (itemStack.isEmpty()) {
-                to.setStack(slot, stack);
+                hupper.setStack(slot, stack);
                 stack = ItemStack.EMPTY;
                 bl = true;
             } else if (canMergeItems(itemStack, stack)) {
@@ -406,11 +434,11 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
             }
 
             if (bl) {
-                if (bl2 && to instanceof XtremeHupperBlockEntity hopperBlockEntity) {
+                if (bl2 && hupper instanceof XtremeHupperBlockEntity hopperBlockEntity) {
                     if (!hopperBlockEntity.isDisabled()) {
                         int j = 0;
 
-                        if (from instanceof XtremeHupperBlockEntity hopperBlockEntity2) {
+                        if (source instanceof XtremeHupperBlockEntity hopperBlockEntity2) {
                             if (hopperBlockEntity.lastTickTime >= hopperBlockEntity2.lastTickTime) {
                                 j = 1;
                             }
@@ -420,7 +448,7 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
                     }
                 }
 
-                to.markDirty();
+                hupper.markDirty();
             }
         }
 
@@ -433,8 +461,8 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     @Nullable
-    private static Inventory getInputInventory(World world, Hopper hopper, BlockPos pos, BlockState state) {
-        return getInventoryAt(world, pos, state, hopper.getHopperX(), hopper.getHopperY(), hopper.getHopperZ());
+    private static Inventory getInputInventory(World world, Hopper hupper, BlockPos pos, BlockState state) {
+        return getInventoryAt(world, pos, state, hupper.getHopperX(), hupper.getHopperY(), hupper.getHopperZ());
     }
 
     public static List<ItemEntity> getInputItemEntities(World world, Hopper hopper) {
@@ -537,6 +565,10 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        if (this.withFilter) {
+            return new FilteredHopperScreenHandler(FILTERED_HOPPER_SCREEN_HANDLER.get(), syncId, playerInventory, this);
+        }
+
         return new HopperScreenHandler(syncId, playerInventory, this);
     }
 }

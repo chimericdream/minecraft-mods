@@ -26,6 +26,7 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
 
     private final int cooldownInTicks;
     private final String baseKey;
+    private final boolean withFilter;
 
     static XtremeHopperBlock create(Settings settings) {
         return new XtremeHopperBlock(8, "default") {
@@ -33,10 +34,15 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
     }
 
     public XtremeHopperBlock(int cooldownInTicks, String translationKey) {
+        this(cooldownInTicks, translationKey, false);
+    }
+
+    public XtremeHopperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = translationKey;
+        this.withFilter = withFilter;
     }
 
     public int getCooldownInTicks() {
@@ -47,14 +53,14 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
         return baseKey;
     }
 
-	@Override
+    @Override
     protected MapCodec<XtremeHopperBlock> getCodec() {
         return CODEC;
     }
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new XtremeHopperBlockEntity(pos, state, cooldownInTicks);
+        return new XtremeHopperBlockEntity(pos, state, cooldownInTicks, withFilter);
     }
 
     @Nullable

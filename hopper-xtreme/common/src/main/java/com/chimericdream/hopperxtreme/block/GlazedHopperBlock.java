@@ -34,6 +34,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     private final int cooldownInTicks;
     private final String baseKey;
+    private final boolean withFilter;
 
     static GlazedHopperBlock create(Settings settings) {
         return new GlazedHopperBlock(8, "default") {
@@ -41,10 +42,15 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
     }
 
     public GlazedHopperBlock(int cooldownInTicks, String translationKey) {
+        this(cooldownInTicks, translationKey, false);
+    }
+
+    public GlazedHopperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = translationKey;
+        this.withFilter = withFilter;
     }
 
     public int getCooldownInTicks() {
@@ -71,7 +77,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GlazedHopperBlockEntity(pos, state, cooldownInTicks);
+        return new GlazedHopperBlockEntity(pos, state, cooldownInTicks, withFilter);
     }
 
     @Nullable

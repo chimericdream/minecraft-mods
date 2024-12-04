@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "key": {
+        "#": {"item": "minecraft:stick"},
+        "W": {"item": "minecraft:cobweb"},
+        "C": {"item": "minecraft:chain"}
+    },
+    "pattern": [
+        "#W#",
+        "#C#",
+        "###"
+    ],
+    "result": {
+        "count": 1,
+        "id": "hopperxtreme:hopper_item_filter",
+        "components": {
+            "hopperxtreme:filter_mode": {
+                "mode": "include"
+            }
+        }
+    }
+}
