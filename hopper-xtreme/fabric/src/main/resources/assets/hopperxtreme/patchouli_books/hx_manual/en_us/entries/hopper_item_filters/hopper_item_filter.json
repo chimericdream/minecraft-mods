@@ -1,5 +1,6 @@
 {
     "name": "Hopper Item Filter",
+    "sortnum": 1,
     "icon": "hopperxtreme:hopper_item_filter",
     "category": "hopperxtreme:filtered_hoppers",
     "read_by_default": true,
@@ -22,26 +23,6 @@
             ],
             "title": "Defining a filter",
             "text": "Note that the filter's texture changes slightly when it has items defined vs. when it is empty."
-        },
-        {
-            "type": "patchouli:image",
-            "images": [
-                "hopperxtreme:textures/patchouli/filters/hopper-without-filter.png",
-                "hopperxtreme:textures/patchouli/filters/hopper-with-filter.png"
-            ],
-            "title": "Adding to a hopper",
-            "text": "Filterable hoppers have an extra slot on the right side, marked by a small filter icon. Place the filter in this slot to enable filtering."
-        },
-        {
-            "type": "patchouli:image",
-            "images": [
-                "hopperxtreme:textures/patchouli/filters/chest-transfer-1.png",
-                "hopperxtreme:textures/patchouli/filters/chest-transfer-2.png",
-                "hopperxtreme:textures/patchouli/filters/chest-transfer-3.png",
-                "hopperxtreme:textures/patchouli/filters/hopper-with-items.png"
-            ],
-            "title": "Filtering in action",
-            "text": "Items being transferred from a chest to a filtered hopper. Notice that the wool is not being transferred, as it is not in the filter."
         }
     ]
 }

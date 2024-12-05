@@ -1,0 +1,49 @@
+{
+    "name": "Filtered Hoppers",
+    "sortnum": 2,
+    "icon": "hopperxtreme:diamond_hopper",
+    "category": "hopperxtreme:filtered_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Gold-tier hoppers and huppers, as well as their multi- and glazed variants, are able to be upgraded to accept item filters."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:filtered_diamond_hopper",
+            "recipe2": "hopperxtreme:filtered_diamond_hupper",
+            "title": "Recipe Examples"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "The multi- variants of filtered hoppers are crafted in the same manner as the non-filtered versions."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:filtered_diamond_multi_hopper",
+            "recipe2": "hopperxtreme:filtered_diamond_multi_hupper",
+            "title": "Recipe Examples"
+        },
+        {
+            "type": "patchouli:image",
+            "images": [
+                "hopperxtreme:textures/patchouli/filters/hopper-without-filter.png",
+                "hopperxtreme:textures/patchouli/filters/hopper-with-filter.png"
+            ],
+            "title": "Adding filters to a hopper",
+            "text": "Filterable hoppers have an extra slot on the right side, marked by a small filter icon. Place the filter in this slot to enable filtering."
+        },
+        {
+            "type": "patchouli:image",
+            "images": [
+                "hopperxtreme:textures/patchouli/filters/chest-transfer-1.png",
+                "hopperxtreme:textures/patchouli/filters/chest-transfer-2.png",
+                "hopperxtreme:textures/patchouli/filters/chest-transfer-3.png",
+                "hopperxtreme:textures/patchouli/filters/hopper-with-items.png"
+            ],
+            "title": "Filtering in action",
+            "text": "Items being transferred from a chest to a filtered hopper. Notice that the wool is not being transferred, as it is not in the filter."
+        }
+    ]
+}
