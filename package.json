@@ -8,7 +8,7 @@
         "clean": "./gradlew clean",
         "copy:accesswideners": "bun ./scripts/copy-accesswideners.ts",
         "postbuild": "bun run teardown:build",
-        "prebuild": "bun run clean && bun run prepare",
+        "prebuild": "bun run clean && bun run prepare:build",
         "prepare:build": "bun run copy:accesswideners && bun run update:patchoulibooks",
         "teardown:build": "bun ./scripts/revert-fabricmodjson.ts",
         "update:patchoulibooks": "bun ./scripts/update-patchouli-books.ts",
