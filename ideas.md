@@ -47,6 +47,7 @@
 #### ChimericLib
 
 * Add more helpers for Fabric datagen
+* Add carpets to `c:shears_mineable` tag
 
 #### Cobblicious (planned)
 
