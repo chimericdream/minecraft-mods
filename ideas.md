@@ -7,6 +7,7 @@
 * Craftable pottery sherds
     * Mechanic similar to how smithing templates are copied
     * Special workstation?
+* Pottery sherds for each special banner pattern
 
 #### Athenaeum
 
@@ -34,6 +35,8 @@
 * Variable beacon bonuses depending on payment
 * Additional beacon effects
 * "Inverted" beacons (negative effects)
+* Redirect beacon beams
+* Hide beacon beams
 
 #### Blacklight (planned)
 
@@ -56,7 +59,22 @@
 
 #### Enchantment Numbers Fix
 
-*
+* Rename
+* Add some new enchantments
+* Override which items can be enchanted with which enchantments
+* Allow previously incompatible enchantments to be combined
+    * Some combinations may be still be disabled by default
+        * Silk Touch and Fortune
+        * Riptide and Loyalty
+        * Riptide and Channeling
+* Allow non-solid blocks to be placed between bookshelves and the enchanting table
+    * Inspiration: https://www.curseforge.com/minecraft/mc-mods/enchanter-fix
+* Configurable sorting of enchantments
+    * Alphabetical
+    * Vanilla order
+    * Custom order
+    * Grouped by type
+* Configurable colors/icons for enchantment tooltips
 
 #### Flat Bedrock
 
@@ -98,6 +116,11 @@
 #### Minekea
 
 * Iron shelves
+* Hammer rework
+    * Remove trowel functionality
+    * Right-clicking a block with the hammer should instead convert it to the cracked/cobbled variant, if one exists
+    * Break 3x3 area instead of a single block
+* New item to replace the hammer's trowel functionality
 
 #### Miniblock Merchants
 
