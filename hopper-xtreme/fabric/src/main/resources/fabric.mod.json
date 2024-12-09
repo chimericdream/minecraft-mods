@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.hopperxtreme.fabric.client.HopperXtremeFabricClient"
+        ],
+        "fabric-gametest": [
+            "com.chimericdream.hopperxtreme.test.TransferSpeedTest"
         ]
     },
     "mixins": [
