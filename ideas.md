@@ -19,6 +19,10 @@
 * Book catalog
 * Advancements
 * Additional configuration options to control which books can be generated
+* GUI improvements for creating books
+    * Inspiration: https://www.curseforge.com/minecraft/mc-mods/stendhal
+    * I like the premise of this mod, but think it could be improved in a few ways
+    * Move writeable book GUI to center of screen
 
 #### Banner Tweaks
 
@@ -173,6 +177,7 @@
     * [ ] Deep Storage (3 levels): extra rows of storage
         * 1 row per level
 * [ ] Apply banners to a shulker
+* [ ] Display nameplates above named shulker boxes
 
 #### Sponj
 
@@ -180,4 +185,6 @@
 
 #### Villager Tweaks
 
-* 
+* [ ] Item (shackles?) that can be dispensed onto a villager to prevent them from moving
+* [ ] Re-add stacked curing discounts
+
