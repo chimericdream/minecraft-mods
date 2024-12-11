@@ -14,6 +14,7 @@
 * Use shears on a creaking heart block to lock its visual state (active/inactive)
 * Locked creaking hearts will not spawn creaking mobs, even if placed between pale oak logs
 * Purely decorative, keeping the texture they had when they were sheared
+* Same thing, but for the eyeblossoms
 
 #### Athenaeum
 
