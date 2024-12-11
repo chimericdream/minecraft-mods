@@ -154,7 +154,7 @@
 
 *
 
-#### Shulker Stuff (planned)
+#### Shulker Stuff
 
 * [x] Make shulkers behave more like bundles
     * [x] Insert items by right-clicking them with the shulker in hand
