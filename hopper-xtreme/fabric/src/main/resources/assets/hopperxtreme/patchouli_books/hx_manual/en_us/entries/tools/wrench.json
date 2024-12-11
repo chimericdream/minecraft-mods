@@ -1,6 +1,7 @@
 {
     "name": "Wrench",
     "icon": "hopperxtreme:tools/wrench",
+    "flag": "hopperxtreme:wrench_enabled",
     "category": "hopperxtreme:tools",
     "read_by_default": true,
     "pages": [
