@@ -9,6 +9,12 @@
     * Special workstation?
 * Pottery sherds for each special banner pattern
 
+#### Artificial Heart (planned)
+
+* Use shears on a creaking heart block to lock its visual state (active/inactive)
+* Locked creaking hearts will not spawn creaking mobs, even if placed between pale oak logs
+* Purely decorative, keeping the texture they had when they were sheared
+
 #### Athenaeum
 
 * More books!
