@@ -24,6 +24,7 @@
 * More books!
 * Add books to loot tables for other structures, including modded structures
 * Additional metadata for books, such as genre
+* Longer books
 * Custom blocks/items
 * New villager type
 * Book catalog
@@ -41,6 +42,7 @@
 * Banner shape variants
     * Jagged bottoms
     * Sharp
+    * Pennant
 * Allow placing on the underside of blocks
 * Allow placing horizontally
 
