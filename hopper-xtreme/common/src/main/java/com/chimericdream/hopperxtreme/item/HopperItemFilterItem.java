@@ -169,7 +169,7 @@ public class HopperItemFilterItem extends Item {
             }
         }
 
-        return false;
+        return mode.equals(FilterMode.EXCLUDE);
     }
 
     public enum FilterMode {
