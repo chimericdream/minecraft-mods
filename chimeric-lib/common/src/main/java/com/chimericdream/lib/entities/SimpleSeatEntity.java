@@ -3,15 +3,17 @@ package com.chimericdream.lib.entities;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.network.EntityTrackerEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 /**
@@ -41,12 +43,19 @@ public class SimpleSeatEntity extends Entity {
 
     @Override
     public void tick() {
-        if (this.age > 20 && this.getPassengerList().isEmpty()) {
-            this.kill();
+        if (this.getWorld() instanceof ServerWorld world) {
+            if (this.age > 20 && this.getPassengerList().isEmpty()) {
+                this.kill(world);
+            }
         }
     }
 
-    public static class EmptyRenderer extends EntityRenderer<SimpleSeatEntity> {
+    @Override
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        return false;
+    }
+
+    public static class EmptyRenderer extends EntityRenderer<SimpleSeatEntity, EntityRenderState> {
         public EmptyRenderer(EntityRendererFactory.Context ctx) {
             super(ctx);
         }
@@ -57,7 +66,7 @@ public class SimpleSeatEntity extends Entity {
         }
 
         @Override
-        public Identifier getTexture(SimpleSeatEntity entity) {
+        public EntityRenderState createRenderState() {
             return null;
         }
     }

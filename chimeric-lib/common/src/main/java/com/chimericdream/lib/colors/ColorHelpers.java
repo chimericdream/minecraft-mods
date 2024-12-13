@@ -14,11 +14,11 @@ import java.util.List;
 public class ColorHelpers {
     public record RGB(int r, int g, int b) {
         public static RGB fromInt(int color) {
-            return new RGB(ColorHelper.Argb.getRed(color), ColorHelper.Argb.getGreen(color), ColorHelper.Argb.getBlue(color));
+            return new RGB(ColorHelper.getRed(color), ColorHelper.getGreen(color), ColorHelper.getBlue(color));
         }
 
         public int getColor() {
-            return ColorHelper.Argb.getArgb(0, r, g, b);
+            return ColorHelper.getArgb(0, r, g, b);
         }
 
         public String toHex() {
@@ -26,7 +26,7 @@ public class ColorHelpers {
         }
 
         public int toInt() {
-            return ColorHelper.Argb.getArgb(0, r, g, b);
+            return ColorHelper.getArgb(0, r, g, b);
         }
     }
 
@@ -159,9 +159,9 @@ public class ColorHelpers {
 
         for (DyeItem dyeItem : dyes) {
             int p = dyeItem.getColor().getEntityColor();
-            int q = ColorHelper.Argb.getRed(p);
-            int r = ColorHelper.Argb.getGreen(p);
-            int s = ColorHelper.Argb.getBlue(p);
+            int q = ColorHelper.getRed(p);
+            int r = ColorHelper.getGreen(p);
+            int s = ColorHelper.getBlue(p);
             l += Math.max(q, Math.max(r, s));
             i += q;
             j += r;

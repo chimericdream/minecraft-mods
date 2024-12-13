@@ -4,7 +4,7 @@ import com.chimericdream.lib.util.Tool;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.TextureMap;
+import net.minecraft.client.data.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;

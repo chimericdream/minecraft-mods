@@ -3,7 +3,7 @@ package com.chimericdream.lib.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -65,7 +65,7 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+//        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.drawBackgroundTexture(context);
@@ -85,46 +85,58 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         // left-top
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x,
             this.y,
             BG_X,
             BG_Y,
             BG_CORNER,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         // right-top
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + this.backgroundWidth - BG_CORNER,
             this.y,
             BG_W - BG_CORNER,
             BG_Y,
             BG_CORNER,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         // right-top
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x,
             this.y + this.backgroundHeight - BG_CORNER,
             BG_X,
             BG_H - BG_CORNER,
             BG_CORNER,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         // right-bottom
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + this.backgroundWidth - BG_CORNER,
             this.y + this.backgroundHeight - BG_CORNER,
             BG_W - BG_CORNER,
             BG_H - BG_CORNER,
             BG_CORNER,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         //
@@ -134,93 +146,117 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
             // top
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
                 this.y,
                 BG_CORNER,
                 BG_Y,
                 BG_W - BG_CORNER * 2,
-                BG_CORNER
+                BG_CORNER,
+                BG_W,
+                BG_H
             );
 
             // bottom
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
                 this.y + this.backgroundHeight - BG_CORNER,
                 BG_CORNER,
                 BG_H - BG_CORNER,
                 BG_W - BG_CORNER * 2,
-                BG_CORNER
+                BG_CORNER,
+                BG_W,
+                BG_H
             );
         }
 
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             // left
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x,
                 this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_X,
                 BG_CORNER,
                 BG_CORNER,
-                BG_H - BG_CORNER * 2
+                BG_H - BG_CORNER * 2,
+                BG_W,
+                BG_H
             );
 
             // right
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x + this.backgroundWidth - BG_CORNER,
                 this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_W - BG_CORNER,
                 BG_CORNER,
                 BG_CORNER,
-                BG_H - BG_CORNER * 2
+                BG_H - BG_CORNER * 2,
+                BG_W,
+                BG_H
             );
         }
 
         // top
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
             this.y,
             BG_CORNER,
             BG_Y,
             hrem,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         // bottom
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
             this.y + this.backgroundHeight - BG_CORNER,
             BG_CORNER,
             BG_H - BG_CORNER,
             hrem,
-            BG_CORNER
+            BG_CORNER,
+            BG_W,
+            BG_H
         );
 
         // left
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x,
             this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_X,
             BG_CORNER,
             BG_CORNER,
-            vrem
+            vrem,
+            BG_W,
+            BG_H
         );
 
         // right
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + this.backgroundWidth - BG_CORNER,
             this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_W - BG_CORNER,
             BG_CORNER,
             BG_CORNER,
-            vrem
+            vrem,
+            BG_W,
+            BG_H
         );
 
         //
@@ -230,47 +266,59 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             for (int hcnt = 0; hcnt < hnum; ++hcnt) {
                 context.drawTexture(
+                    RenderLayer::getGuiTextured,
                     BG,
                     this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
                     this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                     BG_CORNER,
                     BG_CORNER,
                     BG_W - BG_CORNER * 2,
-                    BG_H - BG_CORNER * 2
+                    BG_H - BG_CORNER * 2,
+                    BG_W,
+                    BG_H
                 );
             }
 
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
                 this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_CORNER,
                 BG_CORNER,
                 hrem,
-                BG_H - BG_CORNER * 2
+                BG_H - BG_CORNER * 2,
+                BG_W,
+                BG_H
             );
         }
 
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 BG,
                 this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
                 this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
                 BG_CORNER,
                 BG_CORNER,
                 BG_W - BG_CORNER * 2,
-                vrem
+                vrem,
+                BG_W,
+                BG_H
             );
         }
 
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             BG,
             this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
             this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_CORNER,
             BG_CORNER,
             hrem,
-            vrem
+            vrem,
+            BG_W,
+            BG_H
         );
     }
 
@@ -288,47 +336,59 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             for (int hcnt = 0; hcnt < hnum; ++hcnt) {
                 context.drawTexture(
+                    RenderLayer::getGuiTextured,
                     CONTAINER,
                     this.x + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
                     this.y + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
                     CINV_X,
                     CINV_Y,
                     CINV_COLS * SLOT_SIZE,
-                    CINV_ROWS * SLOT_SIZE
+                    CINV_ROWS * SLOT_SIZE,
+                    256,
+                    256
                 );
             }
 
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 CONTAINER,
                 this.x + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
                 this.y + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
                 CINV_X,
                 CINV_Y,
                 hrem,
-                CINV_ROWS * SLOT_SIZE
+                CINV_ROWS * SLOT_SIZE,
+                256,
+                256
             );
         }
 
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
             context.drawTexture(
+                RenderLayer::getGuiTextured,
                 CONTAINER,
                 this.x + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
                 this.y + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
                 CINV_X,
                 CINV_Y,
                 CINV_COLS * SLOT_SIZE,
-                vrem
+                vrem,
+                256,
+                256
             );
         }
 
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             CONTAINER,
             this.x + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
             this.y + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
             CINV_X,
             CINV_Y,
             hrem,
-            vrem
+            vrem,
+            256,
+            256
         );
 
         //
@@ -336,13 +396,16 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         //
 
         context.drawTexture(
+            RenderLayer::getGuiTextured,
             CONTAINER,
             this.x + CINV_X + (this.numCols - CINV_COLS) * (SLOT_SIZE / 2),
             this.y + CINV_Y + this.numRows * SLOT_SIZE + CINV_MB,
             PINV_X,
             PINV_Y,
             PINV_W,
-            PINV_H
+            PINV_H,
+            256,
+            256
         );
     }
 }
