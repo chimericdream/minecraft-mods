@@ -5,7 +5,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -16,9 +19,11 @@ import net.minecraft.world.World;
 
 public class WetLavaSponjBlock extends Block {
     public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "wet_lava_sponj");
+    public static final RegistryKey<Block> BLOCK_REGISTRY_KEY = RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID);
+    public static final RegistryKey<Item> ITEM_REGISTRY_KEY = RegistryKey.of(RegistryKeys.ITEM, BLOCK_ID);
 
     public WetLavaSponjBlock() {
-        super(Settings.copy(Blocks.SPONGE));
+        super(Settings.copy(Blocks.SPONGE).registryKey(BLOCK_REGISTRY_KEY));
     }
 
 //    public void register() {

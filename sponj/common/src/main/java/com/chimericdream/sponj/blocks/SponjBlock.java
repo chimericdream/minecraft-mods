@@ -10,29 +10,29 @@ import net.minecraft.block.FluidBlock;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Queue;
 
 public class SponjBlock extends Block {
     public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "sponj");
+    public static final RegistryKey<Block> BLOCK_REGISTRY_KEY = RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID);
+    public static final RegistryKey<Item> ITEM_REGISTRY_KEY = RegistryKey.of(RegistryKeys.ITEM, BLOCK_ID);
 
     public SponjBlock() {
-        super(Settings.copy(Blocks.SPONGE));
+        super(Settings.copy(Blocks.SPONGE).registryKey(BLOCK_REGISTRY_KEY));
     }
-
-//    public void register() {
-//        SPONJ_BLOCKS = new ArrayList<>(List.of(SponjMod.SPONJ, SponjMod.WET_SPONJ));
-//
-//        Registry.register(Registries.BLOCK, BLOCK_ID, this);
-//        Registry.register(Registries.ITEM, BLOCK_ID, new BlockItem(this, new Item.Settings()));
-//    }
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!oldState.isOf(state.getBlock())) {
@@ -40,9 +40,9 @@ public class SponjBlock extends Block {
         }
     }
 
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, @Nullable WireOrientation wireOrientation, boolean notify) {
         this.update(world, pos);
-        super.neighborUpdate(state, world, pos, block, fromPos, notify);
+        super.neighborUpdate(state, world, pos, block, wireOrientation, notify);
     }
 
     protected void update(World world, BlockPos pos) {
