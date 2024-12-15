@@ -1,0 +1,7 @@
+architectury {
+    common project(':artificial-heart').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/artificialheart.accesswidener")
+}

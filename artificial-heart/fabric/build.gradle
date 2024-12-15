@@ -1,0 +1,16 @@
+architectury {
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":artificial-heart:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':artificial-heart:common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':artificial-heart:common', configuration: 'transformProductionFabric')
+}

@@ -1,0 +1,88 @@
+{
+    "multipart": [
+        {
+            "apply": {"model": "minecraft:block/creaking_heart"},
+            "when": {"axis": "y"}
+        },
+        {
+            "apply": {"model": "minecraft:block/creaking_heart", "x": 90, "y": 90},
+            "when": {"axis": "x"}
+        },
+        {
+            "apply": {"model": "minecraft:block/creaking_heart", "x": 90},
+            "when": {"axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/north_face_active"},
+            "when": {"active_north": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/east_face_active"},
+            "when": {"active_east": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/south_face_active"},
+            "when": {"active_south": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/west_face_active"},
+            "when": {"active_west": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/up_face_active"},
+            "when": {"active_up": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/down_face_active"},
+            "when": {"active_down": "true", "axis": "y"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/north_face_active", "x": 90, "y": 90},
+            "when": {"active_north": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/east_face_active", "x": 90, "y": 90},
+            "when": {"active_east": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/south_face_active", "x": 90, "y": 90},
+            "when": {"active_south": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/west_face_active", "x": 90, "y": 90},
+            "when": {"active_west": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/up_face_active", "x": 90, "y": 90},
+            "when": {"active_up": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/down_face_active", "x": 90, "y": 90},
+            "when": {"active_down": "true", "axis": "x"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/north_face_active", "x": 90},
+            "when": {"active_north": "true", "axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/east_face_active", "x": 90},
+            "when": {"active_east": "true", "axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/south_face_active", "x": 90},
+            "when": {"active_south": "true", "axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/west_face_active", "x": 90},
+            "when": {"active_west": "true", "axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/up_face_active", "x": 90},
+            "when": {"active_up": "true", "axis": "z"}
+        },
+        {
+            "apply": {"model": "artificialheart:block/artificial_heart/down_face_active", "x": 90},
+            "when": {"active_down": "true", "axis": "z"}
+        }
+    ]
+}
