@@ -53,7 +53,7 @@ subprojects {
             // retrieving dependencies.
             maven {
                 name = "GitHubPackages"
-                url = "https://maven.pkg.github.com/chimericdream/chimericlib-mc"
+                url = "https://maven.pkg.github.com/chimericdream/minecraft-mods"
                 credentials {
                     username = System.getenv("GITHUB_ACTOR")
                     password = System.getenv("GITHUB_TOKEN")
