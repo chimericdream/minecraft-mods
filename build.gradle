@@ -77,25 +77,25 @@ subprojects {
         }
     }
 
-    // if (project.parent != null && project.parent.name !== 'chimeric-lib') {
-    //     if (project.name == 'common') {
-    //         dependencies {
-    //             modImplementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
-    //         }
-    //     }
+    if (project.parent != null && project.parent.name !== 'chimeric-lib') {
+        if (project.name == 'common') {
+            dependencies {
+                modImplementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
+            }
+        }
 
-    //     if (project.name == 'fabric') {
-    //         dependencies {
-    //             modImplementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
-    //         }
-    //     }
+        if (project.name == 'fabric') {
+            dependencies {
+                modImplementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
+            }
+        }
 
-    //     if (project.name == 'neoforge') {
-    //         dependencies {
-    //             modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
-    //         }
-    //     }
-    // }
+        if (project.name == 'neoforge') {
+            dependencies {
+                modImplementation "com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}"
+            }
+        }
+    }
 
     if (project.name == 'common') {
         dependencies {
