@@ -15,8 +15,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - uses: actions/setup-node@v4
-          with:
-            node-version: 22
+        with:
+          node-version: 22
       - name: Install Bun
         run: npm i -g bun
       - name: Install npm deps
