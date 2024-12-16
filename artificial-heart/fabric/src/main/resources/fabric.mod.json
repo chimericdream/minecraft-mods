@@ -31,8 +31,7 @@
         "java": ">=21",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
-        "chimericlib": ">=${chimericlib_compat}",
-        "yet_another_config_lib_v3": ">=${yacl_compat}"
+        "chimericlib": ">=${chimericlib_compat}"
     },
     "recommends": {
         "modmenu": ">=${modmenu_compat}"

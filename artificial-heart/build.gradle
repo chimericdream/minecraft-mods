@@ -30,8 +30,7 @@ subprojects {
                 mod_id: project.mod_id,
                 mod_name: project.mod_name,
                 mod_description: project.mod_description,
-                modmenu_compat: project.modmenu_compat,
-                yacl_compat: project.yacl_compat
+                modmenu_compat: project.modmenu_compat
         }
     }
 

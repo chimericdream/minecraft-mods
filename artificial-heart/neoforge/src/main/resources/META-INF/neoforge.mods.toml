@@ -41,12 +41,5 @@ versionRange = "[${chimericlib_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
-modId = "yet_another_config_lib_v3"
-type = "required"
-versionRange = "[${yacl_compat},)"
-ordering = "AFTER"
-side = "BOTH"
-
 [[mixins]]
 config = "artificialheart.mixins.json"

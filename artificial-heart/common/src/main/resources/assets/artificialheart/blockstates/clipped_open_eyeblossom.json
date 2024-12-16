@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "minecraft:block/open_eyeblossom"
+            "model": "artificialheart:block/clipped_open_eyeblossom"
         }
     }
 }

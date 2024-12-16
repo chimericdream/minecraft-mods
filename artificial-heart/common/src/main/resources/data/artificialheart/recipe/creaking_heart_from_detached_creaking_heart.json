@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": "artificialheart:artificial_creaking_heart",
+        "X": "minecraft:resin_clump"
+    },
+    "pattern": [
+        "XXX",
+        "X#X",
+        "XXX"
+    ],
+    "result": {
+        "count": 1,
+        "id": "minecraft:creaking_heart"
+    }
+}
