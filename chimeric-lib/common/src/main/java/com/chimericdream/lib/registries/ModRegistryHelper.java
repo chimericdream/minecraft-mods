@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -86,6 +87,26 @@ public class ModRegistryHelper {
 
         LOGGER.debug("Registering custom component types");
         CUSTOM_COMPONENTS.register();
+    }
+
+    public Identifier makeId(String key) {
+        return Identifier.of(this.modId, key);
+    }
+
+    public RegistryKey<Block> makeBlockRegistryKey(String key) {
+        return makeBlockRegistryKey(makeId(key));
+    }
+
+    public RegistryKey<Block> makeBlockRegistryKey(Identifier id) {
+        return RegistryKey.of(RegistryKeys.BLOCK, id);
+    }
+
+    public RegistryKey<Item> makeItemRegistryKey(String key) {
+        return makeItemRegistryKey(makeId(key));
+    }
+
+    public RegistryKey<Item> makeItemRegistryKey(Identifier id) {
+        return RegistryKey.of(RegistryKeys.ITEM, id);
     }
 
     public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String name, final Supplier<T> supplier) {
