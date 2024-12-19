@@ -17,14 +17,16 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class HopperItemFilterItem extends Item {
     public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "hopper_item_filter");
@@ -34,8 +36,15 @@ public class HopperItemFilterItem extends Item {
         FilterMode.EXCLUDE, "item.hopperxtreme.hopper_item_filter.tooltip.exclude"
     );
 
+    @SuppressWarnings("UnstableApiUsage")
     public HopperItemFilterItem() {
-        super(new Settings().maxCount(1).arch$tab(ItemGroups.REDSTONE));
+        super(
+            new Settings()
+                .maxCount(1)
+                .arch$tab(ItemGroups.REDSTONE)
+                .useItemPrefixedTranslationKey()
+                .registryKey(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID))
+        );
     }
 
     @Override
@@ -58,7 +67,7 @@ public class HopperItemFilterItem extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         if (player.getWorld() != null && !player.getWorld().isClient) {
             if (player.isSneaking()) {
                 try {
@@ -75,16 +84,16 @@ public class HopperItemFilterItem extends Item {
                         player.sendMessage(Text.translatable(TOOLTIP_KEYS.get(newMode)), true);
                     }
 
-                    return TypedActionResult.success(player.getStackInHand(hand));
+                    return ActionResult.SUCCESS.withNewHandStack(player.getStackInHand(hand));
                 } catch (IllegalArgumentException e) {
-                    return TypedActionResult.fail(player.getStackInHand(hand));
+                    return ActionResult.FAIL;
                 }
             } else {
                 openScreen(player, player.getStackInHand(hand));
             }
         }
 
-        return TypedActionResult.success(player.getStackInHand(hand));
+        return ActionResult.SUCCESS.withNewHandStack(player.getStackInHand(hand));
     }
 
     public static void openScreen(PlayerEntity player, ItemStack filter) {
@@ -142,7 +151,7 @@ public class HopperItemFilterItem extends Item {
         public void markDirty() {
             filterStack.set(DataComponentTypes.CONTAINER, ContainerComponent.fromStacks(items));
             if (this.hasAnyItems()) {
-                filterStack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(2233000));
+                filterStack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(), List.of(), List.of("2233000"), List.of()));
             } else {
                 filterStack.remove(DataComponentTypes.CUSTOM_MODEL_DATA);
             }

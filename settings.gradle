@@ -21,7 +21,7 @@ def projectList = [
 //    'enchantment-numbers-fix',
 //    'flat-bedrock',
 //    'hang-from-slabs',
-//    'hopper-xtreme',
+'hopper-xtreme',
 //    'houdini-block',
 //    'jdcrafte',
 //    'minekea',

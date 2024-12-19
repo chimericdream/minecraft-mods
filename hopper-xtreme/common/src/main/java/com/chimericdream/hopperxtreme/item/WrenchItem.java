@@ -17,11 +17,20 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
+
 public class WrenchItem extends Item {
     public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "tools/wrench");
 
+    @SuppressWarnings("UnstableApiUsage")
     public WrenchItem() {
-        super(new Settings().maxCount(1).arch$tab(ItemGroups.TOOLS));
+        super(
+            new Settings()
+                .maxCount(1)
+                .arch$tab(ItemGroups.TOOLS)
+                .useItemPrefixedTranslationKey()
+                .registryKey(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID))
+        );
     }
 
     private boolean tryPlacing(BlockPos pos, BlockState state, World world) {

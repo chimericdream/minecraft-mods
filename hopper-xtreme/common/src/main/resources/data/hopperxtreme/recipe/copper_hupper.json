@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shapeless",
     "category": "redstone",
     "ingredients": [
-        {"item": "hopperxtreme:copper_hopper"}
+        "hopperxtreme:copper_hopper"
     ],
     "result": {
         "count": 1,

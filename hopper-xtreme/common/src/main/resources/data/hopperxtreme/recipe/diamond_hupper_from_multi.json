@@ -1,7 +1,7 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {"item": "hopperxtreme:diamond_multi_hupper"}
+        "hopperxtreme:diamond_multi_hupper"
     ],
     "result": {
         "count": 4,

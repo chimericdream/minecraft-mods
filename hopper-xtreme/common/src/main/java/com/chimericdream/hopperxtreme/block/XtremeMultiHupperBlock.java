@@ -30,7 +30,6 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
@@ -42,11 +41,13 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHupperBlock extends BlockWithEntity {
@@ -121,7 +122,15 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     }
 
     public XtremeMultiHupperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
-        super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
+        super(
+            Settings.copy(Blocks.HOPPER)
+                .mapColor(MapColor.STONE_GRAY)
+                .requiresTool()
+                .strength(3.0F, 4.8F)
+                .sounds(BlockSoundGroup.METAL)
+                .nonOpaque()
+                .registryKey(REGISTRY_HELPER.makeBlockRegistryKey(baseKey))
+        );
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = baseKey;
@@ -253,10 +262,10 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         // Temporary workaround until the next version of Minekea adds its wrench to the common tag.
         if (!stack.isIn(CommonTags.WRENCHES) && !stack.getItem().getRegistryEntry().registryKey().getValue().equals(Identifier.of("minekea:tools/wrench"))) {
-            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
         }
 
         Direction hitSide = hit.getSide();
@@ -286,11 +295,11 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
         world.setBlockState(pos, state.with(connection, !state.get(connection)));
         world.markDirty(pos);
 
-        return ItemActionResult.CONSUME;
+        return ActionResult.CONSUME;
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
     }
 

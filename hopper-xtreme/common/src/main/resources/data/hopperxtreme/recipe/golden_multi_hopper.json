@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "category": "redstone",
     "key": {
-        "#": {"item": "hopperxtreme:golden_hopper"}
+        "#": "hopperxtreme:golden_hopper"
     },
     "pattern": [
         "##",

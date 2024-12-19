@@ -21,7 +21,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
@@ -36,14 +36,16 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
+import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HUPPER_BLOCK_ENTITY;
 
 public class XtremeHupperBlock extends BlockWithEntity {
     public static final MapCodec<XtremeHupperBlock> CODEC = createCodec(XtremeHupperBlock::create);
 
-    public static final DirectionProperty FACING;
+    public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty ENABLED;
 
     private static final VoxelShape BOTTOM_SHAPE;
@@ -65,7 +67,7 @@ public class XtremeHupperBlock extends BlockWithEntity {
     private static final VoxelShape WEST_RAYCAST_SHAPE;
 
     static {
-        FACING = DirectionProperty.of("facing", (facing) -> facing != Direction.DOWN);
+        FACING = EnumProperty.of("facing", Direction.class, (facing) -> facing != Direction.DOWN);
         ENABLED = Properties.ENABLED;
 
         BOTTOM_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0);
@@ -105,7 +107,15 @@ public class XtremeHupperBlock extends BlockWithEntity {
     }
 
     public XtremeHupperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
-        super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
+        super(
+            Settings.copy(Blocks.HOPPER)
+                .mapColor(MapColor.STONE_GRAY)
+                .requiresTool()
+                .strength(3.0F, 4.8F)
+                .sounds(BlockSoundGroup.METAL)
+                .nonOpaque()
+                .registryKey(REGISTRY_HELPER.makeBlockRegistryKey(translationKey))
+        );
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = translationKey;
@@ -209,7 +219,7 @@ public class XtremeHupperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
     }
 

@@ -2,8 +2,8 @@
     "type": "minecraft:crafting_shapeless",
     "category": "misc",
     "ingredients": [
-        {"item": "minecraft:book"},
-        {"item": "minecraft:hopper"}
+        "minecraft:book",
+        "minecraft:hopper"
     ],
     "result": {
         "id": "patchouli:guide_book",

@@ -1,0 +1,19 @@
+{
+    "model": {
+        "type": "minecraft:select",
+        "property": "minecraft:custom_model_data",
+        "fallback": {
+            "type": "minecraft:model",
+            "model": "hopperxtreme:item/hopper_item_filter"
+        },
+        "cases": [
+            {
+                "when": "2233000",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "hopperxtreme:item/hopper_item_filter_set"
+                }
+            }
+        ]
+    }
+}

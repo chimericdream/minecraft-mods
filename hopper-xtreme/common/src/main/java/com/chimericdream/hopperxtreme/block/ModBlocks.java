@@ -17,159 +17,167 @@ import net.minecraft.item.Item;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.screen.ScreenHandlerType;
 
+import java.util.Set;
+
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class ModBlocks {
-    @SuppressWarnings("UnstableApiUsage")
-    private static final Item.Settings DEFAULT_HOPPER_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.HOPPER_ITEM_GROUP);
-    private static final Item.Settings DEFAULT_MULTI_HOPPER_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.MULTI_HOPPER_ITEM_GROUP);
-    private static final Item.Settings DEFAULT_HUPPER_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.HUPPER_ITEM_GROUP);
-    private static final Item.Settings DEFAULT_MULTI_HUPPER_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.MULTI_HUPPER_ITEM_GROUP);
+    public static final RegistrySupplier<Block> HONEYED_HOPPER = registerHopper("honeyed_hopper", 20);
+    public static final RegistrySupplier<Block> COPPER_HOPPER = registerHopper("copper_hopper", 8);
+    public static final RegistrySupplier<Block> GOLDEN_HOPPER = registerHopper("golden_hopper", 4);
+    public static final RegistrySupplier<Block> DIAMOND_HOPPER = registerHopper("diamond_hopper", 2);
+    public static final RegistrySupplier<Block> NETHERITE_HOPPER = registerHopper("netherite_hopper", 1);
 
-    public static final RegistrySupplier<Block> HONEYED_HOPPER = REGISTRY_HELPER.registerWithItem("honeyed_hopper", () -> new XtremeHopperBlock(20, "honeyed_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> COPPER_HOPPER = REGISTRY_HELPER.registerWithItem("copper_hopper", () -> new XtremeHopperBlock(8, "copper_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GOLDEN_HOPPER = REGISTRY_HELPER.registerWithItem("golden_hopper", () -> new XtremeHopperBlock(4, "golden_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> DIAMOND_HOPPER = REGISTRY_HELPER.registerWithItem("diamond_hopper", () -> new XtremeHopperBlock(2, "diamond_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("netherite_hopper", () -> new XtremeHopperBlock(1, "netherite_hopper"), DEFAULT_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_HOPPER = registerGlazedHopper("glazed_hopper", 8);
+    public static final RegistrySupplier<Block> HONEY_GLAZED_HOPPER = registerGlazedHopper("honey_glazed_hopper", 20);
+    public static final RegistrySupplier<Block> GLAZED_GOLDEN_HOPPER = registerGlazedHopper("glazed_golden_hopper", 4);
+    public static final RegistrySupplier<Block> GLAZED_DIAMOND_HOPPER = registerGlazedHopper("glazed_diamond_hopper", 2);
+    public static final RegistrySupplier<Block> GLAZED_NETHERITE_HOPPER = registerGlazedHopper("glazed_netherite_hopper", 1);
 
-    public static final RegistrySupplier<Block> GLAZED_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_hopper", () -> new GlazedHopperBlock(8, "glazed_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> HONEY_GLAZED_HOPPER = REGISTRY_HELPER.registerWithItem("honey_glazed_hopper", () -> new GlazedHopperBlock(20, "honey_glazed_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_GOLDEN_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_golden_hopper", () -> new GlazedHopperBlock(4, "glazed_golden_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_DIAMOND_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_diamond_hopper", () -> new GlazedHopperBlock(2, "glazed_diamond_hopper"), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_netherite_hopper", () -> new GlazedHopperBlock(1, "glazed_netherite_hopper"), DEFAULT_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> MULTI_HOPPER = registerMultiHopper("multi_hopper", 8);
+    public static final RegistrySupplier<Block> GOLDEN_MULTI_HOPPER = registerMultiHopper("golden_multi_hopper", 4);
+    public static final RegistrySupplier<Block> DIAMOND_MULTI_HOPPER = registerMultiHopper("diamond_multi_hopper", 2);
+    public static final RegistrySupplier<Block> NETHERITE_MULTI_HOPPER = registerMultiHopper("netherite_multi_hopper", 1);
 
-    public static final RegistrySupplier<Block> MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("multi_hopper", () -> new XtremeMultiHopperBlock(8, "multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("golden_multi_hopper", () -> new XtremeMultiHopperBlock(4, "golden_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("diamond_multi_hopper", () -> new XtremeMultiHopperBlock(2, "diamond_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("netherite_multi_hopper", () -> new XtremeMultiHopperBlock(1, "netherite_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> GLAZED_MULTI_HOPPER = registerGlazedMultiHopper("glazed_multi_hopper", 8);
+    public static final RegistrySupplier<Block> GLAZED_GOLDEN_MULTI_HOPPER = registerGlazedMultiHopper("glazed_golden_multi_hopper", 4);
+    public static final RegistrySupplier<Block> GLAZED_DIAMOND_MULTI_HOPPER = registerGlazedMultiHopper("glazed_diamond_multi_hopper", 2);
+    public static final RegistrySupplier<Block> GLAZED_NETHERITE_MULTI_HOPPER = registerGlazedMultiHopper("glazed_netherite_multi_hopper", 1);
 
-    public static final RegistrySupplier<Block> GLAZED_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_multi_hopper", () -> new GlazedMultiHopperBlock(8, "glazed_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_golden_multi_hopper", () -> new GlazedMultiHopperBlock(4, "glazed_golden_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_diamond_multi_hopper", () -> new GlazedMultiHopperBlock(2, "glazed_diamond_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GLAZED_NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("glazed_netherite_multi_hopper", () -> new GlazedMultiHopperBlock(1, "glazed_netherite_multi_hopper"), DEFAULT_MULTI_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> HUPPER = registerHupper("hupper", 8);
+    public static final RegistrySupplier<Block> HONEYED_HUPPER = registerHupper("honeyed_hupper", 20);
+    public static final RegistrySupplier<Block> COPPER_HUPPER = registerHupper("copper_hupper", 8);
+    public static final RegistrySupplier<Block> GOLDEN_HUPPER = registerHupper("golden_hupper", 4);
+    public static final RegistrySupplier<Block> DIAMOND_HUPPER = registerHupper("diamond_hupper", 2);
+    public static final RegistrySupplier<Block> NETHERITE_HUPPER = registerHupper("netherite_hupper", 1);
 
-    public static final RegistrySupplier<Block> HUPPER = REGISTRY_HELPER.registerWithItem("hupper", () -> new XtremeHupperBlock(8, "hupper"), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> HONEYED_HUPPER = REGISTRY_HELPER.registerWithItem("honeyed_hupper", () -> new XtremeHupperBlock(20, "honeyed_hupper"), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> COPPER_HUPPER = REGISTRY_HELPER.registerWithItem("copper_hupper", () -> new XtremeHupperBlock(8, "copper_hupper"), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GOLDEN_HUPPER = REGISTRY_HELPER.registerWithItem("golden_hupper", () -> new XtremeHupperBlock(4, "golden_hupper"), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> DIAMOND_HUPPER = REGISTRY_HELPER.registerWithItem("diamond_hupper", () -> new XtremeHupperBlock(2, "diamond_hupper"), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> NETHERITE_HUPPER = REGISTRY_HELPER.registerWithItem("netherite_hupper", () -> new XtremeHupperBlock(1, "netherite_hupper"), DEFAULT_HUPPER_SETTINGS);
+    public static final RegistrySupplier<Block> MULTI_HUPPER = registerMultiHupper("multi_hupper", 8);
+    public static final RegistrySupplier<Block> GOLDEN_MULTI_HUPPER = registerMultiHupper("golden_multi_hupper", 4);
+    public static final RegistrySupplier<Block> DIAMOND_MULTI_HUPPER = registerMultiHupper("diamond_multi_hupper", 2);
+    public static final RegistrySupplier<Block> NETHERITE_MULTI_HUPPER = registerMultiHupper("netherite_multi_hupper", 1);
 
-    public static final RegistrySupplier<Block> MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("multi_hupper", () -> new XtremeMultiHupperBlock(8, "multi_hupper"), DEFAULT_MULTI_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> GOLDEN_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("golden_multi_hupper", () -> new XtremeMultiHupperBlock(4, "golden_multi_hupper"), DEFAULT_MULTI_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> DIAMOND_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("diamond_multi_hupper", () -> new XtremeMultiHupperBlock(2, "diamond_multi_hupper"), DEFAULT_MULTI_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> NETHERITE_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("netherite_multi_hupper", () -> new XtremeMultiHupperBlock(1, "netherite_multi_hupper"), DEFAULT_MULTI_HUPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HOPPER = registerHopper("filtered_golden_hopper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HOPPER = registerHopper("filtered_diamond_hopper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HOPPER = registerHopper("filtered_netherite_hopper", 1, true);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_golden_hopper", () -> new XtremeHopperBlock(4, "filtered_golden_hopper", true), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_diamond_hopper", () -> new XtremeHopperBlock(2, "filtered_diamond_hopper", true), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_netherite_hopper", () -> new XtremeHopperBlock(1, "filtered_netherite_hopper", true), DEFAULT_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_HOPPER = registerGlazedHopper("filtered_glazed_golden_hopper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_HOPPER = registerGlazedHopper("filtered_glazed_diamond_hopper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_HOPPER = registerGlazedHopper("filtered_glazed_netherite_hopper", 1, true);
 
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_golden_hopper", () -> new GlazedHopperBlock(4, "filtered_glazed_golden_hopper", true), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_diamond_hopper", () -> new GlazedHopperBlock(2, "filtered_glazed_diamond_hopper", true), DEFAULT_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_netherite_hopper", () -> new GlazedHopperBlock(1, "filtered_glazed_netherite_hopper", true), DEFAULT_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HOPPER = registerMultiHopper("filtered_golden_multi_hopper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HOPPER = registerMultiHopper("filtered_diamond_multi_hopper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HOPPER = registerMultiHopper("filtered_netherite_multi_hopper", 1, true);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_golden_multi_hopper", () -> new XtremeMultiHopperBlock(4, "filtered_golden_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_diamond_multi_hopper", () -> new XtremeMultiHopperBlock(2, "filtered_diamond_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_netherite_multi_hopper", () -> new XtremeMultiHopperBlock(1, "filtered_netherite_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_golden_multi_hopper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_diamond_multi_hopper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_netherite_multi_hopper", 1, true);
 
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_golden_multi_hopper", () -> new GlazedMultiHopperBlock(4, "filtered_glazed_golden_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_diamond_multi_hopper", () -> new GlazedMultiHopperBlock(2, "filtered_glazed_diamond_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_MULTI_HOPPER = REGISTRY_HELPER.registerWithItem("filtered_glazed_netherite_multi_hopper", () -> new GlazedMultiHopperBlock(1, "filtered_glazed_netherite_multi_hopper", true), DEFAULT_MULTI_HOPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HUPPER = registerHupper("filtered_golden_hupper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HUPPER = registerHupper("filtered_diamond_hupper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HUPPER = registerHupper("filtered_netherite_hupper", 1, true);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_golden_hupper", () -> new XtremeHupperBlock(4, "filtered_golden_hupper", true), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_diamond_hupper", () -> new XtremeHupperBlock(2, "filtered_diamond_hupper", true), DEFAULT_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_netherite_hupper", () -> new XtremeHupperBlock(1, "filtered_netherite_hupper", true), DEFAULT_HUPPER_SETTINGS);
-
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_golden_multi_hupper", () -> new XtremeMultiHupperBlock(4, "filtered_golden_multi_hupper", true), DEFAULT_MULTI_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_diamond_multi_hupper", () -> new XtremeMultiHupperBlock(2, "filtered_diamond_multi_hupper", true), DEFAULT_MULTI_HUPPER_SETTINGS);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HUPPER = REGISTRY_HELPER.registerWithItem("filtered_netherite_multi_hupper", () -> new XtremeMultiHupperBlock(1, "filtered_netherite_multi_hupper", true), DEFAULT_MULTI_HUPPER_SETTINGS);
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HUPPER = registerMultiHupper("filtered_golden_multi_hupper", 4, true);
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HUPPER = registerMultiHupper("filtered_diamond_multi_hupper", 2, true);
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HUPPER = registerMultiHupper("filtered_netherite_multi_hupper", 1, true);
 
     public static final RegistrySupplier<BlockEntityType<GlazedHopperBlockEntity>> GLAZED_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "glazed_hopper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             GlazedHopperBlockEntity::new,
-            GLAZED_HOPPER.get(),
-            HONEY_GLAZED_HOPPER.get(),
-            GLAZED_GOLDEN_HOPPER.get(),
-            GLAZED_DIAMOND_HOPPER.get(),
-            GLAZED_NETHERITE_HOPPER.get(),
-            FILTERED_GLAZED_GOLDEN_HOPPER.get(),
-            FILTERED_GLAZED_DIAMOND_HOPPER.get(),
-            FILTERED_GLAZED_NETHERITE_HOPPER.get()
-        ).build(null)
+            Set.of(
+                GLAZED_HOPPER.get(),
+                HONEY_GLAZED_HOPPER.get(),
+                GLAZED_GOLDEN_HOPPER.get(),
+                GLAZED_DIAMOND_HOPPER.get(),
+                GLAZED_NETHERITE_HOPPER.get(),
+                FILTERED_GLAZED_GOLDEN_HOPPER.get(),
+                FILTERED_GLAZED_DIAMOND_HOPPER.get(),
+                FILTERED_GLAZED_NETHERITE_HOPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<BlockEntityType<XtremeHopperBlockEntity>> XTREME_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "xtreme_hopper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             XtremeHopperBlockEntity::new,
-            HONEYED_HOPPER.get(),
-            COPPER_HOPPER.get(),
-            GOLDEN_HOPPER.get(),
-            DIAMOND_HOPPER.get(),
-            NETHERITE_HOPPER.get(),
-            FILTERED_GOLDEN_HOPPER.get(),
-            FILTERED_DIAMOND_HOPPER.get(),
-            FILTERED_NETHERITE_HOPPER.get()
-        ).build(null)
+            Set.of(
+                HONEYED_HOPPER.get(),
+                COPPER_HOPPER.get(),
+                GOLDEN_HOPPER.get(),
+                DIAMOND_HOPPER.get(),
+                NETHERITE_HOPPER.get(),
+                FILTERED_GOLDEN_HOPPER.get(),
+                FILTERED_DIAMOND_HOPPER.get(),
+                FILTERED_NETHERITE_HOPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<BlockEntityType<XtremeHupperBlockEntity>> XTREME_HUPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "xtreme_hupper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             XtremeHupperBlockEntity::new,
-            HUPPER.get(),
-            HONEYED_HUPPER.get(),
-            COPPER_HUPPER.get(),
-            GOLDEN_HUPPER.get(),
-            DIAMOND_HUPPER.get(),
-            NETHERITE_HUPPER.get(),
-            FILTERED_GOLDEN_HUPPER.get(),
-            FILTERED_DIAMOND_HUPPER.get(),
-            FILTERED_NETHERITE_HUPPER.get()
-        ).build(null)
+            Set.of(
+                HUPPER.get(),
+                HONEYED_HUPPER.get(),
+                COPPER_HUPPER.get(),
+                GOLDEN_HUPPER.get(),
+                DIAMOND_HUPPER.get(),
+                NETHERITE_HUPPER.get(),
+                FILTERED_GOLDEN_HUPPER.get(),
+                FILTERED_DIAMOND_HUPPER.get(),
+                FILTERED_NETHERITE_HUPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<BlockEntityType<GlazedMultiHopperBlockEntity>> GLAZED_MULTI_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "glazed_multi_hopper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             GlazedMultiHopperBlockEntity::new,
-            GLAZED_MULTI_HOPPER.get(),
-            GLAZED_GOLDEN_MULTI_HOPPER.get(),
-            GLAZED_DIAMOND_MULTI_HOPPER.get(),
-            GLAZED_NETHERITE_MULTI_HOPPER.get(),
-            FILTERED_GLAZED_GOLDEN_MULTI_HOPPER.get(),
-            FILTERED_GLAZED_DIAMOND_MULTI_HOPPER.get(),
-            FILTERED_GLAZED_NETHERITE_MULTI_HOPPER.get()
-        ).build(null)
+            Set.of(
+                GLAZED_MULTI_HOPPER.get(),
+                GLAZED_GOLDEN_MULTI_HOPPER.get(),
+                GLAZED_DIAMOND_MULTI_HOPPER.get(),
+                GLAZED_NETHERITE_MULTI_HOPPER.get(),
+                FILTERED_GLAZED_GOLDEN_MULTI_HOPPER.get(),
+                FILTERED_GLAZED_DIAMOND_MULTI_HOPPER.get(),
+                FILTERED_GLAZED_NETHERITE_MULTI_HOPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<BlockEntityType<XtremeMultiHopperBlockEntity>> XTREME_MULTI_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "xtreme_multi_hopper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             XtremeMultiHopperBlockEntity::new,
-            MULTI_HOPPER.get(),
-            GOLDEN_MULTI_HOPPER.get(),
-            DIAMOND_MULTI_HOPPER.get(),
-            NETHERITE_MULTI_HOPPER.get(),
-            FILTERED_GOLDEN_MULTI_HOPPER.get(),
-            FILTERED_DIAMOND_MULTI_HOPPER.get(),
-            FILTERED_NETHERITE_MULTI_HOPPER.get()
-        ).build(null)
+            Set.of(
+                MULTI_HOPPER.get(),
+                GOLDEN_MULTI_HOPPER.get(),
+                DIAMOND_MULTI_HOPPER.get(),
+                NETHERITE_MULTI_HOPPER.get(),
+                FILTERED_GOLDEN_MULTI_HOPPER.get(),
+                FILTERED_DIAMOND_MULTI_HOPPER.get(),
+                FILTERED_NETHERITE_MULTI_HOPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<BlockEntityType<XtremeMultiHupperBlockEntity>> XTREME_MULTI_HUPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "xtreme_multi_hupper_block_entity",
-        () -> BlockEntityType.Builder.create(
+        () -> new BlockEntityType<>(
             XtremeMultiHupperBlockEntity::new,
-            MULTI_HUPPER.get(),
-            GOLDEN_MULTI_HUPPER.get(),
-            DIAMOND_MULTI_HUPPER.get(),
-            NETHERITE_MULTI_HUPPER.get(),
-            FILTERED_GOLDEN_MULTI_HUPPER.get(),
-            FILTERED_DIAMOND_MULTI_HUPPER.get(),
-            FILTERED_NETHERITE_MULTI_HUPPER.get()
-        ).build(null)
+            Set.of(
+                MULTI_HUPPER.get(),
+                GOLDEN_MULTI_HUPPER.get(),
+                DIAMOND_MULTI_HUPPER.get(),
+                NETHERITE_MULTI_HUPPER.get(),
+                FILTERED_GOLDEN_MULTI_HUPPER.get(),
+                FILTERED_DIAMOND_MULTI_HUPPER.get(),
+                FILTERED_NETHERITE_MULTI_HUPPER.get()
+            )
+        )
     );
 
     public static final RegistrySupplier<ScreenHandlerType<GlazedHopperScreenHandler>> GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
@@ -188,5 +196,97 @@ public class ModBlocks {
     );
 
     public static void init() {
+    }
+
+    private static RegistrySupplier<Block> registerHopper(String key, int ticks) {
+        return registerHopper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerHopper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new XtremeHopperBlock(ticks, key, withFilter),
+            getDefaultHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks) {
+        return registerGlazedHopper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new GlazedHopperBlock(ticks, key, withFilter),
+            getDefaultHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks) {
+        return registerMultiHopper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new XtremeMultiHopperBlock(ticks, key, withFilter),
+            getDefaultMultiHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks) {
+        return registerGlazedMultiHopper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new GlazedMultiHopperBlock(ticks, key, withFilter),
+            getDefaultMultiHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    private static RegistrySupplier<Block> registerHupper(String key, int ticks) {
+        return registerHupper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerHupper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new XtremeHupperBlock(ticks, key, withFilter),
+            getDefaultHupperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks) {
+        return registerMultiHupper(key, ticks, false);
+    }
+
+    private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks, boolean withFilter) {
+        return REGISTRY_HELPER.registerWithItem(
+            REGISTRY_HELPER.makeId(key),
+            () -> new XtremeMultiHupperBlock(ticks, key, withFilter),
+            getDefaultMultiHupperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+        );
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static Item.Settings getDefaultHopperSettings() {
+        return new Item.Settings().arch$tab(ModItemGroups.HOPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static Item.Settings getDefaultMultiHopperSettings() {
+        return new Item.Settings().arch$tab(ModItemGroups.MULTI_HOPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static Item.Settings getDefaultHupperSettings() {
+        return new Item.Settings().arch$tab(ModItemGroups.HUPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static Item.Settings getDefaultMultiHupperSettings() {
+        return new Item.Settings().arch$tab(ModItemGroups.MULTI_HUPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
     }
 }

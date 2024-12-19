@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "category": "building",
     "key": {
-        "#": {"item": "hopperxtreme:diamond_hopper"}
+        "#": "hopperxtreme:diamond_hopper"
     },
     "pattern": [
         "##",

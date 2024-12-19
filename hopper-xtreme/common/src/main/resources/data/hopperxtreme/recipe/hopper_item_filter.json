@@ -2,9 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "redstone",
     "key": {
-        "#": {"item": "minecraft:stick"},
-        "W": {"item": "minecraft:cobweb"},
-        "C": {"item": "minecraft:chain"}
+        "#": "minecraft:stick",
+        "W": "minecraft:cobweb",
+        "C": "minecraft:chain"
     },
     "pattern": [
         "#W#",

@@ -2,9 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "redstone",
     "key": {
-        "C": {"item": "minecraft:chest"},
-        "I": {"item": "minecraft:iron_ingot"},
-        "G": {"item": "minecraft:gray_glazed_terracotta"}
+        "C": "minecraft:chest",
+        "I": "minecraft:iron_ingot",
+        "G": "minecraft:gray_glazed_terracotta"
     },
     "pattern": [
         "IGI",

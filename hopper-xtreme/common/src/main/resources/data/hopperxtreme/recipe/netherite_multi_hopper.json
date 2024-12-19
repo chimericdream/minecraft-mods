@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "category": "redstone",
     "key": {
-        "#": {"item": "hopperxtreme:netherite_hopper"}
+        "#": "hopperxtreme:netherite_hopper"
     },
     "pattern": [
         "##",

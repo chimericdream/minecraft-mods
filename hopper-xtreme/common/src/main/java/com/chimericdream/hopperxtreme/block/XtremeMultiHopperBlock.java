@@ -17,8 +17,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
+import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
@@ -37,7 +39,15 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     public XtremeMultiHopperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
-        super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
+        super(
+            Settings.copy(Blocks.HOPPER)
+                .mapColor(MapColor.STONE_GRAY)
+                .requiresTool()
+                .strength(3.0F, 4.8F)
+                .sounds(BlockSoundGroup.METAL)
+                .nonOpaque()
+                .registryKey(REGISTRY_HELPER.makeBlockRegistryKey(baseKey))
+        );
 
         this.cooldownInTicks = cooldownInTicks;
         this.baseKey = baseKey;
@@ -90,7 +100,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
     }
 

@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "category": "redstone",
     "key": {
-        "#": {"item": "hopperxtreme:filtered_diamond_hupper"}
+        "#": "hopperxtreme:filtered_diamond_hupper"
     },
     "pattern": [
         "##",

@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shapeless",
     "category": "redstone",
     "ingredients": [
-        {"item": "hopperxtreme:multi_hopper"}
+        "hopperxtreme:multi_hopper"
     ],
     "result": {
         "count": 4,

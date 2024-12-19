@@ -2,8 +2,8 @@
     "type": "minecraft:crafting_shapeless",
     "category": "redstone",
     "ingredients": [
-        {"item": "minecraft:gold_ingot"},
-        {"item": "minecraft:hopper"}
+        "minecraft:gold_ingot",
+        "minecraft:hopper"
     ],
     "result": {
         "count": 1,
