@@ -1,0 +1,40 @@
+{
+    DataVersion: 3953,
+    size: [3, 3, 3],
+    data: [
+        {pos: [0, 0, 0], state: "minecraft:air"},
+        {pos: [0, 0, 1], state: "minecraft:air"},
+        {pos: [0, 0, 2], state: "minecraft:air"},
+        {pos: [1, 0, 0], state: "minecraft:air"},
+        {pos: [1, 0, 1], state: "hopperxtreme:golden_hopper{enabled:false,facing:down}", nbt: {Items: [], TransferCooldown: 0, "hx:withFilter": 1b, id: "hopperxtreme:xtreme_hopper_block_entity"}},
+        {pos: [1, 0, 2], state: "minecraft:air"},
+        {pos: [2, 0, 0], state: "minecraft:air"},
+        {pos: [2, 0, 1], state: "minecraft:redstone_block"},
+        {pos: [2, 0, 2], state: "minecraft:air"},
+        {pos: [0, 1, 0], state: "minecraft:air"},
+        {pos: [0, 1, 1], state: "minecraft:air"},
+        {pos: [0, 1, 2], state: "minecraft:air"},
+        {pos: [1, 1, 0], state: "minecraft:air"},
+        {pos: [1, 1, 1], state: "hopperxtreme:filtered_golden_hopper{enabled:false,facing:down}", nbt: {Items: [{Slot: 5b, components: {"minecraft:container": [{item: {count: 1, id: "minecraft:redstone_block"}, slot: 0}], "minecraft:custom_model_data": 2233000}, count: 1, id: "hopperxtreme:hopper_item_filter"}], TransferCooldown: 0, "hx:withFilter": 1b, id: "hopperxtreme:xtreme_hopper_block_entity"}},
+        {pos: [1, 1, 2], state: "minecraft:air"},
+        {pos: [2, 1, 0], state: "minecraft:air"},
+        {pos: [2, 1, 1], state: "minecraft:redstone_block"},
+        {pos: [2, 1, 2], state: "minecraft:air"},
+        {pos: [0, 2, 0], state: "minecraft:air"},
+        {pos: [0, 2, 1], state: "minecraft:air"},
+        {pos: [0, 2, 2], state: "minecraft:air"},
+        {pos: [1, 2, 0], state: "minecraft:air"},
+        {pos: [1, 2, 1], state: "minecraft:air"},
+        {pos: [1, 2, 2], state: "minecraft:air"},
+        {pos: [2, 2, 0], state: "minecraft:air"},
+        {pos: [2, 2, 1], state: "minecraft:air"},
+        {pos: [2, 2, 2], state: "minecraft:air"}
+    ],
+    entities: [],
+    palette: [
+        "minecraft:redstone_block",
+        "minecraft:air",
+        "hopperxtreme:golden_hopper{enabled:false,facing:down}",
+        "hopperxtreme:filtered_golden_hopper{enabled:false,facing:down}"
+    ]
+}
