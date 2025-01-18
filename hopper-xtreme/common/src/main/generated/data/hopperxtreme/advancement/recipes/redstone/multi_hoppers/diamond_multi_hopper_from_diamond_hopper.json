@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_diamond_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:diamond_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_diamond_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
+    ]
+  }
+}

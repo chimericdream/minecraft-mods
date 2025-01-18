@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_filtered_netherite_hupper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:filtered_netherite_hupper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:filtered_huppers/filtered_netherite_hopper_from_filtered_netherite_hupper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_filtered_netherite_hupper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:filtered_huppers/filtered_netherite_hopper_from_filtered_netherite_hupper"
+    ]
+  }
+}

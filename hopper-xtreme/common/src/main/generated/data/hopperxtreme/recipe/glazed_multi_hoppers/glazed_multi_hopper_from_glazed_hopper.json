@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hopperxtreme:glazed_hopper",
+    "hopperxtreme:glazed_hopper",
+    "hopperxtreme:glazed_hopper",
+    "hopperxtreme:glazed_hopper"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hopperxtreme:glazed_multi_hopper"
+  }
+}

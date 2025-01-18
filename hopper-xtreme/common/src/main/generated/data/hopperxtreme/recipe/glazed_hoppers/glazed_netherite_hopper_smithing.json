@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "hopperxtreme:glazed_diamond_hopper",
+  "result": {
+    "count": 1,
+    "id": "hopperxtreme:glazed_netherite_hopper"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

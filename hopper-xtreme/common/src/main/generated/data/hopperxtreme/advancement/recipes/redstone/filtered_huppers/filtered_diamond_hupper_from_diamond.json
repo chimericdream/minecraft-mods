@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_diamond_hupper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:diamond_hupper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_hopper_item_filter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:hopper_item_filter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:filtered_huppers/filtered_diamond_hupper_from_diamond"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_diamond_hupper",
+      "has_hopper_item_filter"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:filtered_huppers/filtered_diamond_hupper_from_diamond"
+    ]
+  }
+}

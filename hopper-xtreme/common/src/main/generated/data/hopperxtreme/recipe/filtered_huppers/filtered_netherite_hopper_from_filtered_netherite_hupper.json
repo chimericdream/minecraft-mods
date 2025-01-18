@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hopperxtreme:filtered_netherite_hupper"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hopperxtreme:filtered_netherite_hopper"
+  }
+}

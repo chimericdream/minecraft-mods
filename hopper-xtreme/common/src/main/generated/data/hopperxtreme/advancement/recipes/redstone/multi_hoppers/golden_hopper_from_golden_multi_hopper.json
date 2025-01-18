@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_golden_multi_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:golden_multi_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:multi_hoppers/golden_hopper_from_golden_multi_hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_golden_multi_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:multi_hoppers/golden_hopper_from_golden_multi_hopper"
+    ]
+  }
+}

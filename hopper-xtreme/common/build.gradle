@@ -5,3 +5,11 @@ architectury {
 loom {
     accessWidenerPath = file("src/main/resources/hopperxtreme.accesswidener")
 }
+
+sourceSets {
+    main {
+        resources.srcDir 'src/main/generated'
+        // optional: exclude the datagen cache files from the mod jar
+        resources.exclude '.cache'
+    }
+}
