@@ -485,9 +485,7 @@ public class GlazedMultiHopperBlockEntity extends LootableContainerBlockEntity i
             return HopperItemFilterItem.matchesFilter(hopper.getStack(1), stack);
         }
 
-        boolean isFilter = ItemStack.areItemsEqual(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
-
-        return isFilter == (slot == 1);
+        return true;
     }
 
     private static boolean canExtract(Hopper hopper, Inventory source, ItemStack stack, int slot, Direction facing) {

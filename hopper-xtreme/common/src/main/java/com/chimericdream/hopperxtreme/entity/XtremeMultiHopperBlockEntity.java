@@ -461,9 +461,7 @@ public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity i
             return HopperItemFilterItem.matchesFilter(target.getStack(5), stack);
         }
 
-        boolean isFilter = ItemStack.areItemsEqual(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
-
-        return isFilter == (slot == 5);
+        return true;
     }
 
     private static boolean canExtract(Inventory hopper, Inventory source, ItemStack stack, int slot, Direction facing) {
