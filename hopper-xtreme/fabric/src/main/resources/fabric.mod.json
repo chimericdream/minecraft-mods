@@ -22,6 +22,7 @@
             "com.chimericdream.hopperxtreme.fabric.client.HopperXtremeFabricClient"
         ],
         "fabric-gametest": [
+            "com.chimericdream.hopperxtreme.test.SixSlotTransferTest",
             "com.chimericdream.hopperxtreme.test.TransferSpeedTest"
         ],
         "fabric-datagen": [
