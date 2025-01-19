@@ -1,6 +1,5 @@
 package com.chimericdream.hopperxtreme.test;
 
-import com.chimericdream.lib.gametest.TestPos;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
@@ -30,7 +29,7 @@ public class PreventFilterExtractionTest {
     }
 
     private void runTest(TestContext context, int singleItemTickTime) {
-        BlockPos bottomHopperPos = TestPos.of(1, 0, 1);
+        BlockPos bottomHopperPos = new BlockPos(1, 0, 1);
 
         context.waitAndRun((long) 2 * singleItemTickTime, () -> {
             LootableContainerBlockEntity bottomHopper = getContainerAt(context, bottomHopperPos);

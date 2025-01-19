@@ -1,7 +1,6 @@
 package com.chimericdream.hopperxtreme.test;
 
 import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
-import com.chimericdream.lib.gametest.TestPos;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -42,10 +41,10 @@ public class TransferSpeedTest {
     }
 
     private void runItemTransferSpeedTest(TestContext context, int fourItemsTickTime, boolean breakRedstoneBlock) {
-        BlockPos redstoneBlockPos = TestPos.of(2, 1, 1);
-        BlockPos topChestPos = TestPos.of(1, 2, 1);
-        BlockPos hopperPos = TestPos.of(1, 1, 1);
-        BlockPos bottomChestPos = TestPos.of(1, 0, 1);
+        BlockPos redstoneBlockPos = new BlockPos(2, 1, 1);
+        BlockPos topChestPos = new BlockPos(1, 2, 1);
+        BlockPos hopperPos = new BlockPos(1, 1, 1);
+        BlockPos bottomChestPos = new BlockPos(1, 0, 1);
 
         LockableContainerBlockEntity topChest = getChestAt(context, topChestPos);
         topChest.setStack(0, new ItemStack(Items.REDSTONE_BLOCK, 64));
