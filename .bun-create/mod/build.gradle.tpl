@@ -11,7 +11,7 @@ subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     base {
-        archivesName = project(":{{FOLDER_NAME}}").archives_name + "-" + project.name
+        archivesName = project(":{{FOLDER_NAME}}").archives_name + "-" + project.name + "-" + project.minecraft_compat
     }
 
     architectury {

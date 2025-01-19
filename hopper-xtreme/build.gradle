@@ -11,7 +11,7 @@ subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     base {
-        archivesName = project(":hopper-xtreme").archives_name + "-" + project.name
+        archivesName = project(":hopper-xtreme").archives_name + "-" + project.name + "-" + project.minecraft_compat
     }
 
     architectury {
