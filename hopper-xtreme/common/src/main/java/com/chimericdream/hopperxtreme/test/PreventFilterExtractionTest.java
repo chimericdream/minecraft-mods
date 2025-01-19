@@ -1,10 +1,7 @@
 package com.chimericdream.hopperxtreme.test;
 
-import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
 import com.chimericdream.lib.gametest.TestPos;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.test.GameTest;
@@ -33,17 +30,9 @@ public class PreventFilterExtractionTest {
     }
 
     private void runTest(TestContext context, int singleItemTickTime) {
-        BlockPos topRedstoneBlockPos = TestPos.of(2, 1, 1);
-        BlockPos bottomRedstoneBlockPos = TestPos.of(2, 0, 1);
         BlockPos bottomHopperPos = TestPos.of(1, 0, 1);
 
-        context.removeBlock(topRedstoneBlockPos);
-        context.removeBlock(bottomRedstoneBlockPos);
-
         context.waitAndRun((long) 2 * singleItemTickTime, () -> {
-            context.setBlockState(topRedstoneBlockPos, Blocks.REDSTONE_BLOCK.getDefaultState());
-            context.setBlockState(bottomRedstoneBlockPos, Blocks.REDSTONE_BLOCK.getDefaultState());
-
             LootableContainerBlockEntity bottomHopper = getContainerAt(context, bottomHopperPos);
             ItemStack hopperSlot0 = bottomHopper.getStack(0);
             if (!hopperSlot0.isEmpty()) {
