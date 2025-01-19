@@ -104,6 +104,10 @@ public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity i
     }
 
     public int size() {
+        if (this.withFilter) {
+            return this.inventory.size() - 1;
+        }
+
         return this.inventory.size();
     }
 
