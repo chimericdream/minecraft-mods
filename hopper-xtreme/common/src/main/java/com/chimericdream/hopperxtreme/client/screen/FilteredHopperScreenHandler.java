@@ -69,16 +69,18 @@ public class FilteredHopperScreenHandler extends ScreenHandler {
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
+        int hopperSize = this.hopper.size() + 1;
+
         Slot slot = this.slots.get(invSlot);
         if (slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
 
-            if (invSlot < this.hopper.size()) {
-                if (!this.insertItem(originalStack, this.hopper.size(), this.slots.size(), true)) {
+            if (invSlot < hopperSize) {
+                if (!this.insertItem(originalStack, hopperSize, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.hopper.size(), false)) {
+            } else if (!this.insertItem(originalStack, 0, hopperSize, false)) {
                 return ItemStack.EMPTY;
             }
 
