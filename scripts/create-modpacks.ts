@@ -21,8 +21,8 @@ const createModpacks = async () => {
         const properties = await loadProperties(project);
         const projectFolder = getProjectFolder(project);
 
-        const fabricFileName = `${properties.archives_name}-fabric-${properties.mod_version}.jar`;
-        const neoForgeFileName = `${properties.archives_name}-neoforge-${properties.mod_version}.jar`;
+        const fabricFileName = `${properties.archives_name}-fabric-${properties.minecraft_compat}-${properties.mod_version}.jar`;
+        const neoForgeFileName = `${properties.archives_name}-neoforge-${properties.minecraft_compat}-${properties.mod_version}.jar`;
 
         const fabricFile = path.join(projectFolder, 'fabric', 'build', 'libs', fabricFileName);
         const neoforgeFile = path.join(projectFolder, 'neoforge', 'build', 'libs', neoForgeFileName);

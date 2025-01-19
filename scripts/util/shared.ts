@@ -9,6 +9,10 @@ export type ModProperties = {
     archives_name: string;
     enabled_platforms: string;
     has_patchouli_guide?: boolean;
+    architectury_compat: string;
+    chimericlib_compat: string;
+    fabric_compat?: string;
+    minecraft_compat: string;
 };
 
 export const getProjectFolder = (project: string) => path.join(__dirname, '..', '..', project);
