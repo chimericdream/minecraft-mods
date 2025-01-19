@@ -21,10 +21,5 @@ for (const project of projectList) {
             path.join(projectFolder, 'common', 'src', 'main', 'resources', awFileName),
             path.join(projectFolder, 'fabric', 'src', 'main', 'resources', awFileName)
         );
-
-        await copyFile(
-            path.join(projectFolder, 'common', 'src', 'main', 'resources', awFileName),
-            path.join(projectFolder, 'neoforge', 'src', 'main', 'resources', awFileName)
-        );
     }
 }
