@@ -18,5 +18,6 @@ for (const project of projectList) {
 
         await writeFile(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', 'fabric.mod.json'), updatedJson);
         await rm(path.join(projectFolder, 'fabric', 'src', 'main', 'resources', awFileName), {force: true});
+        await rm(path.join(projectFolder, 'neoforge', 'src', 'main', 'resources', awFileName), {force: true});
     }
 }
