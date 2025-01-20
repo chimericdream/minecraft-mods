@@ -25,6 +25,9 @@
             "com.chimericdream.hopperxtreme.test.PreventFilterExtractionTest",
             "com.chimericdream.hopperxtreme.test.SixSlotTransferTest",
             "com.chimericdream.hopperxtreme.test.TransferSpeedTest"
+        ],
+        "fabric-datagen": [
+            "com.chimericdream.hopperxtreme.fabric.data.ModDataGenerator"
         ]
     },
     "mixins": [

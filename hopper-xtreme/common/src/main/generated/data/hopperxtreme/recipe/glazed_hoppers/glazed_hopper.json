@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "G": {
+      "item": "minecraft:gray_glazed_terracotta"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "ICI",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "hopperxtreme:glazed_hopper"
+  }
+}

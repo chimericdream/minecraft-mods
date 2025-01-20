@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glazed_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:glazed_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_honeycomb": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:honeycomb"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:glazed_hoppers/honey_glazed_hopper_from_glazed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_glazed_hopper",
+      "has_honeycomb"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:glazed_hoppers/honey_glazed_hopper_from_glazed"
+    ]
+  }
+}

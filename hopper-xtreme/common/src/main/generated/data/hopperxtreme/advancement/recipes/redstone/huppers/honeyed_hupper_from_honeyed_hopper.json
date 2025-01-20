@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_honeyed_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:honeyed_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:huppers/honeyed_hupper_from_honeyed_hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_honeyed_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:huppers/honeyed_hupper_from_honeyed_hopper"
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_diamond": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:diamond"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glazed_golden_multi_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:glazed_golden_multi_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:glazed_multi_hoppers/glazed_diamond_multi_hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_glazed_golden_multi_hopper",
+      "has_diamond"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:glazed_multi_hoppers/glazed_diamond_multi_hopper"
+    ]
+  }
+}

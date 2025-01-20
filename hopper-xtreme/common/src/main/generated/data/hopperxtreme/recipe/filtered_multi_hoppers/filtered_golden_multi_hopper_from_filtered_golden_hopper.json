@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "hopperxtreme:filtered_golden_hopper"
+    },
+    {
+      "item": "hopperxtreme:filtered_golden_hopper"
+    },
+    {
+      "item": "hopperxtreme:filtered_golden_hopper"
+    },
+    {
+      "item": "hopperxtreme:filtered_golden_hopper"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "hopperxtreme:filtered_golden_multi_hopper"
+  }
+}
