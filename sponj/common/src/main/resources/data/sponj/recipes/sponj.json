@@ -1,8 +1,0 @@
-{
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {"item": "minecraft:sponge"},
-        {"item": "minecraft:sponge"}
-    ],
-    "result": {"item": "sponj:sponj", "count":  2}
-}
