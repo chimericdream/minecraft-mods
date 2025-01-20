@@ -26,14 +26,6 @@ public class WetLavaSponjBlock extends Block {
         super(Settings.copy(Blocks.SPONGE).registryKey(BLOCK_REGISTRY_KEY));
     }
 
-//    public void register() {
-//        Registry.register(Registries.BLOCK, BLOCK_ID, this);
-//        Registry.register(Registries.ITEM, BLOCK_ID, new BlockItem(this, new Item.Settings().recipeRemainder(SponjMod.LAVA_SPONJ.asItem())));
-//
-//        // Wet lava sponjes can smelt 128 items!
-//        FuelRegistry.INSTANCE.add(this, 25600);
-//    }
-
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!world.getDimension().bedWorks() && !world.getDimension().ultrawarm()) {
             world.setBlockState(pos, ModBlocks.LAVA_SPONJ_BLOCK.get().getDefaultState(), 3);

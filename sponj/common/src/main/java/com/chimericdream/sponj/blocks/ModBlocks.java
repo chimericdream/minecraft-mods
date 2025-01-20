@@ -32,6 +32,8 @@ public class ModBlocks {
         WetLavaSponjBlock.BLOCK_ID,
         WetLavaSponjBlock::new,
         getDefaultItemSettings().registryKey(WetLavaSponjBlock.ITEM_REGISTRY_KEY)
+        // Disabled until I can figure out how this works on NeoForge
+        // getDefaultItemSettings().recipeRemainder(LAVA_SPONJ_BLOCK.get().asItem()).registryKey(WetLavaSponjBlock.ITEM_REGISTRY_KEY)
     );
 
     public static final List<RegistrySupplier<Block>> SPONJ_BLOCKS = List.of(
@@ -45,6 +47,9 @@ public class ModBlocks {
     );
 
     public static void init() {
+        // Disabled until I can figure out cross-loader fuel registries as well as how to have a recipe remainder in the furnace with a stackable item
+        // // Wet lava sponjes can smelt 128 items!
+        // FuelRegistry.register(25600, WET_LAVA_SPONJ_BLOCK.get());
     }
 
     @SuppressWarnings("UnstableApiUsage")
