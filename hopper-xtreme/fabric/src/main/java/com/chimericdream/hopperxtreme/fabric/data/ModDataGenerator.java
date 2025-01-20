@@ -1,5 +1,6 @@
 package com.chimericdream.hopperxtreme.fabric.data;
 
+import com.chimericdream.hopperxtreme.fabric.block.XtremeHopperLootTableGenerator;
 import com.chimericdream.hopperxtreme.fabric.block.XtremeHopperRecipeGenerator;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -17,6 +18,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = generator.createPack();
 
         pack.addProvider(ModRecipeProvider::new);
+        pack.addProvider(XtremeHopperLootTableGenerator::new);
     }
 
     private static class ModRecipeProvider extends FabricRecipeProvider {
