@@ -61,7 +61,7 @@ abstract public class MapStateMixin {
      * @reason fixes MC-144406
      */
     @Overwrite
-    public void addDecoration(RegistryEntry<MapDecorationType> type, @Nullable WorldAccess world, String key, double x, double z, double rotation, @Nullable Text text) {
+    public final void addDecoration(RegistryEntry<MapDecorationType> type, @Nullable WorldAccess world, String key, double x, double z, double rotation, @Nullable Text text) {
         int i = 1 << this.scale;
         float f = (float) (x - (double) this.centerX) / (float) i;
         float g = (float) (z - (double) this.centerZ) / (float) i;
