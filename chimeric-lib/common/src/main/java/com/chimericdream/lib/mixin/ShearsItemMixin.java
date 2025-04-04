@@ -36,6 +36,6 @@ public class ShearsItemMixin {
         List<ToolComponent.Rule> rules = new ArrayList<>(original.rules());
         rules.add(ToolComponent.Rule.of(blocks.get(), 5.0F));
 
-        cir.setReturnValue(new ToolComponent(rules, original.defaultMiningSpeed(), original.damagePerBlock()));
+        cir.setReturnValue(new ToolComponent(rules, original.defaultMiningSpeed(), original.damagePerBlock(), true));
     }
 }

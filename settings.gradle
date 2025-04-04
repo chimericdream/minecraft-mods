@@ -11,17 +11,17 @@ rootProject.name = 'chimeric-mods'
 
 def projectList = [
 //    'archaeology-tweaks',
-'artificial-heart',
+//'artificial-heart',
 //    'athenaeum',
-'banner-tweaks',
-'beacon-conduit-tweaks',
+//'banner-tweaks',
+//'beacon-conduit-tweaks',
 //    'blacklight',
 'chimeric-lib',
 //    'cobblicious',
 //    'enchantment-numbers-fix',
 //    'flat-bedrock',
-'hang-from-slabs',
-'hopper-xtreme',
+//    'hang-from-slabs',
+//'hopper-xtreme',
 //    'houdini-block',
 //    'jdcrafte',
 //    'minekea',
@@ -29,7 +29,7 @@ def projectList = [
 //    'pannotia-companion',
 //    'playgrounds',
 //    'shulker-stuff',
-'sponj',
+//'sponj',
 //    'villager-tweaks'
 ]
 
