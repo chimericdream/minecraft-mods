@@ -18,7 +18,9 @@
         "main": [
             "com.chimericdream.bannertweaks.fabric.BannerTweaksFabric"
         ],
-        "client": [],
+        "client": [
+            "com.chimericdream.bannertweaks.fabric.BannerTweaksFabricClient"
+        ],
         "modmenu": [
             "com.chimericdream.bannertweaks.fabric.config.ModMenuIntegration"
         ]
