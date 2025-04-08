@@ -1,6 +1,7 @@
 package com.chimericdream.archaeologytweaks.mixin;
 
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
+import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractBlock.class)
 public abstract class AbstractBlockMixin {
     @Unique
-    protected boolean canHideItems(Block target) {
+    protected boolean at$canHideItems(Block target) {
         return
             target.equals(Blocks.CLAY)
                 || target.equals(Blocks.DIRT)
@@ -41,7 +42,7 @@ public abstract class AbstractBlockMixin {
     }
 
     @Unique
-    protected BlockState getHiddenState(Block target) {
+    protected BlockState at$getHiddenState(Block target) {
         if (target.equals(Blocks.CLAY)) {
             return ModBlocks.SUSPICIOUS_CLAY.get().getDefaultState();
         }
@@ -84,26 +85,37 @@ public abstract class AbstractBlockMixin {
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     protected void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         Block target = state.getBlock();
-        if (!canHideItems(target)) {
+        if (!at$canHideItems(target)) {
             return;
         }
 
-        BlockState newState = getHiddenState(target);
+        BlockState newState = at$getHiddenState(target);
 
         Item offhandItem = player.getOffHandStack().getItem();
 
         if (offhandItem.equals(Items.BRUSH) && player.getMainHandStack() != ItemStack.EMPTY) {
             world.setBlockState(pos, newState);
-            NbtElement itemData = player.getMainHandStack().encode(world.getRegistryManager());
+            NbtElement itemData = player.getMainHandStack().toNbt(world.getRegistryManager());
 
-            BrushableBlockEntity be = (BrushableBlockEntity) world.getBlockEntity(pos);
-            NbtCompound nbt = new NbtCompound();
-            nbt.put("item", itemData);
+            if (newState.isOf(Blocks.SUSPICIOUS_SAND) || newState.isOf(Blocks.SUSPICIOUS_GRAVEL)) {
+                BrushableBlockEntity be = (BrushableBlockEntity) world.getBlockEntity(pos);
+                NbtCompound nbt = new NbtCompound();
+                nbt.put("item", itemData);
 
-            assert be != null;
+                assert be != null;
 
-            be.readNbt(nbt, world.getRegistryManager());
-            world.addBlockEntity(be);
+                be.readNbt(nbt, world.getRegistryManager());
+                world.addBlockEntity(be);
+            } else {
+                ATBrushableBlockEntity be = (ATBrushableBlockEntity) world.getBlockEntity(pos);
+                NbtCompound nbt = new NbtCompound();
+                nbt.put("item", itemData);
+
+                assert be != null;
+
+                be.readNbt(nbt, world.getRegistryManager());
+                world.addBlockEntity(be);
+            }
             if (!player.isCreative()) {
                 player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
             }

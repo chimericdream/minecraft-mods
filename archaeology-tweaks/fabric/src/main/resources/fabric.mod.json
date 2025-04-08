@@ -18,10 +18,12 @@
         "main": [
             "com.chimericdream.archaeologytweaks.fabric.ArchaeologyTweaksFabric"
         ],
-        "client": []
+        "client": [
+            "com.chimericdream.archaeologytweaks.fabric.client.ArchaeologyTweaksFabricClient"
+        ]
     },
     "mixins": [
-        "archaeologytweaks.mixins.json"
+        "archtweaks.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_compat}",

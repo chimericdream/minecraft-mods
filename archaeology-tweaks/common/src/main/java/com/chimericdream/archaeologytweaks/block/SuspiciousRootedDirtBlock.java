@@ -7,6 +7,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
@@ -30,6 +32,7 @@ public class SuspiciousRootedDirtBlock extends BrushableFloatingBlock implements
                 .strength(0.5F)
                 .sounds(BlockSoundGroup.ROOTED_DIRT)
                 .pistonBehavior(PistonBehavior.DESTROY)
+                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID))
         );
     }
 

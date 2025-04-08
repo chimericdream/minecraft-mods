@@ -6,7 +6,8 @@
     "client": [
     ],
     "mixins": [
-        "AbstractBlockMixin"
+        "AbstractBlockMixin",
+        "BrushItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

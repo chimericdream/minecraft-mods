@@ -42,7 +42,4 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[mixins]]
-config = "archaeologytweaks.mixins.json"
-
-[[accessTransformers]]
-file = "META-INF/accesstransformer.cfg"
+config = "archtweaks.mixins.json"

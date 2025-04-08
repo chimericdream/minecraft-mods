@@ -3,5 +3,5 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/archaeologytweaks.accesswidener")
+    accessWidenerPath = file("src/main/resources/archtweaks.accesswidener")
 }

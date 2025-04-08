@@ -5,6 +5,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -23,6 +25,7 @@ public class SuspiciousClayBlock extends BrushableFloatingBlock {
                 .strength(0.6F)
                 .sounds(BlockSoundGroup.GRAVEL)
                 .pistonBehavior(PistonBehavior.DESTROY)
+                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID))
         );
     }
 }

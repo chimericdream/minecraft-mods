@@ -4,6 +4,8 @@ import com.chimericdream.archaeologytweaks.ModInfo;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -21,6 +23,7 @@ public class SuspiciousPackedMudBlock extends BrushableFloatingBlock {
                 .strength(1.0F, 3.0F)
                 .sounds(BlockSoundGroup.PACKED_MUD)
                 .pistonBehavior(PistonBehavior.DESTROY)
+                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID))
         );
     }
 }

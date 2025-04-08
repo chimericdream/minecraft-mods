@@ -10,13 +10,13 @@ pluginManagement {
 rootProject.name = 'chimeric-mods'
 
 def projectList = [
-//    'archaeology-tweaks',
+    'archaeology-tweaks',
 //'artificial-heart',
 //    'athenaeum',
-'banner-tweaks',
+    'banner-tweaks',
 //'beacon-conduit-tweaks',
 //    'blacklight',
-'chimeric-lib',
+    'chimeric-lib',
 //    'cobblicious',
 //    'enchantment-numbers-fix',
 //    'flat-bedrock',

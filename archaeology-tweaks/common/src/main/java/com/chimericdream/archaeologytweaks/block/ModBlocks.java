@@ -1,13 +1,16 @@
 package com.chimericdream.archaeologytweaks.block;
 
 import com.chimericdream.archaeologytweaks.ModInfo;
+import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.BrushableBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.util.Identifier;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static com.chimericdream.archaeologytweaks.ArchaeologyTweaksMod.REGISTRY_HELPER;
 
@@ -24,19 +27,21 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SUSPICIOUS_SOUL_SAND = REGISTRY_HELPER.registerWithItem(SuspiciousSoulSandBlock.BLOCK_ID, SuspiciousSoulSandBlock::new, DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> SUSPICIOUS_SOUL_SOIL = REGISTRY_HELPER.registerWithItem(SuspiciousSoulSoilBlock.BLOCK_ID, SuspiciousSoulSoilBlock::new, DEFAULT_SETTINGS);
 
-    public static final RegistrySupplier<BlockEntityType<BrushableBlockEntity>> BRUSHABLE_MOD_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
-        Identifier.of(ModInfo.MOD_ID, "brushable_block"),
-        () -> BlockEntityType.Builder.create(
-            BrushableBlockEntity::new,
-            ModBlocks.SUSPICIOUS_CLAY.get(),
-            ModBlocks.SUSPICIOUS_DIRT.get(),
-            ModBlocks.SUSPICIOUS_MUD.get(),
-            ModBlocks.SUSPICIOUS_PACKED_MUD.get(),
-            ModBlocks.SUSPICIOUS_RED_SAND.get(),
-            ModBlocks.SUSPICIOUS_ROOTED_DIRT.get(),
-            ModBlocks.SUSPICIOUS_SOUL_SAND.get(),
-            ModBlocks.SUSPICIOUS_SOUL_SOIL.get()
-        ).build(null)
+    public static final RegistrySupplier<BlockEntityType<ATBrushableBlockEntity>> BRUSHABLE_MOD_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
+        Identifier.of(ModInfo.MOD_ID, "brushable_block_entity_type"),
+        () -> new BlockEntityType<>(
+            ATBrushableBlockEntity::new,
+            new HashSet<>(Arrays.asList(
+                ModBlocks.SUSPICIOUS_CLAY.get(),
+                ModBlocks.SUSPICIOUS_DIRT.get(),
+                ModBlocks.SUSPICIOUS_MUD.get(),
+                ModBlocks.SUSPICIOUS_PACKED_MUD.get(),
+                ModBlocks.SUSPICIOUS_RED_SAND.get(),
+                ModBlocks.SUSPICIOUS_ROOTED_DIRT.get(),
+                ModBlocks.SUSPICIOUS_SOUL_SAND.get(),
+                ModBlocks.SUSPICIOUS_SOUL_SOIL.get()
+            ))
+        )
     );
 
     public static void init() {
