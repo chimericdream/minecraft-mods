@@ -1,6 +1,7 @@
 package com.chimericdream.bannertweaks.fabric;
 
 import com.chimericdream.bannertweaks.BannerTweaksMod;
+import com.chimericdream.bannertweaks.fabric.network.FabricServerNetworking;
 import net.fabricmc.api.ModInitializer;
 
 public final class BannerTweaksFabric implements ModInitializer {
@@ -12,5 +13,8 @@ public final class BannerTweaksFabric implements ModInitializer {
 
         // Run our common setup.
         BannerTweaksMod.init();
+
+        BannerTweaksMod.LOGGER.info("Initializing Fabric server networking");
+        FabricServerNetworking.init();
     }
 }

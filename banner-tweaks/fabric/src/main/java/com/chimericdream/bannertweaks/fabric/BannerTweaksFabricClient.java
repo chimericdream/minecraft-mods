@@ -7,7 +7,7 @@ import net.fabricmc.api.ClientModInitializer;
 public class BannerTweaksFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BannerTweaksMod.LOGGER.info("Initializing Fabric server networking");
-        FabricServerNetworking.init();
+        BannerTweaksMod.LOGGER.info("Initializing Fabric client networking");
+        FabricServerNetworking.initClient();
     }
 }
