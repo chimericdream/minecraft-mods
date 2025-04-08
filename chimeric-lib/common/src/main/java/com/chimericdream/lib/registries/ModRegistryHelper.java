@@ -132,7 +132,13 @@ public class ModRegistryHelper {
     public RegistrySupplier<Block> registerWithItem(Identifier id, Supplier<Block> supplier, Item.Settings itemSettings) {
         RegistrySupplier<Block> block = registerBlock(id, supplier);
 
-        registerItem(id, () -> new BlockItem(block.get(), itemSettings));
+        registerItem(
+            id,
+            () -> new BlockItem(
+                block.get(),
+                itemSettings.registryKey(RegistryKey.of(RegistryKeys.ITEM, id))
+            )
+        );
 
         return block;
     }
