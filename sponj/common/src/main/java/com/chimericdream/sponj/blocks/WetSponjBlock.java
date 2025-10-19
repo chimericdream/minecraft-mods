@@ -67,7 +67,7 @@ public class WetSponjBlock extends Block {
                     }
                 }
 
-                world.addParticle(ParticleTypes.DRIPPING_WATER, d, e, f, 0.0, 0.0, 0.0);
+                world.addImportantParticleClient(ParticleTypes.DRIPPING_WATER, d, e, f, 0.0, 0.0, 0.0);
             }
         }
     }

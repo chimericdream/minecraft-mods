@@ -67,7 +67,7 @@ public class WetLavaSponjBlock extends Block {
                     }
                 }
 
-                world.addParticle(ParticleTypes.DRIPPING_LAVA, d, e, f, 0.0, 0.0, 0.0);
+                world.addImportantParticleClient(ParticleTypes.DRIPPING_LAVA, d, e, f, 0.0, 0.0, 0.0);
             }
         }
     }
