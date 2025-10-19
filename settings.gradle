@@ -12,7 +12,7 @@ rootProject.name = 'chimeric-mods'
 def projectList = [
     'archaeology-tweaks',
     'artificial-heart',
-//    'athenaeum',
+    'athenaeum',
     'banner-tweaks',
 //'beacon-conduit-tweaks',
 //    'blacklight',

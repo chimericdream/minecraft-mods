@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class AthenaeumReloadListener implements SynchronousResourceReloader {
     public static void register() {
-        ReloadListenerRegistry.register(ResourceType.SERVER_DATA, new AthenaeumReloadListener());
+        ReloadListenerRegistry.register(ResourceType.SERVER_DATA, new AthenaeumReloadListener(), Identifier.of(ModInfo.MOD_ID, "athenaeum_book_resource_listener"));
     }
 
     @Override
