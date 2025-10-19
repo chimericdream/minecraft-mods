@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"face": "minecraft:block/creaking_heart_top_active",
+		"face": "minecraft:block/creaking_heart_top_awake",
 		"particle": "minecraft:block/creaking_heart"
 	},
 	"elements": [
