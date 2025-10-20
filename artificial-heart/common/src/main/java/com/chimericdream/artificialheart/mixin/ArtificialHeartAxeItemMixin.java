@@ -7,7 +7,6 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CreakingHeartBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
@@ -73,7 +72,7 @@ public class ArtificialHeartAxeItemMixin {
         world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(context.getPlayer(), updatedState));
 
         if (player != null) {
-            itemStack.damage(1, player, LivingEntity.getSlotForHand(context.getHand()));
+            itemStack.damage(1, player, context.getHand());
         }
 
         cir.setReturnValue(ActionResult.SUCCESS);
@@ -98,7 +97,7 @@ public class ArtificialHeartAxeItemMixin {
         world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(context.getPlayer(), artificialHeartState));
 
         if (player != null) {
-            itemStack.damage(1, player, LivingEntity.getSlotForHand(context.getHand()));
+            itemStack.damage(1, player, context.getHand());
         }
 
         cir.setReturnValue(ActionResult.SUCCESS);

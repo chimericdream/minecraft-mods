@@ -5,7 +5,6 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EyeblossomBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -51,7 +50,7 @@ public class ArtificialHeartShearsItemMixin {
         world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(context.getPlayer(), clippedEyeblossomState));
 
         if (player != null) {
-            itemStack.damage(1, player, LivingEntity.getSlotForHand(context.getHand()));
+            itemStack.damage(1, player, context.getHand());
         }
 
         cir.setReturnValue(ActionResult.SUCCESS);
