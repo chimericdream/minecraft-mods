@@ -10,7 +10,7 @@ import net.minecraft.registry.tag.TagKey;
 import java.util.function.Function;
 
 public interface FabricItemDataGenerator extends ItemDataGenerator {
-    default void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> getBuilder) {
+    default void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider.ItemTagProvider> getBuilder) {
     }
 
     default void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {

@@ -1,5 +1,5 @@
 plugins {
-    id 'dev.architectury.loom' version '1.10-SNAPSHOT' apply false
+    id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
 }
@@ -160,7 +160,7 @@ subprojects {
             forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:json:0.2.1"))
             forgeRuntimeLibrary(runtimeOnly("org.quiltmc.parsers:gson:0.2.1"))
 
-            implementation("thedarkcolour:kotlinforforge-neoforge:5.6.0") {
+            modImplementation("thedarkcolour:kotlinforforge-neoforge:6.0.0") {
                 exclude(group: "net.neoforged.fancymodloader", module: "loader")
             }
         }
