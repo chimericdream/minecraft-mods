@@ -7,13 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BrushableBlockEntity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -92,32 +89,35 @@ public abstract class AbstractBlockMixin {
         BlockState newState = at$getHiddenState(target);
 
         Item offhandItem = player.getOffHandStack().getItem();
+        ItemStack mainHandStack = player.getMainHandStack();
 
-        if (offhandItem.equals(Items.BRUSH) && player.getMainHandStack() != ItemStack.EMPTY) {
+        if (offhandItem.equals(Items.BRUSH) && mainHandStack != ItemStack.EMPTY) {
             world.setBlockState(pos, newState);
-            NbtElement itemData = player.getMainHandStack().toNbt(world.getRegistryManager());
 
             if (newState.isOf(Blocks.SUSPICIOUS_SAND) || newState.isOf(Blocks.SUSPICIOUS_GRAVEL)) {
                 BrushableBlockEntity be = (BrushableBlockEntity) world.getBlockEntity(pos);
-                NbtCompound nbt = new NbtCompound();
-                nbt.put("item", itemData);
 
                 assert be != null;
 
-                be.readNbt(nbt, world.getRegistryManager());
+                ItemStack itemToHide = mainHandStack.copyWithCount(1);
+                mainHandStack.decrementUnlessCreative(1, player);
+
+                be.item = itemToHide;
+                be.lootTable = null;
+                be.markDirty();
+
                 world.addBlockEntity(be);
             } else {
                 ATBrushableBlockEntity be = (ATBrushableBlockEntity) world.getBlockEntity(pos);
-                NbtCompound nbt = new NbtCompound();
-                nbt.put("item", itemData);
 
                 assert be != null;
 
-                be.readNbt(nbt, world.getRegistryManager());
+                ItemStack itemToHide = mainHandStack.copyWithCount(1);
+                mainHandStack.decrementUnlessCreative(1, player);
+
+                be.setItem(itemToHide);
+
                 world.addBlockEntity(be);
-            }
-            if (!player.isCreative()) {
-                player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
             }
 
             cir.setReturnValue(ActionResult.SUCCESS);

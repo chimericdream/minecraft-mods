@@ -27,6 +27,8 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -78,6 +80,12 @@ public class ATBrushableBlockEntity extends BlockEntity {
 
             return false;
         }
+    }
+
+    public void setItem(ItemStack item) {
+        this.item = item;
+        this.lootTable = null;
+        this.markDirty();
     }
 
     private void generateItem(ServerWorld world, LivingEntity brusher, ItemStack brush) {
@@ -161,23 +169,23 @@ public class ATBrushableBlockEntity extends BlockEntity {
 
     }
 
-    private boolean readLootTableFromNbt(NbtCompound nbtCompound) {
-        this.lootTable = nbtCompound.get("LootTable", LootTable.TABLE_KEY).orElse(null);
-        this.lootTableSeed = nbtCompound.getLong("LootTableSeed", 0L);
+    private boolean readLootTableFromData(ReadView data) {
+        this.lootTable = data.read("LootTable", LootTable.TABLE_KEY).orElse(null);
+        this.lootTableSeed = data.getLong("LootTableSeed", 0L);
         return this.lootTable != null;
     }
 
-    private boolean writeLootTableToNbt(NbtCompound nbt) {
+    private boolean writeLootTableToData(WriteView data) {
         if (this.lootTable == null) {
             return false;
-        } else {
-            nbt.put("LootTable", LootTable.TABLE_KEY, this.lootTable);
-            if (this.lootTableSeed != 0L) {
-                nbt.putLong("LootTableSeed", this.lootTableSeed);
-            }
-
-            return true;
         }
+
+        data.put("LootTable", LootTable.TABLE_KEY, this.lootTable);
+        if (this.lootTableSeed != 0L) {
+            data.putLong("LootTableSeed", this.lootTableSeed);
+        }
+
+        return true;
     }
 
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
@@ -195,25 +203,22 @@ public class ATBrushableBlockEntity extends BlockEntity {
         return BlockEntityUpdateS2CPacket.create(this);
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
-        RegistryOps<NbtElement> registryOps = registries.getOps(NbtOps.INSTANCE);
-        if (!this.readLootTableFromNbt(nbt)) {
-            this.item = nbt.get("item", ItemStack.CODEC, registryOps).orElse(ItemStack.EMPTY);
+    public void readData(ReadView data) {
+        super.readData(data);
+        if (!this.readLootTableFromData(data)) {
+            this.item = (ItemStack) data.read("item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
         } else {
             this.item = ItemStack.EMPTY;
         }
 
-        this.hitDirection = nbt.get("hit_direction", Direction.INDEX_CODEC).orElse(null);
+        this.hitDirection = (Direction) data.read("hit_direction", Direction.INDEX_CODEC).orElse(null);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
-        if (!this.writeLootTableToNbt(nbt) && !this.item.isEmpty()) {
-            RegistryOps<NbtElement> registryOps = registries.getOps(NbtOps.INSTANCE);
-            nbt.put("item", ItemStack.CODEC, registryOps, this.item);
+    protected void writeData(WriteView data) {
+        super.writeData(data);
+        if (!this.writeLootTableToData(data) && !this.item.isEmpty()) {
+            data.put("item", ItemStack.CODEC, this.item);
         }
-
     }
 
     public void setLootTable(RegistryKey<LootTable> lootTable, long seed) {
