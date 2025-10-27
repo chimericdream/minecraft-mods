@@ -13,7 +13,7 @@ def projectList = [
     'archaeology-tweaks',
     'artificial-heart',
     'athenaeum',
-//    'banner-tweaks',
+    'banner-tweaks',
 //'beacon-conduit-tweaks',
     'blacklight',
     'chimeric-lib',
