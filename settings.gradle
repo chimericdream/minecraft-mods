@@ -18,7 +18,7 @@ def projectList = [
     'blacklight',
     'chimeric-lib',
     'cobblicious',
-//    'enchantment-numbers-fix',
+    'enchantment-numbers-fix',
 //    'flat-bedrock',
     'hang-from-slabs',
 //'hopper-xtreme',
