@@ -14,7 +14,7 @@ def projectList = [
     'artificial-heart',
     'athenaeum',
     'banner-tweaks',
-//'beacon-conduit-tweaks',
+    'beacon-conduit-tweaks',
     'blacklight',
     'chimeric-lib',
     'cobblicious',
