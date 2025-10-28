@@ -1,6 +1,5 @@
 package com.chimericdream.houdiniblock.items;
 
-import com.chimericdream.lib.text.TextHelpers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -11,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -19,11 +17,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Map;
 
 public class HoudiniBlockItem extends BlockItem {
@@ -46,24 +42,16 @@ public class HoudiniBlockItem extends BlockItem {
         super(block, settings);
     }
 
-    @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
-        PlacementMode currentMode = PlacementMode.valueOf(nbt.getString("houdini_placement_mode"));
-
-        tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEYS.get(currentMode)));
-    }
-
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         if (!player.isSneaking()) {
-            return TypedActionResult.pass(player.getStackInHand(hand));
+            return ActionResult.PASS;
         }
 
         try {
             ItemStack itemStack = player.getStackInHand(hand);
             NbtCompound nbt = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
 
-            PlacementMode currentMode = PlacementMode.valueOf(nbt.getString("houdini_placement_mode"));
+            PlacementMode currentMode = PlacementMode.getFromNbt(nbt);
             PlacementMode newMode = switch (currentMode) {
                 case PREVENT_ON_BREAK -> PlacementMode.PREVENT_ON_PLACE;
                 case PREVENT_ON_PLACE -> PlacementMode.PREVENT_ALL;
@@ -82,16 +70,16 @@ public class HoudiniBlockItem extends BlockItem {
                 player.sendMessage(Text.translatable(TOOLTIP_KEYS.get(newMode)), true);
             }
 
-            return TypedActionResult.success(player.getStackInHand(hand));
+            return ActionResult.SUCCESS;
         } catch (IllegalArgumentException e) {
-            return TypedActionResult.fail(player.getStackInHand(hand));
+            return ActionResult.FAIL;
         }
     }
 
     public ActionResult useOnBlock(ItemUsageContext context) {
         ItemStack stack = context.getStack();
         NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
-        PlacementMode mode = PlacementMode.valueOf(nbt.getString("houdini_placement_mode"));
+        PlacementMode mode = PlacementMode.getFromNbt(nbt);
 
         ItemPlacementContext placementContext = new ItemPlacementContext(context);
 
@@ -135,5 +123,9 @@ public class HoudiniBlockItem extends BlockItem {
         PREVENT_ON_PLACE,
         PREVENT_ALL,
         REPLACE_BLOCK;
+
+        public static PlacementMode getFromNbt(NbtCompound nbt) {
+            return PlacementMode.valueOf(nbt.getString("houdini_placement_mode").orElse(PlacementMode.PREVENT_ON_BREAK.toString()));
+        }
     }
 }

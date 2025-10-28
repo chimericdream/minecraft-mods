@@ -17,8 +17,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -67,7 +67,7 @@ public class HoudiniBlock extends Block implements Waterloggable {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         ItemStack stack = ctx.getStack();
         NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, HoudiniBlockItem.DEFAULT_NBT).copyNbt();
-        HoudiniBlockItem.PlacementMode mode = HoudiniBlockItem.PlacementMode.valueOf(nbt.getString("houdini_placement_mode"));
+        HoudiniBlockItem.PlacementMode mode = HoudiniBlockItem.PlacementMode.getFromNbt(nbt);
 
         return this.getDefaultState()
             .with(PREVENT_ON_PLACE, mode == HoudiniBlockItem.PlacementMode.PREVENT_ON_PLACE)
@@ -78,15 +78,15 @@ public class HoudiniBlock extends Block implements Waterloggable {
     }
 
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (state.get(REPLACE_BLOCK)) {
             return this.replaceWithBlockInHand(stack, state, world, pos, player, hand, hit);
         }
 
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
-    private ItemActionResult replaceWithBlockInHand(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    private ActionResult replaceWithBlockInHand(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         try {
             if (stack.getItem() instanceof BlockItem blockItem) {
                 Block block = blockItem.getBlock();
@@ -103,13 +103,13 @@ public class HoudiniBlock extends Block implements Waterloggable {
                     stack.decrement(1);
                 }
 
-                return ItemActionResult.SUCCESS;
+                return ActionResult.SUCCESS;
             }
         } catch (RuntimeException e) {
             HoudiniBlockMod.LOGGER.error("Error in HoudiniBlock$replaceWithBlockInHand", e);
         }
 
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
     @Override

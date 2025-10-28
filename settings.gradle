@@ -22,7 +22,7 @@ def projectList = [
 //    'flat-bedrock',
     'hang-from-slabs',
 //'hopper-xtreme',
-//    'houdini-block',
+    'houdini-block',
     'jdcrafte',
 //    'minekea',
 //    'miniblock-merchants',

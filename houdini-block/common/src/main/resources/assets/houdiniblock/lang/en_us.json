@@ -1,5 +1,6 @@
 {
     "block.houdiniblock.houdini_block": "Houdini Block",
+    "item.houdiniblock.houdini_block": "Houdini Block",
     "item.houdiniblock.tooltip.prevent_on_break": "Mode: Prevent on break",
     "item.houdiniblock.tooltip.prevent_on_place": "Mode: Prevent on place",
     "item.houdiniblock.tooltip.prevent_all": "Mode: Prevent all",
