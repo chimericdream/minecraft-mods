@@ -19,7 +19,7 @@ def projectList = [
     'chimeric-lib',
     'cobblicious',
     'enchantment-numbers-fix',
-//    'flat-bedrock',
+    'flat-bedrock',
     'hang-from-slabs',
 //'hopper-xtreme',
     'houdini-block',
