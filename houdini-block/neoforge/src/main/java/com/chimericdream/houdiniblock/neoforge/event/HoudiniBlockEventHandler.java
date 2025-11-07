@@ -2,6 +2,7 @@ package com.chimericdream.houdiniblock.neoforge.event;
 
 import com.chimericdream.houdiniblock.ModInfo;
 import com.chimericdream.houdiniblock.items.HoudiniBlockItem;
+import com.chimericdream.houdiniblock.items.ModItems;
 import com.chimericdream.lib.text.TextHelpers;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,11 @@ public class HoudiniBlockEventHandler {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
+
+        if (!stack.isOf(ModItems.HOUDINI_BLOCK_ITEM.get())) {
+            return;
+        }
+
         NbtCompound nbt = stack.getComponents().getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
         HoudiniBlockItem.PlacementMode currentMode = HoudiniBlockItem.PlacementMode.getFromNbt(nbt);
 
