@@ -120,17 +120,14 @@ subprojects {
     }
 
     if (project.name == 'fabric') {
-        loom {
-            runs {
-//                configureEach {
-//                    vmArg("-Dfabric.log.level=trace")
-//                }
-
-                gameTest {
-                    server()
-                    ideConfigGenerated(true)
-                    vmArg "-Dfabric-api.gametest=1"
-                }
+        fabricApi {
+            configureTests {
+                createSourceSet = true
+                modId = "${project.parent.name}-test"
+                enableGameTests = true
+                enableClientGameTests = true
+                clearRunDirectory = false
+                eula = true
             }
         }
 

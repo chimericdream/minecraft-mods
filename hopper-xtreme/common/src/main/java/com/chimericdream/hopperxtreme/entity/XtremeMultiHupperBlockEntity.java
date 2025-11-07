@@ -20,12 +20,12 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.screen.HopperScreenHandler;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +34,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -88,26 +87,28 @@ public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity i
         return INPUT_AREA_SHAPE;
     }
 
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        this.withFilter = nbt.getBoolean(ModInfo.FILTER_NBT_KEY);
+    @Override
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.withFilter = view.getBoolean(ModInfo.FILTER_NBT_KEY, false);
 
         this.inventory = DefaultedList.ofSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
-        if (!this.readLootTable(nbt)) {
-            Inventories.readNbt(nbt, this.inventory, registryLookup);
+        if (!this.readLootTable(view)) {
+            Inventories.readData(view, this.inventory);
         }
 
-        this.transferCooldown = nbt.getInt("TransferCooldown");
+        this.transferCooldown = view.getInt("TransferCooldown", -1);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        if (!this.writeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory, registryLookup);
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        if (!this.writeLootTable(view)) {
+            Inventories.writeData(view, this.inventory);
         }
 
-        nbt.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
-        nbt.putInt("TransferCooldown", this.transferCooldown);
+        view.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
+        view.putInt("TransferCooldown", this.transferCooldown);
     }
 
     public int size() {
@@ -225,7 +226,7 @@ public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity i
     }
 
     private static boolean insertAndExtract(World world, BlockPos pos, BlockState state, XtremeMultiHupperBlockEntity blockEntity, BooleanSupplier booleanSupplier) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return false;
         }
 
@@ -252,18 +253,13 @@ public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity i
     }
 
     private boolean isFull() {
-        Iterator<?> var1 = this.inventory.iterator();
-
-        ItemStack itemStack;
-        do {
-            if (!var1.hasNext()) {
-                return true;
+        for (ItemStack itemStack : this.inventory) {
+            if (itemStack.isEmpty() || itemStack.getCount() != itemStack.getMaxCount()) {
+                return false;
             }
+        }
 
-            itemStack = (ItemStack) var1.next();
-        } while (!itemStack.isEmpty() && itemStack.getCount() == itemStack.getMaxCount());
-
-        return false;
+        return true;
     }
 
     private static boolean insert(World world, BlockPos pos, XtremeMultiHupperBlockEntity blockEntity) {
@@ -380,11 +376,8 @@ public class XtremeMultiHupperBlockEntity extends LootableContainerBlockEntity i
 
         boolean bl = ((XtremeMultiHupperBlockEntity) hupper).canBlockFromBelow() && blockState.isFullCube(world, blockPos) && !blockState.isIn(BlockTags.DOES_NOT_BLOCK_HOPPERS);
         if (!bl) {
-            Iterator var6 = getInputItemEntities(world, hupper).iterator();
-
-            while (var6.hasNext()) {
-                ItemEntity itemEntity = (ItemEntity) var6.next();
-                if (extract(hupper, itemEntity)) {
+            for (ItemEntity itemEntity : getInputItemEntities(world, hupper)) {
+                if (extract((Inventory) hupper, (ItemEntity) itemEntity)) {
                     return true;
                 }
             }

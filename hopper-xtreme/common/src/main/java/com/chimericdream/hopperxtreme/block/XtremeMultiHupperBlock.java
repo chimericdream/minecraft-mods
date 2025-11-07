@@ -14,11 +14,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
@@ -224,7 +226,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : validateTicker(type, XTREME_MULTI_HUPPER_BLOCK_ENTITY.get(), XtremeMultiHupperBlockEntity::serverTick);
+        return world.isClient() ? null : validateTicker(type, XTREME_MULTI_HUPPER_BLOCK_ENTITY.get(), XtremeMultiHupperBlockEntity::serverTick);
     }
 
     @Override
@@ -236,7 +238,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -312,9 +314,9 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        ItemScatterer.onStateReplaced(state, newState, world, pos);
-        super.onStateReplaced(state, world, pos, newState, moved);
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        ItemScatterer.onStateReplaced(state, world, pos);
+        super.onStateReplaced(state, world, pos, moved);
     }
 
     @Override
@@ -328,7 +330,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 
@@ -348,7 +350,7 @@ public class XtremeMultiHupperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeMultiHupperBlockEntity) {
             XtremeMultiHupperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHupperBlockEntity) blockEntity);

@@ -5,7 +5,6 @@ import com.chimericdream.hopperxtreme.block.GlazedHopperBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredGlazedHopperScreenHandler;
 import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreenHandler;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -21,11 +20,11 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +33,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -70,26 +68,28 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
         this.facing = state.get(GlazedHopperBlock.FACING);
     }
 
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        this.withFilter = nbt.getBoolean(ModInfo.FILTER_NBT_KEY);
+    @Override
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.withFilter = view.getBoolean(ModInfo.FILTER_NBT_KEY, false);
 
-        this.inventory = DefaultedList.ofSize(this.withFilter ? 2 : 1, ItemStack.EMPTY);
-        if (!this.readLootTable(nbt)) {
-            Inventories.readNbt(nbt, this.inventory, registryLookup);
+        this.inventory = DefaultedList.ofSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
+        if (!this.readLootTable(view)) {
+            Inventories.readData(view, this.inventory);
         }
 
-        this.transferCooldown = nbt.getInt("TransferCooldown");
+        this.transferCooldown = view.getInt("TransferCooldown", -1);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        if (!this.writeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory, registryLookup);
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        if (!this.writeLootTable(view)) {
+            Inventories.writeData(view, this.inventory);
         }
 
-        nbt.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
-        nbt.putInt("TransferCooldown", this.transferCooldown);
+        view.putBoolean(ModInfo.FILTER_NBT_KEY, this.withFilter);
+        view.putInt("TransferCooldown", this.transferCooldown);
     }
 
     public int size() {
@@ -150,7 +150,7 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     private static boolean dropAndExtract(World world, BlockPos pos, BlockState state, GlazedHopperBlockEntity blockEntity, BooleanSupplier booleanSupplier) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return false;
         }
 
@@ -179,18 +179,13 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     private boolean isFull() {
-        Iterator<?> var1 = this.inventory.iterator();
-
-        ItemStack itemStack;
-        do {
-            if (!var1.hasNext()) {
-                return true;
+        for (ItemStack itemStack : this.inventory) {
+            if (itemStack.isEmpty() || itemStack.getCount() != itemStack.getMaxCount()) {
+                return false;
             }
+        }
 
-            itemStack = (ItemStack) var1.next();
-        } while (!itemStack.isEmpty() && itemStack.getCount() == itemStack.getMaxCount());
-
-        return false;
+        return true;
     }
 
     private static boolean drop(World world, BlockPos pos, GlazedHopperBlockEntity blockEntity) {
@@ -269,11 +264,8 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
 
         boolean bl = hopper.canBlockFromAbove() && blockState.isFullCube(world, blockPos) && !blockState.isIn(BlockTags.DOES_NOT_BLOCK_HOPPERS);
         if (!bl) {
-            Iterator var6 = getInputItemEntities(world, hopper).iterator();
-
-            while (var6.hasNext()) {
-                ItemEntity itemEntity = (ItemEntity) var6.next();
-                if (extract(hopper, itemEntity)) {
+            for (ItemEntity itemEntity : getInputItemEntities(world, hopper)) {
+                if (extract((Inventory) hopper, (ItemEntity) itemEntity)) {
                     return true;
                 }
             }
@@ -302,18 +294,18 @@ public class GlazedHopperBlockEntity extends LootableContainerBlockEntity implem
         return false;
     }
 
-    public static boolean extract(Hopper hopper, ItemEntity entity) {
+    public static boolean extract(Inventory inventory, ItemEntity itemEntity) {
         boolean bl = false;
 
-        ItemStack itemStack = entity.getStack().copy();
-        ItemStack itemStack2 = transfer(null, hopper, itemStack, null);
+        ItemStack itemStack = itemEntity.getStack().copy();
+        ItemStack itemStack2 = transfer(null, inventory, itemStack, null);
 
         if (itemStack2.isEmpty()) {
             bl = true;
-            entity.setStack(ItemStack.EMPTY);
-            entity.discard();
+            itemEntity.setStack(ItemStack.EMPTY);
+            itemEntity.discard();
         } else {
-            entity.setStack(itemStack2);
+            itemEntity.setStack(itemStack2);
         }
 
         return bl;

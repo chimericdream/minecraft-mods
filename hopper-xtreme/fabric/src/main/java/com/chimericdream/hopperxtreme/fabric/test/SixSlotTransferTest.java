@@ -1,27 +1,28 @@
-package com.chimericdream.hopperxtreme.test;
+package com.chimericdream.hopperxtreme.fabric.test;
 
 import com.chimericdream.hopperxtreme.entity.XtremeHopperBlockEntity;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
+@SuppressWarnings("unused")
 public class SixSlotTransferTest {
-    @GameTest(templateName = "hopperxtreme:transfer_speed/golden_hopper")
+    @GameTest(structure = "hopperxtreme:transfer_speed/golden_hopper", maxTicks = 28)
     public void goldenHopperItemTransfer(TestContext context) {
         runSixSlotTransferTest(context, 4);
     }
 
-    @GameTest(templateName = "hopperxtreme:transfer_speed/diamond_hopper")
+    @GameTest(structure = "hopperxtreme:transfer_speed/diamond_hopper")
     public void diamondHopperItemTransfer(TestContext context) {
         runSixSlotTransferTest(context, 2);
     }
 
-    @GameTest(templateName = "hopperxtreme:transfer_speed/netherite_hopper")
+    @GameTest(structure = "hopperxtreme:transfer_speed/netherite_hopper")
     public void netheriteHopperItemTransfer(TestContext context) {
         runSixSlotTransferTest(context, 1);
     }
@@ -49,7 +50,7 @@ public class SixSlotTransferTest {
 
             ItemStack hopperSlot0 = hopper.getStack(0);
             if (!hopperSlot0.isEmpty()) {
-                context.throwPositionedException("Expected the hopper to be empty, but found " + hopperSlot0, hopperPos);
+                context.throwPositionedException(Text.of("Expected the hopper to be empty, but found " + hopperSlot0), hopperPos);
             }
 
             LockableContainerBlockEntity bottomChest = getChestAt(context, bottomChestPos);
@@ -62,22 +63,22 @@ public class SixSlotTransferTest {
             ItemStack bottomSlot5 = bottomChest.getStack(5);
 
             if (!bottomSlot0.isOf(Items.OAK_LOG) || bottomSlot0.getCount() != 1) {
-                context.throwPositionedException("Expected 1 oak log in slot 0 of the bottom chest, but found " + bottomSlot0, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 oak log in slot 0 of the bottom chest, but found " + bottomSlot0), bottomChestPos);
             }
             if (!bottomSlot1.isOf(Items.OAK_WOOD) || bottomSlot1.getCount() != 1) {
-                context.throwPositionedException("Expected 1 oak wood in slot 1 of the bottom chest, but found " + bottomSlot1, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 oak wood in slot 1 of the bottom chest, but found " + bottomSlot1), bottomChestPos);
             }
             if (!bottomSlot2.isOf(Items.STRIPPED_OAK_LOG) || bottomSlot2.getCount() != 1) {
-                context.throwPositionedException("Expected 1 stripped oak log in slot 2 of the bottom chest, but found " + bottomSlot2, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 stripped oak log in slot 2 of the bottom chest, but found " + bottomSlot2), bottomChestPos);
             }
             if (!bottomSlot3.isOf(Items.STRIPPED_OAK_WOOD) || bottomSlot3.getCount() != 1) {
-                context.throwPositionedException("Expected 1 stripped oak wood in slot 3 of the bottom chest, but found " + bottomSlot3, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 stripped oak wood in slot 3 of the bottom chest, but found " + bottomSlot3), bottomChestPos);
             }
             if (!bottomSlot4.isOf(Items.OAK_PLANKS) || bottomSlot4.getCount() != 1) {
-                context.throwPositionedException("Expected 1 oak planks in slot 4 of the bottom chest, but found " + bottomSlot4, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 oak planks in slot 4 of the bottom chest, but found " + bottomSlot4), bottomChestPos);
             }
             if (!bottomSlot5.isOf(Items.OAK_STAIRS) || bottomSlot5.getCount() != 1) {
-                context.throwPositionedException("Expected 1 oak stairs in slot 5 of the bottom chest, but found " + bottomSlot5, bottomChestPos);
+                context.throwPositionedException(Text.of("Expected 1 oak stairs in slot 5 of the bottom chest, but found " + bottomSlot5), bottomChestPos);
             }
 
             context.complete();
@@ -85,24 +86,10 @@ public class SixSlotTransferTest {
     }
 
     private XtremeHopperBlockEntity getHopperAt(TestContext context, BlockPos pos) {
-        BlockEntity hopper = context.getBlockEntity(pos);
-        if (!(hopper instanceof XtremeHopperBlockEntity)) {
-            context.throwPositionedException("Expected a hopper at " + pos, pos);
-        }
-
-        assert hopper instanceof XtremeHopperBlockEntity;
-
-        return (XtremeHopperBlockEntity) hopper;
+        return context.getBlockEntity(pos, XtremeHopperBlockEntity.class);
     }
 
     private LockableContainerBlockEntity getChestAt(TestContext context, BlockPos pos) {
-        BlockEntity chest = context.getBlockEntity(pos);
-        if (!(chest instanceof LockableContainerBlockEntity)) {
-            context.throwPositionedException("Expected a container at " + pos, pos);
-        }
-
-        assert chest instanceof LockableContainerBlockEntity;
-
-        return (LockableContainerBlockEntity) chest;
+        return context.getBlockEntity(pos, LockableContainerBlockEntity.class);
     }
 }

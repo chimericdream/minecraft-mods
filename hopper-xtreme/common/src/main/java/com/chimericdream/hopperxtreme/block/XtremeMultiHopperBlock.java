@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
@@ -74,7 +75,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : validateTicker(type, XTREME_MULTI_HOPPER_BLOCK_ENTITY.get(), XtremeMultiHopperBlockEntity::serverTick);
+        return world.isClient() ? null : validateTicker(type, XTREME_MULTI_HOPPER_BLOCK_ENTITY.get(), XtremeMultiHopperBlockEntity::serverTick);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -113,7 +114,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
             XtremeMultiHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHopperBlockEntity) blockEntity);

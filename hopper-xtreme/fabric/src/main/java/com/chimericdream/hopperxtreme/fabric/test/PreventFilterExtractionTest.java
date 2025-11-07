@@ -1,29 +1,30 @@
-package com.chimericdream.hopperxtreme.test;
+package com.chimericdream.hopperxtreme.fabric.test;
 
-import net.minecraft.block.entity.BlockEntity;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
+@SuppressWarnings("unused")
 public class PreventFilterExtractionTest {
-    @GameTest(templateName = "hopperxtreme:filter/vanilla_hopper")
+    @GameTest(structure = "hopperxtreme:filter/vanilla_hopper")
     public void vanillaHopperItemTransfer(TestContext context) {
         runTest(context, 8);
     }
 
-    @GameTest(templateName = "hopperxtreme:filter/golden_hopper")
+    @GameTest(structure = "hopperxtreme:filter/golden_hopper")
     public void goldenHopperItemTransfer(TestContext context) {
         runTest(context, 4);
     }
 
-    @GameTest(templateName = "hopperxtreme:filter/diamond_hopper")
+    @GameTest(structure = "hopperxtreme:filter/diamond_hopper")
     public void diamondHopperItemTransfer(TestContext context) {
         runTest(context, 2);
     }
 
-    @GameTest(templateName = "hopperxtreme:filter/netherite_hopper")
+    @GameTest(structure = "hopperxtreme:filter/netherite_hopper")
     public void netheriteHopperItemTransfer(TestContext context) {
         runTest(context, 1);
     }
@@ -35,7 +36,7 @@ public class PreventFilterExtractionTest {
             LootableContainerBlockEntity bottomHopper = getContainerAt(context, bottomHopperPos);
             ItemStack hopperSlot0 = bottomHopper.getStack(0);
             if (!hopperSlot0.isEmpty()) {
-                context.throwPositionedException("Expected the bottom hopper to be empty, but found " + hopperSlot0, bottomHopperPos);
+                context.throwPositionedException(Text.of("Expected the bottom hopper to be empty, but found " + hopperSlot0), bottomHopperPos);
             }
 
             context.complete();
@@ -43,13 +44,6 @@ public class PreventFilterExtractionTest {
     }
 
     private LootableContainerBlockEntity getContainerAt(TestContext context, BlockPos pos) {
-        BlockEntity container = context.getBlockEntity(pos);
-        if (!(container instanceof LootableContainerBlockEntity)) {
-            context.throwPositionedException("Expected a container at " + pos, pos);
-        }
-
-        assert container instanceof LootableContainerBlockEntity;
-
-        return (LootableContainerBlockEntity) container;
+        return context.getBlockEntity(pos, LootableContainerBlockEntity.class);
     }
 }

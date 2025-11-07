@@ -13,7 +13,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -57,18 +56,8 @@ public class HopperItemFilterItem extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType options) {
-        super.appendTooltip(stack, context, tooltip, options);
-
-        HopperXtremeFilterModeComponent component = stack.getOrDefault(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
-        FilterMode mode = FilterMode.fromString(component.mode());
-
-        tooltip.add(Text.translatable(TOOLTIP_KEYS.get(mode)));
-    }
-
-    @Override
     public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (player.getWorld() != null && !player.getWorld().isClient) {
+        if (player.getEntityWorld() != null && !player.getEntityWorld().isClient()) {
             if (player.isSneaking()) {
                 try {
                     ItemStack itemStack = player.getStackInHand(hand);
@@ -97,7 +86,7 @@ public class HopperItemFilterItem extends Item {
     }
 
     public static void openScreen(PlayerEntity player, ItemStack filter) {
-        if (player.getWorld() != null && !player.getWorld().isClient) {
+        if (player.getEntityWorld() != null && !player.getEntityWorld().isClient()) {
             player.openHandledScreen(new NamedScreenHandlerFactory() {
                 @Override
                 public Text getDisplayName() {

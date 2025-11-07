@@ -1,7 +1,6 @@
 package com.chimericdream.hopperxtreme.block;
 
 import com.chimericdream.hopperxtreme.entity.GlazedHopperBlockEntity;
-import com.chimericdream.lib.text.TextHelpers;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,21 +10,16 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_HOPPER_BLOCK_ENTITY;
@@ -72,15 +66,6 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        if (!baseKey.equals("honey_glazed_hopper")) {
-            return;
-        }
-
-        tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEY));
-    }
-
-    @Override
     protected MapCodec<GlazedHopperBlock> getCodec() {
         return CODEC;
     }
@@ -92,7 +77,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : validateTicker(type, GLAZED_HOPPER_BLOCK_ENTITY.get(), GlazedHopperBlockEntity::serverTick);
+        return world.isClient() ? null : validateTicker(type, GLAZED_HOPPER_BLOCK_ENTITY.get(), GlazedHopperBlockEntity::serverTick);
     }
 
     @Override
@@ -104,7 +89,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -130,7 +115,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof GlazedHopperBlockEntity) {
             GlazedHopperBlockEntity.onEntityCollided(world, pos, state, entity, (GlazedHopperBlockEntity) blockEntity);
