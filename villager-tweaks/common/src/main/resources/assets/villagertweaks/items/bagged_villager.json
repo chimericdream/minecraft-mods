@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "villagertweaks:item/bagged_villager"
+    }
+}

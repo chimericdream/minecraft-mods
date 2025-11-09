@@ -8,7 +8,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.storage.NbtReadView;
 import net.minecraft.storage.ReadView;
@@ -34,13 +33,13 @@ public class BaggedVillagerItem extends Item {
             assert component != null;
             ReadView view = NbtReadView.create(ErrorReporter.EMPTY, user.getRegistryManager(), component.copyNbt());
 
+            villager.setCustomName(user.getStackInHand(hand).get(DataComponentTypes.CUSTOM_NAME));
             villager.readCustomData(view);
             villager.refreshPositionAndAngles(user.getBlockPos(), 0, 0);
 
             world.spawnEntity(villager);
 
-            user.getStackInHand(hand).decrement(1);
-            user.setStackInHand(hand, new ItemStack(Items.BUNDLE));
+            user.setStackInHand(hand, Items.BUNDLE.getDefaultStack());
         } catch (Exception e) {
             return ActionResult.FAIL;
         }

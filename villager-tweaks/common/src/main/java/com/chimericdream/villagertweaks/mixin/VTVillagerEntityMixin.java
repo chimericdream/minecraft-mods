@@ -108,6 +108,7 @@ public abstract class VTVillagerEntityMixin extends MerchantEntity {
                 this.writeCustomData(writeView);
                 NbtComponent nbtComponent = NbtComponent.of(writeView.getNbt());
 
+                newItemStack.set(DataComponentTypes.CUSTOM_NAME, this.getCustomName());
                 newItemStack.set(DataComponentTypes.CUSTOM_DATA, nbtComponent);
 
                 player.giveItemStack(newItemStack);
