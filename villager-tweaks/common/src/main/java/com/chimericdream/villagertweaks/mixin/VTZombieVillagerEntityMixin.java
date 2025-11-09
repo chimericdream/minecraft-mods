@@ -1,11 +1,16 @@
 package com.chimericdream.villagertweaks.mixin;
 
 import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ZombieVillagerEntity.class)
 public abstract class VTZombieVillagerEntityMixin extends Entity {
+    private Gson gson = new Gson();
+
     @Shadow
     private int conversionTimer;
 
@@ -41,7 +48,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
         at = @At(value = "INVOKE", target = "net/minecraft/entity/mob/ZombieVillagerEntity.setConverting(Ljava/util/UUID;I)V"),
         index = 1
     )
-    private int modifyConversionTime(int time) {
+    private int vt$modifyConversionTime(int time) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 
         if (config.enableConversionTimeOverride) {
@@ -52,7 +59,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void onTick(CallbackInfo ci) {
+    private void vt$onTick(CallbackInfo ci) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 
         if (!this.isConverting() || !config.displayConversionTime || this.conversionTimer <= 0) {
@@ -61,14 +68,14 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
 
         int secondsLeft = this.conversionTimer / 20;
         if (isTimerShowing) {
-            this.setCustomName(getFormattedTime(secondsLeft));
+            this.setCustomName(vt$getFormattedTime(secondsLeft));
         } else {
             if (this.hasCustomName()) {
                 this.prevName = this.getCustomName();
                 this.wasPrevNameVisible = this.isCustomNameVisible();
             }
 
-            this.setCustomName(getFormattedTime(secondsLeft));
+            this.setCustomName(vt$getFormattedTime(secondsLeft));
 
             this.setCustomNameVisible(true);
             this.isTimerShowing = true;
@@ -76,7 +83,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     }
 
     @Inject(method = "finishConversion", at = @At("HEAD"))
-    private void onFinishConversion(CallbackInfo ci) {
+    private void vt$onFinishConversion(CallbackInfo ci) {
         if (this.prevName != null) {
             this.setCustomName(this.prevName);
             this.setCustomNameVisible(this.wasPrevNameVisible);
@@ -87,25 +94,33 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
         this.isTimerShowing = false;
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void writePreviousNameToNbt(NbtCompound nbt, CallbackInfo ci) {
+    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    private void vt$writePreviousNameData(WriteView view, CallbackInfo ci) {
+
         if (this.prevName != null) {
-            nbt.putString("VTPrevName", Text.Serialization.toJsonString(this.prevName, this.getRegistryManager()));
-            nbt.putBoolean("VTWasPrevNameVisible", this.wasPrevNameVisible);
+            String json = this.gson.toJson(TextCodecs.CODEC.encodeStart(JsonOps.INSTANCE, this.prevName).getOrThrow());
+            view.putString("VTPrevName", json);
+            view.putBoolean("VTWasPrevNameVisible", this.wasPrevNameVisible);
         }
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void readPreviousNameFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (nbt.contains("VTPrevName")) {
-            this.prevName = Text.Serialization.fromJson(nbt.getString("VTPrevName"), this.getRegistryManager());
-            this.wasPrevNameVisible = nbt.getBoolean("VTWasPrevNameVisible");
+    @Inject(method = "readCustomData", at = @At("TAIL"))
+    private void vt$readPreviousNameData(ReadView view, CallbackInfo ci) {
+        if (view.contains("VTPrevName")) {
+            String jsonString = view.getString("VTPrevName", "Uh oh!");
+
+            this.prevName = TextCodecs.CODEC
+                .decode(JsonOps.INSTANCE, this.gson.fromJson(jsonString, JsonElement.class))
+                .getOrThrow()
+                .getFirst();
+
+            this.wasPrevNameVisible = view.getBoolean("VTWasPrevNameVisible", false);
             this.isTimerShowing = true;
         }
     }
 
     @Unique
-    private Text getFormattedTime(int totalSeconds) {
+    private Text vt$getFormattedTime(int totalSeconds) {
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds - (minutes * 60);
 

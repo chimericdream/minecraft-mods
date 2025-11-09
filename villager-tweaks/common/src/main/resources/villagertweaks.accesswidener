@@ -1,2 +1,5 @@
 accessWidener v2 named
 accessible field net/minecraft/entity/passive/VillagerEntity gossip Lnet/minecraft/village/VillagerGossips;
+
+accessible method net/minecraft/entity/passive/VillagerEntity initGoals ()V
+accessible method net/minecraft/entity/passive/VillagerEntity readCustomData (Lnet/minecraft/storage/ReadView;)V

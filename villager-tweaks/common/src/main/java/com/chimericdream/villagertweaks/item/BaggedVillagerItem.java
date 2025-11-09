@@ -4,15 +4,18 @@ import com.chimericdream.villagertweaks.ModInfo;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.NbtReadView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class BaggedVillagerItem extends Item {
@@ -22,16 +25,16 @@ public class BaggedVillagerItem extends Item {
         super(settings);
     }
 
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        VillagerEntity villager = EntityType.VILLAGER.create(world);
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
+        VillagerEntity villager = EntityType.VILLAGER.create(world, SpawnReason.BUCKET);
         assert villager != null;
 
         try {
             NbtComponent component = user.getStackInHand(hand).get(DataComponentTypes.CUSTOM_DATA);
             assert component != null;
-            NbtCompound nbt = component.copyNbt();
+            ReadView view = NbtReadView.create(ErrorReporter.EMPTY, user.getRegistryManager(), component.copyNbt());
 
-            villager.readCustomDataFromNbt(nbt);
+            villager.readCustomData(view);
             villager.refreshPositionAndAngles(user.getBlockPos(), 0, 0);
 
             world.spawnEntity(villager);
@@ -39,9 +42,9 @@ public class BaggedVillagerItem extends Item {
             user.getStackInHand(hand).decrement(1);
             user.setStackInHand(hand, new ItemStack(Items.BUNDLE));
         } catch (Exception e) {
-            return TypedActionResult.fail(user.getStackInHand(hand));
+            return ActionResult.FAIL;
         }
 
-        return TypedActionResult.success(user.getStackInHand(hand));
+        return ActionResult.SUCCESS;
     }
 }

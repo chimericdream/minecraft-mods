@@ -4,7 +4,6 @@
     "package": "com.chimericdream.villagertweaks.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "VTEmeraldTemptationMixin",
         "VTTradeOfferMixin",
         "VTVillagerEntityMixin",
         "VTZombieEntityMixin",

@@ -29,8 +29,8 @@ def projectList = [
     'pannotia-companion',
     'playgrounds',
 //    'shulker-stuff',
-    'sponj'
-//    'villager-tweaks'
+    'sponj',
+    'villager-tweaks'
 ]
 
 projectList.each {
