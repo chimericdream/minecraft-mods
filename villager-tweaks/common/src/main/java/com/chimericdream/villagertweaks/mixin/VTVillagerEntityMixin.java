@@ -8,8 +8,6 @@ import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,6 +62,7 @@ public abstract class VTVillagerEntityMixin extends MerchantEntity {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
         if (
             this.isAiDisabled()
+                || this.getAttacker() != null
                 || this.isPanicking()
                 || this.hasCustomer()
                 || !config.enableEmeraldTemptation
@@ -80,13 +79,6 @@ public abstract class VTVillagerEntityMixin extends MerchantEntity {
                 this.getMoveControl().moveTo(player.getX(), player.getY(), player.getZ(), 0.5f);
             }
         }
-    }
-
-    @Inject(method = "createVillagerAttributes", at = @At("RETURN"), cancellable = true)
-    private static void vt$addTemptAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        DefaultAttributeContainer.Builder builder = cir.getReturnValue();
-
-        cir.setReturnValue(builder.add(EntityAttributes.TEMPT_RANGE, 10.0));
     }
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
