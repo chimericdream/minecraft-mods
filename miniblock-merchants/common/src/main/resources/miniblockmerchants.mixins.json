@@ -6,7 +6,8 @@
     "mixins": [
         "MMMerchantEntityMixin",
         "MMPlayerHeadItemMixin",
-        "MMVillagerEntityMixin"
+        "MMVillagerEntityMixin",
+        "MMZombieVillagerEntityMixin"
     ],
     "injectors": {
         "defaultRequire": 1
