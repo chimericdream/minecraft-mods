@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -1222,6 +1223,10 @@ public class ModProfessions {
         PROFESSIONS.put(name, prof);
 
         return prof;
+    }
+
+    public static boolean isMiniblockMerchant(RegistryEntry<VillagerProfession> profession) {
+        return profession.matches(prof -> prof.getValue().getNamespace().equals(ModInfo.MOD_ID));
     }
 
     public static TradeOfferList getDefaultOffers() {

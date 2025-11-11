@@ -145,7 +145,7 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
 
     @Inject(method = "afterUsing", at = @At("TAIL"))
     private void mm$incrementMiniblockTrade(TradeOffer offer, CallbackInfo ci) {
-        if (this.getCustomer() instanceof ServerPlayerEntity player && ModProfessions.PROFESSION_LIST.contains(this.getVillagerData().profession())) {
+        if (this.getCustomer() instanceof ServerPlayerEntity player && ModProfessions.isMiniblockMerchant(this.getVillagerData().profession())) {
             player.incrementStat(ModStats.TRADE_FOR_MINIBLOCK_ID);
             mm$checkPlayerAdvancements(player);
         }

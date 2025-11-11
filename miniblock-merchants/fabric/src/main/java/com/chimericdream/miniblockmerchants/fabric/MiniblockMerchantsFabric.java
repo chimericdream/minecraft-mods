@@ -1,10 +1,9 @@
 package com.chimericdream.miniblockmerchants.fabric;
 
 import com.chimericdream.miniblockmerchants.MiniblockMerchantsMod;
+import com.chimericdream.miniblockmerchants.loot.MMLootTables;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
-
-//import com.chimericdream.miniblockmerchants.loot.MMLootTables;
 
 public final class MiniblockMerchantsFabric implements ModInitializer {
     @Override
@@ -17,7 +16,7 @@ public final class MiniblockMerchantsFabric implements ModInitializer {
                 return;
             }
 
-//            MMLootTables.modifyLootTables(id, tableBuilder, wrapperLookup);
+            MMLootTables.modifyLootTables(id, tableBuilder, wrapperLookup);
         });
     }
 }

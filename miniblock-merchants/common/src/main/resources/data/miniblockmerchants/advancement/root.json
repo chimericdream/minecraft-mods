@@ -20,7 +20,7 @@
                 "color": "green"
             }
         ],
-        "background": "minecraft:textures/block/white_concrete_powder.png",
+        "background": "minecraft:block/white_concrete_powder",
         "show_toast": false,
         "announce_to_chat": false,
         "hidden": false

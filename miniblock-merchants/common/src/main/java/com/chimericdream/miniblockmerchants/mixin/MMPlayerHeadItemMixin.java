@@ -16,7 +16,7 @@ public class MMPlayerHeadItemMixin {
     private void mm$getName(ItemStack stack, CallbackInfoReturnable<Text> cir) {
         String currentName = cir.getReturnValue().getString();
 
-        if (currentName.startsWith("mmminiblock")) {
+        if (currentName.startsWith("mmminiblock") || currentName.startsWith("mmmobhead")) {
             cir.setReturnValue((Text) stack.getComponents().getOrDefault(DataComponentTypes.ITEM_NAME, ScreenTexts.EMPTY));
         }
     }
