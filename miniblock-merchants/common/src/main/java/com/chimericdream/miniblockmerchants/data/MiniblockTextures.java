@@ -80,4 +80,36 @@ public class MiniblockTextures {
 
     // https://minecraft-heads.com/custom-heads/food%20&%20drinks/6059-raw-beef
     public static final Pair<String, int[]> WAGYU_BEEF = new Pair<>("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWNiMjhhYmVkNTRjYjQ3NWIxOTdiZTEwYzk0MGUyYjJjZTJlZGFlM2FjZWRmZjJiNmUxZjYyM2ZhMmI1MmEwIn19fQ==", new int[]{70200380, -409845443, -1764377712, -348805240});
+
+    public static Pair<String, int[]> getTextures(String id) {
+        return switch (id) {
+            case "ancient_shell" -> ANCIENT_SHELL;
+            case "book_of_rituals" -> BOOK_OF_RITUALS;
+            case "budding_cactus" -> BUDDING_CACTUS;
+            case "crystal_phial" -> CRYSTAL_PHIAL;
+            case "cultivated_sapling" -> CULTIVATED_SAPLING;
+            case "drenched_score_sheet" -> DRENCHED_SCORE_SHEET;
+            case "enchanted_red_delicious" -> ENCHANTED_RED_DELICIOUS;
+            case "endless_bookshelf" -> ENDLESS_BOOKSHELF;
+            case "fine_thread" -> FINE_THREAD;
+            case "forgotten_scrap_metal" -> FORGOTTEN_SCRAP_METAL;
+            case "fragrant_flower" -> FRAGRANT_FLOWER;
+            case "galilean_spyglass" -> GALILEAN_SPYGLASS;
+            case "mastercrafted_iron" -> MASTERCRAFTED_IRON;
+            case "mixology_station" -> MIXOLOGY_STATION;
+            case "overgrown_carrot" -> OVERGROWN_CARROT;
+            case "prismatic_honeycomb" -> PRISMATIC_HONEYCOMB;
+            case "pure_gold" -> PURE_GOLD;
+            case "radiating_redstone" -> RADIATING_REDSTONE;
+            case "rotting_recycling_bin" -> ROTTING_RECYCLING_BIN;
+            case "sculpting_clay" -> SCULPTING_CLAY;
+            case "shimmering_wheat" -> SHIMMERING_WHEAT;
+            case "soaked_villager_plushie" -> SOAKED_VILLAGER_PLUSHIE;
+            case "sparkling_blaze_powder" -> SPARKLING_BLAZE_POWDER;
+            case "stabilized_explosion" -> STABILIZED_EXPLOSION;
+            case "unusually_dense_rock" -> UNUSUALLY_DENSE_ROCK;
+            case "wagyu_beef" -> WAGYU_BEEF;
+            default -> null;
+        };
+    }
 }

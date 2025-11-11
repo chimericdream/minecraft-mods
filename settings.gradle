@@ -25,7 +25,7 @@ def projectList = [
     'houdini-block',
     'jdcrafte',
 //    'minekea',
-//    'miniblock-merchants',
+    'miniblock-merchants',
     'pannotia-companion',
     'playgrounds',
 //    'shulker-stuff',

@@ -25,6 +25,7 @@
     "entity.minecraft.villager.mm_sculptor": "Sculptor",
     "entity.minecraft.villager.mm_steampunker": "Steampunker",
     "entity.minecraft.villager.mm_tailor": "Tailor",
+    "miniblockmerchants.named_villager": "%s (%s)",
     "miniblockmerchants.message.conversion.mm_alchemist": "Potions, brews, and concoctions! All for sale from your local alchemist, me!",
     "miniblockmerchants.message.conversion.mm_arboriculturist": "Logs and log accessories, coming right at you!",
     "miniblockmerchants.message.conversion.mm_astronomer": "The study of other planets is quite fascinating. Care to take a look for yourself?",

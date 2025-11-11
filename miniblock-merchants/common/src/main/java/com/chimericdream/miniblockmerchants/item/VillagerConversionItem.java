@@ -1,27 +1,26 @@
 package com.chimericdream.miniblockmerchants.item;
 
-import com.chimericdream.miniblockmerchants.util.TextHelpers;
+import com.chimericdream.miniblockmerchants.util.DataUtil;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
 
-import java.util.List;
+import static com.chimericdream.miniblockmerchants.MiniblockMerchantsMod.REGISTRY_HELPER;
 
 public class VillagerConversionItem extends Item {
     public final String id;
     public final String profession;
 
     public VillagerConversionItem(String id, String profession) {
-        super(new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL));
+        super(
+            new Item.Settings()
+                .registryKey(REGISTRY_HELPER.makeItemRegistryKey(id))
+                .arch$tab(ItemGroups.FUNCTIONAL)
+                .component(DataComponentTypes.PROFILE, ProfileComponent.ofStatic(DataUtil.makeGameProfile(id)))
+        );
 
         this.id = id;
         this.profession = profession;
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(TextHelpers.getTooltip("tooltip.conversion_item.lore"));
     }
 }

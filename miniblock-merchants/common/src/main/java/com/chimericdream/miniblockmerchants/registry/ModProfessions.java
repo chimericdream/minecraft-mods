@@ -1,9 +1,10 @@
 package com.chimericdream.miniblockmerchants.registry;
 
+import com.chimericdream.miniblockmerchants.MiniblockMerchantsMod;
 import com.chimericdream.miniblockmerchants.ModInfo;
 import com.chimericdream.miniblockmerchants.data.MiniblockTextures;
 import com.chimericdream.miniblockmerchants.item.ModItems;
-import com.chimericdream.miniblockmerchants.util.NbtHelpers;
+import com.chimericdream.miniblockmerchants.util.DataUtil;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.authlib.GameProfile;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -11,11 +12,12 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.TradedItem;
@@ -1193,14 +1195,14 @@ public class ModProfessions {
         return Identifier.of(ModInfo.MOD_ID, name);
     }
 
-    public static VillagerProfession get(String name) {
+    public static RegistryKey<VillagerProfession> get(String name) {
         RegistrySupplier<VillagerProfession> supplier = PROFESSIONS.get(name);
 
         if (supplier == null) {
             return VillagerProfession.NONE;
         }
 
-        return supplier.get();
+        return RegistryKey.of(RegistryKeys.VILLAGER_PROFESSION, makeId(name));
     }
 
     public static RegistrySupplier<VillagerProfession> register(String name) {
@@ -1208,7 +1210,7 @@ public class ModProfessions {
         RegistrySupplier<VillagerProfession> prof = REGISTRY_HELPER.registerVillagerProfession(
             id,
             () -> new VillagerProfession(
-                id.toString(),
+                Text.literal(id.toString()),
                 PointOfInterestType.NONE,
                 PointOfInterestType.NONE,
                 ImmutableSet.of(),
@@ -1223,11 +1225,17 @@ public class ModProfessions {
     }
 
     public static TradeOfferList getDefaultOffers() {
+        MiniblockMerchantsMod.LOGGER.info("No trades found");
         return new TradeOfferList();
     }
 
-    public static TradeOfferList getOffersForProfession(String profession) {
-        if (TRADES.values().isEmpty()) {
+    public static TradeOfferList getOffersForProfession(String id) {
+        MiniblockMerchantsMod.LOGGER.info("Getting trades for {}", id);
+
+        String profession = id.startsWith(ModInfo.MOD_ID) ? id : makeId(id).toString();
+
+        if (TRADES.isEmpty()) {
+            MiniblockMerchantsMod.LOGGER.info("Trades not yet populated");
             populateTrades();
         }
 
@@ -1245,22 +1253,10 @@ public class ModProfessions {
     }
 
     private static TradeOffer makeOffer(TradedItem buyItem, String name, String texture, int[] id) {
-        NbtCompound headTexture = new NbtCompound();
-        headTexture.putString("Value", texture);
-
-        NbtList textureList = new NbtList();
-        textureList.add(headTexture);
-
-        NbtCompound properties = new NbtCompound();
-        properties.put("textures", textureList);
-
-        NbtCompound owner = new NbtCompound();
-        owner.put("Properties", properties);
-
-        GameProfile gameProfile = NbtHelpers.toGameProfile(owner);
+        GameProfile gameProfile = DataUtil.makeGameProfile("mmminiblock", new Pair<>(texture, id));
 
         ItemStack sellHead = Items.PLAYER_HEAD.getDefaultStack();
-        sellHead.set(DataComponentTypes.PROFILE, new ProfileComponent(gameProfile));
+        sellHead.set(DataComponentTypes.PROFILE, ProfileComponent.ofStatic(gameProfile));
         sellHead.set(DataComponentTypes.ITEM_NAME, Text.of(name));
 
         return new TradeOffer(buyItem, sellHead, 99999, 0, 0.0f);

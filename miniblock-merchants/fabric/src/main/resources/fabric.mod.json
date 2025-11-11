@@ -18,9 +18,6 @@
         "main": [
             "com.chimericdream.miniblockmerchants.fabric.MiniblockMerchantsFabric"
         ],
-        "client": [
-            "com.chimericdream.miniblockmerchants.fabric.client.MiniblockMerchantsClient"
-        ],
         "modmenu": [
             "com.chimericdream.miniblockmerchants.fabric.config.ModMenuIntegration"
         ]

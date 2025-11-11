@@ -9,8 +9,10 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(Entity.class)
 abstract public class MMEntityMixin {
-    @Shadow public abstract World getWorld();
+    @Shadow
+    public abstract World getEntityWorld();
 
-    @Shadow @Final
-    public DataTracker dataTracker;
+    @Shadow
+    @Final
+    protected DataTracker dataTracker;
 }
