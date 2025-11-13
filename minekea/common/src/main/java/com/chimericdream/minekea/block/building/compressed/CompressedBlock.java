@@ -6,9 +6,10 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.StateManager;
@@ -19,9 +20,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.function.Consumer;
 
-public class CompressedBlock extends Block {
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
+public class CompressedBlock extends Block implements TooltipAppender {
     public static final String TOOLTIP_LEVEL = "block.minekea.building.compressed.tooltip.level";
     public static final String TOOLTIP_COUNT = "block.minekea.building.compressed.tooltip.count";
 
@@ -40,7 +43,7 @@ public class CompressedBlock extends Block {
         super(AbstractBlock.Settings.copy(config.getIngredient()).strength(
             getHardness(compressionLevel, config.getIngredient().getHardness()),
             getResistance(compressionLevel, config.getIngredient().getBlastResistance())
-        ).requiresTool());
+        ).requiresTool().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), compressionLevel))));
 
         this.compressionLevel = compressionLevel;
         this.config = config;
@@ -74,11 +77,11 @@ public class CompressedBlock extends Block {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
         DecimalFormat df = new DecimalFormat("###,###,###");
 
-        tooltip.add(Text.translatable(TOOLTIP_LEVEL, compressionLevel));
-        tooltip.add(Text.translatable(TOOLTIP_COUNT, df.format(Math.pow(9, compressionLevel))));
+        textConsumer.accept(Text.translatable(TOOLTIP_LEVEL, compressionLevel));
+        textConsumer.accept(Text.translatable(TOOLTIP_COUNT, df.format(Math.pow(9, compressionLevel))));
     }
 
     protected static float getHardness(int level, float baseHardness) {

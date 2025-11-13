@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -26,15 +25,18 @@ import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class OpenShutterHalfBlock extends Block implements Waterloggable {
     public final Identifier BLOCK_ID;
@@ -42,7 +44,7 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
     protected final BlockSetType blockSetType;
 
     public static final EnumProperty<ShutterHalf> HALF;
-    public static final DirectionProperty WALL_SIDE;
+    public static final EnumProperty<Direction> WALL_SIDE;
     public static final BooleanProperty WATERLOGGED;
 
     private static final Map<String, VoxelShape> OUTLINE_LEFT;
@@ -50,7 +52,7 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
 
     static {
         HALF = EnumProperty.of("half", ShutterHalf.class);
-        WALL_SIDE = DirectionProperty.of("wall_side", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        WALL_SIDE = EnumProperty.of("wall_side", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
         WATERLOGGED = Properties.WATERLOGGED;
 
         OUTLINE_LEFT = Map.of(
@@ -69,7 +71,7 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
     }
 
     public OpenShutterHalfBlock(BlockSetType type, BlockConfig config) {
-        super(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
+        super(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         this.setDefaultState(
             this.stateManager
@@ -90,7 +92,7 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(Shutters.SHUTTER_BLOCKS.get(config.getMaterial()).get());
     }
 
@@ -124,12 +126,12 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
@@ -245,7 +247,7 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
         }
 
         this.playToggleSound(player, world, centerPos);
-        return ActionResult.success(world.isClient);
+        return ActionResult.SUCCESS;
     }
 
     protected void playToggleSound(@Nullable PlayerEntity player, World world, BlockPos pos) {

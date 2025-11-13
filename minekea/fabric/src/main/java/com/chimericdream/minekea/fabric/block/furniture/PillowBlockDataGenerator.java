@@ -1,33 +1,28 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
 import com.chimericdream.lib.colors.ColorHelpers;
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.tags.CommonBlockTags;
 import com.chimericdream.minekea.block.furniture.pillows.PillowBlock;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Function;
 
-public class PillowBlockDataGenerator implements FabricBlockDataGenerator {
+public class PillowBlockDataGenerator implements ChimericLibBlockDataGenerator {
     public PillowBlock BLOCK;
 
     public PillowBlockDataGenerator(Block block) {
         BLOCK = (PillowBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.PILLOWS)
             .setReplace(false)
             .add(BLOCK);
@@ -37,25 +32,25 @@ public class PillowBlockDataGenerator implements FabricBlockDataGenerator {
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block wool = ColorHelpers.getWool(BLOCK.color);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("##")
             .pattern("##")
             .input('#', wool)
-            .criterion(FabricRecipeProvider.hasItem(wool),
-                FabricRecipeProvider.conditionsFromItem(wool))
+            .criterion(RecipeGenerator.hasItem(wool),
+                generator.conditionsFromItem(wool))
             .offerTo(exporter);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, wool, 4)
+        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, wool, 4)
             .input(BLOCK)
-            .criterion(FabricRecipeProvider.hasItem(BLOCK),
-                FabricRecipeProvider.conditionsFromItem(BLOCK))
+            .criterion(RecipeGenerator.hasItem(BLOCK),
+                generator.conditionsFromItem(BLOCK))
             .offerTo(exporter);
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 

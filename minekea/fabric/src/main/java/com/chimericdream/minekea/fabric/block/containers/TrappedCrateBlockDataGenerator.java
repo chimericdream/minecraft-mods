@@ -5,12 +5,10 @@ import com.chimericdream.minekea.block.containers.crates.TrappedCrateBlock;
 import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.TextureMap;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -26,14 +24,14 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RecipeExporter exporter) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, BLOCK, 1)
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+        generator.createShapeless(RecipeCategory.REDSTONE, BLOCK, 1)
             .input(((TrappedCrateBlock) BLOCK).BASE_CRATE.get())
             .input(Items.TRIPWIRE_HOOK)
-            .criterion(FabricRecipeProvider.hasItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()),
-                FabricRecipeProvider.conditionsFromItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()))
-            .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK),
-                FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
+            .criterion(RecipeGenerator.hasItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()),
+                generator.conditionsFromItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()))
+            .criterion(RecipeGenerator.hasItem(Items.TRIPWIRE_HOOK),
+                generator.conditionsFromItem(Items.TRIPWIRE_HOOK))
             .offerTo(exporter);
     }
 

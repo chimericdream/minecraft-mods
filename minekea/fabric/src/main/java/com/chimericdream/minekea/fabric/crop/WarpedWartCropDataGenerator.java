@@ -1,6 +1,5 @@
 package com.chimericdream.minekea.fabric.crop;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.crop.WarpedWartPlantBlock;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
@@ -23,10 +22,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.state.property.Properties;
 
-public class WarpedWartCropDataGenerator implements FabricBlockDataGenerator {
+public class WarpedWartCropDataGenerator implements ChimericLibBlockDataGenerator {
     public static final Block BLOCK = ModCrops.WARPED_WART_PLANT_BLOCK.get();
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         RegistryWrapper.Impl<Enchantment> impl = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
 
         generator.addDrop(

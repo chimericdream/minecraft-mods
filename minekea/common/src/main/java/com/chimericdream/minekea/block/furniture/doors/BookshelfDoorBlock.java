@@ -7,12 +7,14 @@ import net.minecraft.block.BlockSetType;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class BookshelfDoorBlock extends DoorBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfDoorBlock(BlockSetType type, BlockConfig config) {
-        super(type, AbstractBlock.Settings.copy(config.getIngredient()));
+        super(type, AbstractBlock.Settings.copy(config.getIngredient()).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

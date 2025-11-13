@@ -4,12 +4,14 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class SlabBlock extends net.minecraft.block.SlabBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public SlabBlock(BlockConfig config) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

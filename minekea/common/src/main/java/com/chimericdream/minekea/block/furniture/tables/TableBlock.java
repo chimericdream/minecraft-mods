@@ -7,11 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -20,16 +21,20 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 
-import java.util.List;
+import java.util.function.Consumer;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 //import static com.chimericdream.minekea.item.MinekeaItemGroups.FURNITURE_ITEM_GROUP_KEY;
 
-public class TableBlock extends Block implements Waterloggable {
+public class TableBlock extends Block implements TooltipAppender, Waterloggable {
     public static final String TOOLTIP_KEY = "block.minekea.furniture.tables.tooltip";
 
     public final Identifier BLOCK_ID;
@@ -61,7 +66,7 @@ public class TableBlock extends Block implements Waterloggable {
     }
 
     public TableBlock(BlockConfig config) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         this.setDefaultState(
             this.stateManager
@@ -84,10 +89,10 @@ public class TableBlock extends Block implements Waterloggable {
     public BlockConfig getConfig() {
         return config;
     }
-    
+
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEY));
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+        textConsumer.accept(TextHelpers.getTooltip(TOOLTIP_KEY));
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -105,14 +110,14 @@ public class TableBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
         return direction.getAxis().isHorizontal()
             ? this.getUpdatedState(state, neighborState, direction)
-            : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+            : super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     private BlockState getUpdatedState(BlockState state, BlockState neighborState, Direction direction) {

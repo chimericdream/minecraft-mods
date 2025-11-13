@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -20,6 +21,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class MilkFluid extends ArchitecturyFlowingFluid.Source {
     public static final ArchitecturyFluidAttributes ATTRIBUTES = SimpleArchitecturyFluidAttributes.of(
@@ -62,12 +65,12 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.MILK_FLUID, AbstractBlock.Settings.copy(Blocks.WATER));
+            super(ModFluids.MILK_FLUID, AbstractBlock.Settings.copy(Blocks.WATER).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.of(ModInfo.MOD_ID, "fluids/milk/source"))));
         }
 
         @Override
-        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-            super.onEntityCollision(state, world, pos, entity);
+        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
+            super.onEntityCollision(state, world, pos, entity, handler, bl);
 
             int level = state.get(FluidBlock.LEVEL);
 

@@ -1,13 +1,10 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.seats.ChairBlock;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.BlockStateVariant;
@@ -18,7 +15,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -29,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ChairBlockDataGenerator implements FabricBlockDataGenerator {
+public class ChairBlockDataGenerator implements ChimericLibBlockDataGenerator {
     private final ChairBlock BLOCK;
 
     protected static final Model CHAIR_MODEL = new Model(
@@ -43,24 +39,24 @@ public class ChairBlockDataGenerator implements FabricBlockDataGenerator {
         this.BLOCK = (ChairBlock) block;
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
             .pattern("P ")
             .pattern("PP")
             .pattern("LL")
             .input('P', plankIngredient)
             .input('L', logIngredient)
-            .criterion(FabricRecipeProvider.hasItem(plankIngredient),
-                FabricRecipeProvider.conditionsFromItem(plankIngredient))
-            .criterion(FabricRecipeProvider.hasItem(logIngredient),
-                FabricRecipeProvider.conditionsFromItem(logIngredient))
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(logIngredient),
+                generator.conditionsFromItem(logIngredient))
             .offerTo(exporter);
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -71,7 +67,7 @@ public class ChairBlockDataGenerator implements FabricBlockDataGenerator {
         translationBuilder.add(BLOCK, String.format("%s Chair", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 

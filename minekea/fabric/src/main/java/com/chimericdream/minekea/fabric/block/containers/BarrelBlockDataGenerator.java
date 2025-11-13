@@ -1,13 +1,10 @@
 package com.chimericdream.minekea.fabric.block.containers;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.containers.barrels.BarrelBlock;
 import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -20,7 +17,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -33,34 +29,34 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class BarrelBlockDataGenerator implements FabricBlockDataGenerator {
+public class BarrelBlockDataGenerator implements ChimericLibBlockDataGenerator {
     private final BarrelBlock BLOCK;
 
     public BarrelBlockDataGenerator(Block block) {
         BLOCK = (BarrelBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block slabIngredient = BLOCK.config.getIngredient("slab");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("PSP")
             .pattern("P P")
             .pattern("PSP")
             .input('P', plankIngredient)
             .input('S', slabIngredient)
-            .criterion(FabricRecipeProvider.hasItem(plankIngredient),
-                FabricRecipeProvider.conditionsFromItem(plankIngredient))
-            .criterion(FabricRecipeProvider.hasItem(slabIngredient),
-                FabricRecipeProvider.conditionsFromItem(slabIngredient))
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(slabIngredient),
+                generator.conditionsFromItem(slabIngredient))
             .offerTo(exporter);
     }
 
@@ -68,7 +64,7 @@ public class BarrelBlockDataGenerator implements FabricBlockDataGenerator {
         translationBuilder.add(BLOCK, String.format("%s Barrel", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
@@ -245,7 +241,7 @@ public class BarrelBlockDataGenerator implements FabricBlockDataGenerator {
         });
     }
 
-    public static class OakBarrelDataGenerator implements FabricBlockDataGenerator {
+    public static class OakBarrelDataGenerator implements ChimericLibBlockDataGenerator {
         @Override
         public void generateTextures() {
             BarrelBlockDataGenerator.generateTextures("stripped_oak_log", "oak_planks", Registries.BLOCK.getId(Blocks.BARREL));

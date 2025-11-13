@@ -6,10 +6,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class CrackedBasaltBricksBlock extends Block {
     public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "building/general/cracked_basalt_bricks");
 
     public CrackedBasaltBricksBlock() {
-        super(AbstractBlock.Settings.copy(Blocks.SMOOTH_BASALT));
+        super(AbstractBlock.Settings.copy(Blocks.SMOOTH_BASALT).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
     }
 }

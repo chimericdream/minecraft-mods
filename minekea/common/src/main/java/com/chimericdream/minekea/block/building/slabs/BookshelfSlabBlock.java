@@ -6,13 +6,15 @@ import com.chimericdream.minekea.block.furniture.bookshelves.BookshelfBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class BookshelfSlabBlock extends SlabBlock {
     public final Identifier BLOCK_ID;
     public final Identifier BASE_BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfSlabBlock(BlockConfig config) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         BASE_BLOCK_ID = BookshelfBlock.makeId(config.getMaterial());

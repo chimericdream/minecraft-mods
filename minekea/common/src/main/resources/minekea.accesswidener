@@ -21,3 +21,11 @@ accessible method net/minecraft/data/client/TextureKey of (Ljava/lang/String;Lne
 
 accessible method net/minecraft/client/gui/screen/ingame/HandledScreens register (Lnet/minecraft/screen/ScreenHandlerType;Lnet/minecraft/client/gui/screen/ingame/HandledScreens$Provider;)V
 accessible class net/minecraft/client/gui/screen/ingame/HandledScreens$Provider
+
+# This should be in chimericlib, but I need to figure out how to get transitive accesswideners working with Fabric, NeoForge, and Architectury
+accessible method net/minecraft/block/entity/BlockEntityType <init> (Lnet/minecraft/block/entity/BlockEntityType$BlockEntityFactory;Ljava/util/Set;)V
+
+accessible method net/minecraft/client/data/Model createTextureMap (Lnet/minecraft/client/data/TextureMap;)Ljava/util/Map;
+accessible field net/minecraft/client/data/Model parent Ljava/util/Optional;
+accessible field net/minecraft/client/data/Model requiredTextures Ljava/util/Set;
+accessible field net/minecraft/client/data/Model variant Ljava/util/Optional;

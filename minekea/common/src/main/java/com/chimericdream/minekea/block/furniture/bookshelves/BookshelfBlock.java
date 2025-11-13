@@ -5,12 +5,14 @@ import com.chimericdream.minekea.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class BookshelfBlock extends Block {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfBlock(BlockConfig config) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

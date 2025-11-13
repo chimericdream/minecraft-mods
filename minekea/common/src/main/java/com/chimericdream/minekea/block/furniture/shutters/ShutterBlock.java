@@ -17,22 +17,27 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class ShutterBlock extends Block implements Waterloggable {
     public final Identifier BLOCK_ID;
@@ -41,7 +46,7 @@ public class ShutterBlock extends Block implements Waterloggable {
 
     public static final BooleanProperty OPEN;
     public static final BooleanProperty POWERED;
-    public static final DirectionProperty WALL_SIDE;
+    public static final EnumProperty<Direction> WALL_SIDE;
     public static final BooleanProperty WATERLOGGED;
 
     private static final Map<String, VoxelShape> OUTLINE_CLOSED;
@@ -50,7 +55,7 @@ public class ShutterBlock extends Block implements Waterloggable {
     static {
         OPEN = Properties.OPEN;
         POWERED = Properties.POWERED;
-        WALL_SIDE = DirectionProperty.of("wall_side", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        WALL_SIDE = EnumProperty.of("wall_side", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
         WATERLOGGED = Properties.WATERLOGGED;
 
         OUTLINE_CLOSED = Map.of(
@@ -80,7 +85,7 @@ public class ShutterBlock extends Block implements Waterloggable {
     }
 
     public ShutterBlock(BlockSetType type, BlockConfig config) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         this.setDefaultState(
             this.stateManager.getDefaultState()
@@ -237,7 +242,7 @@ public class ShutterBlock extends Block implements Waterloggable {
         }
 
         this.playToggleSound(player, world, pos, state.get(OPEN));
-        return ActionResult.success(world.isClient);
+        return ActionResult.SUCCESS;
     }
 
     protected void playToggleSound(@Nullable PlayerEntity player, World world, BlockPos pos, boolean open) {
@@ -246,8 +251,8 @@ public class ShutterBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!world.isClient) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+        if (!world.isClient()) {
             boolean isReceivingPower = world.isReceivingRedstonePower(pos);
             boolean isPowered = state.get(POWERED);
             boolean isOpen = state.get(OPEN);
@@ -298,12 +303,12 @@ public class ShutterBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override

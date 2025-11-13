@@ -1,24 +1,21 @@
 package com.chimericdream.minekea.fabric.block.building.slabs;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.slabs.VerticalSlabBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateVariant;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.MultipartBlockStateSupplier;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.client.VariantSettings;
-import net.minecraft.data.client.When;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -28,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class VerticalSlabBlockDataGenerator implements FabricBlockDataGenerator {
+public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGenerator {
     public static final Model VERTICAL_SLAB_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/slabs/vertical")),
         Optional.empty(),
@@ -41,35 +38,45 @@ public class VerticalSlabBlockDataGenerator implements FabricBlockDataGenerator 
         this.BLOCK = (VerticalSlabBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    @Override
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    @Override
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+
+    }
+
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .pattern("#")
             .pattern("#")
             .pattern("#")
             .input('#', ingredient)
-            .criterion(FabricRecipeProvider.hasItem(ingredient),
-                FabricRecipeProvider.conditionsFromItem(ingredient))
+            .criterion(RecipeGenerator.hasItem(ingredient),
+                generator.conditionsFromItem(ingredient))
             .offerTo(exporter);
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    @Override
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
 //        generator.addDrop(this, generator.slabDrops(this));
     }
 
+    @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("Vertical %s Slab", BLOCK.config.getMaterialName()));
     }
 
+    @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         Identifier textureId = BLOCK.config.getTexture();
 
@@ -108,5 +115,15 @@ public class VerticalSlabBlockDataGenerator implements FabricBlockDataGenerator 
                             .put(VariantSettings.UVLOCK, true)
                     )
             );
+    }
+
+    @Override
+    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+
+    }
+
+    @Override
+    public void generateTextures() {
+
     }
 }

@@ -28,18 +28,18 @@ public class BlockPainterItemDataGenerator implements FabricItemDataGenerator {
 //    }
 
     @Override
-    public void configureRecipes(RecipeExporter exporter) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ITEM, 1)
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
             .pattern(" NW")
             .pattern(" SN")
             .pattern("S  ")
             .input('N', Items.IRON_NUGGET)
             .input('S', Items.STICK)
             .input('W', ItemTags.WOOL)
-            .criterion(FabricRecipeProvider.hasItem(Items.IRON_NUGGET),
-                FabricRecipeProvider.conditionsFromItem(Items.IRON_NUGGET))
-            .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                FabricRecipeProvider.conditionsFromItem(Items.STICK))
+            .criterion(RecipeGenerator.hasItem(Items.IRON_NUGGET),
+                generator.conditionsFromItem(Items.IRON_NUGGET))
+            .criterion(RecipeGenerator.hasItem(Items.STICK),
+                generator.conditionsFromItem(Items.STICK))
             .criterion("has_wool", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL))
             .offerTo(exporter);
     }

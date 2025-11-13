@@ -4,14 +4,12 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.BookshelfStairsBlock;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateSupplier;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -37,24 +35,27 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
         );
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Identifier ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
         Block ingredient = Registries.BLOCK.get(ingredientId);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
             .pattern("#  ")
             .pattern("## ")
             .pattern("###")
             .input('#', ingredient)
-            .criterion(FabricRecipeProvider.hasItem(ingredient),
-                FabricRecipeProvider.conditionsFromItem(ingredient))
+            .criterion(RecipeGenerator.hasItem(ingredient),
+                generator.conditionsFromItem(ingredient))
             .offerTo(exporter);
     }
 
+    @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
     }
 
+    @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         Identifier textureId = BLOCK.config.getTexture();
 

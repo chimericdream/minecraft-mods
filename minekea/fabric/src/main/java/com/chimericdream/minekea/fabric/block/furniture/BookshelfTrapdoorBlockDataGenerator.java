@@ -1,13 +1,10 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.trapdoors.BookshelfTrapdoorBlock;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -19,7 +16,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -29,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class BookshelfTrapdoorBlockDataGenerator implements FabricBlockDataGenerator {
+public class BookshelfTrapdoorBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model BOTTOM_MODEL = makeModel("block/furniture/trapdoors/bookshelves/bottom");
     protected static final Model TOP_MODEL = makeModel("block/furniture/trapdoors/bookshelves/top");
     protected static final Model OPEN_MODEL = makeModel("block/furniture/trapdoors/bookshelves/open");
@@ -49,19 +45,19 @@ public class BookshelfTrapdoorBlockDataGenerator implements FabricBlockDataGener
         );
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block bookshelf = BLOCK.config.getIngredient();
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 12)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 12)
             .pattern("###")
             .pattern("###")
             .input('#', bookshelf)
-            .criterion(FabricRecipeProvider.hasItem(bookshelf),
-                FabricRecipeProvider.conditionsFromItem(bookshelf))
+            .criterion(RecipeGenerator.hasItem(bookshelf),
+                generator.conditionsFromItem(bookshelf))
             .offerTo(exporter);
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -72,7 +68,7 @@ public class BookshelfTrapdoorBlockDataGenerator implements FabricBlockDataGener
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 

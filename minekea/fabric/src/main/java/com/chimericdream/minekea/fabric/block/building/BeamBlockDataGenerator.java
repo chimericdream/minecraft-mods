@@ -1,26 +1,22 @@
 package com.chimericdream.minekea.fabric.block.building;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.beams.BeamBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateVariant;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.MultipartBlockStateSupplier;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.client.VariantSettings;
-import net.minecraft.data.client.When;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -36,7 +32,7 @@ import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED
 import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED_UP;
 import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED_WEST;
 
-public class BeamBlockDataGenerator implements FabricBlockDataGenerator {
+public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model CONNECTED_NORTH_MODEL = makeModel("north");
     protected static final Model CONNECTED_SOUTH_MODEL = makeModel("south");
     protected static final Model CONNECTED_EAST_MODEL = makeModel("east");
@@ -69,7 +65,8 @@ public class BeamBlockDataGenerator implements FabricBlockDataGenerator {
         return BLOCK;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    @Override
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.BEAMS)
             .setReplace(false)
             .add(BLOCK);
@@ -80,27 +77,36 @@ public class BeamBlockDataGenerator implements FabricBlockDataGenerator {
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    @Override
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+
+    }
+
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .pattern("# #")
             .pattern("# #")
             .pattern("# #")
             .input('#', ingredient)
-            .criterion(FabricRecipeProvider.hasItem(ingredient),
-                FabricRecipeProvider.conditionsFromItem(ingredient))
+            .criterion(RecipeGenerator.hasItem(ingredient),
+                generator.conditionsFromItem(ingredient))
             .offerTo(exporter);
     }
 
+    @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    @Override
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
+    @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         TextureMap textures = getTextures();
 
@@ -161,11 +167,17 @@ public class BeamBlockDataGenerator implements FabricBlockDataGenerator {
             .put(TextureKey.END, endTexture);
     }
 
+    @Override
     public void configureItemModels(ItemModelGenerator itemModelGenerator) {
         ITEM_MODEL.upload(
             BLOCK.BLOCK_ID.withPrefixedPath("item/"),
             getTextures(),
             itemModelGenerator.writer
         );
+    }
+
+    @Override
+    public void generateTextures() {
+
     }
 }

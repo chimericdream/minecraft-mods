@@ -21,19 +21,19 @@ public class FloatingShelfBlockDataGenerator extends ShelfBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block slabIngredient = BLOCK.config.getIngredient("slab");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("XXX")
             .pattern("# #")
             .pattern("XXX")
             .input('X', slabIngredient)
             .input('#', Items.IRON_INGOT)
-            .criterion(FabricRecipeProvider.hasItem(slabIngredient),
-                FabricRecipeProvider.conditionsFromItem(slabIngredient))
-            .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
-                FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+            .criterion(RecipeGenerator.hasItem(slabIngredient),
+                generator.conditionsFromItem(slabIngredient))
+            .criterion(RecipeGenerator.hasItem(Items.IRON_INGOT),
+                generator.conditionsFromItem(Items.IRON_INGOT))
             .offerTo(exporter);
     }
 

@@ -1,10 +1,12 @@
 package com.chimericdream.minekea.client;
 
+import com.chimericdream.minekea.ModInfo;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -13,7 +15,7 @@ public class Keybindings {
         "key.minekea.items.painter.cycle_color",
         InputUtil.Type.KEYSYM,
         GLFW.GLFW_KEY_EQUAL,
-        "category.minekea"
+        KeyBinding.Category.create(Identifier.of(ModInfo.MOD_ID, "category.minekea"))
     );
 
     static {

@@ -5,13 +5,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class WaxItem extends Item {
     public final Identifier ITEM_ID;
     public final String color;
     public final Item ingredient;
 
     public WaxItem(String color, Item ingredient) {
-        super(new Item.Settings().arch$tab(ItemGroups.INGREDIENTS));
+        super(new Item.Settings().arch$tab(ItemGroups.INGREDIENTS).registryKey(REGISTRY_HELPER.makeItemRegistryKey(makeId(color))));
 
         ITEM_ID = makeId(color);
 

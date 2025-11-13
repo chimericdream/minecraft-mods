@@ -5,13 +5,15 @@ import com.chimericdream.minekea.ModInfo;
 import net.minecraft.block.CandleBlock;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class VotiveCandleBlock extends CandleBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
     public final String color;
 
     public VotiveCandleBlock(BlockConfig config, String color) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
 
         BLOCK_ID = makeId(color);
         this.config = config;

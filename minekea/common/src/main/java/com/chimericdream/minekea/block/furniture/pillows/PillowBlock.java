@@ -15,6 +15,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class PillowBlock extends Block {
     public final Identifier BLOCK_ID;
     public final String color;
@@ -22,7 +24,7 @@ public class PillowBlock extends Block {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
 
     public PillowBlock(String color) {
-        super(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL).mapColor(DyeColor.byName(color, DyeColor.WHITE)));
+        super(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL).mapColor(DyeColor.byId(color, DyeColor.WHITE)).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
 
         this.color = color;
 
@@ -39,7 +41,7 @@ public class PillowBlock extends Block {
     }
 
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         entity.playSound(SoundEvents.BLOCK_WOOL_STEP, 1.0F, 1.0F);
         if (entity.handleFallDamage(fallDistance, 0F, world.getDamageSources().fall())) {
             entity.playSound(this.soundGroup.getFallSound(), this.soundGroup.getVolume() * 0.5F, this.soundGroup.getPitch() * 0.75F);

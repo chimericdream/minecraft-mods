@@ -1,11 +1,11 @@
 package com.chimericdream.minekea.fabric.block.building.storage;
 
 import com.chimericdream.lib.blocks.BlockConfig;
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.storage.ItemStorageBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
@@ -14,24 +14,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateVariant;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.ModelIds;
-import net.minecraft.data.client.Models;
-import net.minecraft.data.client.MultipartBlockStateSupplier;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.client.VariantSettings;
-import net.minecraft.data.client.When;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.Models;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -43,7 +37,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
+public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenerator {
     public final ItemStorageBlock BLOCK;
 
     public ItemStorageBlockDataGenerator(Block block) {
@@ -80,7 +74,7 @@ public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -88,7 +82,7 @@ public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
     }
 
     @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> getBuilder) {
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
         if (BLOCK.isBaggedItem) {
             getBuilder.apply(MinekeaItemTags.BAGGED_ITEMS)
                 .setReplace(false)
@@ -96,25 +90,25 @@ public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
         }
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Item baseItem = BLOCK.config.getItem();
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("###")
             .pattern("###")
             .pattern("###")
             .input('#', baseItem)
-            .criterion(FabricRecipeProvider.hasItem(baseItem),
-                FabricRecipeProvider.conditionsFromItem(baseItem))
+            .criterion(RecipeGenerator.hasItem(baseItem),
+                generator.conditionsFromItem(baseItem))
             .offerTo(exporter);
 
         // This means that things like totems won't be uncraftable; modpacks which have some method to override
         // the max stack size can re-add these recipes in a datapack
         if (baseItem.getMaxCount() >= 9) {
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, baseItem, 9)
+            generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, baseItem, 9)
                 .input(BLOCK)
-                .criterion(FabricRecipeProvider.hasItem(BLOCK),
-                    FabricRecipeProvider.conditionsFromItem(BLOCK))
+                .criterion(RecipeGenerator.hasItem(BLOCK),
+                    generator.conditionsFromItem(BLOCK))
                 .offerTo(exporter, Registries.ITEM.getId(baseItem).withSuffixedPath("_from_compressed"));
         }
     }
@@ -127,7 +121,7 @@ public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
         }
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
@@ -186,6 +180,11 @@ public class ItemStorageBlockDataGenerator implements FabricBlockDataGenerator {
                 }
             });
         }
+    }
+
+    @Override
+    public void generateTextures() {
+        
     }
 
     protected void configureCustomBaggedBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

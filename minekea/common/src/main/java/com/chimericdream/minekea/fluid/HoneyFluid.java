@@ -11,6 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -24,6 +25,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
     public static final ArchitecturyFluidAttributes ATTRIBUTES = SimpleArchitecturyFluidAttributes.of(
@@ -62,12 +65,12 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.HONEY_FLUID, AbstractBlock.Settings.copy(Blocks.WATER));
+            super(ModFluids.HONEY_FLUID, AbstractBlock.Settings.copy(Blocks.WATER).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.of(ModInfo.MOD_ID, "fluids/honey/source"))));
         }
 
         @Override
-        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-            super.onEntityCollision(state, world, pos, entity);
+        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
+            super.onEntityCollision(state, world, pos, entity, handler, bl);
 
             if (!world.isClient() && entity instanceof LivingEntity) {
                 ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300, 2));
@@ -77,7 +80,7 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Bucket extends ArchitecturyBucketItem {
         public Bucket() {
-            super(ModFluids.HONEY_FLUID, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).arch$tab(ItemGroups.INGREDIENTS));
+            super(ModFluids.HONEY_FLUID, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).arch$tab(ItemGroups.INGREDIENTS).registryKey(REGISTRY_HELPER.makeItemRegistryKey(Identifier.of(ModInfo.MOD_ID, "containers/honey_bucket"))));
         }
     }
 }

@@ -1,13 +1,10 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.tables.TableBlock;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.BlockStateVariant;
@@ -18,7 +15,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -28,7 +24,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class TableBlockDataGenerator implements FabricBlockDataGenerator {
+public class TableBlockDataGenerator implements ChimericLibBlockDataGenerator {
     private final TableBlock BLOCK;
 
     protected static final Model CORE_MODEL = new Model(
@@ -96,27 +92,27 @@ public class TableBlockDataGenerator implements FabricBlockDataGenerator {
         this.BLOCK = (TableBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("XXX")
             .pattern("# #")
             .pattern("# #")
             .input('X', plankIngredient)
             .input('#', logIngredient)
-            .criterion(FabricRecipeProvider.hasItem(plankIngredient),
-                FabricRecipeProvider.conditionsFromItem(plankIngredient))
-            .criterion(FabricRecipeProvider.hasItem(logIngredient),
-                FabricRecipeProvider.conditionsFromItem(logIngredient))
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(logIngredient),
+                generator.conditionsFromItem(logIngredient))
             .offerTo(exporter);
     }
 
@@ -124,7 +120,7 @@ public class TableBlockDataGenerator implements FabricBlockDataGenerator {
         translationBuilder.add(BLOCK, String.format("%s Table", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
@@ -275,7 +271,7 @@ public class TableBlockDataGenerator implements FabricBlockDataGenerator {
             );
     }
 
-    public static class TableTooltipDataGenerator implements FabricBlockDataGenerator {
+    public static class TableTooltipDataGenerator implements ChimericLibBlockDataGenerator {
         public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
             translationBuilder.add(TableBlock.TOOLTIP_KEY, "Simple design, but somehow LACKing...");
         }

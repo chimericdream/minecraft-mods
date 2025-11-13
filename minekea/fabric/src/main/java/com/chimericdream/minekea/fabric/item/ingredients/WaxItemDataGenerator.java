@@ -23,7 +23,7 @@ public class WaxItemDataGenerator implements FabricItemDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         CookingRecipeJsonBuilder.createSmelting(
                 Ingredient.ofItems(ITEM.ingredient),
                 RecipeCategory.MISC,
@@ -31,8 +31,8 @@ public class WaxItemDataGenerator implements FabricItemDataGenerator {
                 0.1f,
                 200
             )
-            .criterion(FabricRecipeProvider.hasItem(ITEM.ingredient),
-                FabricRecipeProvider.conditionsFromItem(ITEM.ingredient))
+            .criterion(RecipeGenerator.hasItem(ITEM.ingredient),
+                generator.conditionsFromItem(ITEM.ingredient))
             .offerTo(exporter);
 
         if (ITEM.color.equals("plain")) {
@@ -43,8 +43,8 @@ public class WaxItemDataGenerator implements FabricItemDataGenerator {
                     0.1f,
                     200
                 )
-                .criterion(FabricRecipeProvider.hasItem(Items.HONEYCOMB),
-                    FabricRecipeProvider.conditionsFromItem(Items.HONEYCOMB))
+                .criterion(RecipeGenerator.hasItem(Items.HONEYCOMB),
+                    generator.conditionsFromItem(Items.HONEYCOMB))
                 .offerTo(exporter, ITEM.ITEM_ID.withSuffixedPath("_from_honeycomb"));
         }
     }

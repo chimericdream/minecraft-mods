@@ -28,9 +28,9 @@ public class HammerItemDataGenerator implements FabricItemDataGenerator {
 //    }
 
     @Override
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         if (ITEM.itemIngredient == null) {
-            ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ITEM, 1)
+            generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
                 .pattern("ISI")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -38,23 +38,23 @@ public class HammerItemDataGenerator implements FabricItemDataGenerator {
                 .input('S', Items.STICK)
                 .criterion("has_item_from_tag",
                     FabricRecipeProvider.conditionsFromTag(ITEM.itemIngredientTag))
-                .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                    FabricRecipeProvider.conditionsFromItem(Items.STICK))
+                .criterion(RecipeGenerator.hasItem(Items.STICK),
+                    generator.conditionsFromItem(Items.STICK))
                 .offerTo(exporter);
 
             return;
         }
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ITEM, 1)
+        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
             .pattern("ISI")
             .pattern(" S ")
             .pattern(" S ")
             .input('I', ITEM.itemIngredient)
             .input('S', Items.STICK)
-            .criterion(FabricRecipeProvider.hasItem(ITEM.itemIngredient),
-                FabricRecipeProvider.conditionsFromItem(ITEM.itemIngredient))
-            .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                FabricRecipeProvider.conditionsFromItem(Items.STICK))
+            .criterion(RecipeGenerator.hasItem(ITEM.itemIngredient),
+                generator.conditionsFromItem(ITEM.itemIngredient))
+            .criterion(RecipeGenerator.hasItem(Items.STICK),
+                generator.conditionsFromItem(Items.STICK))
             .offerTo(exporter);
     }
 
@@ -65,7 +65,7 @@ public class HammerItemDataGenerator implements FabricItemDataGenerator {
 
     public static class NetheriteUpgrade implements FabricItemDataGenerator {
         @Override
-        public void configureRecipes(RecipeExporter exporter) {
+        public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
             SmithingTransformRecipeJsonBuilder.create(
                     Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                     Ingredient.ofItems(Tools.DIAMOND_HAMMER_ITEM.get()),
@@ -73,12 +73,12 @@ public class HammerItemDataGenerator implements FabricItemDataGenerator {
                     RecipeCategory.TOOLS,
                     Tools.NETHERITE_HAMMER_ITEM.get()
                 )
-                .criterion(FabricRecipeProvider.hasItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                    FabricRecipeProvider.conditionsFromItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
-                .criterion(FabricRecipeProvider.hasItem(Tools.DIAMOND_HAMMER_ITEM.get()),
-                    FabricRecipeProvider.conditionsFromItem(Tools.DIAMOND_HAMMER_ITEM.get()))
-                .criterion(FabricRecipeProvider.hasItem(Items.NETHERITE_INGOT),
-                    FabricRecipeProvider.conditionsFromItem(Items.NETHERITE_INGOT))
+                .criterion(RecipeGenerator.hasItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                    generator.conditionsFromItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
+                .criterion(RecipeGenerator.hasItem(Tools.DIAMOND_HAMMER_ITEM.get()),
+                    generator.conditionsFromItem(Tools.DIAMOND_HAMMER_ITEM.get()))
+                .criterion(RecipeGenerator.hasItem(Items.NETHERITE_INGOT),
+                    generator.conditionsFromItem(Items.NETHERITE_INGOT))
                 .offerTo(exporter, ((HammerItem) Tools.NETHERITE_HAMMER_ITEM.get()).ITEM_ID.withSuffixedPath("_upgrade_from_diamond"));
         }
     }

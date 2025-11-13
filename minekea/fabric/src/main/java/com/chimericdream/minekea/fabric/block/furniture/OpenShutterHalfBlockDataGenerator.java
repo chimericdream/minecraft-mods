@@ -1,11 +1,9 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.shutters.OpenShutterHalfBlock;
 import com.chimericdream.minekea.resource.MinekeaTextures;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.BlockStateVariant;
@@ -23,7 +21,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class OpenShutterHalfBlockDataGenerator implements FabricBlockDataGenerator {
+public class OpenShutterHalfBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model LEFT_HALF_MODEL = makeModel("block/furniture/shutters/left_half");
     protected static final Model RIGHT_HALF_MODEL = makeModel("block/furniture/shutters/right_half");
 
@@ -42,7 +40,7 @@ public class OpenShutterHalfBlockDataGenerator implements FabricBlockDataGenerat
         );
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)

@@ -6,12 +6,14 @@ import net.minecraft.block.BlockSetType;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class BookshelfTrapdoorBlock extends TrapdoorBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfTrapdoorBlock(BlockSetType type, BlockConfig config) {
-        super(type, config.getBaseSettings());
+        super(type, config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

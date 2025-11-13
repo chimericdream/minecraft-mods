@@ -16,6 +16,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class EndlessRodBlock extends RodBlock {
     public final static Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "decorations/lighting/endless_rod");
     public static final MapCodec<EndlessRodBlock> CODEC = createCodec(EndlessRodBlock::new);
@@ -29,11 +31,12 @@ public class EndlessRodBlock extends RodBlock {
     }
 
     public EndlessRodBlock() {
-        super(AbstractBlock.Settings.copy(Blocks.END_ROD));
+        super(AbstractBlock.Settings.copy(Blocks.END_ROD).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
 
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.UP));
     }
 
+    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getSide();
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction.getOpposite()));
@@ -43,6 +46,7 @@ public class EndlessRodBlock extends RodBlock {
             : this.getDefaultState().with(FACING, direction);
     }
 
+    @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         Direction direction = state.get(FACING);
 
@@ -52,7 +56,7 @@ public class EndlessRodBlock extends RodBlock {
         double g = 0.4F - (random.nextFloat() + random.nextFloat()) * 0.4F;
 
         if (random.nextInt(5) == 0) {
-            world.addParticle(
+            world.addImportantParticleClient(
                 ParticleTypes.END_ROD,
                 d + (double) direction.getOffsetX() * g,
                 e + (double) direction.getOffsetY() * g,

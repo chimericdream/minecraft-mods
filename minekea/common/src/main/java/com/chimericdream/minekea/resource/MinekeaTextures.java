@@ -1,6 +1,7 @@
 package com.chimericdream.minekea.resource;
 
-import net.minecraft.data.client.TextureKey;
+
+import net.minecraft.client.data.TextureKey;
 
 public class MinekeaTextures {
     public static final TextureKey BAR = TextureKey.of("bar");

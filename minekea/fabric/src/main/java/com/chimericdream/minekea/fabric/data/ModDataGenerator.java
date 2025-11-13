@@ -5,17 +5,18 @@ import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
 import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 import com.chimericdream.minekea.fabric.util.ItemDataGeneratorGroup;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -46,16 +47,26 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
-            for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureRecipes(exporter);
-            }
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+            return new RecipeGenerator(registryLookup, exporter) {
+                @Override
+                public void generate() {
+                    for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
+                        group.configureRecipes(registryLookup, exporter, this);
+                    }
 
-            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-                group.configureRecipes(exporter);
-            }
+                    for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
+                        group.configureRecipes(exporter);
+                    }
 
 //            MinekeaMod.ITEMS.configureRecipes(exporter);
+                }
+            };
+        }
+
+        @Override
+        public String getName() {
+            return "MinekeaRecipeGenerator";
         }
     }
 
@@ -67,7 +78,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureBlockTags(arg, this::getOrCreateTagBuilder);
+                group.configureBlockTags(arg, this::valueLookupBuilder);
             }
 
 //            MinekeaMod.ITEMS.configureBlockTags(arg, this::getOrCreateTagBuilder);
@@ -82,11 +93,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureItemTags(arg, this::getOrCreateTagBuilder);
+                group.configureItemTags(arg, this::valueLookupBuilder);
             }
 
             for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-                group.configureItemTags(arg, this::getOrCreateTagBuilder);
+                group.configureItemTags(arg, this::valueLookupBuilder);
             }
 
 //            MinekeaMod.ITEMS.configureItemTags(arg, this::getOrCreateTagBuilder);
@@ -122,7 +133,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         public void generate() {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureBlockLootTables(this.registryLookup, this);
+                group.configureBlockLootTables(this);
             }
 
 //            MinekeaMod.ITEMS.configureBlockLootTables(this.registryLookup, this);
@@ -154,6 +165,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             }
 
 //            MinekeaMod.ITEMS.configureItemModels(itemModelGenerator);
+        }
+
+        @Override
+        public String getName() {
+            return "MinekeaModelGenerator";
         }
     }
 }

@@ -1,21 +1,17 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.shelves.ShelfBlock;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.TextureMap;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
@@ -25,7 +21,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ShelfBlockDataGenerator implements FabricBlockDataGenerator {
+public class ShelfBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model SHELF_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/shelves/supported")),
         Optional.empty(),
@@ -44,26 +40,26 @@ public class ShelfBlockDataGenerator implements FabricBlockDataGenerator {
         BLOCK = (ShelfBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block slabIngredient = BLOCK.config.getIngredient("slab");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("XXX")
             .pattern("# #")
             .pattern("X X")
             .input('X', slabIngredient)
             .input('#', Items.IRON_NUGGET)
-            .criterion(FabricRecipeProvider.hasItem(slabIngredient),
-                FabricRecipeProvider.conditionsFromItem(slabIngredient))
-            .criterion(FabricRecipeProvider.hasItem(Items.IRON_NUGGET),
-                FabricRecipeProvider.conditionsFromItem(Items.IRON_NUGGET))
+            .criterion(RecipeGenerator.hasItem(slabIngredient),
+                generator.conditionsFromItem(slabIngredient))
+            .criterion(RecipeGenerator.hasItem(Items.IRON_NUGGET),
+                generator.conditionsFromItem(Items.IRON_NUGGET))
             .offerTo(exporter);
     }
 
@@ -71,7 +67,7 @@ public class ShelfBlockDataGenerator implements FabricBlockDataGenerator {
         translationBuilder.add(BLOCK, String.format("%s Shelf", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 

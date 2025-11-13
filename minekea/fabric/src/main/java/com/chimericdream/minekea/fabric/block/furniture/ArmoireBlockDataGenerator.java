@@ -1,15 +1,12 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
 import com.chimericdream.lib.blocks.BlockConfig;
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -22,7 +19,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -34,7 +30,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ArmoireBlockDataGenerator implements FabricBlockDataGenerator {
+public class ArmoireBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected final ArmoireBlock BLOCK;
 
     protected static final Model BOTTOM_MODEL = makeModel("block/furniture/armoires/bottom");
@@ -56,18 +52,18 @@ public class ArmoireBlockDataGenerator implements FabricBlockDataGenerator {
         );
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block slabIngredient = BLOCK.config.getIngredient("slab");
         Block plankIngredient = BLOCK.config.getIngredient("planks");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("BSB")
             .pattern("BCB")
             .pattern("###")
@@ -75,18 +71,18 @@ public class ArmoireBlockDataGenerator implements FabricBlockDataGenerator {
             .input('C', Items.CHEST)
             .input('S', Items.ARMOR_STAND)
             .input('#', plankIngredient)
-            .criterion(FabricRecipeProvider.hasItem(slabIngredient),
-                FabricRecipeProvider.conditionsFromItem(slabIngredient))
-            .criterion(FabricRecipeProvider.hasItem(Items.CHEST),
-                FabricRecipeProvider.conditionsFromItem(Items.CHEST))
-            .criterion(FabricRecipeProvider.hasItem(Items.ARMOR_STAND),
-                FabricRecipeProvider.conditionsFromItem(Items.ARMOR_STAND))
-            .criterion(FabricRecipeProvider.hasItem(plankIngredient),
-                FabricRecipeProvider.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(slabIngredient),
+                generator.conditionsFromItem(slabIngredient))
+            .criterion(RecipeGenerator.hasItem(Items.CHEST),
+                generator.conditionsFromItem(Items.CHEST))
+            .criterion(RecipeGenerator.hasItem(Items.ARMOR_STAND),
+                generator.conditionsFromItem(Items.ARMOR_STAND))
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
             .offerTo(exporter);
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK, generator.dropsWithProperty(BLOCK, ArmoireBlock.HALF, DoubleBlockHalf.LOWER));
     }
 

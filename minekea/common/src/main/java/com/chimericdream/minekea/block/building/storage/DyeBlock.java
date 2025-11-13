@@ -15,6 +15,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class DyeBlock extends Block {
     public final Identifier BLOCK_ID;
     public final String color;
@@ -22,7 +24,7 @@ public class DyeBlock extends Block {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
 
     public DyeBlock(String color) {
-        super(AbstractBlock.Settings.copy(Blocks.HONEY_BLOCK).mapColor(DyeColor.byName(color, DyeColor.WHITE)).jumpVelocityMultiplier(0.5F));
+        super(AbstractBlock.Settings.copy(Blocks.HONEY_BLOCK).mapColor(DyeColor.byId(color, DyeColor.WHITE)).jumpVelocityMultiplier(0.5F).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
 
         this.color = color;
 
@@ -39,7 +41,7 @@ public class DyeBlock extends Block {
     }
 
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         entity.playSound(SoundEvents.BLOCK_HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
         if (entity.handleFallDamage(fallDistance, 0.2F, world.getDamageSources().fall())) {
             entity.playSound(this.soundGroup.getFallSound(), this.soundGroup.getVolume() * 0.5F, this.soundGroup.getPitch() * 0.75F);

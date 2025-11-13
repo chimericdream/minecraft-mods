@@ -1,6 +1,5 @@
 package com.chimericdream.minekea.fabric.block.decorations;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.minekea.block.decorations.candles.VotiveCandles;
 import com.chimericdream.minekea.block.decorations.lighting.Lanterns;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DecorationBlocksDataGenerator implements BlockDataGeneratorGroup {
-    protected static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
+    protected static final List<ChimericLibBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
 
     static {
         Lanterns.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new LanternBlockDataGenerator(block.get())));
@@ -20,7 +19,7 @@ public class DecorationBlocksDataGenerator implements BlockDataGeneratorGroup {
     }
 
     @Override
-    public List<FabricBlockDataGenerator> getBlockGenerators() {
+    public List<ChimericLibBlockDataGenerator> getBlockGenerators() {
         return BLOCK_GENERATORS;
     }
 }

@@ -4,12 +4,14 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class StairsBlock extends net.minecraft.block.StairsBlock {
     public Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public StairsBlock(BlockConfig config) {
-        super(config.getIngredient().getDefaultState(), config.getBaseSettings());
+        super(config.getIngredient().getDefaultState(), config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

@@ -21,15 +21,17 @@ import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class DyedPillarBlock extends PillarBlock {
     public static final EnumProperty<Direction.Axis> AXIS;
@@ -46,7 +48,7 @@ public class DyedPillarBlock extends PillarBlock {
         BlockConfig config,
         DyeColor color
     ) {
-        super(config.getBaseSettings().mapColor(color));
+        super(config.getBaseSettings().mapColor(color).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), color))));
 
         this.color = color;
 
@@ -73,7 +75,7 @@ public class DyedPillarBlock extends PillarBlock {
     }
 
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         PotionContentsComponent potionContentsComponent = stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
         BlockState blockState = world.getBlockState(pos);
         if (hit.getSide() != Direction.DOWN && potionContentsComponent.matches(Potions.WATER)) {
@@ -81,7 +83,7 @@ public class DyedPillarBlock extends PillarBlock {
             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
             player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
 
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 ServerWorld serverWorld = (ServerWorld) world;
 
                 for (int i = 0; i < 5; ++i) {
@@ -92,9 +94,9 @@ public class DyedPillarBlock extends PillarBlock {
             world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
             world.setBlockState(pos, config.getIngredient().getDefaultState().with(AXIS, blockState.get(AXIS)));
-            return ItemActionResult.success(world.isClient);
+            return ActionResult.SUCCESS;
         }
 
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 }

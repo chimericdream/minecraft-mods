@@ -13,12 +13,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -27,9 +26,11 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class ItemStorageBlock extends Block {
     public static final EnumProperty<Direction.Axis> AXIS;
-    public static final DirectionProperty FACING;
+    public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty IS_BAGGED;
 
     public final Identifier BLOCK_ID;
@@ -52,7 +53,7 @@ public class ItemStorageBlock extends Block {
     }
 
     public ItemStorageBlock(BlockConfig config, boolean isBaggedItem, StorageModel model) {
-        super(config.getBaseSettings());
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         setDefaultState(
             getStateManager()
@@ -103,7 +104,7 @@ public class ItemStorageBlock extends Block {
     }
 
     @Override
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (state.get(IS_BAGGED) && stack.isOf(Items.SHEARS)) {
             if (world.isClient()) {
                 world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS, 1.0f, 1.0f);
@@ -112,7 +113,7 @@ public class ItemStorageBlock extends Block {
                 world.markDirty(pos);
             }
 
-            return ItemActionResult.SUCCESS;
+            return ActionResult.SUCCESS;
         }
 
         if (!state.get(IS_BAGGED) && this.isBaggedItem && stack.isOf(Items.LEATHER)) {
@@ -123,10 +124,10 @@ public class ItemStorageBlock extends Block {
                 world.markDirty(pos);
             }
 
-            return ItemActionResult.SUCCESS;
+            return ActionResult.SUCCESS;
         }
 
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
     public enum StorageModel {

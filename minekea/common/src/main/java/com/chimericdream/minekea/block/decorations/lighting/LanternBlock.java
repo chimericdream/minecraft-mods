@@ -6,12 +6,14 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class LanternBlock extends net.minecraft.block.LanternBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public LanternBlock(BlockConfig config, String name) {
-        super(AbstractBlock.Settings.copy(Blocks.LANTERN).nonOpaque());
+        super(AbstractBlock.Settings.copy(Blocks.LANTERN).nonOpaque().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(name))));
 
         this.BLOCK_ID = makeId(name);
         this.config = config;

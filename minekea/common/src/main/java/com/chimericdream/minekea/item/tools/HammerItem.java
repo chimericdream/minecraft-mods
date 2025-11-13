@@ -2,6 +2,7 @@ package com.chimericdream.minekea.item.tools;
 
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -14,8 +15,8 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.TagKey;
@@ -31,8 +32,11 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class HammerItem extends PickaxeItem {
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
+public class HammerItem extends Item implements TooltipAppender {
     public final Identifier ITEM_ID;
 
     public final ToolMaterial material;
@@ -46,7 +50,7 @@ public class HammerItem extends PickaxeItem {
     }
 
     public HammerItem(ToolMaterial material, int maxSlots, String materialName, Item itemIngredient, TagKey<Item> itemIngredientTag, Item.Settings settings) {
-        super(material, settings.maxCount(1).arch$tab(ItemGroups.TOOLS));
+        super(settings.maxCount(1).arch$tab(ItemGroups.TOOLS).pickaxe(material, 1.0F, -2.8F).registryKey(REGISTRY_HELPER.makeItemRegistryKey(makeId(materialName))));
 
         this.material = material;
         this.maxSlots = maxSlots;
@@ -63,7 +67,7 @@ public class HammerItem extends PickaxeItem {
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (!world.isClient && state.getHardness(world, pos) != 0.0F) {
+        if (!world.isClient() && state.getHardness(world, pos) != 0.0F) {
             stack.damage(1, miner, EquipmentSlot.MAINHAND);
         }
 
@@ -71,11 +75,9 @@ public class HammerItem extends PickaxeItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        super.appendTooltip(stack, context, tooltip, options);
-
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
         MutableText text = Text.literal(String.format("Uses up to %d slots", this.maxSlots));
-        tooltip.add(text);
+        textConsumer.accept(text);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class HammerItem extends PickaxeItem {
 
         PlayerInventory inventory = player.getInventory();
 
-        int hammerSlot = inventory.selectedSlot;
+        int hammerSlot = inventory.getSelectedSlot();
         for (int i = hammerSlot; i < 9 && slots.size() < this.maxSlots; i++) {
             ItemStack item = inventory.getStack(i);
             if (!item.isEmpty() && item.getItem() instanceof BlockItem) {
@@ -104,7 +106,7 @@ public class HammerItem extends PickaxeItem {
         if (nbtComponent == null) {
             rand = Random.create();
         } else {
-            rand = Random.create(nbtComponent.copyNbt().getLong("placement_seed"));
+            rand = Random.create(nbtComponent.copyNbt().getLong("placement_seed").get());
         }
 
         if (slots.isEmpty()) {
@@ -157,9 +159,9 @@ public class HammerItem extends PickaxeItem {
         }
 
         ActionResult result = ((BlockItem) toPlace.getItem()).place(placementContext);
-        if (result == ActionResult.CONSUME || result == ActionResult.CONSUME_PARTIAL) {
+        if (result == ActionResult.CONSUME) {
             if (!player.isCreative()) {
-                inventory.getMainHandStack().damage(1, player, ctx.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                inventory.getStack(hammerSlot).damage(1, player, ctx.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             }
         }
 

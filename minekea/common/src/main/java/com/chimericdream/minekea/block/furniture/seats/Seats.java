@@ -11,6 +11,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class Seats implements ModThingGroup {
     public static Identifier SEAT_ENTITY_ID = Identifier.of(ModInfo.MOD_ID, "entities/mounts/seat");
     public static final RegistrySupplier<EntityType<SimpleSeatEntity>> SEAT_ENTITY = REGISTRY_HELPER.registerEntityType(
         SEAT_ENTITY_ID,
-        () -> EntityType.Builder.create(SimpleSeatEntity::new, SpawnGroup.MISC).build(SEAT_ENTITY_ID.toString())
+        () -> EntityType.Builder.create(SimpleSeatEntity::new, SpawnGroup.MISC).build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, SEAT_ENTITY_ID))
     );
 
     static {

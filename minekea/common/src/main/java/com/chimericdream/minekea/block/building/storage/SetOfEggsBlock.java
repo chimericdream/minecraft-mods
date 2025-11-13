@@ -17,10 +17,14 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 // @TODO: turn this into a slab-like block with top/bottom/full variations
 public class SetOfEggsBlock extends Block implements Waterloggable {
@@ -29,7 +33,7 @@ public class SetOfEggsBlock extends Block implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public SetOfEggsBlock() {
-        super(AbstractBlock.Settings.copy(Blocks.NETHER_WART_BLOCK).sounds(MinekeaSoundGroup.SET_OF_EGGS_SOUND_GROUP));
+        super(AbstractBlock.Settings.copy(Blocks.NETHER_WART_BLOCK).sounds(MinekeaSoundGroup.SET_OF_EGGS_SOUND_GROUP).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
 
         this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
     }
@@ -49,12 +53,12 @@ public class SetOfEggsBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override

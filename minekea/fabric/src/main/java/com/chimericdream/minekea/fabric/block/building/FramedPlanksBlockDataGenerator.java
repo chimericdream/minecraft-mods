@@ -1,26 +1,23 @@
 package com.chimericdream.minekea.fabric.block.building;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.framed.FramedPlanksBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateVariant;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.MultipartBlockStateSupplier;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.client.VariantSettings;
-import net.minecraft.data.client.When;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -30,7 +27,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class FramedPlanksBlockDataGenerator implements FabricBlockDataGenerator {
+public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model CORE_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/framed_planks/core")),
         Optional.empty(),
@@ -56,7 +53,8 @@ public class FramedPlanksBlockDataGenerator implements FabricBlockDataGenerator 
         );
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    @Override
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.FRAMED_PLANKS)
             .setReplace(false)
             .add(BLOCK);
@@ -67,31 +65,40 @@ public class FramedPlanksBlockDataGenerator implements FabricBlockDataGenerator 
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    @Override
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+
+    }
+
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .input(plankIngredient)
             .input(plankIngredient)
             .input(plankIngredient)
             .input(plankIngredient)
             .input(logIngredient)
-            .criterion(FabricRecipeProvider.hasItem(plankIngredient),
-                FabricRecipeProvider.conditionsFromItem(plankIngredient))
-            .criterion(FabricRecipeProvider.hasItem(logIngredient),
-                FabricRecipeProvider.conditionsFromItem(logIngredient))
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(logIngredient),
+                generator.conditionsFromItem(logIngredient))
             .offerTo(exporter);
     }
 
+    @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    @Override
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
+    @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
@@ -179,5 +186,15 @@ public class FramedPlanksBlockDataGenerator implements FabricBlockDataGenerator 
                             .put(VariantSettings.MODEL, abConnectedModelId)
                     )
             );
+    }
+
+    @Override
+    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+
+    }
+
+    @Override
+    public void generateTextures() {
+
     }
 }

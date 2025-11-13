@@ -7,13 +7,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class WaxBlock extends Block {
     public final Identifier BLOCK_ID;
 
     public final String color;
 
     public WaxBlock(String color) {
-        super(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).pistonBehavior(PistonBehavior.PUSH_ONLY).slipperiness(0.9F));
+        super(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).pistonBehavior(PistonBehavior.PUSH_ONLY).slipperiness(0.9F).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
 
         BLOCK_ID = makeId(color);
         this.color = color;

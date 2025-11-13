@@ -5,10 +5,10 @@ import com.chimericdream.minekea.block.building.compressed.CompressedColumnBlock
 import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.Models;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.Models;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 

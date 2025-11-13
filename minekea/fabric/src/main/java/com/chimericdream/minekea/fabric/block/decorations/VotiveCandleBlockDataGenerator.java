@@ -2,14 +2,12 @@ package com.chimericdream.minekea.fabric.block.decorations;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.colors.ColorHelpers;
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.decorations.candles.VotiveCandleBlock;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -22,8 +20,6 @@ import net.minecraft.data.client.VariantSettings;
 import net.minecraft.data.client.When;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -36,7 +32,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class VotiveCandleBlockDataGenerator implements FabricBlockDataGenerator {
+public class VotiveCandleBlockDataGenerator implements ChimericLibBlockDataGenerator {
     protected static final Model VOTIVE_ITEM_MODEL = makeModel("block/candles/template_votive_item");
     protected static final Model ONE_VOTIVE_MODEL = makeModel("block/candles/template_votive_candle");
     protected static final Model ONE_VOTIVE_LIT_MODEL = makeModel("block/candles/template_votive_candle");
@@ -63,24 +59,24 @@ public class VotiveCandleBlockDataGenerator implements FabricBlockDataGenerator 
         );
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBuilder.apply(BlockTags.CANDLES).add(BLOCK);
     }
 
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> getBuilder) {
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
         getBuilder.apply(MinekeaItemTags.VOTIVE_CANDLES).add(BLOCK.asItem());
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLOCK, 4)
+        generator.createShapeless(RecipeCategory.DECORATIONS, BLOCK, 4)
             .input(ingredient, 4)
             .input(Items.GLASS)
-            .criterion(FabricRecipeProvider.hasItem(ingredient),
-                FabricRecipeProvider.conditionsFromItem(ingredient))
-            .criterion(FabricRecipeProvider.hasItem(Items.GLASS),
-                FabricRecipeProvider.conditionsFromItem(Items.GLASS))
+            .criterion(RecipeGenerator.hasItem(ingredient),
+                generator.conditionsFromItem(ingredient))
+            .criterion(RecipeGenerator.hasItem(Items.GLASS),
+                generator.conditionsFromItem(Items.GLASS))
             .offerTo(exporter);
 
         Item dye;
@@ -90,7 +86,7 @@ public class VotiveCandleBlockDataGenerator implements FabricBlockDataGenerator 
             dye = ColorHelpers.getDye(BLOCK.color);
         }
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLOCK, 8)
+        generator.createShaped(RecipeCategory.DECORATIONS, BLOCK, 8)
             .pattern("###")
             .pattern("#D#")
             .pattern("###")
@@ -98,12 +94,12 @@ public class VotiveCandleBlockDataGenerator implements FabricBlockDataGenerator 
             .input('D', dye)
             .criterion("has_any_votive",
                 FabricRecipeProvider.conditionsFromTag(MinekeaItemTags.VOTIVE_CANDLES))
-            .criterion(FabricRecipeProvider.hasItem(dye),
-                FabricRecipeProvider.conditionsFromItem(dye))
+            .criterion(RecipeGenerator.hasItem(dye),
+                generator.conditionsFromItem(dye))
             .offerTo(exporter, BLOCK.BLOCK_ID.withSuffixedPath("_universal_dyeing"));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK, generator.candleDrops(BLOCK));
     }
 

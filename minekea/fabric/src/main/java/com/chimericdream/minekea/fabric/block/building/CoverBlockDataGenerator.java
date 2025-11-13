@@ -1,21 +1,22 @@
 package com.chimericdream.minekea.fabric.block.building;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.covers.CoverBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -26,7 +27,7 @@ import java.util.function.Function;
 
 import static com.chimericdream.minekea.block.building.covers.CoverBlock.FACING;
 
-public class CoverBlockDataGenerator implements FabricBlockDataGenerator {
+public class CoverBlockDataGenerator implements ChimericLibBlockDataGenerator {
     // yowza
     public static final Model COVER_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/cover")),
@@ -41,34 +42,44 @@ public class CoverBlockDataGenerator implements FabricBlockDataGenerator {
         BLOCK = (CoverBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    @Override
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RecipeExporter exporter) {
+    @Override
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+
+    }
+
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLOCK, 16)
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 16)
             .pattern("# #")
             .pattern("   ")
             .pattern("# #")
             .input('#', ingredient)
-            .criterion(FabricRecipeProvider.hasItem(ingredient),
-                FabricRecipeProvider.conditionsFromItem(ingredient))
+            .criterion(RecipeGenerator.hasItem(ingredient),
+                generator.conditionsFromItem(ingredient))
             .offerTo(exporter);
     }
 
+    @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Cover", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator generator) {
+    @Override
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
     }
 
+    @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         Identifier endTextureId = BLOCK.config.getTexture();
         Identifier sideTextureId = Optional.ofNullable(BLOCK.config.getTexture("side")).orElse(endTextureId);
@@ -80,5 +91,15 @@ public class CoverBlockDataGenerator implements FabricBlockDataGenerator {
         Identifier subModelId = blockStateModelGenerator.createSubModel(BLOCK, "", COVER_MODEL, unused -> textures);
 
         ModelUtils.registerBlockWithHorizontalFacing(blockStateModelGenerator, FACING, BLOCK, subModelId);
+    }
+
+    @Override
+    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+
+    }
+
+    @Override
+    public void generateTextures() {
+
     }
 }

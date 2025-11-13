@@ -1,6 +1,5 @@
 package com.chimericdream.minekea.fabric.block.building;
 
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.block.building.beams.Beams;
 import com.chimericdream.minekea.block.building.compressed.CompressedBlocks;
@@ -33,13 +32,14 @@ import com.chimericdream.minekea.fabric.block.building.stairs.VerticalStairsBloc
 import com.chimericdream.minekea.fabric.block.building.storage.DyeBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.storage.ItemStorageBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.storage.SetOfEggsBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
-    protected static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
+    protected static final List<ChimericLibBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
 
     static {
         BLOCK_GENERATORS.add(new BasaltBricksDataGenerator());
@@ -76,7 +76,7 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
     }
 
     @Override
-    public List<FabricBlockDataGenerator> getBlockGenerators() {
+    public List<ChimericLibBlockDataGenerator> getBlockGenerators() {
         return BLOCK_GENERATORS;
     }
 }

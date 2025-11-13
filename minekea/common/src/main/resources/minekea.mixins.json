@@ -5,10 +5,7 @@
     "minVersion": "0.8",
     "client": [
     ],
-    "mixins": [
-        "MilkBucketItemMixin",
-        "PointOfInterestTypesAccessor"
-    ],
+    "mixins": [],
     "injectors": {
         "defaultRequire": 1
     }

@@ -5,12 +5,14 @@ import com.chimericdream.minekea.ModInfo;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.util.Identifier;
 
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
 public class WallBlock extends net.minecraft.block.WallBlock {
     public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public WallBlock(BlockConfig config) {
-        super(AbstractBlock.Settings.copy(config.getIngredient()));
+        super(AbstractBlock.Settings.copy(config.getIngredient()).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;

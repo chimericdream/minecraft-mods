@@ -1,14 +1,15 @@
 package com.chimericdream.minekea.fabric.util;
 
 import com.chimericdream.lib.blocks.BlockDataGenerator;
-import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -17,14 +18,14 @@ import java.util.List;
 import java.util.function.Function;
 
 public interface BlockDataGeneratorGroup {
-    List<FabricBlockDataGenerator> getBlockGenerators();
+    List<ChimericLibBlockDataGenerator> getBlockGenerators();
 
-    default void configureRecipes(RecipeExporter exporter) {
-        getBlockGenerators().forEach(generator -> generator.configureRecipes(exporter));
+    default void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator recipeGenerator) {
+        getBlockGenerators().forEach(generator -> generator.configureRecipes(registryLookup, exporter, recipeGenerator));
     }
 
-    default void configureBlockLootTables(RegistryWrapper.WrapperLookup registryLookup, BlockLootTableGenerator lootTableGenerator) {
-        getBlockGenerators().forEach(generator -> generator.configureBlockLootTables(registryLookup, lootTableGenerator));
+    default void configureBlockLootTables(BlockLootTableGenerator lootTableGenerator) {
+        getBlockGenerators().forEach(generator -> generator.configureBlockLootTables(lootTableGenerator));
     }
 
     default void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
@@ -39,11 +40,11 @@ public interface BlockDataGeneratorGroup {
         getBlockGenerators().forEach(BlockDataGenerator::generateTextures);
     }
 
-    default void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> getBuilder) {
+    default void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBlockGenerators().forEach(generator -> generator.configureBlockTags(registryLookup, getBuilder));
     }
 
-    default void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> getBuilder) {
+    default void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
         getBlockGenerators().forEach(generator -> generator.configureItemTags(registryLookup, getBuilder));
     }
 
