@@ -10,9 +10,13 @@ import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.ModelVariantOperator;
+import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -22,6 +26,7 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
@@ -67,7 +72,6 @@ public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGener
 
     @Override
     public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
     }
 
     @Override
@@ -112,89 +116,41 @@ public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGener
         Identifier bConnectedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_b_connected", B_CONNECTED_MODEL, unused -> textures);
         Identifier abConnectedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_ab_connected", AB_CONNECTED_MODEL, unused -> textures);
 
+        WeightedVariant coreVariant = BlockStateModelGenerator.createWeightedVariant(modelId);
+        WeightedVariant aConnectedVariant = BlockStateModelGenerator.createWeightedVariant(aConnectedModelId);
+        WeightedVariant bConnectedVariant = BlockStateModelGenerator.createWeightedVariant(bConnectedModelId);
+        WeightedVariant abConnectedVariant = BlockStateModelGenerator.createWeightedVariant(abConnectedModelId);
+
         blockStateModelGenerator.registerParentedItemModel(BLOCK, modelId);
 
         blockStateModelGenerator.blockStateCollector
             .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.NORTH)
-                            .set(FramedPlanksBlock.CONNECTED_EAST, false)
-                            .set(FramedPlanksBlock.CONNECTED_WEST, false),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.NORTH)
-                            .set(FramedPlanksBlock.CONNECTED_EAST, true)
-                            .set(FramedPlanksBlock.CONNECTED_WEST, false),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, aConnectedModelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.NORTH)
-                            .set(FramedPlanksBlock.CONNECTED_EAST, false)
-                            .set(FramedPlanksBlock.CONNECTED_WEST, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, bConnectedModelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.NORTH)
-                            .set(FramedPlanksBlock.CONNECTED_EAST, true)
-                            .set(FramedPlanksBlock.CONNECTED_WEST, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, abConnectedModelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.EAST)
-                            .set(FramedPlanksBlock.CONNECTED_NORTH, false)
-                            .set(FramedPlanksBlock.CONNECTED_SOUTH, false),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.MODEL, modelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.EAST)
-                            .set(FramedPlanksBlock.CONNECTED_NORTH, true)
-                            .set(FramedPlanksBlock.CONNECTED_SOUTH, false),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.MODEL, aConnectedModelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.EAST)
-                            .set(FramedPlanksBlock.CONNECTED_NORTH, false)
-                            .set(FramedPlanksBlock.CONNECTED_SOUTH, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.MODEL, bConnectedModelId)
-                    )
-                    .with(
-                        When.create()
-                            .set(FramedPlanksBlock.FACING, Direction.EAST)
-                            .set(FramedPlanksBlock.CONNECTED_NORTH, true)
-                            .set(FramedPlanksBlock.CONNECTED_SOUTH, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.MODEL, abConnectedModelId)
-                    )
+                VariantsBlockModelDefinitionCreator.of(BLOCK).with(
+                    BlockStateVariantMap
+                        .models(
+                            FramedPlanksBlock.FACING,
+                            FramedPlanksBlock.CONNECTED_EAST,
+                            FramedPlanksBlock.CONNECTED_WEST,
+                            FramedPlanksBlock.CONNECTED_NORTH,
+                            FramedPlanksBlock.CONNECTED_SOUTH
+                        )
+                        .register(Direction.NORTH, false, false, false, false, coreVariant)
+                        .register(Direction.NORTH, true, false, false, false, aConnectedVariant)
+                        .register(Direction.NORTH, false, true, false, false, bConnectedVariant)
+                        .register(Direction.NORTH, true, true, false, false, abConnectedVariant)
+                        .register(Direction.EAST, false, false, false, false, coreVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .register(Direction.EAST, false, false, true, false, aConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .register(Direction.EAST, false, false, false, true, bConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .register(Direction.EAST, false, false, true, true, abConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                )
             );
     }
 
     @Override
     public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
     }
 
     @Override
     public void generateTextures() {
-
     }
 }

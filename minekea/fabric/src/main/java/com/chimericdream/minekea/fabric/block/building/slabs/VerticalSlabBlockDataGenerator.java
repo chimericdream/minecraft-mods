@@ -4,6 +4,7 @@ import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.slabs.VerticalSlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -20,7 +21,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -80,41 +80,14 @@ public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGener
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         Identifier textureId = BLOCK.config.getTexture();
 
-        TextureMap textures = new TextureMap()
-            .put(TextureKey.ALL, textureId);
+        TextureMap textures = new TextureMap().put(TextureKey.ALL, textureId);
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", VERTICAL_SLAB_MODEL, unused -> textures);
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.NORTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, coreModelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.EAST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, coreModelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.SOUTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, coreModelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.WEST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, coreModelId)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-            );
+        ModelUtils.registerVerticalSlabBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            VERTICAL_SLAB_MODEL
+        );
     }
 
     @Override

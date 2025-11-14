@@ -13,6 +13,7 @@ import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.data.TexturedModel;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -91,8 +92,7 @@ public class DyeBlockDataGenerator implements ChimericLibBlockDataGenerator {
 
         blockStateModelGenerator.registerSingleton(
             BLOCK,
-            textures,
-            DYE_BLOCK_MODEL
+            TexturedModel.makeFactory((unused) -> textures, DYE_BLOCK_MODEL)
         );
     }
 

@@ -3,9 +3,9 @@ package com.chimericdream.minekea.fabric.block.building.slabs;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.slabs.SlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.enums.SlabType;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
@@ -75,26 +75,14 @@ public class SlabBlockDataGenerator implements ChimericLibBlockDataGenerator {
             .put(TextureKey.TOP, textureId)
             .put(TextureKey.ALL, textureId);
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.SLAB, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSubModel(BLOCK, "_top", Models.SLAB_TOP, unused -> textures);
-        Identifier doubleModelId = blockStateModelGenerator.createSubModel(BLOCK, "_double", Models.CUBE_ALL, unused -> textures);
-
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.BOTTOM),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, coreModelId)
-                    )
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.TOP),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, topModelId)
-                    )
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.DOUBLE),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, doubleModelId)
-                    )
-            );
+        ModelUtils.registerSlabBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            Models.SLAB,
+            Models.SLAB_TOP,
+            Models.CUBE_ALL
+        );
     }
 
     @Override

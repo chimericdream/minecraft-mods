@@ -3,6 +3,7 @@ package com.chimericdream.minekea.fabric.block.building;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.walls.WallBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -19,7 +20,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -77,14 +77,15 @@ public class WallBlockDataGenerator implements ChimericLibBlockDataGenerator {
         TextureMap textures = new TextureMap()
             .put(TextureKey.WALL, BLOCK.config.getTexture());
 
-        Identifier inventoryModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.WALL_INVENTORY, unused -> textures);
-        Identifier postModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.TEMPLATE_WALL_POST, unused -> textures);
-        Identifier sideModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.TEMPLATE_WALL_SIDE, unused -> textures);
-        Identifier sideTallModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.TEMPLATE_WALL_SIDE_TALL, unused -> textures);
-
-        BlockStateSupplier blockStateSupplier = BlockStateModelGenerator.createWallBlockState(BLOCK, postModelId, sideModelId, sideTallModelId);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateSupplier);
-        blockStateModelGenerator.registerParentedItemModel(BLOCK, inventoryModelId);
+        ModelUtils.registerWallBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            Models.WALL_INVENTORY,
+            Models.TEMPLATE_WALL_POST,
+            Models.TEMPLATE_WALL_SIDE,
+            Models.TEMPLATE_WALL_SIDE_TALL
+        );
     }
 
     @Override

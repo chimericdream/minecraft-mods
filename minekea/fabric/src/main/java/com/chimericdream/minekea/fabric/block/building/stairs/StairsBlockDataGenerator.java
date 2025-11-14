@@ -3,6 +3,7 @@ package com.chimericdream.minekea.fabric.block.building.stairs;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.stairs.StairsBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -76,12 +77,14 @@ public class StairsBlockDataGenerator implements ChimericLibBlockDataGenerator {
             .put(TextureKey.TOP, textureId)
             .put(TextureKey.SIDE, textureId);
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.STAIRS, unused -> textures);
-        Identifier innerModelId = blockStateModelGenerator.createSubModel(BLOCK, "_inner", Models.INNER_STAIRS, unused -> textures);
-        Identifier outerModelId = blockStateModelGenerator.createSubModel(BLOCK, "_outer", Models.OUTER_STAIRS, unused -> textures);
-
-        BlockStateSupplier blockStateSupplier = BlockStateModelGenerator.createStairsBlockState(BLOCK, innerModelId, coreModelId, outerModelId);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateSupplier);
+        ModelUtils.registerStairsBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            Models.INNER_STAIRS,
+            Models.STAIRS,
+            Models.OUTER_STAIRS
+        );
     }
 
     @Override

@@ -3,12 +3,11 @@ package com.chimericdream.minekea.fabric.block.building.slabs;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.slabs.BookshelfSlabBlock;
-import com.chimericdream.minekea.block.building.slabs.SlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.enums.SlabType;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
@@ -89,26 +88,14 @@ public class BookshelfSlabBlockDataGenerator implements ChimericLibBlockDataGene
             .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", BOTTOM_BOOKSHELF_SLAB_MODEL, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSubModel(BLOCK, "_top", TOP_BOOKSHELF_SLAB_MODEL, unused -> textures);
-        Identifier doubleModelId = blockStateModelGenerator.createSubModel(BLOCK, "_double", BOOKSHELF_MODEL, unused -> textures);
-
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.BOTTOM),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, coreModelId)
-                    )
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.TOP),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, topModelId)
-                    )
-                    .with(
-                        When.create().set(SlabBlock.TYPE, SlabType.DOUBLE),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, doubleModelId)
-                    )
-            );
+        ModelUtils.registerSlabBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            BOTTOM_BOOKSHELF_SLAB_MODEL,
+            TOP_BOOKSHELF_SLAB_MODEL,
+            BOOKSHELF_MODEL
+        );
     }
 
     @Override

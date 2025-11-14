@@ -3,8 +3,8 @@ package com.chimericdream.minekea.fabric.block.building.slabs;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.slabs.VerticalBookshelfSlabBlock;
-import com.chimericdream.minekea.block.building.slabs.VerticalSlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
@@ -22,7 +22,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -85,39 +84,12 @@ public class VerticalBookshelfSlabBlockDataGenerator implements ChimericLibBlock
             .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
-        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", VERTICAL_BOOKSHELF_SLAB_MODEL, unused -> textures);
-
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.NORTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.EAST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.SOUTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalSlabBlock.FACING, Direction.WEST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-            );
+        ModelUtils.registerVerticalSlabBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            VERTICAL_BOOKSHELF_SLAB_MODEL
+        );
     }
 
     @Override

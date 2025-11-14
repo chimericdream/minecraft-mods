@@ -2,6 +2,7 @@ package com.chimericdream.minekea.fabric.block.building.stairs;
 
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.VerticalBookshelfStairsBlock;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
@@ -59,8 +60,11 @@ public class VerticalBookshelfStairsBlockDataGenerator extends VerticalStairsBlo
             .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, BLOCK.config.getTexture());
 
-        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", VERTICAL_BOOKSHELF_STAIRS_MODEL, unused -> textures);
-
-        doBlockStateModels(blockStateModelGenerator, BLOCK, modelId);
+        ModelUtils.registerVerticalStairsBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            VERTICAL_BOOKSHELF_STAIRS_MODEL
+        );
     }
 }

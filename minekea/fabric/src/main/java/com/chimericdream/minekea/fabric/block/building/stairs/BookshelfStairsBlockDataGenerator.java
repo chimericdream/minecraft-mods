@@ -2,6 +2,7 @@ package com.chimericdream.minekea.fabric.block.building.stairs;
 
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.BookshelfStairsBlock;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
@@ -63,11 +64,13 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
             .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", MAIN_BOOKSHELF_STAIRS_MODEL, unused -> textures);
-        Identifier innerModelId = blockStateModelGenerator.createSubModel(BLOCK, "_inner", INNER_BOOKSHELF_STAIRS_MODEL, unused -> textures);
-        Identifier outerModelId = blockStateModelGenerator.createSubModel(BLOCK, "_outer", OUTER_BOOKSHELF_STAIRS_MODEL, unused -> textures);
-
-        BlockStateSupplier blockStateSupplier = BlockStateModelGenerator.createStairsBlockState(BLOCK, innerModelId, coreModelId, outerModelId);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateSupplier);
+        ModelUtils.registerStairsBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            INNER_BOOKSHELF_STAIRS_MODEL,
+            MAIN_BOOKSHELF_STAIRS_MODEL,
+            OUTER_BOOKSHELF_STAIRS_MODEL
+        );
     }
 }

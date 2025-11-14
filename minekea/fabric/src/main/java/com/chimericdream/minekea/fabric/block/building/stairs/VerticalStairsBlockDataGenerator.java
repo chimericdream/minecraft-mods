@@ -4,6 +4,7 @@ import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.VerticalStairsBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -20,7 +21,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -75,62 +75,23 @@ public class VerticalStairsBlockDataGenerator implements ChimericLibBlockDataGen
         generator.addDrop(BLOCK);
     }
 
-    // @TODO: remember why I did this
-    public static void doBlockStateModels(
-        BlockStateModelGenerator blockStateModelGenerator,
-        Block block,
-        Identifier modelId
-    ) {
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                MultipartBlockStateSupplier.create(block)
-                    .with(
-                        When.create().set(VerticalStairsBlock.FACING, Direction.NORTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalStairsBlock.FACING, Direction.EAST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalStairsBlock.FACING, Direction.SOUTH),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-                    .with(
-                        When.create().set(VerticalStairsBlock.FACING, Direction.WEST),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId)
-                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            .put(VariantSettings.UVLOCK, true)
-                    )
-            );
-    }
-
     @Override
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textures = new TextureMap()
-            .put(TextureKey.ALL, BLOCK.config.getTexture());
+        TextureMap textures = new TextureMap().put(TextureKey.ALL, BLOCK.config.getTexture());
 
-        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", VERTICAL_STAIRS_MODEL, unused -> textures);
-
-        doBlockStateModels(blockStateModelGenerator, BLOCK, modelId);
+        ModelUtils.registerVerticalStairsBlock(
+            blockStateModelGenerator,
+            BLOCK,
+            textures,
+            VERTICAL_STAIRS_MODEL
+        );
     }
 
     @Override
     public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
     }
 
     @Override
     public void generateTextures() {
-
     }
 }

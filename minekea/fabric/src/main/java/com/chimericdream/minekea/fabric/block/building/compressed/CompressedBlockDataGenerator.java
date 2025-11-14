@@ -110,6 +110,35 @@ public class CompressedBlockDataGenerator implements ChimericLibBlockDataGenerat
     }
 
     public static class CompressedBlockTooltipDataGenerator implements ChimericLibBlockDataGenerator {
+        @Override
+        public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+        }
+
+        @Override
+        public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+        }
+
+        @Override
+        public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+        }
+
+        @Override
+        public void configureBlockLootTables(BlockLootTableGenerator generator) {
+        }
+
+        @Override
+        public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        }
+
+        @Override
+        public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+        }
+
+        @Override
+        public void generateTextures() {
+        }
+
+        @Override
         public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
             translationBuilder.add(CompressedBlock.TOOLTIP_LEVEL, "%dx Compressed");
             translationBuilder.add(CompressedBlock.TOOLTIP_COUNT, "(%s blocks)");

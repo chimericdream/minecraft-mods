@@ -10,8 +10,11 @@ import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
+import net.minecraft.client.data.MultipartBlockModelDefinitionCreator;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.render.model.json.MultipartModelConditionBuilder;
+import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -118,43 +121,24 @@ public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
         Identifier upModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
         Identifier downModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
 
+        WeightedVariant coreVariant = BlockStateModelGenerator.createWeightedVariant(coreModelId);
+        WeightedVariant northVariant = BlockStateModelGenerator.createWeightedVariant(northModelId);
+        WeightedVariant southVariant = BlockStateModelGenerator.createWeightedVariant(southModelId);
+        WeightedVariant eastVariant = BlockStateModelGenerator.createWeightedVariant(eastModelId);
+        WeightedVariant westVariant = BlockStateModelGenerator.createWeightedVariant(westModelId);
+        WeightedVariant upVariant = BlockStateModelGenerator.createWeightedVariant(upModelId);
+        WeightedVariant downVariant = BlockStateModelGenerator.createWeightedVariant(downModelId);
+
         blockStateModelGenerator.blockStateCollector
             .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, coreModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_NORTH, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, northModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_SOUTH, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, southModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_EAST, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, eastModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_WEST, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, westModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_UP, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, upModelId)
-                    )
-                    .with(
-                        When.create().set(CONNECTED_DOWN, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, downModelId)
-                    )
+                MultipartBlockModelDefinitionCreator.create(BLOCK)
+                    .with(coreVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_NORTH, true), northVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_SOUTH, true), southVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_EAST, true), eastVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_WEST, true), westVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_UP, true), upVariant)
+                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_DOWN, true), downVariant)
             );
     }
 
