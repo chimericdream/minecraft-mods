@@ -46,8 +46,6 @@ public class ModelUtils {
         itemModelGenerator.register(block.asItem(), Models.GENERATED);
     }
 
-    public static void register
-
     public static void registerSlabBlock(
         BlockStateModelGenerator blockStateModelGenerator,
         SlabBlock block,

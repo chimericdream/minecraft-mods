@@ -16,12 +16,17 @@ import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.ModelSupplier;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.data.TexturedModel;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -35,7 +40,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenerator {
     public final ItemStorageBlock BLOCK;
@@ -109,7 +113,7 @@ public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenera
                 .input(BLOCK)
                 .criterion(RecipeGenerator.hasItem(BLOCK),
                     generator.conditionsFromItem(BLOCK))
-                .offerTo(exporter, Registries.ITEM.getId(baseItem).withSuffixedPath("_from_compressed"));
+                .offerTo(exporter, Registries.ITEM.getId(baseItem).withSuffixedPath("_from_compressed").toString());
         }
     }
 
@@ -137,29 +141,25 @@ public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenera
         Identifier baggedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_bagged", makeBaggedModel(BlockConfig.RenderType.CUTOUT), unused -> textures);
         Identifier baseModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.CUBE_ALL, unused -> textures);
 
+        WeightedVariant baggedModel = BlockStateModelGenerator.createWeightedVariant(baggedModelId);
+        WeightedVariant baseModel = BlockStateModelGenerator.createWeightedVariant(baseModelId);
+
         blockStateModelGenerator.blockStateCollector
             .accept(
-                MultipartBlockStateSupplier.create(BLOCK)
-                    .with(
-                        When.create().set(ItemStorageBlock.IS_BAGGED, true),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, baggedModelId)
-                    )
-                    .with(
-                        When.create().set(ItemStorageBlock.IS_BAGGED, false),
-                        BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, baseModelId)
-                    )
+                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                    .with(BlockStateVariantMap.models(ItemStorageBlock.IS_BAGGED)
+                        .register(true, baggedModel)
+                        .register(false, baseModel))
             );
 
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLOCK);
+//        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLOCK);
     }
 
     public void configureItemModels(ItemModelGenerator itemModelGenerator) {
         if (BLOCK.isBaggedItem) {
             Block self = BLOCK;
 
-            itemModelGenerator.writer.accept(ModelIds.getItemModelId(BLOCK.asItem()), new Supplier<JsonElement>() {
+            itemModelGenerator.modelCollector.accept(ModelIds.getItemModelId(BLOCK.asItem()), new ModelSupplier() {
                 @Override
                 public JsonElement get() {
                     JsonArray overrides = new JsonArray();
@@ -184,7 +184,7 @@ public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenera
 
     @Override
     public void generateTextures() {
-        
+
     }
 
     protected void configureCustomBaggedBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
@@ -233,7 +233,10 @@ public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenera
 
     protected void configureDefaultBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
         TextureMap textures = new TextureMap().put(TextureKey.ALL, TextureUtils.block(BLOCK));
-        blockStateModelGenerator.registerSingleton(BLOCK, textures, makeCubeModel(BLOCK.config.getRenderType()));
+        blockStateModelGenerator.registerSingleton(
+            BLOCK,
+            TexturedModel.makeFactory((unused) -> textures, makeCubeModel(BLOCK.config.getRenderType()))
+        );
     }
 
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

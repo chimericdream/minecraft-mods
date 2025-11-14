@@ -156,7 +156,7 @@ public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
         ITEM_MODEL.upload(
             BLOCK.BLOCK_ID.withPrefixedPath("item/"),
             getTextures(),
-            itemModelGenerator.writer
+            itemModelGenerator.modelCollector
         );
     }
 
