@@ -9,7 +9,6 @@ import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
@@ -26,7 +25,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class DyedPillarBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public DyedPillarBlock BLOCK;
 
     public DyedPillarBlockDataGenerator(Block block) {
@@ -39,11 +38,6 @@ public class DyedPillarBlockDataGenerator implements ChimericLibBlockDataGenerat
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
-    }
-
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
     }
 
     @Override
@@ -83,15 +77,5 @@ public class DyedPillarBlockDataGenerator implements ChimericLibBlockDataGenerat
         Identifier subModelId = blockStateModelGenerator.createSubModel(BLOCK, "", Models.CUBE_COLUMN, unused -> textures);
 
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, DyedPillarBlock.AXIS, BLOCK, subModelId);
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 }

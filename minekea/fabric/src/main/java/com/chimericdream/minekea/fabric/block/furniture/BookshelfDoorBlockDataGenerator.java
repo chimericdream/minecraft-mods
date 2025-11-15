@@ -27,7 +27,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class BookshelfDoorBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model ITEM_MODEL = makeModel("item/furniture/doors/bookshelf");
     protected static final Model BOTTOM_MODEL = makeModel("block/furniture/doors/bookshelves/bottom");
     protected static final Model BOTTOM_HINGE_MODEL = makeModel("block/furniture/doors/bookshelves/bottom_rh");

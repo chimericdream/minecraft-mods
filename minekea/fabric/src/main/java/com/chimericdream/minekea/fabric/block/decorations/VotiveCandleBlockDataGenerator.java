@@ -32,7 +32,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class VotiveCandleBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model VOTIVE_ITEM_MODEL = makeModel("block/candles/template_votive_item");
     protected static final Model ONE_VOTIVE_MODEL = makeModel("block/candles/template_votive_candle");
     protected static final Model ONE_VOTIVE_LIT_MODEL = makeModel("block/candles/template_votive_candle");

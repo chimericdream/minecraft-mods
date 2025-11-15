@@ -2,6 +2,7 @@ package com.chimericdream.minekea.fabric.block.containers;
 
 import com.chimericdream.minekea.block.containers.barrels.Barrels;
 import com.chimericdream.minekea.block.containers.crates.Crates;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
 import java.util.ArrayList;

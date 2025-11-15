@@ -11,7 +11,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.TextureMap;
 import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
@@ -21,7 +20,6 @@ import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -32,7 +30,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model CORE_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/framed_planks/core")),
         Optional.empty(),
@@ -68,10 +66,6 @@ public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGener
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
-    }
-
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
     }
 
     @Override
@@ -144,13 +138,5 @@ public class FramedPlanksBlockDataGenerator implements ChimericLibBlockDataGener
                         .register(Direction.EAST, false, false, true, true, abConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
                 )
             );
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-    }
-
-    @Override
-    public void generateTextures() {
     }
 }

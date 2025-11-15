@@ -25,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ShutterBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model CLOSED_MODEL = makeModel("block/furniture/shutters/closed");
     protected static final Model OPEN_MODEL = makeModel("block/furniture/shutters/open");
 

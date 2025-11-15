@@ -1,9 +1,12 @@
 package com.chimericdream.minekea.fabric.block.containers;
 
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -17,7 +20,7 @@ import java.util.function.Function;
 import static com.chimericdream.minekea.block.containers.ContainerBlocks.GLASS_JAR;
 import static com.chimericdream.minekea.block.containers.GlassJarBlock.ALLOWED_ITEMS;
 
-public class GlassJarBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class GlassJarBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
         FabricTagProvider<Item>.FabricTagBuilder builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);

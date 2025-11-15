@@ -22,7 +22,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.state.property.Properties;
 
-public class WarpedWartCropDataGenerator implements ChimericLibBlockDataGenerator {
+public class WarpedWartCropDataGenerator extends ChimericLibBlockDataGenerator {
     public static final Block BLOCK = ModCrops.WARPED_WART_PLANT_BLOCK.get();
 
     public void configureBlockLootTables(BlockLootTableGenerator generator) {

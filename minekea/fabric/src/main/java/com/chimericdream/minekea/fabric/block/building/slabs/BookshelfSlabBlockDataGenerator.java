@@ -9,14 +9,12 @@ import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.TextureMap;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -28,7 +26,7 @@ import java.util.function.Function;
 
 import static com.chimericdream.minekea.fabric.block.furniture.BookshelfBlockDataGenerator.BOOKSHELF_MODEL;
 
-public class BookshelfSlabBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model BOTTOM_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/bottom");
     protected static final Model TOP_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/top");
 
@@ -53,11 +51,6 @@ public class BookshelfSlabBlockDataGenerator implements ChimericLibBlockDataGene
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
-    }
-
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
     }
 
     @Override
@@ -96,15 +89,5 @@ public class BookshelfSlabBlockDataGenerator implements ChimericLibBlockDataGene
             TOP_BOOKSHELF_SLAB_MODEL,
             BOOKSHELF_MODEL
         );
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 }

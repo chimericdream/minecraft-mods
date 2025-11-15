@@ -7,7 +7,6 @@ import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
@@ -15,7 +14,6 @@ import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -24,7 +22,7 @@ import net.minecraft.registry.tag.TagKey;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class WallBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class WallBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public final WallBlock BLOCK;
 
     public WallBlockDataGenerator(Block block) {
@@ -42,12 +40,6 @@ public class WallBlockDataGenerator implements ChimericLibBlockDataGenerator {
             .setReplace(false)
             .add(BLOCK);
     }
-
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
-    }
-
 
     @Override
     public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
@@ -86,15 +78,5 @@ public class WallBlockDataGenerator implements ChimericLibBlockDataGenerator {
             Models.TEMPLATE_WALL_SIDE,
             Models.TEMPLATE_WALL_SIDE_TALL
         );
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 }

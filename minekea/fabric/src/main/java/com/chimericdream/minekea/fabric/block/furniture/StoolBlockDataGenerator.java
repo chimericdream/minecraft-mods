@@ -20,7 +20,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class StoolBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class StoolBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private final StoolBlock BLOCK;
 
     protected static final Model STOOL_MODEL = new Model(

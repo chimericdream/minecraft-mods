@@ -24,7 +24,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class TableBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class TableBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private final TableBlock BLOCK;
 
     protected static final Model CORE_MODEL = new Model(
@@ -271,7 +271,7 @@ public class TableBlockDataGenerator implements ChimericLibBlockDataGenerator {
             );
     }
 
-    public static class TableTooltipDataGenerator implements ChimericLibBlockDataGenerator {
+    public static class TableTooltipDataGenerator extends ChimericLibBlockDataGenerator {
         public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
             translationBuilder.add(TableBlock.TOOLTIP_KEY, "Simple design, but somehow LACKing...");
         }

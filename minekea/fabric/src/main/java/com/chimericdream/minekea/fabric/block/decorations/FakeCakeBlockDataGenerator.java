@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
-public class FakeCakeBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
         getBuilder.apply(CommonBlockTags.SHEARS_MINEABLE)
             .setReplace(false)

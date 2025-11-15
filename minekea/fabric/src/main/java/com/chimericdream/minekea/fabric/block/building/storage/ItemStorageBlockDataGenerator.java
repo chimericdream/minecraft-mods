@@ -41,7 +41,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public final ItemStorageBlock BLOCK;
 
     public ItemStorageBlockDataGenerator(Block block) {
@@ -180,11 +180,6 @@ public class ItemStorageBlockDataGenerator implements ChimericLibBlockDataGenera
                 }
             });
         }
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 
     protected void configureCustomBaggedBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

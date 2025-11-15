@@ -25,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class BookshelfTrapdoorBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model BOTTOM_MODEL = makeModel("block/furniture/trapdoors/bookshelves/bottom");
     protected static final Model TOP_MODEL = makeModel("block/furniture/trapdoors/bookshelves/top");
     protected static final Model OPEN_MODEL = makeModel("block/furniture/trapdoors/bookshelves/open");

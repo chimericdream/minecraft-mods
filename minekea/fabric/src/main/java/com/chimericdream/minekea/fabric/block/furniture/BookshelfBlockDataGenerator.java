@@ -25,7 +25,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class BookshelfBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public static final Model BOOKSHELF_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/bookshelf")),
         Optional.empty(),

@@ -19,7 +19,6 @@ import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -35,7 +34,7 @@ import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED
 import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED_UP;
 import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED_WEST;
 
-public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model CONNECTED_NORTH_MODEL = makeModel("north");
     protected static final Model CONNECTED_SOUTH_MODEL = makeModel("south");
     protected static final Model CONNECTED_EAST_MODEL = makeModel("east");
@@ -78,11 +77,6 @@ public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
-    }
-
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
     }
 
     @Override
@@ -158,10 +152,5 @@ public class BeamBlockDataGenerator implements ChimericLibBlockDataGenerator {
             getTextures(),
             itemModelGenerator.modelCollector
         );
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 }

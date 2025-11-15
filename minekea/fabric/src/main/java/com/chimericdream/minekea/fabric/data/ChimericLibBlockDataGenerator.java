@@ -14,20 +14,28 @@ import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Function;
 
-public interface ChimericLibBlockDataGenerator {
-    void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator);
+abstract public class ChimericLibBlockDataGenerator {
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    }
 
-    void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder);
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    }
 
-    void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder);
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+    }
 
-    void configureBlockLootTables(BlockLootTableGenerator generator);
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    }
 
-    void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator);
+    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    }
 
-    void configureItemModels(ItemModelGenerator itemModelGenerator);
+    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+    }
 
-    void generateTextures();
+    public void generateTextures() {
+    }
 
-    void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder);
+    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    }
 }

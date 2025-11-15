@@ -17,7 +17,7 @@ import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Function;
 
-public class LanternBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class LanternBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public LanternBlock BLOCK;
 
     public LanternBlockDataGenerator(Block block) {

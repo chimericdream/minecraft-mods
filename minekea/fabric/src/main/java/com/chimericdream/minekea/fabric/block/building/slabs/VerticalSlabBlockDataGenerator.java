@@ -8,7 +8,6 @@ import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Model;
 import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.data.TextureMap;
@@ -16,7 +15,6 @@ import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
@@ -25,7 +23,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public static final Model VERTICAL_SLAB_MODEL = new Model(
         Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/slabs/vertical")),
         Optional.empty(),
@@ -47,11 +45,6 @@ public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGener
     }
 
     @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-
-    }
-
-    @Override
     public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
@@ -68,7 +61,6 @@ public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGener
     @Override
     public void configureBlockLootTables(BlockLootTableGenerator generator) {
         generator.addDrop(BLOCK);
-//        generator.addDrop(this, generator.slabDrops(this));
     }
 
     @Override
@@ -88,15 +80,5 @@ public class VerticalSlabBlockDataGenerator implements ChimericLibBlockDataGener
             textures,
             VERTICAL_SLAB_MODEL
         );
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-
-    }
-
-    @Override
-    public void generateTextures() {
-
     }
 }

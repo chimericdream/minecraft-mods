@@ -7,12 +7,10 @@ import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -24,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class CompressedBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public CompressedBlock BLOCK;
 
     public CompressedBlockDataGenerator(Block block) {
@@ -79,14 +77,6 @@ public class CompressedBlockDataGenerator implements ChimericLibBlockDataGenerat
         });
     }
 
-    @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-    }
-
-    @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-    }
-
     protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, Identifier blockId) {
         if (source.isPresent()) {
             BufferedImage sourceImage = source.get();
@@ -109,35 +99,7 @@ public class CompressedBlockDataGenerator implements ChimericLibBlockDataGenerat
         addTextureOverlay(instance, source, blockId);
     }
 
-    public static class CompressedBlockTooltipDataGenerator implements ChimericLibBlockDataGenerator {
-        @Override
-        public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        }
-
-        @Override
-        public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
-        }
-
-        @Override
-        public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-        }
-
-        @Override
-        public void configureBlockLootTables(BlockLootTableGenerator generator) {
-        }
-
-        @Override
-        public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        }
-
-        @Override
-        public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-        }
-
-        @Override
-        public void generateTextures() {
-        }
-
+    public static class CompressedBlockTooltipDataGenerator extends ChimericLibBlockDataGenerator {
         @Override
         public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
             translationBuilder.add(CompressedBlock.TOOLTIP_LEVEL, "%dx Compressed");

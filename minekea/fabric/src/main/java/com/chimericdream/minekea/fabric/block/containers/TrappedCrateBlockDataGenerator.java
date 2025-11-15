@@ -6,9 +6,10 @@ import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -24,7 +25,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(RecipeExporter exporter, RecipeGenerator generator) {
         generator.createShapeless(RecipeCategory.REDSTONE, BLOCK, 1)
             .input(((TrappedCrateBlock) BLOCK).BASE_CRATE.get())
             .input(Items.TRIPWIRE_HOOK)

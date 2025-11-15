@@ -15,7 +15,7 @@ import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Function;
 
-public class PillowBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class PillowBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public PillowBlock BLOCK;
 
     public PillowBlockDataGenerator(Block block) {

@@ -8,7 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 
-public class EndlessRodBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class EndlessRodBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         generator.createShapeless(RecipeCategory.DECORATIONS, DecorationBlocks.ENDLESS_ROD.get(), 1)
             .input(Items.END_ROD)

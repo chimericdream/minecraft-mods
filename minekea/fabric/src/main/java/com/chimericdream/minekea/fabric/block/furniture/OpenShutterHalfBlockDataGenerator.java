@@ -21,7 +21,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class OpenShutterHalfBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class OpenShutterHalfBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final Model LEFT_HALF_MODEL = makeModel("block/furniture/shutters/left_half");
     protected static final Model RIGHT_HALF_MODEL = makeModel("block/furniture/shutters/right_half");
 

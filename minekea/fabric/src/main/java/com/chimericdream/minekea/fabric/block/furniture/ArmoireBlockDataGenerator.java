@@ -30,7 +30,7 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ArmoireBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected final ArmoireBlock BLOCK;
 
     protected static final Model BOTTOM_MODEL = makeModel("block/furniture/armoires/bottom");

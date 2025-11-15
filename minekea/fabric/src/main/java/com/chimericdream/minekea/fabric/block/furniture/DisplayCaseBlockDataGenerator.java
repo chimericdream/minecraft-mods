@@ -21,7 +21,7 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class DisplayCaseBlockDataGenerator implements ChimericLibBlockDataGenerator {
+public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private static final Model DISPLAY_CASE_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
         Optional.of(Identifier.of("minekea:block/furniture/display_case")),
