@@ -1,12 +1,13 @@
 package com.chimericdream.minekea.fabric.client;
 
+import com.chimericdream.minekea.client.MinekeaClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class MinekeaFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-//        MinekeaClient.initializeClientRegistries();
-//        MinekeaClient.onInitializeClient();
+        MinekeaClient.initializeClientRegistries();
+        MinekeaClient.onInitializeClient();
 
         initializeBlockRenderLayers();
         initializeKeybindings();

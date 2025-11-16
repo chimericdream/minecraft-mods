@@ -1,6 +1,5 @@
 package com.chimericdream.minekea.fabric.util;
 
-import com.chimericdream.lib.blocks.BlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
@@ -37,7 +36,7 @@ public interface BlockDataGeneratorGroup {
     }
 
     default void generateTextures() {
-        getBlockGenerators().forEach(BlockDataGenerator::generateTextures);
+        getBlockGenerators().forEach(ChimericLibBlockDataGenerator::generateTextures);
     }
 
     default void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {

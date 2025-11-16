@@ -19,9 +19,7 @@ import com.chimericdream.minekea.fabric.block.building.general.CrackedBasaltBric
 import com.chimericdream.minekea.fabric.block.building.general.CrimsonBasaltBricksDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.general.MossyBasaltBricksDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.general.WarpedBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.WarpedNetherBricksDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.general.WaxBlockDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.SlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalBookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalSlabBlockDataGenerator;
@@ -38,6 +36,9 @@ import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
+//import com.chimericdream.minekea.fabric.block.building.general.WarpedNetherBricksDataGenerator;
+
 public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
     protected static final List<ChimericLibBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         BLOCK_GENERATORS.add(new CrimsonBasaltBricksDataGenerator());
         BLOCK_GENERATORS.add(new MossyBasaltBricksDataGenerator());
         BLOCK_GENERATORS.add(new WarpedBasaltBricksDataGenerator());
-        BLOCK_GENERATORS.add(new WarpedNetherBricksDataGenerator());
+//        BLOCK_GENERATORS.add(new WarpedNetherBricksDataGenerator());
 
         BuildingBlocks.WAX_BLOCKS.values().forEach(block -> BLOCK_GENERATORS.add(new WaxBlockDataGenerator(block.get())));
         Beams.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BeamBlockDataGenerator(block.get())));
@@ -61,7 +62,7 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         FramedBlocks.FRAMED_PLANKS.forEach(block -> BLOCK_GENERATORS.add(new FramedPlanksBlockDataGenerator(block.get())));
         Slabs.SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new SlabBlockDataGenerator(block.get())));
         Slabs.VERTICAL_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalSlabBlockDataGenerator(block.get())));
-        Slabs.BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfSlabBlockDataGenerator(block.get())));
+//        Slabs.BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfSlabBlockDataGenerator(block.get())));
         Slabs.VERTICAL_BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalBookshelfSlabBlockDataGenerator(block.get())));
         Stairs.STAIRS_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new StairsBlockDataGenerator(block.get())));
         Stairs.VERTICAL_STAIRS_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalStairsBlockDataGenerator(block.get())));

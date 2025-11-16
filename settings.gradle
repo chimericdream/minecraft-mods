@@ -24,7 +24,7 @@ def projectList = [
     'hopper-xtreme',
     'houdini-block',
     'jdcrafte',
-//    'minekea',
+    'minekea',
     'miniblock-merchants',
     'pannotia-companion',
     'playgrounds',
