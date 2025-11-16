@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/basalt_brick/1x"
+            "items": "minekea:building/general/basalt_bricks"
           }
         ]
       },

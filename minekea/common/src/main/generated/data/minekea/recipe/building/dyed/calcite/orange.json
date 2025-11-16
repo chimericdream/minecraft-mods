@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:calcite"
-    },
-    "D": {
-      "item": "minecraft:orange_dye"
-    }
+    "#": "minecraft:calcite",
+    "D": "minecraft:orange_dye"
   },
   "pattern": [
     "###",

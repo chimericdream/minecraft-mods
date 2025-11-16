@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/dark_prismarine/8x"
-    }
+    "minekea:building/compressed/dark_prismarine/8x"
   ],
   "result": {
     "count": 9,

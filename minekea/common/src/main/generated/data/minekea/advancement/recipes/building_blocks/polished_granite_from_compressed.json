@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/polished_granite/1x"
+            "items": "minecraft:polished_granite"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:polished_granite_from_compressed"
+        "recipe": "minekea:polished_granite_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:polished_granite_from_compressed"
+      "minekea:polished_granite_from_compressed"
     ]
   }
 }

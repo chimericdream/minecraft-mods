@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/netherrack/8x"
-    }
+    "#": "minekea:building/compressed/netherrack/8x"
   },
   "pattern": [
     "###",

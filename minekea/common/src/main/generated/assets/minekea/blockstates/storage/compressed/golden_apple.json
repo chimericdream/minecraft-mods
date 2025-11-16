@@ -1,59 +1,29 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple",
-        "x": 90
-      },
-      "when": {
-        "facing": "north"
-      }
+  "variants": {
+    "facing=down": {
+      "model": "minekea:block/storage/compressed/golden_apple",
+      "x": 180
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple",
-        "x": 90,
-        "y": 90
-      },
-      "when": {
-        "facing": "east"
-      }
+    "facing=east": {
+      "model": "minekea:block/storage/compressed/golden_apple",
+      "x": 90,
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple",
-        "x": 270
-      },
-      "when": {
-        "facing": "south"
-      }
+    "facing=north": {
+      "model": "minekea:block/storage/compressed/golden_apple",
+      "x": 90
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple",
-        "x": 90,
-        "y": 270
-      },
-      "when": {
-        "facing": "west"
-      }
+    "facing=south": {
+      "model": "minekea:block/storage/compressed/golden_apple",
+      "x": 270
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple"
-      },
-      "when": {
-        "facing": "up"
-      }
+    "facing=up": {
+      "model": "minekea:block/storage/compressed/golden_apple"
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/golden_apple",
-        "x": 180
-      },
-      "when": {
-        "facing": "down"
-      }
+    "facing=west": {
+      "model": "minekea:block/storage/compressed/golden_apple",
+      "x": 90,
+      "y": 270
     }
-  ]
+  }
 }

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/magenta_terracotta/1x"
-    }
+    "minekea:building/compressed/magenta_terracotta/1x"
   ],
   "result": {
     "count": 9,

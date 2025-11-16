@@ -1,6 +1,0 @@
-{
-  "parent": "minekea:block/furniture/shelves/floating",
-  "textures": {
-    "planks": "minecraft:block/acacia_planks"
-  }
-}

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/slabs/vertical/smooth_quartz"
+          "name": "minekea:building/slabs/bookshelves/vertical/smooth_quartz"
         }
       ],
       "rolls": 1.0

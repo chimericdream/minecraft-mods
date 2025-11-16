@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:cobblestone"
-    },
-    "D": {
-      "item": "minecraft:light_gray_dye"
-    }
+    "#": "minecraft:cobblestone",
+    "D": "minecraft:light_gray_dye"
   },
   "pattern": [
     "###",

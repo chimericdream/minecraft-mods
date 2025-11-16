@@ -54,7 +54,11 @@ public class VerticalStairsBlock extends Block implements Waterloggable {
     public final BlockConfig config;
 
     public VerticalStairsBlock(BlockConfig config) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        this(config, makeId(config.getMaterial()));
+    }
+
+    public VerticalStairsBlock(BlockConfig config, Identifier id) {
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(id)));
 
         this.setDefaultState(
             this.stateManager.getDefaultState()
@@ -62,7 +66,7 @@ public class VerticalStairsBlock extends Block implements Waterloggable {
                 .with(WATERLOGGED, false)
         );
 
-        BLOCK_ID = makeId(config.getMaterial());
+        BLOCK_ID = id;
         this.config = config;
     }
 

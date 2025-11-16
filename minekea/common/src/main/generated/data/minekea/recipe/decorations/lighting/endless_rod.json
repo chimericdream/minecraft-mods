@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:end_rod"
-    }
+    "minecraft:end_rod"
   ],
   "result": {
     "count": 1,

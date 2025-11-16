@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minekea:building/general/wax/light_blue"
-    }
+    "minekea:building/general/wax/light_blue"
   ],
   "result": {
     "count": 9,

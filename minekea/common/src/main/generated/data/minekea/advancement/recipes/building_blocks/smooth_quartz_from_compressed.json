@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/quartz_block_bottom/1x"
+            "items": "minecraft:smooth_quartz"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:smooth_quartz_from_compressed"
+        "recipe": "minekea:smooth_quartz_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:smooth_quartz_from_compressed"
+      "minekea:smooth_quartz_from_compressed"
     ]
   }
 }

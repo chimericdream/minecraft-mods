@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:totem_of_undying"
-    }
+    "#": "minecraft:totem_of_undying"
   },
   "pattern": [
     "###",

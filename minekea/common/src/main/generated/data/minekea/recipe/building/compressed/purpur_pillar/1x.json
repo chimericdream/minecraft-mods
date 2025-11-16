@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:purpur_pillar"
-    }
+    "#": "minecraft:purpur_pillar"
   },
   "pattern": [
     "###",

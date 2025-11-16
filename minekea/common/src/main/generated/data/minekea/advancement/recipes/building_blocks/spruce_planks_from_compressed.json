@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/spruce_planks/1x"
+            "items": "minecraft:spruce_planks"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:spruce_planks_from_compressed"
+        "recipe": "minekea:spruce_planks_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:spruce_planks_from_compressed"
+      "minekea:spruce_planks_from_compressed"
     ]
   }
 }

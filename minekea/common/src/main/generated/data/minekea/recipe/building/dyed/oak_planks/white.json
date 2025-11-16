@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:oak_planks"
-    },
-    "D": {
-      "item": "minecraft:white_dye"
-    }
+    "#": "minecraft:oak_planks",
+    "D": "minecraft:white_dye"
   },
   "pattern": [
     "###",

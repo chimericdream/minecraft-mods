@@ -24,7 +24,7 @@
 //import java.util.Optional;
 //import java.util.function.Function;
 //
-//import static com.chimericdream.minekea.fabric.block.furniture.BookshelfBlockDataGenerator.BOOKSHELF_MODEL;
+/// /import static com.chimericdream.minekea.fabric.block.furniture.BookshelfBlockDataGenerator.BOOKSHELF_MODEL;
 //
 //public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
 //    protected static final Model BOTTOM_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/bottom");

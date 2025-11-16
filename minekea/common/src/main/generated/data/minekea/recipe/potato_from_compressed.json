@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/potato"
-    }
+    "minekea:storage/compressed/potato"
   ],
   "result": {
     "count": 9,

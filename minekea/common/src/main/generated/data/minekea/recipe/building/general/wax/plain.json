@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minekea:ingredients/wax/plain"
-    }
+    "#": "minekea:ingredients/wax/plain"
   },
   "pattern": [
     "###",

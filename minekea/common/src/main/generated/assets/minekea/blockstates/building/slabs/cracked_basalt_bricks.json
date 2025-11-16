@@ -1,28 +1,13 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/building/slabs/cracked_basalt_bricks"
-      },
-      "when": {
-        "type": "bottom"
-      }
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/cracked_basalt_bricks"
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/slabs/cracked_basalt_bricks_top_top"
-      },
-      "when": {
-        "type": "top"
-      }
+    "type=double": {
+      "model": "minekea:block/building/slabs/cracked_basalt_bricks_double"
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/slabs/cracked_basalt_bricks_double"
-      },
-      "when": {
-        "type": "double"
-      }
+    "type=top": {
+      "model": "minekea:block/building/slabs/cracked_basalt_bricks_top_top"
     }
-  ]
+  }
 }

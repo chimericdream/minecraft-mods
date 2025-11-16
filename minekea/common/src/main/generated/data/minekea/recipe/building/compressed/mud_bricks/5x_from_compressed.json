@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/mud_bricks/6x"
-    }
+    "minekea:building/compressed/mud_bricks/6x"
   ],
   "result": {
     "count": 9,

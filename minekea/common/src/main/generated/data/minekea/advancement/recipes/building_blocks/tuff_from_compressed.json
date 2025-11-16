@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/tuff/1x"
+            "items": "minecraft:tuff"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:tuff_from_compressed"
+        "recipe": "minekea:tuff_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:tuff_from_compressed"
+      "minekea:tuff_from_compressed"
     ]
   }
 }

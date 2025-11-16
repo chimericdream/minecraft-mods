@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/set_of_eggs"
-    }
+    "minekea:storage/set_of_eggs"
   ],
   "result": {
     "count": 9,

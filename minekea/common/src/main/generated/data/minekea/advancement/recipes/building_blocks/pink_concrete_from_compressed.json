@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/pink_concrete/1x"
+            "items": "minecraft:pink_concrete"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:pink_concrete_from_compressed"
+        "recipe": "minekea:pink_concrete_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:pink_concrete_from_compressed"
+      "minekea:pink_concrete_from_compressed"
     ]
   }
 }

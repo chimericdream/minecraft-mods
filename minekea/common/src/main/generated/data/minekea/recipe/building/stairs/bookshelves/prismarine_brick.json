@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/prismarine_brick"
-    }
+    "#": "minekea:furniture/bookshelves/prismarine_brick"
   },
   "pattern": [
     "#  ",

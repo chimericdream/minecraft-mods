@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/ender_pearl"
-    }
+    "minekea:storage/compressed/ender_pearl"
   ],
   "result": {
     "count": 9,

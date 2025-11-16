@@ -1,8 +1,0 @@
-{
-  "parent": "minekea:block/candles/template_votive_item",
-  "render_type": "minecraft:translucent",
-  "textures": {
-    "candle": "minecraft:block/yellow_candle",
-    "side": "minecraft:block/glass"
-  }
-}

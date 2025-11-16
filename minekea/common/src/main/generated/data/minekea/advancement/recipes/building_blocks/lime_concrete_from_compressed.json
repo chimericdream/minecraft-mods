@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/lime_concrete/1x"
+            "items": "minecraft:lime_concrete"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:lime_concrete_from_compressed"
+        "recipe": "minekea:lime_concrete_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:lime_concrete_from_compressed"
+      "minekea:lime_concrete_from_compressed"
     ]
   }
 }

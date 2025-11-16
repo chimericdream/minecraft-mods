@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/smooth_basalt/7x"
-    }
+    "minekea:building/compressed/smooth_basalt/7x"
   ],
   "result": {
     "count": 9,

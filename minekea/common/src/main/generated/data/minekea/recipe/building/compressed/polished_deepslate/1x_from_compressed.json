@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/polished_deepslate/2x"
-    }
+    "minekea:building/compressed/polished_deepslate/2x"
   ],
   "result": {
     "count": 9,

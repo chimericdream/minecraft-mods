@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minekea:decorations/lighting/endless_rod"
-    }
+    "minekea:decorations/lighting/endless_rod"
   ],
   "result": {
     "count": 1,

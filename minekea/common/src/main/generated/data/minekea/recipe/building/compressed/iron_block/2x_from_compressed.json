@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/iron_block/3x"
-    }
+    "minekea:building/compressed/iron_block/3x"
   ],
   "result": {
     "count": 9,

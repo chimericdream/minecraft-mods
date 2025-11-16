@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/jungle_log/3x"
-    }
+    "#": "minekea:building/compressed/jungle_log/3x"
   },
   "pattern": [
     "###",

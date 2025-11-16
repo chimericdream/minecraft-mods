@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/phantom_membrane"
-    }
+    "minekea:storage/compressed/phantom_membrane"
   ],
   "result": {
     "count": 9,

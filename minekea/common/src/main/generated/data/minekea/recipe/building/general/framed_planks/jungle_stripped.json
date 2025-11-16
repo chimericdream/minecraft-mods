@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:jungle_planks"
-    },
-    {
-      "item": "minecraft:jungle_planks"
-    },
-    {
-      "item": "minecraft:jungle_planks"
-    },
-    {
-      "item": "minecraft:jungle_planks"
-    },
-    {
-      "item": "minecraft:stripped_jungle_log"
-    }
+    "minecraft:jungle_planks",
+    "minecraft:jungle_planks",
+    "minecraft:jungle_planks",
+    "minecraft:jungle_planks",
+    "minecraft:stripped_jungle_log"
   ],
   "result": {
     "count": 6,

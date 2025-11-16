@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:spruce_planks"
-    },
-    {
-      "item": "minecraft:spruce_planks"
-    },
-    {
-      "item": "minecraft:spruce_planks"
-    },
-    {
-      "item": "minecraft:spruce_planks"
-    },
-    {
-      "item": "minecraft:spruce_log"
-    }
+    "minecraft:spruce_planks",
+    "minecraft:spruce_planks",
+    "minecraft:spruce_planks",
+    "minecraft:spruce_planks",
+    "minecraft:spruce_log"
   ],
   "result": {
     "count": 6,

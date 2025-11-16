@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/nether_star"
-    }
+    "minekea:storage/compressed/nether_star"
   ],
   "result": {
     "count": 9,

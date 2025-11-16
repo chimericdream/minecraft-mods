@@ -1,20 +1,10 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/potato_bagged"
-      },
-      "when": {
-        "is_bagged": "true"
-      }
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/potato"
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/potato"
-      },
-      "when": {
-        "is_bagged": "false"
-      }
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/potato_bagged"
     }
-  ]
+  }
 }

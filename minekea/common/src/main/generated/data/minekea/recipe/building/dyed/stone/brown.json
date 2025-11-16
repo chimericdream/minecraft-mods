@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:stone"
-    },
-    "D": {
-      "item": "minecraft:brown_dye"
-    }
+    "#": "minecraft:stone",
+    "D": "minecraft:brown_dye"
   },
   "pattern": [
     "###",

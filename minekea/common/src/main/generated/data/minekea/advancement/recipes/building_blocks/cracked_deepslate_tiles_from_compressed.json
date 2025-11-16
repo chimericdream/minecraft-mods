@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/cracked_deepslate_tiles/1x"
+            "items": "minecraft:cracked_deepslate_tiles"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cracked_deepslate_tiles_from_compressed"
+        "recipe": "minekea:cracked_deepslate_tiles_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cracked_deepslate_tiles_from_compressed"
+      "minekea:cracked_deepslate_tiles_from_compressed"
     ]
   }
 }

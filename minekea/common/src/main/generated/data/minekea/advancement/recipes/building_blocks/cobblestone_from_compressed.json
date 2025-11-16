@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/cobblestone/1x"
+            "items": "minecraft:cobblestone"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cobblestone_from_compressed"
+        "recipe": "minekea:cobblestone_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cobblestone_from_compressed"
+      "minekea:cobblestone_from_compressed"
     ]
   }
 }

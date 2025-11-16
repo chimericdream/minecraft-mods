@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/jungle"
-    }
+    "#": "minekea:furniture/bookshelves/jungle"
   },
   "pattern": [
     "#  ",

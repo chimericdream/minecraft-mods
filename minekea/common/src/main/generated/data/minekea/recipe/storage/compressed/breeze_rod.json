@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:breeze_rod"
-    }
+    "#": "minecraft:breeze_rod"
   },
   "pattern": [
     "###",

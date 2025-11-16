@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/gray_concrete/1x"
+            "items": "minecraft:gray_concrete"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gray_concrete_from_compressed"
+        "recipe": "minekea:gray_concrete_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gray_concrete_from_compressed"
+      "minekea:gray_concrete_from_compressed"
     ]
   }
 }

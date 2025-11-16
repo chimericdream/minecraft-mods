@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/diamond_block/9x"
-    }
+    "minekea:building/compressed/diamond_block/9x"
   ],
   "result": {
     "count": 9,

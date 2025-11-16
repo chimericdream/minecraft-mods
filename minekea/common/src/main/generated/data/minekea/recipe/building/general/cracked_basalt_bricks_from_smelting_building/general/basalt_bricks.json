@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "minekea",
-  "ingredient": {
-    "item": "minekea:building/general/basalt_bricks"
-  },
+  "ingredient": "minekea:building/general/basalt_bricks",
   "result": {
     "id": "minekea:building/general/cracked_basalt_bricks"
   }

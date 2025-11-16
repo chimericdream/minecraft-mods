@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/warped_nether_brick/1x"
+            "items": "minekea:building/general/warped_nether_bricks"
           }
         ]
       },

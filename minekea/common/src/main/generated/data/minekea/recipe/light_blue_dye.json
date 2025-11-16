@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/dyes/light_blue"
-    }
+    "minekea:storage/dyes/light_blue"
   ],
   "result": {
     "count": 9,

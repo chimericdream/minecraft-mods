@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:furniture/pillows/yellow"
-    }
+    "minekea:furniture/pillows/yellow"
   ],
   "result": {
     "count": 4,

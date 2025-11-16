@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:crimson_planks"
-    },
-    {
-      "item": "minecraft:crimson_planks"
-    },
-    {
-      "item": "minecraft:crimson_planks"
-    },
-    {
-      "item": "minecraft:crimson_planks"
-    },
-    {
-      "item": "minecraft:stripped_crimson_stem"
-    }
+    "minecraft:crimson_planks",
+    "minecraft:crimson_planks",
+    "minecraft:crimson_planks",
+    "minecraft:crimson_planks",
+    "minecraft:stripped_crimson_stem"
   ],
   "result": {
     "count": 6,

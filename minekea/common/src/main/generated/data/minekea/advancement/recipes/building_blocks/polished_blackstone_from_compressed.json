@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/polished_blackstone/1x"
+            "items": "minecraft:polished_blackstone"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:polished_blackstone_from_compressed"
+        "recipe": "minekea:polished_blackstone_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:polished_blackstone_from_compressed"
+      "minekea:polished_blackstone_from_compressed"
     ]
   }
 }

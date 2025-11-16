@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/quartz_brick"
-    }
+    "#": "minekea:furniture/bookshelves/quartz_brick"
   },
   "pattern": [
     "###",

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/general/basalt_bricks"
-    },
-    {
-      "item": "minecraft:weeping_vines"
-    }
+    "minekea:building/general/basalt_bricks",
+    "minecraft:weeping_vines"
   ],
   "result": {
     "count": 1,

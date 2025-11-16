@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:warped_planks"
-    },
-    {
-      "item": "minecraft:warped_planks"
-    },
-    {
-      "item": "minecraft:warped_planks"
-    },
-    {
-      "item": "minecraft:warped_planks"
-    },
-    {
-      "item": "minecraft:stripped_warped_stem"
-    }
+    "minecraft:warped_planks",
+    "minecraft:warped_planks",
+    "minecraft:warped_planks",
+    "minecraft:warped_planks",
+    "minecraft:stripped_warped_stem"
   ],
   "result": {
     "count": 6,

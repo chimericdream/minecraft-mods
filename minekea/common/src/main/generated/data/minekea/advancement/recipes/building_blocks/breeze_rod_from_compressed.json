@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:breeze_rod_from_compressed"
+        "recipe": "minekea:breeze_rod_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:breeze_rod_from_compressed"
+      "minekea:breeze_rod_from_compressed"
     ]
   }
 }

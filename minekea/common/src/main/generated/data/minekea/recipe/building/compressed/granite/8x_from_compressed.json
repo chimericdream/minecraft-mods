@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/granite/9x"
-    }
+    "minekea:building/compressed/granite/9x"
   ],
   "result": {
     "count": 9,

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minekea:building/general/wax/lime"
-    }
+    "minekea:building/general/wax/lime"
   ],
   "result": {
     "count": 9,

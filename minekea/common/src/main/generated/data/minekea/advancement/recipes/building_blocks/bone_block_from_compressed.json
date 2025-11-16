@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/bone_block/1x"
+            "items": "minecraft:bone_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:bone_block_from_compressed"
+        "recipe": "minekea:bone_block_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:bone_block_from_compressed"
+      "minekea:bone_block_from_compressed"
     ]
   }
 }

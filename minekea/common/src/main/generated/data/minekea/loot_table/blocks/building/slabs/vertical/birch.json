@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/slabs/vertical/birch"
+          "name": "minekea:building/slabs/bookshelves/vertical/birch"
         }
       ],
       "rolls": 1.0

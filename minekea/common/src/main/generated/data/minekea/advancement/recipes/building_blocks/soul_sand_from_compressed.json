@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/soul_sand/1x"
+            "items": "minecraft:soul_sand"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:soul_sand_from_compressed"
+        "recipe": "minekea:soul_sand_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:soul_sand_from_compressed"
+      "minekea:soul_sand_from_compressed"
     ]
   }
 }

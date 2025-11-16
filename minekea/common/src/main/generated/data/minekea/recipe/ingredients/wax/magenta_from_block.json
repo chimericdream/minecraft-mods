@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minekea:building/general/wax/magenta"
-    }
+    "minekea:building/general/wax/magenta"
   ],
   "result": {
     "count": 9,

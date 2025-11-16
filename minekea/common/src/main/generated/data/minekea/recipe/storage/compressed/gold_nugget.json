@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:currency/gold_nugget_bag"
-    }
+    "#": "minekea:currency/gold_nugget_bag"
   },
   "pattern": [
     "###",

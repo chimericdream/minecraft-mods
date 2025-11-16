@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/blackstone/4x"
-    }
+    "minekea:building/compressed/blackstone/4x"
   ],
   "result": {
     "count": 9,

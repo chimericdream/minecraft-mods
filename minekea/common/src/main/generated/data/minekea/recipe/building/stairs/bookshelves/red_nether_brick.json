@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/red_nether_brick"
-    }
+    "#": "minekea:furniture/bookshelves/red_nether_brick"
   },
   "pattern": [
     "#  ",

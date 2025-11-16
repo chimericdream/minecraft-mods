@@ -1,7 +1,0 @@
-{
-  "parent": "minekea:block/furniture/shutters/left_half",
-  "textures": {
-    "frame": "minecraft:block/stripped_acacia_log",
-    "panel": "minecraft:block/acacia_planks"
-  }
-}

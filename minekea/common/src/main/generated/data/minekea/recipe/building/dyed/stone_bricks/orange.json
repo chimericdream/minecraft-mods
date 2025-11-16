@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:stone_bricks"
-    },
-    "D": {
-      "item": "minecraft:orange_dye"
-    }
+    "#": "minecraft:stone_bricks",
+    "D": "minecraft:orange_dye"
   },
   "pattern": [
     "###",

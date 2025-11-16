@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/polished_deepslate/6x"
-    }
+    "#": "minekea:building/compressed/polished_deepslate/6x"
   },
   "pattern": [
     "###",

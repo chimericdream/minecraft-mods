@@ -1,8 +1,0 @@
-{
-  "parent": "minekea:block/furniture/display_case",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "material": "minecraft:block/stripped_spruce_log",
-    "stripped_material": "minecraft:block/stripped_spruce_log"
-  }
-}

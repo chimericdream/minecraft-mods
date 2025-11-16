@@ -1,7 +1,0 @@
-{
-  "parent": "minekea:block/furniture/shutters/closed",
-  "textures": {
-    "frame": "minecraft:block/crimson_stem",
-    "panel": "minecraft:block/crimson_planks"
-  }
-}

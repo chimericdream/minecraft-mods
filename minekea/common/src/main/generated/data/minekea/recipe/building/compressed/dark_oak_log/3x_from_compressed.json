@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/dark_oak_log/4x"
-    }
+    "minekea:building/compressed/dark_oak_log/4x"
   ],
   "result": {
     "count": 9,

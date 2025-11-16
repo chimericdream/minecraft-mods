@@ -1,20 +1,10 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/beetroot_bagged"
-      },
-      "when": {
-        "is_bagged": "true"
-      }
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/beetroot"
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/beetroot"
-      },
-      "when": {
-        "is_bagged": "false"
-      }
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/beetroot_bagged"
     }
-  ]
+  }
 }

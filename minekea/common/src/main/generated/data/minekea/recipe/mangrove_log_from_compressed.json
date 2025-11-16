@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/mangrove_log/1x"
-    }
+    "minekea:building/compressed/mangrove_log/1x"
   ],
   "result": {
     "count": 9,

@@ -1,39 +1,19 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/building/covers/polished_andesite"
-      },
-      "when": {
-        "facing": "north"
-      }
+  "variants": {
+    "facing=east": {
+      "model": "minekea:block/building/covers/polished_andesite",
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/covers/polished_andesite",
-        "y": 90
-      },
-      "when": {
-        "facing": "east"
-      }
+    "facing=north": {
+      "model": "minekea:block/building/covers/polished_andesite"
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/covers/polished_andesite",
-        "y": 180
-      },
-      "when": {
-        "facing": "south"
-      }
+    "facing=south": {
+      "model": "minekea:block/building/covers/polished_andesite",
+      "y": 180
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/covers/polished_andesite",
-        "y": 270
-      },
-      "when": {
-        "facing": "west"
-      }
+    "facing=west": {
+      "model": "minekea:block/building/covers/polished_andesite",
+      "y": 270
     }
-  ]
+  }
 }

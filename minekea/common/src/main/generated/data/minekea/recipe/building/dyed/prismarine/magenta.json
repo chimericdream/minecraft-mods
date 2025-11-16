@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:prismarine"
-    },
-    "D": {
-      "item": "minecraft:magenta_dye"
-    }
+    "#": "minecraft:prismarine",
+    "D": "minecraft:magenta_dye"
   },
   "pattern": [
     "###",

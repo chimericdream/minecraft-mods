@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/stone_bricks/1x"
+            "items": "minecraft:stone_bricks"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:stone_bricks_from_compressed"
+        "recipe": "minekea:stone_bricks_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:stone_bricks_from_compressed"
+      "minekea:stone_bricks_from_compressed"
     ]
   }
 }

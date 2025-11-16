@@ -41,7 +41,11 @@ public class VerticalSlabBlock extends Block implements Waterloggable {
     }
 
     public VerticalSlabBlock(BlockConfig config) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        this(config, makeId(config.getMaterial()));
+    }
+
+    public VerticalSlabBlock(BlockConfig config, Identifier id) {
+        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(id)));
 
         this.setDefaultState(
             this.stateManager.getDefaultState()
@@ -49,7 +53,7 @@ public class VerticalSlabBlock extends Block implements Waterloggable {
                 .with(WATERLOGGED, false)
         );
 
-        BLOCK_ID = makeId(config.getMaterial());
+        BLOCK_ID = id;
         this.config = config;
     }
 

@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:cherry_planks"
-    },
-    {
-      "item": "minecraft:cherry_planks"
-    },
-    {
-      "item": "minecraft:cherry_planks"
-    },
-    {
-      "item": "minecraft:cherry_planks"
-    },
-    {
-      "item": "minecraft:stripped_cherry_log"
-    }
+    "minecraft:cherry_planks",
+    "minecraft:cherry_planks",
+    "minecraft:cherry_planks",
+    "minecraft:cherry_planks",
+    "minecraft:stripped_cherry_log"
   ],
   "result": {
     "count": 6,

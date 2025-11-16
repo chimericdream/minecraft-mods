@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:prismarine_bricks"
-    },
-    "D": {
-      "item": "minecraft:cyan_dye"
-    }
+    "#": "minecraft:prismarine_bricks",
+    "D": "minecraft:cyan_dye"
   },
   "pattern": [
     "###",

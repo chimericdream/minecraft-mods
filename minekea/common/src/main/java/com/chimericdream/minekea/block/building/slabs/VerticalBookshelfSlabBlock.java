@@ -9,7 +9,7 @@ public class VerticalBookshelfSlabBlock extends VerticalSlabBlock {
     public final Identifier BASE_BLOCK_ID;
 
     public VerticalBookshelfSlabBlock(BlockConfig config) {
-        super(config);
+        super(config, makeId(config.getMaterial()));
 
         BLOCK_ID = makeId(config.getMaterial());
         BASE_BLOCK_ID = BookshelfBlock.makeId(config.getMaterial());

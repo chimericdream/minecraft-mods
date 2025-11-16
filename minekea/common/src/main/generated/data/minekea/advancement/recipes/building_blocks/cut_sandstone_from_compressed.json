@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/cut_sandstone/1x"
+            "items": "minecraft:cut_sandstone"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cut_sandstone_from_compressed"
+        "recipe": "minekea:cut_sandstone_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cut_sandstone_from_compressed"
+      "minekea:cut_sandstone_from_compressed"
     ]
   }
 }

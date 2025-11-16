@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/paper"
-    }
+    "minekea:storage/compressed/paper"
   ],
   "result": {
     "count": 9,

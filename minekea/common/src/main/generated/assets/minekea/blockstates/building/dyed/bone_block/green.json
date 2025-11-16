@@ -1,31 +1,16 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/building/dyed/bone_block/green",
-        "x": 90,
-        "y": 90
-      },
-      "when": {
-        "axis": "x"
-      }
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/building/dyed/bone_block/green",
+      "x": 90,
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/dyed/bone_block/green"
-      },
-      "when": {
-        "axis": "y"
-      }
+    "axis=y": {
+      "model": "minekea:block/building/dyed/bone_block/green"
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/dyed/bone_block/green",
-        "x": 90
-      },
-      "when": {
-        "axis": "z"
-      }
+    "axis=z": {
+      "model": "minekea:block/building/dyed/bone_block/green",
+      "x": 90
     }
-  ]
+  }
 }

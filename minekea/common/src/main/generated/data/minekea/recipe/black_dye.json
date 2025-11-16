@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/dyes/black"
-    }
+    "minekea:storage/dyes/black"
   ],
   "result": {
     "count": 9,

@@ -28,7 +28,7 @@ def projectList = [
     'miniblock-merchants',
     'pannotia-companion',
     'playgrounds',
-//    'shulker-stuff',
+    'shulker-stuff',
     'sponj',
     'villager-tweaks'
 ]

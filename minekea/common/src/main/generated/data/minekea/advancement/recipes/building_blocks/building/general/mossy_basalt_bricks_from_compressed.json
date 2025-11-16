@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/mossy_basalt_brick/1x"
+            "items": "minekea:building/general/mossy_basalt_bricks"
           }
         ]
       },

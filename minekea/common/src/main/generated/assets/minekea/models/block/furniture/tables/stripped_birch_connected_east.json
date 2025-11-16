@@ -1,7 +1,0 @@
-{
-  "parent": "minekea:block/furniture/tables/table_east_connected",
-  "textures": {
-    "log": "minecraft:block/stripped_birch_log",
-    "planks": "minecraft:block/birch_planks"
-  }
-}

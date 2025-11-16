@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/cyan_concrete/1x"
+            "items": "minecraft:cyan_concrete"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cyan_concrete_from_compressed"
+        "recipe": "minekea:cyan_concrete_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cyan_concrete_from_compressed"
+      "minekea:cyan_concrete_from_compressed"
     ]
   }
 }

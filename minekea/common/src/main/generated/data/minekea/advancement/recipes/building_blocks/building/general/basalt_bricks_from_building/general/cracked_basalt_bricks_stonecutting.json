@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:building/general/basalt_bricks_from_building/general/cracked_basalt_bricks_stonecutting"
+        "recipe": "minekea:building/general/basalt_bricks_from_building/general/cracked_basalt_bricks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:building/general/basalt_bricks_from_building/general/cracked_basalt_bricks_stonecutting"
+      "minekea:building/general/basalt_bricks_from_building/general/cracked_basalt_bricks_stonecutting"
     ]
   }
 }

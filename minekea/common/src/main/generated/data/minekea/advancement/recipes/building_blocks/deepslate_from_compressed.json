@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/deepslate/1x"
+            "items": "minecraft:deepslate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:deepslate_from_compressed"
+        "recipe": "minekea:deepslate_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:deepslate_from_compressed"
+      "minekea:deepslate_from_compressed"
     ]
   }
 }

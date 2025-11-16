@@ -1,7 +1,0 @@
-{
-  "parent": "minekea:block/furniture/table",
-  "textures": {
-    "log": "minecraft:block/stripped_jungle_log",
-    "planks": "minecraft:block/jungle_planks"
-  }
-}

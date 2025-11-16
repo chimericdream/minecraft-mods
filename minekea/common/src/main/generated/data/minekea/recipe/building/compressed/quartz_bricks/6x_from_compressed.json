@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/quartz_bricks/7x"
-    }
+    "minekea:building/compressed/quartz_bricks/7x"
   ],
   "result": {
     "count": 9,

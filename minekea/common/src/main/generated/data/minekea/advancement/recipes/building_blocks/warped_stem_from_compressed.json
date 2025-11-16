@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/warped_stem/1x"
+            "items": "minecraft:warped_stem"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:warped_stem_from_compressed"
+        "recipe": "minekea:warped_stem_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:warped_stem_from_compressed"
+      "minekea:warped_stem_from_compressed"
     ]
   }
 }

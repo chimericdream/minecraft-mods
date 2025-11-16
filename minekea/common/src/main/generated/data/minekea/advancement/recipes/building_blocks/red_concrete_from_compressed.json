@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/red_concrete/1x"
+            "items": "minecraft:red_concrete"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:red_concrete_from_compressed"
+        "recipe": "minekea:red_concrete_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:red_concrete_from_compressed"
+      "minekea:red_concrete_from_compressed"
     ]
   }
 }

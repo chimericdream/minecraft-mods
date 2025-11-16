@@ -1,31 +1,16 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/building/compressed/warped_stem/6x",
-        "x": 90,
-        "y": 90
-      },
-      "when": {
-        "axis": "x"
-      }
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/building/compressed/warped_stem/6x",
+      "x": 90,
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/compressed/warped_stem/6x"
-      },
-      "when": {
-        "axis": "y"
-      }
+    "axis=y": {
+      "model": "minekea:block/building/compressed/warped_stem/6x"
     },
-    {
-      "apply": {
-        "model": "minekea:block/building/compressed/warped_stem/6x",
-        "x": 90
-      },
-      "when": {
-        "axis": "z"
-      }
+    "axis=z": {
+      "model": "minekea:block/building/compressed/warped_stem/6x",
+      "x": 90
     }
-  ]
+  }
 }

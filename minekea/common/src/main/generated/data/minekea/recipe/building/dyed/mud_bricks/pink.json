@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:mud_bricks"
-    },
-    "D": {
-      "item": "minecraft:pink_dye"
-    }
+    "#": "minecraft:mud_bricks",
+    "D": "minecraft:pink_dye"
   },
   "pattern": [
     "###",

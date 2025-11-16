@@ -1,20 +1,10 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/carrot_bagged"
-      },
-      "when": {
-        "is_bagged": "true"
-      }
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/carrot"
     },
-    {
-      "apply": {
-        "model": "minekea:block/storage/compressed/carrot"
-      },
-      "when": {
-        "is_bagged": "false"
-      }
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/carrot_bagged"
     }
-  ]
+  }
 }

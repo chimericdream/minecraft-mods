@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/mangrove_planks/1x"
+            "items": "minecraft:mangrove_planks"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:mangrove_planks_from_compressed"
+        "recipe": "minekea:mangrove_planks_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:mangrove_planks_from_compressed"
+      "minekea:mangrove_planks_from_compressed"
     ]
   }
 }

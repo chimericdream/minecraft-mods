@@ -1,3 +1,6 @@
 {
-  "parent": "minekea:block/decorations/lighting/doom_lantern"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minekea:item/decorations/lighting/doom_lantern"
+  }
 }

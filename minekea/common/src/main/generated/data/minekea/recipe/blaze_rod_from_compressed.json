@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:storage/compressed/blaze_rod"
-    }
+    "minekea:storage/compressed/blaze_rod"
   ],
   "result": {
     "count": 9,

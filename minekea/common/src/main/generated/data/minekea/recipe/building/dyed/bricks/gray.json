@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:bricks"
-    },
-    "D": {
-      "item": "minecraft:gray_dye"
-    }
+    "#": "minecraft:bricks",
+    "D": "minecraft:gray_dye"
   },
   "pattern": [
     "###",

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/green_terracotta/3x"
-    }
+    "#": "minekea:building/compressed/green_terracotta/3x"
   },
   "pattern": [
     "###",

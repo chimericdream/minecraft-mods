@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/dark_oak"
-    }
+    "#": "minekea:furniture/bookshelves/dark_oak"
   },
   "pattern": [
     "#  ",

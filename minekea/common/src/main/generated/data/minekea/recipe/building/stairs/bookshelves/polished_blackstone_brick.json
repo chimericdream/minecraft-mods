@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/polished_blackstone_brick"
-    }
+    "#": "minekea:furniture/bookshelves/polished_blackstone_brick"
   },
   "pattern": [
     "#  ",

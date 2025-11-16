@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/brown_glazed_terracotta/1x"
+            "items": "minecraft:brown_glazed_terracotta"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:brown_glazed_terracotta_from_compressed"
+        "recipe": "minekea:brown_glazed_terracotta_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:brown_glazed_terracotta_from_compressed"
+      "minekea:brown_glazed_terracotta_from_compressed"
     ]
   }
 }

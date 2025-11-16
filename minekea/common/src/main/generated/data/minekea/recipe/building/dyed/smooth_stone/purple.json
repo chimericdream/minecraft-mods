@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minecraft:smooth_stone"
-    },
-    "D": {
-      "item": "minecraft:purple_dye"
-    }
+    "#": "minecraft:smooth_stone",
+    "D": "minecraft:purple_dye"
   },
   "pattern": [
     "###",

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/stairs/vertical/polished_granite"
+          "name": "minekea:building/stairs/bookshelves/vertical/polished_granite"
         }
       ],
       "rolls": 1.0

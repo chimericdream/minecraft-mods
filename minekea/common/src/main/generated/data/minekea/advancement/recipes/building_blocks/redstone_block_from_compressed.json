@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/redstone_block/1x"
+            "items": "minecraft:redstone_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:redstone_block_from_compressed"
+        "recipe": "minekea:redstone_block_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:redstone_block_from_compressed"
+      "minekea:redstone_block_from_compressed"
     ]
   }
 }

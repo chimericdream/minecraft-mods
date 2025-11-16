@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/mud_bricks/4x"
-    }
+    "#": "minekea:building/compressed/mud_bricks/4x"
   },
   "pattern": [
     "###",

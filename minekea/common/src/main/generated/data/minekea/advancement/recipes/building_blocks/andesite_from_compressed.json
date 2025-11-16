@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/andesite/1x"
+            "items": "minecraft:andesite"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:andesite_from_compressed"
+        "recipe": "minekea:andesite_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:andesite_from_compressed"
+      "minekea:andesite_from_compressed"
     ]
   }
 }

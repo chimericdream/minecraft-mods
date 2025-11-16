@@ -4,25 +4,22 @@
 //import com.chimericdream.lib.colors.ColorHelpers;
 //import com.chimericdream.minekea.ModInfo;
 //import com.chimericdream.minekea.block.decorations.candles.VotiveCandleBlock;
+//import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 //import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 //import com.chimericdream.minekea.tag.MinekeaItemTags;
 //import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-//import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 //import net.minecraft.block.Block;
 //import net.minecraft.block.Blocks;
-//import net.minecraft.data.client.BlockStateModelGenerator;
-//import net.minecraft.data.client.BlockStateVariant;
-//import net.minecraft.data.client.Model;
-//import net.minecraft.data.client.MultipartBlockStateSupplier;
-//import net.minecraft.data.client.TextureKey;
-//import net.minecraft.data.client.TextureMap;
-//import net.minecraft.data.client.VariantSettings;
-//import net.minecraft.data.client.When;
-//import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-//import net.minecraft.data.server.recipe.RecipeExporter;
+//import net.minecraft.client.data.BlockStateModelGenerator;
+//import net.minecraft.client.data.Model;
+//import net.minecraft.client.data.TextureKey;
+//import net.minecraft.client.data.TextureMap;
+//import net.minecraft.data.loottable.BlockLootTableGenerator;
+//import net.minecraft.data.recipe.RecipeExporter;
+//import net.minecraft.data.recipe.RecipeGenerator;
+//import net.minecraft.data.tag.ProvidedTagBuilder;
 //import net.minecraft.item.Item;
 //import net.minecraft.item.Items;
-//import net.minecraft.recipe.Ingredient;
 //import net.minecraft.recipe.book.RecipeCategory;
 //import net.minecraft.registry.RegistryWrapper;
 //import net.minecraft.registry.tag.BlockTags;
@@ -31,6 +28,8 @@
 //
 //import java.util.Optional;
 //import java.util.function.Function;
+//
+//import static com.chimericdream.minekea.fabric.util.RegistryUtil.makeTagIngredient;
 //
 //public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerator {
 //    protected static final Model VOTIVE_ITEM_MODEL = makeModel("block/candles/template_votive_item");
@@ -90,13 +89,13 @@
 //            .pattern("###")
 //            .pattern("#D#")
 //            .pattern("###")
-//            .input('#', Ingredient.fromTag(MinekeaItemTags.VOTIVE_CANDLES))
+//            .input('#', makeTagIngredient(MinekeaItemTags.VOTIVE_CANDLES))
 //            .input('D', dye)
 //            .criterion("has_any_votive",
-//                FabricRecipeProvider.conditionsFromTag(MinekeaItemTags.VOTIVE_CANDLES))
+//                generator.conditionsFromTag(MinekeaItemTags.VOTIVE_CANDLES))
 //            .criterion(RecipeGenerator.hasItem(dye),
 //                generator.conditionsFromItem(dye))
-//            .offerTo(exporter, BLOCK.BLOCK_ID.withSuffixedPath("_universal_dyeing"));
+//            .offerTo(exporter, BLOCK.BLOCK_ID.withSuffixedPath("_universal_dyeing").toString());
 //    }
 //
 //    public void configureBlockLootTables(BlockLootTableGenerator generator) {

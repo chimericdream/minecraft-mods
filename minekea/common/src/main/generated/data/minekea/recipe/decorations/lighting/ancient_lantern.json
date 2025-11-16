@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:iron_nugget"
-    },
-    "P": {
-      "item": "minecraft:ender_pearl"
-    },
-    "T": {
-      "item": "minecraft:torch"
-    }
+    "#": "minecraft:iron_nugget",
+    "P": "minecraft:ender_pearl",
+    "T": "minecraft:torch"
   },
   "pattern": [
     "###",

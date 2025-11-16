@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/cracked_stone_bricks/4x"
-    }
+    "minekea:building/compressed/cracked_stone_bricks/4x"
   ],
   "result": {
     "count": 9,

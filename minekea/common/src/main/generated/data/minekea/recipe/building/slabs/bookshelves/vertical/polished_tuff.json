@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:furniture/bookshelves/polished_tuff"
-    }
+    "#": "minekea:furniture/bookshelves/polished_tuff"
   },
   "pattern": [
     "#",

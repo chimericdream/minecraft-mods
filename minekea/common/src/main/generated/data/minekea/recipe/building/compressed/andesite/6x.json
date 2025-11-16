@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "minekea:building/compressed/andesite/5x"
-    }
+    "#": "minekea:building/compressed/andesite/5x"
   },
   "pattern": [
     "###",

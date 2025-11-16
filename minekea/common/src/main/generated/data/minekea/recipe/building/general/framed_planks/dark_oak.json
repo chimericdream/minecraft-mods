@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:dark_oak_planks"
-    },
-    {
-      "item": "minecraft:dark_oak_planks"
-    },
-    {
-      "item": "minecraft:dark_oak_planks"
-    },
-    {
-      "item": "minecraft:dark_oak_planks"
-    },
-    {
-      "item": "minecraft:dark_oak_log"
-    }
+    "minecraft:dark_oak_planks",
+    "minecraft:dark_oak_planks",
+    "minecraft:dark_oak_planks",
+    "minecraft:dark_oak_planks",
+    "minecraft:dark_oak_log"
   ],
   "result": {
     "count": 6,

@@ -1,9 +1,0 @@
-{
-  "parent": "minekea:block/furniture/armoires/top",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "bar": "minecraft:block/netherite_block",
-    "material": "minecraft:block/stripped_crimson_stem",
-    "planks": "minecraft:block/oak_planks"
-  }
-}

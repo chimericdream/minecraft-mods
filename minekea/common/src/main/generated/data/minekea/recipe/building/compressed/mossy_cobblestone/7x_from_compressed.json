@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minekea:building/compressed/mossy_cobblestone/8x"
-    }
+    "minekea:building/compressed/mossy_cobblestone/8x"
   ],
   "result": {
     "count": 9,

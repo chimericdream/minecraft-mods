@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/compressed/birch_log/1x"
+            "items": "minecraft:birch_log"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:birch_log_from_compressed"
+        "recipe": "minekea:birch_log_from_compressed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:birch_log_from_compressed"
+      "minekea:birch_log_from_compressed"
     ]
   }
 }

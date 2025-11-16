@@ -1,7 +1,0 @@
-{
-  "parent": "minekea:block/furniture/shutters/right_half",
-  "textures": {
-    "frame": "minecraft:block/stripped_bamboo_block",
-    "panel": "minecraft:block/bamboo_planks"
-  }
-}
