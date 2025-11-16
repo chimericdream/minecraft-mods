@@ -13,8 +13,8 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
     private static final int BG_CORNER = 4;
     private static final int BG_X = 0;
     private static final int BG_Y = 0;
-    private static final int BG_W = 248;
-    private static final int BG_H = 166;
+    private static final int BG_W = 350;
+    private static final int BG_H = 344;
 
     private static final Identifier CONTAINER = Identifier.ofVanilla("textures/gui/container/generic_54.png");
     private static final int CINV_X = 7;
@@ -29,9 +29,9 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
     private static final int SLOT_SIZE = 18;
     private static final int TEXT_LH = 11;
     private static final int PT = 17;
-    private static final int PB = 7;
-    private static final int PL = 7;
-    private static final int PR = 7;
+    private static final int PB = 13;
+    private static final int PL = 13;
+    private static final int PR = 13;
     private static final int CINV_MB = 14;
     private static final int PINV_MB = 4;
 
@@ -49,9 +49,9 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         this.backgroundWidth = PL + (this.numCols * SLOT_SIZE) + PR;
         this.backgroundHeight = PT + (this.numRows * SLOT_SIZE) + CINV_MB + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB;
-        this.titleX = PL + 1;
+        this.titleX = PL + 1 - CINV_X;
         this.titleY = PT - TEXT_LH;
-        this.playerInventoryTitleX = PL + ((this.numCols - CINV_COLS) * (SLOT_SIZE / 2)) + 1;
+        this.playerInventoryTitleX = PL + ((this.numCols - CINV_COLS) * (SLOT_SIZE / 2)) + 1 - PINV_X;
         this.playerInventoryTitleY = this.backgroundHeight - (TEXT_LH + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB);
     }
 
@@ -96,14 +96,14 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             BG_H
         );
 
-        // right-top
+        // left-bottom
         context.drawTexture(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + this.backgroundWidth - BG_CORNER,
-            this.y,
-            BG_W - BG_CORNER,
-            BG_Y,
+            this.x,
+            this.y + this.backgroundHeight - BG_CORNER,
+            BG_X,
+            BG_H - BG_CORNER,
             BG_CORNER,
             BG_CORNER,
             BG_W,
@@ -114,10 +114,10 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         context.drawTexture(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x,
-            this.y + this.backgroundHeight - BG_CORNER,
-            BG_X,
-            BG_H - BG_CORNER,
+            this.x + this.backgroundWidth - BG_CORNER,
+            this.y,
+            BG_W - BG_CORNER,
+            BG_Y,
             BG_CORNER,
             BG_CORNER,
             BG_W,
@@ -191,7 +191,7 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             context.drawTexture(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + this.backgroundWidth - BG_CORNER,
+                this.x + this.backgroundWidth - BG_CORNER + 50,
                 this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_W - BG_CORNER,
                 BG_CORNER,
