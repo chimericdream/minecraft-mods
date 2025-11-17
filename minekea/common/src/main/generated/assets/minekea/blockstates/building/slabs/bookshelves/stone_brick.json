@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/stone_brick"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/stone_brick_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/stone_brick_top"
+    }
+  }
+}

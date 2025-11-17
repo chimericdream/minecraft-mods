@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/smooth_stone"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/smooth_stone_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/smooth_stone_top"
+    }
+  }
+}

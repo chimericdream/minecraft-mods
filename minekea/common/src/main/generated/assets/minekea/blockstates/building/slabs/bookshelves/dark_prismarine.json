@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/dark_prismarine"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/dark_prismarine_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/dark_prismarine_top"
+    }
+  }
+}

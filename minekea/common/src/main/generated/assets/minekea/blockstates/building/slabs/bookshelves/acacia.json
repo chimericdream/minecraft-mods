@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/acacia"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/acacia_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/acacia_top"
+    }
+  }
+}

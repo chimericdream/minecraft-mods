@@ -20,6 +20,7 @@ import com.chimericdream.minekea.fabric.block.building.general.CrimsonBasaltBric
 import com.chimericdream.minekea.fabric.block.building.general.MossyBasaltBricksDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.general.WarpedBasaltBricksDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.general.WaxBlockDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.SlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalBookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalSlabBlockDataGenerator;
@@ -35,8 +36,6 @@ import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
 //import com.chimericdream.minekea.fabric.block.building.general.WarpedNetherBricksDataGenerator;
 
 public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
@@ -62,7 +61,7 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         FramedBlocks.FRAMED_PLANKS.forEach(block -> BLOCK_GENERATORS.add(new FramedPlanksBlockDataGenerator(block.get())));
         Slabs.SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new SlabBlockDataGenerator(block.get())));
         Slabs.VERTICAL_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalSlabBlockDataGenerator(block.get())));
-//        Slabs.BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfSlabBlockDataGenerator(block.get())));
+        Slabs.BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfSlabBlockDataGenerator(block.get())));
         Slabs.VERTICAL_BOOKSHELF_SLAB_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalBookshelfSlabBlockDataGenerator(block.get())));
         Stairs.STAIRS_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new StairsBlockDataGenerator(block.get())));
         Stairs.VERTICAL_STAIRS_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalStairsBlockDataGenerator(block.get())));

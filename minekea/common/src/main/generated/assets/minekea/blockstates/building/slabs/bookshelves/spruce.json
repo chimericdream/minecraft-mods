@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/spruce"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/spruce_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/spruce_top"
+    }
+  }
+}

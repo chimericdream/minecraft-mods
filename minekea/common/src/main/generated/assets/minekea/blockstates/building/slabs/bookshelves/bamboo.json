@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/bamboo"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/bamboo_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/bamboo_top"
+    }
+  }
+}

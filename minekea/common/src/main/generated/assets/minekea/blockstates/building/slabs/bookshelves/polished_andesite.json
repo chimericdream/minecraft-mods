@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/polished_andesite"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/polished_andesite_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/polished_andesite_top"
+    }
+  }
+}

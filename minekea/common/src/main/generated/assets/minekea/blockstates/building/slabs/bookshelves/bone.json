@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/bone"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/bone_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/bone_top"
+    }
+  }
+}
