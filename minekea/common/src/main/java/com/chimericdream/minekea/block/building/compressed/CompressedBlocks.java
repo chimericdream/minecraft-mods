@@ -29,9 +29,6 @@ import java.util.function.Supplier;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class CompressedBlocks implements ModThingGroup {
-    @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_COMPRESSED_BLOCK_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.COMPRESSED_BLOCK_ITEM_GROUP);
-
     public static final Map<String, List<RegistrySupplier<Block>>> BLOCK_MAP = new LinkedHashMap<>();
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> COLUMN_BLOCKS = new ArrayList<>();
@@ -189,7 +186,7 @@ public class CompressedBlocks implements ModThingGroup {
                                 .tool(tool),
                             compressionLevel
                         ),
-                        DEFAULT_COMPRESSED_BLOCK_SETTINGS
+                        getItemSettings(material)
                     )
                 );
             }
@@ -241,7 +238,7 @@ public class CompressedBlocks implements ModThingGroup {
                             sideTextureSuffix,
                             endTextureSuffix
                         ),
-                        DEFAULT_COMPRESSED_BLOCK_SETTINGS
+                        getItemSettings(material)
                     )
                 );
             }
@@ -280,7 +277,7 @@ public class CompressedBlocks implements ModThingGroup {
                             compressionLevel,
                             baseBlockId
                         ),
-                        DEFAULT_COMPRESSED_BLOCK_SETTINGS
+                        getItemSettings(material)
                     )
                 );
             }
@@ -288,5 +285,10 @@ public class CompressedBlocks implements ModThingGroup {
             MINEKEA_BLOCKS.addAll(compressedBlocks);
             BLOCK_MAP.put(materialName, compressedBlocks);
         });
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static Item.Settings getItemSettings(String material) {
+        return new Item.Settings().arch$tab(ModItemGroups.COMPRESSED_BLOCK_ITEM_GROUP).translationKey(CompressedBlock.makeTranslationKey(material));
     }
 }

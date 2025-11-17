@@ -48,6 +48,7 @@ public class WarpedBasaltBricksDataGenerator extends ChimericLibBlockDataGenerat
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Warped Basalt Bricks");
+        translationBuilder.add(BLOCK.asItem(), "Warped Basalt Bricks");
     }
 
     @Override

@@ -74,6 +74,7 @@
 //
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(BLOCK, String.format("%s Bookshelf Door", BLOCK.config.getMaterialName()));
+//        translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Door", BLOCK.config.getMaterialName()));
 //    }
 //
 //    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

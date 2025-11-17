@@ -167,6 +167,7 @@ public class TextureGenerator implements DataProvider {
                 File imageFile = new File(imagePath);
 
                 if (!imageFile.canRead()) {
+                    MinekeaMod.LOGGER.warn("{} is not readable", imagePath);
                     return Optional.empty();
                 }
 

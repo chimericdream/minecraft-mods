@@ -46,5 +46,6 @@
 //    @Override
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(GLASS_JAR.get(), "Glass Jar");
+//        translationBuilder.add(GLASS_JAR.get().asItem(), "Glass Jar");
 //    }
 //}

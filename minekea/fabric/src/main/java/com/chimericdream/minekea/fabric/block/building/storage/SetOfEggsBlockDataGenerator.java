@@ -58,5 +58,6 @@ public class SetOfEggsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Set of Eggs");
+        translationBuilder.add(BLOCK.asItem(), "Set of Eggs");
     }
 }

@@ -49,6 +49,7 @@ public class CrimsonBasaltBricksDataGenerator extends ChimericLibBlockDataGenera
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Crimson Basalt Bricks");
+        translationBuilder.add(BLOCK.asItem(), "Crimson Basalt Bricks");
     }
 
     @Override

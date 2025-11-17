@@ -105,11 +105,13 @@
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        if (BLOCK.color.equals("plain")) {
 //            translationBuilder.add(BLOCK, "Votive Candle");
+//            translationBuilder.add(BLOCK.asItem(), "Votive Candle");
 //
 //            return;
 //        }
 //
 //        translationBuilder.add(BLOCK, String.format("%s Votive Candle", ColorHelpers.getName(BLOCK.color)));
+//        translationBuilder.add(BLOCK.asItem(), String.format("%s Votive Candle", ColorHelpers.getName(BLOCK.color)));
 //    }
 //
 //    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

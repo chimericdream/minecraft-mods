@@ -49,6 +49,7 @@
 //    @Override
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(BLOCK, "Warped Nether Bricks");
+//        translationBuilder.add(BLOCK.asItem(), "Warped Nether Bricks");
 //    }
 //
 //    @Override

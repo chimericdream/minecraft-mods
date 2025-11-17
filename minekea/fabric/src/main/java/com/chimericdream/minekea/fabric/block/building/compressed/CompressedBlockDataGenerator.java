@@ -57,7 +57,9 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
+        if (BLOCK.compressionLevel == 1) {
+            translationBuilder.add(BLOCK.getTranslationKey(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
+        }
     }
 
     @Override

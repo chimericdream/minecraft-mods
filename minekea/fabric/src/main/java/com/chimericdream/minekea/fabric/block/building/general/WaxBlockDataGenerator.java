@@ -61,11 +61,13 @@ public class WaxBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.color.equals("plain")) {
             translationBuilder.add(BLOCK, "Wax Block");
+            translationBuilder.add(BLOCK.asItem(), "Wax Block");
 
             return;
         }
 
         translationBuilder.add(BLOCK, String.format("%s Wax Block", ColorHelpers.getName(BLOCK.color)));
+        translationBuilder.add(BLOCK.asItem(), String.format("%s Wax Block", ColorHelpers.getName(BLOCK.color)));
     }
 
     @Override

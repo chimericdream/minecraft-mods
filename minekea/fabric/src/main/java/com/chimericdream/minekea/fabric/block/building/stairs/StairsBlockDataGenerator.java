@@ -54,6 +54,7 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Stairs", BLOCK.config.getMaterialName()));
+        translationBuilder.add(BLOCK.asItem(), String.format("%s Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override

@@ -18,6 +18,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.function.Consumer;
@@ -35,15 +36,25 @@ public class CompressedBlock extends Block implements TooltipAppender {
     public final BlockConfig config;
     public final int compressionLevel;
 
+    @Nullable
+    private Item cachedItem;
+
     static {
         AXIS = Properties.AXIS;
     }
 
     public CompressedBlock(BlockConfig config, int compressionLevel) {
-        super(AbstractBlock.Settings.copy(config.getIngredient()).strength(
-            getHardness(compressionLevel, config.getIngredient().getHardness()),
-            getResistance(compressionLevel, config.getIngredient().getBlastResistance())
-        ).requiresTool().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), compressionLevel))));
+        super(
+            AbstractBlock.Settings
+                .copy(config.getIngredient())
+                .strength(
+                    getHardness(compressionLevel, config.getIngredient().getHardness()),
+                    getResistance(compressionLevel, config.getIngredient().getBlastResistance())
+                )
+                .requiresTool()
+                .registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), compressionLevel)))
+                .overrideTranslationKey(makeTranslationKey(config.getMaterial()))
+        );
 
         this.compressionLevel = compressionLevel;
         this.config = config;
@@ -57,6 +68,10 @@ public class CompressedBlock extends Block implements TooltipAppender {
         }
 
         this.setDefaultState(this.stateManager.getDefaultState().with(AXIS, Direction.Axis.Y));
+    }
+
+    public static String makeTranslationKey(String material) {
+        return Identifier.of(ModInfo.MOD_ID, String.format("building/compressed/%s", material)).toTranslationKey().replace('/', '.');
     }
 
     public static Identifier makeId(String material, int compressionLevel) {

@@ -59,6 +59,7 @@ public class PillowBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
+        translationBuilder.add(BLOCK.asItem(), String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
     }
 
     public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

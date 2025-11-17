@@ -25,7 +25,7 @@ import java.util.jar.JarFile;
  */
 public final class JarAccess {
     // Formatted to be akin to Fabric's style of environment variable names.
-    private static final String ENV_KEY = "minekea.datagen.minecraft-jar-path";
+    private static final String ENV_KEY = "chimericdream.datagen.minecraft-jar-path";
     private static final int MAX_HINTS = 5;
     private static @Nullable JarAccess instance;
 

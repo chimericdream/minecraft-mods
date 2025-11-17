@@ -120,8 +120,10 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.config.getName() != null) {
             translationBuilder.add(BLOCK, BLOCK.config.getName());
+            translationBuilder.add(BLOCK.asItem(), BLOCK.config.getName());
         } else {
             translationBuilder.add(BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
+            translationBuilder.add(BLOCK.asItem(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
         }
     }
 

@@ -52,6 +52,7 @@
 //
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(DecorationBlocks.FAKE_CAKE.get(), "Cake");
+//        translationBuilder.add(DecorationBlocks.FAKE_CAKE.get().asItem(), "Cake");
 //        translationBuilder.add(FakeCakeBlock.TOOLTIP_KEY, "This cake is a lie!");
 //    }
 //

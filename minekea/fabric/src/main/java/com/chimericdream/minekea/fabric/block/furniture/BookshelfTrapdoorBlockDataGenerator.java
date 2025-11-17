@@ -65,6 +65,7 @@
 //
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(BLOCK, String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
+//        translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
 //    }
 //
 //    public void configureBlockLootTables(BlockLootTableGenerator generator) {

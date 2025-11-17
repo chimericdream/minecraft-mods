@@ -39,6 +39,7 @@
 //    @Override
 //    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
 //        translationBuilder.add(BLOCK, String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
+//        translationBuilder.add(BLOCK.asItem(), String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
 //    }
 //
 //    @Override

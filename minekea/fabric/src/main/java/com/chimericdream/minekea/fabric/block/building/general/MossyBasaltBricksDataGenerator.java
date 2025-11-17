@@ -48,6 +48,7 @@ public class MossyBasaltBricksDataGenerator extends ChimericLibBlockDataGenerato
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Mossy Basalt Bricks");
+        translationBuilder.add(BLOCK.asItem(), "Mossy Basalt Bricks");
     }
 
     @Override

@@ -60,6 +60,7 @@ public class DyedBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Dyed %s", ColorHelpers.getName(BLOCK.color), BLOCK.config.getMaterialName()));
+        translationBuilder.add(BLOCK.asItem(), String.format("%s Dyed %s", ColorHelpers.getName(BLOCK.color), BLOCK.config.getMaterialName()));
     }
 
     @Override
