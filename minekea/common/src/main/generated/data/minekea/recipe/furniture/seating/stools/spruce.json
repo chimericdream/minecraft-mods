@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "L": "minecraft:spruce_log",
+    "P": "minecraft:spruce_planks"
+  },
+  "pattern": [
+    "PP",
+    "LL"
+  ],
+  "result": {
+    "count": 2,
+    "id": "minekea:furniture/seating/stools/spruce"
+  }
+}

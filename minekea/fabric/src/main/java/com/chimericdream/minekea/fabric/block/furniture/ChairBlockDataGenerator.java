@@ -1,112 +1,103 @@
-//package com.chimericdream.minekea.fabric.block.furniture;
-//
-//import com.chimericdream.lib.util.Tool;
-//import com.chimericdream.minekea.ModInfo;
-//import com.chimericdream.minekea.block.furniture.seats.ChairBlock;
-//import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-//import com.chimericdream.minekea.resource.MinekeaTextures;
-//import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-//import net.minecraft.block.Block;
-//import net.minecraft.client.data.BlockStateModelGenerator;
-//import net.minecraft.client.data.Model;
-//import net.minecraft.client.data.TextureMap;
-//import net.minecraft.data.loottable.BlockLootTableGenerator;
-//import net.minecraft.data.recipe.RecipeExporter;
-//import net.minecraft.data.recipe.RecipeGenerator;
-//import net.minecraft.data.tag.ProvidedTagBuilder;
-//import net.minecraft.recipe.book.RecipeCategory;
-//import net.minecraft.registry.Registries;
-//import net.minecraft.registry.RegistryWrapper;
-//import net.minecraft.registry.tag.TagKey;
-//import net.minecraft.util.Identifier;
-//import net.minecraft.util.math.Direction;
-//
-//import java.util.Optional;
-//import java.util.function.Function;
-//
-//public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
-//    private final ChairBlock BLOCK;
-//
-//    protected static final Model CHAIR_MODEL = new Model(
-//        Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/seating/chair")),
-//        Optional.empty(),
-//        MinekeaTextures.LOG,
-//        MinekeaTextures.PLANKS
-//    );
-//
-//    public ChairBlockDataGenerator(Block block) {
-//        this.BLOCK = (ChairBlock) block;
-//    }
-//
-//    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-//        Block plankIngredient = BLOCK.config.getIngredient();
-//        Block logIngredient = BLOCK.config.getIngredient("log");
-//
-//        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
-//            .pattern("P ")
-//            .pattern("PP")
-//            .pattern("LL")
-//            .input('P', plankIngredient)
-//            .input('L', logIngredient)
-//            .criterion(RecipeGenerator.hasItem(plankIngredient),
-//                generator.conditionsFromItem(plankIngredient))
-//            .criterion(RecipeGenerator.hasItem(logIngredient),
-//                generator.conditionsFromItem(logIngredient))
-//            .offerTo(exporter);
-//    }
-//
-//    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
-//        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-//        getBuilder.apply(tool.getMineableTag())
-//            .setReplace(false)
-//            .add(BLOCK);
-//    }
-//
-//    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-//        translationBuilder.add(BLOCK, String.format("%s Chair", BLOCK.config.getMaterialName()));
-//        translationBuilder.add(BLOCK.asItem(), String.format("%s Chair", BLOCK.config.getMaterialName()));
-//    }
-//
-//    public void configureBlockLootTables(BlockLootTableGenerator generator) {
-//        generator.addDrop(BLOCK);
-//    }
-//
-//    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-//        Block plankIngredient = BLOCK.config.getIngredient();
-//        Block logIngredient = BLOCK.config.getIngredient("log");
-//
-//        TextureMap textures = new TextureMap()
-//            .put(MinekeaTextures.LOG, Registries.BLOCK.getId(logIngredient).withPrefixedPath("block/"))
-//            .put(MinekeaTextures.PLANKS, Registries.BLOCK.getId(plankIngredient).withPrefixedPath("block/"));
-//
-//        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", CHAIR_MODEL, unused -> textures);
-//
-//        blockStateModelGenerator.blockStateCollector
-//            .accept(
-//                MultipartBlockStateSupplier.create(BLOCK)
-//                    .with(
-//                        When.create().set(ChairBlock.FACING, Direction.NORTH),
-//                        BlockStateVariant.create()
-//                            .put(VariantSettings.Y, VariantSettings.Rotation.R90)
-//                            .put(VariantSettings.MODEL, modelId)
-//                    )
-//                    .with(
-//                        When.create().set(ChairBlock.FACING, Direction.EAST),
-//                        BlockStateVariant.create()
-//                            .put(VariantSettings.Y, VariantSettings.Rotation.R180)
-//                            .put(VariantSettings.MODEL, modelId)
-//                    )
-//                    .with(
-//                        When.create().set(ChairBlock.FACING, Direction.SOUTH),
-//                        BlockStateVariant.create()
-//                            .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-//                            .put(VariantSettings.MODEL, modelId)
-//                    )
-//                    .with(
-//                        When.create().set(ChairBlock.FACING, Direction.WEST),
-//                        BlockStateVariant.create()
-//                            .put(VariantSettings.MODEL, modelId)
-//                    )
-//            );
-//    }
-//}
+package com.chimericdream.minekea.fabric.block.furniture;
+
+import com.chimericdream.lib.util.Tool;
+import com.chimericdream.minekea.ModInfo;
+import com.chimericdream.minekea.block.furniture.seats.ChairBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.resource.MinekeaTextures;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.block.Block;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.ModelVariantOperator;
+import net.minecraft.client.render.model.json.WeightedVariant;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.AxisRotation;
+import net.minecraft.util.math.Direction;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
+    private final ChairBlock BLOCK;
+
+    protected static final Model CHAIR_MODEL = new Model(
+        Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/seating/chair")),
+        Optional.empty(),
+        MinekeaTextures.LOG,
+        MinekeaTextures.PLANKS
+    );
+
+    public ChairBlockDataGenerator(Block block) {
+        this.BLOCK = (ChairBlock) block;
+    }
+
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+        Block plankIngredient = BLOCK.config.getIngredient();
+        Block logIngredient = BLOCK.config.getIngredient("log");
+
+        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
+            .pattern("P ")
+            .pattern("PP")
+            .pattern("LL")
+            .input('P', plankIngredient)
+            .input('L', logIngredient)
+            .criterion(RecipeGenerator.hasItem(plankIngredient),
+                generator.conditionsFromItem(plankIngredient))
+            .criterion(RecipeGenerator.hasItem(logIngredient),
+                generator.conditionsFromItem(logIngredient))
+            .offerTo(exporter);
+    }
+
+    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
+        getBuilder.apply(tool.getMineableTag())
+            .setReplace(false)
+            .add(BLOCK);
+    }
+
+    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+        translationBuilder.add(BLOCK, String.format("%s Chair", BLOCK.config.getMaterialName()));
+        translationBuilder.add(BLOCK.asItem(), String.format("%s Chair", BLOCK.config.getMaterialName()));
+    }
+
+    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+        generator.addDrop(BLOCK);
+    }
+
+    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        Block plankIngredient = BLOCK.config.getIngredient();
+        Block logIngredient = BLOCK.config.getIngredient("log");
+
+        TextureMap textures = new TextureMap()
+            .put(MinekeaTextures.LOG, Registries.BLOCK.getId(logIngredient).withPrefixedPath("block/"))
+            .put(MinekeaTextures.PLANKS, Registries.BLOCK.getId(plankIngredient).withPrefixedPath("block/"));
+
+        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", CHAIR_MODEL, unused -> textures);
+
+        WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(modelId);
+
+        blockStateModelGenerator.blockStateCollector
+            .accept(
+                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                    .with(
+                        BlockStateVariantMap.models(ChairBlock.FACING)
+                            .register(Direction.NORTH, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
+                            .register(Direction.EAST, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180)))
+                            .register(Direction.SOUTH, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                            .register(Direction.WEST, model)
+                    )
+            );
+    }
+}

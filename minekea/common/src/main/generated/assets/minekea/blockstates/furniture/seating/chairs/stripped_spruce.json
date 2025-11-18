@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minekea:block/furniture/seating/chairs/stripped_spruce",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "minekea:block/furniture/seating/chairs/stripped_spruce",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minekea:block/furniture/seating/chairs/stripped_spruce",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "minekea:block/furniture/seating/chairs/stripped_spruce"
+    }
+  }
+}
