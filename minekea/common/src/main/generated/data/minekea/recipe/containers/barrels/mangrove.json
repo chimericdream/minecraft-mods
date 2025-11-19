@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": "minecraft:mangrove_planks",
+    "S": "minecraft:mangrove_slab"
+  },
+  "pattern": [
+    "PSP",
+    "P P",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:containers/barrels/mangrove"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": "minecraft:bamboo_planks",
+    "S": "minecraft:bamboo_slab"
+  },
+  "pattern": [
+    "PSP",
+    "P P",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:containers/barrels/bamboo"
+  }
+}

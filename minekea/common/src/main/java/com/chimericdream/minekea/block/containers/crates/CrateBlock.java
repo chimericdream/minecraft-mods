@@ -268,12 +268,12 @@ public class CrateBlock extends BlockWithEntity {
 
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (direction.getAxis().isVertical()) {
-            return state;
+        if (state.get(getConnectionProperty(direction)) && !neighborState.isOf(this)) {
+            return state.with(getConnectionProperty(direction), false).with(CRATE_TYPE, ChestType.SINGLE);
         }
 
-        if (!neighborState.isOf(this)) {
-            return state.with(getConnectionProperty(direction), false);
+        if (direction.getAxis().isVertical() || !neighborState.isOf(this)) {
+            return state;
         }
 
         BooleanProperty prop = getReverseConnectionProperty(direction);

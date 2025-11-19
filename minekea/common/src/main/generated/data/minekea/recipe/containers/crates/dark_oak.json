@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "#minecraft:dark_oak_logs",
+    "X": "minecraft:dark_oak_planks"
+  },
+  "pattern": [
+    "#X#",
+    "XXX",
+    "#X#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:containers/crates/dark_oak"
+  }
+}
