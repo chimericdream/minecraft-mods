@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:stripped_crimson_stem",
+    "G": "minecraft:glass",
+    "X": "minecraft:crimson_planks"
+  },
+  "pattern": [
+    " G ",
+    "X X",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:furniture/display_cases/stripped/crimson"
+  }
+}

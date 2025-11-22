@@ -1,6 +1,7 @@
 package com.chimericdream.minekea.block.furniture;
 
 import com.chimericdream.minekea.block.furniture.bookshelves.Bookshelves;
+import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.doors.Doors;
 import com.chimericdream.minekea.block.furniture.pillows.Pillows;
 import com.chimericdream.minekea.block.furniture.seats.Seats;
@@ -20,7 +21,7 @@ public class FurnitureBlocks implements ModThingGroup {
     static {
 //        BLOCKS.addAll(Armoires.BLOCKS);
         BLOCKS.addAll(Bookshelves.BLOCKS);
-//        BLOCKS.addAll(DisplayCases.BLOCKS);
+        BLOCKS.addAll(DisplayCases.BLOCKS);
         BLOCKS.addAll(Doors.BLOCKS);
         BLOCKS.addAll(Seats.CHAIR_BLOCKS);
         BLOCKS.addAll(Seats.STOOL_BLOCKS);

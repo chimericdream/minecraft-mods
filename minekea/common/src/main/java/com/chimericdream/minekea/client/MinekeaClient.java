@@ -2,19 +2,20 @@ package com.chimericdream.minekea.client;
 
 import com.chimericdream.lib.entities.SimpleSeatEntity;
 import com.chimericdream.minekea.block.containers.crates.Crates;
+import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.seats.Seats;
+import com.chimericdream.minekea.client.render.block.DisplayCaseBlockEntityRenderer;
 import com.chimericdream.minekea.client.screen.crate.CrateScreen;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreen;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 //import com.chimericdream.minekea.block.furniture.armoires.Armoires;
-//import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 //import com.chimericdream.minekea.block.furniture.shelves.Shelves;
 //import com.chimericdream.minekea.client.render.block.ArmoireBlockEntityRenderer;
-//import com.chimericdream.minekea.client.render.block.DisplayCaseBlockEntityRenderer;
 //import com.chimericdream.minekea.client.render.block.ShelfBlockEntityRenderer;
 //import com.chimericdream.minekea.client.screen.BlockPainterScreen;
 
@@ -41,12 +42,12 @@ public class MinekeaClient {
 //            Armoires.ARMOIRE_BLOCK_ENTITY.get(),
 //            ArmoireBlockEntityRenderer::new
 //        );
-//
-//        BlockEntityRendererRegistry.register(
-//            DisplayCases.DISPLAY_CASE_BLOCK_ENTITY.get(),
-//            DisplayCaseBlockEntityRenderer::new
-//        );
-//
+
+        BlockEntityRendererRegistry.register(
+            DisplayCases.DISPLAY_CASE_BLOCK_ENTITY.get(),
+            DisplayCaseBlockEntityRenderer::new
+        );
+
 //        BlockEntityRendererRegistry.register(
 //            Shelves.SHELF_BLOCK_ENTITY.get(),
 //            ShelfBlockEntityRenderer::new
