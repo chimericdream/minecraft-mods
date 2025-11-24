@@ -100,18 +100,6 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        /*
-         * This is commented out on purpose, though I wonder if there's a better
-         * approach. With this in place, there was a server/client de-sync where
-         * items would continue rendering in the display case even after being
-         * removed. However, the docs seem to suggest that you shouldn't be
-         * running the code in this method on the client side.
-         * /shrug
-         */
-        // if (world.isClient()) {
-        //     return ActionResult.SUCCESS;
-        // }
-
         DisplayCaseBlockEntity entity;
 
         try {
