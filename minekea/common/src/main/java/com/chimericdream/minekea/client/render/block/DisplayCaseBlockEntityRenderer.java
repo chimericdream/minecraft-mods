@@ -65,32 +65,37 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             boolean isBlock = stack.getItem() instanceof BlockItem;
 
             state.setItem(stack);
-            state.setRotation(blockState.get(DisplayCaseBlock.ROTATION));
-            state.setIsBlock(isBlock);
+            state.rotation = blockState.get(DisplayCaseBlock.ROTATION);
+            state.isBlock = isBlock;
+            state.distanceToCamera = cameraPos.squaredDistanceTo(entity.getPos().toCenterPos());
 
             displayContext = isBlock ? ItemDisplayContext.GROUND : ItemDisplayContext.FIXED;
+
+            if (stack.getCustomName() != null) {
+                state.setCustomName(stack.getCustomName());
+            }
 
             if (isBaggedItem(stack)) {
                 stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(9001f), List.of(), List.of(), List.of()));
             }
         }
 
-        this.context.itemModelManager().update(state.getDisplayItem(), stack, displayContext, null, null, 0);
+        this.context.itemModelManager().update(state.displayItem, stack, displayContext, null, null, 0);
     }
 
     @Override
     public void render(DisplayCaseBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
         matrices.push();
 
-//        if (hasLabel(entity, stack)) {
-//            renderLabelIfPresent(entity, stack.getName(), matrices, vertexConsumers, light, tickDelta);
-//        }
+        if (state.hasCustomName) {
+            queue.submitLabel(matrices, state.nameLabelPos, 0, state.customName, true, state.lightmapCoordinates, state.distanceToCamera, cameraState);
+        }
 
-        boolean isHead = isHeadItem(state.getItem());
-        int rotation = state.getRotation();
+        boolean isHead = isHeadItem(state.itemId);
+        int rotation = state.rotation;
 
-        if (state.isBlock()) {
-            Block block = Registries.BLOCK.get(state.getItem());
+        if (state.isBlock) {
+            Block block = Registries.BLOCK.get(state.itemId);
             double maxY = block.getOutlineShape(block.getDefaultState(), null, null, null).getMax(Direction.Axis.Y);
 
             matrices.translate(0.5, 0.65 + Math.min((0.3 * Math.abs(maxY - 1.0)), 0.125), 0.5);
@@ -118,7 +123,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
 //            matrices.translate(0, 0, 0.09375);
 //        }
 
-        state.getDisplayItem().render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+        state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
 
         matrices.pop();
     }
@@ -199,52 +204,5 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
 //        itemRenderer.renderItem(stack, mode, light, overlay, matrices, vertexConsumers, null, 0);
 //
 //        matrices.pop();
-//    }
-//
-//    protected double getSquaredDistanceToCamera(DisplayCaseBlockEntity entity) {
-//        return entity.getPos().getSquaredDistance(dispatcher.camera.getPos());
-//    }
-//
-//    protected boolean hasLabel(DisplayCaseBlockEntity entity, ItemStack item) {
-//        HitResult target = dispatcher.crosshairTarget;
-//        BlockPos targetedPos = BlockPos.ofFloored(target.getPos());
-//
-//        if (entity.isEmpty()) {
-//            return false;
-//        }
-//
-//        if (MinecraftClient.isHudEnabled() && item.contains(DataComponentTypes.CUSTOM_NAME) && entity.getPos().isWithinDistance(targetedPos, 1.5)) {
-//            double d = entity.getPos().getSquaredDistance(dispatcher.camera.getPos());
-//            float f = 32.0F;
-//            return d < (double) (f * f);
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    public TextRenderer getTextRenderer() {
-//        return this.textRenderer;
-//    }
-//
-//    protected void renderLabelIfPresent(DisplayCaseBlockEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta) {
-//        double d = getSquaredDistanceToCamera(entity);
-//
-//        if (!(d > 4096.0)) {
-//            float f = 1.5F;
-//            int i = "deadmau5".equals(text.getString()) ? -10 : 0;
-//            matrices.push();
-//            matrices.translate(0.5, f, 0.5);
-//            matrices.multiply(dispatcher.camera.getRotation());
-//            matrices.scale(-0.025F, -0.025F, 0.025F);
-//            Matrix4f matrix4f = matrices.peek().getPositionMatrix();
-//            float g = MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25F);
-//            int j = (int) (g * 255.0F) << 24;
-//            TextRenderer textRenderer = this.getTextRenderer();
-//            float h = (float) (-textRenderer.getWidth(text) / 2);
-//            textRenderer.draw(text, g, (float) i, 553648127, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, j, light);
-//            textRenderer.draw(text, g, (float) i, -1, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
-//
-//            matrices.pop();
-//        }
 //    }
 }
