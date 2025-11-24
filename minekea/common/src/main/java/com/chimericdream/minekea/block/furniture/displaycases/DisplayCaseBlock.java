@@ -99,57 +99,18 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
-        }
-
-        DisplayCaseBlockEntity entity;
-
-        try {
-            entity = (DisplayCaseBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
-        } catch (Exception e) {
-            MinekeaMod.LOGGER.error(String.format("The display case at %s had an invalid block entity.\nBlock Entity: %s", pos, world.getBlockEntity(pos)));
-
-            return ActionResult.FAIL;
-        }
-
-        // If the case is empty, there's nothing to get or rotate
-        if (entity.isEmpty()) {
-            return ActionResult.SUCCESS;
-        }
-
-        if (player.isSneaking()) {
-            // If the player is sneaking, get what's in the case
-            ItemScatterer.spawn(
-                world,
-                player.getX(),
-                player.getY(),
-                player.getZ(),
-                entity.removeStack(0)
-            );
-
-            world.setBlockState(pos, state.with(ROTATION, 0));
-            entity.markDirty();
-            entity.playRemoveItemSound();
-        } else {
-            // Otherwise, rotate the item in the case
-            int rotation = state.get(ROTATION);
-            int newRotation = rotation >= 7 ? 0 : rotation + 1;
-
-            world.setBlockState(pos, state.with(ROTATION, newRotation));
-            entity.playRotateItemSound();
-        }
-
-        return ActionResult.SUCCESS;
-    }
-
-    @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
-        }
+        /*
+         * This is commented out on purpose, though I wonder if there's a better
+         * approach. With this in place, there was a server/client de-sync where
+         * items would continue rendering in the display case even after being
+         * removed. However, the docs seem to suggest that you shouldn't be
+         * running the code in this method on the client side.
+         * /shrug
+         */
+        // if (world.isClient()) {
+        //     return ActionResult.SUCCESS;
+        // }
 
         DisplayCaseBlockEntity entity;
 
@@ -176,7 +137,11 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
                 entity.markDirty();
                 entity.playAddItemSound();
             }
-        } else if (player.isSneaking()) {
+
+            return ActionResult.SUCCESS;
+        }
+
+        if (player.isSneaking()) {
             // If the player is sneaking, get what's in the case
             ItemScatterer.spawn(
                 world,

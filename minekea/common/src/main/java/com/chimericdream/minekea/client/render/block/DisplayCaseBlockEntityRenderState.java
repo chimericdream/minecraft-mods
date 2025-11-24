@@ -8,11 +8,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 public class DisplayCaseBlockEntityRenderState extends BlockEntityRenderState {
-    public final ItemRenderState displayItem = new ItemRenderState();
-    public boolean hasItem = false;
-    public boolean isBlock = false;
-    public int rotation;
-    public Identifier itemId;
+    private final ItemRenderState displayItem = new ItemRenderState();
+    private boolean hasItem = false;
+    private boolean isBlock = false;
+    private int rotation;
+    private Identifier itemId;
 
     public void clear() {
         displayItem.clear();
@@ -22,8 +22,36 @@ public class DisplayCaseBlockEntityRenderState extends BlockEntityRenderState {
         itemId = Registries.ITEM.getId(Items.AIR);
     }
 
+    public ItemRenderState getDisplayItem() {
+        return displayItem;
+    }
+
+    public boolean hasItem() {
+        return hasItem;
+    }
+
+    public boolean isBlock() {
+        return isBlock;
+    }
+
+    public void setIsBlock(boolean isBlock) {
+        this.isBlock = isBlock;
+    }
+
+    public Identifier getItem() {
+        return itemId;
+    }
+
     public void setItem(ItemStack stack) {
         this.hasItem = !stack.isEmpty();
         this.itemId = Registries.ITEM.getId(stack.getItem());
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
     }
 }
