@@ -4,7 +4,9 @@ import com.chimericdream.lib.entities.SimpleSeatEntity;
 import com.chimericdream.minekea.block.containers.crates.Crates;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.seats.Seats;
+import com.chimericdream.minekea.block.furniture.shelves.Shelves;
 import com.chimericdream.minekea.client.render.block.DisplayCaseBlockEntityRenderer;
+import com.chimericdream.minekea.client.render.block.ShelfBlockEntityRenderer;
 import com.chimericdream.minekea.client.screen.crate.CrateScreen;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreen;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
@@ -48,9 +50,9 @@ public class MinekeaClient {
             DisplayCaseBlockEntityRenderer::new
         );
 
-//        BlockEntityRendererRegistry.register(
-//            Shelves.SHELF_BLOCK_ENTITY.get(),
-//            ShelfBlockEntityRenderer::new
-//        );
+        BlockEntityRendererRegistry.register(
+            Shelves.SHELF_BLOCK_ENTITY.get(),
+            ShelfBlockEntityRenderer::new
+        );
     }
 }

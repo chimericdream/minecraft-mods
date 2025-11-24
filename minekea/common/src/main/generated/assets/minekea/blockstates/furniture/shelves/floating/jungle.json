@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "wall_side=east": {
+      "model": "minekea:block/furniture/shelves/floating/jungle",
+      "y": 90
+    },
+    "wall_side=north": {
+      "model": "minekea:block/furniture/shelves/floating/jungle"
+    },
+    "wall_side=south": {
+      "model": "minekea:block/furniture/shelves/floating/jungle",
+      "y": 180
+    },
+    "wall_side=west": {
+      "model": "minekea:block/furniture/shelves/floating/jungle",
+      "y": 270
+    }
+  }
+}

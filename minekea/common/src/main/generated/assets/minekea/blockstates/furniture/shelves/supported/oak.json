@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "wall_side=east": {
+      "model": "minekea:block/furniture/shelves/supported/oak",
+      "y": 90
+    },
+    "wall_side=north": {
+      "model": "minekea:block/furniture/shelves/supported/oak"
+    },
+    "wall_side=south": {
+      "model": "minekea:block/furniture/shelves/supported/oak",
+      "y": 180
+    },
+    "wall_side=west": {
+      "model": "minekea:block/furniture/shelves/supported/oak",
+      "y": 270
+    }
+  }
+}
