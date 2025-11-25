@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "candles=1,lit=false": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_one"
+    },
+    "candles=1,lit=true": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_one_lit"
+    },
+    "candles=2,lit=false": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_two"
+    },
+    "candles=2,lit=true": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_two_lit"
+    },
+    "candles=3,lit=false": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_three"
+    },
+    "candles=3,lit=true": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_three_lit"
+    },
+    "candles=4,lit=false": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_four"
+    },
+    "candles=4,lit=true": {
+      "model": "minekea:block/decorations/candles/cyan_votive_candle_four_lit"
+    }
+  }
+}

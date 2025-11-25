@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:black_candle",
+    "minecraft:black_candle",
+    "minecraft:black_candle",
+    "minecraft:black_candle",
+    "minecraft:glass"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minekea:decorations/candles/black_votive_candle"
+  }
+}

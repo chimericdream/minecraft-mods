@@ -8,6 +8,13 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.BlockRenderLayer;
 
+//import com.chimericdream.minekea.fabric.client.render.block.GlassJarBlockEntityRenderer;
+//import com.chimericdream.minekea.fabric.client.render.item.GlassJarItemRenderer;
+//import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+//import static com.chimericdream.minekea.block.containers.ContainerBlocks.GLASS_JAR;
+//import static com.chimericdream.minekea.block.containers.ContainerBlocks.GLASS_JAR_BLOCK_ENTITY;
+//import static com.chimericdream.minekea.item.containers.ContainerItems.GLASS_JAR_ITEM;
+
 public final class MinekeaFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {

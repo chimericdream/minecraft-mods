@@ -4,7 +4,6 @@
 //import com.chimericdream.lib.fabric.items.FabricItemDataGenerator;
 //import com.chimericdream.minekea.item.ingredients.WaxItem;
 //import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-//import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 //import net.minecraft.data.client.ItemModelGenerator;
 //import net.minecraft.data.client.Models;
 //import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;

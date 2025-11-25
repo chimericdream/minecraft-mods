@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:magenta_candle",
+    "minecraft:magenta_candle",
+    "minecraft:magenta_candle",
+    "minecraft:magenta_candle",
+    "minecraft:glass"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minekea:decorations/candles/magenta_votive_candle"
+  }
+}

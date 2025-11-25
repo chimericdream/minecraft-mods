@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:candle",
+    "minecraft:candle",
+    "minecraft:candle",
+    "minecraft:candle",
+    "minecraft:glass"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minekea:decorations/candles/plain_votive_candle"
+  }
+}

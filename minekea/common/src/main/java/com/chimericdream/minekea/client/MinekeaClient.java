@@ -16,9 +16,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 //import com.chimericdream.minekea.block.furniture.armoires.Armoires;
-//import com.chimericdream.minekea.block.furniture.shelves.Shelves;
 //import com.chimericdream.minekea.client.render.block.ArmoireBlockEntityRenderer;
-//import com.chimericdream.minekea.client.render.block.ShelfBlockEntityRenderer;
 //import com.chimericdream.minekea.client.screen.BlockPainterScreen;
 
 @Environment(EnvType.CLIENT)

@@ -7,6 +7,8 @@
 //import net.minecraft.block.BlockState;
 //import net.minecraft.block.entity.BlockEntity;
 //import net.minecraft.block.entity.BlockEntityType;
+//import net.minecraft.entity.EntityType;
+//import net.minecraft.entity.TypedEntityData;
 //import net.minecraft.fluid.Fluid;
 //import net.minecraft.fluid.Fluids;
 //import net.minecraft.inventory.Inventories;
@@ -22,6 +24,8 @@
 //import net.minecraft.sound.SoundCategory;
 //import net.minecraft.sound.SoundEvent;
 //import net.minecraft.sound.SoundEvents;
+//import net.minecraft.storage.ReadView;
+//import net.minecraft.storage.WriteView;
 //import net.minecraft.util.Identifier;
 //import net.minecraft.util.collection.DefaultedList;
 //import net.minecraft.util.math.BlockPos;
@@ -41,7 +45,7 @@
 //    private Fluid storedFluid = Fluids.EMPTY;
 //    private double fluidAmountInBuckets = 0.0;
 //
-//    private NbtCompound storedMobData = new NbtCompound();
+//    private TypedEntityData<EntityType<?>> storedMobData = null;
 //
 //    public static final String ITEM_AMT_KEY = "FullItemStacks";
 //    public static final String FLUID_KEY = "StoredFluid";
@@ -56,7 +60,7 @@
 //        super(type, pos, state);
 //    }
 //
-//    public NbtCompound getStoredMobData() {
+//    public TypedEntityData<EntityType<?>> getStoredMobData() {
 //        return storedMobData;
 //    }
 //
@@ -307,24 +311,30 @@
 //    }
 //
 //    @Override
-//    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+//    protected void writeData(WriteView view) {
+//        super.writeData(view);
+//        Inventories.writeData(view, this.items);
+//    }
+//
+//    @Override
+//    protected void readData(ReadView view) {
 //        items.clear();
 //
-//        super.readNbt(nbt, registryLookup);
+//        super.readData(view);
 //
-//        boolean hasFluid = readFluidNbt(nbt);
-//        boolean hasMob = readMobNbt(nbt);
+//        boolean hasFluid = readFluidView(view);
+//        boolean hasMob = readMobView(view);
 //
 //        if (!hasFluid && !hasMob) {
-//            Inventories.readNbt(nbt, items, registryLookup);
-//            fullItemStacks = nbt.getInt(ITEM_AMT_KEY);
+//            Inventories.readData(view, this.items);
+//            fullItemStacks = view.getInt(ITEM_AMT_KEY, 0);
 //        }
 //
 //        markDirty();
 //    }
 //
-//    private boolean readFluidNbt(NbtCompound nbt) {
-//        String fluidKey = nbt.getString(FLUID_KEY);
+//    private boolean readFluidView(ReadView view) {
+//        String fluidKey = view.getString(FLUID_KEY, "NONE");
 //
 //        if (fluidKey.equals("NONE")) {
 //            storedFluid = Fluids.EMPTY;
@@ -334,13 +344,13 @@
 //        }
 //
 //        storedFluid = Registries.FLUID.get(Identifier.of(fluidKey));
-//        fluidAmountInBuckets = nbt.getDouble(FLUID_AMT_KEY);
+//        fluidAmountInBuckets = view.getDouble(FLUID_AMT_KEY, 0.0);
 //
 //        return true;
 //    }
 //
-//    private boolean readMobNbt(NbtCompound nbt) {
-//        storedMobData = nbt.getCompound(MOB_DATA_KEY);
+//    private boolean readMobView(ReadView view) {
+//        storedMobData = view.read(MOB_DATA_KEY);
 //
 //        return !storedMobData.isEmpty();
 //    }

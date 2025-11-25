@@ -9,7 +9,12 @@ import net.minecraft.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.chimericdream.minekea.ModInfo;
 //import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
+//import net.minecraft.block.entity.BlockEntityType;
+//import net.minecraft.util.Identifier;
+//import java.util.Set;
+//import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class ContainerBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();

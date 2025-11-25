@@ -16,16 +16,15 @@
 //import net.minecraft.client.util.math.MatrixStack;
 //import net.minecraft.entity.Entity;
 //import net.minecraft.entity.EntityType;
+//import net.minecraft.entity.SpawnReason;
+//import net.minecraft.entity.TypedEntityData;
 //import net.minecraft.fluid.Fluid;
 //import net.minecraft.fluid.Fluids;
 //import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NbtCompound;
 //import net.minecraft.util.math.BlockPos;
 //import net.minecraft.util.math.Direction;
 //import net.minecraft.world.World;
 //import org.joml.Quaternionf;
-//
-//import java.util.Optional;
 //
 //public abstract class GlassJarBlockEntityRendererLogic {
 //    protected static final float yLightFactor = 0.5f;
@@ -59,8 +58,8 @@
 //    }
 //
 //    protected void renderMob(GlassJarBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
-//        NbtCompound mobData = entity.getStoredMobData();
-//        if (mobData.isEmpty()) {
+//        TypedEntityData<EntityType<?>> mobData = entity.getStoredMobData();
+//        if (mobData == null) {
 //            return;
 //        }
 //
@@ -69,16 +68,17 @@
 //            return;
 //        }
 //
-//        Optional<Entity> mob = EntityType.getEntityFromNbt(mobData, world);
+//        Entity mob = mobData.getType().create(world, SpawnReason.CONVERSION);
+//        EntityType.loadFromEntityNbt(world, null, mob, mobData);
 //
-//        if (mob.isEmpty()) {
+//        if (mob == null) {
 //            return;
 //        }
 //
 //        matrices.push();
 //        matrices.translate(0.5f, 0f, 0.5f);
 //        float f = 0.34375f;
-//        float g = Math.max(mob.get().getWidth(), mob.get().getHeight());
+//        float g = Math.max(mob.getWidth(), mob.getHeight());
 //        if ((double) g > 1.0) {
 //            f /= g;
 //        }
@@ -102,7 +102,7 @@
 //            }
 //        }
 //
-//        entityRenderer.render(mob.get(), 0.0, 0.0, 0.0, 0.0f, 0.0f, matrices, vertexConsumers, light);
+//        entityRenderer.render(mob, 0.0, 0.0, 0.0, 0.0f, 0.0f, matrices, vertexConsumers, light);
 //        matrices.pop();
 //    }
 //
