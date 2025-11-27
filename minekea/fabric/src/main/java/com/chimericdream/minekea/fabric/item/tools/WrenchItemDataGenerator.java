@@ -1,54 +1,56 @@
-//package com.chimericdream.minekea.fabric.item.tools;
-//
-//import com.chimericdream.lib.fabric.items.FabricItemDataGenerator;
-//import com.chimericdream.lib.tags.CommonItemTags;
-//import com.chimericdream.minekea.item.Tools;
-//import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-//import net.minecraft.data.server.recipe.RecipeExporter;
-//import net.minecraft.item.Item;
-//import net.minecraft.item.Items;
-//import net.minecraft.recipe.book.RecipeCategory;
-//import net.minecraft.registry.RegistryWrapper;
-//import net.minecraft.registry.tag.TagKey;
-//
-//import java.util.function.Function;
-//
-//public class WrenchItemDataGenerator implements FabricItemDataGenerator {
-//    private final Item ITEM;
-//
-//    public WrenchItemDataGenerator() {
-//        ITEM = Tools.WRENCH_ITEM.get();
-//    }
-//
-/// /    @Override
-/// /    public void register() {
-/// /        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
-/// /            .register((itemGroup) -> {
-/// /                itemGroup.add(this);
-/// /            });
-/// /    }
-//
+package com.chimericdream.minekea.fabric.item.tools;
+
+import com.chimericdream.lib.tags.CommonItemTags;
+import com.chimericdream.minekea.fabric.data.ChimericLibItemDataGenerator;
+import com.chimericdream.minekea.item.Tools;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.tag.ProvidedTagBuilder;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
+
+import java.util.function.Function;
+
+public class WrenchItemDataGenerator extends ChimericLibItemDataGenerator {
+    private final Item ITEM;
+
+    public WrenchItemDataGenerator() {
+        ITEM = Tools.WRENCH_ITEM.get();
+    }
+
 //    @Override
-//    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-//        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
-//            .pattern(" # ")
-//            .pattern(" ##")
-//            .pattern("#  ")
-//            .input('#', net.minecraft.item.Items.IRON_INGOT)
-//            .criterion(RecipeGenerator.hasItem(Items.IRON_INGOT),
-//                generator.conditionsFromItem(Items.IRON_INGOT))
-//            .offerTo(exporter);
+//    public void register() {
+//        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
+//            .register((itemGroup) -> {
+//                itemGroup.add(this);
+//            });
 //    }
-//
-//    @Override
-//    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-//        getBuilder.apply(CommonItemTags.WRENCHES)
-//            .setReplace(false)
-//            .add(ITEM);
-//    }
-//
-//    @Override
-//    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-//        translationBuilder.add(ITEM, "Wrench");
-//    }
-//}
+
+    @Override
+    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
+                .pattern(" # ")
+                .pattern(" ##")
+                .pattern("#  ")
+                .input('#', net.minecraft.item.Items.IRON_INGOT)
+                .criterion(RecipeGenerator.hasItem(Items.IRON_INGOT),
+                        generator.conditionsFromItem(Items.IRON_INGOT))
+                .offerTo(exporter);
+    }
+
+    @Override
+    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+        getBuilder.apply(CommonItemTags.WRENCHES)
+                .setReplace(false)
+                .add(ITEM);
+    }
+
+    @Override
+    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+        translationBuilder.add(ITEM, "Wrench");
+    }
+}

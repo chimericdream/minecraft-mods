@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "minekea:tools/hammers/diamond",
+  "result": {
+    "id": "minekea:tools/hammers/netherite"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

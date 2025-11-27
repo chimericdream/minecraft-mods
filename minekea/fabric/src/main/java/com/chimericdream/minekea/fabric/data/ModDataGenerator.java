@@ -1,7 +1,9 @@
 package com.chimericdream.minekea.fabric.data;
 
 import com.chimericdream.minekea.fabric.block.ModBlockDataGenerators;
+import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
+import com.chimericdream.minekea.fabric.util.ItemDataGeneratorGroup;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -17,8 +19,6 @@ import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
-
-//import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
 //import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
 
 public class ModDataGenerator implements DataGeneratorEntrypoint {
@@ -37,7 +37,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             new TextureGenerator(pack);
 
             ModBlockDataGenerators.BLOCK_GROUPS.forEach(BlockDataGeneratorGroup::generateTextures);
-//            ModItemDataGenerators.ITEM_GROUPS.forEach(ItemDataGeneratorGroup::generateTextures);
+            ModItemDataGenerators.ITEM_GROUPS.forEach(ItemDataGeneratorGroup::generateTextures);
         }
     }
 
@@ -55,11 +55,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                         group.configureRecipes(registryLookup, exporter, this);
                     }
 
-//                    for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-//                        group.configureRecipes(exporter);
-//                    }
+                    for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
+                        group.configureRecipes(registryLookup, exporter, this);
+                    }
 
-//            MinekeaMod.ITEMS.configureRecipes(exporter);
+//                    MinekeaMod.ITEMS.configureRecipes(exporter);
                 }
             };
         }
@@ -96,9 +96,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                 group.configureItemTags(arg, this::valueLookupBuilder);
             }
 
-//            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-//                group.configureItemTags(arg, this::valueLookupBuilder);
-//            }
+            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
+                group.configureItemTags(arg, this::valueLookupBuilder);
+            }
 
 //            MinekeaMod.ITEMS.configureItemTags(arg, this::getOrCreateTagBuilder);
         }
@@ -115,10 +115,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                 group.configureTranslations(registryLookup, translationBuilder);
             }
 
-//            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-//                group.configureTranslations(registryLookup, translationBuilder);
-//            }
-//
+            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
+                group.configureTranslations(registryLookup, translationBuilder);
+            }
+
 //            ModRegistryDataGenerator.configureTranslations(registryLookup, translationBuilder);
 
 //            MinekeaMod.ITEMS.configureTranslations(registryLookup, translationBuilder);
@@ -160,9 +160,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                 group.configureItemModels(itemModelGenerator);
             }
 
-//            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-//                group.configureItemModels(itemModelGenerator);
-//            }
+            for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
+                group.configureItemModels(itemModelGenerator);
+            }
 
 //            MinekeaMod.ITEMS.configureItemModels(itemModelGenerator);
         }

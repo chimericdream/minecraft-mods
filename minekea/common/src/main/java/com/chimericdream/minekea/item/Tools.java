@@ -1,6 +1,7 @@
 package com.chimericdream.minekea.item;
 
 import com.chimericdream.minekea.item.tools.HammerItem;
+import com.chimericdream.minekea.item.tools.WrenchItem;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
@@ -24,8 +25,8 @@ public class Tools implements ModThingGroup {
     public static final RegistrySupplier<Item> DIAMOND_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("diamond"), () -> new HammerItem(ToolMaterial.DIAMOND, 7, "Diamond", Items.DIAMOND, null));
     public static final RegistrySupplier<Item> NETHERITE_HAMMER_ITEM = REGISTRY_HELPER.registerItem(HammerItem.makeId("netherite"), () -> new HammerItem(ToolMaterial.NETHERITE, 8, "Netherite", Items.NETHERITE_INGOT, null, new Item.Settings().fireproof()));
 
-//    public static final RegistrySupplier<Item> BLOCK_PAINTER_ITEM = REGISTRY_HELPER.registerItem(BlockPainterItem.ITEM_ID, BlockPainterItem::new);
-//    public static final RegistrySupplier<Item> WRENCH_ITEM = REGISTRY_HELPER.registerItem(WrenchItem.ITEM_ID, WrenchItem::new);
+    //    public static final RegistrySupplier<Item> BLOCK_PAINTER_ITEM = REGISTRY_HELPER.registerItem(BlockPainterItem.ITEM_ID, BlockPainterItem::new);
+    public static final RegistrySupplier<Item> WRENCH_ITEM = REGISTRY_HELPER.registerItem(WrenchItem.ITEM_ID, WrenchItem::new);
 
 //    public static final RegistrySupplier<ScreenHandlerType<BlockPainterScreenHandler>> BLOCK_PAINTER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(BlockPainterScreenHandler.SCREEN_ID, () -> new ScreenHandlerType<>(BlockPainterScreenHandler::new, FeatureSet.empty()));
 
@@ -39,6 +40,6 @@ public class Tools implements ModThingGroup {
 
         ITEMS.addAll(HAMMERS);
 //        ITEMS.add(BLOCK_PAINTER_ITEM);
-//        ITEMS.add(WRENCH_ITEM);
+        ITEMS.add(WRENCH_ITEM);
     }
 }

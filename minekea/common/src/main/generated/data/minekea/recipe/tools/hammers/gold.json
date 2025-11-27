@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "minecraft:gold_ingot",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "ISI",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:tools/hammers/gold"
+  }
+}
