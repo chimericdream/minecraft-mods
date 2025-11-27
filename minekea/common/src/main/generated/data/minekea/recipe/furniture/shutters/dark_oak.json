@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:dark_oak_log",
+    "X": "minecraft:dark_oak_planks"
+  },
+  "pattern": [
+    "#X#",
+    "#X#",
+    "#X#"
+  ],
+  "result": {
+    "count": 6,
+    "id": "minekea:furniture/shutters/dark_oak"
+  }
+}

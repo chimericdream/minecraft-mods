@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "half=left,wall_side=east": {
+      "model": "minekea:block/furniture/shutters/crimson_open_right_half",
+      "y": 270
+    },
+    "half=left,wall_side=north": {
+      "model": "minekea:block/furniture/shutters/crimson_open_right_half",
+      "y": 180
+    },
+    "half=left,wall_side=south": {
+      "model": "minekea:block/furniture/shutters/crimson_open_right_half"
+    },
+    "half=left,wall_side=west": {
+      "model": "minekea:block/furniture/shutters/crimson_open_right_half",
+      "y": 90
+    },
+    "half=right,wall_side=east": {
+      "model": "minekea:block/furniture/shutters/crimson_open_left_half",
+      "y": 270
+    },
+    "half=right,wall_side=north": {
+      "model": "minekea:block/furniture/shutters/crimson_open_left_half",
+      "y": 180
+    },
+    "half=right,wall_side=south": {
+      "model": "minekea:block/furniture/shutters/crimson_open_left_half"
+    },
+    "half=right,wall_side=west": {
+      "model": "minekea:block/furniture/shutters/crimson_open_left_half",
+      "y": 90
+    }
+  }
+}

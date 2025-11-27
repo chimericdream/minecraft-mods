@@ -2,13 +2,7 @@ package com.chimericdream.minekea.block.furniture.shutters;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -184,17 +178,19 @@ public class OpenShutterHalfBlock extends Block implements Waterloggable {
             world.scheduleFluidTick(centerPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        ItemEntity itemEntity = new ItemEntity(
-            world,
-            (double) pos.getX() + 0.5D,
-            (double) pos.getY() + 0.5D,
-            (double) pos.getZ() + 0.5D,
-            Shutters.SHUTTER_BLOCKS.get(config.getMaterial()).get().asItem().getDefaultStack()
-        );
+        if (!player.isCreative()) {
+            ItemEntity itemEntity = new ItemEntity(
+                world,
+                (double) pos.getX() + 0.5D,
+                (double) pos.getY() + 0.5D,
+                (double) pos.getZ() + 0.5D,
+                Shutters.SHUTTER_BLOCKS.get(config.getMaterial()).get().asItem().getDefaultStack()
+            );
 
-        itemEntity.setToDefaultPickupDelay();
+            itemEntity.setToDefaultPickupDelay();
 
-        world.spawnEntity(itemEntity);
+            world.spawnEntity(itemEntity);
+        }
 
         return super.onBreak(world, centerPos, centerState, player);
     }
