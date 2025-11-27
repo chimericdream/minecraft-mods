@@ -68,7 +68,7 @@ public class SimpleSeatEntity extends Entity {
 
         @Override
         public EntityRenderState createRenderState() {
-            return null;
+            return new EntityRenderState();
         }
     }
 }
