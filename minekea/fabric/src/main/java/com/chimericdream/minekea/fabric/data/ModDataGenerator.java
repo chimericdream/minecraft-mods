@@ -2,6 +2,7 @@ package com.chimericdream.minekea.fabric.data;
 
 import com.chimericdream.minekea.fabric.block.ModBlockDataGenerators;
 import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
+import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 import com.chimericdream.minekea.fabric.util.ItemDataGeneratorGroup;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -19,7 +20,6 @@ import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
-//import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
 
 public class ModDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -119,7 +119,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                 group.configureTranslations(registryLookup, translationBuilder);
             }
 
-//            ModRegistryDataGenerator.configureTranslations(registryLookup, translationBuilder);
+            ModRegistryDataGenerator.configureTranslations(registryLookup, translationBuilder);
 
 //            MinekeaMod.ITEMS.configureTranslations(registryLookup, translationBuilder);
         }

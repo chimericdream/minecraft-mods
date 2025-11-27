@@ -7,6 +7,7 @@ import com.chimericdream.minekea.block.furniture.pillows.Pillows;
 import com.chimericdream.minekea.block.furniture.seats.Seats;
 import com.chimericdream.minekea.block.furniture.shelves.Shelves;
 import com.chimericdream.minekea.block.furniture.shutters.Shutters;
+import com.chimericdream.minekea.block.furniture.tables.Tables;
 import com.chimericdream.minekea.block.furniture.trapdoors.Trapdoors;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
@@ -29,10 +30,10 @@ public class FurnitureBlocksDataGenerator implements BlockDataGeneratorGroup {
         Shelves.FLOATING_SHELF_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new FloatingShelfBlockDataGenerator(block.get())));
         Shutters.SHUTTER_BLOCKS.values().forEach(block -> BLOCK_GENERATORS.add(new ShutterBlockDataGenerator(block.get())));
         Shutters.OPEN_SHUTTER_HALF_BLOCKS.values().forEach(block -> BLOCK_GENERATORS.add(new OpenShutterHalfBlockDataGenerator(block.get())));
-//        Tables.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new TableBlockDataGenerator(block.get())));
+        Tables.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new TableBlockDataGenerator(block.get())));
         Trapdoors.BOOKSHELF_TRAPDOOR_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfTrapdoorBlockDataGenerator(block.get())));
-//
-//        BLOCK_GENERATORS.add(new TableBlockDataGenerator.TableTooltipDataGenerator());
+
+        BLOCK_GENERATORS.add(new TableBlockDataGenerator.TableTooltipDataGenerator());
     }
 
     @Override
