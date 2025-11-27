@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/slabs/bookshelves/vertical/polished_diorite"
+          "name": "minekea:building/slabs/vertical/polished_diorite"
         }
       ],
       "rolls": 1.0

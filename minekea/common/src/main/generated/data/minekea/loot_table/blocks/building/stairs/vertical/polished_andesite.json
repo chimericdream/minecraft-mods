@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/stairs/bookshelves/vertical/polished_andesite"
+          "name": "minekea:building/stairs/vertical/polished_andesite"
         }
       ],
       "rolls": 1.0

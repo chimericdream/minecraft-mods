@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/slabs/bookshelves/vertical/spruce"
+          "name": "minekea:building/slabs/vertical/spruce"
         }
       ],
       "rolls": 1.0

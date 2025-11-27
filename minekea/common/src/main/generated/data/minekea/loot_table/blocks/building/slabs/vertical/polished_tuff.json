@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/slabs/bookshelves/vertical/polished_tuff"
+          "name": "minekea:building/slabs/vertical/polished_tuff"
         }
       ],
       "rolls": 1.0

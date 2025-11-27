@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:building/stairs/bookshelves/vertical/polished_deepslate"
+          "name": "minekea:building/stairs/vertical/polished_deepslate"
         }
       ],
       "rolls": 1.0
