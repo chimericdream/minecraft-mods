@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
+import com.chimericdream.minekea.block.furniture.armoires.Armoires;
 import com.chimericdream.minekea.block.furniture.bookshelves.Bookshelves;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.doors.Doors;
@@ -19,7 +20,7 @@ public class FurnitureBlocksDataGenerator implements BlockDataGeneratorGroup {
     protected static final List<ChimericLibBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
 
     static {
-//        Armoires.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new ArmoireBlockDataGenerator(block.get())));
+        Armoires.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new ArmoireBlockDataGenerator(block.get())));
         Bookshelves.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfBlockDataGenerator(block.get())));
         DisplayCases.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new DisplayCaseBlockDataGenerator(block.get())));
         Doors.BOOKSHELF_DOOR_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BookshelfDoorBlockDataGenerator(block.get())));

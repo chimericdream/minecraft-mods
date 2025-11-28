@@ -1,0 +1,33 @@
+{
+  "variants": {
+    "facing=east,half=lower": {
+      "model": "minekea:block/furniture/armoires/mangrove_bottom",
+      "y": 180
+    },
+    "facing=east,half=upper": {
+      "model": "minekea:block/furniture/armoires/mangrove_top",
+      "y": 180
+    },
+    "facing=north,half=lower": {
+      "model": "minekea:block/furniture/armoires/mangrove_bottom",
+      "y": 90
+    },
+    "facing=north,half=upper": {
+      "model": "minekea:block/furniture/armoires/mangrove_top",
+      "y": 90
+    },
+    "facing=south,half=lower": {
+      "model": "minekea:block/furniture/armoires/mangrove_bottom"
+    },
+    "facing=south,half=upper": {
+      "model": "minekea:block/furniture/armoires/mangrove_top",
+      "y": 270
+    },
+    "facing=west,half=lower": {
+      "model": "minekea:block/furniture/armoires/mangrove_bottom"
+    },
+    "facing=west,half=upper": {
+      "model": "minekea:block/furniture/armoires/mangrove_top"
+    }
+  }
+}

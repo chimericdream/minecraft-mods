@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.block.furniture;
 
+import com.chimericdream.minekea.block.furniture.armoires.Armoires;
 import com.chimericdream.minekea.block.furniture.bookshelves.Bookshelves;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.doors.Doors;
@@ -20,7 +21,7 @@ public class FurnitureBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
     static {
-//        BLOCKS.addAll(Armoires.BLOCKS);
+        BLOCKS.addAll(Armoires.BLOCKS);
         BLOCKS.addAll(Bookshelves.BLOCKS);
         BLOCKS.addAll(DisplayCases.BLOCKS);
         BLOCKS.addAll(Doors.BLOCKS);

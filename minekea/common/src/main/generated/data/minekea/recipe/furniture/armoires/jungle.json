@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:jungle_planks",
+    "B": "minecraft:jungle_slab",
+    "C": "minecraft:chest",
+    "S": "minecraft:armor_stand"
+  },
+  "pattern": [
+    "BSB",
+    "BCB",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:furniture/armoires/jungle"
+  }
+}

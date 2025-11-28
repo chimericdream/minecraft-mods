@@ -7,13 +7,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.command.ModelCommandRenderer;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
@@ -33,15 +31,9 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<DisplayCaseBlockEntity, DisplayCaseBlockEntityRenderState> {
-    //    protected final BlockEntityRenderDispatcher dispatcher;
-    private final ItemRenderer itemRenderer;
-    private final TextRenderer textRenderer;
     private final BlockEntityRendererFactory.Context context;
 
     public DisplayCaseBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-//        this.dispatcher = ctx.getRenderDispatcher();
-        this.itemRenderer = ctx.itemRenderer();
-        this.textRenderer = ctx.textRenderer();
         this.context = ctx;
     }
 
