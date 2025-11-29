@@ -1,24 +1,21 @@
-//package com.chimericdream.minekea.data.nbt;
-//
-//import net.minecraft.component.DataComponentTypes;
-//import net.minecraft.component.type.NbtComponent;
-//import net.minecraft.inventory.Inventories;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NbtCompound;
-//import net.minecraft.registry.RegistryWrapper;
-//import net.minecraft.util.collection.DefaultedList;
-//
-//public class NbtHelpers {
-//    public static void setCustomDataFromNbt(ItemStack itemStack, NbtCompound nbt) {
-//        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
-//    }
-//
-//    public static NbtCompound getOrCreateNbt(ItemStack stack) {
-//        NbtComponent component = stack.get(DataComponentTypes.CUSTOM_DATA);
-//        NbtCompound nbt = component != null ? component.copyNbt() : new NbtCompound();
-//
-//        return nbt;
-//    }
+package com.chimericdream.minekea.data.nbt;
+
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+
+public class NbtHelpers {
+    public static void setCustomDataFromNbt(ItemStack itemStack, NbtCompound nbt) {
+        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+    }
+
+    public static NbtCompound getOrCreateNbt(ItemStack stack) {
+        NbtComponent component = stack.get(DataComponentTypes.CUSTOM_DATA);
+        NbtCompound nbt = component != null ? component.copyNbt() : new NbtCompound();
+
+        return nbt;
+    }
 //
 //    public static DefaultedList<ItemStack> getInventory(ItemStack stack, int size, RegistryWrapper.WrapperLookup registries) {
 //        return getInventory(getOrCreateNbt(stack), size, registries);
@@ -30,4 +27,4 @@
 //
 //        return items;
 //    }
-//}
+}

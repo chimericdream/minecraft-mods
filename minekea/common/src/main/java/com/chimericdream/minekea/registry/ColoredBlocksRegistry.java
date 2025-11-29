@@ -143,29 +143,29 @@ public class ColoredBlocksRegistry {
     }
 
     public enum BlockColor {
-        NONE(-1, -1, null),
-        WHITE(0, 2232000, Items.WHITE_DYE),
-        LIGHT_GRAY(1, 2232001, Items.LIGHT_GRAY_DYE),
-        GRAY(2, 2232002, Items.GRAY_DYE),
-        BLACK(3, 2232003, Items.BLACK_DYE),
-        BROWN(4, 2232004, Items.BROWN_DYE),
-        RED(5, 2232005, Items.RED_DYE),
-        ORANGE(6, 2232006, Items.ORANGE_DYE),
-        YELLOW(7, 2232007, Items.YELLOW_DYE),
-        LIME(8, 2232008, Items.LIME_DYE),
-        GREEN(9, 2232009, Items.GREEN_DYE),
-        CYAN(10, 2232010, Items.CYAN_DYE),
-        LIGHT_BLUE(11, 2232011, Items.LIGHT_BLUE_DYE),
-        BLUE(12, 2232012, Items.BLUE_DYE),
-        PURPLE(13, 2232013, Items.PURPLE_DYE),
-        MAGENTA(14, 2232014, Items.MAGENTA_DYE),
-        PINK(15, 2232015, Items.PINK_DYE);
+        NONE(-1, "-1", null),
+        WHITE(0, "2232000", Items.WHITE_DYE),
+        LIGHT_GRAY(1, "2232001", Items.LIGHT_GRAY_DYE),
+        GRAY(2, "2232002", Items.GRAY_DYE),
+        BLACK(3, "2232003", Items.BLACK_DYE),
+        BROWN(4, "2232004", Items.BROWN_DYE),
+        RED(5, "2232005", Items.RED_DYE),
+        ORANGE(6, "2232006", Items.ORANGE_DYE),
+        YELLOW(7, "2232007", Items.YELLOW_DYE),
+        LIME(8, "2232008", Items.LIME_DYE),
+        GREEN(9, "2232009", Items.GREEN_DYE),
+        CYAN(10, "2232010", Items.CYAN_DYE),
+        LIGHT_BLUE(11, "2232011", Items.LIGHT_BLUE_DYE),
+        BLUE(12, "2232012", Items.BLUE_DYE),
+        PURPLE(13, "2232013", Items.PURPLE_DYE),
+        MAGENTA(14, "2232014", Items.MAGENTA_DYE),
+        PINK(15, "2232015", Items.PINK_DYE);
 
         private final int idx;
-        private final int modelNumber;
+        private final String modelNumber;
         private final Item dye;
 
-        BlockColor(int idx, int modelNumber, Item dye) {
+        BlockColor(int idx, String modelNumber, Item dye) {
             this.idx = idx;
             this.modelNumber = modelNumber;
             this.dye = dye;
@@ -185,7 +185,7 @@ public class ColoredBlocksRegistry {
             return idx;
         }
 
-        public int getModelNumber() {
+        public String getModelNumber() {
             return modelNumber;
         }
 

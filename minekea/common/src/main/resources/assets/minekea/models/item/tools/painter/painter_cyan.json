@@ -1,5 +1,5 @@
 {
-    "parent": "item/generated",
+    "parent": "minecraft:item/handheld",
     "textures": {
         "layer0": "minekea:item/tools/painter/painter_cyan"
     }

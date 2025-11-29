@@ -4,9 +4,14 @@ import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.block.decorations.candles.VotiveCandles;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.client.MinekeaClient;
+import com.chimericdream.minekea.network.CyclePainterColorPayload;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.BlockRenderLayer;
+
+import static com.chimericdream.minekea.client.Keybindings.CYCLE_PAINTER_COLOR;
 
 //import com.chimericdream.minekea.fabric.client.render.block.GlassJarBlockEntityRenderer;
 //import com.chimericdream.minekea.fabric.client.render.item.GlassJarItemRenderer;
@@ -51,10 +56,10 @@ public final class MinekeaFabricClient implements ClientModInitializer {
     }
 
     private void initializeKeybindings() {
-//        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-//            if (CYCLE_PAINTER_COLOR.wasPressed()) {
-//                ClientPlayNetworking.send(new CyclePainterColorPayload(true));
-//            }
-//        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (CYCLE_PAINTER_COLOR.wasPressed()) {
+                ClientPlayNetworking.send(new CyclePainterColorPayload(true));
+            }
+        });
     }
 }

@@ -1,0 +1,124 @@
+{
+    "model": {
+        "type": "select",
+        "property": "custom_model_data",
+        "fallback": {
+            "type": "minecraft:model",
+            "model": "minekea:item/tools/painter/painter_white"
+        },
+        "cases": [
+            {
+                "when": "2232000",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_white"
+                }
+            },
+            {
+                "when": "2232001",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_light_gray"
+                }
+            },
+            {
+                "when": "2232002",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_gray"
+                }
+            },
+            {
+                "when": "2232003",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_black"
+                }
+            },
+            {
+                "when": "2232004",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_brown"
+                }
+            },
+            {
+                "when": "2232005",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_red"
+                }
+            },
+            {
+                "when": "2232006",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_orange"
+                }
+            },
+            {
+                "when": "2232007",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_yellow"
+                }
+            },
+            {
+                "when": "2232008",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_lime"
+                }
+            },
+            {
+                "when": "2232009",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_green"
+                }
+            },
+            {
+                "when": "2232010",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_cyan"
+                }
+            },
+            {
+                "when": "2232011",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_light_blue"
+                }
+            },
+            {
+                "when": "2232012",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_blue"
+                }
+            },
+            {
+                "when": "2232013",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_purple"
+                }
+            },
+            {
+                "when": "2232014",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_magenta"
+                }
+            },
+            {
+                "when": "2232015",
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "minekea:item/tools/painter/painter_pink"
+                }
+            }
+        ]
+    }
+}
