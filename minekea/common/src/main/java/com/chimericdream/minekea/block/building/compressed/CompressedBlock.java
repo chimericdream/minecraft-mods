@@ -6,11 +6,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentsAccess;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -21,11 +18,11 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
-import java.util.function.Consumer;
+import java.util.List;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class CompressedBlock extends Block implements TooltipAppender {
+public class CompressedBlock extends Block {
     public static final String TOOLTIP_LEVEL = "block.minekea.building.compressed.tooltip.level";
     public static final String TOOLTIP_COUNT = "block.minekea.building.compressed.tooltip.count";
 
@@ -91,12 +88,10 @@ public class CompressedBlock extends Block implements TooltipAppender {
         return BlockRenderType.MODEL;
     }
 
-    @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+    public List<Text> getTooltip() {
         DecimalFormat df = new DecimalFormat("###,###,###");
 
-        textConsumer.accept(Text.translatable(TOOLTIP_LEVEL, compressionLevel));
-        textConsumer.accept(Text.translatable(TOOLTIP_COUNT, df.format(Math.pow(9, compressionLevel))));
+        return List.of(Text.translatable(TOOLTIP_LEVEL, compressionLevel), Text.translatable(TOOLTIP_COUNT, df.format(Math.pow(9, compressionLevel))));
     }
 
     protected static float getHardness(int level, float baseHardness) {

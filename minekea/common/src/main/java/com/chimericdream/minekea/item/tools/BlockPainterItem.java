@@ -28,6 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class BlockPainterItem extends Item {
@@ -67,17 +69,13 @@ public class BlockPainterItem extends Item {
         return stack;
     }
 
-//    @Override
-//    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-//        super.appendTooltip(stack, context, tooltip, options);
-//
-//        NbtCompound nbt = NbtHelpers.getOrCreateNbt(stack);
-//        String stackColor = nbt.getString("current_color");
-//        BlockColor color = BlockColor.get(stackColor);
-//
-//        MutableText text = Text.literal(String.format("Current color: %s", color));
-//        tooltip.add(text);
-//    }
+    public List<Text> getTooltip(ItemStack stack) {
+        NbtCompound nbt = NbtHelpers.getOrCreateNbt(stack);
+        String stackColor = nbt.getString("current_color", "NONE");
+        BlockColor color = BlockColor.get(stackColor);
+
+        return List.of(Text.literal(String.format("Current color: %s", color)));
+    }
 
     @Override
     public boolean isItemBarVisible(ItemStack painter) {

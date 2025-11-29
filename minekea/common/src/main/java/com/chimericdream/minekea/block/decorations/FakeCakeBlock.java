@@ -6,11 +6,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CakeBlock;
-import net.minecraft.component.ComponentsAccess;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -18,11 +14,11 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.function.Consumer;
+import java.util.List;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class FakeCakeBlock extends CakeBlock implements TooltipAppender {
+public class FakeCakeBlock extends CakeBlock {
     public final static String TOOLTIP_KEY = "block.minekea.decorations.misc.fake_cake.tooltip";
     public final static Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "decorations/misc/fake_cake");
 
@@ -35,8 +31,7 @@ public class FakeCakeBlock extends CakeBlock implements TooltipAppender {
         return ActionResult.SUCCESS;
     }
 
-    @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
-        textConsumer.accept(TextHelpers.getTooltip(TOOLTIP_KEY));
+    public List<Text> getTooltip() {
+        return List.of(TextHelpers.getTooltip(TOOLTIP_KEY));
     }
 }

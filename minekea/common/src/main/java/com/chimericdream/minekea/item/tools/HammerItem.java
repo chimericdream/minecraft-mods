@@ -2,25 +2,15 @@ package com.chimericdream.minekea.item.tools;
 
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -32,11 +22,10 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class HammerItem extends Item implements TooltipAppender {
+public class HammerItem extends Item {
     public final Identifier ITEM_ID;
 
     public final ToolMaterial material;
@@ -74,10 +63,8 @@ public class HammerItem extends Item implements TooltipAppender {
         return true;
     }
 
-    @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
-        MutableText text = Text.literal(String.format("Uses up to %d slots", this.maxSlots));
-        textConsumer.accept(text);
+    public List<Text> getTooltip() {
+        return List.of(Text.literal(String.format("Uses up to %d slots", this.maxSlots)));
     }
 
     @Override

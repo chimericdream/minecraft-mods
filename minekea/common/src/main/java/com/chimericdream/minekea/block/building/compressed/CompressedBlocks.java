@@ -3,12 +3,7 @@ package com.chimericdream.minekea.block.building.compressed;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
-import com.chimericdream.minekea.block.building.general.BasaltBricksBlock;
-import com.chimericdream.minekea.block.building.general.CrackedBasaltBricksBlock;
-import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock;
-import com.chimericdream.minekea.block.building.general.MossyBasaltBricksBlock;
-import com.chimericdream.minekea.block.building.general.WarpedBasaltBricksBlock;
-import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
+import com.chimericdream.minekea.block.building.general.*;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -30,6 +25,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class CompressedBlocks implements ModThingGroup {
     public static final Map<String, List<RegistrySupplier<Block>>> BLOCK_MAP = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Block>> COMPRESSED_BLOCKS_BY_ID = new LinkedHashMap<>();
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> COLUMN_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> MINEKEA_BLOCKS = new ArrayList<>();
@@ -175,20 +171,22 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                compressedBlocks.add(
-                    REGISTRY_HELPER.registerWithItem(
-                        CompressedBlock.makeId(material, compressionLevel),
-                        () -> new CompressedBlock(
-                            new BlockConfig()
-                                .material(material)
-                                .materialName(materialName)
-                                .ingredient(ingredient)
-                                .tool(tool),
-                            compressionLevel
-                        ),
-                        getItemSettings(material)
-                    )
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
+                    blockId,
+                    () -> new CompressedBlock(
+                        new BlockConfig()
+                            .material(material)
+                            .materialName(materialName)
+                            .ingredient(ingredient)
+                            .tool(tool),
+                        compressionLevel
+                    ),
+                    getItemSettings(material)
                 );
+
+                COMPRESSED_BLOCKS_BY_ID.put(blockId.toString(), compressedBlock);
+                compressedBlocks.add(compressedBlock);
             }
 
             BLOCKS.addAll(compressedBlocks);
@@ -225,22 +223,24 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                compressedBlocks.add(
-                    REGISTRY_HELPER.registerWithItem(
-                        CompressedBlock.makeId(material, compressionLevel),
-                        () -> new CompressedColumnBlock(
-                            new BlockConfig()
-                                .material(material)
-                                .materialName(materialName)
-                                .ingredient(ingredient)
-                                .tool(tool),
-                            compressionLevel,
-                            sideTextureSuffix,
-                            endTextureSuffix
-                        ),
-                        getItemSettings(material)
-                    )
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
+                    blockId,
+                    () -> new CompressedColumnBlock(
+                        new BlockConfig()
+                            .material(material)
+                            .materialName(materialName)
+                            .ingredient(ingredient)
+                            .tool(tool),
+                        compressionLevel,
+                        sideTextureSuffix,
+                        endTextureSuffix
+                    ),
+                    getItemSettings(material)
                 );
+
+                COMPRESSED_BLOCKS_BY_ID.put(blockId.toString(), compressedBlock);
+                compressedBlocks.add(compressedBlock);
             }
 
             COLUMN_BLOCKS.addAll(compressedBlocks);
@@ -265,21 +265,23 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                compressedBlocks.add(
-                    REGISTRY_HELPER.registerWithItem(
-                        CompressedBlock.makeId(material, compressionLevel),
-                        () -> new CompressedMinekeaBlock(
-                            new BlockConfig()
-                                .material(material)
-                                .materialName(materialName)
-                                .ingredient(ingredient.get())
-                                .tool(tool),
-                            compressionLevel,
-                            baseBlockId
-                        ),
-                        getItemSettings(material)
-                    )
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
+                    blockId,
+                    () -> new CompressedMinekeaBlock(
+                        new BlockConfig()
+                            .material(material)
+                            .materialName(materialName)
+                            .ingredient(ingredient.get())
+                            .tool(tool),
+                        compressionLevel,
+                        baseBlockId
+                    ),
+                    getItemSettings(material)
                 );
+
+                COMPRESSED_BLOCKS_BY_ID.put(blockId.toString(), compressedBlock);
+                compressedBlocks.add(compressedBlock);
             }
 
             MINEKEA_BLOCKS.addAll(compressedBlocks);
