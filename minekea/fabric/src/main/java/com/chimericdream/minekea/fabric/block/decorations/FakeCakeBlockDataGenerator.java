@@ -4,12 +4,10 @@ import com.chimericdream.lib.tags.CommonBlockTags;
 import com.chimericdream.minekea.block.decorations.DecorationBlocks;
 import com.chimericdream.minekea.block.decorations.FakeCakeBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.ModelIds;
 import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
 import net.minecraft.client.render.model.json.WeightedVariant;
@@ -62,15 +60,13 @@ public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier identifier = ModelIds.getBlockModelId(Blocks.CAKE);
         WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(identifier);
 
+        blockStateModelGenerator.registerParentedItemModel(DecorationBlocks.FAKE_CAKE.get(), ModelIds.getItemModelId(Items.CAKE));
+
         blockStateModelGenerator.blockStateCollector
             .accept(VariantsBlockModelDefinitionCreator.of(DecorationBlocks.FAKE_CAKE.get(), model));
     }
 
     public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(DecorationBlocks.FAKE_CAKE.get());
-    }
-
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-        ModelUtils.registerGeneratedItem(itemModelGenerator, DecorationBlocks.FAKE_CAKE.get());
     }
 }
