@@ -9,16 +9,17 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class NuggetBag extends Item {
     public final Identifier ITEM_ID;
+    public final String material;
+    public final String materialName;
+    public final Item ingredient;
 
-    protected final String material;
-    protected final Item ingredient;
-
-    public NuggetBag(String material, Item ingredient) {
+    public NuggetBag(String material, String materialName, Item ingredient) {
         super(new Item.Settings().arch$tab(ItemGroups.INGREDIENTS).registryKey(REGISTRY_HELPER.makeItemRegistryKey(makeId(material))));
 
         ITEM_ID = makeId(material);
 
         this.material = material;
+        this.materialName = materialName;
         this.ingredient = ingredient;
     }
 

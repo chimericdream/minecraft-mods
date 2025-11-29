@@ -55,7 +55,7 @@ public class LanternBlockDataGenerator extends ChimericLibBlockDataGenerator {
         translationBuilder.add(BLOCK.asItem(), BLOCK.config.getName());
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK);
     }
 

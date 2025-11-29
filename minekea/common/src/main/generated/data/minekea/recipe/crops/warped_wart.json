@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:warped_wart_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:crops/warped_wart"
+  }
+}

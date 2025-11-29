@@ -99,7 +99,7 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
 //            .offerTo(exporter, BLOCK.BLOCK_ID.withSuffixedPath("_universal_dyeing").toString());
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK, generator.candleDrops(BLOCK));
     }
 

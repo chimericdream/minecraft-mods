@@ -23,8 +23,8 @@ public interface BlockDataGeneratorGroup {
         getBlockGenerators().forEach(generator -> generator.configureRecipes(registryLookup, exporter, recipeGenerator));
     }
 
-    default void configureBlockLootTables(BlockLootTableGenerator lootTableGenerator) {
-        getBlockGenerators().forEach(generator -> generator.configureBlockLootTables(lootTableGenerator));
+    default void configureBlockLootTables(BlockLootTableGenerator lootTableGenerator, RegistryWrapper.WrapperLookup registryLookup) {
+        getBlockGenerators().forEach(generator -> generator.configureBlockLootTables(lootTableGenerator, registryLookup));
     }
 
     default void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

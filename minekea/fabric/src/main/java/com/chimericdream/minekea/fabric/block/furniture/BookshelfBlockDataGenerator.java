@@ -67,7 +67,7 @@ public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .offerTo(exporter);
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK, generator.drops(BLOCK, Items.BOOK, ConstantLootNumberProvider.create(3)));
     }
 

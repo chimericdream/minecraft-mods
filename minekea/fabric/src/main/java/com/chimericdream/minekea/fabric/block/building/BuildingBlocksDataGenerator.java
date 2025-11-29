@@ -13,13 +13,7 @@ import com.chimericdream.minekea.block.building.walls.Walls;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedColumnBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedMinekeaBlockDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.BasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.ChiseledBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.CrackedBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.CrimsonBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.MossyBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.WarpedBasaltBricksDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.WaxBlockDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.*;
 import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.SlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalBookshelfSlabBlockDataGenerator;
@@ -36,7 +30,6 @@ import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-//import com.chimericdream.minekea.fabric.block.building.general.WarpedNetherBricksDataGenerator;
 
 public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
     protected static final List<ChimericLibBlockDataGenerator> BLOCK_GENERATORS = new ArrayList<>();
@@ -48,7 +41,7 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         BLOCK_GENERATORS.add(new CrimsonBasaltBricksDataGenerator());
         BLOCK_GENERATORS.add(new MossyBasaltBricksDataGenerator());
         BLOCK_GENERATORS.add(new WarpedBasaltBricksDataGenerator());
-//        BLOCK_GENERATORS.add(new WarpedNetherBricksDataGenerator());
+        BLOCK_GENERATORS.add(new WarpedNetherBricksDataGenerator());
 
         BuildingBlocks.WAX_BLOCKS.values().forEach(block -> BLOCK_GENERATORS.add(new WaxBlockDataGenerator(block.get())));
         Beams.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new BeamBlockDataGenerator(block.get())));

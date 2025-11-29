@@ -126,14 +126,17 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaBlockLootTables extends FabricBlockLootTableProvider {
+        private final RegistryWrapper.WrapperLookup registryLookup;
+
         protected MinekeaBlockLootTables(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(dataOutput, registryLookup);
+            this.registryLookup = registryLookup.join();
         }
 
         @Override
         public void generate() {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureBlockLootTables(this);
+                group.configureBlockLootTables(this, this.registryLookup);
             }
 
 //            MinekeaMod.ITEMS.configureBlockLootTables(this.registryLookup, this);

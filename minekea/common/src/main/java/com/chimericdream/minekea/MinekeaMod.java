@@ -2,6 +2,7 @@ package com.chimericdream.minekea;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.minekea.block.ModBlocks;
+import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.ModItems;
 import com.chimericdream.minekea.network.ServerNetworking;
@@ -28,7 +29,7 @@ public final class MinekeaMod {
 
         ModFluids.init();
         ModBlocks.init();
-//        ModCrops.init();
+        ModCrops.init();
         ModItems.init();
         ModItemGroups.init();
 

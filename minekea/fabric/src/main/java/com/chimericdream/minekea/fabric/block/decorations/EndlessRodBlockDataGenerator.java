@@ -30,7 +30,7 @@ public class EndlessRodBlockDataGenerator extends ChimericLibBlockDataGenerator 
         translationBuilder.add(DecorationBlocks.ENDLESS_ROD.get().asItem(), "End(less) Rod");
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(DecorationBlocks.ENDLESS_ROD.get());
     }
 }

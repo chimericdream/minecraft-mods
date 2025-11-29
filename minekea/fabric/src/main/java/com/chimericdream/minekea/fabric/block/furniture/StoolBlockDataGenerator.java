@@ -66,7 +66,7 @@ public class StoolBlockDataGenerator extends ChimericLibBlockDataGenerator {
         translationBuilder.add(BLOCK.asItem(), String.format("%s Stool", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK);
     }
 

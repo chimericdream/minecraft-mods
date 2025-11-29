@@ -45,7 +45,7 @@ public class CrackedBasaltBricksDataGenerator extends ChimericLibBlockDataGenera
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK);
     }
 

@@ -66,7 +66,7 @@ public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .accept(VariantsBlockModelDefinitionCreator.of(DecorationBlocks.FAKE_CAKE.get(), model));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(DecorationBlocks.FAKE_CAKE.get());
     }
 

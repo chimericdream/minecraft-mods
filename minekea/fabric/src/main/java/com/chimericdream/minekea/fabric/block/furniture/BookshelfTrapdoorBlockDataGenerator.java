@@ -73,7 +73,7 @@ public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGen
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator) {
+    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
         generator.addDrop(BLOCK);
     }
 
