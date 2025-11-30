@@ -1,65 +1,57 @@
-//package com.chimericdream.minekea.entity.block.containers;
-//
-//import com.chimericdream.lib.inventories.ImplementedInventory;
-//import com.chimericdream.minekea.block.containers.ContainerBlocks;
-//import com.chimericdream.minekea.fluid.ModFluids;
-//import com.chimericdream.minekea.tag.MinekeaItemTags;
-//import net.minecraft.block.BlockState;
-//import net.minecraft.block.entity.BlockEntity;
-//import net.minecraft.block.entity.BlockEntityType;
-//import net.minecraft.entity.EntityType;
-//import net.minecraft.entity.TypedEntityData;
-//import net.minecraft.fluid.Fluid;
-//import net.minecraft.fluid.Fluids;
-//import net.minecraft.inventory.Inventories;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.item.Items;
-//import net.minecraft.nbt.NbtCompound;
-//import net.minecraft.network.listener.ClientPlayPacketListener;
-//import net.minecraft.network.packet.Packet;
-//import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-//import net.minecraft.registry.Registries;
-//import net.minecraft.registry.RegistryWrapper;
-//import net.minecraft.server.world.ServerWorld;
-//import net.minecraft.sound.SoundCategory;
-//import net.minecraft.sound.SoundEvent;
-//import net.minecraft.sound.SoundEvents;
-//import net.minecraft.storage.ReadView;
-//import net.minecraft.storage.WriteView;
-//import net.minecraft.util.Identifier;
-//import net.minecraft.util.collection.DefaultedList;
-//import net.minecraft.util.math.BlockPos;
-//import net.minecraft.world.World;
-//import org.jetbrains.annotations.Nullable;
-//
-//public class GlassJarBlockEntity extends BlockEntity implements ImplementedInventory {
+package com.chimericdream.minekea.entity.block.containers;
+
+import com.chimericdream.lib.inventories.ImplementedInventory;
+import com.chimericdream.minekea.block.containers.ContainerBlocks;
+import com.chimericdream.minekea.tag.MinekeaItemTags;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.inventory.Inventories;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+public class GlassJarBlockEntity extends BlockEntity implements ImplementedInventory {
 //    public static final int MAX_BUCKETS = 8;
 //    public static final double BOTTLE_SIZE = 0.33;
-//
-//    // Since the `items` stores a single stack, the actual total is one higher than this
-//    public static final int MAX_ITEM_STACKS = 7;
-//
-//    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
-//    private int fullItemStacks = 0;
-//
+
+    // Since the `items` stores a single stack, the actual total is one higher than this
+    public static final int MAX_ITEM_STACKS = 7;
+
+    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    private int fullItemStacks = 0;
+
 //    private Fluid storedFluid = Fluids.EMPTY;
 //    private double fluidAmountInBuckets = 0.0;
 //
 //    private TypedEntityData<EntityType<?>> storedMobData = null;
-//
-//    public static final String ITEM_AMT_KEY = "FullItemStacks";
+
+    public static final String ITEM_AMT_KEY = "FullItemStacks";
 //    public static final String FLUID_KEY = "StoredFluid";
 //    public static final String FLUID_AMT_KEY = "StoredFluidAmount";
 //    public static final String MOB_DATA_KEY = "StoredMobData";
-//
-//    public GlassJarBlockEntity(BlockPos pos, BlockState state) {
-//        this(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), pos, state);
-//    }
-//
-//    public GlassJarBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-//        super(type, pos, state);
-//    }
-//
+
+    public GlassJarBlockEntity(BlockPos pos, BlockState state) {
+        this(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), pos, state);
+    }
+
+    public GlassJarBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
 //    public TypedEntityData<EntityType<?>> getStoredMobData() {
 //        return storedMobData;
 //    }
@@ -67,11 +59,11 @@
 //    public Fluid getStoredFluid() {
 //        return storedFluid;
 //    }
-//
-//    public int getStoredStacks() {
-//        return fullItemStacks;
-//    }
-//
+
+    public int getStoredStacks() {
+        return fullItemStacks;
+    }
+
 //    public double getStoredBuckets() {
 //        return fluidAmountInBuckets;
 //    }
@@ -161,178 +153,179 @@
 //
 //        return fluid;
 //    }
-//
-//    public boolean canAcceptItem(ItemStack item) {
-//        // We can't store multiple things at the same time
+
+    public boolean canAcceptItem(ItemStack item) {
+        // We can't store multiple things at the same time
 //        if (this.hasFluid() || this.hasMob()) {
 //            return false;
 //        }
-//
-//        if (!item.isIn(MinekeaItemTags.GLASS_JAR_STORABLE)) {
-//            return false;
-//        }
-//
-//        if (this.isEmpty()) {
-//            return true;
-//        }
-//
-//        ItemStack storedItem = items.get(0);
-//
-//        // If this is the same item we're already storing, AND the jar isn't full yet
-//        return item.isOf(storedItem.getItem()) && (fullItemStacks < MAX_ITEM_STACKS || storedItem.getCount() < storedItem.getMaxCount());
-//    }
-//
-//    @Override
-//    public ItemStack tryInsert(ItemStack stack) {
+
+        if (!item.isIn(MinekeaItemTags.GLASS_JAR_STORABLE)) {
+            return false;
+        }
+
+        if (this.isEmpty()) {
+            return true;
+        }
+
+        ItemStack storedItem = items.getFirst();
+
+        // If this is the same item we're already storing, AND the jar isn't full yet
+        return item.isOf(storedItem.getItem()) && (fullItemStacks < MAX_ITEM_STACKS || storedItem.getCount() < storedItem.getMaxCount());
+    }
+
+    @Override
+    public ItemStack tryInsert(ItemStack stack) {
 //        if (this.hasFluid() || this.hasMob()) {
 //            return stack;
 //        }
-//
-//        ItemStack storedItem = this.items.get(0);
-//
-//        // The jar was empty. Now it won't be
-//        if (storedItem.isEmpty()) {
-//            this.items.set(0, stack);
-//
-//            return ItemStack.EMPTY;
-//        }
-//
-//        // We're full. No dice
-//        if (this.fullItemStacks == MAX_ITEM_STACKS && storedItem.getCount() == storedItem.getMaxCount()) {
-//            return stack;
-//        }
-//
-//        // You can't insert different things
-//        if (!stack.isOf(storedItem.getItem())) {
-//            return stack;
-//        }
-//
-//        int itemCount = stack.getCount();
-//        int storedItemCount = storedItem.getCount();
-//
-//        // The stack coming in fits completely in the main inventory slot
-//        if (itemCount + storedItemCount <= storedItem.getMaxCount()) {
-//            storedItem.setCount(itemCount + storedItemCount);
-//
-//            this.items.set(0, storedItem);
-//            return ItemStack.EMPTY;
-//        }
-//
-//        int remainder = (itemCount + storedItemCount) - storedItem.getMaxCount();
-//
-//        // The stack coming in will fill up the main slot, plus a little overflow, but that's ok because we have room.
-//        if (this.fullItemStacks < MAX_ITEM_STACKS) {
-//            this.fullItemStacks += 1;
-//
-//            storedItem.setCount(remainder);
-//            this.items.set(0, storedItem);
-//
-//            return ItemStack.EMPTY;
-//        }
-//
-//        // At this point, we have MAX_ITEM_STACKS already stored, but a little space left in the "real" inventory slot
-//        storedItem.setCount(storedItem.getMaxCount());
-//        this.items.set(0, storedItem);
-//
-//        stack.setCount(remainder);
-//
-//        return stack;
-//    }
-//
-//    @Override
-//    public ItemStack removeStack() {
-//        if (!this.hasItem()) {
-//            return ItemStack.EMPTY;
-//        }
-//
-//        ItemStack stack = this.items.get(0).copy();
-//
-//        if (fullItemStacks > 1 || (fullItemStacks == 1 && stack.isStackable())) {
-//            stack.setCount(stack.getMaxCount());
-//            fullItemStacks -= 1;
-//
-//            return stack;
-//        }
-//
-//        this.items.set(0, ItemStack.EMPTY);
-//        fullItemStacks = 0;
-//
-//        return stack;
-//    }
-//
-//    public DefaultedList<ItemStack> getItemsOnBreak() {
-//        DefaultedList<ItemStack> stacks = DefaultedList.of();
-//
-//        int i = 0;
-//
-//        while (i < fullItemStacks) {
-//            ItemStack stack = this.items.get(0).copy();
-//            stack.setCount(stack.getMaxCount());
-//
-//            stacks.add(stack);
-//            i++;
-//        }
-//
-//        stacks.add(this.items.get(0));
-//
-//        return stacks;
-//    }
-//
+
+        ItemStack storedItem = this.items.getFirst();
+
+        // The jar was empty. Now it won't be
+        if (storedItem.isEmpty()) {
+            this.items.set(0, stack);
+
+            return ItemStack.EMPTY;
+        }
+
+        // We're full. No dice
+        if (this.fullItemStacks == MAX_ITEM_STACKS && storedItem.getCount() == storedItem.getMaxCount()) {
+            return stack;
+        }
+
+        // You can't insert different things
+        if (!stack.isOf(storedItem.getItem())) {
+            return stack;
+        }
+
+        int itemCount = stack.getCount();
+        int storedItemCount = storedItem.getCount();
+
+        // The stack coming in fits completely in the main inventory slot
+        if (itemCount + storedItemCount <= storedItem.getMaxCount()) {
+            storedItem.setCount(itemCount + storedItemCount);
+
+            this.items.set(0, storedItem);
+            return ItemStack.EMPTY;
+        }
+
+        int remainder = (itemCount + storedItemCount) - storedItem.getMaxCount();
+
+        // The stack coming in will fill up the main slot, plus a little overflow, but that's ok because we have room.
+        if (this.fullItemStacks < MAX_ITEM_STACKS) {
+            this.fullItemStacks += 1;
+
+            storedItem.setCount(remainder);
+            this.items.set(0, storedItem);
+
+            return ItemStack.EMPTY;
+        }
+
+        // At this point, we have MAX_ITEM_STACKS already stored, but a little space left in the "real" inventory slot
+        storedItem.setCount(storedItem.getMaxCount());
+        this.items.set(0, storedItem);
+
+        stack.setCount(remainder);
+
+        return stack;
+    }
+
+    @Override
+    public ItemStack removeStack() {
+        if (!this.hasItem()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack stack = this.items.getFirst().copy();
+
+        if (fullItemStacks > 1 || (fullItemStacks == 1 && stack.isStackable())) {
+            stack.setCount(stack.getMaxCount());
+            fullItemStacks -= 1;
+
+            return stack;
+        }
+
+        this.items.set(0, ItemStack.EMPTY);
+        fullItemStacks = 0;
+
+        return stack;
+    }
+
+    public DefaultedList<ItemStack> getItemsOnBreak() {
+        DefaultedList<ItemStack> stacks = DefaultedList.of();
+
+        int i = 0;
+
+        while (i < fullItemStacks) {
+            ItemStack stack = this.items.getFirst().copy();
+            stack.setCount(stack.getMaxCount());
+
+            stacks.add(stack);
+            i++;
+        }
+
+        stacks.add(this.items.getFirst());
+
+        return stacks;
+    }
+
 //    @Nullable
 //    public String getMobId() {
 //        if (this.hasMob()) {
-//            return storedMobData.getString("id").orElse(null);
+//            return storedMobData.copyNbtWithoutId().getString("id").orElse(null);
 //        }
 //
 //        return null;
 //    }
 //
 //    public boolean hasMob() {
-//        return !storedMobData.isEmpty();
+//        return !storedMobData.copyNbtWithoutId().isEmpty();
 //    }
 //
 //    public boolean hasFluid() {
 //        return !storedFluid.matchesType(Fluids.EMPTY);
 //    }
-//
-//    public boolean hasItem() {
+
+    public boolean hasItem() {
 //        if (!storedFluid.matchesType(Fluids.EMPTY)) {
 //            return false;
 //        }
-//
-//        ItemStack storedItem = items.get(0);
-//
-//        return !storedItem.isEmpty();
-//    }
-//
-//    @Override
-//    public DefaultedList<ItemStack> getItems() {
-//        return items;
-//    }
-//
-//    @Override
-//    protected void writeData(WriteView view) {
-//        super.writeData(view);
-//        Inventories.writeData(view, this.items);
-//    }
-//
-//    @Override
-//    protected void readData(ReadView view) {
-//        items.clear();
-//
-//        super.readData(view);
-//
+
+        ItemStack storedItem = items.getFirst();
+
+        return !storedItem.isEmpty();
+    }
+
+    @Override
+    public DefaultedList<ItemStack> getItems() {
+        return items;
+    }
+
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        Inventories.writeData(view, this.items);
+        view.putInt(ITEM_AMT_KEY, fullItemStacks);
+    }
+
+    @Override
+    protected void readData(ReadView view) {
+        items.clear();
+
+        super.readData(view);
+
 //        boolean hasFluid = readFluidView(view);
 //        boolean hasMob = readMobView(view);
 //
 //        if (!hasFluid && !hasMob) {
-//            Inventories.readData(view, this.items);
-//            fullItemStacks = view.getInt(ITEM_AMT_KEY, 0);
+        Inventories.readData(view, this.items);
+        fullItemStacks = view.getInt(ITEM_AMT_KEY, 0);
 //        }
-//
-//        markDirty();
-//    }
-//
+
+        markDirty();
+    }
+
 //    private boolean readFluidView(ReadView view) {
 //        String fluidKey = view.getString(FLUID_KEY, "NONE");
 //
@@ -352,7 +345,7 @@
 //    private boolean readMobView(ReadView view) {
 //        storedMobData = view.read(MOB_DATA_KEY);
 //
-//        return !storedMobData.isEmpty();
+//        return !storedMobData.copyNbtWithoutId().isEmpty();
 //    }
 //
 //    public void readMobNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
@@ -383,44 +376,44 @@
 //    }
 //
 //    public void writeMobNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-//        nbt.put(MOB_DATA_KEY, storedMobData);
+//        nbt.put(MOB_DATA_KEY, storedMobData.copyNbtWithoutId());
 //    }
-//
-//    @Override
-//    public void markDirty() {
-//        if (this.world != null) {
-//            markDirtyInWorld(this.world, this.pos, this.getCachedState());
-//        }
-//    }
-//
-//    protected void markDirtyInWorld(World world, BlockPos pos, BlockState state) {
-//        world.markDirty(pos);
-//
-//        if (!world.isClient()) {
-//            ((ServerWorld) world).getChunkManager().markForUpdate(pos); // Mark changes to be synced to the client.
-//        }
-//    }
-//
-//    @Nullable
-//    @Override
-//    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-//        return BlockEntityUpdateS2CPacket.create(this);
-//    }
-//
-//    @Override
-//    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-//        return createNbt(registryLookup);
-//    }
-//
-//    @Override
-//    public boolean isEmpty() {
+
+    @Override
+    public void markDirty() {
+        if (this.world != null) {
+            markDirtyInWorld(this.world, this.pos, this.getCachedState());
+        }
+    }
+
+    protected void markDirtyInWorld(World world, BlockPos pos, BlockState state) {
+        world.markDirty(pos);
+
+        if (!world.isClient()) {
+            ((ServerWorld) world).getChunkManager().markForUpdate(pos); // Mark changes to be synced to the client.
+        }
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
+    }
+
+    @Override
+    public boolean isEmpty() {
 //        if (hasFluid() || hasMob()) {
 //            return false;
 //        }
-//
-//        return ImplementedInventory.super.isEmpty();
-//    }
-//
+
+        return ImplementedInventory.super.isEmpty();
+    }
+
 //    public void playEmptyBottleSound() {
 //        playSound(SoundEvents.ITEM_BOTTLE_EMPTY);
 //    }
@@ -444,20 +437,20 @@
 //            playSound(SoundEvents.ITEM_BUCKET_FILL);
 //        }
 //    }
-//
-//    public void playAddItemSound() {
-//        playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);
-//    }
-//
-//    public void playRemoveItemSound() {
-//        playSound(SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM);
-//    }
-//
-//    public void playSound(SoundEvent soundEvent) {
-//        if (this.world == null) {
-//            return;
-//        }
-//
-//        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
-//    }
-//}
+
+    public void playAddItemSound() {
+        playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);
+    }
+
+    public void playRemoveItemSound() {
+        playSound(SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM);
+    }
+
+    public void playSound(SoundEvent soundEvent) {
+        if (this.world == null) {
+            return;
+        }
+
+        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    }
+}

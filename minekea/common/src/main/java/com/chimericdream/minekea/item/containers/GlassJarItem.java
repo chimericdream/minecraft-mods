@@ -1,49 +1,29 @@
-//package com.chimericdream.minekea.item.containers;
-//
-//import dev.architectury.registry.registries.RegistrySupplier;
-//import net.minecraft.block.Block;
-//import net.minecraft.block.BlockState;
-//import net.minecraft.component.DataComponentTypes;
-//import net.minecraft.component.type.NbtComponent;
-//import net.minecraft.entity.Entity;
-//import net.minecraft.entity.EntityType;
-//import net.minecraft.entity.LivingEntity;
-//import net.minecraft.entity.mob.EndermiteEntity;
-//import net.minecraft.entity.mob.MobEntity;
-//import net.minecraft.entity.mob.SilverfishEntity;
-//import net.minecraft.entity.mob.SlimeEntity;
-//import net.minecraft.entity.mob.VexEntity;
-//import net.minecraft.entity.passive.AllayEntity;
-//import net.minecraft.entity.passive.BatEntity;
-//import net.minecraft.entity.passive.BeeEntity;
-//import net.minecraft.entity.player.PlayerEntity;
-//import net.minecraft.item.BlockItem;
-//import net.minecraft.item.ItemPlacementContext;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.item.ItemUsageContext;
-//import net.minecraft.nbt.NbtCompound;
-//import net.minecraft.sound.SoundCategory;
-//import net.minecraft.sound.SoundEvents;
-//import net.minecraft.text.Text;
-//import net.minecraft.util.ActionResult;
-//import net.minecraft.util.Hand;
-//import net.minecraft.util.math.BlockPos;
-//import net.minecraft.util.math.Box;
-//import net.minecraft.util.math.Direction;
-//import net.minecraft.util.math.MathHelper;
-//import net.minecraft.util.math.Vec3d;
-//import net.minecraft.util.shape.VoxelShape;
-//import net.minecraft.util.shape.VoxelShapes;
-//import net.minecraft.world.World;
-//import net.minecraft.world.WorldAccess;
-//import net.minecraft.world.event.GameEvent;
-//import org.jetbrains.annotations.Nullable;
-//
-//public class GlassJarItem extends BlockItem {
-//    public GlassJarItem(RegistrySupplier<Block> block, Settings settings) {
-//        super(block.get(), settings);
-//    }
-//
+package com.chimericdream.minekea.item.containers;
+
+import com.chimericdream.minekea.block.containers.GlassJarBlock;
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.block.Block;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.WorldAccess;
+
+import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+
+public class GlassJarItem extends BlockItem {
+    public GlassJarItem(RegistrySupplier<Block> block, Settings settings) {
+        super(block.get(), settings.registryKey(REGISTRY_HELPER.makeItemRegistryKey(GlassJarBlock.BLOCK_ID)));
+    }
+
 //    @Override
 //    public ActionResult useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
 //        if (entity instanceof MobEntity mob && canCaptureMob(mob) && !hasStoredMob(stack)) {
@@ -93,11 +73,11 @@
 //
 //        return ActionResult.PASS;
 //    }
-//
-//    @Override
-//    public ActionResult useOnBlock(ItemUsageContext context) {
-//        ItemStack stack = context.getStack();
-//
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        ItemStack stack = context.getStack();
+
 //        if (context.getPlayer() != null && context.getPlayer().isSneaking() && hasStoredMob(stack)) {
 //            World world = context.getWorld();
 //
@@ -116,10 +96,10 @@
 //
 //            return ActionResult.CONSUME;
 //        }
-//
-//        return this.place(new ItemPlacementContext(context));
-//    }
-//
+
+        return this.place(new ItemPlacementContext(context));
+    }
+
 //    public void releaseMob(@Nullable PlayerEntity player, World world, ItemStack itemStack, BlockPos blockPos, BlockPos releasePos) {
 //        NbtCompound nbt = itemStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT).copyNbt();
 //
@@ -168,17 +148,17 @@
 //
 //        return false;
 //    }
-//
-//    private Text getDefaultName(MobEntity mob) {
-//        return Text.of(String.format("%s in a jar", mob.getType().getName()));
-//    }
-//
+
+    private Text getDefaultName(MobEntity mob) {
+        return Text.of(String.format("%s in a jar", mob.getType().getName()));
+    }
+
 //    private boolean hasCustomName(ItemStack stack) {
 //        NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //
 //        return nbt.getBoolean("has_custom_name");
 //    }
-//
+
 //    private boolean saveMob(MobEntity entity, NbtCompound nbt) {
 //        return entity.saveNbt(nbt);
 //    }
@@ -221,11 +201,11 @@
 //            mob.playAmbientSound();
 //        }
 //    }
-//
-//    private double getYOffset(WorldAccess world, BlockPos pos, Box box) {
-//        Box box2 = new Box(pos);
-//        Iterable<VoxelShape> iterable = world.getCollisions(null, box2);
-//
-//        return 1.0D + VoxelShapes.calculateMaxOffset(Direction.Axis.Y, box, iterable, -1.0D);
-//    }
-//}
+
+    private double getYOffset(WorldAccess world, BlockPos pos, Box box) {
+        Box box2 = new Box(pos);
+        Iterable<VoxelShape> iterable = world.getCollisions(null, box2);
+
+        return 1.0D + VoxelShapes.calculateMaxOffset(Direction.Axis.Y, box, iterable, -1.0D);
+    }
+}

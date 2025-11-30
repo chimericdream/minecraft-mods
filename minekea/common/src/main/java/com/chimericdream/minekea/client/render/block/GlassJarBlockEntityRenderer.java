@@ -1,62 +1,86 @@
-//package com.chimericdream.minekea.client.render.block;
-//
-//import com.chimericdream.minekea.block.containers.GlassJarBlock;
-//import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
-//import net.minecraft.client.MinecraftClient;
-//import net.minecraft.client.render.OverlayTexture;
-//import net.minecraft.client.render.RenderLayer;
-//import net.minecraft.client.render.VertexConsumer;
-//import net.minecraft.client.render.VertexConsumerProvider;
-//import net.minecraft.client.render.WorldRenderer;
-//import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-//import net.minecraft.client.render.entity.EntityRenderDispatcher;
-//import net.minecraft.client.render.item.ItemRenderer;
-//import net.minecraft.client.render.model.json.ModelTransformationMode;
-//import net.minecraft.client.texture.Sprite;
-//import net.minecraft.client.util.math.MatrixStack;
-//import net.minecraft.entity.Entity;
-//import net.minecraft.entity.EntityType;
-//import net.minecraft.entity.SpawnReason;
-//import net.minecraft.entity.TypedEntityData;
-//import net.minecraft.fluid.Fluid;
-//import net.minecraft.fluid.Fluids;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.util.math.BlockPos;
-//import net.minecraft.util.math.Direction;
-//import net.minecraft.world.World;
-//import org.joml.Quaternionf;
-//
-//public abstract class GlassJarBlockEntityRendererLogic {
-//    protected static final float yLightFactor = 0.5f;
-//    protected static final float zLightFactor = 0.8f;
-//    protected static final float xLightFactor = 0.6f;
-//
-//    // Prevents z-fighting when the textures would otherwise be touching
-//    protected static final float NUDGE = 0.0001f;
-//    // Ensures that textures start at the appropriate distance from the block's edge
-//    protected static final float EDGE_OFFSET = 5f / 16f;
-//    protected static final float HORIZONTAL_OFFSET = NUDGE + EDGE_OFFSET;
-//    // Ensures that the total height of the contents doesn't go above the top
-//    protected static final float VERTICAL_MULTIPLIER = 9f / 16f;
-//
-//    protected final EntityRenderDispatcher entityRenderer;
+package com.chimericdream.minekea.client.render.block;
+
+import com.chimericdream.minekea.block.containers.GlassJarBlock;
+import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.state.CameraRenderState;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
+import org.jetbrains.annotations.Nullable;
+
+public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJarBlockEntity, GlassJarBlockEntityRenderState> {
+    protected static final float yLightFactor = 0.5f;
+    protected static final float zLightFactor = 0.8f;
+    protected static final float xLightFactor = 0.6f;
+
+    // Prevents z-fighting when the textures would otherwise be touching
+    protected static final float NUDGE = 0.0001f;
+    // Ensures that textures start at the appropriate distance from the block's edge
+    protected static final float EDGE_OFFSET = 5f / 16f;
+    protected static final float HORIZONTAL_OFFSET = NUDGE + EDGE_OFFSET;
+    // Ensures that the total height of the contents doesn't go above the top
+    protected static final float VERTICAL_MULTIPLIER = 9f / 16f;
+
+    //    protected final EntityRenderDispatcher entityRenderer;
 //    protected final ItemRenderer itemRenderer;
-//
-//    public GlassJarBlockEntityRendererLogic(BlockEntityRendererFactory.Context ctx) {
+    private final BlockEntityRendererFactory.Context context;
+
+    public GlassJarBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 //        entityRenderer = ctx.getEntityRenderDispatcher();
 //        itemRenderer = ctx.getItemRenderer();
-//    }
-//
+        this.context = ctx;
+    }
+
+    @Override
+    public GlassJarBlockEntityRenderState createRenderState() {
+        return new GlassJarBlockEntityRenderState();
+    }
+
+    @Override
+    public void updateRenderState(GlassJarBlockEntity entity, GlassJarBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
+        BlockEntityRenderer.super.updateRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
+        state.hasItem = entity.hasItem();
+        state.fillLevel = entity.getStoredStacks() + 1;
+
+        ItemStack storedStack = entity.getStack(0);
+        ItemStack stack = GlassJarBlock.getStackToRender(storedStack);
+        this.context.itemModelManager().update(state.displayItem, stack, ItemDisplayContext.FIXED, null, null, 0);
+    }
+
+    @Override
+    public void render(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+        if (state.hasItem) {
+            int fillLevel = state.fillLevel;
+            float fY = (float) fillLevel / (GlassJarBlockEntity.MAX_ITEM_STACKS + 1);
+
+            matrices.push();
+
+            matrices.translate(0.5, (fY * 0.25) + NUDGE, 0.5);
+            matrices.scale(0.749f, fY, 0.749f);
+
+            state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+
+            matrices.pop();
+        }
+    }
+
 //    public void render(GlassJarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 //        if (entity.hasMob()) {
 //            renderMob(entity, matrices, vertexConsumers);
 //        } else if (entity.hasFluid()) {
 //            renderFluid(entity, matrices, vertexConsumers, light);
 //        } else if (entity.hasItem()) {
+//        if (entity.hasItem()) {
 //            renderItem(entity, matrices, vertexConsumers);
 //        }
 //    }
-//
+
 //    protected void renderMob(GlassJarBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 //        TypedEntityData<EntityType<?>> mobData = entity.getStoredMobData();
 //        if (mobData == null) {
@@ -306,7 +330,7 @@
 //
 //        renderFluidTexture(fluidTexture, matrices, vertexConsumers, fluidTop, color, light);
 //    }
-//
+
 //    protected void renderItem(GlassJarBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 //        World world = entity.getWorld();
 //        BlockPos pos = entity.getPos();
@@ -331,12 +355,12 @@
 //        matrices.scale(0.749f, fY, 0.749f);
 //
 //        int lightAbove = world == null ? 15728880 : WorldRenderer.getLightmapCoordinates(world, pos.up());
-//        itemRenderer.renderItem(stack, ModelTransformationMode.FIXED, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, null, 0);
+//        itemRenderer.renderItem(stack, ItemDisplayContext.FIXED, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, null, 0);
 //
 //        matrices.pop();
 //    }
-//
+
 //    abstract protected int getFluidColor(Fluid fluid);
 //
 //    abstract protected Sprite getFluidTexture(Fluid fluid);
-//}
+}

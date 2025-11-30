@@ -3,6 +3,7 @@ package com.chimericdream.minekea.fabric.client;
 import com.chimericdream.minekea.block.building.compressed.CompressedBlock;
 import com.chimericdream.minekea.block.building.compressed.CompressedBlocks;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
+import com.chimericdream.minekea.block.containers.ContainerBlocks;
 import com.chimericdream.minekea.block.decorations.DecorationBlocks;
 import com.chimericdream.minekea.block.decorations.FakeCakeBlock;
 import com.chimericdream.minekea.block.decorations.candles.VotiveCandles;
@@ -10,6 +11,7 @@ import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
 import com.chimericdream.minekea.block.furniture.tables.TableBlock;
 import com.chimericdream.minekea.block.furniture.tables.Tables;
 import com.chimericdream.minekea.client.MinekeaClient;
+import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.item.tools.BlockPainterItem;
 import com.chimericdream.minekea.item.tools.HammerItem;
 import com.chimericdream.minekea.network.CyclePainterColorPayload;
@@ -85,21 +87,20 @@ public final class MinekeaFabricClient implements ClientModInitializer {
         StorageBlocks.BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.CUTOUT));
         VotiveCandles.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.TRANSLUCENT));
 
-//        BlockRenderLayerMap.INSTANCE.putBlocks(BlockRenderLayer.TRANSLUCENT, GLASS_JAR.get());
-
 //        BlockEntityRendererFactories.register(GLASS_JAR_BLOCK_ENTITY.get(), GlassJarBlockEntityRenderer::new);
 //        BuiltinItemRendererRegistry.INSTANCE.register(GLASS_JAR_ITEM.get(), new GlassJarItemRenderer());
 
         BlockRenderLayerMap.putBlocks(
             BlockRenderLayer.TRANSLUCENT,
-            StorageBlocks.SUGAR_CANE_BLOCK.get()
+            StorageBlocks.SUGAR_CANE_BLOCK.get(),
+            ContainerBlocks.GLASS_JAR.get()
         );
 
-//        BlockRenderLayerMap.INSTANCE.putBlocks(
-//            BlockRenderLayer.CUTOUT,
-//            StorageBlocks.SET_OF_EGGS_BLOCK.get(),
-//            WARPED_WART_PLANT_BLOCK.get()
-//        );
+        BlockRenderLayerMap.putBlocks(
+            BlockRenderLayer.CUTOUT,
+            StorageBlocks.SET_OF_EGGS_BLOCK.get(),
+            ModCrops.WARPED_WART_PLANT_BLOCK.get()
+        );
     }
 
     private void initializeKeybindings() {

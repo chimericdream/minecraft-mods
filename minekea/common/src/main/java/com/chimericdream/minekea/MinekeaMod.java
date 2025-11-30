@@ -5,6 +5,7 @@ import com.chimericdream.minekea.block.ModBlocks;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.ModItems;
+import com.chimericdream.minekea.item.WaxItems;
 import com.chimericdream.minekea.network.ServerNetworking;
 import com.chimericdream.minekea.registry.ColoredBlocksRegistry;
 import com.chimericdream.minekea.registry.ModItemGroups;
@@ -36,6 +37,9 @@ public final class MinekeaMod {
         ColoredBlocksRegistry.init();
 
         REGISTRY_HELPER.init();
+
+        // @TODO: move this somewhere else?
+        WaxItems.init();
     }
 
     public static void initVillagerPois() {

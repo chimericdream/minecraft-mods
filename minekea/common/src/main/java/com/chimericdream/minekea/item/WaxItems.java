@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.item;
 
+import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -8,6 +9,7 @@ import net.minecraft.item.Items;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -50,5 +52,9 @@ public class WaxItems implements ModThingGroup {
         WAX_ITEMS.put("purple", PURPLE_WAX_ITEM);
         WAX_ITEMS.put("magenta", MAGENTA_WAX_ITEM);
         WAX_ITEMS.put("pink", PINK_WAX_ITEM);
+    }
+
+    public static void init() {
+        GlassJarBlock.ALLOWED_ITEMS.addAll(WAX_ITEMS.values().stream().map(Supplier::get).toList());
     }
 }
