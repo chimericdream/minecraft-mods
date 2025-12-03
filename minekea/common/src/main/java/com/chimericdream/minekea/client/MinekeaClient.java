@@ -2,6 +2,7 @@ package com.chimericdream.minekea.client;
 
 import com.chimericdream.lib.entities.SimpleSeatEntity;
 import com.chimericdream.minekea.block.containers.ContainerBlocks;
+import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.block.containers.crates.Crates;
 import com.chimericdream.minekea.block.furniture.armoires.Armoires;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
@@ -11,6 +12,7 @@ import com.chimericdream.minekea.client.render.block.ArmoireBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.block.DisplayCaseBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.block.ShelfBlockEntityRenderer;
+import com.chimericdream.minekea.client.render.item.GlassJarItemRenderer;
 import com.chimericdream.minekea.client.screen.BlockPainterScreen;
 import com.chimericdream.minekea.client.screen.crate.CrateScreen;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreen;
@@ -20,6 +22,7 @@ import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.item.model.special.SpecialModelTypes;
 
 @Environment(EnvType.CLIENT)
 public class MinekeaClient {
@@ -59,5 +62,7 @@ public class MinekeaClient {
             Shelves.SHELF_BLOCK_ENTITY.get(),
             ShelfBlockEntityRenderer::new
         );
+
+        SpecialModelTypes.ID_MAPPER.put(GlassJarBlock.BLOCK_ID, GlassJarItemRenderer.Unbaked.CODEC);
     }
 }

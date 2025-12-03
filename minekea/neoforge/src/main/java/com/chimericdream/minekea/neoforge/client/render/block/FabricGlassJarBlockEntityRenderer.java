@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.neoforge.client.render.block;
 
+import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.fluid.Fluid;
@@ -8,8 +9,8 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.client.textures.FluidSpriteCache;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class GlassJarBlockEntityRenderer extends com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer {
-    public GlassJarBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+public class FabricGlassJarBlockEntityRenderer extends GlassJarBlockEntityRenderer {
+    public FabricGlassJarBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
         super(ctx);
     }
 

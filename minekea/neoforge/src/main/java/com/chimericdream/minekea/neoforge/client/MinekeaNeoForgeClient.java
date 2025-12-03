@@ -5,7 +5,7 @@ import com.chimericdream.minekea.block.containers.ContainerBlocks;
 import com.chimericdream.minekea.client.Keybindings;
 import com.chimericdream.minekea.client.MinekeaClient;
 import com.chimericdream.minekea.item.containers.ContainerItems;
-import com.chimericdream.minekea.neoforge.client.render.block.GlassJarBlockEntityRenderer;
+import com.chimericdream.minekea.neoforge.client.render.block.FabricGlassJarBlockEntityRenderer;
 import com.chimericdream.minekea.neoforge.client.render.item.GlassJarItemRenderer;
 import com.chimericdream.minekea.network.CyclePainterColorPayload;
 import net.neoforged.api.distmarker.Dist;
@@ -34,7 +34,7 @@ public class MinekeaNeoForgeClient {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(
             ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
-            GlassJarBlockEntityRenderer::new
+            FabricGlassJarBlockEntityRenderer::new
         );
     }
 

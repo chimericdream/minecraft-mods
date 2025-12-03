@@ -1,0 +1,9 @@
+{
+    "model": {
+        "type": "minecraft:special",
+        "base": "minekea:item/containers/glass_jar",
+        "model": {
+            "type": "minekea:containers/glass_jar"
+        }
+    }
+}

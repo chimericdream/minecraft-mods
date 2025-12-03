@@ -2,23 +2,31 @@ package com.chimericdream.minekea.entity.block.containers;
 
 import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.minekea.block.containers.ContainerBlocks;
+import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.NbtReadView;
+import net.minecraft.storage.NbtWriteView;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -50,6 +58,40 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     public GlassJarBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+    }
+
+    public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientWorld world) {
+        GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ORIGIN, ContainerBlocks.GLASS_JAR.get().getDefaultState());
+
+        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
+        if (customData == null) {
+            return entity;
+        }
+
+        NbtCompound nbt = customData.copyNbt();
+        entity.readData(NbtReadView.create(ErrorReporter.EMPTY, BuiltinRegistries.createWrapperLookup(), nbt));
+
+//        TypedEntityData<EntityType<?>> nbt = stack.get(DataComponentTypes.ENTITY_DATA);
+//        if (nbt != null) {
+//            nbt.applyToEntity(entity);
+//        }
+//
+//        var armor = stack.get(ArmorRack.ARMOR_STAND_ARMOR);
+//        if (armor != null) {
+//            armor.apply(entity);
+//        }
+
+        return entity;
+    }
+
+    public ItemStack toItemStack() {
+        ItemStack stack = new ItemStack(ContainerItems.GLASS_JAR_ITEM.get());
+        NbtWriteView writeView = NbtWriteView.create(ErrorReporter.EMPTY);
+        this.writeData(writeView);
+
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(writeView.getNbt()));
+
+        return stack;
     }
 
 //    public TypedEntityData<EntityType<?>> getStoredMobData() {
@@ -252,24 +294,24 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         return stack;
     }
 
-    public DefaultedList<ItemStack> getItemsOnBreak() {
-        DefaultedList<ItemStack> stacks = DefaultedList.of();
-
-        int i = 0;
-
-        while (i < fullItemStacks) {
-            ItemStack stack = this.items.getFirst().copy();
-            stack.setCount(stack.getMaxCount());
-
-            stacks.add(stack);
-            i++;
-        }
-
-        stacks.add(this.items.getFirst());
-
-        return stacks;
-    }
-
+//    public DefaultedList<ItemStack> getItemsOnBreak() {
+//        DefaultedList<ItemStack> stacks = DefaultedList.of();
+//
+//        int i = 0;
+//
+//        while (i < fullItemStacks) {
+//            ItemStack stack = this.items.getFirst().copy();
+//            stack.setCount(stack.getMaxCount());
+//
+//            stacks.add(stack);
+//            i++;
+//        }
+//
+//        stacks.add(this.items.getFirst());
+//
+//        return stacks;
+//    }
+//
 //    @Nullable
 //    public String getMobId() {
 //        if (this.hasMob()) {

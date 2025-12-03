@@ -55,6 +55,10 @@ public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJar
 
     @Override
     public void render(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+        renderJar(state, matrices, queue);
+    }
+
+    public static void renderJar(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue) {
         if (state.hasItem) {
             int fillLevel = state.fillLevel;
             float fY = (float) fillLevel / (GlassJarBlockEntity.MAX_ITEM_STACKS + 1);

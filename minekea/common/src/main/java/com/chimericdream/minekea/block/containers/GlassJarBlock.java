@@ -8,10 +8,15 @@ import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +25,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -47,7 +51,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.UnaryOperator;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -504,15 +507,7 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 
                     world.spawnEntity(itemEntity);
                 } else if (!entity.isEmpty()) {
-                    ItemStack itemStack = new ItemStack(ContainerItems.GLASS_JAR_ITEM.get());
-                    NbtCompound nbt = new NbtCompound();
-//                    entity.writeNbt(nbt, world.getRegistryManager());
-
-//                    if (entity.hasMob()) {
-//                        itemStack.apply(DataComponentTypes.ENTITY_DATA, NbtComponent.of(nbt.getCompoundOrEmpty(GlassJarBlockEntity.MOB_DATA_KEY)), UnaryOperator.identity());
-//                    } else {
-                    itemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt), UnaryOperator.identity());
-//                    }
+                    ItemStack itemStack = entity.toItemStack();
 
                     ItemEntity itemEntity = new ItemEntity(
                         world,

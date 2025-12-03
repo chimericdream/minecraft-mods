@@ -1,7 +1,6 @@
 package com.chimericdream.minekea.neoforge.client.render.item;
 
 import com.chimericdream.minekea.block.containers.ContainerBlocks;
-import com.chimericdream.minekea.client.render.item.GlassJarItemRendererLogic;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -20,7 +19,7 @@ public class GlassJarItemRenderer extends BuiltinModelItemRenderer {
     @Override
     public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         BlockState defaultState = ContainerBlocks.GLASS_JAR.get().getDefaultState();
-        GlassJarItemRendererLogic.render(stack, matrices, vertexConsumers, light, overlay, MinecraftClient.getInstance().getBlockRenderManager().getModel(defaultState));
+        com.chimericdream.minekea.client.render.item.GlassJarItemRenderer.render(stack, matrices, vertexConsumers, light, overlay, MinecraftClient.getInstance().getBlockRenderManager().getModel(defaultState));
     }
 
     public static class GlassJarItemRendererExtension implements IClientItemExtensions {
