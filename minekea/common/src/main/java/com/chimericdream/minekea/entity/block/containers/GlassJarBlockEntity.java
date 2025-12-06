@@ -60,6 +60,16 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         super(type, pos, state);
     }
 
+    public void readDataFromItemStack(ItemStack stack) {
+        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
+        if (customData == null) {
+            return;
+        }
+
+        NbtCompound nbt = customData.copyNbt();
+        this.readData(NbtReadView.create(ErrorReporter.EMPTY, BuiltinRegistries.createWrapperLookup(), nbt));
+    }
+
     public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientWorld world) {
         GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ORIGIN, ContainerBlocks.GLASS_JAR.get().getDefaultState());
 

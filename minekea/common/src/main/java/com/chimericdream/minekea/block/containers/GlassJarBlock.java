@@ -493,11 +493,7 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
             return;
         }
 
-//        NbtComponent customData = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-//        if (!customData.isEmpty()) {
-//            entity.readNbt(customData.copyNbt(), world.getRegistryManager());
-//            return;
-//        }
+        entity.readDataFromItemStack(itemStack);
 
 //        TypedEntityData<EntityType<?>> entityData = itemStack.get(DataComponentTypes.ENTITY_DATA);
 //        if (entityData != null) {
@@ -535,6 +531,8 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
                     );
 
                     itemEntity.setToDefaultPickupDelay();
+
+                    entity.clear();
 
                     world.spawnEntity(itemEntity);
                 }
