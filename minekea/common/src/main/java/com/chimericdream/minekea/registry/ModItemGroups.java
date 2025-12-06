@@ -38,4 +38,7 @@ public class ModItemGroups {
 
     public static void init() {
     }
+
+    public static void postInit() {
+    }
 }

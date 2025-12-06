@@ -27,4 +27,7 @@ public class ModFluids implements ModThingGroup {
 
     public static void init() {
     }
+
+    public static void postInit() {
+    }
 }

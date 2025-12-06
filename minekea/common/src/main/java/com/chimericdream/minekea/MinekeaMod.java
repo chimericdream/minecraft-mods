@@ -38,6 +38,12 @@ public final class MinekeaMod {
 
         REGISTRY_HELPER.init();
 
+        ModFluids.postInit();
+        ModBlocks.postInit();
+        ModCrops.postInit();
+        ModItems.postInit();
+        ModItemGroups.postInit();
+
         // @TODO: move this somewhere else?
         WaxItems.init();
     }
