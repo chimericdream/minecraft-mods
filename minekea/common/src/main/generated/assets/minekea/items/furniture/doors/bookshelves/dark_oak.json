@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/furniture/doors/bookshelves/dark_oak"
+    "model": "minekea:item/furniture/doors/bookshelves/dark_oak"
   }
 }

@@ -63,6 +63,8 @@ public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerat
     public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
         Block bookshelf = BLOCK.config.getIngredient();
 
+        assert bookshelf != null;
+
         generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("##")
             .pattern("##")
@@ -98,6 +100,8 @@ public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerat
         WeightedVariant bottomHinge = BlockStateModelGenerator.createWeightedVariant(bottomHingeModelId);
         WeightedVariant top = BlockStateModelGenerator.createWeightedVariant(topModelId);
         WeightedVariant topHinge = BlockStateModelGenerator.createWeightedVariant(topHingeModelId);
+
+        blockStateModelGenerator.registerParentedItemModel(BLOCK, BLOCK.BLOCK_ID.withPrefixedPath("item/"));
 
         blockStateModelGenerator.blockStateCollector
             .accept(

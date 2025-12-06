@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/furniture/doors/bookshelves/jungle"
+    "model": "minekea:item/furniture/doors/bookshelves/jungle"
   }
 }

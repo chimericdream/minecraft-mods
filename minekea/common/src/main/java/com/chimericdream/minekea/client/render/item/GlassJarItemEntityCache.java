@@ -7,10 +7,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 /*
  * Adapted from the Armor Rack mod
@@ -20,16 +19,13 @@ public class GlassJarItemEntityCache {
     private GlassJarItemEntityCache() {
     }
 
-    private static final Map<World, Map<ItemStackWrapper, GlassJarBlockEntityRenderState>> CACHE = new WeakHashMap<>();
+    private static final Map<ItemStack, GlassJarBlockEntityRenderState> CACHE = new HashMap<>();
 
     public static GlassJarBlockEntityRenderState getOrCreate(ItemStack itemStack, ClientWorld world) {
         return CACHE.computeIfAbsent(
-            world,
-            _unused -> new WeakHashMap<>()
-        ).computeIfAbsent(
-            new ItemStackWrapper(itemStack),
-            (_unused) -> {
-                GlassJarBlockEntity entity = GlassJarBlockEntity.fromItemStack(itemStack, world);
+            itemStack,
+            (stack) -> {
+                GlassJarBlockEntity entity = GlassJarBlockEntity.fromItemStack(stack, world);
                 GlassJarBlockEntityRenderer renderer = (GlassJarBlockEntityRenderer) MinecraftClient.getInstance().getBlockEntityRenderDispatcher().<GlassJarBlockEntity, GlassJarBlockEntityRenderState>get(entity);
 
                 if (renderer == null) {
@@ -41,20 +37,5 @@ public class GlassJarItemEntityCache {
                 return state;
             }
         );
-    }
-
-    // @TODO: move to chimericlib
-    public record ItemStackWrapper(ItemStack stack) {
-        @Override
-        public boolean equals(Object o) {
-            if (o == null || getClass() != o.getClass()) return false;
-            ItemStackWrapper that = (ItemStackWrapper) o;
-            return ItemStack.areItemsAndComponentsEqual(stack, that.stack);
-        }
-
-        @Override
-        public int hashCode() {
-            return ItemStack.hashCode(stack);
-        }
     }
 }
