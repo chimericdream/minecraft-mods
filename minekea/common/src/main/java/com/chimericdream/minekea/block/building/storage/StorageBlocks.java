@@ -50,10 +50,13 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> BEETROOT_SEEDS_BLOCK;
     public static final RegistrySupplier<Block> BLAZE_POWDER_BLOCK;
     public static final RegistrySupplier<Block> BLAZE_ROD_BLOCK;
+    public static final RegistrySupplier<Block> BLUE_EGG_CRATE_BLOCK;
     public static final RegistrySupplier<Block> BREEZE_ROD_BLOCK;
+    public static final RegistrySupplier<Block> BROWN_EGG_CRATE_BLOCK;
     public static final RegistrySupplier<Block> CARROT_BLOCK;
     public static final RegistrySupplier<Block> CHARCOAL_BLOCK;
     public static final RegistrySupplier<Block> CHORUS_FRUIT_BLOCK;
+    public static final RegistrySupplier<Block> EGG_CRATE_BLOCK;
     public static final RegistrySupplier<Block> ENDER_PEARL_BLOCK;
     public static final RegistrySupplier<Block> FLINT_BLOCK;
     public static final RegistrySupplier<Block> GOLD_NUGGET_SACK;
@@ -65,7 +68,6 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> PHANTOM_MEMBRANE_BLOCK;
     public static final RegistrySupplier<Block> POTATO_BLOCK;
     public static final RegistrySupplier<Block> PUMPKIN_SEEDS_BLOCK;
-    public static final RegistrySupplier<Block> SET_OF_EGGS_BLOCK;
     public static final RegistrySupplier<Block> STICK_BLOCK;
     public static final RegistrySupplier<Block> SUGAR_BLOCK;
     public static final RegistrySupplier<Block> SUGAR_CANE_BLOCK;
@@ -142,7 +144,9 @@ public class StorageBlocks implements ModThingGroup {
         WALLPAPER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("paper"), () -> new ItemStorageBlock(new BlockConfig().settings(AbstractBlock.Settings.copy(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.NETHER_STEM)).item(Items.PAPER).material("paper").name("Wallpaper").tool(Tool.AXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WHEAT_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wheat_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(AbstractBlock.Settings.copy(Blocks.HAY_BLOCK).nonOpaque().sounds(BlockSoundGroup.CROP)).item(Items.WHEAT_SEEDS).material("wheat_seeds").materialName("Wheat Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
 
-        SET_OF_EGGS_BLOCK = REGISTRY_HELPER.registerWithItem(SetOfEggsBlock.BLOCK_ID, SetOfEggsBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
+        BLUE_EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(BlueEggCrateBlock.BLOCK_ID, BlueEggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
+        BROWN_EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(BrownEggCrateBlock.BLOCK_ID, BrownEggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
+        EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(EggCrateBlock.BLOCK_ID, EggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
 
         STORAGE_BLOCKS = List.of(
             APPLE_STORAGE_BLOCK,
@@ -190,7 +194,9 @@ public class StorageBlocks implements ModThingGroup {
 
         BLOCKS.addAll(DYE_BLOCKS);
         BLOCKS.addAll(STORAGE_BLOCKS);
-        BLOCKS.add(SET_OF_EGGS_BLOCK);
+        BLOCKS.add(BLUE_EGG_CRATE_BLOCK);
+        BLOCKS.add(BROWN_EGG_CRATE_BLOCK);
+        BLOCKS.add(EGG_CRATE_BLOCK);
     }
 
 //    @Environment(EnvType.CLIENT)

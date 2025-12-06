@@ -11,6 +11,7 @@ import net.minecraft.block.Waterloggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -27,13 +28,17 @@ import net.minecraft.world.tick.ScheduledTickView;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 // @TODO: turn this into a slab-like block with top/bottom/full variations
-public class SetOfEggsBlock extends Block implements Waterloggable {
-    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "storage/set_of_eggs");
+public class EggCrateBlock extends Block implements Waterloggable {
+    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "storage/egg_crate");
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    public SetOfEggsBlock() {
-        super(AbstractBlock.Settings.copy(Blocks.NETHER_WART_BLOCK).sounds(MinekeaSoundGroup.SET_OF_EGGS_SOUND_GROUP).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
+    public EggCrateBlock() {
+        this(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID));
+    }
+
+    public EggCrateBlock(RegistryKey<Block> registryKey) {
+        super(AbstractBlock.Settings.copy(Blocks.NETHER_WART_BLOCK).sounds(MinekeaSoundGroup.EGG_CRATE_SOUND_GROUP).registryKey(registryKey));
 
         this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
     }

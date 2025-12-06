@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_storage/egg_crate": {
+    "has_egg": {
       "conditions": {
         "items": [
           {
-            "items": "minekea:storage/egg_crate"
+            "items": "minecraft:egg"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minekea:egg"
+        "recipe": "minekea:storage/egg_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_storage/egg_crate"
+      "has_egg"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minekea:egg"
+      "minekea:storage/egg_crate"
     ]
   }
 }

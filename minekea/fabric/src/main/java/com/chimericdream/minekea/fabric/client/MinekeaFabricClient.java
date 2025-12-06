@@ -98,7 +98,7 @@ public final class MinekeaFabricClient implements ClientModInitializer {
 
         BlockRenderLayerMap.putBlocks(
             BlockRenderLayer.CUTOUT,
-            StorageBlocks.SET_OF_EGGS_BLOCK.get(),
+            StorageBlocks.EGG_CRATE_BLOCK.get(),
             ModCrops.WARPED_WART_PLANT_BLOCK.get()
         );
     }

@@ -4,7 +4,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 
 public class MinekeaSoundGroup {
-    public static final BlockSoundGroup SET_OF_EGGS_SOUND_GROUP;
+    public static final BlockSoundGroup EGG_CRATE_SOUND_GROUP;
 
     // BlockSoundGroup(
     //     float volume,
@@ -17,7 +17,7 @@ public class MinekeaSoundGroup {
     // )
 
     static {
-        SET_OF_EGGS_SOUND_GROUP = new BlockSoundGroup(
+        EGG_CRATE_SOUND_GROUP = new BlockSoundGroup(
             1.0F,
             1.0F,
             SoundEvents.ENTITY_TURTLE_EGG_BREAK,

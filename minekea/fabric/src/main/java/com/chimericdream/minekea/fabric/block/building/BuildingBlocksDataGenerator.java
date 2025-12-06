@@ -13,7 +13,14 @@ import com.chimericdream.minekea.block.building.walls.Walls;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedColumnBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedMinekeaBlockDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.general.*;
+import com.chimericdream.minekea.fabric.block.building.general.BasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.ChiseledBasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.CrackedBasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.CrimsonBasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.MossyBasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.WarpedBasaltBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.WarpedNetherBricksDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.general.WaxBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.BookshelfSlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.SlabBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.slabs.VerticalBookshelfSlabBlockDataGenerator;
@@ -22,9 +29,11 @@ import com.chimericdream.minekea.fabric.block.building.stairs.BookshelfStairsBlo
 import com.chimericdream.minekea.fabric.block.building.stairs.StairsBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.stairs.VerticalBookshelfStairsBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.stairs.VerticalStairsBlockDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.storage.BlueEggCrateBlockDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.storage.BrownEggCrateBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.storage.DyeBlockDataGenerator;
+import com.chimericdream.minekea.fabric.block.building.storage.EggCrateBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.storage.ItemStorageBlockDataGenerator;
-import com.chimericdream.minekea.fabric.block.building.storage.SetOfEggsBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
@@ -65,7 +74,9 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         Walls.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new WallBlockDataGenerator(block.get())));
 
         BLOCK_GENERATORS.add(new CompressedBlockDataGenerator.CompressedBlockTooltipDataGenerator());
-        BLOCK_GENERATORS.add(new SetOfEggsBlockDataGenerator());
+        BLOCK_GENERATORS.add(new BlueEggCrateBlockDataGenerator());
+        BLOCK_GENERATORS.add(new BrownEggCrateBlockDataGenerator());
+        BLOCK_GENERATORS.add(new EggCrateBlockDataGenerator());
     }
 
     @Override

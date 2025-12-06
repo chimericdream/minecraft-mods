@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minekea:storage/set_of_eggs"
+          "name": "minekea:storage/egg_crate"
         }
       ],
       "rolls": 1.0

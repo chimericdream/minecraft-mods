@@ -2,8 +2,8 @@
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "ambientocclusion": false,
     "textures": {
-        "particle": "minekea:block/storage/compressed/set_of_eggs",
-        "0": "minekea:block/storage/compressed/set_of_eggs"
+        "particle": "minekea:block/storage/compressed/egg_crate",
+        "0": "minekea:block/storage/compressed/egg_crate"
     },
     "parent": "block/cube_all",
     "elements": [

@@ -1,6 +1,6 @@
 package com.chimericdream.minekea.fabric.block.building.storage;
 
-import com.chimericdream.minekea.block.building.storage.SetOfEggsBlock;
+import com.chimericdream.minekea.block.building.storage.EggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -17,11 +17,11 @@ import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Function;
 
-public class SetOfEggsBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected final SetOfEggsBlock BLOCK;
+public class EggCrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
+    protected final EggCrateBlock BLOCK;
 
-    public SetOfEggsBlockDataGenerator() {
-        BLOCK = (SetOfEggsBlock) StorageBlocks.SET_OF_EGGS_BLOCK.get();
+    public EggCrateBlockDataGenerator() {
+        BLOCK = (EggCrateBlock) StorageBlocks.EGG_CRATE_BLOCK.get();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SetOfEggsBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, "Set of Eggs");
-        translationBuilder.add(BLOCK.asItem(), "Set of Eggs");
+        translationBuilder.add(BLOCK, "Egg Crate");
+        translationBuilder.add(BLOCK.asItem(), "Egg Crate");
     }
 }

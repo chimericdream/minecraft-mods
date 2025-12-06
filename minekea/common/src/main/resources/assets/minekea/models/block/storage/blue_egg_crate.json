@@ -1,0 +1,8 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "minekea:block/storage/compressed/blue_egg_crate",
+        "0": "minekea:block/storage/compressed/blue_egg_crate"
+    },
+    "parent": "minekea:block/storage/egg_crate"
+}
