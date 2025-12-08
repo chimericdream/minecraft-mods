@@ -12,9 +12,11 @@ import com.chimericdream.minekea.block.furniture.tables.TableBlock;
 import com.chimericdream.minekea.block.furniture.tables.Tables;
 import com.chimericdream.minekea.client.MinekeaClient;
 import com.chimericdream.minekea.crop.ModCrops;
+import com.chimericdream.minekea.fabric.client.render.block.FabricGlassJarBlockEntityRenderer;
 import com.chimericdream.minekea.item.tools.BlockPainterItem;
 import com.chimericdream.minekea.item.tools.HammerItem;
 import com.chimericdream.minekea.network.CyclePainterColorPayload;
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -87,7 +89,11 @@ public final class MinekeaFabricClient implements ClientModInitializer {
         StorageBlocks.BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.CUTOUT));
         VotiveCandles.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.TRANSLUCENT));
 
-//        BlockEntityRendererFactories.register(GLASS_JAR_BLOCK_ENTITY.get(), GlassJarBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(
+            ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
+            FabricGlassJarBlockEntityRenderer::new
+        );
+
 //        BuiltinItemRendererRegistry.INSTANCE.register(GLASS_JAR_ITEM.get(), new GlassJarItemRenderer());
 
         BlockRenderLayerMap.putBlocks(

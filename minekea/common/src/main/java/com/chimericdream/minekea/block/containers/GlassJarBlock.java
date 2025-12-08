@@ -11,6 +11,7 @@ import com.chimericdream.minekea.block.building.storage.EggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.crop.WarpedWartItem;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
+import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.mojang.serialization.MapCodec;
@@ -23,16 +24,23 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -57,6 +65,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -350,11 +359,11 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 //            default -> null;
 //        };
 //    }
-//
-//    @Override
-//    public FluidState getFluidState(BlockState state) {
-//        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-//    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
@@ -383,84 +392,85 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
             return ActionResult.FAIL;
         }
 
-//        if (isFilledBucket(stack)) {
-//            Identifier stackId = Registries.ITEM.getId(stack.getItem());
-//            Fluid bucketFluid = getFluidType(stackId);
-//
-//            if (!bucketFluid.matchesType(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
-//                replaceHeldItemOrDont(world, player, stack, Items.BUCKET.getDefaultStack());
-//                if (world.isClient()) {
-//                    entity.playEmptyBucketSound(bucketFluid);
-//                }
-//                entity.markDirty();
-//            }
-//        } else if (isFilledBottle(stack)) {
-//            if (
-//                stack.isOf(Items.HONEY_BOTTLE)
-//                    && entity.tryInsert(ModFluids.HONEY_FLUID.get(), GlassJarBlockEntity.BOTTLE_SIZE)
-//            ) {
-//                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
-//                if (world.isClient()) {
-//                    entity.playEmptyBottleSound();
-//                }
-//                entity.markDirty();
-//            } else if (
-//                stack.isOf(Items.POTION)
-//                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
-//                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
-//                    && entity.tryInsert(Fluids.WATER, GlassJarBlockEntity.BOTTLE_SIZE)
-//            ) {
-//                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
-//                if (world.isClient()) {
-//                    entity.playEmptyBottleSound();
-//                }
-//                entity.markDirty();
-//            }
-//        } else if (
-//            stack.isOf(Items.GLASS_BOTTLE)
-//                && entity.hasFluid()
-//                && (entity.getStoredFluid() == Fluids.WATER || entity.getStoredFluid() == ModFluids.HONEY_FLUID.get())
-//        ) {
-//            ItemStack bottle = entity.getBottle();
-//
-//            if (bottle != null && !bottle.isOf(Items.GLASS_BOTTLE)) {
-//                replaceHeldItemOrDont(world, player, stack, bottle);
-//                if (world.isClient()) {
-//                    entity.playFillBottleSound();
-//                }
-//            }
-//        } else if (isEmptyBucket(stack) && entity.hasFluid()) {
-//            Fluid fluid = entity.getBucket();
-//
-//            if (!fluid.matchesType(Fluids.EMPTY)) {
-//                if (fluid.matchesType(Fluids.WATER)) {
-//                    replaceHeldItemOrDont(world, player, stack, Items.WATER_BUCKET.getDefaultStack());
-//                } else if (fluid.matchesType(Fluids.LAVA)) {
-//                    replaceHeldItemOrDont(world, player, stack, Items.LAVA_BUCKET.getDefaultStack());
-//                } else if (fluid.matchesType(ModFluids.MILK_FLUID.get())) {
-//                    replaceHeldItemOrDont(world, player, stack, Items.MILK_BUCKET.getDefaultStack());
-//                } else if (fluid.matchesType(ModFluids.HONEY_FLUID.get())) {
-//                    replaceHeldItemOrDont(world, player, stack, ModFluids.HONEY_BUCKET.get().getDefaultStack());
-//                }
-//
-//                if (world.isClient()) {
-//                    entity.playFillBucketSound(fluid);
-//                }
-//                entity.markDirty();
-//            }
-//        } else if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
-        if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
-            ItemStack originalStack = stack.copy();
+        if (isFilledBucket(stack)) {
+            Identifier stackId = Registries.ITEM.getId(stack.getItem());
+            Fluid bucketFluid = getFluidType(stackId);
 
-            // Try to insert the item in the player's hand into the jar
-            ItemStack remainingStack = entity.tryInsert(stack);
-
-            if (remainingStack.isEmpty() || originalStack.getCount() > remainingStack.getCount()) {
-                player.setStackInHand(Hand.MAIN_HAND, remainingStack);
+            if (!bucketFluid.matchesType(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
+                replaceHeldItemOrDont(world, player, stack, Items.BUCKET.getDefaultStack());
                 if (world.isClient()) {
-                    entity.playAddItemSound();
+                    entity.playEmptyBucketSound(bucketFluid);
                 }
                 entity.markDirty();
+            }
+        } else if (isFilledBottle(stack)) {
+            if (
+                stack.isOf(Items.HONEY_BOTTLE)
+                    && entity.tryInsert(ModFluids.HONEY_FLUID.get(), GlassJarBlockEntity.BOTTLE_SIZE)
+            ) {
+                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
+                if (world.isClient()) {
+                    entity.playEmptyBottleSound();
+                }
+                entity.markDirty();
+            } else if (
+                stack.isOf(Items.POTION)
+                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
+                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
+                    && entity.tryInsert(Fluids.WATER, GlassJarBlockEntity.BOTTLE_SIZE)
+            ) {
+                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
+                if (world.isClient()) {
+                    entity.playEmptyBottleSound();
+                }
+                entity.markDirty();
+            }
+        } else if (
+            stack.isOf(Items.GLASS_BOTTLE)
+                && entity.hasFluid()
+                && (entity.getStoredFluid() == Fluids.WATER || entity.getStoredFluid() == ModFluids.HONEY_FLUID.get())
+        ) {
+            ItemStack bottle = entity.getBottle();
+
+            if (bottle != null && !bottle.isOf(Items.GLASS_BOTTLE)) {
+                replaceHeldItemOrDont(world, player, stack, bottle);
+                if (world.isClient()) {
+                    entity.playFillBottleSound();
+                }
+            }
+        } else if (isEmptyBucket(stack) && entity.hasFluid()) {
+            Fluid fluid = entity.getBucket();
+
+            if (!fluid.matchesType(Fluids.EMPTY)) {
+                if (fluid.matchesType(Fluids.WATER)) {
+                    replaceHeldItemOrDont(world, player, stack, Items.WATER_BUCKET.getDefaultStack());
+                } else if (fluid.matchesType(Fluids.LAVA)) {
+                    replaceHeldItemOrDont(world, player, stack, Items.LAVA_BUCKET.getDefaultStack());
+                } else if (fluid.matchesType(ModFluids.MILK_FLUID.get())) {
+                    replaceHeldItemOrDont(world, player, stack, Items.MILK_BUCKET.getDefaultStack());
+                } else if (fluid.matchesType(ModFluids.HONEY_FLUID.get())) {
+                    replaceHeldItemOrDont(world, player, stack, ModFluids.HONEY_BUCKET.get().getDefaultStack());
+                }
+
+                if (world.isClient()) {
+                    entity.playFillBucketSound(fluid);
+                }
+                entity.markDirty();
+            }
+        } else if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
+            if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
+                ItemStack originalStack = stack.copy();
+
+                // Try to insert the item in the player's hand into the jar
+                ItemStack remainingStack = entity.tryInsert(stack);
+
+                if (remainingStack.isEmpty() || originalStack.getCount() > remainingStack.getCount()) {
+                    player.setStackInHand(Hand.MAIN_HAND, remainingStack);
+                    if (world.isClient()) {
+                        entity.playAddItemSound();
+                    }
+                    entity.markDirty();
+                }
             }
         } else if (player.isSneaking() && stack.isEmpty()) {
             if (entity.hasItem()) {
@@ -538,12 +548,12 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 
                     itemEntity.setToDefaultPickupDelay();
 
-                    entity.clear();
-
                     world.spawnEntity(itemEntity);
                 }
             }
         }
+
+        world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
         return state;
     }
@@ -634,57 +644,57 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         super.onStateReplaced(state, world, pos, moved);
     }
 
-//    private Fluid getFluidType(Identifier heldItemId) {
-//        Optional<Fluid> foundFluid = Registries.FLUID.stream()
-//            .filter(fluid -> {
-//                Item bucket = fluid.getBucketItem();
-//                return Registries.ITEM.getId(bucket).compareTo(heldItemId) == 0;
-//            })
-//            .findFirst();
-//
-//        return foundFluid.orElse(Fluids.EMPTY);
-//    }
-//
-//    private boolean isEmptyBucket(ItemStack item) {
-//        if (item.isEmpty()) {
-//            return false;
-//        }
-//
-//        return item.isOf(Items.BUCKET);
-//    }
-//
-//    private boolean isFilledBottle(ItemStack item) {
-//        if (item.isEmpty()) {
-//            return false;
-//        }
-//
-//        if (
-//            item.isOf(Items.POTION)
-//                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
-//                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
-//        ) {
-//            return true;
-//        }
-//
-//        return item.isOf(Items.HONEY_BOTTLE);
-//    }
-//
-//    private boolean isFilledBucket(ItemStack item) {
-//        if (item.isEmpty()) {
-//            return false;
-//        }
-//
-//        if (
-//            !(item.getItem() instanceof BucketItem)
-//                && !item.getItem().getTranslationKey().equals(Items.MILK_BUCKET.asItem().getTranslationKey())
-//        ) {
-//            return false;
-//        }
-//
-//        Identifier itemId = Registries.ITEM.getId(item.getItem());
-//
-//        return itemId.compareTo(Registries.ITEM.getId(Items.BUCKET.asItem())) != 0;
-//    }
+    private Fluid getFluidType(Identifier heldItemId) {
+        Optional<Fluid> foundFluid = Registries.FLUID.stream()
+            .filter(fluid -> {
+                Item bucket = fluid.getBucketItem();
+                return Registries.ITEM.getId(bucket).compareTo(heldItemId) == 0;
+            })
+            .findFirst();
+
+        return foundFluid.orElse(Fluids.EMPTY);
+    }
+
+    private boolean isEmptyBucket(ItemStack item) {
+        if (item.isEmpty()) {
+            return false;
+        }
+
+        return item.isOf(Items.BUCKET);
+    }
+
+    private boolean isFilledBottle(ItemStack item) {
+        if (item.isEmpty()) {
+            return false;
+        }
+
+        if (
+            item.isOf(Items.POTION)
+                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
+                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
+        ) {
+            return true;
+        }
+
+        return item.isOf(Items.HONEY_BOTTLE);
+    }
+
+    private boolean isFilledBucket(ItemStack item) {
+        if (item.isEmpty()) {
+            return false;
+        }
+
+        if (
+            !(item.getItem() instanceof BucketItem)
+                && !item.getItem().getTranslationKey().equals(Items.MILK_BUCKET.asItem().getTranslationKey())
+        ) {
+            return false;
+        }
+
+        Identifier itemId = Registries.ITEM.getId(item.getItem());
+
+        return itemId.compareTo(Registries.ITEM.getId(Items.BUCKET.asItem())) != 0;
+    }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

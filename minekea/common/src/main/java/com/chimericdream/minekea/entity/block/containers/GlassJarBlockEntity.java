@@ -2,6 +2,7 @@ package com.chimericdream.minekea.entity.block.containers;
 
 import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.minekea.block.containers.ContainerBlocks;
+import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.minecraft.block.BlockState;
@@ -10,13 +11,16 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
-import net.minecraft.inventory.Inventories;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -27,29 +31,32 @@ import net.minecraft.storage.NbtWriteView;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.ErrorReporter;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class GlassJarBlockEntity extends BlockEntity implements ImplementedInventory {
-//    public static final int MAX_BUCKETS = 8;
-//    public static final double BOTTLE_SIZE = 0.33;
+    public static final int MAX_BUCKETS = 8;
+    public static final double BOTTLE_SIZE = 0.33;
 
     // Since the `items` stores a single stack, the actual total is one higher than this
     public static final int MAX_ITEM_STACKS = 7;
 
-    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    private ItemStack storedItem = ItemStack.EMPTY;
     private int fullItemStacks = 0;
 
-//    private Fluid storedFluid = Fluids.EMPTY;
-//    private double fluidAmountInBuckets = 0.0;
-//
+    private Fluid storedFluid = Fluids.EMPTY;
+    private double fluidAmountInBuckets = 0.0;
+
 //    private TypedEntityData<EntityType<?>> storedMobData = null;
 
-    public static final String ITEM_AMT_KEY = "FullItemStacks";
-//    public static final String FLUID_KEY = "StoredFluid";
-//    public static final String FLUID_AMT_KEY = "StoredFluidAmount";
+    public static final String ITEM_KEY = "StoredItem";
+    public static final String ITEM_QTY_KEY = "StoredItemQty";
+    public static final String ITEM_STACKS_KEY = "FullItemStacks";
+    public static final String FLUID_KEY = "StoredFluid";
+    public static final String FLUID_AMT_KEY = "StoredFluidAmount";
 //    public static final String MOB_DATA_KEY = "StoredMobData";
 
     public GlassJarBlockEntity(BlockPos pos, BlockState state) {
@@ -81,16 +88,6 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         NbtCompound nbt = customData.copyNbt();
         entity.readData(NbtReadView.create(ErrorReporter.EMPTY, BuiltinRegistries.createWrapperLookup(), nbt));
 
-//        TypedEntityData<EntityType<?>> nbt = stack.get(DataComponentTypes.ENTITY_DATA);
-//        if (nbt != null) {
-//            nbt.applyToEntity(entity);
-//        }
-//
-//        var armor = stack.get(ArmorRack.ARMOR_STAND_ARMOR);
-//        if (armor != null) {
-//            armor.apply(entity);
-//        }
-
         return entity;
     }
 
@@ -107,110 +104,114 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 //    public TypedEntityData<EntityType<?>> getStoredMobData() {
 //        return storedMobData;
 //    }
-//
-//    public Fluid getStoredFluid() {
-//        return storedFluid;
-//    }
+
+    public ItemStack getStoredItem() {
+        return storedItem;
+    }
 
     public int getStoredStacks() {
         return fullItemStacks;
     }
 
-//    public double getStoredBuckets() {
-//        return fluidAmountInBuckets;
-//    }
-//
-//    public boolean canAcceptFluid(Fluid fluid) {
-//        return canAcceptFluid(fluid, 1.0);
-//    }
-//
-//    public boolean canAcceptFluid(Fluid fluid, double amount) {
-//        if (this.isEmpty()) {
-//            return true;
-//        }
-//
-//        // We can't store multiple things at the same time
-//        if (this.hasItem() || this.hasMob()) {
-//            return false;
-//        }
-//
-//        if (storedFluid.matchesType(Fluids.EMPTY)) {
-//            return true;
-//        }
-//
-//        // If this is the same fluid we're already storing, AND the jar isn't full yet
-//        return fluid.matchesType(storedFluid) && (fluidAmountInBuckets + amount) <= MAX_BUCKETS;
-//    }
-//
-//    public boolean tryInsert(Fluid fluid) {
-//        return tryInsert(fluid, 1.0);
-//    }
-//
-//    public boolean tryInsert(Fluid fluid, double amount) {
-//        if (!canAcceptFluid(fluid, amount)) {
-//            return false;
-//        }
-//
-//        storedFluid = fluid;
-//        fluidAmountInBuckets += amount;
-//
-//        if (fluidAmountInBuckets > (MAX_BUCKETS - BOTTLE_SIZE)) {
-//            fluidAmountInBuckets = MAX_BUCKETS;
-//        }
-//
-//        return true;
-//    }
-//
-//    @Nullable
-//    public ItemStack getBottle() {
-//        if (!this.hasFluid()) {
-//            return null;
-//        }
-//
-//        if (!this.hasFluid()) {
-//            return Items.GLASS_BOTTLE.getDefaultStack();
-//        }
-//
-//        ItemStack retStack = null;
-//
-//        if (this.getStoredFluid() == Fluids.WATER) {
-//            fluidAmountInBuckets -= BOTTLE_SIZE;
-//            retStack = Items.POTION.getDefaultStack();
-//        }
-//
-//        if (this.getStoredFluid() == ModFluids.HONEY_FLUID) {
-//            fluidAmountInBuckets -= BOTTLE_SIZE;
-//            retStack = Items.HONEY_BOTTLE.getDefaultStack();
-//        }
-//
-//        if (fluidAmountInBuckets < BOTTLE_SIZE) {
-//            storedFluid = Fluids.EMPTY;
-//            fluidAmountInBuckets = 0;
-//        }
-//
-//        return retStack;
-//    }
-//
-//    public Fluid getBucket() {
-//        if (!this.hasFluid() || fluidAmountInBuckets < 1) {
-//            return Fluids.EMPTY;
-//        }
-//
-//        Fluid fluid = storedFluid;
-//        fluidAmountInBuckets -= 1;
-//
-//        if (fluidAmountInBuckets <= 0) {
-//            storedFluid = Fluids.EMPTY;
-//        }
-//
-//        return fluid;
-//    }
+    public Fluid getStoredFluid() {
+        return storedFluid;
+    }
+
+    public double getStoredBuckets() {
+        return fluidAmountInBuckets;
+    }
+
+    public boolean canAcceptFluid(Fluid fluid) {
+        return canAcceptFluid(fluid, 1.0);
+    }
+
+    public boolean canAcceptFluid(Fluid fluid, double amount) {
+        if (this.isEmpty()) {
+            return true;
+        }
+
+        // We can't store multiple things at the same time
+        if (this.hasItem()/* || this.hasMob()*/) {
+            return false;
+        }
+
+        if (storedFluid.matchesType(Fluids.EMPTY)) {
+            return true;
+        }
+
+        // If this is the same fluid we're already storing, AND the jar isn't full yet
+        return fluid.matchesType(storedFluid) && (fluidAmountInBuckets + amount) <= MAX_BUCKETS;
+    }
+
+    public boolean tryInsert(Fluid fluid) {
+        return tryInsert(fluid, 1.0);
+    }
+
+    public boolean tryInsert(Fluid fluid, double amount) {
+        if (!canAcceptFluid(fluid, amount)) {
+            return false;
+        }
+
+        storedFluid = fluid;
+        fluidAmountInBuckets += amount;
+
+        if (fluidAmountInBuckets > (MAX_BUCKETS - BOTTLE_SIZE)) {
+            fluidAmountInBuckets = MAX_BUCKETS;
+        }
+
+        return true;
+    }
+
+    @Nullable
+    public ItemStack getBottle() {
+        if (!this.hasFluid()) {
+            return null;
+        }
+
+        if (!this.hasFluid()) {
+            return Items.GLASS_BOTTLE.getDefaultStack();
+        }
+
+        ItemStack retStack = null;
+
+        if (this.getStoredFluid() == Fluids.WATER) {
+            fluidAmountInBuckets -= BOTTLE_SIZE;
+            retStack = Items.POTION.getDefaultStack();
+        }
+
+        if (this.getStoredFluid() == ModFluids.HONEY_FLUID) {
+            fluidAmountInBuckets -= BOTTLE_SIZE;
+            retStack = Items.HONEY_BOTTLE.getDefaultStack();
+        }
+
+        if (fluidAmountInBuckets < BOTTLE_SIZE) {
+            storedFluid = Fluids.EMPTY;
+            fluidAmountInBuckets = 0;
+        }
+
+        return retStack;
+    }
+
+    public Fluid getBucket() {
+        if (!this.hasFluid() || fluidAmountInBuckets < 1) {
+            return Fluids.EMPTY;
+        }
+
+        Fluid fluid = storedFluid;
+        fluidAmountInBuckets -= 1;
+
+        if (fluidAmountInBuckets <= 0) {
+            storedFluid = Fluids.EMPTY;
+        }
+
+        return fluid;
+    }
 
     public boolean canAcceptItem(ItemStack item) {
         // We can't store multiple things at the same time
-//        if (this.hasFluid() || this.hasMob()) {
-//            return false;
-//        }
+        if (this.hasFluid()/* || this.hasMob()*/) {
+            return false;
+        }
 
         if (!item.isIn(MinekeaItemTags.GLASS_JAR_STORABLE)) {
             return false;
@@ -220,23 +221,19 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return true;
         }
 
-        ItemStack storedItem = items.getFirst();
-
         // If this is the same item we're already storing, AND the jar isn't full yet
         return item.isOf(storedItem.getItem()) && (fullItemStacks < MAX_ITEM_STACKS || storedItem.getCount() < storedItem.getMaxCount());
     }
 
     @Override
     public ItemStack tryInsert(ItemStack stack) {
-//        if (this.hasFluid() || this.hasMob()) {
-//            return stack;
-//        }
-
-        ItemStack storedItem = this.items.getFirst();
+        if (this.hasFluid()/* || this.hasMob()*/) {
+            return stack;
+        }
 
         // The jar was empty. Now it won't be
         if (storedItem.isEmpty()) {
-            this.items.set(0, stack);
+            storedItem = stack.copy();
 
             return ItemStack.EMPTY;
         }
@@ -258,7 +255,6 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         if (itemCount + storedItemCount <= storedItem.getMaxCount()) {
             storedItem.setCount(itemCount + storedItemCount);
 
-            this.items.set(0, storedItem);
             return ItemStack.EMPTY;
         }
 
@@ -269,14 +265,12 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             this.fullItemStacks += 1;
 
             storedItem.setCount(remainder);
-            this.items.set(0, storedItem);
 
             return ItemStack.EMPTY;
         }
 
         // At this point, we have MAX_ITEM_STACKS already stored, but a little space left in the "real" inventory slot
         storedItem.setCount(storedItem.getMaxCount());
-        this.items.set(0, storedItem);
 
         stack.setCount(remainder);
 
@@ -289,7 +283,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return ItemStack.EMPTY;
         }
 
-        ItemStack stack = this.items.getFirst().copy();
+        ItemStack stack = storedItem.copy();
 
         if (fullItemStacks > 1 || (fullItemStacks == 1 && stack.isStackable())) {
             stack.setCount(stack.getMaxCount());
@@ -298,7 +292,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return stack;
         }
 
-        this.items.set(0, ItemStack.EMPTY);
+        storedItem = ItemStack.EMPTY;
         fullItemStacks = 0;
 
         return stack;
@@ -334,66 +328,77 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 //    public boolean hasMob() {
 //        return !storedMobData.copyNbtWithoutId().isEmpty();
 //    }
-//
-//    public boolean hasFluid() {
-//        return !storedFluid.matchesType(Fluids.EMPTY);
-//    }
+
+    public boolean hasFluid() {
+        return !storedFluid.matchesType(Fluids.EMPTY);
+    }
 
     public boolean hasItem() {
-//        if (!storedFluid.matchesType(Fluids.EMPTY)) {
-//            return false;
-//        }
-
-        ItemStack storedItem = items.getFirst();
+        if (!storedFluid.matchesType(Fluids.EMPTY)) {
+            return false;
+        }
 
         return !storedItem.isEmpty();
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
-        return items;
-    }
-
-    @Override
     protected void writeData(WriteView view) {
         super.writeData(view);
-        Inventories.writeData(view, this.items);
-        view.putInt(ITEM_AMT_KEY, fullItemStacks);
+
+        view.putString(ITEM_KEY, storedItem.getRegistryEntry().getIdAsString());
+        view.putInt(ITEM_QTY_KEY, storedItem.getCount());
+        view.putInt(ITEM_STACKS_KEY, fullItemStacks);
+
+        writeFluidData(view);
+    }
+
+    private void writeFluidData(WriteView view) {
+        if (storedFluid.matchesType(Fluids.EMPTY)) {
+            view.putString(FLUID_KEY, "NONE");
+            view.putDouble(FLUID_AMT_KEY, 0.0);
+
+            return;
+        }
+
+        view.putString(FLUID_KEY, Registries.FLUID.getId(storedFluid).toString());
+        view.putDouble(FLUID_AMT_KEY, fluidAmountInBuckets);
     }
 
     @Override
     protected void readData(ReadView view) {
-        items.clear();
-
         super.readData(view);
 
-//        boolean hasFluid = readFluidView(view);
+        boolean hasFluid = readFluidView(view);
 //        boolean hasMob = readMobView(view);
 //
-//        if (!hasFluid && !hasMob) {
-        Inventories.readData(view, this.items);
-        fullItemStacks = view.getInt(ITEM_AMT_KEY, 0);
-//        }
+        if (!hasFluid/* && !hasMob*/) {
+            String storedItemKey = view.getString(ITEM_KEY, null);
+            if (storedItemKey != null) {
+                storedItem = Registries.ITEM.get(Identifier.of(storedItemKey)).getDefaultStack();
+                storedItem.setCount(view.getInt(ITEM_QTY_KEY, 1));
+            }
+            fullItemStacks = view.getInt(ITEM_STACKS_KEY, 0);
+        }
 
         markDirty();
     }
 
-//    private boolean readFluidView(ReadView view) {
-//        String fluidKey = view.getString(FLUID_KEY, "NONE");
-//
-//        if (fluidKey.equals("NONE")) {
-//            storedFluid = Fluids.EMPTY;
-//            fluidAmountInBuckets = 0.0;
-//
-//            return false;
-//        }
-//
-//        storedFluid = Registries.FLUID.get(Identifier.of(fluidKey));
-//        fluidAmountInBuckets = view.getDouble(FLUID_AMT_KEY, 0.0);
-//
-//        return true;
-//    }
-//
+    private boolean readFluidView(ReadView view) {
+        String fluidKey = view.getString(FLUID_KEY, "NONE");
+
+        if (fluidKey.equals("NONE")) {
+            storedFluid = Fluids.EMPTY;
+            fluidAmountInBuckets = 0.0;
+
+            return false;
+        }
+
+        storedFluid = Registries.FLUID.get(Identifier.of(fluidKey));
+        fluidAmountInBuckets = view.getDouble(FLUID_AMT_KEY, 0.0);
+
+        return true;
+    }
+
 //    private boolean readMobView(ReadView view) {
 //        storedMobData = view.read(MOB_DATA_KEY);
 //
@@ -458,37 +463,42 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    public boolean isEmpty() {
-//        if (hasFluid() || hasMob()) {
-//            return false;
-//        }
-
-        return ImplementedInventory.super.isEmpty();
+    public DefaultedList<ItemStack> getItems() {
+        return null;
     }
 
-//    public void playEmptyBottleSound() {
-//        playSound(SoundEvents.ITEM_BOTTLE_EMPTY);
-//    }
-//
-//    public void playFillBottleSound() {
-//        playSound(SoundEvents.ITEM_BOTTLE_FILL);
-//    }
-//
-//    public void playEmptyBucketSound(Fluid fluid) {
-//        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
-//            playSound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA);
-//        } else {
-//            playSound(SoundEvents.ITEM_BUCKET_EMPTY);
-//        }
-//    }
-//
-//    public void playFillBucketSound(Fluid fluid) {
-//        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
-//            playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
-//        } else {
-//            playSound(SoundEvents.ITEM_BUCKET_FILL);
-//        }
-//    }
+    @Override
+    public boolean isEmpty() {
+        if (hasFluid()/* || hasMob()*/) {
+            return false;
+        }
+
+        return storedItem.isEmpty();
+    }
+
+    public void playEmptyBottleSound() {
+        playSound(SoundEvents.ITEM_BOTTLE_EMPTY);
+    }
+
+    public void playFillBottleSound() {
+        playSound(SoundEvents.ITEM_BOTTLE_FILL);
+    }
+
+    public void playEmptyBucketSound(Fluid fluid) {
+        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
+            playSound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA);
+        } else {
+            playSound(SoundEvents.ITEM_BUCKET_EMPTY);
+        }
+    }
+
+    public void playFillBucketSound(Fluid fluid) {
+        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
+            playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
+        } else {
+            playSound(SoundEvents.ITEM_BUCKET_FILL);
+        }
+    }
 
     public void playAddItemSound() {
         playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);

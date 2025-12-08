@@ -3,18 +3,21 @@ package com.chimericdream.minekea.client.render.block;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
 import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.command.ModelCommandRenderer;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.state.CameraRenderState;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJarBlockEntity, GlassJarBlockEntityRenderState> {
+abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJarBlockEntity, GlassJarBlockEntityRenderState> {
     protected static final float yLightFactor = 0.5f;
     protected static final float zLightFactor = 0.8f;
     protected static final float xLightFactor = 0.6f;
@@ -48,30 +51,49 @@ public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJar
         state.hasItem = entity.hasItem();
         state.fillLevel = entity.getStoredStacks() + 1;
 
-        ItemStack storedStack = entity.getStack(0);
+        state.storedFluid = entity.getStoredFluid();
+        state.fluidAmountInBuckets = entity.getStoredBuckets();
+        state.hasFluid = entity.hasFluid();
+
+        ItemStack storedStack = entity.getStoredItem();
         ItemStack stack = GlassJarBlock.getStackToRender(storedStack);
         this.context.itemModelManager().update(state.displayItem, stack, ItemDisplayContext.FIXED, null, null, 0);
     }
 
     @Override
     public void render(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
-        renderJar(state, matrices, queue);
+        if (state.hasItem) {
+            renderJar(state, matrices, queue);
+        } else if (state.hasFluid) {
+            Fluid storedFluid = state.storedFluid;
+
+            int color = getFluidColor(storedFluid);
+            Sprite fluidTexture = getFluidTexture(storedFluid);
+
+            renderFluidJar(state, color, fluidTexture, matrices, queue);
+        }
     }
 
     public static void renderJar(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue) {
-        if (state.hasItem) {
-            int fillLevel = state.fillLevel;
-            float fY = (float) fillLevel / (GlassJarBlockEntity.MAX_ITEM_STACKS + 1);
+        int fillLevel = state.fillLevel;
+        float fY = (float) fillLevel / (GlassJarBlockEntity.MAX_ITEM_STACKS + 1);
 
-            matrices.push();
+        matrices.push();
 
-            matrices.translate(0.5, (fY * 0.25) + NUDGE, 0.5);
-            matrices.scale(0.749f, fY, 0.749f);
+        matrices.translate(0.5, (fY * 0.25) + NUDGE, 0.5);
+        matrices.scale(0.749f, fY, 0.749f);
 
-            state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+        state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
 
-            matrices.pop();
-        }
+        matrices.pop();
+    }
+
+    public static void renderFluidJar(GlassJarBlockEntityRenderState state, int color, Sprite texture, MatrixStack matrices, OrderedRenderCommandQueue queue) {
+        queue.submitCustom(
+            matrices,
+            RenderLayer.getTranslucentMovingBlock(),
+            new GlassJarFluidRenderCommandQueue(color, texture, state.lightmapCoordinates, state.fluidAmountInBuckets)
+        );
     }
 
 //    public void render(GlassJarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -133,207 +155,6 @@ public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJar
 //        entityRenderer.render(mob, 0.0, 0.0, 0.0, 0.0f, 0.0f, matrices, vertexConsumers, light);
 //        matrices.pop();
 //    }
-//
-//    protected void renderFluidTexture(
-//        Sprite texture,
-//        MatrixStack matrices,
-//        VertexConsumerProvider vertexConsumers,
-//        float fluidTop,
-//        int color,
-//        int light
-//    ) {
-//        VertexConsumer translucentBuffer = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
-//        MatrixStack.Entry worldMatrix = matrices.peek();
-//
-//        float colorR = (float) (color >> 16 & 255) / 255.0F;
-//        float colorG = (float) (color >> 8 & 255) / 255.0F;
-//        float colorB = (float) (color & 255) / 255.0F;
-//        float xColorR = colorR * xLightFactor;
-//        float xColorG = colorG * xLightFactor;
-//        float xColorB = colorB * xLightFactor;
-//        float yColorR = colorR * yLightFactor;
-//        float yColorG = colorG * yLightFactor;
-//        float yColorB = colorB * yLightFactor;
-//        float zColorR = colorR * zLightFactor;
-//        float zColorG = colorG * zLightFactor;
-//        float zColorB = colorB * zLightFactor;
-//
-//        matrices.push();
-//
-//        // east (x+)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f, 1f - HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f, 0f + HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop, 0f + HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop, 1f - HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(1f, 0f, 0f);
-//
-//        // west (x-)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f, 0f + HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(-1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f, 1f - HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(-1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop, 1f - HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(-1f, 0f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop, 0f + HORIZONTAL_OFFSET)
-//            .color(xColorR, xColorG, xColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(-1f, 0f, 0f);
-//
-//        // south (z+)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f, 1f - HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 0f, 1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f, 1f - HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 0f, 1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop, 1f - HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 0f, 1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop, 1f - HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 0f, 1f);
-//
-//        // north (z-)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f, 0f + HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 0f, -1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f, 0f + HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 0f, -1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop, 0f + HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 0f, -1f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop, 0f + HORIZONTAL_OFFSET)
-//            .color(zColorR, zColorG, zColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 0f, -1f);
-//
-//        // up (y+)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop - NUDGE, 1f - HORIZONTAL_OFFSET)
-//            .color(colorR, colorG, colorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop - NUDGE, 1f - HORIZONTAL_OFFSET)
-//            .color(colorR, colorG, colorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, 1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, fluidTop - NUDGE, 0f + HORIZONTAL_OFFSET)
-//            .color(colorR, colorG, colorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, fluidTop - NUDGE, 0f + HORIZONTAL_OFFSET)
-//            .color(colorR, colorG, colorB, 1f)
-//            .texture(texture.getMinU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, 1f, 0f);
-//
-//        // down (y-)
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f + NUDGE, 0f + HORIZONTAL_OFFSET)
-//            .color(yColorR, yColorG, yColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, -1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f + NUDGE, 0f + HORIZONTAL_OFFSET)
-//            .color(yColorR, yColorG, yColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMinV())
-//            .light(light)
-//            .normal(0f, -1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 1f - HORIZONTAL_OFFSET, 0f + NUDGE, 1f - HORIZONTAL_OFFSET)
-//            .color(yColorR, yColorG, yColorB, 1f)
-//            .texture(texture.getMaxU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, -1f, 0f);
-//        translucentBuffer
-//            .vertex(worldMatrix.getPositionMatrix(), 0f + HORIZONTAL_OFFSET, 0f + NUDGE, 1f - HORIZONTAL_OFFSET)
-//            .color(yColorR, yColorG, yColorB, 1f)
-//            .texture(texture.getMinU(), texture.getMaxV())
-//            .light(light)
-//            .normal(0f, -1f, 0f);
-//
-//        matrices.pop();
-//    }
-//
-//    protected void renderFluid(GlassJarBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-//        Fluid storedFluid = entity.getStoredFluid();
-//        if (storedFluid.matchesType(Fluids.EMPTY)) {
-//            return;
-//        }
-//
-//        int color = getFluidColor(storedFluid);
-//        Sprite fluidTexture = getFluidTexture(storedFluid);
-//
-//        double fillLevel = entity.getStoredBuckets();
-//
-//        float fluidTop = (((float) fillLevel / GlassJarBlockEntity.MAX_BUCKETS) * VERTICAL_MULTIPLIER) - NUDGE;
-//
-//        renderFluidTexture(fluidTexture, matrices, vertexConsumers, fluidTop, color, light);
-//    }
 
 //    protected void renderItem(GlassJarBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 //        World world = entity.getWorld();
@@ -364,7 +185,7 @@ public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJar
 //        matrices.pop();
 //    }
 
-//    abstract protected int getFluidColor(Fluid fluid);
-//
-//    abstract protected Sprite getFluidTexture(Fluid fluid);
+    abstract protected int getFluidColor(Fluid fluid);
+
+    abstract protected Sprite getFluidTexture(Fluid fluid);
 }

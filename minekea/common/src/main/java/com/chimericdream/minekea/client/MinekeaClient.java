@@ -1,7 +1,6 @@
 package com.chimericdream.minekea.client;
 
 import com.chimericdream.lib.entities.SimpleSeatEntity;
-import com.chimericdream.minekea.block.containers.ContainerBlocks;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.block.containers.crates.Crates;
 import com.chimericdream.minekea.block.furniture.armoires.Armoires;
@@ -10,7 +9,6 @@ import com.chimericdream.minekea.block.furniture.seats.Seats;
 import com.chimericdream.minekea.block.furniture.shelves.Shelves;
 import com.chimericdream.minekea.client.render.block.ArmoireBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.block.DisplayCaseBlockEntityRenderer;
-import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.block.ShelfBlockEntityRenderer;
 import com.chimericdream.minekea.client.render.item.GlassJarItemRenderer;
 import com.chimericdream.minekea.client.screen.BlockPainterScreen;
@@ -51,11 +49,6 @@ public class MinekeaClient {
         BlockEntityRendererRegistry.register(
             DisplayCases.DISPLAY_CASE_BLOCK_ENTITY.get(),
             DisplayCaseBlockEntityRenderer::new
-        );
-
-        BlockEntityRendererRegistry.register(
-            ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
-            GlassJarBlockEntityRenderer::new
         );
 
         BlockEntityRendererRegistry.register(

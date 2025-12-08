@@ -1,7 +1,9 @@
 package com.chimericdream.minekea.client.render.block;
 
+import com.chimericdream.minekea.block.decorations.lighting.Lanterns;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock;
 import com.chimericdream.minekea.entity.block.furniture.DisplayCaseBlockEntity;
+import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -84,6 +86,8 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         }
 
         boolean isHead = isHeadItem(state.itemId);
+        boolean isJar = isJarItem(state.itemId);
+        boolean isLantern = isLanternItem(state.itemId);
         int rotation = state.rotation;
 
         if (state.isBlock) {
@@ -102,18 +106,18 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             matrices.scale(0.5f, 0.5f, 0.5f);
         }
 
-        // Rotate heads and jars so they face up instead of being half inside the case
-        if (isHead/* || isJarItem(stack)*/) {
+        // Rotate some items so they face up instead of being half inside the case
+        if (isHead || isJar || isLantern) {
 //            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180 - (rotation * 45)));
             matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
             matrices.translate(0, -0.0625, 0);
         }
 
-        // Jars need to move up a tiny bit more
-//        if (isJarItem(stack)) {
-//            matrices.translate(0, 0, 0.09375);
-//        }
+        // A few things need to move up a tiny bit more
+        if (isJar || isLantern) {
+            matrices.translate(0, 0, 0.09375);
+        }
 
         state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
 
@@ -124,9 +128,13 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         return stack.isIn(MinekeaItemTags.BAGGED_ITEMS);
     }
 
-//    private boolean isJarItem(ItemStack stack) {
-//        return stack.isOf(ContainerBlocks.GLASS_JAR.get().asItem());
-//    }
+    private boolean isJarItem(Identifier id) {
+        if (id == null) {
+            return false;
+        }
+
+        return id.compareTo(Registries.ITEM.getId(ContainerItems.GLASS_JAR_ITEM.get())) == 0;
+    }
 
     private boolean isHeadItem(Identifier id) {
         if (id == null) {
@@ -140,6 +148,25 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
                 || id.compareTo(Registries.ITEM.getId(Items.CREEPER_HEAD)) == 0
                 || id.compareTo(Registries.ITEM.getId(Items.WITHER_SKELETON_SKULL)) == 0
                 || id.compareTo(Registries.ITEM.getId(Items.PIGLIN_HEAD)) == 0;
+    }
+
+    private boolean isLanternItem(Identifier id) {
+        if (id == null) {
+            return false;
+        }
+
+        return
+            id.compareTo(Registries.ITEM.getId(Items.LANTERN)) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.SOUL_LANTERN)) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.exposed())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.oxidized())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.unaffected())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxed())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedExposed())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedOxidized())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedWeathered())) == 0
+                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.weathered())) == 0
+                || Lanterns.BLOCKS.stream().anyMatch(block -> id.compareTo(block.getId()) == 0);
     }
 
 //    @Override
