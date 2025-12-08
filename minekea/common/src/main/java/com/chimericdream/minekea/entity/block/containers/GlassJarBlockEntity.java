@@ -458,6 +458,10 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+    }
+
+    @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
         return createNbt(registryLookup);
     }
