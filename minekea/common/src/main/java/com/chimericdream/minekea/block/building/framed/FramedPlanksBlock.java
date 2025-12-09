@@ -7,8 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,14 +19,12 @@ import org.jetbrains.annotations.Nullable;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class FramedPlanksBlock extends Block {
-    public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty CONNECTED_NORTH;
     public static final BooleanProperty CONNECTED_SOUTH;
     public static final BooleanProperty CONNECTED_EAST;
     public static final BooleanProperty CONNECTED_WEST;
 
     static {
-        FACING = Properties.HORIZONTAL_FACING;
         CONNECTED_NORTH = BooleanProperty.of("connected_north");
         CONNECTED_SOUTH = BooleanProperty.of("connected_south");
         CONNECTED_EAST = BooleanProperty.of("connected_east");
@@ -47,7 +43,6 @@ public class FramedPlanksBlock extends Block {
         this.setDefaultState(
             this.stateManager
                 .getDefaultState()
-                .with(FACING, Direction.NORTH)
                 .with(CONNECTED_NORTH, false)
                 .with(CONNECTED_SOUTH, false)
                 .with(CONNECTED_EAST, false)
@@ -63,25 +58,105 @@ public class FramedPlanksBlock extends Block {
         return config;
     }
 
-    private boolean shouldConnect(ItemPlacementContext ctx, Direction direction, Direction facing) {
-        return shouldConnect(ctx.getWorld(), ctx.getBlockPos(), direction, facing);
-    }
-
-    private boolean shouldConnect(BlockView world, BlockPos pos, Direction direction, Direction facing) {
-        BlockPos neighborPos = pos.offset(direction);
-        BlockState neighborState = world.getBlockState(neighborPos);
-
-        return neighborState.isOf(this) && neighborState.get(FACING).equals(facing);
-    }
-
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(
-            FACING,
             CONNECTED_NORTH,
             CONNECTED_SOUTH,
             CONNECTED_EAST,
             CONNECTED_WEST
         );
+    }
+
+    protected boolean shouldConnectNorth(BlockView world, BlockPos pos) {
+        return shouldConnectNorth(world, pos, null);
+    }
+
+    protected boolean shouldConnectNorth(BlockView world, BlockPos pos, @Nullable BlockState self) {
+        BlockPos neighborPos = pos.offset(Direction.NORTH);
+        BlockState neighbor = world.getBlockState(neighborPos);
+
+        if (!neighbor.isOf(this)) {
+            return false;
+        }
+
+        if (neighbor.isOf(this) && (neighbor.get(CONNECTED_EAST) || neighbor.get(CONNECTED_WEST))) {
+            return false;
+        }
+
+        if (self == null) {
+            return true;
+        }
+
+        return !(self.get(CONNECTED_EAST) || self.get(CONNECTED_WEST));
+    }
+
+    protected boolean shouldConnectSouth(BlockView world, BlockPos pos) {
+        return shouldConnectSouth(world, pos, null);
+    }
+
+    protected boolean shouldConnectSouth(BlockView world, BlockPos pos, @Nullable BlockState self) {
+        BlockPos neighborPos = pos.offset(Direction.SOUTH);
+        BlockState neighbor = world.getBlockState(neighborPos);
+
+        if (!neighbor.isOf(this)) {
+            return false;
+        }
+
+        if (neighbor.isOf(this) && (neighbor.get(CONNECTED_EAST) || neighbor.get(CONNECTED_WEST))) {
+            return false;
+        }
+
+        if (self == null) {
+            return true;
+        }
+
+        return !(self.get(CONNECTED_EAST) || self.get(CONNECTED_WEST));
+    }
+
+    protected boolean shouldConnectEast(BlockView world, BlockPos pos) {
+        return shouldConnectEast(world, pos, null);
+    }
+
+    protected boolean shouldConnectEast(BlockView world, BlockPos pos, @Nullable BlockState self) {
+        BlockPos neighborPos = pos.offset(Direction.EAST);
+        BlockState neighbor = world.getBlockState(neighborPos);
+
+        if (!neighbor.isOf(this)) {
+            return false;
+        }
+
+        if (neighbor.isOf(this) && (neighbor.get(CONNECTED_NORTH) || neighbor.get(CONNECTED_SOUTH))) {
+            return false;
+        }
+
+        if (self == null) {
+            return true;
+        }
+
+        return !(self.get(CONNECTED_NORTH) || self.get(CONNECTED_SOUTH));
+    }
+
+    protected boolean shouldConnectWest(BlockView world, BlockPos pos) {
+        return shouldConnectWest(world, pos, null);
+    }
+
+    protected boolean shouldConnectWest(BlockView world, BlockPos pos, @Nullable BlockState self) {
+        BlockPos neighborPos = pos.offset(Direction.WEST);
+        BlockState neighbor = world.getBlockState(neighborPos);
+
+        if (!neighbor.isOf(this)) {
+            return false;
+        }
+
+        if (neighbor.isOf(this) && (neighbor.get(CONNECTED_NORTH) || neighbor.get(CONNECTED_SOUTH))) {
+            return false;
+        }
+
+        if (self == null) {
+            return true;
+        }
+
+        return !(self.get(CONNECTED_NORTH) || self.get(CONNECTED_SOUTH));
     }
 
     @Override
@@ -90,19 +165,18 @@ public class FramedPlanksBlock extends Block {
             return this.getDefaultState();
         }
 
-        Direction facing = getHorizontalAxisFacing(ctx.getPlayer().getHorizontalFacing());
+        boolean connectNorth = shouldConnectNorth(ctx.getWorld(), ctx.getBlockPos());
+        boolean connectSouth = shouldConnectSouth(ctx.getWorld(), ctx.getBlockPos());
+        boolean connectEast = shouldConnectEast(ctx.getWorld(), ctx.getBlockPos());
+        boolean connectWest = shouldConnectWest(ctx.getWorld(), ctx.getBlockPos());
 
-        if (facing.equals(Direction.NORTH)) {
-            return this.getDefaultState()
-                .with(FACING, facing)
-                .with(CONNECTED_EAST, shouldConnect(ctx, Direction.EAST, facing))
-                .with(CONNECTED_WEST, shouldConnect(ctx, Direction.WEST, facing));
-        }
+        boolean isNorthSouth = connectNorth || connectSouth;
 
         return this.getDefaultState()
-            .with(FACING, facing)
-            .with(CONNECTED_NORTH, shouldConnect(ctx, Direction.NORTH, facing))
-            .with(CONNECTED_SOUTH, shouldConnect(ctx, Direction.SOUTH, facing));
+            .with(CONNECTED_NORTH, connectNorth)
+            .with(CONNECTED_SOUTH, connectSouth)
+            .with(CONNECTED_EAST, !isNorthSouth && connectEast)
+            .with(CONNECTED_WEST, !isNorthSouth && connectWest);
     }
 
     @Override
@@ -111,30 +185,17 @@ public class FramedPlanksBlock extends Block {
             return state;
         }
 
-        BooleanProperty prop = getConnectionProperty(direction);
+        boolean connectNorth = shouldConnectNorth(world, pos, state);
+        boolean connectSouth = shouldConnectSouth(world, pos, state);
+        boolean connectEast = shouldConnectEast(world, pos, state);
+        boolean connectWest = shouldConnectWest(world, pos, state);
 
-        if (!state.isOf(this)) {
-            return state.with(prop, false);
-        }
+        boolean isNorthSouth = connectNorth || connectSouth;
 
-        return state.with(prop, neighborState.isOf(this) && neighborState.get(FACING) == state.get(FACING));
-    }
-
-    private Direction getHorizontalAxisFacing(Direction direction) {
-        return switch (direction) {
-            case EAST, WEST -> Direction.EAST;
-            default -> Direction.NORTH;
-        };
-    }
-
-    @Nullable
-    private BooleanProperty getConnectionProperty(Direction direction) {
-        return switch (direction) {
-            case NORTH -> CONNECTED_NORTH;
-            case SOUTH -> CONNECTED_SOUTH;
-            case EAST -> CONNECTED_EAST;
-            case WEST -> CONNECTED_WEST;
-            case UP, DOWN -> null;
-        };
+        return state
+            .with(CONNECTED_NORTH, connectNorth)
+            .with(CONNECTED_SOUTH, connectSouth)
+            .with(CONNECTED_EAST, !isNorthSouth && connectEast)
+            .with(CONNECTED_WEST, !isNorthSouth && connectWest);
     }
 }

@@ -25,7 +25,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -125,76 +124,30 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
                 VariantsBlockModelDefinitionCreator.of(BLOCK).with(
                     BlockStateVariantMap
                         .models(
-                            FramedPlanksBlock.FACING,
                             FramedPlanksBlock.CONNECTED_EAST,
                             FramedPlanksBlock.CONNECTED_WEST,
                             FramedPlanksBlock.CONNECTED_NORTH,
                             FramedPlanksBlock.CONNECTED_SOUTH
                         )
-                        .register(Direction.NORTH, false, false, false, false, coreVariant)
-                        .register(Direction.NORTH, true, false, false, false, aConnectedVariant)
-                        .register(Direction.NORTH, false, true, false, false, bConnectedVariant)
-                        .register(Direction.NORTH, true, true, false, false, abConnectedVariant)
-                        .register(Direction.EAST, false, false, false, false, coreVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(Direction.EAST, false, false, true, false, aConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(Direction.EAST, false, false, false, true, bConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(Direction.EAST, false, false, true, true, abConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(Direction.NORTH, true, true, true, true, invalidVariant)
-                        .register(Direction.NORTH, true, true, true, false, invalidVariant)
-                        .register(Direction.NORTH, true, true, false, true, invalidVariant)
-                        .register(Direction.NORTH, true, false, true, true, invalidVariant)
-                        .register(Direction.NORTH, true, false, true, false, invalidVariant)
-                        .register(Direction.NORTH, true, false, false, true, invalidVariant)
-                        .register(Direction.NORTH, false, true, true, true, invalidVariant)
-                        .register(Direction.NORTH, false, true, true, false, invalidVariant)
-                        .register(Direction.NORTH, false, true, false, true, invalidVariant)
-                        .register(Direction.NORTH, false, false, true, true, invalidVariant)
-                        .register(Direction.NORTH, false, false, true, false, invalidVariant)
-                        .register(Direction.NORTH, false, false, false, true, invalidVariant)
-                        .register(Direction.SOUTH, true, true, true, true, invalidVariant)
-                        .register(Direction.SOUTH, true, true, true, false, invalidVariant)
-                        .register(Direction.SOUTH, true, true, false, true, invalidVariant)
-                        .register(Direction.SOUTH, true, true, false, false, invalidVariant)
-                        .register(Direction.SOUTH, true, false, true, true, invalidVariant)
-                        .register(Direction.SOUTH, true, false, true, false, invalidVariant)
-                        .register(Direction.SOUTH, true, false, false, true, invalidVariant)
-                        .register(Direction.SOUTH, true, false, false, false, invalidVariant)
-                        .register(Direction.SOUTH, false, true, true, true, invalidVariant)
-                        .register(Direction.SOUTH, false, true, true, false, invalidVariant)
-                        .register(Direction.SOUTH, false, true, false, true, invalidVariant)
-                        .register(Direction.SOUTH, false, true, false, false, invalidVariant)
-                        .register(Direction.SOUTH, false, false, true, true, invalidVariant)
-                        .register(Direction.SOUTH, false, false, true, false, invalidVariant)
-                        .register(Direction.SOUTH, false, false, false, true, invalidVariant)
-                        .register(Direction.SOUTH, false, false, false, false, invalidVariant)
-                        .register(Direction.WEST, true, true, true, true, invalidVariant)
-                        .register(Direction.WEST, true, true, true, false, invalidVariant)
-                        .register(Direction.WEST, true, true, false, true, invalidVariant)
-                        .register(Direction.WEST, true, true, false, false, invalidVariant)
-                        .register(Direction.WEST, true, false, true, true, invalidVariant)
-                        .register(Direction.WEST, true, false, true, false, invalidVariant)
-                        .register(Direction.WEST, true, false, false, true, invalidVariant)
-                        .register(Direction.WEST, true, false, false, false, invalidVariant)
-                        .register(Direction.WEST, false, true, true, true, invalidVariant)
-                        .register(Direction.WEST, false, true, true, false, invalidVariant)
-                        .register(Direction.WEST, false, true, false, true, invalidVariant)
-                        .register(Direction.WEST, false, true, false, false, invalidVariant)
-                        .register(Direction.WEST, false, false, true, true, invalidVariant)
-                        .register(Direction.WEST, false, false, true, false, invalidVariant)
-                        .register(Direction.WEST, false, false, false, true, invalidVariant)
-                        .register(Direction.WEST, false, false, false, false, invalidVariant)
-                        .register(Direction.EAST, true, true, true, true, invalidVariant)
-                        .register(Direction.EAST, true, true, true, false, invalidVariant)
-                        .register(Direction.EAST, true, true, false, true, invalidVariant)
-                        .register(Direction.EAST, true, true, false, false, invalidVariant)
-                        .register(Direction.EAST, true, false, true, true, invalidVariant)
-                        .register(Direction.EAST, true, false, true, false, invalidVariant)
-                        .register(Direction.EAST, true, false, false, true, invalidVariant)
-                        .register(Direction.EAST, true, false, false, false, invalidVariant)
-                        .register(Direction.EAST, false, true, true, true, invalidVariant)
-                        .register(Direction.EAST, false, true, true, false, invalidVariant)
-                        .register(Direction.EAST, false, true, false, true, invalidVariant)
-                        .register(Direction.EAST, false, true, false, false, invalidVariant)
+                        .register(false, false, false, false, coreVariant)
+                        .register(true, false, false, false, aConnectedVariant)
+                        .register(false, true, false, false, bConnectedVariant)
+                        .register(false, false, true, false, aConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .register(false, false, false, true, bConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+
+                        .register(true, true, false, false, abConnectedVariant)
+                        .register(true, false, true, false, invalidVariant)
+                        .register(true, false, false, true, invalidVariant)
+                        .register(false, true, true, false, invalidVariant)
+                        .register(false, true, false, true, invalidVariant)
+                        .register(false, false, true, true, abConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+
+                        .register(true, true, true, false, invalidVariant)
+                        .register(true, true, false, true, invalidVariant)
+                        .register(true, false, true, true, invalidVariant)
+                        .register(false, true, true, true, invalidVariant)
+
+                        .register(true, true, true, true, invalidVariant)
                 )
             );
     }

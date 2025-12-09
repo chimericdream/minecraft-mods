@@ -1,199 +1,54 @@
 {
   "variants": {
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=false,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch",
-      "y": 270
-    },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=false,facing=north": {
+    "connected_east=false,connected_north=false,connected_south=false,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch"
     },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=true,facing=north": {
+    "connected_east=false,connected_north=false,connected_south=false,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_b_connected"
     },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=false,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=false,facing=east": {
+    "connected_east=false,connected_north=false,connected_south=true,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_b_connected",
       "y": 270
     },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=false,facing=north": {
+    "connected_east=false,connected_north=false,connected_south=true,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=false,connected_south=true,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=false,facing=east": {
+    "connected_east=false,connected_north=true,connected_south=false,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_a_connected",
       "y": 270
     },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=false,facing=north": {
+    "connected_east=false,connected_north=true,connected_south=false,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=false,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=false,facing=east": {
+    "connected_east=false,connected_north=true,connected_south=true,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_ab_connected",
       "y": 270
     },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=false,facing=north": {
+    "connected_east=false,connected_north=true,connected_south=true,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=false,connected_north=true,connected_south=true,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=false,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=false,facing=north": {
+    "connected_east=true,connected_north=false,connected_south=false,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_a_connected"
     },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=true,facing=north": {
+    "connected_east=true,connected_north=false,connected_south=false,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_ab_connected"
     },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=true,facing=south": {
+    "connected_east=true,connected_north=false,connected_south=true,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=true,connected_north=false,connected_south=false,connected_west=true,facing=west": {
+    "connected_east=true,connected_north=false,connected_south=true,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=false,facing=east": {
+    "connected_east=true,connected_north=true,connected_south=false,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=false,facing=north": {
+    "connected_east=true,connected_north=true,connected_south=false,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=false,facing=south": {
+    "connected_east=true,connected_north=true,connected_south=true,connected_west=false": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=false,connected_south=true,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=false,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=false,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=false,connected_west=true,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=false,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=false,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=false,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=false,facing=west": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=true,facing=east": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=true,facing=north": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=true,facing=south": {
-      "model": "minekea:block/building/general/framed_planks/birch_invalid"
-    },
-    "connected_east=true,connected_north=true,connected_south=true,connected_west=true,facing=west": {
+    "connected_east=true,connected_north=true,connected_south=true,connected_west=true": {
       "model": "minekea:block/building/general/framed_planks/birch_invalid"
     }
   }
