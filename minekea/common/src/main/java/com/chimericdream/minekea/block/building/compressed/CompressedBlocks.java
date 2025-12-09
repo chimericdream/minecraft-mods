@@ -3,7 +3,12 @@ package com.chimericdream.minekea.block.building.compressed;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
-import com.chimericdream.minekea.block.building.general.*;
+import com.chimericdream.minekea.block.building.general.BasaltBricksBlock;
+import com.chimericdream.minekea.block.building.general.CrackedBasaltBricksBlock;
+import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock;
+import com.chimericdream.minekea.block.building.general.MossyBasaltBricksBlock;
+import com.chimericdream.minekea.block.building.general.WarpedBasaltBricksBlock;
+import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -158,6 +163,7 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Jungle Planks", "jungle_planks"), Blocks.JUNGLE_PLANKS, Tool.AXE));
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Mangrove Planks", "mangrove_planks"), Blocks.MANGROVE_PLANKS, Tool.AXE));
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Oak Planks", "oak_planks"), Blocks.OAK_PLANKS, Tool.AXE));
+        BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Pale Oak Planks", "pale_oak_planks"), Blocks.PALE_OAK_PLANKS, Tool.AXE));
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Spruce Planks", "spruce_planks"), Blocks.SPRUCE_PLANKS, Tool.AXE));
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Warped Planks", "warped_planks"), Blocks.WARPED_PLANKS, Tool.AXE));
 
@@ -208,6 +214,7 @@ public class CompressedBlocks implements ModThingGroup {
         COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Jungle Log", "jungle_log"), Blocks.JUNGLE_LOG, new Pair<>("", "_top"), Tool.AXE));
         COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Mangrove Log", "mangrove_log"), Blocks.MANGROVE_LOG, new Pair<>("", "_top"), Tool.AXE));
         COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Oak Log", "oak_log"), Blocks.OAK_LOG, new Pair<>("", "_top"), Tool.AXE));
+        COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Pale Oak Log", "pale_oak_log"), Blocks.PALE_OAK_LOG, new Pair<>("", "_top"), Tool.AXE));
         COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Spruce Log", "spruce_log"), Blocks.SPRUCE_LOG, new Pair<>("", "_top"), Tool.AXE));
         COLUMN_BLOCKS_TO_COMPRESS.add(new Quartet<>(new Pair<>("Warped Stem", "warped_stem"), Blocks.WARPED_STEM, new Pair<>("", "_top"), Tool.AXE));
 

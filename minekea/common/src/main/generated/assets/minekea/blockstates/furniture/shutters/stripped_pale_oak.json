@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "open=false,wall_side=east": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak",
+      "y": 270
+    },
+    "open=false,wall_side=north": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak",
+      "y": 180
+    },
+    "open=false,wall_side=south": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak"
+    },
+    "open=false,wall_side=west": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak",
+      "y": 90
+    },
+    "open=true,wall_side=east": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak_open"
+    },
+    "open=true,wall_side=north": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak_open"
+    },
+    "open=true,wall_side=south": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak_open"
+    },
+    "open=true,wall_side=west": {
+      "model": "minekea:block/furniture/shutters/stripped_pale_oak_open"
+    }
+  }
+}

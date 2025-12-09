@@ -36,6 +36,7 @@ public class Shutters implements ModThingGroup {
         CONFIGS.put("jungle", new BlockConfig().material("jungle").materialName("Jungle").ingredient(Blocks.JUNGLE_PLANKS).ingredient("log", Blocks.JUNGLE_LOG).flammable());
         CONFIGS.put("mangrove", new BlockConfig().material("mangrove").materialName("Mangrove").ingredient(Blocks.MANGROVE_PLANKS).ingredient("log", Blocks.MANGROVE_LOG).flammable());
         CONFIGS.put("oak", new BlockConfig().material("oak").materialName("Oak").ingredient(Blocks.OAK_PLANKS).ingredient("log", Blocks.OAK_LOG).flammable());
+        CONFIGS.put("pale_oak", new BlockConfig().material("pale_oak").materialName("Pale Oak").ingredient(Blocks.PALE_OAK_PLANKS).ingredient("log", Blocks.PALE_OAK_LOG).flammable());
         CONFIGS.put("spruce", new BlockConfig().material("spruce").materialName("Spruce").ingredient(Blocks.SPRUCE_PLANKS).ingredient("log", Blocks.SPRUCE_LOG).flammable());
         CONFIGS.put("warped", new BlockConfig().material("warped").materialName("Warped").ingredient(Blocks.WARPED_PLANKS).ingredient("log", Blocks.WARPED_STEM));
 
@@ -48,6 +49,7 @@ public class Shutters implements ModThingGroup {
         CONFIGS.put("stripped_jungle", new BlockConfig().material("stripped_jungle").materialName("Stripped Jungle").ingredient(Blocks.JUNGLE_PLANKS).ingredient("log", Blocks.STRIPPED_JUNGLE_LOG).flammable());
         CONFIGS.put("stripped_mangrove", new BlockConfig().material("stripped_mangrove").materialName("Stripped Mangrove").ingredient(Blocks.MANGROVE_PLANKS).ingredient("log", Blocks.STRIPPED_MANGROVE_LOG).flammable());
         CONFIGS.put("stripped_oak", new BlockConfig().material("stripped_oak").materialName("Stripped Oak").ingredient(Blocks.OAK_PLANKS).ingredient("log", Blocks.STRIPPED_OAK_LOG).flammable());
+        CONFIGS.put("stripped_pale_oak", new BlockConfig().material("stripped_pale_oak").materialName("Stripped Pale Oak").ingredient(Blocks.PALE_OAK_PLANKS).ingredient("log", Blocks.STRIPPED_PALE_OAK_LOG).flammable());
         CONFIGS.put("stripped_spruce", new BlockConfig().material("stripped_spruce").materialName("Stripped Spruce").ingredient(Blocks.SPRUCE_PLANKS).ingredient("log", Blocks.STRIPPED_SPRUCE_LOG).flammable());
         CONFIGS.put("stripped_warped", new BlockConfig().material("stripped_warped").materialName("Stripped Warped").ingredient(Blocks.WARPED_PLANKS).ingredient("log", Blocks.STRIPPED_WARPED_STEM));
 
@@ -60,6 +62,7 @@ public class Shutters implements ModThingGroup {
         SHUTTER_BLOCKS.put("jungle", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("jungle"), () -> new ShutterBlock(BlockSetType.JUNGLE, CONFIGS.get("jungle")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("mangrove", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("mangrove"), () -> new ShutterBlock(BlockSetType.MANGROVE, CONFIGS.get("mangrove")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("oak", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("oak"), () -> new ShutterBlock(BlockSetType.OAK, CONFIGS.get("oak")), DEFAULT_SHUTTER_SETTINGS));
+        SHUTTER_BLOCKS.put("pale_oak", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("pale_oak"), () -> new ShutterBlock(BlockSetType.PALE_OAK, CONFIGS.get("pale_oak")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("spruce", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("spruce"), () -> new ShutterBlock(BlockSetType.SPRUCE, CONFIGS.get("spruce")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("warped", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("warped"), () -> new ShutterBlock(BlockSetType.WARPED, CONFIGS.get("warped")), DEFAULT_SHUTTER_SETTINGS));
 
@@ -72,6 +75,7 @@ public class Shutters implements ModThingGroup {
         SHUTTER_BLOCKS.put("stripped_jungle", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_jungle"), () -> new ShutterBlock(BlockSetType.JUNGLE, CONFIGS.get("stripped_jungle")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("stripped_mangrove", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_mangrove"), () -> new ShutterBlock(BlockSetType.MANGROVE, CONFIGS.get("stripped_mangrove")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("stripped_oak", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_oak"), () -> new ShutterBlock(BlockSetType.OAK, CONFIGS.get("stripped_oak")), DEFAULT_SHUTTER_SETTINGS));
+        SHUTTER_BLOCKS.put("stripped_pale_oak", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_pale_oak"), () -> new ShutterBlock(BlockSetType.PALE_OAK, CONFIGS.get("stripped_pale_oak")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("stripped_spruce", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_spruce"), () -> new ShutterBlock(BlockSetType.SPRUCE, CONFIGS.get("stripped_spruce")), DEFAULT_SHUTTER_SETTINGS));
         SHUTTER_BLOCKS.put("stripped_warped", REGISTRY_HELPER.registerWithItem(ShutterBlock.makeId("stripped_warped"), () -> new ShutterBlock(BlockSetType.WARPED, CONFIGS.get("stripped_warped")), DEFAULT_SHUTTER_SETTINGS));
 
@@ -84,6 +88,7 @@ public class Shutters implements ModThingGroup {
         OPEN_SHUTTER_HALF_BLOCKS.put("jungle", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("jungle"), () -> new OpenShutterHalfBlock(BlockSetType.JUNGLE, CONFIGS.get("jungle")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("mangrove", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("mangrove"), () -> new OpenShutterHalfBlock(BlockSetType.MANGROVE, CONFIGS.get("mangrove")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("oak", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("oak"), () -> new OpenShutterHalfBlock(BlockSetType.OAK, CONFIGS.get("oak")), DEFAULT_SHUTTER_HALF_SETTINGS));
+        OPEN_SHUTTER_HALF_BLOCKS.put("pale_oak", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("pale_oak"), () -> new OpenShutterHalfBlock(BlockSetType.PALE_OAK, CONFIGS.get("pale_oak")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("spruce", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("spruce"), () -> new OpenShutterHalfBlock(BlockSetType.SPRUCE, CONFIGS.get("spruce")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("warped", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("warped"), () -> new OpenShutterHalfBlock(BlockSetType.WARPED, CONFIGS.get("warped")), DEFAULT_SHUTTER_HALF_SETTINGS));
 
@@ -96,6 +101,7 @@ public class Shutters implements ModThingGroup {
         OPEN_SHUTTER_HALF_BLOCKS.put("stripped_jungle", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_jungle"), () -> new OpenShutterHalfBlock(BlockSetType.JUNGLE, CONFIGS.get("stripped_jungle")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("stripped_mangrove", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_mangrove"), () -> new OpenShutterHalfBlock(BlockSetType.MANGROVE, CONFIGS.get("stripped_mangrove")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("stripped_oak", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_oak"), () -> new OpenShutterHalfBlock(BlockSetType.OAK, CONFIGS.get("stripped_oak")), DEFAULT_SHUTTER_HALF_SETTINGS));
+        OPEN_SHUTTER_HALF_BLOCKS.put("stripped_pale_oak", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_pale_oak"), () -> new OpenShutterHalfBlock(BlockSetType.PALE_OAK, CONFIGS.get("stripped_pale_oak")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("stripped_spruce", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_spruce"), () -> new OpenShutterHalfBlock(BlockSetType.SPRUCE, CONFIGS.get("stripped_spruce")), DEFAULT_SHUTTER_HALF_SETTINGS));
         OPEN_SHUTTER_HALF_BLOCKS.put("stripped_warped", REGISTRY_HELPER.registerWithItem(OpenShutterHalfBlock.makeId("stripped_warped"), () -> new OpenShutterHalfBlock(BlockSetType.WARPED, CONFIGS.get("stripped_warped")), DEFAULT_SHUTTER_HALF_SETTINGS));
 

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": "minecraft:pale_oak_planks",
+    "S": "minecraft:pale_oak_slab"
+  },
+  "pattern": [
+    "PSP",
+    "P P",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minekea:containers/barrels/pale_oak"
+  }
+}

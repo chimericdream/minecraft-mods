@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:stripped_pale_oak_log",
+    "X": "minecraft:pale_oak_planks"
+  },
+  "pattern": [
+    "#X#",
+    "#X#",
+    "#X#"
+  ],
+  "result": {
+    "count": 6,
+    "id": "minekea:furniture/shutters/stripped_pale_oak"
+  }
+}

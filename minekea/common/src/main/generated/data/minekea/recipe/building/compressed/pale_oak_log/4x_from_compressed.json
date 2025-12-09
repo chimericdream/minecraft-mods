@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/pale_oak_log/5x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/pale_oak_log/4x"
+  }
+}

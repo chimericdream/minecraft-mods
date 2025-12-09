@@ -1,0 +1,7 @@
+{
+  "parent": "minekea:item/building/beam",
+  "textures": {
+    "end": "minecraft:block/pale_oak_planks",
+    "side": "minecraft:block/pale_oak_planks"
+  }
+}

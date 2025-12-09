@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minekea:block/building/covers/pale_oak",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "minekea:block/building/covers/pale_oak"
+    },
+    "facing=south": {
+      "model": "minekea:block/building/covers/pale_oak",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minekea:block/building/covers/pale_oak",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:pale_oak_planks"
+  },
+  "pattern": [
+    "###",
+    " ##",
+    "  #"
+  ],
+  "result": {
+    "count": 8,
+    "id": "minekea:building/stairs/vertical/pale_oak_planks"
+  }
+}

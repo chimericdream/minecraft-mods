@@ -36,6 +36,7 @@ public class Bookshelves implements ModThingGroup {
         BOOKSHELF_CONFIGS.put("dark_oak", new BlockConfig().material("dark_oak").materialName("Dark Oak").flammable().ingredient(Blocks.DARK_OAK_PLANKS).tool(Tool.AXE));
         BOOKSHELF_CONFIGS.put("jungle", new BlockConfig().material("jungle").materialName("Jungle").flammable().ingredient(Blocks.JUNGLE_PLANKS).tool(Tool.AXE));
         BOOKSHELF_CONFIGS.put("mangrove", new BlockConfig().material("mangrove").materialName("Mangrove").flammable().ingredient(Blocks.MANGROVE_PLANKS).tool(Tool.AXE));
+        BOOKSHELF_CONFIGS.put("pale_oak", new BlockConfig().material("pale_oak").materialName("Pale Oak").flammable().ingredient(Blocks.PALE_OAK_PLANKS).tool(Tool.AXE));
         BOOKSHELF_CONFIGS.put("spruce", new BlockConfig().material("spruce").materialName("Spruce").flammable().ingredient(Blocks.SPRUCE_PLANKS).tool(Tool.AXE));
         BOOKSHELF_CONFIGS.put("warped", new BlockConfig().material("warped").materialName("Warped").ingredient(Blocks.WARPED_PLANKS).tool(Tool.AXE));
 

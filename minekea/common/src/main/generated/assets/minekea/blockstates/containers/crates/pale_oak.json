@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "connected_east=false,connected_north=false,connected_south=false,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak"
+    },
+    "connected_east=false,connected_north=false,connected_south=false,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_double_half"
+    },
+    "connected_east=false,connected_north=false,connected_south=true,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_double_half",
+      "y": 270
+    },
+    "connected_east=false,connected_north=false,connected_south=true,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=false,connected_north=true,connected_south=false,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_double_half",
+      "y": 90
+    },
+    "connected_east=false,connected_north=true,connected_south=false,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=false,connected_north=true,connected_south=true,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=false,connected_north=true,connected_south=true,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=false,connected_south=false,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_double_half",
+      "y": 180
+    },
+    "connected_east=true,connected_north=false,connected_south=false,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=false,connected_south=true,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=false,connected_south=true,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=true,connected_south=false,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=true,connected_south=false,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=true,connected_south=true,connected_west=false": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    },
+    "connected_east=true,connected_north=true,connected_south=true,connected_west=true": {
+      "model": "minekea:block/containers/crates/pale_oak_broken"
+    }
+  }
+}

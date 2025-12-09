@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_armor_stand": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:armor_stand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_chest": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:chest"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pale_oak_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pale_oak_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pale_oak_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pale_oak_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minekea:furniture/armoires/pale_oak"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pale_oak_slab",
+      "has_chest",
+      "has_armor_stand",
+      "has_pale_oak_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minekea:furniture/armoires/pale_oak"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minekea:furniture/bookshelves/pale_oak"
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 12,
+    "id": "minekea:furniture/trapdoors/bookshelves/pale_oak"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/building/compressed/pale_oak_log/3x",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "minekea:block/building/compressed/pale_oak_log/3x"
+    },
+    "axis=z": {
+      "model": "minekea:block/building/compressed/pale_oak_log/3x",
+      "x": 90
+    }
+  }
+}

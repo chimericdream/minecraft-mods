@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minekea:block/building/slabs/vertical/pale_oak",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north": {
+      "model": "minekea:block/building/slabs/vertical/pale_oak",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minekea:block/building/slabs/vertical/pale_oak",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west": {
+      "model": "minekea:block/building/slabs/vertical/pale_oak",
+      "uvlock": true
+    }
+  }
+}
