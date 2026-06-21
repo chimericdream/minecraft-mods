@@ -24,6 +24,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -40,6 +41,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -68,6 +70,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
+import static com.chimericdream.minekea.sound.MinekeaSoundGroup.GLASS_JAR_SOUND_GROUP;
 
 public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
     public static final MapCodec<GlassJarBlock> CODEC = createCodec(GlassJarBlock::new);
@@ -287,7 +290,7 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
     }
 
     public GlassJarBlock() {
-        super(Settings.copy(Blocks.GLASS).nonOpaque().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(GlassJarBlock.BLOCK_ID)));
+        super(Settings.copy(Blocks.GLASS).sounds(GLASS_JAR_SOUND_GROUP).nonOpaque().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(GlassJarBlock.BLOCK_ID)));
 
         this.setDefaultState(
             this.stateManager
@@ -325,40 +328,40 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-//        GlassJarBlockEntity entity;
-//        try {
-//            entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-//            assert entity != null;
-//        } catch (Exception e) {
-//            MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
-//
-//            return;
-//        }
-//
-//        String mobId = entity.getMobId();
-//        if (mobId == null) {
-//            return;
-//        }
-//
-//        SoundEvent sound = getMobSound(mobId);
-//        if (sound != null && random.nextInt(100) == 0) {
-//            world.playSound(null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 0.5F, 0.5F);
-//        }
+        GlassJarBlockEntity entity;
+        try {
+            entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
+            assert entity != null;
+        } catch (Exception e) {
+            MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
+
+            return;
+        }
+
+        String mobId = entity.getMobId();
+        if (mobId == null) {
+            return;
+        }
+
+        SoundEvent sound = getMobSound(mobId);
+        if (world instanceof ClientWorld && sound != null && random.nextInt(100) == 0) {
+            world.playSound(null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 0.5F, 0.5F);
+        }
     }
 
-//    @Nullable
-//    private SoundEvent getMobSound(String mobId) {
-//        return switch (mobId) {
-//            case "minecraft:allay" -> SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM;
-//            case "minecraft:bat" -> SoundEvents.ENTITY_BAT_AMBIENT;
-//            case "minecraft:bee" -> SoundEvents.ENTITY_BEE_POLLINATE;
-//            case "minecraft:endermite" -> SoundEvents.ENTITY_ENDERMITE_AMBIENT;
-//            case "minecraft:silverfish" -> SoundEvents.ENTITY_SILVERFISH_AMBIENT;
-//            case "minecraft:slime" -> SoundEvents.ENTITY_SLIME_SQUISH;
-//            case "minecraft:vex" -> SoundEvents.ENTITY_VEX_AMBIENT;
-//            default -> null;
-//        };
-//    }
+    @Nullable
+    private SoundEvent getMobSound(String mobId) {
+        return switch (mobId) {
+            case "minecraft:allay" -> SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM;
+            case "minecraft:bat" -> SoundEvents.ENTITY_BAT_AMBIENT;
+            case "minecraft:bee" -> SoundEvents.ENTITY_BEE_POLLINATE;
+            case "minecraft:endermite" -> SoundEvents.ENTITY_ENDERMITE_AMBIENT;
+            case "minecraft:silverfish" -> SoundEvents.ENTITY_SILVERFISH_AMBIENT;
+            case "minecraft:slime" -> SoundEvents.ENTITY_SLIME_SQUISH;
+            case "minecraft:vex" -> SoundEvents.ENTITY_VEX_AMBIENT;
+            default -> null;
+        };
+    }
 
     @Override
     public FluidState getFluidState(BlockState state) {
@@ -510,11 +513,6 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         }
 
         entity.readDataFromItemStack(itemStack);
-
-//        TypedEntityData<EntityType<?>> entityData = itemStack.get(DataComponentTypes.ENTITY_DATA);
-//        if (entityData != null) {
-//            entity.readMobNbt(entityData.copyNbtWithoutId(), world.getRegistryManager());
-//        }
     }
 
     @Override

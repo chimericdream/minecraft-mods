@@ -5,17 +5,25 @@ import com.chimericdream.minekea.block.containers.ContainerBlocks;
 import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.TypedEntityData;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -36,8 +44,14 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+
+import java.util.Objects;
+import java.util.Optional;
 
 public class GlassJarBlockEntity extends BlockEntity implements ImplementedInventory {
+    static final Logger LOGGER = LogUtils.getLogger();
+
     public static final int MAX_BUCKETS = 8;
     public static final double BOTTLE_SIZE = 0.33;
 
@@ -50,14 +64,15 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     private Fluid storedFluid = Fluids.EMPTY;
     private double fluidAmountInBuckets = 0.0;
 
-//    private TypedEntityData<EntityType<?>> storedMobData = null;
+    private TypedEntityData<EntityType<?>> storedMobData = null;
+    private String storedMobId = null;
 
     public static final String ITEM_KEY = "StoredItem";
     public static final String ITEM_QTY_KEY = "StoredItemQty";
     public static final String ITEM_STACKS_KEY = "FullItemStacks";
     public static final String FLUID_KEY = "StoredFluid";
     public static final String FLUID_AMT_KEY = "StoredFluidAmount";
-//    public static final String MOB_DATA_KEY = "StoredMobData";
+    public static final String MOB_DATA_KEY = "StoredMobData";
 
     public GlassJarBlockEntity(BlockPos pos, BlockState state) {
         this(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), pos, state);
@@ -101,9 +116,13 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         return stack;
     }
 
-//    public TypedEntityData<EntityType<?>> getStoredMobData() {
-//        return storedMobData;
-//    }
+    public TypedEntityData<EntityType<?>> getStoredMobData() {
+        return storedMobData;
+    }
+
+    public String getStoredMobId() {
+        return storedMobId;
+    }
 
     public ItemStack getStoredItem() {
         return storedItem;
@@ -131,7 +150,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         // We can't store multiple things at the same time
-        if (this.hasItem()/* || this.hasMob()*/) {
+        if (this.hasItem() || this.hasMob()) {
             return false;
         }
 
@@ -209,7 +228,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     public boolean canAcceptItem(ItemStack item) {
         // We can't store multiple things at the same time
-        if (this.hasFluid()/* || this.hasMob()*/) {
+        if (this.hasFluid() || this.hasMob()) {
             return false;
         }
 
@@ -227,7 +246,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     @Override
     public ItemStack tryInsert(ItemStack stack) {
-        if (this.hasFluid()/* || this.hasMob()*/) {
+        if (this.hasFluid() || this.hasMob()) {
             return stack;
         }
 
@@ -315,19 +334,23 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 //
 //        return stacks;
 //    }
-//
-//    @Nullable
-//    public String getMobId() {
-//        if (this.hasMob()) {
-//            return storedMobData.copyNbtWithoutId().getString("id").orElse(null);
-//        }
-//
-//        return null;
-//    }
-//
-//    public boolean hasMob() {
-//        return !storedMobData.copyNbtWithoutId().isEmpty();
-//    }
+
+    @Nullable
+    public String getMobId() {
+        if (this.hasMob()) {
+            return storedMobId;
+        }
+
+        return null;
+    }
+
+    public boolean hasMob() {
+        if (storedMobData == null) {
+            return false;
+        }
+
+        return !storedMobData.copyNbtWithoutId().isEmpty();
+    }
 
     public boolean hasFluid() {
         return !storedFluid.matchesType(Fluids.EMPTY);
@@ -350,6 +373,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         view.putInt(ITEM_STACKS_KEY, fullItemStacks);
 
         writeFluidData(view);
+        writeMobData(view);
     }
 
     private void writeFluidData(WriteView view) {
@@ -364,14 +388,25 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         view.putDouble(FLUID_AMT_KEY, fluidAmountInBuckets);
     }
 
+    private void writeMobData(WriteView view) {
+        if (!hasMob()) {
+            return;
+        }
+
+        NbtCompound nbt = storedMobData.copyNbtWithoutId();
+        nbt.putString("id", storedMobId);
+
+        view.put("minecraft:entity_data", NbtCompound.CODEC, nbt);
+    }
+
     @Override
     protected void readData(ReadView view) {
         super.readData(view);
 
-        boolean hasFluid = readFluidView(view);
-//        boolean hasMob = readMobView(view);
-//
-        if (!hasFluid/* && !hasMob*/) {
+        boolean hasFluid = readFluidData(view);
+        boolean hasMob = readMobData(view);
+
+        if (!hasFluid && !hasMob) {
             String storedItemKey = view.getString(ITEM_KEY, null);
             if (storedItemKey != null) {
                 storedItem = Registries.ITEM.get(Identifier.of(storedItemKey)).getDefaultStack();
@@ -383,7 +418,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         markDirty();
     }
 
-    private boolean readFluidView(ReadView view) {
+    private boolean readFluidData(ReadView view) {
         String fluidKey = view.getString(FLUID_KEY, "NONE");
 
         if (fluidKey.equals("NONE")) {
@@ -399,12 +434,35 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         return true;
     }
 
-//    private boolean readMobView(ReadView view) {
-//        storedMobData = view.read(MOB_DATA_KEY);
-//
-//        return !storedMobData.copyNbtWithoutId().isEmpty();
-//    }
-//
+    private boolean readMobData(ReadView view) {
+        NbtCompound components = view.read("components", NbtCompound.CODEC).orElse(null);
+        if (components == null) {
+            return false;
+        }
+
+        NbtCompound entityNbt = components.get("minecraft:entity_data", NbtCompound.CODEC).orElse(null);
+
+        if (entityNbt == null) {
+            return false;
+        }
+
+        String id = entityNbt.getString("id", null);
+
+        if (id == null) {
+            return false;
+        }
+
+        Optional<EntityType<?>> entityType = EntityType.get(id);
+        if (entityType.isEmpty()) {
+            return false;
+        }
+
+        storedMobData = TypedEntityData.create(entityType.get(), entityNbt);
+        storedMobId = id;
+
+        return true;
+    }
+
 //    public void readMobNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 //        storedMobData = nbt;
 //    }
@@ -473,7 +531,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     @Override
     public boolean isEmpty() {
-        if (hasFluid()/* || hasMob()*/) {
+        if (hasFluid() || hasMob()) {
             return false;
         }
 
@@ -518,5 +576,45 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    }
+
+    public record OccupantData(TypedEntityData<EntityType<?>> entityData) {
+        public static final Codec<OccupantData> CODEC = RecordCodecBuilder.create((instance) -> instance.group(TypedEntityData.createCodec(EntityType.CODEC).fieldOf("entity_data").forGetter(OccupantData::entityData)).apply(instance, OccupantData::new));
+        public static final PacketCodec<RegistryByteBuf, OccupantData> PACKET_CODEC;
+
+        public static OccupantData of(Entity entity) {
+            OccupantData data;
+            try (ErrorReporter.Logging logging = new ErrorReporter.Logging(entity.getErrorReporterContext(), LOGGER)) {
+                NbtWriteView nbtWriteView = NbtWriteView.create(logging, entity.getRegistryManager());
+                entity.saveData(nbtWriteView);
+                Objects.requireNonNull(nbtWriteView);
+                NbtCompound nbtCompound = nbtWriteView.getNbt();
+
+                data = new OccupantData(TypedEntityData.create(entity.getType(), nbtCompound));
+            }
+
+            return data;
+        }
+
+//        public static OccupantData create() {
+//            return new OccupantData(TypedEntityData.create(EntityType.BEE, new NbtCompound()));
+//        }
+
+//        @Nullable
+//        public Entity loadEntity(World world, BlockPos pos) {
+//            NbtCompound nbtCompound = this.entityData.copyNbtWithoutId();
+//            Objects.requireNonNull(nbtCompound);
+//            Entity entity = EntityType.loadEntityWithPassengers(this.entityData.getType(), nbtCompound, world, SpawnReason.LOAD, (entityx) -> entityx);
+//
+//            if (entity != null) {
+//                return entity;
+//            } else {
+//                return null;
+//            }
+//        }
+
+        static {
+            PACKET_CODEC = PacketCodec.tuple(TypedEntityData.createPacketCodec(EntityType.PACKET_CODEC), OccupantData::entityData, OccupantData::new);
+        }
     }
 }
