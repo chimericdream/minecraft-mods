@@ -10,27 +10,27 @@ pluginManagement {
 rootProject.name = 'chimeric-mods'
 
 def projectList = [
-//    'archaeology-tweaks',
-//    'artificial-heart',
-//    'athenaeum',
-//    'banner-tweaks',
-//    'beacon-conduit-tweaks',
+        'archaeology-tweaks',
+        'artificial-heart',
+        'athenaeum',
+        'banner-tweaks',
+        'beacon-conduit-tweaks',
 //    'blacklight',
-'chimeric-lib',
+        'chimeric-lib',
 //    'cobblicious',
-//    'enchantment-numbers-fix',
-//    'flat-bedrock',
+        'enchantment-numbers-fix',
+        'flat-bedrock',
 //    'hang-from-slabs',
-//    'hopper-xtreme',
-//    'houdini-block',
+        'hopper-xtreme',
+        'houdini-block',
 //    'jdcrafte',
-'minekea',
-//    'miniblock-merchants',
+        'minekea',
+        'miniblock-merchants',
 //    'pannotia-companion',
 //    'playgrounds',
 //    'shulker-stuff',
-//    'sponj',
-//    'villager-tweaks'
+        'sponj',
+        'villager-tweaks'
 ]
 
 projectList.each {
