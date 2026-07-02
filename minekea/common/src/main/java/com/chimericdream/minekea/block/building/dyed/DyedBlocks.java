@@ -5,10 +5,6 @@ import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.util.DyeColor;
 import oshi.util.tuples.Pair;
 import oshi.util.tuples.Triplet;
 
@@ -16,12 +12,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class DyedBlocks implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_DYED_BLOCK_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.DYED_BLOCK_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_DYED_BLOCK_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.DYED_BLOCK_ITEM_GROUP);
 
     public static final Map<String, RegistrySupplier<Block>> BLOCK_MAP = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> PILLAR_BLOCK_MAP = new LinkedHashMap<>();

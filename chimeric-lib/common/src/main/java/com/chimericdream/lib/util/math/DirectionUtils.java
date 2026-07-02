@@ -1,6 +1,6 @@
 package com.chimericdream.lib.util.math;
 
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 
 public class DirectionUtils {
     public static Direction getHitFace(Direction.Axis axis, Direction hitSide) {

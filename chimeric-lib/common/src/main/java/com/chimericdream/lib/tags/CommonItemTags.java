@@ -1,10 +1,10 @@
 package com.chimericdream.lib.tags;
 
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class CommonItemTags {
-    public static final TagKey<Item> WRENCHES = TagKey.of(Registries.ITEM.getKey(), Identifier.of("c", "tools/wrenches"));
+    public static final TagKey<Item> WRENCHES = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath("c", "tools/wrenches"));
 }

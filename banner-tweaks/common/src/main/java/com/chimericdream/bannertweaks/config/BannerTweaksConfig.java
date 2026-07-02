@@ -11,16 +11,16 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public class BannerTweaksConfig {
     @SerialEntry
     public int maxBannerLayers = Defaults.MAX_BANNER_LAYERS;
 
     public static ConfigClassHandler<BannerTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(BannerTweaksConfig.class)
-        .id(Identifier.of(ModInfo.MOD_ID, "config"))
+        .id(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
             .setPath(YACLPlatform.getConfigDir().resolve("bannertweaks.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
@@ -30,12 +30,12 @@ public class BannerTweaksConfig {
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(HANDLER, ((defaults, config, builder) -> builder
-            .title(Text.literal("Banner Tweaks Config"))
+            .title(Component.literal("Banner Tweaks Config"))
             .category(ConfigCategory.createBuilder()
-                .name(Text.literal("Banner Tweaks Config"))
+                .name(Component.literal("Banner Tweaks Config"))
                 .option(Option.<Integer>createBuilder()
-                    .name(Text.literal("Max. banner layers"))
-                    .description(OptionDescription.of(Text.literal("The maximum number of layers a banner can have. Default: 12")))
+                    .name(Component.literal("Max. banner layers"))
+                    .description(OptionDescription.of(Component.literal("The maximum number of layers a banner can have. Default: 12")))
                     .binding(Defaults.MAX_BANNER_LAYERS, () -> config.maxBannerLayers, newVal -> config.maxBannerLayers = newVal)
                     .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                         .range(1, 32)

@@ -1,11 +1,11 @@
 package com.chimericdream.lib.util;
 
 import com.chimericdream.lib.tags.CommonBlockTags;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 public enum Tool {
@@ -28,10 +28,10 @@ public enum Tool {
 
     public @Nullable TagKey<Block> getMineableTag() {
         return switch (this) {
-            case AXE -> BlockTags.AXE_MINEABLE;
-            case HOE -> BlockTags.HOE_MINEABLE;
-            case PICKAXE -> BlockTags.PICKAXE_MINEABLE;
-            case SHOVEL -> BlockTags.SHOVEL_MINEABLE;
+            case AXE -> BlockTags.MINEABLE_WITH_AXE;
+            case HOE -> BlockTags.MINEABLE_WITH_HOE;
+            case PICKAXE -> BlockTags.MINEABLE_WITH_PICKAXE;
+            case SHOVEL -> BlockTags.MINEABLE_WITH_SHOVEL;
             case SHEARS -> CommonBlockTags.SHEARS_MINEABLE;
             case NONE -> null;
         };

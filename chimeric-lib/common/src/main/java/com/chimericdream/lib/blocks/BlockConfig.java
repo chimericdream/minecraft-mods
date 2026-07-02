@@ -2,20 +2,20 @@ package com.chimericdream.lib.blocks;
 
 import com.chimericdream.lib.util.Tool;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class BlockConfig {
-    protected AbstractBlock.Settings baseSettings = null;
+    protected BlockBehaviour.Properties baseSettings = null;
     protected String blockName = null;
     protected Item item = null;
     protected RegistrySupplier<Item> itemSupplier = null;
@@ -28,16 +28,16 @@ public class BlockConfig {
     protected final Map<String, TagKey<Item>> tagIngredients = new LinkedHashMap<>();
     protected boolean isFlammable = false;
     protected boolean isTranslucent = false;
-    protected final Map<String, Identifier> textures = new LinkedHashMap<>();
+    protected final Map<String, ResourceLocation> textures = new LinkedHashMap<>();
     protected RenderType renderType = RenderType.SOLID;
 
-    public BlockConfig settings(AbstractBlock.Settings baseSettings) {
+    public BlockConfig settings(BlockBehaviour.Properties baseSettings) {
         this.baseSettings = baseSettings;
         return this;
     }
 
-    public AbstractBlock.Settings getBaseSettings() {
-        return Objects.requireNonNullElseGet(this.baseSettings, () -> AbstractBlock.Settings.copy(this.getIngredient()));
+    public BlockBehaviour.Properties getBaseSettings() {
+        return Objects.requireNonNullElseGet(this.baseSettings, () -> BlockBehaviour.Properties.ofFullCopy(this.getIngredient()));
     }
 
     public BlockConfig item(RegistrySupplier<Item> itemSupplier) {
@@ -178,20 +178,20 @@ public class BlockConfig {
         return isTranslucent;
     }
 
-    public BlockConfig texture(Identifier texture) {
+    public BlockConfig texture(ResourceLocation texture) {
         return texture("default", texture);
     }
 
-    public BlockConfig texture(String name, Identifier texture) {
+    public BlockConfig texture(String name, ResourceLocation texture) {
         this.textures.put(name, texture);
         return this;
     }
 
-    public @Nullable Identifier getTexture() {
-        return textures.getOrDefault("default", TextureMap.getId(this.getIngredient()));
+    public @Nullable ResourceLocation getTexture() {
+        return textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()));
     }
 
-    public @Nullable Identifier getTexture(String name) {
+    public @Nullable ResourceLocation getTexture(String name) {
         return textures.get(name);
     }
 

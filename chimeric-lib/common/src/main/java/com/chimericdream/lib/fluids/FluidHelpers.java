@@ -1,10 +1,10 @@
 package com.chimericdream.lib.fluids;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.material.Fluid;
 
 public class FluidHelpers {
-    public static Text getFluidName(Fluid fluid) {
-        return fluid.getDefaultState().getBlockState().getBlock().getName();
+    public static Component getFluidName(Fluid fluid) {
+        return fluid.defaultFluidState().createLegacyBlock().getBlock().getName();
     }
 }

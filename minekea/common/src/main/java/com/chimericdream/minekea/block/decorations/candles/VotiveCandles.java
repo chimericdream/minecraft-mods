@@ -3,19 +3,18 @@ package com.chimericdream.minekea.block.decorations.candles;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class VotiveCandles implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_CANDLE_SETTINGS = new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL);
+    public static final Item.Properties DEFAULT_CANDLE_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 

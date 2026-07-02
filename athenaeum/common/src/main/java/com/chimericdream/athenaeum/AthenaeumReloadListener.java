@@ -3,34 +3,33 @@ package com.chimericdream.athenaeum;
 import com.chimericdream.athenaeum.registries.AthenaeumRegistries;
 import com.google.common.base.Predicates;
 import dev.architectury.registry.ReloadListenerRegistry;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.resource.SynchronousResourceReloader;
-import net.minecraft.util.Identifier;
-
 import java.io.InputStream;
 import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 
-public class AthenaeumReloadListener implements SynchronousResourceReloader {
+public class AthenaeumReloadListener implements ResourceManagerReloadListener {
     public static void register() {
-        ReloadListenerRegistry.register(ResourceType.SERVER_DATA, new AthenaeumReloadListener(), Identifier.of(ModInfo.MOD_ID, "athenaeum_book_resource_listener"));
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, new AthenaeumReloadListener(), ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "athenaeum_book_resource_listener"));
     }
 
     @Override
-    public void reload(ResourceManager manager) {
+    public void onResourceManagerReload(ResourceManager manager) {
         AthenaeumRegistries.BOOKS.clear();
 
-        Map<Identifier, Resource> resources = manager.findResources("athenaeum_books", Predicates.alwaysTrue());
+        Map<ResourceLocation, Resource> resources = manager.listResources("athenaeum_books", Predicates.alwaysTrue());
         resources.forEach((id, resource) -> {
-            Identifier bookId = Identifier.of(
+            ResourceLocation bookId = ResourceLocation.fromNamespaceAndPath(
                 id.getNamespace(),
                 id.getPath()
                     .replace("athenaeum_books/", "")
                     .replace(".json", "")
             );
 
-            try (InputStream stream = resource.getInputStream()) {
+            try (InputStream stream = resource.open()) {
                 AthenaeumRegistries.BOOKS.addFromInputStream(bookId, stream);
             } catch (Exception e) {
                 AthenaeumMod.LOGGER.error("Error occurred while loading resource json" + id.toString(), e);
@@ -40,6 +39,6 @@ public class AthenaeumReloadListener implements SynchronousResourceReloader {
 
     @Override
     public String getName() {
-        return Identifier.of(ModInfo.MOD_ID, "athenaeum_book_resource_listener").toString();
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "athenaeum_book_resource_listener").toString();
     }
 }

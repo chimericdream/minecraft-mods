@@ -1,11 +1,10 @@
 package com.chimericdream.sponj;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class BlockUtils {
 	public static List<BlockPos> getAdjacentBlockPositions(BlockPos pos, boolean down) {
@@ -15,16 +14,16 @@ public class BlockUtils {
 		around.add(pos.east());
 		around.add(pos.south());
 		around.add(pos.west());
-		around.add(pos.up());
+		around.add(pos.above());
 
 		if (down) {
-			around.add(pos.down());
+			around.add(pos.below());
 		}
 
 		return around;
 	}
 
-	public static List<BlockPos> getConnectedBlocksByType(World world, BlockPos start, List<Block> blockTypes, int maxDistance) {
+	public static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, List<Block> blockTypes, int maxDistance) {
 		List<BlockPos> checkedBlocks = new ArrayList<>();
 		List<BlockPos> blocks = new ArrayList<>();
 
@@ -36,7 +35,7 @@ public class BlockUtils {
 		return getConnectedBlocksByType(world, start, start, blockTypes, blocks, checkedBlocks, maxDistance);
 	}
 
-	private static List<BlockPos> getConnectedBlocksByType(World world, BlockPos start, BlockPos pos, List<Block> blockTypes, List<BlockPos> startingBlocks, List<BlockPos> checkedBlocks, int maxDistance) {
+	private static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, BlockPos pos, List<Block> blockTypes, List<BlockPos> startingBlocks, List<BlockPos> checkedBlocks, int maxDistance) {
 		List<BlockPos> adjacentBlocks = getAdjacentBlockPositions(pos, true);
 		List<BlockPos> blocks = new ArrayList<>(startingBlocks);
 
@@ -66,6 +65,6 @@ public class BlockUtils {
 	}
 
 	public static Boolean isWithinDistance(BlockPos start, BlockPos end, double distance) {
-		return start.getSquaredDistance(end) <= distance;
+		return start.distSqr(end) <= distance;
 	}
 }

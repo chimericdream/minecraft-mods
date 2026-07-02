@@ -1,14 +1,14 @@
 package com.chimericdream.lib.inventories;
 
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 
 public class InventoryUtils {
-    public static SimpleInventory convertListToInventory(DefaultedList<ItemStack> list) {
-        SimpleInventory inventory = new SimpleInventory(list.size());
+    public static SimpleContainer convertListToInventory(NonNullList<ItemStack> list) {
+        SimpleContainer inventory = new SimpleContainer(list.size());
         for (int i = 0; i < list.size(); i++) {
-            inventory.setStack(i, list.get(i));
+            inventory.setItem(i, list.get(i));
         }
 
         return inventory;

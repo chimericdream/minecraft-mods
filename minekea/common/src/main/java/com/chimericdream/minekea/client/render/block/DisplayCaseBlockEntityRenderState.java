@@ -1,23 +1,23 @@
 package com.chimericdream.minekea.client.render.block;
 
-import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 
 public class DisplayCaseBlockEntityRenderState extends BlockEntityRenderState {
-    public final ItemRenderState displayItem = new ItemRenderState();
-    public final Vec3d nameLabelPos = new Vec3d(0.5f, 1.0f, 0.5f);
-    public Text customName = null;
+    public final ItemStackRenderState displayItem = new ItemStackRenderState();
+    public final Vec3 nameLabelPos = new Vec3(0.5f, 1.0f, 0.5f);
+    public Component customName = null;
     public boolean hasCustomName = false;
     public boolean hasItem = false;
     public boolean isBlock = false;
     public int rotation;
-    public Identifier itemId;
+    public ResourceLocation itemId;
     public double distanceToCamera = 0;
 
     public void clear() {
@@ -27,17 +27,17 @@ public class DisplayCaseBlockEntityRenderState extends BlockEntityRenderState {
         hasItem = false;
         isBlock = false;
         rotation = 0;
-        itemId = Registries.ITEM.getId(Items.AIR);
+        itemId = BuiltInRegistries.ITEM.getKey(Items.AIR);
         distanceToCamera = 0;
     }
 
-    public void setCustomName(Text customName) {
+    public void setCustomName(Component customName) {
         this.customName = customName;
         this.hasCustomName = true;
     }
 
     public void setItem(ItemStack stack) {
         this.hasItem = !stack.isEmpty();
-        this.itemId = Registries.ITEM.getId(stack.getItem());
+        this.itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
     }
 }

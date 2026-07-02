@@ -2,29 +2,29 @@ package com.chimericdream.minekea.block.building.storage;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -33,15 +33,15 @@ public class ItemStorageBlock extends Block {
     public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty IS_BAGGED;
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
     public final boolean isBaggedItem;
     public final StorageModel model;
 
     static {
-        AXIS = Properties.AXIS;
-        FACING = Properties.FACING;
-        IS_BAGGED = BooleanProperty.of("is_bagged");
+        AXIS = BlockStateProperties.AXIS;
+        FACING = BlockStateProperties.FACING;
+        IS_BAGGED = BooleanProperty.create("is_bagged");
     }
 
     public ItemStorageBlock(BlockConfig config) {
@@ -53,13 +53,13 @@ public class ItemStorageBlock extends Block {
     }
 
     public ItemStorageBlock(BlockConfig config, boolean isBaggedItem, StorageModel model) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
-        setDefaultState(
-            getStateManager()
-                .getDefaultState()
-                .with(AXIS, Direction.Axis.Y)
-                .with(IS_BAGGED, false)
+        registerDefaultState(
+            getStateDefinition()
+                .any()
+                .setValue(AXIS, Direction.Axis.Y)
+                .setValue(IS_BAGGED, false)
         );
 
         this.BLOCK_ID = makeId(config.getMaterial());
@@ -68,66 +68,66 @@ public class ItemStorageBlock extends Block {
         this.model = model;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("storage/compressed/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("storage/compressed/%s", material));
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (state.get(IS_BAGGED)) {
-            return VoxelShapes.union(
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 9.0, 16.0),
-                Block.createCuboidShape(1.0, 9.0, 1.0, 15.0, 10.0, 15.0),
-                Block.createCuboidShape(0.0, 10.0, 0.0, 16.0, 13.0, 16.0),
-                Block.createCuboidShape(1.0, 13.0, 1.0, 15.0, 16.0, 15.0)
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (state.getValue(IS_BAGGED)) {
+            return Shapes.or(
+                Block.box(0.0, 0.0, 0.0, 16.0, 9.0, 16.0),
+                Block.box(1.0, 9.0, 1.0, 15.0, 10.0, 15.0),
+                Block.box(0.0, 10.0, 0.0, 16.0, 13.0, 16.0),
+                Block.box(1.0, 13.0, 1.0, 15.0, 16.0, 15.0)
             );
         }
 
-        return VoxelShapes.fullCube();
+        return Shapes.block();
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AXIS, FACING, IS_BAGGED);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = this.getDefaultState()
-            .with(AXIS, ctx.getSide().getAxis())
-            .with(FACING, ctx.getPlayerLookDirection().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState state = this.defaultBlockState()
+            .setValue(AXIS, ctx.getClickedFace().getAxis())
+            .setValue(FACING, ctx.getNearestLookingDirection().getOpposite());
 
         if (this.isBaggedItem) {
-            return state.with(IS_BAGGED, true);
+            return state.setValue(IS_BAGGED, true);
         }
 
-        return state.with(IS_BAGGED, false);
+        return state.setValue(IS_BAGGED, false);
     }
 
     @Override
-    public ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (state.get(IS_BAGGED) && stack.isOf(Items.SHEARS)) {
-            if (world.isClient()) {
-                world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    public InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (state.getValue(IS_BAGGED) && stack.is(Items.SHEARS)) {
+            if (world.isClientSide()) {
+                world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0f, 1.0f);
             } else {
-                world.setBlockState(pos, state.with(IS_BAGGED, false));
-                world.markDirty(pos);
+                world.setBlockAndUpdate(pos, state.setValue(IS_BAGGED, false));
+                world.blockEntityChanged(pos);
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        if (!state.get(IS_BAGGED) && this.isBaggedItem && stack.isOf(Items.LEATHER)) {
-            if (world.isClient()) {
-                world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        if (!state.getValue(IS_BAGGED) && this.isBaggedItem && stack.is(Items.LEATHER)) {
+            if (world.isClientSide()) {
+                world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUNDLE_INSERT, SoundSource.BLOCKS, 1.0f, 1.0f);
             } else {
-                world.setBlockState(pos, state.with(IS_BAGGED, true));
-                world.markDirty(pos);
+                world.setBlockAndUpdate(pos, state.setValue(IS_BAGGED, true));
+                world.blockEntityChanged(pos);
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     public enum StorageModel {

@@ -2,36 +2,35 @@ package com.chimericdream.minekea.block.decorations;
 
 import com.chimericdream.lib.text.TextHelpers;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CakeBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class FakeCakeBlock extends CakeBlock {
     public final static String TOOLTIP_KEY = "block.minekea.decorations.misc.fake_cake.tooltip";
-    public final static Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "decorations/misc/fake_cake");
+    public final static ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/misc/fake_cake");
 
     public FakeCakeBlock() {
-        super(AbstractBlock.Settings.copy(Blocks.CAKE).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        return ActionResult.SUCCESS;
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        return InteractionResult.SUCCESS;
     }
 
-    public List<Text> getTooltip() {
+    public List<Component> getTooltip() {
         return List.of(TextHelpers.getTooltip(TOOLTIP_KEY));
     }
 }

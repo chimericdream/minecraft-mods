@@ -2,88 +2,88 @@ package com.chimericdream.minekea.block.building.covers;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CarpetBlock;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class CoverBlock extends CarpetBlock implements Waterloggable {
+public class CoverBlock extends CarpetBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty WATERLOGGED;
 
     static {
-        FACING = Properties.HORIZONTAL_FACING;
-        WATERLOGGED = Properties.WATERLOGGED;
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+        WATERLOGGED = BlockStateProperties.WATERLOGGED;
     }
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
     public CoverBlock(BlockConfig config) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
-        this.setDefaultState(
-            this.stateManager.getDefaultState()
-                .with(FACING, Direction.NORTH)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
         );
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("building/covers/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/covers/%s", material));
     }
 
     public BlockConfig getConfig() {
         return config;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        PlayerEntity player = ctx.getPlayer();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Player player = ctx.getPlayer();
 
         Direction facing = Direction.NORTH;
         if (player != null) {
-            facing = ctx.getPlayer().getHorizontalFacing().getOpposite();
+            facing = ctx.getPlayer().getDirection().getOpposite();
         }
 
-        return this.getDefaultState().with(FACING, facing)
-            .with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+        return this.defaultBlockState().setValue(FACING, facing)
+            .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 }

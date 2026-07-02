@@ -1,35 +1,35 @@
 package com.chimericdream.archaeologytweaks.block;
 
 import com.chimericdream.archaeologytweaks.ModInfo;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class SuspiciousSoulSandBlock extends BrushableFloatingNonFullBlock {
-    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "suspicious_soul_sand");
+    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "suspicious_soul_sand");
 
     public SuspiciousSoulSandBlock() {
         super(
             Blocks.SOUL_SAND,
-            SoundEvents.ITEM_BRUSH_BRUSHING_SAND,
-            SoundEvents.ITEM_BRUSH_BRUSHING_SAND_COMPLETE,
-            AbstractBlock.Settings
-                .create()
-                .mapColor(MapColor.BROWN)
+            SoundEvents.BRUSH_SAND,
+            SoundEvents.BRUSH_SAND_COMPLETED,
+            BlockBehaviour.Properties
+                .of()
+                .mapColor(MapColor.COLOR_BROWN)
                 .strength(0.5F)
-                .velocityMultiplier(0.4F)
-                .sounds(BlockSoundGroup.SOUL_SAND)
-                .solidBlock(Blocks::always)
-                .blockVision(Blocks::always)
-                .suffocates(Blocks::always)
-                .pistonBehavior(PistonBehavior.DESTROY)
-                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID))
+                .speedFactor(0.4F)
+                .sound(SoundType.SOUL_SAND)
+                .isRedstoneConductor(Blocks::always)
+                .isViewBlocking(Blocks::always)
+                .isSuffocating(Blocks::always)
+                .pushReaction(PushReaction.DESTROY)
+                .setId(ResourceKey.create(Registries.BLOCK, BLOCK_ID))
         );
     }
 }

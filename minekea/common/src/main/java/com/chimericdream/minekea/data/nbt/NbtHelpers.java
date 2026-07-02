@@ -1,18 +1,18 @@
 package com.chimericdream.minekea.data.nbt;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 public class NbtHelpers {
-    public static void setCustomDataFromNbt(ItemStack itemStack, NbtCompound nbt) {
-        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+    public static void setCustomDataFromNbt(ItemStack itemStack, CompoundTag nbt) {
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
     }
 
-    public static NbtCompound getOrCreateNbt(ItemStack stack) {
-        NbtComponent component = stack.get(DataComponentTypes.CUSTOM_DATA);
-        NbtCompound nbt = component != null ? component.copyNbt() : new NbtCompound();
+    public static CompoundTag getOrCreateNbt(ItemStack stack) {
+        CustomData component = stack.get(DataComponents.CUSTOM_DATA);
+        CompoundTag nbt = component != null ? component.copyTag() : new CompoundTag();
 
         return nbt;
     }

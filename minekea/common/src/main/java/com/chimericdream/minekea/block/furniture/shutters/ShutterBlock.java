@@ -3,44 +3,44 @@ package com.chimericdream.minekea.block.furniture.shutters;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class ShutterBlock extends Block implements Waterloggable {
-    public final Identifier BLOCK_ID;
+public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
     protected final BlockSetType blockSetType;
 
@@ -53,46 +53,46 @@ public class ShutterBlock extends Block implements Waterloggable {
     private static final Map<String, VoxelShape> HITBOX_OPEN;
 
     static {
-        OPEN = Properties.OPEN;
-        POWERED = Properties.POWERED;
-        WALL_SIDE = EnumProperty.of("wall_side", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
-        WATERLOGGED = Properties.WATERLOGGED;
+        OPEN = BlockStateProperties.OPEN;
+        POWERED = BlockStateProperties.POWERED;
+        WALL_SIDE = EnumProperty.create("wall_side", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
         OUTLINE_CLOSED = Map.of(
-            "north", Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0),
-            "south", Block.createCuboidShape(0.0, 0.0, 14.0, 16.0, 16.0, 16.0),
-            "east", Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-            "west", Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
+            "north", Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0),
+            "south", Block.box(0.0, 0.0, 14.0, 16.0, 16.0, 16.0),
+            "east", Block.box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+            "west", Block.box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
         );
         HITBOX_OPEN = Map.of(
-            "north", VoxelShapes.union(
-                Block.createCuboidShape(16.0, 0.0, 0.0, 24.0, 16.0, 2.0),
-                Block.createCuboidShape(-8.0, 0.0, 0.0, 0.0, 16.0, 2.0)
+            "north", Shapes.or(
+                Block.box(16.0, 0.0, 0.0, 24.0, 16.0, 2.0),
+                Block.box(-8.0, 0.0, 0.0, 0.0, 16.0, 2.0)
             ),
-            "south", VoxelShapes.union(
-                Block.createCuboidShape(16.0, 0.0, 14.0, 24.0, 16.0, 16.0),
-                Block.createCuboidShape(-8.0, 0.0, 14.0, 0.0, 16.0, 16.0)
+            "south", Shapes.or(
+                Block.box(16.0, 0.0, 14.0, 24.0, 16.0, 16.0),
+                Block.box(-8.0, 0.0, 14.0, 0.0, 16.0, 16.0)
             ),
-            "east", VoxelShapes.union(
-                Block.createCuboidShape(14.0, 0.0, -8.0, 16.0, 16.0, 0.0),
-                Block.createCuboidShape(14.0, 0.0, 16.0, 16.0, 16.0, 24.0)
+            "east", Shapes.or(
+                Block.box(14.0, 0.0, -8.0, 16.0, 16.0, 0.0),
+                Block.box(14.0, 0.0, 16.0, 16.0, 16.0, 24.0)
             ),
-            "west", VoxelShapes.union(
-                Block.createCuboidShape(0.0, 0.0, -8.0, 2.0, 16.0, 0.0),
-                Block.createCuboidShape(0.0, 0.0, 16.0, 2.0, 16.0, 24.0)
+            "west", Shapes.or(
+                Block.box(0.0, 0.0, -8.0, 2.0, 16.0, 0.0),
+                Block.box(0.0, 0.0, 16.0, 2.0, 16.0, 24.0)
             )
         );
     }
 
     public ShutterBlock(BlockSetType type, BlockConfig config) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
-        this.setDefaultState(
-            this.stateManager.getDefaultState()
-                .with(OPEN, false)
-                .with(POWERED, false)
-                .with(WALL_SIDE, Direction.NORTH)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            this.stateDefinition.any()
+                .setValue(OPEN, false)
+                .setValue(POWERED, false)
+                .setValue(WALL_SIDE, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
         );
 
         BLOCK_ID = makeId(config.getMaterial());
@@ -101,37 +101,37 @@ public class ShutterBlock extends Block implements Waterloggable {
         this.blockSetType = type;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("furniture/shutters/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shutters/%s", material));
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (state.get(OPEN)) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        if (state.getValue(OPEN)) {
             removeOpenHalves(state, world, pos);
         }
 
-        return super.onBreak(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(OPEN, POWERED, WALL_SIDE, WATERLOGGED);
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, NavigationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return switch (type) {
-            case LAND, AIR -> state.get(OPEN);
-            case WATER -> state.get(WATERLOGGED);
+            case LAND, AIR -> state.getValue(OPEN);
+            case WATER -> state.getValue(WATERLOGGED);
         };
     }
 
-    private static boolean hasSpaceToOpen(BlockState state, BlockView world, BlockPos pos) {
+    private static boolean hasSpaceToOpen(BlockState state, BlockGetter world, BlockPos pos) {
         BlockPos pos1 = pos.east();
         BlockPos pos2 = pos.west();
 
-        Direction wallSide = state.get(WALL_SIDE);
+        Direction wallSide = state.getValue(WALL_SIDE);
         if (wallSide == Direction.EAST || wallSide == Direction.WEST) {
             pos1 = pos.north();
             pos2 = pos.south();
@@ -140,15 +140,15 @@ public class ShutterBlock extends Block implements Waterloggable {
         BlockState pos1State = world.getBlockState(pos1);
         BlockState pos2State = world.getBlockState(pos2);
 
-        return (pos1State.isOf(Blocks.AIR) || pos1State.isOf(Blocks.WATER))
-            && (pos2State.isOf(Blocks.AIR) || pos2State.isOf(Blocks.WATER));
+        return (pos1State.is(Blocks.AIR) || pos1State.is(Blocks.WATER))
+            && (pos2State.is(Blocks.AIR) || pos2State.is(Blocks.WATER));
     }
 
-    private void placeOpenHalves(BlockState state, World world, BlockPos pos) {
+    private void placeOpenHalves(BlockState state, Level world, BlockPos pos) {
         BlockPos left;
         BlockPos right;
 
-        switch (state.get(WALL_SIDE)) {
+        switch (state.getValue(WALL_SIDE)) {
             case NORTH -> {
                 left = pos.west();
                 right = pos.east();
@@ -173,33 +173,33 @@ public class ShutterBlock extends Block implements Waterloggable {
         BlockState baseNewState = Shutters.OPEN_SHUTTER_HALF_BLOCKS
             .get(config.getMaterial())
             .get()
-            .getDefaultState()
-            .with(OpenShutterHalfBlock.WALL_SIDE, state.get(WALL_SIDE));
+            .defaultBlockState()
+            .setValue(OpenShutterHalfBlock.WALL_SIDE, state.getValue(WALL_SIDE));
 
-        BlockState newLeftState = baseNewState.with(OpenShutterHalfBlock.HALF, OpenShutterHalfBlock.ShutterHalf.LEFT);
-        BlockState newRightState = baseNewState.with(OpenShutterHalfBlock.HALF, OpenShutterHalfBlock.ShutterHalf.RIGHT);
+        BlockState newLeftState = baseNewState.setValue(OpenShutterHalfBlock.HALF, OpenShutterHalfBlock.ShutterHalf.LEFT);
+        BlockState newRightState = baseNewState.setValue(OpenShutterHalfBlock.HALF, OpenShutterHalfBlock.ShutterHalf.RIGHT);
 
-        if (leftState.isOf(Blocks.WATER)) {
-            world.setBlockState(
+        if (leftState.is(Blocks.WATER)) {
+            world.setBlockAndUpdate(
                 left,
-                newLeftState.with(OpenShutterHalfBlock.WATERLOGGED, true)
+                newLeftState.setValue(OpenShutterHalfBlock.WATERLOGGED, true)
             );
         } else {
-            world.setBlockState(left, newLeftState);
+            world.setBlockAndUpdate(left, newLeftState);
         }
 
-        if (rightState.isOf(Blocks.WATER)) {
-            world.setBlockState(right, newRightState.with(OpenShutterHalfBlock.WATERLOGGED, true));
+        if (rightState.is(Blocks.WATER)) {
+            world.setBlockAndUpdate(right, newRightState.setValue(OpenShutterHalfBlock.WATERLOGGED, true));
         } else {
-            world.setBlockState(right, newRightState);
+            world.setBlockAndUpdate(right, newRightState);
         }
     }
 
-    private void removeOpenHalves(BlockState state, World world, BlockPos pos) {
+    private void removeOpenHalves(BlockState state, Level world, BlockPos pos) {
         BlockPos pos1 = pos.east();
         BlockPos pos2 = pos.west();
 
-        Direction wallSide = state.get(WALL_SIDE);
+        Direction wallSide = state.getValue(WALL_SIDE);
         if (wallSide == Direction.EAST || wallSide == Direction.WEST) {
             pos1 = pos.north();
             pos2 = pos.south();
@@ -208,25 +208,25 @@ public class ShutterBlock extends Block implements Waterloggable {
         BlockState pos1State = world.getBlockState(pos1);
         BlockState pos2State = world.getBlockState(pos2);
 
-        if (pos1State.getProperties().contains(Properties.WATERLOGGED) && pos1State.get(WATERLOGGED)) {
-            world.setBlockState(pos1, Blocks.WATER.getDefaultState());
+        if (pos1State.getProperties().contains(BlockStateProperties.WATERLOGGED) && pos1State.getValue(WATERLOGGED)) {
+            world.setBlockAndUpdate(pos1, Blocks.WATER.defaultBlockState());
         } else {
-            world.setBlockState(pos1, Blocks.AIR.getDefaultState());
+            world.setBlockAndUpdate(pos1, Blocks.AIR.defaultBlockState());
         }
 
-        if (pos2State.getProperties().contains(Properties.WATERLOGGED) && pos2State.get(WATERLOGGED)) {
-            world.setBlockState(pos2, Blocks.WATER.getDefaultState());
+        if (pos2State.getProperties().contains(BlockStateProperties.WATERLOGGED) && pos2State.getValue(WATERLOGGED)) {
+            world.setBlockAndUpdate(pos2, Blocks.WATER.defaultBlockState());
         } else {
-            world.setBlockState(pos2, Blocks.AIR.getDefaultState());
+            world.setBlockAndUpdate(pos2, Blocks.AIR.defaultBlockState());
         }
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        boolean isOpen = state.get(OPEN);
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        boolean isOpen = state.getValue(OPEN);
 
         if (!isOpen && !hasSpaceToOpen(state, world, pos)) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         if (isOpen) {
@@ -236,26 +236,26 @@ public class ShutterBlock extends Block implements Waterloggable {
         }
 
         state = state.cycle(OPEN);
-        world.setBlockState(pos, state, 2);
-        if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        world.setBlock(pos, state, 2);
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        this.playToggleSound(player, world, pos, state.get(OPEN));
-        return ActionResult.SUCCESS;
+        this.playToggleSound(player, world, pos, state.getValue(OPEN));
+        return InteractionResult.SUCCESS;
     }
 
-    protected void playToggleSound(@Nullable PlayerEntity player, World world, BlockPos pos, boolean open) {
-        world.playSound(player, pos, open ? this.blockSetType.trapdoorOpen() : this.blockSetType.trapdoorClose(), SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.1F + 0.9F);
-        world.emitGameEvent(player, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+    protected void playToggleSound(@Nullable Player player, Level world, BlockPos pos, boolean open) {
+        world.playSound(player, pos, open ? this.blockSetType.trapdoorOpen() : this.blockSetType.trapdoorClose(), SoundSource.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.1F + 0.9F);
+        world.gameEvent(player, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (!world.isClient()) {
-            boolean isReceivingPower = world.isReceivingRedstonePower(pos);
-            boolean isPowered = state.get(POWERED);
-            boolean isOpen = state.get(OPEN);
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (!world.isClientSide()) {
+            boolean isReceivingPower = world.hasNeighborSignal(pos);
+            boolean isPowered = state.getValue(POWERED);
+            boolean isOpen = state.getValue(OPEN);
 
             if (isReceivingPower != isPowered) {
                 if (isOpen != isReceivingPower) {
@@ -265,59 +265,59 @@ public class ShutterBlock extends Block implements Waterloggable {
                         placeOpenHalves(state, world, pos);
                     }
 
-                    state = state.with(OPEN, isReceivingPower);
+                    state = state.setValue(OPEN, isReceivingPower);
                     this.playToggleSound(null, world, pos, isReceivingPower);
                 }
 
-                world.setBlockState(pos, state.with(POWERED, isReceivingPower), 2);
-                if (state.get(WATERLOGGED)) {
-                    world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+                world.setBlock(pos, state.setValue(POWERED, isReceivingPower), 2);
+                if (state.getValue(WATERLOGGED)) {
+                    world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
                 }
             }
         }
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
 
 
         // Get the player's look direction and ignore vertical directions (UP and DOWN)
-        Direction playerLookDirection = ctx.getPlayerLookDirection();
+        Direction playerLookDirection = ctx.getNearestLookingDirection();
         if (playerLookDirection.getAxis().isVertical()) {
-            playerLookDirection = ctx.getHorizontalPlayerFacing(); // Default to horizontal facing
+            playerLookDirection = ctx.getHorizontalDirection(); // Default to horizontal facing
         }
 
-        BlockState blockState = this.getDefaultState().with(WALL_SIDE, playerLookDirection);
+        BlockState blockState = this.defaultBlockState().setValue(WALL_SIDE, playerLookDirection);
 
-        if (ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())) {
-            blockState = blockState.with(OPEN, true).with(POWERED, true);
+        if (ctx.getLevel().hasNeighborSignal(ctx.getClickedPos())) {
+            blockState = blockState.setValue(OPEN, true).setValue(POWERED, true);
         }
 
-        return blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        return blockState.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (state.get(OPEN)) {
-            return VoxelShapes.empty();
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (state.getValue(OPEN)) {
+            return Shapes.empty();
         }
 
-        return switch (state.get(WALL_SIDE)) {
+        return switch (state.getValue(WALL_SIDE)) {
             case SOUTH -> OUTLINE_CLOSED.get("south");
             case WEST -> OUTLINE_CLOSED.get("west");
             case EAST -> OUTLINE_CLOSED.get("east");
@@ -326,9 +326,9 @@ public class ShutterBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (state.get(OPEN)) {
-            return switch (state.get(WALL_SIDE)) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (state.getValue(OPEN)) {
+            return switch (state.getValue(WALL_SIDE)) {
                 case SOUTH -> HITBOX_OPEN.get("south");
                 case WEST -> HITBOX_OPEN.get("west");
                 case EAST -> HITBOX_OPEN.get("east");
@@ -336,7 +336,7 @@ public class ShutterBlock extends Block implements Waterloggable {
             };
         }
 
-        return switch (state.get(WALL_SIDE)) {
+        return switch (state.getValue(WALL_SIDE)) {
             case SOUTH -> OUTLINE_CLOSED.get("south");
             case WEST -> OUTLINE_CLOSED.get("west");
             case EAST -> OUTLINE_CLOSED.get("east");

@@ -2,22 +2,22 @@ package com.chimericdream.minekea.client.render.block;
 
 import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.entity.block.furniture.ArmoireBlockEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
@@ -26,9 +26,9 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBlockEntity, ArmoireBlockEntityRenderState> {
-    private final BlockEntityRendererFactory.Context context;
+    private final BlockEntityRendererProvider.Context context;
 
-    public ArmoireBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+    public ArmoireBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         this.context = ctx;
     }
 
@@ -38,12 +38,12 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
     }
 
     @Override
-    public void updateRenderState(ArmoireBlockEntity entity, ArmoireBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
-        BlockEntityRenderer.super.updateRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
-        BlockState blockState = entity.getCachedState();
+    public void updateRenderState(ArmoireBlockEntity entity, ArmoireBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
+        BlockState blockState = entity.getBlockState();
 
         List<ItemStack> items = entity.getItems();
-        state.facing = blockState.get(ArmoireBlock.FACING);
+        state.facing = blockState.getValue(ArmoireBlock.FACING);
 
         List<ArmoireBlockEntityRenderState.ArmorItemData> stateItems = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
             };
 
             stateItems.add(new ArmoireBlockEntityRenderState.ArmorItemData(xOffset, yOffset, zOffset, stack));
-            this.context.itemModelManager().update(state.displayItems.get(lastIdx++), stack, ItemDisplayContext.GROUND, null, null, 0);
+            this.context.itemModelResolver().appendItemLayers(state.displayItems.get(lastIdx++), stack, ItemDisplayContext.GROUND, null, null, 0);
         }
 
         state.items.clear();
@@ -88,19 +88,19 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
     }
 
     @Override
-    public void render(ArmoireBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+    public void render(ArmoireBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         Direction facing = state.facing;
 
         Quaternionf rotation;
         switch (facing) {
-            case NORTH -> rotation = RotationAxis.POSITIVE_Y.rotationDegrees(0);
-            case EAST -> rotation = RotationAxis.POSITIVE_Y.rotationDegrees(90);
-            case SOUTH -> rotation = RotationAxis.POSITIVE_Y.rotationDegrees(180);
-            case WEST -> rotation = RotationAxis.POSITIVE_Y.rotationDegrees(270);
+            case NORTH -> rotation = Axis.YP.rotationDegrees(0);
+            case EAST -> rotation = Axis.YP.rotationDegrees(90);
+            case SOUTH -> rotation = Axis.YP.rotationDegrees(180);
+            case WEST -> rotation = Axis.YP.rotationDegrees(270);
             default -> throw new IllegalStateException("Armoires cannot face ".concat(facing.toString()).concat("."));
         }
 
-        ItemRenderState renderState;
+        ItemStackRenderState renderState;
         ArmoireBlockEntityRenderState.ArmorItemData item;
         for (int i = 0; i < state.items.size(); i += 1) {
             item = state.items.get(i);
@@ -110,16 +110,16 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
             double yOffset = item.yOffset();
             double zOffset = item.zOffset();
 
-            matrices.push();
+            matrices.pushPose();
 
             matrices.translate(xOffset, yOffset, zOffset);
-            matrices.multiply(rotation);
+            matrices.mulPose(rotation);
             matrices.scale(0.5f, 0.5f, 0.5f);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+            matrices.mulPose(Axis.YP.rotationDegrees(180));
 
-            renderState.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+            renderState.submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
-            matrices.pop();
+            matrices.popPose();
         }
     }
 }

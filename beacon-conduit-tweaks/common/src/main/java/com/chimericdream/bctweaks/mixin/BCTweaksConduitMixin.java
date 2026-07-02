@@ -1,12 +1,6 @@
 package com.chimericdream.bctweaks.mixin;
 
 import com.chimericdream.bctweaks.config.BCTweaksConfig;
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.ConduitBlockEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -20,6 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 
 @Mixin(value = ConduitBlockEntity.class, priority = 4101)
 public class BCTweaksConduitMixin {
@@ -34,8 +34,8 @@ public class BCTweaksConduitMixin {
 
         if (!config.conduitRangePerBlock.isEmpty()) {
             Set<Block> modifierBlocks = config.conduitRangePerBlock.keySet().stream()
-                .map(Identifier::of)
-                .map(Registries.BLOCK::get)
+                .map(ResourceLocation::parse)
+                .map(BuiltInRegistries.BLOCK::getValue)
                 .collect(Collectors.toSet());
 
             Collections.addAll(modifierBlocks, ACTIVATING_BLOCKS);
@@ -44,7 +44,7 @@ public class BCTweaksConduitMixin {
     }
 
     @ModifyVariable(method = "givePlayersEffects(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD"), ordinal = 1)
-    private static int bct$modifiedRange(int _unused, World world, BlockPos pos, List<BlockPos> activatingBlocks) {
+    private static int bct$modifiedRange(int _unused, Level world, BlockPos pos, List<BlockPos> activatingBlocks) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
 
         int i = activatingBlocks.size();
@@ -56,7 +56,7 @@ public class BCTweaksConduitMixin {
 
         double n = j;
         for (BlockPos p : activatingBlocks) {
-            String blockId = Registries.BLOCK.getEntry(world.getBlockState(p).getBlock()).getIdAsString();
+            String blockId = BuiltInRegistries.BLOCK.wrapAsHolder(world.getBlockState(p).getBlock()).getRegisteredName();
 
             n += config.conduitRangePerBlock.getOrDefault(blockId, 0.0);
         }

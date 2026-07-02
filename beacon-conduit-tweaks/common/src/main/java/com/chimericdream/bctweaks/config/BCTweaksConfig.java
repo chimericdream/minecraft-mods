@@ -12,11 +12,10 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import java.util.Map;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public class BCTweaksConfig {
     @SerialEntry
@@ -31,7 +30,7 @@ public class BCTweaksConfig {
     public transient Map<String, Double> conduitRangePerBlock = Defaults.CONDUIT_RANGE_PER_BLOCK;
 
     public static ConfigClassHandler<BCTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(BCTweaksConfig.class)
-        .id(Identifier.of(ModInfo.MOD_ID, "config"))
+        .id(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
             .setPath(YACLPlatform.getConfigDir().resolve("beacon-conduit-tweaks.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
@@ -45,24 +44,24 @@ public class BCTweaksConfig {
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(HANDLER, ((defaults, config, builder) -> builder
-            .title(Text.translatable("text.config.bctweaks.title"))
+            .title(Component.translatable("text.config.bctweaks.title"))
             .category(ConfigCategory.createBuilder()
-                .name(Text.translatable("text.config.bctweaks.title"))
+                .name(Component.translatable("text.config.bctweaks.title"))
                 .option(Option.<Double>createBuilder()
-                    .name(Text.translatable("text.config.bctweaks.option.beaconBaseRange"))
-                    .description(OptionDescription.of(Text.literal("")))
+                    .name(Component.translatable("text.config.bctweaks.option.beaconBaseRange"))
+                    .description(OptionDescription.of(Component.literal("")))
                     .binding(Defaults.BEACON_BASE_RANGE, () -> config.beaconBaseRange, newVal -> config.beaconBaseRange = newVal)
                     .controller(opt -> DoubleFieldControllerBuilder.create(opt).min(10.0))
                     .build())
                 .option(Option.<Double>createBuilder()
-                    .name(Text.translatable("text.config.bctweaks.option.beaconRangePerLevel"))
-                    .description(OptionDescription.of(Text.literal("")))
+                    .name(Component.translatable("text.config.bctweaks.option.beaconRangePerLevel"))
+                    .description(OptionDescription.of(Component.literal("")))
                     .binding(Defaults.BEACON_RANGE_PER_LEVEL, () -> config.beaconRangePerLevel, newVal -> config.beaconRangePerLevel = newVal)
                     .controller(opt -> DoubleFieldControllerBuilder.create(opt).min(10.0))
                     .build())
                 .option(Option.<Boolean>createBuilder()
-                    .name(Text.translatable("text.config.bctweaks.option.conduitAddVanillaRange"))
-                    .description(OptionDescription.of(Text.literal("")))
+                    .name(Component.translatable("text.config.bctweaks.option.conduitAddVanillaRange"))
+                    .description(OptionDescription.of(Component.literal("")))
                     .binding(Defaults.CONDUIT_ADD_VANILLA_RANGE, () -> config.conduitAddVanillaRange, newVal -> config.conduitAddVanillaRange = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())

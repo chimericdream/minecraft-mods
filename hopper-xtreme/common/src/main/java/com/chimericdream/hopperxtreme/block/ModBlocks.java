@@ -11,13 +11,12 @@ import com.chimericdream.hopperxtreme.entity.XtremeMultiHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeMultiHupperBlockEntity;
 import com.chimericdream.hopperxtreme.registry.ModItemGroups;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.screen.ScreenHandlerType;
-
 import java.util.Set;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
@@ -180,19 +179,19 @@ public class ModBlocks {
         )
     );
 
-    public static final RegistrySupplier<ScreenHandlerType<GlazedHopperScreenHandler>> GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+    public static final RegistrySupplier<MenuType<GlazedHopperScreenHandler>> GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         GlazedHopperScreenHandler.SCREEN_ID,
-        () -> new ScreenHandlerType<>(GlazedHopperScreenHandler::new, FeatureSet.empty())
+        () -> new MenuType<>(GlazedHopperScreenHandler::new, FeatureFlagSet.of())
     );
 
-    public static final RegistrySupplier<ScreenHandlerType<FilteredGlazedHopperScreenHandler>> FILTERED_GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+    public static final RegistrySupplier<MenuType<FilteredGlazedHopperScreenHandler>> FILTERED_GLAZED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         FilteredGlazedHopperScreenHandler.SCREEN_ID,
-        () -> new ScreenHandlerType<>(FilteredGlazedHopperScreenHandler::new, FeatureSet.empty())
+        () -> new MenuType<>(FilteredGlazedHopperScreenHandler::new, FeatureFlagSet.of())
     );
 
-    public static final RegistrySupplier<ScreenHandlerType<FilteredHopperScreenHandler>> FILTERED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+    public static final RegistrySupplier<MenuType<FilteredHopperScreenHandler>> FILTERED_HOPPER_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         FilteredHopperScreenHandler.SCREEN_ID,
-        () -> new ScreenHandlerType<>(FilteredHopperScreenHandler::new, FeatureSet.empty())
+        () -> new MenuType<>(FilteredHopperScreenHandler::new, FeatureFlagSet.of())
     );
 
     public static void init() {
@@ -206,7 +205,7 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeHopperBlock(ticks, key, withFilter),
-            getDefaultHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
@@ -218,7 +217,7 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new GlazedHopperBlock(ticks, key, withFilter),
-            getDefaultHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
@@ -230,7 +229,7 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeMultiHopperBlock(ticks, key, withFilter),
-            getDefaultMultiHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultMultiHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
@@ -242,7 +241,7 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new GlazedMultiHopperBlock(ticks, key, withFilter),
-            getDefaultMultiHopperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultMultiHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
@@ -254,7 +253,7 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeHupperBlock(ticks, key, withFilter),
-            getDefaultHupperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultHupperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
@@ -266,27 +265,27 @@ public class ModBlocks {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeMultiHupperBlock(ticks, key, withFilter),
-            getDefaultMultiHupperSettings().registryKey(REGISTRY_HELPER.makeItemRegistryKey(key))
+            getDefaultMultiHupperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getDefaultHopperSettings() {
-        return new Item.Settings().arch$tab(ModItemGroups.HOPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    public static Item.Properties getDefaultHopperSettings() {
+        return new Item.Properties().arch$tab(ModItemGroups.HOPPER_ITEM_GROUP).useBlockDescriptionPrefix();
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getDefaultMultiHopperSettings() {
-        return new Item.Settings().arch$tab(ModItemGroups.MULTI_HOPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    public static Item.Properties getDefaultMultiHopperSettings() {
+        return new Item.Properties().arch$tab(ModItemGroups.MULTI_HOPPER_ITEM_GROUP).useBlockDescriptionPrefix();
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getDefaultHupperSettings() {
-        return new Item.Settings().arch$tab(ModItemGroups.HUPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    public static Item.Properties getDefaultHupperSettings() {
+        return new Item.Properties().arch$tab(ModItemGroups.HUPPER_ITEM_GROUP).useBlockDescriptionPrefix();
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getDefaultMultiHupperSettings() {
-        return new Item.Settings().arch$tab(ModItemGroups.MULTI_HUPPER_ITEM_GROUP).useBlockPrefixedTranslationKey();
+    public static Item.Properties getDefaultMultiHupperSettings() {
+        return new Item.Properties().arch$tab(ModItemGroups.MULTI_HUPPER_ITEM_GROUP).useBlockDescriptionPrefix();
     }
 }

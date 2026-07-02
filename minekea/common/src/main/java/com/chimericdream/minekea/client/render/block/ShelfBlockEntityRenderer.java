@@ -3,29 +3,29 @@ package com.chimericdream.minekea.client.render.block;
 import com.chimericdream.minekea.block.furniture.shelves.ShelfBlock;
 import com.chimericdream.minekea.entity.block.furniture.ShelfBlockEntity;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.CustomModelDataComponent;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 /*
  * Much of the code in this file was adapted from similar code in the SimpleShelves mod by Pinaz993. They have my
@@ -35,10 +35,10 @@ import java.util.List;
  * https://www.curseforge.com/minecraft/mc-mods/simple-shelves
  */
 public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockEntity, ShelfBlockEntityRenderState> {
-    private final ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
-    private final BlockEntityRendererFactory.Context context;
+    private final ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
+    private final BlockEntityRendererProvider.Context context;
 
-    public ShelfBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+    public ShelfBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         this.context = ctx;
     }
 
@@ -48,13 +48,13 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
     }
 
     @Override
-    public void updateRenderState(ShelfBlockEntity entity, ShelfBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
-        BlockEntityRenderer.super.updateRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
-        BlockState blockState = entity.getCachedState();
+    public void updateRenderState(ShelfBlockEntity entity, ShelfBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
+        BlockState blockState = entity.getBlockState();
 
-        state.wallSide = blockState.get(ShelfBlock.WALL_SIDE);
+        state.wallSide = blockState.getValue(ShelfBlock.WALL_SIDE);
 
-        DefaultedList<ItemStack> items = entity.getItems();
+        NonNullList<ItemStack> items = entity.getItems();
         for (int i = 0; i < items.size(); i += 1) {
             ItemStack stack = items.get(i);
             state.setItem(stack, isBlockItem(stack), false, i);
@@ -62,10 +62,10 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
             if (stack.isEmpty()) {
                 state.displayItems[i].clear();
             } else if (isBaggedItem(stack)) {
-                stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(9001f), List.of(), List.of(), List.of()));
+                stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(9001f), List.of(), List.of(), List.of()));
             }
 
-            this.context.itemModelManager().update(state.displayItems[i], stack, ItemDisplayContext.FIXED, null, null, 0);
+            this.context.itemModelResolver().appendItemLayers(state.displayItems[i], stack, ItemDisplayContext.FIXED, null, null, 0);
         }
     }
 
@@ -75,7 +75,7 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
     }
 
     private boolean isBaggedItem(ItemStack stack) {
-        return stack.isIn(MinekeaItemTags.BAGGED_ITEMS);
+        return stack.is(MinekeaItemTags.BAGGED_ITEMS);
     }
 
 //    private boolean isJarItem(ItemStack stack) {
@@ -83,9 +83,9 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
 //    }
 
     @Override
-    public void render(ShelfBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+    public void render(ShelfBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         Quaternionf rotation;
-        RotationAxis axis = RotationAxis.POSITIVE_Y;
+        Axis axis = Axis.YP;
         switch (state.wallSide) {
             case NORTH -> rotation = axis.rotationDegrees(180);
             case EAST -> rotation = axis.rotationDegrees(90);
@@ -102,28 +102,28 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
 
     private void render(
         ShelfBlockEntityRenderState state,
-        MatrixStack matrices,
-        OrderedRenderCommandQueue queue,
+        PoseStack matrices,
+        SubmitNodeCollector queue,
         Quaternionf rotation,
         int i
     ) {
         double x = 0.125 + (i * 0.25);
 
-        ItemRenderState displayItem = state.displayItems[i];
+        ItemStackRenderState displayItem = state.displayItems[i];
         boolean isBlockItem = state.isBlockItem[i];
         boolean isJarItem = state.isJarItem[i];
 
-        matrices.push();
+        matrices.pushPose();
 
         matrices.translate(0.5, 0.5, 0.5);
 
-        matrices.multiply(rotation);
+        matrices.mulPose(rotation);
         matrices.translate(-0.5, -0.5, -0.5);
 
         if (isJarItem) {
             matrices.translate(x, 0.785, 0.25);
             matrices.scale(0.9f, 0.9f, 0.9f);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
+            matrices.mulPose(Axis.YP.rotationDegrees(90));
         } else if (isBlockItem) {
             matrices.translate(x, 0.65, 0.25);
             matrices.scale(0.375f, 0.375f, 0.375f);
@@ -132,10 +132,10 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
             matrices.scale(0.25f, 0.25f, 0.25f);
         }
 
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+        matrices.mulPose(Axis.YP.rotationDegrees(180));
 
-        displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+        displayItem.submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
-        matrices.pop();
+        matrices.popPose();
     }
 }

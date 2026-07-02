@@ -1,32 +1,32 @@
 package com.chimericdream.miniblockmerchants.mixin;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.village.TradeOfferList;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(MerchantEntity.class)
-abstract public class MMMerchantEntityMixin extends MobEntity {
+@Mixin(AbstractVillager.class)
+abstract public class MMMerchantEntityMixin extends Mob {
     @Shadow
-    protected TradeOfferList offers;
+    protected MerchantOffers offers;
 
     @Shadow
     abstract public boolean hasCustomer();
 
     @Shadow
-    abstract protected void produceParticles(ParticleEffect parameters);
+    abstract protected void produceParticles(ParticleOptions parameters);
 
     @Shadow
     @Nullable
-    public abstract PlayerEntity getCustomer();
+    public abstract Player getCustomer();
 
-    protected MMMerchantEntityMixin(EntityType<? extends MobEntity> entityType, World world) {
+    protected MMMerchantEntityMixin(EntityType<? extends Mob> entityType, Level world) {
         super(entityType, world);
     }
 }

@@ -1,24 +1,24 @@
 package com.chimericdream.bannertweaks.mixin;
 
 import com.chimericdream.bannertweaks.client.render.block.entity.state.BannerBlockEntityRenderStateAccessor;
-import net.minecraft.client.render.block.entity.state.BannerBlockEntityRenderState;
-import net.minecraft.text.Text;
+import net.minecraft.client.renderer.blockentity.state.BannerRenderState;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(BannerBlockEntityRenderState.class)
+@Mixin(BannerRenderState.class)
 public class BannerBlockEntityRenderStateMixin implements BannerBlockEntityRenderStateAccessor {
     @Unique
-    public Text bt$customName;
+    public Component bt$customName;
 
 
     @Override
-    public Text bt$getCustomName() {
+    public Component bt$getCustomName() {
         return bt$customName;
     }
 
     @Override
-    public void bt$setCustomName(Text customName) {
+    public void bt$setCustomName(Component customName) {
         this.bt$customName = customName;
     }
 }

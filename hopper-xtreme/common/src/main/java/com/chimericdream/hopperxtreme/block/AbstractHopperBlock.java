@@ -1,30 +1,30 @@
 package com.chimericdream.hopperxtreme.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-abstract public class AbstractHopperBlock extends BlockWithEntity {
+abstract public class AbstractHopperBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty ENABLED;
 
@@ -46,15 +46,15 @@ abstract public class AbstractHopperBlock extends BlockWithEntity {
     public static final VoxelShape SOUTH_RAYCAST_SHAPE;
     public static final VoxelShape WEST_RAYCAST_SHAPE;
 
-    protected AbstractHopperBlock(Settings settings) {
+    protected AbstractHopperBlock(Properties settings) {
         super(settings);
 
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.DOWN).with(ENABLED, true));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.DOWN).setValue(ENABLED, true));
     }
 
     @Override
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (state.get(FACING)) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
             case DOWN -> {
                 return DOWN_SHAPE;
             }
@@ -77,8 +77,8 @@ abstract public class AbstractHopperBlock extends BlockWithEntity {
     }
 
     @Override
-    protected VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
-        switch (state.get(FACING)) {
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+        switch (state.getValue(FACING)) {
             case DOWN -> {
                 return DOWN_RAYCAST_SHAPE;
             }
@@ -101,69 +101,69 @@ abstract public class AbstractHopperBlock extends BlockWithEntity {
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getSide().getOpposite();
-        return this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction).with(ENABLED, true);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Direction direction = ctx.getClickedFace().getOpposite();
+        return this.defaultBlockState().setValue(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction).setValue(ENABLED, true);
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        ItemScatterer.onStateReplaced(state, world, pos);
-        super.onStateReplaced(state, world, pos, moved);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
+        Containers.updateNeighboursAfterDestroy(state, world, pos);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    protected BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    protected boolean hasComparatorOutput(BlockState state) {
+    protected boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
     }
 
     @Override
-    protected BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(FACING)));
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, ENABLED);
     }
 
     @Override
-    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
+    protected boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
     static {
-        FACING = Properties.HOPPER_FACING;
-        ENABLED = Properties.ENABLED;
-        TOP_SHAPE = Block.createCuboidShape(0.0, 10.0, 0.0, 16.0, 16.0, 16.0);
-        MIDDLE_SHAPE = Block.createCuboidShape(4.0, 4.0, 4.0, 12.0, 10.0, 12.0);
-        OUTSIDE_SHAPE = VoxelShapes.union(MIDDLE_SHAPE, TOP_SHAPE);
-        INSIDE_SHAPE = createCuboidShape(2.0, 11.0, 2.0, 14.0, 16.0, 14.0);
-        DEFAULT_SHAPE = VoxelShapes.combineAndSimplify(OUTSIDE_SHAPE, INSIDE_SHAPE, BooleanBiFunction.ONLY_FIRST);
-        DOWN_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0));
-        EAST_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(12.0, 4.0, 6.0, 16.0, 8.0, 10.0));
-        NORTH_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(6.0, 4.0, 0.0, 10.0, 8.0, 4.0));
-        SOUTH_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(6.0, 4.0, 12.0, 10.0, 8.0, 16.0));
-        WEST_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(0.0, 4.0, 6.0, 4.0, 8.0, 10.0));
+        FACING = BlockStateProperties.FACING_HOPPER;
+        ENABLED = BlockStateProperties.ENABLED;
+        TOP_SHAPE = Block.box(0.0, 10.0, 0.0, 16.0, 16.0, 16.0);
+        MIDDLE_SHAPE = Block.box(4.0, 4.0, 4.0, 12.0, 10.0, 12.0);
+        OUTSIDE_SHAPE = Shapes.or(MIDDLE_SHAPE, TOP_SHAPE);
+        INSIDE_SHAPE = box(2.0, 11.0, 2.0, 14.0, 16.0, 14.0);
+        DEFAULT_SHAPE = Shapes.join(OUTSIDE_SHAPE, INSIDE_SHAPE, BooleanOp.ONLY_FIRST);
+        DOWN_SHAPE = Shapes.or(DEFAULT_SHAPE, Block.box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0));
+        EAST_SHAPE = Shapes.or(DEFAULT_SHAPE, Block.box(12.0, 4.0, 6.0, 16.0, 8.0, 10.0));
+        NORTH_SHAPE = Shapes.or(DEFAULT_SHAPE, Block.box(6.0, 4.0, 0.0, 10.0, 8.0, 4.0));
+        SOUTH_SHAPE = Shapes.or(DEFAULT_SHAPE, Block.box(6.0, 4.0, 12.0, 10.0, 8.0, 16.0));
+        WEST_SHAPE = Shapes.or(DEFAULT_SHAPE, Block.box(0.0, 4.0, 6.0, 4.0, 8.0, 10.0));
         DOWN_RAYCAST_SHAPE = INSIDE_SHAPE;
-        EAST_RAYCAST_SHAPE = VoxelShapes.union(INSIDE_SHAPE, Block.createCuboidShape(12.0, 8.0, 6.0, 16.0, 10.0, 10.0));
-        NORTH_RAYCAST_SHAPE = VoxelShapes.union(INSIDE_SHAPE, Block.createCuboidShape(6.0, 8.0, 0.0, 10.0, 10.0, 4.0));
-        SOUTH_RAYCAST_SHAPE = VoxelShapes.union(INSIDE_SHAPE, Block.createCuboidShape(6.0, 8.0, 12.0, 10.0, 10.0, 16.0));
-        WEST_RAYCAST_SHAPE = VoxelShapes.union(INSIDE_SHAPE, Block.createCuboidShape(0.0, 8.0, 6.0, 4.0, 10.0, 10.0));
+        EAST_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(12.0, 8.0, 6.0, 16.0, 10.0, 10.0));
+        NORTH_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(6.0, 8.0, 0.0, 10.0, 10.0, 4.0));
+        SOUTH_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(6.0, 8.0, 12.0, 10.0, 10.0, 16.0));
+        WEST_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(0.0, 8.0, 6.0, 4.0, 10.0, 10.0));
     }
 }

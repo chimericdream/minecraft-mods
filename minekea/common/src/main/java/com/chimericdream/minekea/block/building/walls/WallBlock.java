@@ -2,23 +2,23 @@ package com.chimericdream.minekea.block.building.walls;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class WallBlock extends net.minecraft.block.WallBlock {
-    public final Identifier BLOCK_ID;
+public class WallBlock extends net.minecraft.world.level.block.WallBlock {
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
     public WallBlock(BlockConfig config) {
-        super(AbstractBlock.Settings.copy(config.getIngredient()).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(BlockBehaviour.Properties.ofFullCopy(config.getIngredient()).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("building/walls/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/walls/%s", material));
     }
 }

@@ -12,10 +12,6 @@ import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 import oshi.util.tuples.Pair;
 import oshi.util.tuples.Quartet;
 import oshi.util.tuples.Triplet;
@@ -25,6 +21,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -37,7 +37,7 @@ public class CompressedBlocks implements ModThingGroup {
 
     protected static final List<Triplet<Pair<String, String>, Block, Tool>> BLOCKS_TO_COMPRESS = new ArrayList<>();
     protected static final List<Quartet<Pair<String, String>, Block, Pair<String, String>, Tool>> COLUMN_BLOCKS_TO_COMPRESS = new ArrayList<>();
-    protected static final List<Quartet<Pair<String, String>, Supplier<Block>, Identifier, Tool>> MINEKEA_BLOCKS_TO_COMPRESS = new ArrayList<>();
+    protected static final List<Quartet<Pair<String, String>, Supplier<Block>, ResourceLocation, Tool>> MINEKEA_BLOCKS_TO_COMPRESS = new ArrayList<>();
 
     static {
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Amethyst", "amethyst_block"), Blocks.AMETHYST_BLOCK, null));
@@ -177,7 +177,7 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedBlock(
@@ -230,7 +230,7 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedColumnBlock(
@@ -265,14 +265,14 @@ public class CompressedBlocks implements ModThingGroup {
             String materialName = data.getA().getA();
             String material = data.getA().getB();
             Supplier<Block> ingredient = data.getB();
-            Identifier baseBlockId = data.getC();
+            ResourceLocation baseBlockId = data.getC();
             Tool tool = data.getD();
 
             List<RegistrySupplier<Block>> compressedBlocks = new ArrayList<>();
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
+                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedMinekeaBlock(
@@ -297,7 +297,7 @@ public class CompressedBlocks implements ModThingGroup {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getItemSettings(String material) {
-        return new Item.Settings().arch$tab(ModItemGroups.COMPRESSED_BLOCK_ITEM_GROUP).translationKey(CompressedBlock.makeTranslationKey(material));
+    public static Item.Properties getItemSettings(String material) {
+        return new Item.Properties().arch$tab(ModItemGroups.COMPRESSED_BLOCK_ITEM_GROUP).overrideDescription(CompressedBlock.makeTranslationKey(material));
     }
 }

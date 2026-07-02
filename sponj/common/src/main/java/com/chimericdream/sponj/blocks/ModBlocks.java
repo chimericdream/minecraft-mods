@@ -1,11 +1,10 @@
 package com.chimericdream.sponj.blocks;
 
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import static com.chimericdream.sponj.SponjMod.REGISTRY_HELPER;
 
@@ -13,25 +12,25 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         SponjBlock.BLOCK_ID,
         SponjBlock::new,
-        getDefaultItemSettings().registryKey(SponjBlock.ITEM_REGISTRY_KEY)
+        getDefaultItemSettings().setId(SponjBlock.ITEM_REGISTRY_KEY)
     );
 
     public static final RegistrySupplier<Block> WET_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         WetSponjBlock.BLOCK_ID,
         WetSponjBlock::new,
-        getDefaultItemSettings().registryKey(WetSponjBlock.ITEM_REGISTRY_KEY)
+        getDefaultItemSettings().setId(WetSponjBlock.ITEM_REGISTRY_KEY)
     );
 
     public static final RegistrySupplier<Block> LAVA_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         LavaSponjBlock.BLOCK_ID,
         LavaSponjBlock::new,
-        getDefaultItemSettings().registryKey(LavaSponjBlock.ITEM_REGISTRY_KEY)
+        getDefaultItemSettings().setId(LavaSponjBlock.ITEM_REGISTRY_KEY)
     );
 
     public static final RegistrySupplier<Block> WET_LAVA_SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         WetLavaSponjBlock.BLOCK_ID,
         WetLavaSponjBlock::new,
-        getDefaultItemSettings().registryKey(WetLavaSponjBlock.ITEM_REGISTRY_KEY)
+        getDefaultItemSettings().setId(WetLavaSponjBlock.ITEM_REGISTRY_KEY)
         // Disabled until I can figure out how this works on NeoForge
         // getDefaultItemSettings().recipeRemainder(LAVA_SPONJ_BLOCK.get().asItem()).registryKey(WetLavaSponjBlock.ITEM_REGISTRY_KEY)
     );
@@ -53,8 +52,8 @@ public class ModBlocks {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private static Item.Settings getDefaultItemSettings() {
-        return new Item.Settings().arch$tab(ItemGroups.FUNCTIONAL).useBlockPrefixedTranslationKey();
+    private static Item.Properties getDefaultItemSettings() {
+        return new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix();
     }
 
     public static List<Block> getSponjBlocks() {

@@ -6,26 +6,25 @@ import com.chimericdream.minekea.entity.block.furniture.DisplayCaseBlockEntity;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class DisplayCases implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_DISPLAY_CASE_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_DISPLAY_CASE_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    public static Identifier DISPLAY_CASE_BLOCK_ENTITY_ID = Identifier.of(ModInfo.MOD_ID, "entities/blocks/furniture/display_case");
+    public static ResourceLocation DISPLAY_CASE_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/display_case");
     public static RegistrySupplier<BlockEntityType<DisplayCaseBlockEntity>> DISPLAY_CASE_BLOCK_ENTITY;
 
     static {

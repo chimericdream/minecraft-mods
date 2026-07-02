@@ -1,12 +1,12 @@
 package com.chimericdream.lib.mixin;
 
 import com.chimericdream.lib.tags.CommonBlockTags;
-import net.minecraft.block.Block;
-import net.minecraft.component.type.ToolComponent;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,23 +19,23 @@ import java.util.Optional;
 @Mixin(ShearsItem.class)
 public class ShearsItemMixin {
     @Inject(
-        method = "createToolComponent()Lnet/minecraft/component/type/ToolComponent;",
-        at = @At(value = "RETURN"),
-        cancellable = true
+            method = "createToolProperties()Lnet/minecraft/world/item/component/Tool;",
+            at = @At(value = "RETURN"),
+            cancellable = true
     )
-    private static void addBlocksToRuleList(CallbackInfoReturnable<ToolComponent> cir) {
-        ToolComponent original = cir.getReturnValue();
+    private static void addBlocksToRuleList(CallbackInfoReturnable<Tool> cir) {
+        Tool original = cir.getReturnValue();
 
-        RegistryEntryLookup<Block> lookup = Registries.createEntryLookup(Registries.BLOCK);
-        Optional<RegistryEntryList.Named<Block>> blocks = lookup.getOptional(CommonBlockTags.SHEARS_MINEABLE);
+        HolderGetter<Block> lookup = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
+        Optional<HolderSet.Named<Block>> blocks = lookup.get(CommonBlockTags.SHEARS_MINEABLE);
 
         if (blocks.isEmpty()) {
             return;
         }
 
-        List<ToolComponent.Rule> rules = new ArrayList<>(original.rules());
-        rules.add(ToolComponent.Rule.of(blocks.get(), 5.0F));
+        List<Tool.Rule> rules = new ArrayList<>(original.rules());
+        rules.add(Tool.Rule.overrideSpeed(blocks.get(), 5.0F));
 
-        cir.setReturnValue(new ToolComponent(rules, original.defaultMiningSpeed(), original.damagePerBlock(), true));
+        cir.setReturnValue(new Tool(rules, original.defaultMiningSpeed(), original.damagePerBlock(), true));
     }
 }

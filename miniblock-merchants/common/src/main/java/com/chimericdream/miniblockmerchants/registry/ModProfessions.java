@@ -8,33 +8,32 @@ import com.chimericdream.miniblockmerchants.util.DataUtil;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.authlib.GameProfile;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ProfileComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOfferList;
-import net.minecraft.village.TradedItem;
-import net.minecraft.village.VillagerProfession;
-import net.minecraft.world.poi.PointOfInterestType;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ResolvableProfile;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
 
 import static com.chimericdream.miniblockmerchants.MiniblockMerchantsMod.REGISTRY_HELPER;
 
 public class ModProfessions {
     public static final Map<String, RegistrySupplier<VillagerProfession>> PROFESSIONS = new HashMap<>();
-    public static final Map<String, TradeOfferList> TRADES = new HashMap<>();
+    public static final Map<String, MerchantOffers> TRADES = new HashMap<>();
 
     public static final String ALCHEMIST_ID = "mm_alchemist";
     public static final RegistrySupplier<VillagerProfession> ALCHEMIST = register(ALCHEMIST_ID);
@@ -147,7 +146,7 @@ public class ModProfessions {
     }
 
     public static void populateTrades() {
-        TradeOfferList alchemistTrades = makeOfferList(
+        MerchantOffers alchemistTrades = makeOfferList(
             makeOffer("Cauldron", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzA5NTc3YmNiYzMxYTA0MjI2ODkyMDEzOGJlZmMwMTA0OTNjZTZjMjdkMjA4YWI5Y2RiOGNlOWZhMjQ1NzMwOCJ9fX0=", new int[]{-922603379, -497987848, -1632532933, -2069520577}),
             makeOffer("Cauldron with Blood", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGExZjMwYWM2N2VjMTBhM2Q1ZTdkZWFmNjRkMGU5YTIwMDRhZTgwMWMwYmQ2Y2U4NWM1ZDYwNzM5YTlkODgyYSJ9fX0=", new int[]{-1511826865, -301906378, -1630532647, 317859372}),
             makeOffer("Sugar", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E2YWE0MGRiNzQxYTZjYmVkYjExOWEzZTVjYmE4YTg3ZjdlYzhmNzRkMjY4YWQ4MjgyYTQ2ZTVlMDU0ZmNiOSJ9fX0=", new int[]{-1171650357, -2028255289, -1780378138, 1576325737}),
@@ -166,7 +165,7 @@ public class ModProfessions {
             makeOffer("Organ in a Bottle", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZjOWQ0NzFmMzczNTU3NTgzMzkyZWFlZmFmNjU5YmJmZWMyMzg1YzYwZmJhYjY4NjBmMjM2YjVmYjI0MSJ9fX0=", new int[]{41213480, 826101342, -1295841538, 1915000144})
         );
 
-        TradeOfferList arboriculturistTrades = makeOfferList(
+        MerchantOffers arboriculturistTrades = makeOfferList(
             makeOffer("Oak Log", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTRhYWRhNGQ5ZmNlZGE5MDE4NjkxOGQ2Y2EzNWI5YTBlYWQ4ZTRiMTRjOWQ5NDI3MTU3ZWU5YjkzMzlkN2IxIn19fQ==", new int[]{-55379546, 753746504, -1517949859, -1306493605}),
             makeOffer("Rounded Oak Log", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBjZDEzMjIzYThkOWMxNzNjZWRjZTZjNGJlYmViYTA2YTI0YTFiYTI3NWRkM2ViNWM3OTMzZjlhNzRiYTAxMSJ9fX0=", new int[]{2045552266, -1956040570, -1809882858, -852453119}),
             makeOffer("Stripped Oak Log", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmRlYTIxZmQzMGQ3ZThjYTIyOTZiMjA1ZjhiMjZjMmViYzA2NWUxOGRjZDNkYzIyNjM3MDI1NTYxNjZmMGRhZiJ9fX0=", new int[]{-2025414481, -1437646155, -1282854958, 978735206}),
@@ -201,7 +200,7 @@ public class ModProfessions {
             makeOffer("Fir Cone", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTRlMjg4OTBlODY1YzdkOTUwYjE1MTMxYTQzZDc2Yzk0ZGUzODk5NWQ2MDlmZWZiNGYyOTczNjJmZWQxMjE4In19fQ==", new int[]{122709924, 593466750, -1994325822, -174546356})
         );
 
-        TradeOfferList astronomerTrades = makeOfferList(
+        MerchantOffers astronomerTrades = makeOfferList(
             makeOffer("Spyglass", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZlM2JjYmE1N2M3YjdmOGQ0NjJiMzAwNTQzZDEzMmVjZWE5YmYyZWQ1ODdjYzlkOTk0YTM5NWFjOTU5MmVhYSJ9fX0=", new int[]{-1054666174, -1656598702, -1876453964, -461724679}),
             makeOffer("Spyglass", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2ODAwMmNiMGI5N2JlZTUwOGU4N2Y5OTU0Y2YxODk5YWI5MDU2MGJkNzQ3YzQ4OWNiNTQyNTFiYTZjNTBmMyJ9fX0=", new int[]{628217491, 1172324583, -1342291521, -107037697}),
             makeOffer("Sun", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWMzNzgzMmM0MTM1MjU1NTU1M2Q4NmFhYWUxMzQxOTMzMWUzYWRlOTk3YmNlMGI4MTEzN2Q1MjA0ZTRjZGU3ZSJ9fX0=", new int[]{29464294, 160580508, -1779136758, 1804506042}),
@@ -252,7 +251,7 @@ public class ModProfessions {
             makeOffer("World on Fire", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ4MjEwOTJjZTVlNzU1NzQ1MWM3MjNhMDM0MWU5MGI5M2UwNTY0ZTJiMDE0ODFkZTgxZWVhMjcxZjA0YzViNiJ9fX0=", new int[]{-1195778884, 212553325, -1862081928, -1360317608})
         );
 
-        TradeOfferList bakerTrades = makeOfferList(
+        MerchantOffers bakerTrades = makeOfferList(
             makeOffer("Cake", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzhmYWE0Y2U3OTA1NGNjOWI4ZTFjOWRlNDgyM2MyMmNjMDY5ODRhOGE0ZjZkZTYyYmRhOTBiNTJjNWZlY2RkNiJ9fX0=", new int[]{1116589873, 253052146, -1537080906, -693884363}),
             makeOffer("Cake", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGFkNDI1NTE0Y2NmOGNiOWMwZTE0MzQyNWQ3M2Q5Mzk0YTUwZGRhNDE5NzdiMjEyMDYxNmMwZjllMzg5MjBlNSJ9fX0=", new int[]{-197447966, -1270199445, -1729338201, 469712511}),
             makeOffer("Carrot Cake", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmIyNmMxMjJlZGYwZDExZTQ2NWE1OTEyMDkwMDYwYWUyOTI3NGQyM2IxOWZkYjhkNzdiMWQ0YjM3NzNhN2VjZCJ9fX0=", new int[]{1706944402, 742739098, -1787158039, -475029988}),
@@ -299,7 +298,7 @@ public class ModProfessions {
             makeOffer("Bag of Semolina", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjAyMzE2MTZlYzYwMzIyY2M1MWUyZTE4NGVmMTg0ZTMzNTNmYTIxYjBhMTE0YjQyNzg0NTc0MDg5NjgxNDE1OCJ9fX0=", new int[]{1120928665, -2033170402, -1437311155, -371959761})
         );
 
-        TradeOfferList bartenderTrades = makeOfferList(
+        MerchantOffers bartenderTrades = makeOfferList(
             makeOffer("Coca Cola", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjlmYTMxNjM1YTZiY2JkNjAwNjEzNTYxNTQ5YTMwYzE4ODg4ZWQ2MmZiMDViZjJkYTIzMTM5OGY4ODJlYTNkIn19fQ==", new int[]{-1157208890, 1574650735, -1377882779, 1281476000}),
             makeOffer("Pepsi-Cola", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzE0YmVmZDRkMzc5N2E4YTZhYjUzY2VlZGViYWIzYzEyYjdiMWYwMzQ0MGJmMDA4NTAxMDAyNWMzNTcxNzYyOCJ9fX0=", new int[]{1153837622, -2043131296, -2097111420, -848722408}),
             makeOffer("Sprite", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjQ3MzNhNDc2YjdjNDYwOTY2Y2QxZWU1ZWJlMmUwNzcwYWY1NzRjZTlhMTc1NzZhN2MyMDBkODY4YWNmZmYzZiJ9fX0=", new int[]{-1596413158, -421048538, -1850884638, -560215747}),
@@ -333,7 +332,7 @@ public class ModProfessions {
             makeOffer("Pack of Bottles", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjNhZTE3YzllZmNiZmRkODc3MThhYzA4MGFjODE1Y2Q4MDA5Yzg3ZjgyYzQ3NDQ0NDA4MmE0ZDg3ZWVmNzA2MiJ9fX0=", new int[]{7076563, 226904294, -2066022928, -1635283772})
         );
 
-        TradeOfferList beekeeperTrades = makeOfferList(
+        MerchantOffers beekeeperTrades = makeOfferList(
             makeOffer("Honey", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7ImlkIjoiMGMwOGJiNmIyZWMzNDI2MjhhYmRkYjRkYmVhZWU1MDMiLCJ0eXBlIjoiU0tJTiIsInVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDA3ZTQ1MDE5MjhlYThkYjUzZWM4MGVjY2ZhMzgzNjQ0OTY3YTAwZDhjZTViODczNWZiOWRmOGU2ODYwM2RhYiIsInByb2ZpbGVJZCI6IjgwMThhYjAwYjJhZTQ0Y2FhYzliZjYwZWY5MGY0NWU1IiwidGV4dHVyZUlkIjoiNDA3ZTQ1MDE5MjhlYThkYjUzZWM4MGVjY2ZhMzgzNjQ0OTY3YTAwZDhjZTViODczNWZiOWRmOGU2ODYwM2RhYiJ9fSwic2tpbiI6eyJpZCI6IjBjMDhiYjZiMmVjMzQyNjI4YWJkZGI0ZGJlYWVlNTAzIiwidHlwZSI6IlNLSU4iLCJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzQwN2U0NTAxOTI4ZWE4ZGI1M2VjODBlY2NmYTM4MzY0NDk2N2EwMGQ4Y2U1Yjg3MzVmYjlkZjhlNjg2MDNkYWIiLCJwcm9maWxlSWQiOiI4MDE4YWIwMGIyYWU0NGNhYWM5YmY2MGVmOTBmNDVlNSIsInRleHR1cmVJZCI6IjQwN2U0NTAxOTI4ZWE4ZGI1M2VjODBlY2NmYTM4MzY0NDk2N2EwMGQ4Y2U1Yjg3MzVmYjlkZjhlNjg2MDNkYWIiLCJtZXRhZGF0YSI6eyJtb2RlbCI6InNsaW0ifX0sImNhcGUiOm51bGx9", new int[]{-1353968602, -2075572998, -1764666166, -524272984}),
             makeOffer("Honeycomb", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDE1NDkxMzJkYmM4NzVkNjM5ZDY3ZDkzY2M3MTNlOTQxYmIxNmM5NjRkMGE2MmU4YzY3OTRiZDNkZTZmZjgifX19", new int[]{-688088462, -1271378425, -1673475377, 1921030549}),
             makeOffer("Beeswax", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjMwYmRmYTM0ZWRlOGM2NGYwZjMwNWZjNDgzMTU2NTBiMDg3OWFjNDNjYjdkM2I4OGFhNzhkYTUxYTU3OTBhZiJ9fX0=", new int[]{1986817906, -113030055, -1485537748, -1062382032}),
@@ -347,7 +346,7 @@ public class ModProfessions {
             makeOffer("Honey Jar", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTczY2M5NjhiNTI1ODhhMTBkYjY2N2VlMmI0M2Q2OWI1MjFiYzM2NWIyNDM1ZjJkODI0OGZlNDI4ZTE4ODUifX19", new int[]{981506669, 1288782656, -1189572945, 683836919})
         );
 
-        TradeOfferList blacksmithTrades = makeOfferList(
+        MerchantOffers blacksmithTrades = makeOfferList(
             makeOffer("Anvil", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI0MjVhYTNkOTQ2MThhODdkYWM5Yzk0ZjM3N2FmNmNhNDk4NGMwNzU3OTY3NGZhZDkxN2Y2MDJiN2JmMjM1In19fQ==", new int[]{-1827611109, 269961553, -2135234946, 1151404620}),
             makeOffer("Block of Copper", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmQ1NzI0YTc5ZjkwZmQxZTU0NzY1ZDc1OTY5MjgxNDZkY2I5ZTUwZmRiODg1OTYyMDFjNGEyMzVjNGE2ZjRlZSJ9fX0=", new int[]{1427075118, -735883869, -1482513100, 1893312011}),
             makeOffer("Iron Block", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGFmNmJkMmMwMzNhODM4ZDRmZjdmZDU1NTMyMWUwNmNmODA2YTc1YzRhMmI1ODY4YzcxMDA0ZTAyYTE4NjBhNCJ9fX0=", new int[]{-1251684449, 2137935534, -1943659716, -1491289363}),
@@ -373,7 +372,7 @@ public class ModProfessions {
             makeOffer("Ender Knight Helmet", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWQwYTM5YWVhYWVhYjQ5OGM1NTBhNzZjZjFiYWFiZjAwNWRlNzQzZWYyOTBlMzJhNzFlY2UwNjRkMWYyMGU4YyJ9fX0=", new int[]{161965987, 2050377278, -1872684503, 1433099303})
         );
 
-        TradeOfferList chefTrades = makeOfferList(
+        MerchantOffers chefTrades = makeOfferList(
             makeOffer("Mac and Cheese", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmJiZWNiYTUyMzE4MDVhYWFkZGE4MWQ3NjRiMDk2ZWVlNjJlZDJlNGNiNDQ3NDQ4NTQ0ZjUxODJiMDkxZjEwMSJ9fX0=", new int[]{-1528446196, -808237267, -2059520990, -1542307753}),
             makeOffer("Bowl of Noodles", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZThlMDEwMmE5MGRiODI5MTlmZGRlOTc2YTc2MDJjNTEzZDMwMWEwY2RhZTk3ZWYyNTkyMTg2NTBmY2VhOCJ9fX0=", new int[]{-854721655, -2132261734, -1268268824, -1053483058}),
             makeOffer("Lasagna", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiMzk4ZTM5ZDM0ZWZiNjQ4YjExYzlmMzMyMWY3YTgwZWUzMjQxODAyNjQ1ZTE1YTNjOGU0NzVmZjc2MTYifX19", new int[]{129924919, 1218463286, -1755691348, 131402843}),
@@ -410,7 +409,7 @@ public class ModProfessions {
             makeOffer("Spicy Goblin Omlette", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmM5NGM2ZWRiZDljOTFhNDUxMDViN2UxZmU5ZWI1OGYxYmVlYzU0OWI3Mzg1MDFkNzg0MWZlNzNlMDQ3NDdiOSJ9fX0=", new int[]{-1904708969, 1650672937, -2080684324, 105837649})
         );
 
-        TradeOfferList engineerTrades = makeOfferList(
+        MerchantOffers engineerTrades = makeOfferList(
             makeOffer("Redstone Dust", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmIyYzI2NzhlOTM2NDA5ODhlNjg1YWM4OTM0N2VmYTQ1MjQxMTljOWQ4ZjcyNzhjZTAxODFiYzNlNGZiMmIwOSJ9fX0=", new int[]{-1658424990, 920798264, -1687667913, -1278144185}),
             makeOffer("Redstone Torch Top", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiMGEyNzA5YWQyN2M1NzgzYmE3YWNiZGFlODc4N2QxNzY3M2YwODg4ZjFiNmQ0ZTI0ZWUxMzI5OGQ0In19fQ==", new int[]{-1460296685, -1879880444, -1548143272, 1415626638}),
             makeOffer("Redstone Lamp (on)", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2ViNGIzNDUxOWZlMTU4NDdkYmVhNzIyOTE3OWZlZWI2ZWE1NzcxMmQxNjVkY2M4ZmY2Yjc4NWJiNTg5MTFiMCJ9fX0=", new int[]{-232114097, -1876409202, -1463232328, 724804809}),
@@ -466,7 +465,7 @@ public class ModProfessions {
             makeOffer("Soulflow Engine", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2IwNDMzZjFjMjI3OTYwOGY3YmQyY2VjZWI5OGNkMTc1Y2JhYWRjM2Y2Mjk5YWUzY2NhZTI1N2RjMjJhNTViMiJ9fX0=", new int[]{1415077840, -1096793858, -1202550676, -587324367})
         );
 
-        TradeOfferList eremologistTrades = makeOfferList(
+        MerchantOffers eremologistTrades = makeOfferList(
             makeOffer("Sand", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTMzOThhYjNjYjY5NmIzNDQzMGJlOTQ0YjE0YWZiZDIyN2ZkODdlOTkwMjZiY2ZjOGI3Mzg3YTg2MWJkZSJ9fX0=", new int[]{1381378554, 1711423830, -2009393088, 1937950700}),
             makeOffer("Red Sand", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTNjYjU0NjRhYjliODUxYjlkNGFjOGI4Y2RiYjg2NWU3NGM1ODliMzQ4NWFiZWNlNTg5ZDQyOWQ4OTlhZWQifX19", new int[]{1115752381, -1932768137, -1799524842, -1635272322}),
             makeOffer("Sandstone", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWFjZWJkZGNlZTg2ODhiODU3NWQ5Y2M4NWQyZDgzMmE2NGMyZGIzYWEyMzViZDdlNzZmZDJlOGUxZDY1ZSJ9fX0=", new int[]{-1180158627, -237420399, -1972249935, 607001151}),
@@ -485,7 +484,7 @@ public class ModProfessions {
             makeOffer("Animal Skull", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTdjNDZjZTY2MDM3Nzg0OTgzOWQyYmU2OTgwNjYwYjQ5YjNkNmIzMzUyMGE3YTRhZjlmZWVlNzVlNWJjMTBlZiJ9fX0=", new int[]{1385607739, 1527596045, -1436535224, -1199740636})
         );
 
-        TradeOfferList furnisherTrades = makeOfferList(
+        MerchantOffers furnisherTrades = makeOfferList(
             makeOffer("Wooden Chest", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDdlYzQxZTBkZjhlMTcwZDk3ZjliOWFmMWQ2NWVkYWQ0OTc5Yzc4Yzg5YjAxYjE4MGYzODllZTA4YTYxYWY4MiJ9fX0=", new int[]{1475604554, -133937347, -1728975250, -417416949}),
             makeOffer("Regal Chest", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmE2ZGFjODAzNWQzNjFiYTdmMmMyYTYxNGI0ZWJhYWZjMWU1ZTMxMDFmODViZWVmNjgzNTM2ZjMzN2U1MDkwIn19fQ==", new int[]{1772007514, 1440433578, -1717327762, -859867748}),
             makeOffer("Coal Chest", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzY1OGNjYzczNDU1NTllOTMyMWY0OWVlMWFmNjc1MjJlNzA4ZGNhODkzMmIwYTcyMWNjMzQxMzA3MzFlYjU5OCJ9fX0=", new int[]{477832284, 2026588190, -1123594741, 2095845784}),
@@ -557,7 +556,7 @@ public class ModProfessions {
             makeOffer("White Bowl (Water)", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmI1MmVmYzFiMDkzMTkzZGNkMWYxZmRiYWI3MWRkM2NkMDM0Yjg0MzE4YzczMDE3YWIxMzBkZGM0YzdjYzdkMyJ9fX0=", new int[]{-110500288, 1585924626, -1177168419, -1509761685})
         );
 
-        TradeOfferList gamemasterTrades = makeOfferList(
+        MerchantOffers gamemasterTrades = makeOfferList(
             makeOffer("Red Player Piece", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTMzYTViZmM4YTJhM2ExNTJkNjQ2YTViZWE2OTRhNDI1YWI3OWRiNjk0YjIxNGYxNTZjMzdjNzE4M2FhIn19fQ==", new int[]{-63035681, 225069933, -1372847351, 1276459827}),
             makeOffer("Orange Player Piece", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWRjNTYzNTVmMTFjZTUzZTE0ZDM3NGVjZjJhMGIyNTUzMDFiNzM0ZDk5YzY3NDI0MGFmYWNjNzNlMjE0NWMifX19", new int[]{-162898245, -1020639690, -1630312116, -1949545875}),
             makeOffer("Yellow Player Piece", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDExMzliM2VmMmU0YzQ0YTRjOTgzZjExNGNiZTk0OGQ4YWI1ZDRmODc5YTVjNjY1YmI4MjBlNzM4NmFjMmYifX19", new int[]{-2146185637, -1391639195, -1094454784, 274136625}),
@@ -624,7 +623,7 @@ public class ModProfessions {
             makeOffer("Black 20", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjdiMjlhMWJiMjViMmFkOGZmM2E3YTM4MjI4MTg5Yzk0NjFmNDU3YTRkYTk4ZGFlMjkzODRjNWMyNWQ4NSJ9fX0=", new int[]{-824926972, 1458457918, -1488313899, -1952625789})
         );
 
-        TradeOfferList grieferTrades = makeOfferList(
+        MerchantOffers grieferTrades = makeOfferList(
             makeOffer("Bag Of Gunpowder", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODIyYTQ4YTU3NTllZGRlZjllMjkxOGZjODU5OTZmODQ5MWNjOTI1NzhkNTRkY2Q2MmUyYjZkOTEzYmZiNDIxZSJ9fX0=", new int[]{570072899, 880430595, -1197170054, -300354481}),
             makeOffer("Blue Bomb", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmM1NjNiOWI1ODI0MDlmNDFmMGUwNzgxYTk4M2FmZTNkOGZlMmZiZjM4M2M1M2E1ZDI3NDMxNTU1NjRkNjgifX19", new int[]{1274520565, 137973731, -1550009758, 370346578}),
             makeOffer("Bomb", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWYxM2I3YjNkNTBlMDcyYzVkMWIzYzUxMjFlYTJlNTllMjFmZGRmYTUzODZjYzBjZjZlZTEzMTk4M2EyNWU0NSJ9fX0=", new int[]{-984091042, 1001800325, -1989162394, 546600767}),
@@ -639,7 +638,7 @@ public class ModProfessions {
             makeOffer("TNT Minecart", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzRkN2ZjOGUzYTk1OWFkZTdkOWNmNjYzZjFlODJkYjc5NzU1NDNlMjg4YWI4ZDExZWIyNTQxODg4MjEzNTI2In19fQ==", new int[]{-1751060147, -1939324848, -1223663423, 403887968})
         );
 
-        TradeOfferList horticulturistTrades = makeOfferList(
+        MerchantOffers horticulturistTrades = makeOfferList(
             makeOffer("Moss Block", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWIwOTZlMDFkZTJlYjFlODQ5OWZkMjg0YjhiMmNkOWMyZGI1NmU2MzJjMzAyYTJmOWEwODg0ZjIzODFkODA2NyJ9fX0=", new int[]{538523570, -610710158, -2036008709, -81306847}),
             makeOffer("Rooted Dirt", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWNkNDZiMzU4N2IyMGQ4ZDdkYzk4YTdjNzdhMDhkNjE4NzA2NDcyMGU5YzEzOGUxYWM3YzFkOTYwMTgxODg3NCJ9fX0=", new int[]{-900730224, 900221810, -1296656787, 15569554}),
             makeOffer("Oak Leaves", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0ODQ4OTI4NWVjOTM3MzVmMjNhOGYzNDU2OGFmMTIxMGU2YjViZDlmYjRlZjgwNzViY2Q5MjBiYTBkNTlmOCJ9fX0=", new int[]{-2117259736, 1476084201, -2117594981, -1450309933}),
@@ -673,7 +672,7 @@ public class ModProfessions {
             makeOffer("Scarecrow", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZlNjUwMmFjNGM4NDdiMWFjMzc4MTBkNjZkMjhjOTFhOGIxOGZkN2Y2MzgzMTI4MjI4NzU1YWE4YzhmNSJ9fX0=", new int[]{405988732, 1223116081, -1633747462, -1824827819})
         );
 
-        TradeOfferList mineralogistTrades = makeOfferList(
+        MerchantOffers mineralogistTrades = makeOfferList(
             makeOffer("Coal Ore", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzYxYzU3OTc0ZjEwMmQzZGViM2M1M2Q0MmZkZTkwOWU5YjM5Y2NiYzdmNzc2ZTI3NzU3NWEwMmQ1MWExOTk5ZSJ9fX0=", new int[]{-640806278, -3390182, -1730348283, -303318522}),
             makeOffer("Iron Ore", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTAxODQzZWM0M2YwODhjOTYzZmZjM2UyZjcxYzY2ZTMxNTU5NDNiMTc3YTFhMzU5ODJiMTIwZjZmNjQ4MjJiYyJ9fX0=", new int[]{373955113, -1893973236, -1382621792, 1764712526}),
             makeOffer("Copper Ore", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTE4NGY0ZDVlZWVhOWJmZDE2NTdiNzY2OWI2ZWE4YTI0MzI5ZmY2ZDk3M2I3YmRmMzg4ZmNhNTYyYTg4MTNmNSJ9fX0=", new int[]{-1941413026, -531805651, -1511995196, -259814477}),
@@ -712,7 +711,7 @@ public class ModProfessions {
             makeOffer("Mosquito Amber", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGRlZTViYmFlM2M4NTIyZWJlZWM5OThmNmNjMDcwZTljNDRjMzUxMzY3Yzc5ZWFmZjUxMTA3MTJmMDZhMDMwOSJ9fX0=", new int[]{1371322123, -781627632, -2095610134, 116730592})
         );
 
-        TradeOfferList netherographerTrades = makeOfferList(
+        MerchantOffers netherographerTrades = makeOfferList(
             makeOffer("Netherrack", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRkMzBlMmZjNWNiMDQ0NjFiYWJjMzk0MjMzODAxODdkMzUyNjUwOWNkNmQ0YzM1YzA0ZjYxNmYzMWIxYjkxZiJ9fX0=", new int[]{-1696461021, -1396682981, -1685500882, 189325391}),
             makeOffer("Nether Gold Ore", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmEyZjA1ZTZkNmQ1OThkYTZiZGVjYjI2ZTc3MGRiNDE3NTdjYWI1OGU2ZWQzOTJiYjE0ZTNjNjc0NWIwZDcyMCJ9fX0=", new int[]{-1883409119, -1479062779, -1977877739, 1385525164}),
             makeOffer("Nether Quartz Ore", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRkNjljNGNkZGY5MDNmYmNjNWE4YzY3Y2MyMmU0ZDkzMjQyNzJkNTJhNDc5NmQ2NjcyNDM1ZDEwMTU5ODk4NSJ9fX0=", new int[]{351783933, 1232489776, -1385409704, -1822148250}),
@@ -740,7 +739,7 @@ public class ModProfessions {
             makeOffer("Nether Orb", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDUwMDI5MmY0YWZlNTJkMTBmMjk5ZGZiMjYwMzYzMjI4MzA0NTAzMzFlMDAzMDg0YmIyMjAzMzM1MzA2NjRlMSJ9fX0=", new int[]{1185639029, 1846363053, -1787704507, 813969860})
         );
 
-        TradeOfferList oceanographerTrades = makeOfferList(
+        MerchantOffers oceanographerTrades = makeOfferList(
             makeOffer("Prismarine", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjdiZjExMWQ2NzFiNTI3NzBkNmEyNGZkNzhjOGYwZTEwN2QzZjdjZmRmNjcxZDcyYjUzMjEwM2ZkOWVlOWI4OSJ9fX0=", new int[]{1522064447, 1838826504, -1792806733, 201393392}),
             makeOffer("Polished Prismarine", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGM4NDJlZWI4NjhlZTg1YzVhYjk3NGZlYzUyZGIwN2UzYWQ0ZTRmMTU4NjFhYmJmOGY2NDUzNGRiM2Y0NTBmMyJ9fX0=", new int[]{-2084007218, -67615836, -1721988974, -1232281838}),
             makeOffer("Prismarine Brick", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzU5YzlmZGFmMzBiM2I0ZjYzMzlhOWEwNTVlNTA0YmRjOTU2YjIzN2VjZjEyY2FhZGE3Mjg5YTVkNGYyNzkyZCJ9fX0=", new int[]{1140060955, 1870022260, -1342384152, 49889799}),
@@ -796,7 +795,7 @@ public class ModProfessions {
             makeOffer("Toy Ship", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmEyOWVhMjRlNTI5ZGMxNzA4YWUzYTI5MDJkZTNlMjljMjJhOWVkYmJiMDdlY2JjZDI3Y2I1MzYwMmM3MSJ9fX0=", new int[]{-1681042001, -1415034218, -1978075281, -678912740})
         );
 
-        TradeOfferList olericulturistTrades = makeOfferList(
+        MerchantOffers olericulturistTrades = makeOfferList(
             makeOffer("Lettuce", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTk3OWZlN2IzMmZiN2ZjOTc0NmUxNTc0NzFmOTc1ZjMxYWZjYjU4ZmQ4YjVhY2I4YmY1M2VjMzUwZjRkNWMyIn19fQ==", new int[]{-110667807, -1464269963, 1137403645, -2048879243}),
             makeOffer("Broccoli", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjUxMDZmMGNjNGMxMmRjZmU3NzM2YTFmZmM5Mjc3MmY0MWI2NmUxYjc2ODJiMWY0NzUzNzc4NzcyMDU2NzI2MiJ9fX0=", new int[]{1479487917, 334186074, -1136243544, 2065758105}),
             makeOffer("Carrots", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQzYTZiZDk4YWMxODMzYzY2NGM0OTA5ZmY4ZDJkYzYyY2U4ODdiZGNmM2NjNWIzODQ4NjUxYWU1YWY2YiJ9fX0=", new int[]{-319110374, -1443871767, -1539027072, 935922312}),
@@ -836,7 +835,7 @@ public class ModProfessions {
             makeOffer("Basket with Beetroot", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDIyOWQ2NmVmZjU3ZTFmODk1MzRhZjljYTk2ZmE1NzQ2OGU0ZjkyZDBkZTU4MDk3MzYwZTVlMWMyNjYzZTNmZSJ9fX0=", new int[]{2008012670, -1688647239, -1499179086, 1656203295})
         );
 
-        TradeOfferList petrologistTrades = makeOfferList(
+        MerchantOffers petrologistTrades = makeOfferList(
             makeOffer("Stone", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTU0ODE4MjMzYzgxMTg3M2U4NWY1YTRlYTQ0MjliNzVmMjNiNmFlMGVhNmY1ZmMwZjdiYjQyMGQ3YzQ3MSJ9fX0=", new int[]{1574779933, -1714798066, -1987665384, 2114116260}),
             makeOffer("Cobblestone", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGMxNzU0ODUxZTM2N2U4YmViYTJhNmQ4ZjdjMmZlZGU4N2FlNzkzYWM1NDZiMGYyOTlkNjczMjE1YjI5MyJ9fX0=", new int[]{686627684, -1988148325, -2098939964, -950127968}),
             makeOffer("Mossy Cobblestone", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RlNjIwZTE4MDBiM2JlZDViNzcyODYwZDdmNWU0YzNmOGE3MTJhZTQ2MmJmOWE3OTdkNTA0YmUxMzBkYTNiOCJ9fX0=", new int[]{1684206543, -658486815, -2035398035, -67162188}),
@@ -865,7 +864,7 @@ public class ModProfessions {
             makeOffer("Barrel with Obsidian", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDUwMjMyMzdiZGJhMjZmMDlhODg4YzkyOWEzNWIwYTE0YTY2ZjMzY2E0NTBmZjJiOGE2NzVmMzNmNjA0ZmYzZSJ9fX0=", new int[]{-974292722, -2060237493, -1466967129, 155829028})
         );
 
-        TradeOfferList plushieManiacTrades = makeOfferList(
+        MerchantOffers plushieManiacTrades = makeOfferList(
             makeOffer("Steve Plushie", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzgzNWRhMjY4NWY3YWQzZjE5MTlhMDE4OTc2YWQ1NjgyNjY5MWUyNjc1OGEzYTU1YTE5MThmN2YxN2FkOTM4In19fQ==", new int[]{1899696613, 419123106, -1497348806, 537574103}),
             makeOffer("Alex Plushie", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzFjZDI3NjJhY2I0YjQyNzhjZjExMTc2YTVmODc3OTlmOTNhMWQ5MTE2Y2IzY2I1N2VlNGQxZTYwMTM0NTg4In19fQ==", new int[]{-1042875197, 2130332210, -1968490269, 608847136}),
             makeOffer("Creeper Plushie", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzIwMzMwZDg5MDBlZWY4MDAyYzlmOTgxYjM5MTU5ZWU4YjlmOTM4NTRmZmU1YjQwMmQyNTJhYTJkN2U0NTBlIn19fQ==", new int[]{-215293920, 553207038, -1301846297, -138099246}),
@@ -934,7 +933,7 @@ public class ModProfessions {
             makeOffer("Shrek Plushie", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmE3NDY2Njc5MWM4MmYyZTkzZWJlMjc1M2M3OTg4MDIyMTQ2MWFhMDJjNGZmNGFhOGRlMzJlOTEwZjJhYTZhIn19fQ==", new int[]{641235608, 831734771, -1256257602, -768904809})
         );
 
-        TradeOfferList pomologistTrades = makeOfferList(
+        MerchantOffers pomologistTrades = makeOfferList(
             makeOffer("Red Apple", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTJiMzViZGE1ZWJkZjEzNWY0ZTcxY2U0OTcyNmZiZWM1NzM5ZjBhZGVkZjAxYzUxOWUyYWVhN2Y1MTk1MWVhMiJ9fX0=", new int[]{224385475, -800831601, -1217080453, 1602681386}),
             makeOffer("Green Apple", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTZjMTVmYjRlOWEzMTE5MWYwY2I0ZGE1NmZlNjAzMzRkZDQ2ZWIzYTU4MjExMWI0ZjhmMjdlZGRiNzYwZTJjIn19fQ==", new int[]{-1494102527, 1695042176, -1540297872, 819027921}),
             makeOffer("Golden Apple", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDIxY2FiNDA5NWU3MWJkOTI1Y2Y0NjQ5OTBlMThlNDNhZGI3MjVkYjdjYzE3NWZkOWQxZGVjODIwOTE0YjNkZSJ9fX0=", new int[]{335506107, 1707692026, -1974806069, 2034944701}),
@@ -979,36 +978,36 @@ public class ModProfessions {
             makeOffer("Basket with Apples", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDc2ZDYxZDBkYTljMzM5NTcyNWZkNTBkYTE3ODk2MjE5Mzc5ZmM5OWNkYjVmNjEzN2JlYWNmNDlmMjM3ZTJlZiJ9fX0=", new int[]{1176513721, -348503925, -2065094847, 1574496047})
         );
 
-        TradeOfferList recyclerTrades = makeOfferList(
-            makeOffer(new TradedItem(ModItems.ANCIENT_SHELL_ITEM.get()), "Ancient Shell", MiniblockTextures.ANCIENT_SHELL.getLeft(), MiniblockTextures.ANCIENT_SHELL.getRight()),
-            makeOffer(new TradedItem(ModItems.BOOK_OF_RITUALS_ITEM.get()), "Book of Rituals", MiniblockTextures.BOOK_OF_RITUALS.getLeft(), MiniblockTextures.BOOK_OF_RITUALS.getRight()),
-            makeOffer(new TradedItem(ModItems.BUDDING_CACTUS_ITEM.get()), "Budding Cactus", MiniblockTextures.BUDDING_CACTUS.getLeft(), MiniblockTextures.BUDDING_CACTUS.getRight()),
-            makeOffer(new TradedItem(ModItems.CRYSTAL_PHIAL_ITEM.get()), "Crystal Phial", MiniblockTextures.CRYSTAL_PHIAL.getLeft(), MiniblockTextures.CRYSTAL_PHIAL.getRight()),
-            makeOffer(new TradedItem(ModItems.CULTIVATED_SAPLING_ITEM.get()), "Cultivated Sapling", MiniblockTextures.CULTIVATED_SAPLING.getLeft(), MiniblockTextures.CULTIVATED_SAPLING.getRight()),
-            makeOffer(new TradedItem(ModItems.DRENCHED_SCORE_SHEET_ITEM.get()), "Drenched Score Sheet", MiniblockTextures.DRENCHED_SCORE_SHEET.getLeft(), MiniblockTextures.DRENCHED_SCORE_SHEET.getRight()),
-            makeOffer(new TradedItem(ModItems.ENCHANTED_RED_DELICIOUS_ITEM.get()), "Enchanted Red Delicious", MiniblockTextures.ENCHANTED_RED_DELICIOUS.getLeft(), MiniblockTextures.ENCHANTED_RED_DELICIOUS.getRight()),
-            makeOffer(new TradedItem(ModItems.ENDLESS_BOOKSHELF_ITEM.get()), "Endless Bookshelf", MiniblockTextures.ENDLESS_BOOKSHELF.getLeft(), MiniblockTextures.ENDLESS_BOOKSHELF.getRight()),
-            makeOffer(new TradedItem(ModItems.FINE_THREAD_ITEM.get()), "Fine Thread", MiniblockTextures.FINE_THREAD.getLeft(), MiniblockTextures.FINE_THREAD.getRight()),
-            makeOffer(new TradedItem(ModItems.FORGOTTEN_SCRAP_METAL_ITEM.get()), "Forgotten Scrap Metal", MiniblockTextures.FORGOTTEN_SCRAP_METAL.getLeft(), MiniblockTextures.FORGOTTEN_SCRAP_METAL.getRight()),
-            makeOffer(new TradedItem(ModItems.FRAGRANT_FLOWER_ITEM.get()), "Fragrant Flower", MiniblockTextures.FRAGRANT_FLOWER.getLeft(), MiniblockTextures.FRAGRANT_FLOWER.getRight()),
-            makeOffer(new TradedItem(ModItems.GALILEAN_SPYGLASS_ITEM.get()), "Galilean Spyglass", MiniblockTextures.GALILEAN_SPYGLASS.getLeft(), MiniblockTextures.GALILEAN_SPYGLASS.getRight()),
-            makeOffer(new TradedItem(ModItems.MASTERCRAFTED_IRON_ITEM.get()), "Mastercrafted Iron", MiniblockTextures.MASTERCRAFTED_IRON.getLeft(), MiniblockTextures.MASTERCRAFTED_IRON.getRight()),
-            makeOffer(new TradedItem(ModItems.MIXOLOGY_STATION_ITEM.get()), "Mixology Station", MiniblockTextures.MIXOLOGY_STATION.getLeft(), MiniblockTextures.MIXOLOGY_STATION.getRight()),
-            makeOffer(new TradedItem(ModItems.OVERGROWN_CARROT_ITEM.get()), "Overgrown Carrot", MiniblockTextures.OVERGROWN_CARROT.getLeft(), MiniblockTextures.OVERGROWN_CARROT.getRight()),
-            makeOffer(new TradedItem(ModItems.PRISMATIC_HONEYCOMB_ITEM.get()), "Prismatic Honeycomb", MiniblockTextures.PRISMATIC_HONEYCOMB.getLeft(), MiniblockTextures.PRISMATIC_HONEYCOMB.getRight()),
-            makeOffer(new TradedItem(ModItems.PURE_GOLD_ITEM.get()), "24-Karat Gold", MiniblockTextures.PURE_GOLD.getLeft(), MiniblockTextures.PURE_GOLD.getRight()),
-            makeOffer(new TradedItem(ModItems.RADIATING_REDSTONE_ITEM.get()), "Radiating Redstone", MiniblockTextures.RADIATING_REDSTONE.getLeft(), MiniblockTextures.RADIATING_REDSTONE.getRight()),
-            makeOffer(new TradedItem(ModItems.ROTTING_RECYCLING_BIN_ITEM.get()), "Rotting Recycling Bin", MiniblockTextures.ROTTING_RECYCLING_BIN.getLeft(), MiniblockTextures.ROTTING_RECYCLING_BIN.getRight()),
-            makeOffer(new TradedItem(ModItems.SCULPTING_CLAY_ITEM.get()), "Sculpting Clay", MiniblockTextures.SCULPTING_CLAY.getLeft(), MiniblockTextures.SCULPTING_CLAY.getRight()),
-            makeOffer(new TradedItem(ModItems.SHIMMERING_WHEAT_ITEM.get()), "Shimmering Wheat", MiniblockTextures.SHIMMERING_WHEAT.getLeft(), MiniblockTextures.SHIMMERING_WHEAT.getRight()),
-            makeOffer(new TradedItem(ModItems.SOAKED_VILLAGER_PLUSHIE_ITEM.get()), "Soaked Villager Plushie", MiniblockTextures.SOAKED_VILLAGER_PLUSHIE.getLeft(), MiniblockTextures.SOAKED_VILLAGER_PLUSHIE.getRight()),
-            makeOffer(new TradedItem(ModItems.SPARKLING_BLAZE_POWDER_ITEM.get()), "Sparkling Blaze Powder", MiniblockTextures.SPARKLING_BLAZE_POWDER.getLeft(), MiniblockTextures.SPARKLING_BLAZE_POWDER.getRight()),
-            makeOffer(new TradedItem(ModItems.STABILIZED_EXPLOSION_ITEM.get()), "Stabilized Explosion", MiniblockTextures.STABILIZED_EXPLOSION.getLeft(), MiniblockTextures.STABILIZED_EXPLOSION.getRight()),
-            makeOffer(new TradedItem(ModItems.UNUSUALLY_DENSE_ROCK_ITEM.get()), "Unusually Dense Rock", MiniblockTextures.UNUSUALLY_DENSE_ROCK.getLeft(), MiniblockTextures.UNUSUALLY_DENSE_ROCK.getRight()),
-            makeOffer(new TradedItem(ModItems.WAGYU_BEEF_ITEM.get()), "Wagyu Beef", MiniblockTextures.WAGYU_BEEF.getLeft(), MiniblockTextures.WAGYU_BEEF.getRight())
+        MerchantOffers recyclerTrades = makeOfferList(
+            makeOffer(new ItemCost(ModItems.ANCIENT_SHELL_ITEM.get()), "Ancient Shell", MiniblockTextures.ANCIENT_SHELL.getA(), MiniblockTextures.ANCIENT_SHELL.getB()),
+            makeOffer(new ItemCost(ModItems.BOOK_OF_RITUALS_ITEM.get()), "Book of Rituals", MiniblockTextures.BOOK_OF_RITUALS.getA(), MiniblockTextures.BOOK_OF_RITUALS.getB()),
+            makeOffer(new ItemCost(ModItems.BUDDING_CACTUS_ITEM.get()), "Budding Cactus", MiniblockTextures.BUDDING_CACTUS.getA(), MiniblockTextures.BUDDING_CACTUS.getB()),
+            makeOffer(new ItemCost(ModItems.CRYSTAL_PHIAL_ITEM.get()), "Crystal Phial", MiniblockTextures.CRYSTAL_PHIAL.getA(), MiniblockTextures.CRYSTAL_PHIAL.getB()),
+            makeOffer(new ItemCost(ModItems.CULTIVATED_SAPLING_ITEM.get()), "Cultivated Sapling", MiniblockTextures.CULTIVATED_SAPLING.getA(), MiniblockTextures.CULTIVATED_SAPLING.getB()),
+            makeOffer(new ItemCost(ModItems.DRENCHED_SCORE_SHEET_ITEM.get()), "Drenched Score Sheet", MiniblockTextures.DRENCHED_SCORE_SHEET.getA(), MiniblockTextures.DRENCHED_SCORE_SHEET.getB()),
+            makeOffer(new ItemCost(ModItems.ENCHANTED_RED_DELICIOUS_ITEM.get()), "Enchanted Red Delicious", MiniblockTextures.ENCHANTED_RED_DELICIOUS.getA(), MiniblockTextures.ENCHANTED_RED_DELICIOUS.getB()),
+            makeOffer(new ItemCost(ModItems.ENDLESS_BOOKSHELF_ITEM.get()), "Endless Bookshelf", MiniblockTextures.ENDLESS_BOOKSHELF.getA(), MiniblockTextures.ENDLESS_BOOKSHELF.getB()),
+            makeOffer(new ItemCost(ModItems.FINE_THREAD_ITEM.get()), "Fine Thread", MiniblockTextures.FINE_THREAD.getA(), MiniblockTextures.FINE_THREAD.getB()),
+            makeOffer(new ItemCost(ModItems.FORGOTTEN_SCRAP_METAL_ITEM.get()), "Forgotten Scrap Metal", MiniblockTextures.FORGOTTEN_SCRAP_METAL.getA(), MiniblockTextures.FORGOTTEN_SCRAP_METAL.getB()),
+            makeOffer(new ItemCost(ModItems.FRAGRANT_FLOWER_ITEM.get()), "Fragrant Flower", MiniblockTextures.FRAGRANT_FLOWER.getA(), MiniblockTextures.FRAGRANT_FLOWER.getB()),
+            makeOffer(new ItemCost(ModItems.GALILEAN_SPYGLASS_ITEM.get()), "Galilean Spyglass", MiniblockTextures.GALILEAN_SPYGLASS.getA(), MiniblockTextures.GALILEAN_SPYGLASS.getB()),
+            makeOffer(new ItemCost(ModItems.MASTERCRAFTED_IRON_ITEM.get()), "Mastercrafted Iron", MiniblockTextures.MASTERCRAFTED_IRON.getA(), MiniblockTextures.MASTERCRAFTED_IRON.getB()),
+            makeOffer(new ItemCost(ModItems.MIXOLOGY_STATION_ITEM.get()), "Mixology Station", MiniblockTextures.MIXOLOGY_STATION.getA(), MiniblockTextures.MIXOLOGY_STATION.getB()),
+            makeOffer(new ItemCost(ModItems.OVERGROWN_CARROT_ITEM.get()), "Overgrown Carrot", MiniblockTextures.OVERGROWN_CARROT.getA(), MiniblockTextures.OVERGROWN_CARROT.getB()),
+            makeOffer(new ItemCost(ModItems.PRISMATIC_HONEYCOMB_ITEM.get()), "Prismatic Honeycomb", MiniblockTextures.PRISMATIC_HONEYCOMB.getA(), MiniblockTextures.PRISMATIC_HONEYCOMB.getB()),
+            makeOffer(new ItemCost(ModItems.PURE_GOLD_ITEM.get()), "24-Karat Gold", MiniblockTextures.PURE_GOLD.getA(), MiniblockTextures.PURE_GOLD.getB()),
+            makeOffer(new ItemCost(ModItems.RADIATING_REDSTONE_ITEM.get()), "Radiating Redstone", MiniblockTextures.RADIATING_REDSTONE.getA(), MiniblockTextures.RADIATING_REDSTONE.getB()),
+            makeOffer(new ItemCost(ModItems.ROTTING_RECYCLING_BIN_ITEM.get()), "Rotting Recycling Bin", MiniblockTextures.ROTTING_RECYCLING_BIN.getA(), MiniblockTextures.ROTTING_RECYCLING_BIN.getB()),
+            makeOffer(new ItemCost(ModItems.SCULPTING_CLAY_ITEM.get()), "Sculpting Clay", MiniblockTextures.SCULPTING_CLAY.getA(), MiniblockTextures.SCULPTING_CLAY.getB()),
+            makeOffer(new ItemCost(ModItems.SHIMMERING_WHEAT_ITEM.get()), "Shimmering Wheat", MiniblockTextures.SHIMMERING_WHEAT.getA(), MiniblockTextures.SHIMMERING_WHEAT.getB()),
+            makeOffer(new ItemCost(ModItems.SOAKED_VILLAGER_PLUSHIE_ITEM.get()), "Soaked Villager Plushie", MiniblockTextures.SOAKED_VILLAGER_PLUSHIE.getA(), MiniblockTextures.SOAKED_VILLAGER_PLUSHIE.getB()),
+            makeOffer(new ItemCost(ModItems.SPARKLING_BLAZE_POWDER_ITEM.get()), "Sparkling Blaze Powder", MiniblockTextures.SPARKLING_BLAZE_POWDER.getA(), MiniblockTextures.SPARKLING_BLAZE_POWDER.getB()),
+            makeOffer(new ItemCost(ModItems.STABILIZED_EXPLOSION_ITEM.get()), "Stabilized Explosion", MiniblockTextures.STABILIZED_EXPLOSION.getA(), MiniblockTextures.STABILIZED_EXPLOSION.getB()),
+            makeOffer(new ItemCost(ModItems.UNUSUALLY_DENSE_ROCK_ITEM.get()), "Unusually Dense Rock", MiniblockTextures.UNUSUALLY_DENSE_ROCK.getA(), MiniblockTextures.UNUSUALLY_DENSE_ROCK.getB()),
+            makeOffer(new ItemCost(ModItems.WAGYU_BEEF_ITEM.get()), "Wagyu Beef", MiniblockTextures.WAGYU_BEEF.getA(), MiniblockTextures.WAGYU_BEEF.getB())
         );
 
-        TradeOfferList ritualistTrades = makeOfferList(
+        MerchantOffers ritualistTrades = makeOfferList(
             makeOffer("Water Rune", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzUxZDVhMWFjMTE0YTgyZmE2NTJmYzIzN2IzZTc4ZjIyZmU5ZDU4ZGU5N2M1MzdiZDVlZjk5YzM4ZmI2NmIyIn19fQ==", new int[]{245611374, -2062007065, -1916001814, 802225404}),
             makeOffer("Earth Rune", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGZiODAyMmM5ZDlhMDVlMDgzMTZkYTg3NDU3YmNhYjI3ODVjM2JhN2E1OTBkNDk0N2NlZjY4ODQzYjRkMDdhZCJ9fX0=", new int[]{-1690381855, 1180584462, -1406468635, -1197718696}),
             makeOffer("Fire Rune", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2E3ZDU3ODM2Y2FkNzc1ZDFmMzBmMGVlYmFmMDQwZjg5Y2VkYzMwN2E5ZGZlYTBiNDgzNjMxYmI1Zjc1YjI1YSJ9fX0=", new int[]{127991645, 1435454288, -1248188706, 1741961659}),
@@ -1049,7 +1048,7 @@ public class ModProfessions {
             makeOffer("Dark Orb", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjg4Y2ZhZmE1ZjAzZjhhZWYwNDJhMTQzNzk5ZTk2NDM0MmRmNzZiN2MxZWI0NjFmNjE4ZTM5OGY4NGE5OWE2MyJ9fX0=", new int[]{609190262, 1386629600, -2045872823, 1522879293})
         );
 
-        TradeOfferList sculptorTrades = makeOfferList(
+        MerchantOffers sculptorTrades = makeOfferList(
             makeOffer("Clay Ball", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGFhNTUzOTFlZjg5YjJhNTM0YTU4ZDAxNTBmMTYyMTE3NTMxMGVhODc3MzU2MDFhZWJlOGQ2YjFkN2M1NjhiYiJ9fX0=", new int[]{-352396343, 1414874783, -1724849305, 612586855}),
             makeOffer("Clay", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc4MjY4MjllYWI1YWQ2MmYwYzExZDlmYWFmZGM5OTU0MzY0ODcxMTYwZGQ4MzllMWFiNWEzYjIxM2EzMyJ9fX0=", new int[]{-781671474, 194596528, -1278393834, 413024264}),
             makeOffer("Clay Pot", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhjNjAwNzM2ZWQ5MDIxYTdmZTcyMjk4OGQwYTQxODE3N2EyZDIzMGJlZjQzODBlMzAxNmU1NzVjN2Y3ZGFjNiJ9fX0=", new int[]{1813037718, 403522586, -2094962406, -245569533}),
@@ -1103,7 +1102,7 @@ public class ModProfessions {
             makeOffer("Chimney (polished diorite)", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI1OTM2NzgxYTJmMjEwNjQyNDI5ZjE1MDZkOWU3MjAwMzdlNDlkMGI0ZTM4MGVkZTIxYTg0ZWQxNjI1ZTA0MyJ9fX0=", new int[]{448316632, -1590276170, -1975792916, 1808842461})
         );
 
-        TradeOfferList steampunkerTrades = makeOfferList(
+        MerchantOffers steampunkerTrades = makeOfferList(
             makeOffer("Steampunk Device", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTM0NzRkMGFhMWZhMTA5YmY5ZjRmMDVlYWEyZDJjNmZlZjc1Y2ViNmUyOTIzZjg1ZThlM2E2MmNjNWE0NDk1OCJ9fX0=", new int[]{-483707455, 38948704, -1555055281, -777760050}),
             makeOffer("Steampunk Robot", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGVhN2RhNGZlOGI4OGVkNmM4ZDAwZTlmNjlkNjMyNTlkNDcxODYzZGY5NGUyNWFlMjkwNDNjYzc3ZGY0YzAzZSJ9fX0=", new int[]{1374965242, -1570617428, -1770847629, 1645723245}),
             makeOffer("Steampunk Robot", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzczMTA1NDY1ZGFkMmQwMjM4MjVmODQyNjJiMzg4ZmY3ZDBhMjliNzAwNmRkMmE1N2Q3ZThjYzY5ZDk1NTBjMyJ9fX0=", new int[]{1504946014, 1516454875, -2082045037, 880660664}),
@@ -1126,7 +1125,7 @@ public class ModProfessions {
             makeOffer("Block of Raw Copper", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWU4YTRmMzVjMWEwYzhiM2JkODIxYTc2ZTM4NDczNDI3Yzk4OGZkZjVhMmRlMDI1NjQ2ZTA3MzUxZTM5M2M3ZSJ9fX0=", new int[]{1811749435, -1305065694, -1752689835, -378378799})
         );
 
-        TradeOfferList tailorTrades = makeOfferList(
+        MerchantOffers tailorTrades = makeOfferList(
             makeOffer("Steve's Clothes", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUyMDNmYmY5ZTU3ODRjZmZlYzkzYTJlYmNjNTU4YmI4ZTU1NmVjM2VjNTI1ZDZiY2Q4ZTRiMjIxMDZlNzk5In19fQ==", new int[]{924865078, 1573931399, -1490389728, -1737180909}),
             makeOffer("Alex's Clothes", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzgwN2VkNjY5NTBjZGEzMWQwOTZhNGNjM2ZmZjFmOTYxM2ExZGQyMzQwNWViOTM3NzZhNzQxOTdlOTRiZDk2NSJ9fX0=", new int[]{1944886890, -2060761456, -2027220993, -801562732}),
             makeOffer("Pile of Shirts", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTE2Y2UxMDRlYWVmOWZhYThjZmNlNmViMDYxNmI5MTVlODgwNGIyNjI5Y2VjMTQyODE2M2ZhOTUxNGY3NzA4MyJ9fX0=", new int[]{-2130204718, 1319060125, -1618289757, -1207456364}),
@@ -1192,31 +1191,31 @@ public class ModProfessions {
         TRADES.put(makeId(TAILOR_ID).toString(), tailorTrades);
     }
 
-    public static Identifier makeId(String name) {
-        return Identifier.of(ModInfo.MOD_ID, name);
+    public static ResourceLocation makeId(String name) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, name);
     }
 
-    public static RegistryKey<VillagerProfession> get(String name) {
+    public static ResourceKey<VillagerProfession> get(String name) {
         RegistrySupplier<VillagerProfession> supplier = PROFESSIONS.get(name);
 
         if (supplier == null) {
             return VillagerProfession.NONE;
         }
 
-        return RegistryKey.of(RegistryKeys.VILLAGER_PROFESSION, makeId(name));
+        return ResourceKey.create(Registries.VILLAGER_PROFESSION, makeId(name));
     }
 
     public static RegistrySupplier<VillagerProfession> register(String name) {
-        Identifier id = makeId(name);
+        ResourceLocation id = makeId(name);
         RegistrySupplier<VillagerProfession> prof = REGISTRY_HELPER.registerVillagerProfession(
             id,
             () -> new VillagerProfession(
-                Text.literal(id.toString()),
-                PointOfInterestType.NONE,
-                PointOfInterestType.NONE,
+                Component.literal(id.toString()),
+                PoiType.NONE,
+                PoiType.NONE,
                 ImmutableSet.of(),
                 ImmutableSet.of(),
-                SoundEvents.ENTITY_VILLAGER_WORK_MASON
+                SoundEvents.VILLAGER_WORK_MASON
             )
         );
 
@@ -1225,16 +1224,16 @@ public class ModProfessions {
         return prof;
     }
 
-    public static boolean isMiniblockMerchant(RegistryEntry<VillagerProfession> profession) {
-        return profession.matches(prof -> prof.getValue().getNamespace().equals(ModInfo.MOD_ID));
+    public static boolean isMiniblockMerchant(Holder<VillagerProfession> profession) {
+        return profession.is(prof -> prof.location().getNamespace().equals(ModInfo.MOD_ID));
     }
 
-    public static TradeOfferList getDefaultOffers() {
+    public static MerchantOffers getDefaultOffers() {
         MiniblockMerchantsMod.LOGGER.info("No trades found");
-        return new TradeOfferList();
+        return new MerchantOffers();
     }
 
-    public static TradeOfferList getOffersForProfession(String id) {
+    public static MerchantOffers getOffersForProfession(String id) {
         MiniblockMerchantsMod.LOGGER.info("Getting trades for {}", id);
 
         String profession = id.startsWith(ModInfo.MOD_ID) ? id : makeId(id).toString();
@@ -1247,23 +1246,23 @@ public class ModProfessions {
         return TRADES.getOrDefault(profession, getDefaultOffers());
     }
 
-    private static TradeOfferList makeOfferList(TradeOffer... offers) {
-        TradeOfferList list = new TradeOfferList();
+    private static MerchantOffers makeOfferList(MerchantOffer... offers) {
+        MerchantOffers list = new MerchantOffers();
         Collections.addAll(list, offers);
         return list;
     }
 
-    private static TradeOffer makeOffer(String name, String texture, int[] id) {
-        return makeOffer(new TradedItem(Items.EMERALD), name, texture, id);
+    private static MerchantOffer makeOffer(String name, String texture, int[] id) {
+        return makeOffer(new ItemCost(Items.EMERALD), name, texture, id);
     }
 
-    private static TradeOffer makeOffer(TradedItem buyItem, String name, String texture, int[] id) {
-        GameProfile gameProfile = DataUtil.makeGameProfile("mmminiblock", new Pair<>(texture, id));
+    private static MerchantOffer makeOffer(ItemCost buyItem, String name, String texture, int[] id) {
+        GameProfile gameProfile = DataUtil.makeGameProfile("mmminiblock", new Tuple<>(texture, id));
 
-        ItemStack sellHead = Items.PLAYER_HEAD.getDefaultStack();
-        sellHead.set(DataComponentTypes.PROFILE, ProfileComponent.ofStatic(gameProfile));
-        sellHead.set(DataComponentTypes.ITEM_NAME, Text.of(name));
+        ItemStack sellHead = Items.PLAYER_HEAD.getDefaultInstance();
+        sellHead.set(DataComponents.PROFILE, ResolvableProfile.createResolved(gameProfile));
+        sellHead.set(DataComponents.ITEM_NAME, Component.nullToEmpty(name));
 
-        return new TradeOffer(buyItem, sellHead, 99999, 0, 0.0f);
+        return new MerchantOffer(buyItem, sellHead, 99999, 0, 0.0f);
     }
 }

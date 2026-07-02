@@ -13,21 +13,20 @@ import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
 import com.chimericdream.minekea.block.furniture.bookshelves.Bookshelves;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Stairs implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_STAIRS_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
+    public static final Item.Properties DEFAULT_STAIRS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_VERTICAL_STAIRS_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
+    public static final Item.Properties DEFAULT_VERTICAL_STAIRS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
 
     public static final List<RegistrySupplier<Block>> STAIRS_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> VERTICAL_STAIRS_BLOCKS = new ArrayList<>();

@@ -2,61 +2,61 @@ package com.chimericdream.archaeologytweaks.client.render.block.entity;
 
 import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import com.chimericdream.archaeologytweaks.client.render.block.entity.state.ATBrushableBlockEntityRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.item.ItemModelManager;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.WorldRenderer.BrightnessGetter;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.HeldItemContext;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LevelRenderer.BrightnessGetter;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBrushableBlockEntity, ATBrushableBlockEntityRenderState> {
-    private final ItemModelManager itemModelManager;
+    private final ItemModelResolver itemModelManager;
 
-    public ATBrushableBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
-        this.itemModelManager = context.itemModelManager();
+    public ATBrushableBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+        this.itemModelManager = context.itemModelResolver();
     }
 
     public ATBrushableBlockEntityRenderState createRenderState() {
         return new ATBrushableBlockEntityRenderState();
     }
 
-    public void updateRenderState(ATBrushableBlockEntity blockEntity, ATBrushableBlockEntityRenderState renderState, float f, Vec3d vec3d, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand) {
-        BlockEntityRenderer.super.updateRenderState(blockEntity, renderState, f, vec3d, crumblingOverlayCommand);
+    public void updateRenderState(ATBrushableBlockEntity blockEntity, ATBrushableBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, f, vec3d, crumblingOverlayCommand);
         renderState.face = blockEntity.getHitDirection();
-        renderState.dusted = (Integer) blockEntity.getCachedState().get(Properties.DUSTED);
-        if (blockEntity.getWorld() != null && blockEntity.getHitDirection() != null) {
-            renderState.lightmapCoordinates = WorldRenderer.getLightmapCoordinates(BrightnessGetter.DEFAULT, blockEntity.getWorld(), blockEntity.getCachedState(), blockEntity.getPos().offset(blockEntity.getHitDirection()));
+        renderState.dusted = (Integer) blockEntity.getBlockState().getValue(BlockStateProperties.DUSTED);
+        if (blockEntity.getLevel() != null && blockEntity.getHitDirection() != null) {
+            renderState.lightCoords = LevelRenderer.getLightColor(BrightnessGetter.DEFAULT, blockEntity.getLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos().relative(blockEntity.getHitDirection()));
         }
 
-        this.itemModelManager.clearAndUpdate(renderState.itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getWorld(), (HeldItemContext) null, 0);
+        this.itemModelManager.updateForTopItem(renderState.itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), (ItemOwner) null, 0);
     }
 
-    public void render(ATBrushableBlockEntityRenderState renderState, MatrixStack matrixStack, OrderedRenderCommandQueue orderedRenderCommandQueue, CameraRenderState cameraRenderState) {
+    public void render(ATBrushableBlockEntityRenderState renderState, PoseStack matrixStack, SubmitNodeCollector orderedRenderCommandQueue, CameraRenderState cameraRenderState) {
         if (renderState.dusted > 0 && renderState.face != null && !renderState.itemRenderState.isEmpty()) {
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.translate(0.0F, 0.5F, 0.0F);
             float[] fs = this.getTranslation(renderState.face, renderState.dusted);
             matrixStack.translate(fs[0], fs[1], fs[2]);
-            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(75.0F));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(75.0F));
             boolean bl = renderState.face == Direction.EAST || renderState.face == Direction.WEST;
-            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) ((bl ? 90 : 0) + 11)));
+            matrixStack.mulPose(Axis.YP.rotationDegrees((float) ((bl ? 90 : 0) + 11)));
             matrixStack.scale(0.5F, 0.5F, 0.5F);
-            renderState.itemRenderState.render(matrixStack, orderedRenderCommandQueue, renderState.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-            matrixStack.pop();
+            renderState.itemRenderState.submit(matrixStack, orderedRenderCommandQueue, renderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+            matrixStack.popPose();
         }
     }
 

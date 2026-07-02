@@ -1,16 +1,16 @@
 package com.chimericdream.lib.text;
 
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public class TextHelpers {
-    public static MutableText getTooltip(String tooltipId) {
-        return formatTooltip(Text.translatable(tooltipId));
+    public static MutableComponent getTooltip(String tooltipId) {
+        return formatTooltip(Component.translatable(tooltipId));
     }
 
-    public static MutableText formatTooltip(MutableText tooltipText) {
-        return tooltipText.formatted(Formatting.AQUA).formatted(Formatting.ITALIC);
+    public static MutableComponent formatTooltip(MutableComponent tooltipText) {
+        return tooltipText.withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC);
     }
 
     public static String getColorTranslationKey(String color) {

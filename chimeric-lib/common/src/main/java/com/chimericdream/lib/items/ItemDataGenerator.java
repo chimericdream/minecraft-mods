@@ -1,13 +1,13 @@
 package com.chimericdream.lib.items;
 
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.data.recipes.RecipeOutput;
 
 public interface ItemDataGenerator {
-    default void configureRecipes(RecipeExporter exporter) {
+    default void configureRecipes(RecipeOutput exporter) {
     }
 
-    default void configureItemModels(ItemModelGenerator itemModelGenerator) {
+    default void configureItemModels(ItemModelGenerators itemModelGenerator) {
     }
 
     default void generateTextures() {

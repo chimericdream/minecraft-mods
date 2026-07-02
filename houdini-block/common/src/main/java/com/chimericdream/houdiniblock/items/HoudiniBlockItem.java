@@ -1,29 +1,28 @@
 package com.chimericdream.houdiniblock.items;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class HoudiniBlockItem extends BlockItem {
-    public static final NbtComponent DEFAULT_NBT;
+    public static final CustomData DEFAULT_NBT;
     public static final Map<PlacementMode, String> TOOLTIP_KEYS = Map.of(
         PlacementMode.PREVENT_ON_BREAK, "item.houdiniblock.tooltip.prevent_on_break",
         PlacementMode.PREVENT_ON_PLACE, "item.houdiniblock.tooltip.prevent_on_place",
@@ -32,24 +31,24 @@ public class HoudiniBlockItem extends BlockItem {
     );
 
     static {
-        NbtCompound nbt = new NbtCompound();
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("houdini_placement_mode", PlacementMode.PREVENT_ON_BREAK.toString());
 
-        DEFAULT_NBT = NbtComponent.of(nbt);
+        DEFAULT_NBT = CustomData.of(nbt);
     }
 
-    public HoudiniBlockItem(Block block, Item.Settings settings) {
+    public HoudiniBlockItem(Block block, Item.Properties settings) {
         super(block, settings);
     }
 
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (!player.isSneaking()) {
-            return ActionResult.PASS;
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (!player.isShiftKeyDown()) {
+            return InteractionResult.PASS;
         }
 
         try {
-            ItemStack itemStack = player.getStackInHand(hand);
-            NbtCompound nbt = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
+            ItemStack itemStack = player.getItemInHand(hand);
+            CompoundTag nbt = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, DEFAULT_NBT).copyTag();
 
             PlacementMode currentMode = PlacementMode.getFromNbt(nbt);
             PlacementMode newMode = switch (currentMode) {
@@ -60,62 +59,62 @@ public class HoudiniBlockItem extends BlockItem {
             };
 
             if (newMode == PlacementMode.PREVENT_ON_BREAK) {
-                itemStack.remove(DataComponentTypes.CUSTOM_DATA);
+                itemStack.remove(DataComponents.CUSTOM_DATA);
             } else {
                 nbt.putString("houdini_placement_mode", newMode.toString());
-                itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+                itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
             }
 
-            if (!world.isClient()) {
-                player.sendMessage(Text.translatable(TOOLTIP_KEYS.get(newMode)), true);
+            if (!world.isClientSide()) {
+                player.displayClientMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)), true);
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } catch (IllegalArgumentException e) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
     }
 
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        ItemStack stack = context.getStack();
-        NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
+    public InteractionResult useOn(UseOnContext context) {
+        ItemStack stack = context.getItemInHand();
+        CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, DEFAULT_NBT).copyTag();
         PlacementMode mode = PlacementMode.getFromNbt(nbt);
 
-        ItemPlacementContext placementContext = new ItemPlacementContext(context);
+        BlockPlaceContext placementContext = new BlockPlaceContext(context);
 
         if (mode == PlacementMode.REPLACE_BLOCK) {
-            BlockPos pos = context.getBlockPos();
-            BlockState target = context.getWorld().getBlockState(pos);
+            BlockPos pos = context.getClickedPos();
+            BlockState target = context.getLevel().getBlockState(pos);
 
             // This doesn't let you break unbreakable blocks
             // @TODO: make this configurable?
-            if (target.getBlock().getHardness() == -1.0F) {
-                return ActionResult.FAIL;
+            if (target.getBlock().defaultDestroyTime() == -1.0F) {
+                return InteractionResult.FAIL;
             }
 
-            if (context.getWorld() instanceof ServerWorld world) {
-                Block.dropStacks(target, world, pos, null);
+            if (context.getLevel() instanceof ServerLevel world) {
+                Block.dropResources(target, world, pos, null);
             }
 
-            placementContext.placementPos = pos;
-            placementContext.canReplaceExisting = true;
+            placementContext.relativePos = pos;
+            placementContext.replaceClicked = true;
         }
 
         this.place(placementContext);
 
-        World world = context.getWorld();
+        Level world = context.getLevel();
         if (mode != PlacementMode.PREVENT_ON_BREAK) {
-            PlayerEntity player = context.getPlayer();
+            Player player = context.getPlayer();
             if (player != null && !player.isCreative()) {
-                stack.decrement(1);
+                stack.shrink(1);
             }
 
-            if (world.isClient()) {
-                world.playSound(context.getPlayer(), context.getBlockPos(), SoundEvents.BLOCK_STONE_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            if (world.isClientSide()) {
+                world.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     public enum PlacementMode {
@@ -124,7 +123,7 @@ public class HoudiniBlockItem extends BlockItem {
         PREVENT_ALL,
         REPLACE_BLOCK;
 
-        public static PlacementMode getFromNbt(NbtCompound nbt) {
+        public static PlacementMode getFromNbt(CompoundTag nbt) {
             return PlacementMode.valueOf(nbt.getString("houdini_placement_mode").orElse(PlacementMode.PREVENT_ON_BREAK.toString()));
         }
     }

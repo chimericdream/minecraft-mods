@@ -2,34 +2,34 @@ package com.chimericdream.minekea.entity.block.furniture;
 
 import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCases;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock.ROTATION;
 
-public class DisplayCaseBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
-    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
+public class DisplayCaseBlockEntity extends BlockEntity implements ImplementedInventory, WorldlyContainer {
+    private final NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
 
     public DisplayCaseBlockEntity(BlockPos pos, BlockState state) {
         this(DisplayCases.DISPLAY_CASE_BLOCK_ENTITY.get(), pos, state);
@@ -40,89 +40,89 @@ public class DisplayCaseBlockEntity extends BlockEntity implements ImplementedIn
     }
 
     public int getRotation() {
-        return this.getCachedState().get(ROTATION);
+        return this.getBlockState().getValue(ROTATION);
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return items;
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        Inventories.writeData(view, this.items);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        ContainerHelper.saveAllItems(view, this.items);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        Inventories.readData(view, this.items);
-        if (this.items.getFirst().isOf(Blocks.BARRIER.asItem())) {
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        ContainerHelper.loadAllItems(view, this.items);
+        if (this.items.getFirst().is(Blocks.BARRIER.asItem())) {
             this.items.set(0, ItemStack.EMPTY);
         }
     }
 
     @Override
-    public void markDirty() {
-        if (this.world == null) {
+    public void setChanged() {
+        if (this.level == null) {
             return;
         }
 
-        markDirtyInWorld(this.world, this.pos, this.getCachedState());
+        markDirtyInWorld(this.level, this.worldPosition, this.getBlockState());
     }
 
-    protected void markDirtyInWorld(World world, BlockPos pos, BlockState state) {
-        world.markDirty(pos);
+    protected void markDirtyInWorld(Level world, BlockPos pos, BlockState state) {
+        world.blockEntityChanged(pos);
 
-        if (!world.isClient()) {
-            ((ServerWorld) world).getChunkManager().markForUpdate(pos); // Mark changes to be synced to the client.
+        if (!world.isClientSide()) {
+            ((ServerLevel) world).getChunkSource().blockChanged(pos); // Mark changes to be synced to the client.
         }
     }
 
     @Nullable
     @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+        return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public int[] getAvailableSlots(Direction var1) {
+    public int[] getSlotsForFace(Direction var1) {
         return new int[]{};
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction) {
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction direction) {
         return false;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction) {
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
         return false;
     }
 
     public void playRemoveItemSound() {
-        playSound(SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM);
+        playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM);
     }
 
     public void playRotateItemSound() {
-        playSound(SoundEvents.ENTITY_ITEM_FRAME_ROTATE_ITEM);
+        playSound(SoundEvents.ITEM_FRAME_ROTATE_ITEM);
     }
 
     public void playAddItemSound() {
-        playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);
+        playSound(SoundEvents.ITEM_FRAME_ADD_ITEM);
     }
 
     public void playSound(SoundEvent soundEvent) {
-        if (this.world == null) {
+        if (this.level == null) {
             return;
         }
 
-        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        this.level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 }

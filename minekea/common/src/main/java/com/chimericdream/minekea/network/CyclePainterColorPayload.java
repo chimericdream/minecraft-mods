@@ -1,16 +1,16 @@
 package com.chimericdream.minekea.network;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record CyclePainterColorPayload(boolean cyclePressed) implements CustomPayload {
-    public static final CustomPayload.Id<CyclePainterColorPayload> ID = new CustomPayload.Id<>(ServerNetworking.CYCLE_PAINTER_COLOR);
-    public static final PacketCodec<RegistryByteBuf, CyclePainterColorPayload> CODEC = PacketCodec.tuple(PacketCodecs.BOOLEAN, CyclePainterColorPayload::cyclePressed, CyclePainterColorPayload::new);
+public record CyclePainterColorPayload(boolean cyclePressed) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<CyclePainterColorPayload> ID = new CustomPacketPayload.Type<>(ServerNetworking.CYCLE_PAINTER_COLOR);
+    public static final StreamCodec<RegistryFriendlyByteBuf, CyclePainterColorPayload> CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, CyclePainterColorPayload::cyclePressed, CyclePainterColorPayload::new);
 
     @Override
-    public Id<CyclePainterColorPayload> getId() {
+    public Type<CyclePainterColorPayload> type() {
         return ID;
     }
 }

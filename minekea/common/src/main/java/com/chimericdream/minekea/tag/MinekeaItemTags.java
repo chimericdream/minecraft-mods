@@ -1,13 +1,13 @@
 package com.chimericdream.minekea.tag;
 
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class MinekeaItemTags {
-    public static final TagKey<Item> BAGGED_ITEMS = TagKey.of(Registries.ITEM.getKey(), Identifier.of(ModInfo.MOD_ID, "bagged_items"));
-    public static final TagKey<Item> GLASS_JAR_STORABLE = TagKey.of(Registries.ITEM.getKey(), Identifier.of(ModInfo.MOD_ID, "glass_jar_storable"));
-    public static final TagKey<Item> VOTIVE_CANDLES = TagKey.of(Registries.ITEM.getKey(), Identifier.of(ModInfo.MOD_ID, "votive_candles"));
+    public static final TagKey<Item> BAGGED_ITEMS = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "bagged_items"));
+    public static final TagKey<Item> GLASS_JAR_STORABLE = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "glass_jar_storable"));
+    public static final TagKey<Item> VOTIVE_CANDLES = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "votive_candles"));
 }

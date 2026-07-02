@@ -2,8 +2,8 @@ package com.chimericdream.minekea.crop;
 
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 

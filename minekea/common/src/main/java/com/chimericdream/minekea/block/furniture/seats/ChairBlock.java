@@ -3,168 +3,167 @@ package com.chimericdream.minekea.block.furniture.seats;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.entities.SimpleSeatEntity;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
-
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class ChairBlock extends Block implements Waterloggable {
+public class ChairBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction> FACING;
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape SEAT_SHAPE;
     private static final VoxelShape[] LEG_SHAPES;
     private static final Map<String, VoxelShape> SEAT_BACKS;
 
     static {
-        FACING = EnumProperty.of("facing", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        FACING = EnumProperty.create("facing", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
 
-        SEAT_SHAPE = Block.createCuboidShape(2.0, 8.0, 2.0, 14.0, 10.0, 14.0);
+        SEAT_SHAPE = Block.box(2.0, 8.0, 2.0, 14.0, 10.0, 14.0);
         LEG_SHAPES = new VoxelShape[]{
-            Block.createCuboidShape(2.0, 0.0, 2.0, 4.0, 8.0, 4.0), // north-west
-            Block.createCuboidShape(12.0, 0.0, 2.0, 14.0, 8.0, 4.0), // north-east
-            Block.createCuboidShape(12.0, 0.0, 12.0, 14.0, 8.0, 14.0), // south-east
-            Block.createCuboidShape(2.0, 0.0, 12.0, 4.0, 8.0, 14.0) // south-west
+            Block.box(2.0, 0.0, 2.0, 4.0, 8.0, 4.0), // north-west
+            Block.box(12.0, 0.0, 2.0, 14.0, 8.0, 4.0), // north-east
+            Block.box(12.0, 0.0, 12.0, 14.0, 8.0, 14.0), // south-east
+            Block.box(2.0, 0.0, 12.0, 4.0, 8.0, 14.0) // south-west
         };
         SEAT_BACKS = Map.of(
-            "north", Block.createCuboidShape(2.0, 10.0, 2.0, 14.0, 22.0, 4.0),
-            "south", Block.createCuboidShape(2.0, 10.0, 12.0, 14.0, 22.0, 14.0),
-            "east", Block.createCuboidShape(12.0, 10.0, 2.0, 14.0, 22.0, 14.0),
-            "west", Block.createCuboidShape(2.0, 10.0, 2.0, 4.0, 22.0, 14.0)
+            "north", Block.box(2.0, 10.0, 2.0, 14.0, 22.0, 4.0),
+            "south", Block.box(2.0, 10.0, 12.0, 14.0, 22.0, 14.0),
+            "east", Block.box(12.0, 10.0, 2.0, 14.0, 22.0, 14.0),
+            "west", Block.box(2.0, 10.0, 2.0, 4.0, 22.0, 14.0)
         );
     }
 
     public ChairBlock(BlockConfig config) {
-        super(config.getBaseSettings().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
-        this.setDefaultState(
-            this.stateManager.getDefaultState()
-                .with(FACING, Direction.NORTH)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
         );
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("furniture/seating/chairs/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/seating/chairs/%s", material));
     }
 
     public BlockConfig getConfig() {
         return config;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction dir = Direction.NORTH;
         if (ctx.getPlayer() != null) {
-            dir = ctx.getPlayer().getHorizontalFacing();
+            dir = ctx.getPlayer().getDirection();
         }
 
-        return this.getDefaultState()
-            .with(FACING, dir)
-            .with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+        return this.defaultBlockState()
+            .setValue(FACING, dir)
+            .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return super.getCollisionShape(state, world, pos, context);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        List<SimpleSeatEntity> seats = world.getEntitiesByClass(SimpleSeatEntity.class, new Box(pos), (Object) -> true);
+        List<SimpleSeatEntity> seats = world.getEntitiesOfClass(SimpleSeatEntity.class, new AABB(pos), (Object) -> true);
 
-        if (seats.isEmpty() && player.isSneaking()) {
-            world.setBlockState(pos, state.with(FACING, state.get(FACING).rotateYClockwise()));
+        if (seats.isEmpty() && player.isShiftKeyDown()) {
+            world.setBlockAndUpdate(pos, state.setValue(FACING, state.getValue(FACING).getClockWise()));
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         if (seats.isEmpty()) {
-            Entity seat = Seats.SEAT_ENTITY.get().create(world, SpawnReason.EVENT);
-            Vec3d seatPos = new Vec3d(hit.getBlockPos().getX() + 0.5d, hit.getBlockPos().getY() - 1.15d, hit.getBlockPos().getZ() + 0.5d);
+            Entity seat = Seats.SEAT_ENTITY.get().create(world, EntitySpawnReason.EVENT);
+            Vec3 seatPos = new Vec3(hit.getBlockPos().getX() + 0.5d, hit.getBlockPos().getY() - 1.15d, hit.getBlockPos().getZ() + 0.5d);
 
-            seat.updatePosition(seatPos.getX(), seatPos.getY(), seatPos.getZ());
-            world.spawnEntity(seat);
+            seat.absSnapTo(seatPos.x(), seatPos.y(), seatPos.z());
+            world.addFreshEntity(seat);
             player.startRiding(seat);
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Direction facing = state.get(FACING);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        Direction facing = state.getValue(FACING);
 
         if (facing == Direction.SOUTH) {
-            return VoxelShapes.union(VoxelShapes.union(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("north"));
+            return Shapes.or(Shapes.or(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("north"));
         }
 
         if (facing == Direction.EAST) {
-            return VoxelShapes.union(VoxelShapes.union(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("west"));
+            return Shapes.or(Shapes.or(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("west"));
         }
 
         if (facing == Direction.WEST) {
-            return VoxelShapes.union(VoxelShapes.union(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("east"));
+            return Shapes.or(Shapes.or(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("east"));
         }
 
-        return VoxelShapes.union(VoxelShapes.union(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("south"));
+        return Shapes.or(Shapes.or(SEAT_SHAPE, LEG_SHAPES), SEAT_BACKS.get("south"));
     }
 }

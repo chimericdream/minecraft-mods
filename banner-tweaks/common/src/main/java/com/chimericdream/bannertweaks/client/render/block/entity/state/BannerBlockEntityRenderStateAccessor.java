@@ -1,9 +1,9 @@
 package com.chimericdream.bannertweaks.client.render.block.entity.state;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public interface BannerBlockEntityRenderStateAccessor {
-    Text bt$getCustomName();
+    Component bt$getCustomName();
 
-    void bt$setCustomName(Text customName);
+    void bt$setCustomName(Component customName);
 }

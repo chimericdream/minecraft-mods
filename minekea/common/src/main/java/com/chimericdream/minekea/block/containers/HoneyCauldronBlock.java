@@ -2,58 +2,58 @@ package com.chimericdream.minekea.block.containers;
 
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.fluid.ModFluids;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeveledCauldronBlock;
-import net.minecraft.block.cauldron.CauldronBehavior;
-import net.minecraft.entity.CollisionEvent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.InsideBlockEffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 
-import static net.minecraft.block.cauldron.CauldronBehavior.createMap;
-import static net.minecraft.block.cauldron.CauldronBehavior.emptyCauldron;
-import static net.minecraft.block.cauldron.CauldronBehavior.fillCauldron;
+import static net.minecraft.core.cauldron.CauldronInteraction.newInteractionMap;
+import static net.minecraft.core.cauldron.CauldronInteraction.fillBucket;
+import static net.minecraft.core.cauldron.CauldronInteraction.emptyBucket;
 
-public class HoneyCauldronBlock extends LeveledCauldronBlock {
-    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "containers/cauldrons/honey");
-    public static CauldronBehavior.CauldronBehaviorMap BEHAVIORS = createMap("honey");
+public class HoneyCauldronBlock extends LayeredCauldronBlock {
+    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/honey");
+    public static CauldronInteraction.InteractionMap BEHAVIORS = newInteractionMap("honey");
 
-    public static final CauldronBehavior FILL_WITH_HONEY;
-    public static final CauldronBehavior EMPTY_CAULDRON;
-    public static final CauldronBehavior FILL_FROM_BOTTLE;
+    public static final CauldronInteraction FILL_WITH_HONEY;
+    public static final CauldronInteraction EMPTY_CAULDRON;
+    public static final CauldronInteraction FILL_FROM_BOTTLE;
 
     static {
-        FILL_WITH_HONEY = (state, world, pos, player, hand, stack) -> fillCauldron(
+        FILL_WITH_HONEY = (state, world, pos, player, hand, stack) -> emptyBucket(
             world,
             pos,
             player,
             hand,
             stack,
-            ModFluids.HONEY_CAULDRON.get().getDefaultState().with(LEVEL, 3),
-            SoundEvents.ITEM_BUCKET_EMPTY_LAVA
+            ModFluids.HONEY_CAULDRON.get().defaultBlockState().setValue(LEVEL, 3),
+            SoundEvents.BUCKET_EMPTY_LAVA
         );
-        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> emptyCauldron(
+        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> fillBucket(
             state,
             world,
             pos,
@@ -62,85 +62,85 @@ public class HoneyCauldronBlock extends LeveledCauldronBlock {
             stack,
             new ItemStack(ModFluids.HONEY_BUCKET.get()),
             statex -> true,
-            SoundEvents.ITEM_BUCKET_FILL_LAVA
+            SoundEvents.BUCKET_FILL_LAVA
         );
         FILL_FROM_BOTTLE = (state, world, pos, player, hand, stack) -> {
-            if (!world.isClient()) {
+            if (!world.isClientSide()) {
                 Item item = stack.getItem();
-                player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
-                player.incrementStat(Stats.USE_CAULDRON);
-                player.incrementStat(Stats.USED.getOrCreateStat(item));
-                world.setBlockState(pos, ModFluids.HONEY_CAULDRON.get().getDefaultState());
-                world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                world.setBlockAndUpdate(pos, ModFluids.HONEY_CAULDRON.get().defaultBlockState());
+                world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                world.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         };
 
         BEHAVIORS.map().put(Items.BUCKET, EMPTY_CAULDRON);
         BEHAVIORS.map().put(Items.GLASS_BOTTLE, (state, world, pos, player, hand, stack) -> {
-            if (!world.isClient()) {
+            if (!world.isClientSide()) {
                 Item item = stack.getItem();
-                player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, Items.HONEY_BOTTLE.getDefaultStack()));
-                player.incrementStat(Stats.USE_CAULDRON);
-                player.incrementStat(Stats.USED.getOrCreateStat(item));
-                LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-                world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                world.emitGameEvent(null, GameEvent.FLUID_PICKUP, pos);
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.HONEY_BOTTLE.getDefaultInstance()));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                LayeredCauldronBlock.lowerFillLevel(state, world, pos);
+                world.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                world.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         });
         BEHAVIORS.map().put(Items.HONEY_BOTTLE, (state, world, pos, player, hand, stack) -> {
-            if (state.get(LeveledCauldronBlock.LEVEL) != 3) {
-                if (!world.isClient()) {
-                    player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
-                    player.incrementStat(Stats.USE_CAULDRON);
-                    player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
-                    world.setBlockState(pos, state.cycle(LeveledCauldronBlock.LEVEL));
-                    world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
+            if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
+                if (!world.isClientSide()) {
+                    player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                    world.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
+                    world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    world.gameEvent(null, GameEvent.FLUID_PLACE, pos);
                 }
 
-                return ActionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
-                return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
+                return InteractionResult.TRY_WITH_EMPTY_HAND;
             }
         });
 
-        CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.map().put(Items.HONEY_BOTTLE, FILL_FROM_BOTTLE);
+        CauldronInteraction.EMPTY.map().put(Items.HONEY_BOTTLE, FILL_FROM_BOTTLE);
 
         ModFluids.HONEY_BUCKET.listen((bucket) -> {
             BEHAVIORS.map().put(bucket, FILL_WITH_HONEY);
-            CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.map().put(bucket, FILL_WITH_HONEY);
+            CauldronInteraction.EMPTY.map().put(bucket, FILL_WITH_HONEY);
         });
     }
 
-    public HoneyCauldronBlock(AbstractBlock.Settings settings) {
+    public HoneyCauldronBlock(BlockBehaviour.Properties settings) {
         this();
     }
 
     public HoneyCauldronBlock() {
-        super(Biome.Precipitation.NONE, BEHAVIORS, AbstractBlock.Settings.copy(Blocks.CAULDRON).registryKey(RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID)));
+        super(Biome.Precipitation.NONE, BEHAVIORS, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(ResourceKey.create(Registries.BLOCK, BLOCK_ID)));
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
-        if (world instanceof ServerWorld serverWorld) {
-            BlockPos blockPos = pos.toImmutable();
-            handler.addPreCallback(CollisionEvent.EXTINGUISH, collidedEntity -> {
-                if (collidedEntity instanceof LivingEntity livingEntity && collidedEntity.canModifyAt(serverWorld, blockPos)) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 15));
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
+        if (world instanceof ServerLevel serverWorld) {
+            BlockPos blockPos = pos.immutable();
+            handler.runBefore(InsideBlockEffectType.EXTINGUISH, collidedEntity -> {
+                if (collidedEntity instanceof LivingEntity livingEntity && collidedEntity.mayInteract(serverWorld, blockPos)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 15));
                 }
             });
         }
 
-        handler.addEvent(CollisionEvent.EXTINGUISH);
+        handler.apply(InsideBlockEffectType.EXTINGUISH);
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
-        return Items.CAULDRON.getDefaultStack();
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+        return Items.CAULDRON.getDefaultInstance();
     }
 }

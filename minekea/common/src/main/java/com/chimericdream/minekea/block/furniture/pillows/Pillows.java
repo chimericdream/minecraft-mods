@@ -2,18 +2,17 @@ package com.chimericdream.minekea.block.furniture.pillows;
 
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Pillows implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_PILLOW_SETTINGS = new Item.Settings().arch$tab(ItemGroups.COLORED_BLOCKS);
+    public static final Item.Properties DEFAULT_PILLOW_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
     public static final RegistrySupplier<Block> WHITE_PILLOW;
     public static final RegistrySupplier<Block> LIGHT_GRAY_PILLOW;

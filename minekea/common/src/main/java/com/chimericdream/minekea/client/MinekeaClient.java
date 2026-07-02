@@ -19,15 +19,15 @@ import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.render.item.model.special.SpecialModelTypes;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.special.SpecialModelRenderers;
 
 @Environment(EnvType.CLIENT)
 public class MinekeaClient {
     public static void onInitializeClient() {
-        HandledScreens.register(Crates.CRATE_SCREEN_HANDLER.get(), CrateScreen::new);
-        HandledScreens.register(Crates.DOUBLE_CRATE_SCREEN_HANDLER.get(), DoubleCrateScreen::new);
-        HandledScreens.register(Tools.BLOCK_PAINTER_SCREEN_HANDLER.get(), BlockPainterScreen::new);
+        MenuScreens.register(Crates.CRATE_SCREEN_HANDLER.get(), CrateScreen::new);
+        MenuScreens.register(Crates.DOUBLE_CRATE_SCREEN_HANDLER.get(), DoubleCrateScreen::new);
+        MenuScreens.register(Tools.BLOCK_PAINTER_SCREEN_HANDLER.get(), BlockPainterScreen::new);
         Keybindings.init();
         registerEntityRenderers();
     }
@@ -56,6 +56,6 @@ public class MinekeaClient {
             ShelfBlockEntityRenderer::new
         );
 
-        SpecialModelTypes.ID_MAPPER.put(GlassJarBlock.BLOCK_ID, GlassJarItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(GlassJarBlock.BLOCK_ID, GlassJarItemRenderer.Unbaked.CODEC);
     }
 }

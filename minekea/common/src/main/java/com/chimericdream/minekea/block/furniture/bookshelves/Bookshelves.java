@@ -6,22 +6,21 @@ import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.registry.Registries;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Bookshelves implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_BOOKSHELF_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
+    public static final Item.Properties DEFAULT_BOOKSHELF_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final Map<String, RegistrySupplier<Block>> BOOKSHELVES = new LinkedHashMap<>();
@@ -40,13 +39,13 @@ public class Bookshelves implements ModThingGroup {
         BOOKSHELF_CONFIGS.put("spruce", new BlockConfig().material("spruce").materialName("Spruce").flammable().ingredient(Blocks.SPRUCE_PLANKS).tool(Tool.AXE));
         BOOKSHELF_CONFIGS.put("warped", new BlockConfig().material("warped").materialName("Warped").ingredient(Blocks.WARPED_PLANKS).tool(Tool.AXE));
 
-        BOOKSHELF_CONFIGS.put("bone", new BlockConfig().material("bone").materialName("Bone").ingredient(Blocks.BONE_BLOCK).texture("default", Registries.BLOCK.getId(Blocks.BONE_BLOCK).withPrefixedPath("block/").withSuffixedPath("_side")));
+        BOOKSHELF_CONFIGS.put("bone", new BlockConfig().material("bone").materialName("Bone").ingredient(Blocks.BONE_BLOCK).texture("default", BuiltInRegistries.BLOCK.getKey(Blocks.BONE_BLOCK).withPrefix("block/").withSuffix("_side")));
         BOOKSHELF_CONFIGS.put("dark_prismarine", new BlockConfig().material("dark_prismarine").materialName("Dark Prismarine").ingredient(Blocks.DARK_PRISMARINE));
         BOOKSHELF_CONFIGS.put("deepslate_brick", new BlockConfig().material("deepslate_brick").materialName("Deepslate Brick").ingredient(Blocks.DEEPSLATE_BRICKS));
         BOOKSHELF_CONFIGS.put("end_stone_brick", new BlockConfig().material("end_stone_brick").materialName("End Stone Brick").ingredient(Blocks.END_STONE_BRICKS));
         BOOKSHELF_CONFIGS.put("nether_brick", new BlockConfig().material("nether_brick").materialName("Nether Brick").ingredient(Blocks.NETHER_BRICKS));
         BOOKSHELF_CONFIGS.put("polished_andesite", new BlockConfig().material("polished_andesite").materialName("Polished Andesite").ingredient(Blocks.POLISHED_ANDESITE));
-        BOOKSHELF_CONFIGS.put("polished_basalt", new BlockConfig().material("polished_basalt").materialName("Polished Basalt").ingredient(Blocks.POLISHED_BASALT).texture("default", Registries.BLOCK.getId(Blocks.POLISHED_BASALT).withPrefixedPath("block/").withSuffixedPath("_top")));
+        BOOKSHELF_CONFIGS.put("polished_basalt", new BlockConfig().material("polished_basalt").materialName("Polished Basalt").ingredient(Blocks.POLISHED_BASALT).texture("default", BuiltInRegistries.BLOCK.getKey(Blocks.POLISHED_BASALT).withPrefix("block/").withSuffix("_top")));
         BOOKSHELF_CONFIGS.put("polished_blackstone", new BlockConfig().material("polished_blackstone").materialName("Polished Blackstone").ingredient(Blocks.POLISHED_BLACKSTONE));
         BOOKSHELF_CONFIGS.put("polished_blackstone_brick", new BlockConfig().material("polished_blackstone_brick").materialName("Polished Blackstone Brick").ingredient(Blocks.POLISHED_BLACKSTONE_BRICKS));
         BOOKSHELF_CONFIGS.put("polished_deepslate", new BlockConfig().material("polished_deepslate").materialName("Polished Deepslate").ingredient(Blocks.POLISHED_DEEPSLATE));
@@ -58,11 +57,11 @@ public class Bookshelves implements ModThingGroup {
         BOOKSHELF_CONFIGS.put("purpur", new BlockConfig().material("purpur").materialName("Purpur").ingredient(Blocks.PURPUR_BLOCK));
         BOOKSHELF_CONFIGS.put("quartz_brick", new BlockConfig().material("quartz_brick").materialName("Quartz Brick").ingredient(Blocks.QUARTZ_BRICKS));
         BOOKSHELF_CONFIGS.put("red_nether_brick", new BlockConfig().material("red_nether_brick").materialName("Red Nether Brick").ingredient(Blocks.RED_NETHER_BRICKS));
-        BOOKSHELF_CONFIGS.put("smooth_quartz", new BlockConfig().material("smooth_quartz").materialName("Smooth Quartz").ingredient(Blocks.SMOOTH_QUARTZ).texture("default", Registries.BLOCK.getId(Blocks.QUARTZ_BLOCK).withPrefixedPath("block/").withSuffixedPath("_bottom")));
+        BOOKSHELF_CONFIGS.put("smooth_quartz", new BlockConfig().material("smooth_quartz").materialName("Smooth Quartz").ingredient(Blocks.SMOOTH_QUARTZ).texture("default", BuiltInRegistries.BLOCK.getKey(Blocks.QUARTZ_BLOCK).withPrefix("block/").withSuffix("_bottom")));
         BOOKSHELF_CONFIGS.put("smooth_stone", new BlockConfig().material("smooth_stone").materialName("Smooth Stone").ingredient(Blocks.SMOOTH_STONE));
         BOOKSHELF_CONFIGS.put("stone_brick", new BlockConfig().material("stone_brick").materialName("Stone Brick").ingredient(Blocks.STONE_BRICKS));
         BOOKSHELF_CONFIGS.put("tuff_brick", new BlockConfig().material("tuff_brick").materialName("Tuff Brick").ingredient(Blocks.TUFF_BRICKS));
-        BOOKSHELF_CONFIGS.put("warped_nether_brick", new BlockConfig().material("warped_nether_brick").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS).texture("default", WarpedNetherBricksBlock.BLOCK_ID.withPrefixedPath("block/")));
+        BOOKSHELF_CONFIGS.put("warped_nether_brick", new BlockConfig().material("warped_nether_brick").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS).texture("default", WarpedNetherBricksBlock.BLOCK_ID.withPrefix("block/")));
 
         BOOKSHELF_CONFIGS.forEach((key, value) -> BOOKSHELVES.put(key, REGISTRY_HELPER.registerWithItem(BookshelfBlock.makeId(key), () -> new BookshelfBlock(value), DEFAULT_BOOKSHELF_SETTINGS)));
 

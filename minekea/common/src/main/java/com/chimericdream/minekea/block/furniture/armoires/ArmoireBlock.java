@@ -6,36 +6,44 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.entity.block.furniture.ArmoireBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class ArmoireBlock extends BlockWithEntity {
+public class ArmoireBlock extends BaseEntityBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF;
     public static final EnumProperty<Direction> FACING;
 
@@ -52,158 +60,158 @@ public class ArmoireBlock extends BlockWithEntity {
     protected static final VoxelShape WEST_BOTTOM_SHAPE;
 
     static {
-        FACING = HorizontalFacingBlock.FACING;
-        HALF = Properties.DOUBLE_BLOCK_HALF;
+        FACING = HorizontalDirectionalBlock.FACING;
+        HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-        NORTH_TOP_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(15.00, 0.00, 0.00, 16.00, 16.00, 12.00),   // left
-            Block.createCuboidShape(0.00, 0.00, 0.00, 1.00, 16.00, 12.00),     // right
-            Block.createCuboidShape(1.00, 15.00, 1.00, 15.00, 16.00, 12.00),   // back
-            Block.createCuboidShape(1.00, 0.00, 0.00, 15.00, 16.00, 1.00),     // top
-            Block.createCuboidShape(1.00, 12.00, 5.00, 15.00, 13.00, 6.00)     // pole
+        NORTH_TOP_SHAPE = Shapes.or(
+            Block.box(15.00, 0.00, 0.00, 16.00, 16.00, 12.00),   // left
+            Block.box(0.00, 0.00, 0.00, 1.00, 16.00, 12.00),     // right
+            Block.box(1.00, 15.00, 1.00, 15.00, 16.00, 12.00),   // back
+            Block.box(1.00, 0.00, 0.00, 15.00, 16.00, 1.00),     // top
+            Block.box(1.00, 12.00, 5.00, 15.00, 13.00, 6.00)     // pole
         );
-        NORTH_BOTTOM_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(0.00, 0.00, 0.00, 16.00, 1.00, 12.00),     // bottom
-            Block.createCuboidShape(15.00, 1.00, 0.00, 16.00, 16.00, 12.00),   // ???
-            Block.createCuboidShape(0.00, 1.00, 0.00, 1.00, 16.00, 12.00),     // right
-            Block.createCuboidShape(1.00, 1.00, 0.00, 15.00, 16.00, 1.00),     // left
-            Block.createCuboidShape(1.00, 7.00, 1.00, 15.00, 8.00, 9.00)       // shelf
-        );
-
-        SOUTH_TOP_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(0.00, 0.00, 4.00, 1.00, 16.00, 16.00),     // left
-            Block.createCuboidShape(15.00, 0.00, 4.00, 16.00, 16.00, 16.00),   // right
-            Block.createCuboidShape(1.00, 15.00, 4.00, 15.00, 16.00, 15.00),   // back
-            Block.createCuboidShape(1.00, 0.00, 15.00, 15.00, 16.00, 16.00),   // top
-            Block.createCuboidShape(1.00, 12.00, 10.00, 15.00, 13.00, 11.00)   // pole
-        );
-        SOUTH_BOTTOM_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(0.00, 0.00, 4.00, 16.00, 1.00, 16.00),     // bottom
-            Block.createCuboidShape(1.00, 7.00, 7.00, 15.00, 8.00, 15.00),     // shelf
-            Block.createCuboidShape(0.00, 1.00, 4.00, 1.00, 16.00, 16.00),     // right
-            Block.createCuboidShape(15.00, 1.00, 4.00, 16.00, 16.00, 16.00),   // left
-            Block.createCuboidShape(1.00, 1.00, 15.00, 15.00, 16.00, 16.00)    // back
+        NORTH_BOTTOM_SHAPE = Shapes.or(
+            Block.box(0.00, 0.00, 0.00, 16.00, 1.00, 12.00),     // bottom
+            Block.box(15.00, 1.00, 0.00, 16.00, 16.00, 12.00),   // ???
+            Block.box(0.00, 1.00, 0.00, 1.00, 16.00, 12.00),     // right
+            Block.box(1.00, 1.00, 0.00, 15.00, 16.00, 1.00),     // left
+            Block.box(1.00, 7.00, 1.00, 15.00, 8.00, 9.00)       // shelf
         );
 
-        EAST_TOP_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(4.00, 0.00, 15.00, 16.00, 16.00, 16.00),   // left
-            Block.createCuboidShape(4.00, 0.00, 0.00, 16.00, 16.00, 1.00),     // right
-            Block.createCuboidShape(4.00, 15.00, 1.00, 15.00, 16.00, 15.00),   // back
-            Block.createCuboidShape(15.00, 0.00, 1.00, 16.00, 16.00, 15.00),   // top
-            Block.createCuboidShape(10.00, 12.00, 1.00, 11.00, 13.00, 15.00)   // pole
+        SOUTH_TOP_SHAPE = Shapes.or(
+            Block.box(0.00, 0.00, 4.00, 1.00, 16.00, 16.00),     // left
+            Block.box(15.00, 0.00, 4.00, 16.00, 16.00, 16.00),   // right
+            Block.box(1.00, 15.00, 4.00, 15.00, 16.00, 15.00),   // back
+            Block.box(1.00, 0.00, 15.00, 15.00, 16.00, 16.00),   // top
+            Block.box(1.00, 12.00, 10.00, 15.00, 13.00, 11.00)   // pole
         );
-        EAST_BOTTOM_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(4.00, 0.00, 0.00, 16.00, 1.00, 16.00),     // bottom
-            Block.createCuboidShape(4.00, 1.00, 15.00, 16.00, 16.00, 16.00),   // ???
-            Block.createCuboidShape(4.00, 1.00, 0.00, 16.00, 16.00, 1.00),     // right
-            Block.createCuboidShape(15.00, 1.00, 1.00, 16.00, 16.00, 15.00),   // left
-            Block.createCuboidShape(7.00, 7.00, 1.00, 15.00, 8.00, 15.00)      // shelf
+        SOUTH_BOTTOM_SHAPE = Shapes.or(
+            Block.box(0.00, 0.00, 4.00, 16.00, 1.00, 16.00),     // bottom
+            Block.box(1.00, 7.00, 7.00, 15.00, 8.00, 15.00),     // shelf
+            Block.box(0.00, 1.00, 4.00, 1.00, 16.00, 16.00),     // right
+            Block.box(15.00, 1.00, 4.00, 16.00, 16.00, 16.00),   // left
+            Block.box(1.00, 1.00, 15.00, 15.00, 16.00, 16.00)    // back
         );
 
-        WEST_TOP_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(0.00, 0.00, 0.00, 12.00, 16.00, 1.00),     // left
-            Block.createCuboidShape(0.00, 0.00, 15.00, 12.00, 16.00, 16.00),   // right
-            Block.createCuboidShape(1.00, 15.00, 1.00, 12.00, 16.00, 15.00),   // back
-            Block.createCuboidShape(0.00, 0.00, 1.00, 1.00, 16.00, 15.00),     // top
-            Block.createCuboidShape(5.00, 12.00, 1.00, 6.00, 13.00, 15.00)     // pole
+        EAST_TOP_SHAPE = Shapes.or(
+            Block.box(4.00, 0.00, 15.00, 16.00, 16.00, 16.00),   // left
+            Block.box(4.00, 0.00, 0.00, 16.00, 16.00, 1.00),     // right
+            Block.box(4.00, 15.00, 1.00, 15.00, 16.00, 15.00),   // back
+            Block.box(15.00, 0.00, 1.00, 16.00, 16.00, 15.00),   // top
+            Block.box(10.00, 12.00, 1.00, 11.00, 13.00, 15.00)   // pole
         );
-        WEST_BOTTOM_SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(0.00, 0.00, 0.00, 12.00, 1.00, 16.00),     // bottom
-            Block.createCuboidShape(0.00, 1.00, 0.00, 12.00, 16.00, 1.00),     // ???
-            Block.createCuboidShape(0.00, 1.00, 15.00, 12.00, 16.00, 16.00),   // right
-            Block.createCuboidShape(0.00, 1.00, 1.00, 1.00, 16.00, 15.00),     // left
-            Block.createCuboidShape(1.00, 7.00, 1.00, 9.0, 8.00, 15.00)       // shelf
+        EAST_BOTTOM_SHAPE = Shapes.or(
+            Block.box(4.00, 0.00, 0.00, 16.00, 1.00, 16.00),     // bottom
+            Block.box(4.00, 1.00, 15.00, 16.00, 16.00, 16.00),   // ???
+            Block.box(4.00, 1.00, 0.00, 16.00, 16.00, 1.00),     // right
+            Block.box(15.00, 1.00, 1.00, 16.00, 16.00, 15.00),   // left
+            Block.box(7.00, 7.00, 1.00, 15.00, 8.00, 15.00)      // shelf
+        );
+
+        WEST_TOP_SHAPE = Shapes.or(
+            Block.box(0.00, 0.00, 0.00, 12.00, 16.00, 1.00),     // left
+            Block.box(0.00, 0.00, 15.00, 12.00, 16.00, 16.00),   // right
+            Block.box(1.00, 15.00, 1.00, 12.00, 16.00, 15.00),   // back
+            Block.box(0.00, 0.00, 1.00, 1.00, 16.00, 15.00),     // top
+            Block.box(5.00, 12.00, 1.00, 6.00, 13.00, 15.00)     // pole
+        );
+        WEST_BOTTOM_SHAPE = Shapes.or(
+            Block.box(0.00, 0.00, 0.00, 12.00, 1.00, 16.00),     // bottom
+            Block.box(0.00, 1.00, 0.00, 12.00, 16.00, 1.00),     // ???
+            Block.box(0.00, 1.00, 15.00, 12.00, 16.00, 16.00),   // right
+            Block.box(0.00, 1.00, 1.00, 1.00, 16.00, 15.00),     // left
+            Block.box(1.00, 7.00, 1.00, 9.0, 8.00, 15.00)       // shelf
         );
     }
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
     public ArmoireBlock(BlockConfig config) {
-        super(AbstractBlock.Settings.copy(config.getIngredient("planks")).pistonBehavior(PistonBehavior.IGNORE).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(BlockBehaviour.Properties.ofFullCopy(config.getIngredient("planks")).pushReaction(PushReaction.IGNORE).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
-        this.setDefaultState(
-            this.stateManager
-                .getDefaultState()
-                .with(FACING, Direction.NORTH)
-                .with(HALF, DoubleBlockHalf.LOWER)
+        this.registerDefaultState(
+            this.stateDefinition
+                .any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(HALF, DoubleBlockHalf.LOWER)
         );
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("furniture/armoires/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/armoires/%s", material));
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, HALF);
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient() && player.isCreative()) {
-            DoubleBlockHalf half = state.get(HALF);
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        if (!world.isClientSide() && player.isCreative()) {
+            DoubleBlockHalf half = state.getValue(HALF);
 
             if (half == DoubleBlockHalf.UPPER) {
-                BlockPos blockPos = pos.down();
+                BlockPos blockPos = pos.below();
                 BlockState blockState = world.getBlockState(blockPos);
 
-                if (blockState.isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
-                    BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-                    world.setBlockState(blockPos, blockState2, 35);
-                    world.syncWorldEvent(player, 2001, blockPos, Block.getRawIdFromState(blockState));
+                if (blockState.is(state.getBlock()) && blockState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+                    BlockState blockState2 = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                    world.setBlock(blockPos, blockState2, 35);
+                    world.levelEvent(player, 2001, blockPos, Block.getId(blockState));
                 }
             }
         }
 
-        return super.onBreak(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), 3);
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        world.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction lookDirection = ctx.getPlayerLookDirection();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Direction lookDirection = ctx.getNearestLookingDirection();
 
         if (lookDirection.getAxis().isVertical()) {
-            lookDirection = ctx.getHorizontalPlayerFacing();
+            lookDirection = ctx.getHorizontalDirection();
         }
 
-        return this.getDefaultState().with(FACING, lookDirection);
+        return this.defaultBlockState().setValue(FACING, lookDirection);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        DoubleBlockHalf doubleBlockHalf = state.get(HALF);
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
 
         if (direction.getAxis() == Direction.Axis.Y && doubleBlockHalf == DoubleBlockHalf.LOWER == (direction == Direction.UP)) {
-            return neighborState.isOf(this) && neighborState.get(HALF) != doubleBlockHalf ? state.with(FACING, neighborState.get(FACING)) : Blocks.AIR.getDefaultState();
+            return neighborState.is(this) && neighborState.getValue(HALF) != doubleBlockHalf ? state.setValue(FACING, neighborState.getValue(FACING)) : Blocks.AIR.defaultBlockState();
         } else {
-            return doubleBlockHalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !state.canPlaceAt(world, pos)
-                ? Blocks.AIR.getDefaultState()
-                : super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+            return doubleBlockHalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !state.canSurvive(world, pos)
+                ? Blocks.AIR.defaultBlockState()
+                : super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
         }
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos below = pos.down();
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        BlockPos below = pos.below();
         BlockState belowState = world.getBlockState(below);
-        BlockPos above = pos.up();
+        BlockPos above = pos.above();
         BlockState aboveState = world.getBlockState(above);
 
-        return state.get(HALF) == DoubleBlockHalf.LOWER ? aboveState.isAir() : belowState.isOf(this);
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER ? aboveState.isAir() : belowState.is(this);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Direction facing = state.get(FACING);
-        DoubleBlockHalf half = state.get(HALF);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        Direction facing = state.getValue(FACING);
+        DoubleBlockHalf half = state.getValue(HALF);
 
         return switch (facing) {
             case EAST -> half == DoubleBlockHalf.LOWER ? EAST_BOTTOM_SHAPE : EAST_TOP_SHAPE;
@@ -214,8 +222,8 @@ public class ArmoireBlock extends BlockWithEntity {
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             return null;
         }
 
@@ -223,13 +231,13 @@ public class ArmoireBlock extends BlockWithEntity {
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     /*
@@ -252,16 +260,16 @@ public class ArmoireBlock extends BlockWithEntity {
      * 15 - right: boots
      */
     private int getTargetSlot(BlockState state, BlockHitResult hit) {
-        Direction facing = state.get(FACING);
-        DoubleBlockHalf half = state.get(HALF);
-        Vec3d localCoords = hit.getPos().subtract(Vec3d.of(hit.getBlockPos()));
+        Direction facing = state.getValue(FACING);
+        DoubleBlockHalf half = state.getValue(HALF);
+        Vec3 localCoords = hit.getLocation().subtract(Vec3.atLowerCornerOf(hit.getBlockPos()));
 
         int targetStand = 0; // 0, 1, 2, 3 -> left, middle-left, middle-right, right
         int targetItem = -1; // -1, 0, 1, 2, 3 -> none, chestplate, leggings, helmet, boots
 
-        double x = localCoords.getX();
-        double y = localCoords.getY();
-        double z = localCoords.getZ();
+        double x = localCoords.x();
+        double y = localCoords.y();
+        double z = localCoords.z();
 
         /*
          * East
@@ -403,12 +411,12 @@ public class ArmoireBlock extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         ArmoireBlockEntity entity;
 
         try {
-            if (state.get(HALF) == DoubleBlockHalf.UPPER) {
-                entity = (ArmoireBlockEntity) world.getBlockEntity(pos.down());
+            if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+                entity = (ArmoireBlockEntity) world.getBlockEntity(pos.below());
             } else {
                 entity = (ArmoireBlockEntity) world.getBlockEntity(pos);
             }
@@ -417,44 +425,44 @@ public class ArmoireBlock extends BlockWithEntity {
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The armoire at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         int slot = getTargetSlot(state, hit);
 
         if (slot == -1) {
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         }
 
-        if (!player.getMainHandStack().isEmpty()) {
+        if (!player.getMainHandItem().isEmpty()) {
             // Try to insert the item in the player's hand into the targeted slot in the armoire
-            player.setStackInHand(Hand.MAIN_HAND, entity.tryInsert(slot, player.getStackInHand(Hand.MAIN_HAND)));
-        } else if (player.isSneaking() && player.getMainHandStack().isEmpty()) {
-            if (!entity.getStack(slot).isEmpty()) {
-                ItemScatterer.spawn(
+            player.setItemInHand(InteractionHand.MAIN_HAND, entity.tryInsert(slot, player.getItemInHand(InteractionHand.MAIN_HAND)));
+        } else if (player.isShiftKeyDown() && player.getMainHandItem().isEmpty()) {
+            if (!entity.getItem(slot).isEmpty()) {
+                Containers.dropItemStack(
                     world,
                     player.getX(),
                     player.getY(),
                     player.getZ(),
-                    entity.removeStack(slot)
+                    entity.removeItemNoUpdate(slot)
                 );
             }
         }
 
-        entity.markDirty();
-        world.markDirty(pos);
+        entity.setChanged();
+        world.blockEntityChanged(pos);
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    public void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof ArmoireBlockEntity) {
-            ItemScatterer.spawn(world, pos, (ArmoireBlockEntity) blockEntity);
-            world.updateComparators(pos, this);
+            Containers.dropContents(world, pos, (ArmoireBlockEntity) blockEntity);
+            world.updateNeighbourForOutputSignal(pos, this);
         }
 
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 }

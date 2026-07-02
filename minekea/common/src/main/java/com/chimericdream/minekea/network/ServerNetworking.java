@@ -4,33 +4,32 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.data.nbt.NbtHelpers;
 import com.chimericdream.minekea.item.tools.BlockPainterItem;
 import com.chimericdream.minekea.registry.ColoredBlocksRegistry;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.CustomModelDataComponent;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.CustomModelData;
 import java.util.List;
 
 public class ServerNetworking {
-    public static Identifier CYCLE_PAINTER_COLOR = Identifier.of(ModInfo.MOD_ID, "events/items/painter/cycle");
+    public static ResourceLocation CYCLE_PAINTER_COLOR = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "events/items/painter/cycle");
 
     public static void init() {
     }
 
-    protected static void handleCyclePainterColorPacket(MinecraftServer server, ServerPlayerEntity player) {
+    protected static void handleCyclePainterColorPacket(MinecraftServer server, ServerPlayer player) {
         if (server != null && player != null) {
             server.execute(() -> {
                 ItemStack heldItem = ItemStack.EMPTY;
 
-                if (!player.getMainHandStack().isEmpty() && player.getMainHandStack().getItem() instanceof BlockPainterItem) {
-                    heldItem = player.getMainHandStack();
+                if (!player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof BlockPainterItem) {
+                    heldItem = player.getMainHandItem();
                 }
-                if (!player.getOffHandStack().isEmpty() && player.getOffHandStack().getItem() instanceof BlockPainterItem) {
-                    heldItem = player.getOffHandStack();
+                if (!player.getOffhandItem().isEmpty() && player.getOffhandItem().getItem() instanceof BlockPainterItem) {
+                    heldItem = player.getOffhandItem();
                 }
 
                 if (heldItem.isEmpty()) {
@@ -39,10 +38,10 @@ public class ServerNetworking {
 
                 ColoredBlocksRegistry.BlockColor nextColor = BlockPainterItem.getNextColor(heldItem);
 
-                NbtCompound nbt = new NbtCompound();
+                CompoundTag nbt = new CompoundTag();
                 nbt.putString("current_color", nextColor.toString());
-                heldItem.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
-                heldItem.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(), List.of(), List.of(nextColor.getModelNumber()), List.of()));
+                heldItem.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
+                heldItem.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(), List.of(), List.of(nextColor.getModelNumber()), List.of()));
 
                 NbtHelpers.setCustomDataFromNbt(heldItem, BlockPainterItem.makeNbt(nbt, nextColor));
             });

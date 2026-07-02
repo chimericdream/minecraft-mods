@@ -1,7 +1,7 @@
 package com.chimericdream.flatbedrock.mixin;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.YOffset;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,21 +13,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract public class FlatBedrockMixin {
     @Shadow
     @Final
-    private Identifier randomName;
-    private static final Identifier bedrockFloor = Identifier.ofVanilla("bedrock_floor");
-    private static final Identifier bedrockRoof = Identifier.ofVanilla("bedrock_roof");
-    private static final YOffset aboveBottom = YOffset.aboveBottom(1);
-    private static final YOffset belowTop = YOffset.belowTop(1);
+    private ResourceLocation randomName;
+    private static final ResourceLocation bedrockFloor = ResourceLocation.withDefaultNamespace("bedrock_floor");
+    private static final ResourceLocation bedrockRoof = ResourceLocation.withDefaultNamespace("bedrock_roof");
+    private static final VerticalAnchor aboveBottom = VerticalAnchor.aboveBottom(1);
+    private static final VerticalAnchor belowTop = VerticalAnchor.belowTop(1);
 
     @Inject(method = "falseAtAndAbove", at = @At("HEAD"), cancellable = true)
-    private void falseAtAndAbove(CallbackInfoReturnable<YOffset> cir) {
+    private void falseAtAndAbove(CallbackInfoReturnable<VerticalAnchor> cir) {
         if(randomName.equals(bedrockFloor)) {
             cir.setReturnValue(aboveBottom);
         }
     }
 
     @Inject(method = "trueAtAndBelow", at = @At("HEAD"), cancellable = true)
-    private void trueAtAndBelow(CallbackInfoReturnable<YOffset> cir) {
+    private void trueAtAndBelow(CallbackInfoReturnable<VerticalAnchor> cir) {
         if(randomName.equals(bedrockRoof)) {
             cir.setReturnValue(belowTop);
         }

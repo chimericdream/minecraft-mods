@@ -1,11 +1,11 @@
 package com.chimericdream.minekea.sound;
 
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.SoundType;
 
 public class MinekeaSoundGroup {
-    public static final BlockSoundGroup EGG_CRATE_SOUND_GROUP;
-    public static final BlockSoundGroup GLASS_JAR_SOUND_GROUP;
+    public static final SoundType EGG_CRATE_SOUND_GROUP;
+    public static final SoundType GLASS_JAR_SOUND_GROUP;
 
     // BlockSoundGroup(
     //     float volume,
@@ -18,24 +18,24 @@ public class MinekeaSoundGroup {
     // )
 
     static {
-        EGG_CRATE_SOUND_GROUP = new BlockSoundGroup(
+        EGG_CRATE_SOUND_GROUP = new SoundType(
             1.0f,
             1.0f,
-            SoundEvents.ENTITY_TURTLE_EGG_BREAK,
-            SoundEvents.ENTITY_TURTLE_EGG_CRACK,
-            SoundEvents.BLOCK_ANCIENT_DEBRIS_PLACE,
-            SoundEvents.ENTITY_TURTLE_EGG_CRACK,
-            SoundEvents.ENTITY_TURTLE_EGG_CRACK
+            SoundEvents.TURTLE_EGG_BREAK,
+            SoundEvents.TURTLE_EGG_CRACK,
+            SoundEvents.ANCIENT_DEBRIS_PLACE,
+            SoundEvents.TURTLE_EGG_CRACK,
+            SoundEvents.TURTLE_EGG_CRACK
         );
 
-        GLASS_JAR_SOUND_GROUP = new BlockSoundGroup(
+        GLASS_JAR_SOUND_GROUP = new SoundType(
             0.9f,
             1.15f,
-            SoundEvents.BLOCK_DECORATED_POT_BREAK,
-            SoundEvents.BLOCK_GLASS_STEP,
-            SoundEvents.BLOCK_DECORATED_POT_PLACE,
-            SoundEvents.BLOCK_GLASS_HIT,
-            SoundEvents.BLOCK_GLASS_FALL
+            SoundEvents.DECORATED_POT_BREAK,
+            SoundEvents.GLASS_STEP,
+            SoundEvents.DECORATED_POT_PLACE,
+            SoundEvents.GLASS_HIT,
+            SoundEvents.GLASS_FALL
         );
     }
 }

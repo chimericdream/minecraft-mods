@@ -1,32 +1,38 @@
 package com.chimericdream.minekea.item.tools;
 
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class HammerItem extends Item {
-    public final Identifier ITEM_ID;
+    public final ResourceLocation ITEM_ID;
 
     public final ToolMaterial material;
     public final int maxSlots;
@@ -35,11 +41,11 @@ public class HammerItem extends Item {
     public final TagKey<Item> itemIngredientTag;
 
     public HammerItem(ToolMaterial material, int maxSlots, String materialName, Item itemIngredient, TagKey<Item> itemIngredientTag) {
-        this(material, maxSlots, materialName, itemIngredient, itemIngredientTag, new Item.Settings());
+        this(material, maxSlots, materialName, itemIngredient, itemIngredientTag, new Item.Properties());
     }
 
-    public HammerItem(ToolMaterial material, int maxSlots, String materialName, Item itemIngredient, TagKey<Item> itemIngredientTag, Item.Settings settings) {
-        super(settings.maxCount(1).arch$tab(ItemGroups.TOOLS).pickaxe(material, 1.0F, -2.8F).registryKey(REGISTRY_HELPER.makeItemRegistryKey(makeId(materialName))));
+    public HammerItem(ToolMaterial material, int maxSlots, String materialName, Item itemIngredient, TagKey<Item> itemIngredientTag, Item.Properties settings) {
+        super(settings.stacksTo(1).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).pickaxe(material, 1.0F, -2.8F).setId(REGISTRY_HELPER.makeItemRegistryKey(makeId(materialName))));
 
         this.material = material;
         this.maxSlots = maxSlots;
@@ -50,108 +56,108 @@ public class HammerItem extends Item {
         this.ITEM_ID = makeId(materialName);
     }
 
-    public static Identifier makeId(String materialName) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("tools/hammers/%s", materialName.toLowerCase()));
+    public static ResourceLocation makeId(String materialName) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("tools/hammers/%s", materialName.toLowerCase()));
     }
 
     @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (!world.isClient() && state.getHardness(world, pos) != 0.0F) {
-            stack.damage(1, miner, EquipmentSlot.MAINHAND);
+    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (!world.isClientSide() && state.getDestroySpeed(world, pos) != 0.0F) {
+            stack.hurtAndBreak(1, miner, EquipmentSlot.MAINHAND);
         }
 
         return true;
     }
 
-    public List<Text> getTooltip() {
-        return List.of(Text.literal(String.format("Uses up to %d slots", this.maxSlots)));
+    public List<Component> getTooltip() {
+        return List.of(Component.literal(String.format("Uses up to %d slots", this.maxSlots)));
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext ctx) {
-        PlayerEntity player = ctx.getPlayer();
+    public InteractionResult useOn(UseOnContext ctx) {
+        Player player = ctx.getPlayer();
         if (player == null) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         List<Integer> slots = new ArrayList<>();
 
-        PlayerInventory inventory = player.getInventory();
+        Inventory inventory = player.getInventory();
 
         int hammerSlot = inventory.getSelectedSlot();
         for (int i = hammerSlot; i < 9 && slots.size() < this.maxSlots; i++) {
-            ItemStack item = inventory.getStack(i);
+            ItemStack item = inventory.getItem(i);
             if (!item.isEmpty() && item.getItem() instanceof BlockItem) {
                 slots.add(i);
             }
         }
 
-        ItemStack hammer = inventory.getStack(hammerSlot);
-        NbtComponent nbtComponent = hammer.getComponents().get(DataComponentTypes.CUSTOM_DATA);
+        ItemStack hammer = inventory.getItem(hammerSlot);
+        CustomData nbtComponent = hammer.getComponents().get(DataComponents.CUSTOM_DATA);
 
-        Random rand;
+        RandomSource rand;
         if (nbtComponent == null) {
-            rand = Random.create();
+            rand = RandomSource.create();
         } else {
-            rand = Random.create(nbtComponent.copyNbt().getLong("placement_seed").get());
+            rand = RandomSource.create(nbtComponent.copyTag().getLong("placement_seed").get());
         }
 
         if (slots.isEmpty()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         int totalBlocks = 0;
         for (int slot : slots) {
-            totalBlocks += inventory.getStack(slot).getCount();
+            totalBlocks += inventory.getItem(slot).getCount();
         }
 
-        int randomBlock = rand.nextBetween(1, totalBlocks);
+        int randomBlock = rand.nextIntBetweenInclusive(1, totalBlocks);
 
         int slotToUse = -1;
         for (int slot : slots) {
-            if (randomBlock <= inventory.getStack(slot).getCount()) {
+            if (randomBlock <= inventory.getItem(slot).getCount()) {
                 slotToUse = slot;
                 break;
             }
 
-            randomBlock -= inventory.getStack(slot).getCount();
+            randomBlock -= inventory.getItem(slot).getCount();
         }
 
         if (slotToUse == -1) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        ItemStack toPlace = inventory.getStack(slotToUse);
-        ItemPlacementContext placementContext = new ItemPlacementContext(
+        ItemStack toPlace = inventory.getItem(slotToUse);
+        BlockPlaceContext placementContext = new BlockPlaceContext(
             player,
             ctx.getHand(),
             toPlace,
-            new BlockHitResult(ctx.getHitPos(), ctx.getSide(), ctx.getBlockPos(), ctx.hitsInsideBlock())
+            new BlockHitResult(ctx.getClickLocation(), ctx.getClickedFace(), ctx.getClickedPos(), ctx.isInside())
         );
 
         if (!placementContext.canPlace()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        World world = ctx.getWorld();
-        if (!world.isClient()) {
+        Level world = ctx.getLevel();
+        if (!world.isClientSide()) {
             long nextSeed = rand.nextLong();
 
-            NbtCompound nbt = new NbtCompound();
+            CompoundTag nbt = new CompoundTag();
             nbt.putLong("placement_seed", nextSeed);
 
-            NbtComponent hammerNbt = NbtComponent.of(nbt);
+            CustomData hammerNbt = CustomData.of(nbt);
 
-            hammer.set(DataComponentTypes.CUSTOM_DATA, hammerNbt);
+            hammer.set(DataComponents.CUSTOM_DATA, hammerNbt);
         }
 
-        ActionResult result = ((BlockItem) toPlace.getItem()).place(placementContext);
-        if (result == ActionResult.CONSUME) {
+        InteractionResult result = ((BlockItem) toPlace.getItem()).place(placementContext);
+        if (result == InteractionResult.CONSUME) {
             if (!player.isCreative()) {
-                inventory.getStack(hammerSlot).damage(1, player, ctx.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                inventory.getItem(hammerSlot).hurtAndBreak(1, player, ctx.getHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             }
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

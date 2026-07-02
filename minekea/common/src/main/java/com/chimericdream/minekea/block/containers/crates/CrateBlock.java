@@ -5,50 +5,50 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreenHandler;
 import com.chimericdream.minekea.entity.block.containers.CrateBlockEntity;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoubleBlockProperties;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.enums.ChestType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.DoubleInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.CompoundContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class CrateBlock extends BlockWithEntity {
-    public static final MapCodec<CrateBlock> CODEC = createCodec(CrateBlock::new);
+public class CrateBlock extends BaseEntityBlock {
+    public static final MapCodec<CrateBlock> CODEC = simpleCodec(CrateBlock::new);
 
     public static final Integer ROW_COUNT = 6;
 
@@ -62,66 +62,66 @@ public class CrateBlock extends BlockWithEntity {
     public static final BooleanProperty CONNECTED_EAST;
     public static final BooleanProperty CONNECTED_WEST;
 
-    public Identifier BLOCK_ID;
+    public ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
-    private static final DoubleBlockProperties.PropertyRetriever<CrateBlockEntity, Optional<Inventory>> INVENTORY_RETRIEVER;
-    private static final DoubleBlockProperties.PropertyRetriever<CrateBlockEntity, Optional<NamedScreenHandlerFactory>> SCREEN_RETRIEVER;
+    private static final DoubleBlockCombiner.Combiner<CrateBlockEntity, Optional<Container>> INVENTORY_RETRIEVER;
+    private static final DoubleBlockCombiner.Combiner<CrateBlockEntity, Optional<MenuProvider>> SCREEN_RETRIEVER;
 
     static {
-        FACING = Properties.FACING;
-        AXIS = Properties.AXIS;
-        OPEN = Properties.OPEN;
+        FACING = BlockStateProperties.FACING;
+        AXIS = BlockStateProperties.AXIS;
+        OPEN = BlockStateProperties.OPEN;
 
-        CRATE_TYPE = Properties.CHEST_TYPE;
-        CONNECTED_NORTH = BooleanProperty.of("connected_north");
-        CONNECTED_SOUTH = BooleanProperty.of("connected_south");
-        CONNECTED_EAST = BooleanProperty.of("connected_east");
-        CONNECTED_WEST = BooleanProperty.of("connected_west");
+        CRATE_TYPE = BlockStateProperties.CHEST_TYPE;
+        CONNECTED_NORTH = BooleanProperty.create("connected_north");
+        CONNECTED_SOUTH = BooleanProperty.create("connected_south");
+        CONNECTED_EAST = BooleanProperty.create("connected_east");
+        CONNECTED_WEST = BooleanProperty.create("connected_west");
 
-        INVENTORY_RETRIEVER = new DoubleBlockProperties.PropertyRetriever<>() {
-            public Optional<Inventory> getFromBoth(CrateBlockEntity crate1, CrateBlockEntity crate2) {
-                return Optional.of(new DoubleInventory(crate1, crate2));
+        INVENTORY_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
+            public Optional<Container> getFromBoth(CrateBlockEntity crate1, CrateBlockEntity crate2) {
+                return Optional.of(new CompoundContainer(crate1, crate2));
             }
 
-            public Optional<Inventory> getFrom(CrateBlockEntity chestBlockEntity) {
+            public Optional<Container> getFrom(CrateBlockEntity chestBlockEntity) {
                 return Optional.of(chestBlockEntity);
             }
 
-            public Optional<Inventory> getFallback() {
+            public Optional<Container> acceptNone() {
                 return Optional.empty();
             }
         };
-        SCREEN_RETRIEVER = new DoubleBlockProperties.PropertyRetriever<>() {
-            public Optional<NamedScreenHandlerFactory> getFromBoth(final CrateBlockEntity crate1, final CrateBlockEntity crate2) {
-                final Inventory inventory = new DoubleInventory(crate1, crate2);
+        SCREEN_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
+            public Optional<MenuProvider> getFromBoth(final CrateBlockEntity crate1, final CrateBlockEntity crate2) {
+                final Container inventory = new CompoundContainer(crate1, crate2);
 
-                return Optional.of(new NamedScreenHandlerFactory() {
-                    public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                return Optional.of(new MenuProvider() {
+                    public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
                         return new DoubleCrateScreenHandler(Crates.DOUBLE_CRATE_SCREEN_HANDLER.get(), i, playerInventory, inventory);
                     }
 
-                    public Text getDisplayName() {
+                    public Component getDisplayName() {
                         if (crate1.isTrapped()) {
-                            return Text.translatable(DoubleCrateScreenHandler.TRAPPED_SCREEN_ID.toTranslationKey());
+                            return Component.translatable(DoubleCrateScreenHandler.TRAPPED_SCREEN_ID.toLanguageKey());
                         }
 
-                        return Text.translatable(DoubleCrateScreenHandler.SCREEN_ID.toTranslationKey());
+                        return Component.translatable(DoubleCrateScreenHandler.SCREEN_ID.toLanguageKey());
                     }
                 });
             }
 
-            public Optional<NamedScreenHandlerFactory> getFrom(CrateBlockEntity crate) {
+            public Optional<MenuProvider> getFrom(CrateBlockEntity crate) {
                 return Optional.of(crate);
             }
 
-            public Optional<NamedScreenHandlerFactory> getFallback() {
+            public Optional<MenuProvider> acceptNone() {
                 return Optional.empty();
             }
         };
     }
 
-    public CrateBlock(AbstractBlock.Settings settings) {
+    public CrateBlock(BlockBehaviour.Properties settings) {
         this(Crates.CONFIGS.get("oak"));
     }
 
@@ -129,107 +129,107 @@ public class CrateBlock extends BlockWithEntity {
         this(config, makeId(config.getMaterial()));
     }
 
-    public CrateBlock(BlockConfig config, Identifier blockId) {
-        super(AbstractBlock.Settings.copy(Blocks.BARREL).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(blockId)));
+    public CrateBlock(BlockConfig config, ResourceLocation blockId) {
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.BARREL).setId(REGISTRY_HELPER.makeBlockRegistryKey(blockId)));
 
         BLOCK_ID = blockId;
         this.config = config;
 
-        this.setDefaultState(
-            this.stateManager
-                .getDefaultState()
-                .with(AXIS, Axis.Y)
-                .with(FACING, Direction.NORTH)
-                .with(CRATE_TYPE, ChestType.SINGLE)
-                .with(CONNECTED_NORTH, false)
-                .with(CONNECTED_SOUTH, false)
-                .with(CONNECTED_EAST, false)
-                .with(CONNECTED_WEST, false)
-                .with(OPEN, false)
+        this.registerDefaultState(
+            this.stateDefinition
+                .any()
+                .setValue(AXIS, Axis.Y)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(CRATE_TYPE, ChestType.SINGLE)
+                .setValue(CONNECTED_NORTH, false)
+                .setValue(CONNECTED_SOUTH, false)
+                .setValue(CONNECTED_EAST, false)
+                .setValue(CONNECTED_WEST, false)
+                .setValue(OPEN, false)
         );
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("containers/crates/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/crates/%s", material));
     }
 
     @Override
-    protected MapCodec<CrateBlock> getCodec() {
+    protected MapCodec<CrateBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CrateBlockEntity(Crates.CRATE_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, Crates.CRATE_BLOCK_ENTITY.get(), CrateBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, Crates.CRATE_BLOCK_ENTITY.get(), CrateBlockEntity::tick);
     }
 
-    public static BlockState changeRotation(BlockState state, BlockRotation rotation) {
+    public static BlockState changeRotation(BlockState state, Rotation rotation) {
         if (isConnectedCrate(state)) {
             return state;
         }
 
         return switch (rotation) {
-            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.get(AXIS)) {
-                case X -> (BlockState) state.with(AXIS, Axis.Z);
-                case Z -> (BlockState) state.with(AXIS, Axis.X);
+            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.getValue(AXIS)) {
+                case X -> (BlockState) state.setValue(AXIS, Axis.Z);
+                case Z -> (BlockState) state.setValue(AXIS, Axis.X);
                 default -> state;
             };
             default -> state;
         };
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, AXIS, OPEN, CRATE_TYPE, CONNECTED_NORTH, CONNECTED_SOUTH, CONNECTED_EAST, CONNECTED_WEST);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState placementState = this.getDefaultState().with(AXIS, ctx.getSide().getAxis());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState placementState = this.defaultBlockState().setValue(AXIS, ctx.getClickedFace().getAxis());
 
         // if the player is sneaking, and they are targeting another block of this type, and that block is not already connected elsewhere
-        if (ctx.getPlayer() != null && ctx.getPlayer().isSneaking() && ctx.getSide().getAxis().isHorizontal()) {
-            Direction side = ctx.getSide().getOpposite();
+        if (ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown() && ctx.getClickedFace().getAxis().isHorizontal()) {
+            Direction side = ctx.getClickedFace().getOpposite();
             BlockState neighbor = getAvailableNeighboringCrate(ctx, side);
             BooleanProperty prop = getConnectionProperty(side);
 
             if (neighbor != null) {
-                return this.getDefaultState().with(AXIS, Axis.Y).with(FACING, Direction.UP).with(prop, true).with(CRATE_TYPE, getDoubleCrateType(side));
+                return this.defaultBlockState().setValue(AXIS, Axis.Y).setValue(FACING, Direction.UP).setValue(prop, true).setValue(CRATE_TYPE, getDoubleCrateType(side));
             }
         }
 
         // if the player is sneaking, or if this crate is not being placed vertically, skip checking for double crate stuff
-        if (ctx.shouldCancelInteraction() || ctx.getSide().getAxis().isHorizontal()) {
-            if (ctx.getSide().getAxis().equals(Axis.X)) {
-                return placementState.with(FACING, Direction.EAST);
+        if (ctx.isSecondaryUseActive() || ctx.getClickedFace().getAxis().isHorizontal()) {
+            if (ctx.getClickedFace().getAxis().equals(Axis.X)) {
+                return placementState.setValue(FACING, Direction.EAST);
             }
 
-            return placementState.with(FACING, Direction.SOUTH);
+            return placementState.setValue(FACING, Direction.SOUTH);
         }
 
         BlockState neighbor;
 
         neighbor = getAvailableNeighboringCrate(ctx, Direction.NORTH);
         if (neighbor != null) {
-            return placementState.with(CONNECTED_NORTH, true).with(FACING, Direction.UP).with(CRATE_TYPE, ChestType.RIGHT);
+            return placementState.setValue(CONNECTED_NORTH, true).setValue(FACING, Direction.UP).setValue(CRATE_TYPE, ChestType.RIGHT);
         }
 
         neighbor = getAvailableNeighboringCrate(ctx, Direction.EAST);
         if (neighbor != null) {
-            return placementState.with(CONNECTED_EAST, true).with(FACING, Direction.UP).with(CRATE_TYPE, ChestType.LEFT);
+            return placementState.setValue(CONNECTED_EAST, true).setValue(FACING, Direction.UP).setValue(CRATE_TYPE, ChestType.LEFT);
         }
 
         neighbor = getAvailableNeighboringCrate(ctx, Direction.SOUTH);
         if (neighbor != null) {
-            return placementState.with(CONNECTED_SOUTH, true).with(FACING, Direction.UP).with(CRATE_TYPE, ChestType.LEFT);
+            return placementState.setValue(CONNECTED_SOUTH, true).setValue(FACING, Direction.UP).setValue(CRATE_TYPE, ChestType.LEFT);
         }
 
         neighbor = getAvailableNeighboringCrate(ctx, Direction.WEST);
         if (neighbor != null) {
-            return placementState.with(CONNECTED_WEST, true).with(FACING, Direction.UP).with(CRATE_TYPE, ChestType.RIGHT);
+            return placementState.setValue(CONNECTED_WEST, true).setValue(FACING, Direction.UP).setValue(CRATE_TYPE, ChestType.RIGHT);
         }
 
         return placementState;
@@ -267,32 +267,32 @@ public class CrateBlock extends BlockWithEntity {
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(getConnectionProperty(direction)) && !neighborState.isOf(this)) {
-            return state.with(getConnectionProperty(direction), false).with(CRATE_TYPE, ChestType.SINGLE);
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(getConnectionProperty(direction)) && !neighborState.is(this)) {
+            return state.setValue(getConnectionProperty(direction), false).setValue(CRATE_TYPE, ChestType.SINGLE);
         }
 
-        if (direction.getAxis().isVertical() || !neighborState.isOf(this)) {
+        if (direction.getAxis().isVertical() || !neighborState.is(this)) {
             return state;
         }
 
         BooleanProperty prop = getReverseConnectionProperty(direction);
-        if (neighborState.get(prop)) {
-            return state.with(getConnectionProperty(direction), true).with(FACING, Direction.UP);
+        if (neighborState.getValue(prop)) {
+            return state.setValue(getConnectionProperty(direction), true).setValue(FACING, Direction.UP);
         }
 
         return state;
     }
 
     private static boolean isConnectedCrate(BlockState crate) {
-        return crate.get(CONNECTED_NORTH) || crate.get(CONNECTED_SOUTH) || crate.get(CONNECTED_EAST) || crate.get(CONNECTED_WEST);
+        return crate.getValue(CONNECTED_NORTH) || crate.getValue(CONNECTED_SOUTH) || crate.getValue(CONNECTED_EAST) || crate.getValue(CONNECTED_WEST);
     }
 
     @Nullable
-    private BlockState getAvailableNeighboringCrate(ItemPlacementContext ctx, Direction dir) {
-        BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(dir));
+    private BlockState getAvailableNeighboringCrate(BlockPlaceContext ctx, Direction dir) {
+        BlockState blockState = ctx.getLevel().getBlockState(ctx.getClickedPos().relative(dir));
 
-        if (!blockState.isOf(this) || isConnectedCrate(blockState) || blockState.get(AXIS).isHorizontal()) {
+        if (!blockState.is(this) || isConnectedCrate(blockState) || blockState.getValue(AXIS).isHorizontal()) {
             return null;
         }
 
@@ -300,60 +300,60 @@ public class CrateBlock extends BlockWithEntity {
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        NamedScreenHandlerFactory screenHandlerFactory = this.createScreenHandlerFactory(state, world, pos);
+        MenuProvider screenHandlerFactory = this.getMenuProvider(state, world, pos);
 
         if (screenHandlerFactory != null) {
-            player.openHandledScreen(screenHandlerFactory);
-            return ActionResult.CONSUME;
+            player.openMenu(screenHandlerFactory);
+            return InteractionResult.CONSUME;
         }
 
-        return ActionResult.FAIL;
+        return InteractionResult.FAIL;
     }
 
     public static Direction getFacing(BlockState state) {
-        if (state.get(CONNECTED_NORTH)) {
+        if (state.getValue(CONNECTED_NORTH)) {
             return Direction.NORTH;
         }
 
-        if (state.get(CONNECTED_SOUTH)) {
+        if (state.getValue(CONNECTED_SOUTH)) {
             return Direction.SOUTH;
         }
 
-        if (state.get(CONNECTED_EAST)) {
+        if (state.getValue(CONNECTED_EAST)) {
             return Direction.EAST;
         }
 
-        if (state.get(CONNECTED_WEST)) {
+        if (state.getValue(CONNECTED_WEST)) {
             return Direction.WEST;
         }
 
-        return state.get(FACING);
+        return state.getValue(FACING);
     }
 
-    public static DoubleBlockProperties.Type getDoubleBlockType(BlockState state) {
+    public static DoubleBlockCombiner.BlockType getDoubleBlockType(BlockState state) {
         if (!isConnectedCrate(state)) {
-            return DoubleBlockProperties.Type.SINGLE;
+            return DoubleBlockCombiner.BlockType.SINGLE;
         }
 
-        if (state.get(CONNECTED_NORTH) || state.get(CONNECTED_EAST)) {
-            return DoubleBlockProperties.Type.FIRST;
+        if (state.getValue(CONNECTED_NORTH) || state.getValue(CONNECTED_EAST)) {
+            return DoubleBlockCombiner.BlockType.FIRST;
         }
 
-        return DoubleBlockProperties.Type.SECOND;
+        return DoubleBlockCombiner.BlockType.SECOND;
     }
 
-    public DoubleBlockProperties.PropertySource<CrateBlockEntity> getBlockEntitySource(BlockState state, World world, BlockPos pos) {
-        return DoubleBlockProperties.toPropertySource(
+    public DoubleBlockCombiner.NeighborCombineResult<CrateBlockEntity> getBlockEntitySource(BlockState state, Level world, BlockPos pos) {
+        return DoubleBlockCombiner.combineWithNeigbour(
             Crates.CRATE_BLOCK_ENTITY.get(),
             CrateBlock::getDoubleBlockType,
             CrateBlock::getFacing,
@@ -366,28 +366,28 @@ public class CrateBlock extends BlockWithEntity {
     }
 
     @Nullable
-    protected NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+    protected MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
         return this.getBlockEntitySource(state, world, pos).apply(SCREEN_RETRIEVER).orElse(null);
     }
 
     @Override
-    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    public void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof CrateBlockEntity) {
-            ItemScatterer.spawn(world, pos, (CrateBlockEntity) blockEntity);
-            world.updateComparators(pos, this);
+            Containers.dropContents(world, pos, (CrateBlockEntity) blockEntity);
+            world.updateNeighbourForOutputSignal(pos, this);
         }
 
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
     }
 }

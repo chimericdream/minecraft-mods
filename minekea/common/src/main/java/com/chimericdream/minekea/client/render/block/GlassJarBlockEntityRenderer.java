@@ -3,32 +3,32 @@ package com.chimericdream.minekea.client.render.block;
 import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.EntityRenderManager;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.TypedEntityData;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtDouble;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import com.mojang.blaze3d.vertex.PoseStack;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 import java.util.function.Function;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.TypedEntityData;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.Vec3;
 
 abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer<GlassJarBlockEntity, GlassJarBlockEntityRenderState> {
     protected static final float yLightFactor = 0.5f;
@@ -43,9 +43,9 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
     // Ensures that the total height of the contents doesn't go above the top
     protected static final float VERTICAL_MULTIPLIER = 9f / 16f;
 
-    private final BlockEntityRendererFactory.Context context;
+    private final BlockEntityRendererProvider.Context context;
 
-    public GlassJarBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+    public GlassJarBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
 //        entityRenderer = ctx.getEntityRenderDispatcher();
 //        itemRenderer = ctx.getItemRenderer();
         this.context = ctx;
@@ -57,10 +57,10 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
     }
 
     @Override
-    public void updateRenderState(GlassJarBlockEntity entity, GlassJarBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
-        BlockEntityRenderer.super.updateRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
+    public void updateRenderState(GlassJarBlockEntity entity, GlassJarBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
 
-        state.facing = entity.getCachedState().get(GlassJarBlock.FACING);
+        state.facing = entity.getBlockState().getValue(GlassJarBlock.FACING);
 
         state.hasFluid = entity.hasFluid();
         state.hasItem = entity.hasItem();
@@ -73,81 +73,81 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
 
         ItemStack storedStack = entity.getStoredItem();
         ItemStack stack = GlassJarBlock.getStackToRender(storedStack);
-        this.context.itemModelManager().update(state.displayItem, stack, ItemDisplayContext.FIXED, null, null, 0);
+        this.context.itemModelResolver().appendItemLayers(state.displayItem, stack, ItemDisplayContext.FIXED, null, null, 0);
 
         TypedEntityData<EntityType<?>> entityData = entity.getStoredMobData();
         String entityId = entity.getStoredMobId();
 
         Entity mobEntity = null;
-        if (entityData != null && entityId != null && entity.getWorld() != null) {
-            NbtCompound nbt = entityData.copyNbtWithoutId();
+        if (entityData != null && entityId != null && entity.getLevel() != null) {
+            CompoundTag nbt = entityData.copyTagWithoutId();
             nbt.putString("id", entityId);
 
-            NbtList fakePos = new NbtList();
-            fakePos.add(NbtDouble.of(0d));
-            fakePos.add(NbtDouble.of(9001d));
-            fakePos.add(NbtDouble.of(0d));
+            ListTag fakePos = new ListTag();
+            fakePos.add(DoubleTag.valueOf(0d));
+            fakePos.add(DoubleTag.valueOf(9001d));
+            fakePos.add(DoubleTag.valueOf(0d));
 
             nbt.put("Pos", fakePos);
 
             nbt.remove("equipment");
 
-            mobEntity = EntityType.loadEntityWithPassengers(nbt, entity.getWorld(), SpawnReason.SPAWNER, Function.identity());
+            mobEntity = EntityType.loadEntityRecursive(nbt, entity.getLevel(), EntitySpawnReason.SPAWNER, Function.identity());
         }
 
         if (mobEntity != null) {
             state.mobId = entityId;
-            state.mobDisplay = this.context.entityRenderDispatcher().getAndUpdateRenderState(mobEntity, 0f);
-            state.mobDisplay.light = state.lightmapCoordinates;
-            state.mobHeight = mobEntity.getHeight();
-            state.mobWidth = mobEntity.getWidth();
+            state.mobDisplay = this.context.entityRenderer().extractEntity(mobEntity, 0f);
+            state.mobDisplay.lightCoords = state.lightCoords;
+            state.mobHeight = mobEntity.getBbHeight();
+            state.mobWidth = mobEntity.getBbWidth();
         }
     }
 
     @Override
-    public void render(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+    public void render(GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         if (state.hasItem) {
             renderJar(state, matrices, queue);
         } else if (state.hasFluid) {
             Fluid storedFluid = state.storedFluid;
 
             int color = getFluidColor(storedFluid);
-            Sprite fluidTexture = getFluidTexture(storedFluid);
+            TextureAtlasSprite fluidTexture = getFluidTexture(storedFluid);
 
             renderFluidJar(state, color, fluidTexture, matrices, queue);
         } else if (state.hasMob) {
-            renderMobJar(state, matrices, queue, this.context.entityRenderDispatcher(), cameraState);
+            renderMobJar(state, matrices, queue, this.context.entityRenderer(), cameraState);
         }
     }
 
-    public static void renderJar(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue) {
+    public static void renderJar(GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue) {
         int fillLevel = state.fillLevel;
         float fY = (float) fillLevel / (GlassJarBlockEntity.MAX_ITEM_STACKS + 1);
 
-        matrices.push();
+        matrices.pushPose();
 
         matrices.translate(0.5, (fY * 0.25) + NUDGE, 0.5);
         matrices.scale(0.749f, fY, 0.749f);
 
-        state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+        state.displayItem.submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
-        matrices.pop();
+        matrices.popPose();
     }
 
-    public static void renderFluidJar(GlassJarBlockEntityRenderState state, int color, Sprite texture, MatrixStack matrices, OrderedRenderCommandQueue queue) {
-        queue.submitCustom(
+    public static void renderFluidJar(GlassJarBlockEntityRenderState state, int color, TextureAtlasSprite texture, PoseStack matrices, SubmitNodeCollector queue) {
+        queue.submitCustomGeometry(
             matrices,
-            RenderLayer.getTranslucentMovingBlock(),
-            new GlassJarFluidRenderCommandQueue(color, texture, state.lightmapCoordinates, state.fluidAmountInBuckets)
+            RenderType.translucentMovingBlock(),
+            new GlassJarFluidRenderCommandQueue(color, texture, state.lightCoords, state.fluidAmountInBuckets)
         );
     }
 
-    public static void renderMobJar(GlassJarBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, EntityRenderManager entityRenderer, CameraRenderState cameraState) {
+    public static void renderMobJar(GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, EntityRenderDispatcher entityRenderer, CameraRenderState cameraState) {
         if (!state.hasMob) {
             return;
         }
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(0.5f, 0f, 0.5f);
         float f = 0.34375f;
         float g = Math.max(state.mobWidth, state.mobHeight);
@@ -161,13 +161,13 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
 
         Direction facing = state.facing;
         if (facing.equals(Direction.NORTH)) {
-            matrices.multiply((new Quaternionf()).rotationY(3.1415927f));
+            matrices.mulPose((new Quaternionf()).rotationY(3.1415927f));
         } else if (facing.equals(Direction.SOUTH)) {
-            matrices.multiply(new Quaternionf());
+            matrices.mulPose(new Quaternionf());
         } else if (facing.equals(Direction.WEST)) {
-            matrices.multiply((new Quaternionf()).rotationY(-1.5707964f));
+            matrices.mulPose((new Quaternionf()).rotationY(-1.5707964f));
         } else {
-            matrices.multiply((new Quaternionf()).rotationY(1.5707964f));
+            matrices.mulPose((new Quaternionf()).rotationY(1.5707964f));
         }
 
         switch (state.mobId) {
@@ -179,15 +179,15 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
         }
 
         try {
-            entityRenderer.render(state.mobDisplay, cameraState, 0f, 0f, 0f, matrices, queue);
+            entityRenderer.submit(state.mobDisplay, cameraState, 0f, 0f, 0f, matrices, queue);
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("Error while rendering glass jar block entity!", e);
         }
 
-        matrices.pop();
+        matrices.popPose();
     }
 
     abstract protected int getFluidColor(Fluid fluid);
 
-    abstract protected Sprite getFluidTexture(Fluid fluid);
+    abstract protected TextureAtlasSprite getFluidTexture(Fluid fluid);
 }

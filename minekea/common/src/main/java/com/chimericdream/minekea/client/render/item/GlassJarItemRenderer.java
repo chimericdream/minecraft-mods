@@ -1,17 +1,17 @@
 package com.chimericdream.minekea.client.render.item;
 
 import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.model.special.SpecialModelRenderer;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -22,25 +22,25 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     private static final CameraRenderState CAMERA_STATE = new CameraRenderState();
 
     @Override
-    public void render(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, MatrixStack matrices, OrderedRenderCommandQueue queue, int light, int overlay, boolean glint, int i) {
+    public void render(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
 //        if (data != null) {
 //            data.light = light;
 //        }
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(1f, 0f, 1f);
         matrices.scale(-1, 1, -1);
-        Objects.requireNonNull(MinecraftClient.getInstance().getBlockEntityRenderDispatcher().getByRenderState(state)).render(state, matrices, queue, CAMERA_STATE);
-        matrices.pop();
+        Objects.requireNonNull(Minecraft.getInstance().getBlockEntityRenderDispatcher().getRenderer(state)).submit(state, matrices, queue, CAMERA_STATE);
+        matrices.popPose();
     }
 
     @Override
-    public void collectVertices(Set<Vector3f> vertices) {
+    public void getExtents(Set<Vector3f> vertices) {
     }
 
     @Override
-    public @Nullable GlassJarBlockEntityRenderState getData(ItemStack stack) {
-        ClientWorld world = MinecraftClient.getInstance().world;
+    public @Nullable GlassJarBlockEntityRenderState extractArgument(ItemStack stack) {
+        ClientLevel world = Minecraft.getInstance().level;
         if (world == null) {
             return null;
         }
@@ -51,14 +51,14 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     @Environment(EnvType.CLIENT)
     public record Unbaked() implements SpecialModelRenderer.Unbaked {
         public static final GlassJarItemRenderer.Unbaked INSTANCE = new GlassJarItemRenderer.Unbaked();
-        public static final MapCodec<Unbaked> CODEC;
+        public static final MapCodec<com.chimericdream.minekea.client.render.item.GlassJarItemRenderer.Unbaked> CODEC;
 
         @Override
-        public SpecialModelRenderer<?> bake(BakeContext context) {
+        public SpecialModelRenderer<?> bake(BakingContext context) {
             return new GlassJarItemRenderer();
         }
 
-        public MapCodec<GlassJarItemRenderer.Unbaked> getCodec() {
+        public MapCodec<GlassJarItemRenderer.Unbaked> type() {
             return CODEC;
         }
 

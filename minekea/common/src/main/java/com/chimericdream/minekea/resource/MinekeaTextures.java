@@ -1,18 +1,18 @@
 package com.chimericdream.minekea.resource;
 
 
-import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.models.model.TextureSlot;
 
 public class MinekeaTextures {
-    public static final TextureKey BAR = TextureKey.of("bar");
-    public static final TextureKey BRACE = TextureKey.of("brace");
-    public static final TextureKey CONTENTS = TextureKey.of("contents");
-    public static final TextureKey FRAME = TextureKey.of("frame");
-    public static final TextureKey LOG = TextureKey.of("log");
-    public static final TextureKey MATERIAL = TextureKey.of("material");
-    public static final TextureKey OVERLAY = TextureKey.of("overlay");
-    public static final TextureKey PANEL = TextureKey.of("panel");
-    public static final TextureKey PLANKS = TextureKey.of("planks");
-    public static final TextureKey SHELF = TextureKey.of("shelf");
-    public static final TextureKey STRIPPED_MATERIAL = TextureKey.of("stripped_material");
+    public static final TextureSlot BAR = TextureSlot.create("bar");
+    public static final TextureSlot BRACE = TextureSlot.create("brace");
+    public static final TextureSlot CONTENTS = TextureSlot.create("contents");
+    public static final TextureSlot FRAME = TextureSlot.create("frame");
+    public static final TextureSlot LOG = TextureSlot.create("log");
+    public static final TextureSlot MATERIAL = TextureSlot.create("material");
+    public static final TextureSlot OVERLAY = TextureSlot.create("overlay");
+    public static final TextureSlot PANEL = TextureSlot.create("panel");
+    public static final TextureSlot PLANKS = TextureSlot.create("planks");
+    public static final TextureSlot SHELF = TextureSlot.create("shelf");
+    public static final TextureSlot STRIPPED_MATERIAL = TextureSlot.create("stripped_material");
 }

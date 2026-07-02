@@ -4,14 +4,14 @@ import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.ZombieVillagerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ZombieVillagerEntity.class)
+@Mixin(ZombieVillager.class)
 public abstract class VTZombieVillagerEntityMixin extends Entity {
     private Gson gson = new Gson();
 
@@ -30,12 +30,12 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     @Shadow
     public abstract boolean isConverting();
 
-    public VTZombieVillagerEntityMixin(EntityType<?> type, World world) {
+    public VTZombieVillagerEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
     @Unique
-    private Text prevName = null;
+    private Component prevName = null;
 
     @Unique
     private boolean wasPrevNameVisible = false;
@@ -95,35 +95,35 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     }
 
     @Inject(method = "writeCustomData", at = @At("TAIL"))
-    private void vt$writePreviousNameData(WriteView view, CallbackInfo ci) {
+    private void vt$writePreviousNameData(ValueOutput view, CallbackInfo ci) {
 
         if (this.prevName != null) {
-            String json = this.gson.toJson(TextCodecs.CODEC.encodeStart(JsonOps.INSTANCE, this.prevName).getOrThrow());
+            String json = this.gson.toJson(ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, this.prevName).getOrThrow());
             view.putString("VTPrevName", json);
             view.putBoolean("VTWasPrevNameVisible", this.wasPrevNameVisible);
         }
     }
 
     @Inject(method = "readCustomData", at = @At("TAIL"))
-    private void vt$readPreviousNameData(ReadView view, CallbackInfo ci) {
+    private void vt$readPreviousNameData(ValueInput view, CallbackInfo ci) {
         if (view.contains("VTPrevName")) {
-            String jsonString = view.getString("VTPrevName", "Uh oh!");
+            String jsonString = view.getStringOr("VTPrevName", "Uh oh!");
 
-            this.prevName = TextCodecs.CODEC
+            this.prevName = ComponentSerialization.CODEC
                 .decode(JsonOps.INSTANCE, this.gson.fromJson(jsonString, JsonElement.class))
                 .getOrThrow()
                 .getFirst();
 
-            this.wasPrevNameVisible = view.getBoolean("VTWasPrevNameVisible", false);
+            this.wasPrevNameVisible = view.getBooleanOr("VTWasPrevNameVisible", false);
             this.isTimerShowing = true;
         }
     }
 
     @Unique
-    private Text vt$getFormattedTime(int totalSeconds) {
+    private Component vt$getFormattedTime(int totalSeconds) {
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds - (minutes * 60);
 
-        return Text.of(minutes + ":" + (seconds < 10 ? "0" + seconds : seconds));
+        return Component.nullToEmpty(minutes + ":" + (seconds < 10 ? "0" + seconds : seconds));
     }
 }

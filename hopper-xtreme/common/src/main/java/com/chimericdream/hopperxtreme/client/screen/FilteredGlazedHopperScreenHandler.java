@@ -2,31 +2,31 @@ package com.chimericdream.hopperxtreme.client.screen;
 
 import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.lib.screen.ScreenHelpers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class FilteredGlazedHopperScreenHandler extends ScreenHandler {
-    public static final Identifier SCREEN_ID = Identifier.of(ModInfo.MOD_ID, "gui/filtered_glazed_hopper");
+public class FilteredGlazedHopperScreenHandler extends AbstractContainerMenu {
+    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/filtered_glazed_hopper");
 
-    private final Inventory hopper;
+    private final Container hopper;
 
-    public FilteredGlazedHopperScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(null, syncId, playerInventory, new SimpleInventory(2));
+    public FilteredGlazedHopperScreenHandler(int syncId, Inventory playerInventory) {
+        this(null, syncId, playerInventory, new SimpleContainer(2));
     }
 
-    public FilteredGlazedHopperScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory hopper) {
+    public FilteredGlazedHopperScreenHandler(MenuType<?> type, int syncId, Inventory playerInventory, Container hopper) {
         super(type, syncId);
 
         this.hopper = hopper;
 
-        hopper.onOpen(playerInventory.player);
+        hopper.startOpen(playerInventory.player);
 
         this.addSlot(new NonFilterSlot(this.hopper, 0, 80, 20));
         this.addSlot(new FilterSlot(this.hopper, 1, 152, 20));
@@ -52,38 +52,38 @@ public class FilteredGlazedHopperScreenHandler extends ScreenHandler {
         }
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return hopper;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.hopper.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.hopper.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+    public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
-        int hopperSize = this.hopper.size() + 1;
+        int hopperSize = this.hopper.getContainerSize() + 1;
 
         Slot slot = this.slots.get(invSlot);
-        if (slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
+        if (slot.hasItem()) {
+            ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
 
             if (invSlot < hopperSize) {
-                if (!this.insertItem(originalStack, hopperSize, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(originalStack, hopperSize, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, hopperSize, false)) {
+            } else if (!this.moveItemStackTo(originalStack, 0, hopperSize, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.setByPlayer(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
         }
 

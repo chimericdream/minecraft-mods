@@ -1,37 +1,37 @@
 package com.chimericdream.artificialheart.block;
 
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
 
 abstract public class BaseClippedEyeblossomBlock extends FlowerBlock {
-    public BaseClippedEyeblossomBlock(RegistryEntry<StatusEffect> stewEffect, float effectLengthInSeconds, Settings settings) {
+    public BaseClippedEyeblossomBlock(Holder<MobEffect> stewEffect, float effectLengthInSeconds, Properties settings) {
         super(stewEffect, effectLengthInSeconds, settings);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!world.isClient() && world.getDifficulty() != Difficulty.PEACEFUL && entity instanceof BeeEntity beeEntity) {
-            if (BeeEntity.isAttractive(state) && !beeEntity.hasStatusEffect(StatusEffects.POISON)) {
-                beeEntity.addStatusEffect(this.getContactEffect());
+    protected void onEntityCollision(BlockState state, Level world, BlockPos pos, Entity entity) {
+        if (!world.isClientSide() && world.getDifficulty() != Difficulty.PEACEFUL && entity instanceof Bee beeEntity) {
+            if (Bee.attractsBees(state) && !beeEntity.hasEffect(MobEffects.POISON)) {
+                beeEntity.addEffect(this.getBeeInteractionEffect());
             }
         }
     }
 
-    public StatusEffectInstance getContactEffect() {
-        return new StatusEffectInstance(StatusEffects.POISON, 25);
+    public MobEffectInstance getBeeInteractionEffect() {
+        return new MobEffectInstance(MobEffects.POISON, 25);
     }
 }

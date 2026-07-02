@@ -19,14 +19,13 @@ import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.block.building.walls.Walls;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -35,8 +34,8 @@ public class BuildingBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final Map<String, RegistrySupplier<Block>> WAX_BLOCKS = new LinkedHashMap<>();
 
-    public static final Item.Settings DEFAULT_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
-    public static final Item.Settings WAX_BLOCK_SETTINGS = new Item.Settings().arch$tab(ItemGroups.COLORED_BLOCKS);
+    public static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
+    public static final Item.Properties WAX_BLOCK_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
     public static final RegistrySupplier<Block> BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(BasaltBricksBlock.BLOCK_ID, BasaltBricksBlock::new, DEFAULT_SETTINGS);
     public static final RegistrySupplier<Block> CHISELED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(ChiseledBasaltBricksBlock.BLOCK_ID, ChiseledBasaltBricksBlock::new, DEFAULT_SETTINGS);

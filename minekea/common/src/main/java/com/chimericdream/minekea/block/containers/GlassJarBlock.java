@@ -15,52 +15,6 @@ import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potions;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -68,12 +22,58 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 import static com.chimericdream.minekea.sound.MinekeaSoundGroup.GLASS_JAR_SOUND_GROUP;
 
-public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
-    public static final MapCodec<GlassJarBlock> CODEC = createCodec(GlassJarBlock::new);
+public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<GlassJarBlock> CODEC = simpleCodec(GlassJarBlock::new);
 
     public static final Map<String, String> ALLOWED_ITEM_IDS = new LinkedHashMap<>();
     public static final List<Item> ALLOWED_ITEMS = new ArrayList<>();
@@ -81,14 +81,14 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty WATERLOGGED;
 
-    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "containers/glass_jar");
+    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/glass_jar");
 
     private static final VoxelShape MAIN_SHAPE;
     private static final VoxelShape LID_SHAPE;
 
     static {
-        FACING = Properties.HORIZONTAL_FACING;
-        WATERLOGGED = Properties.WATERLOGGED;
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+        WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
         ALLOWED_ITEMS.add(Items.AMETHYST_SHARD);
         ALLOWED_ITEMS.add(Items.APPLE);
@@ -183,37 +183,37 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
          * every time I ran datagen. By doing it this way, I ensure the JSON file only updates when the values change.
          */
         ALLOWED_ITEM_IDS.put("minecraft:amethyst_shard", "minecraft:amethyst_block");
-        ALLOWED_ITEM_IDS.put("minecraft:apple", StorageBlocks.APPLE_STORAGE_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:apple", StorageBlocks.APPLE_STORAGE_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:bamboo", "minecraft:bamboo_block");
-        ALLOWED_ITEM_IDS.put("minecraft:beetroot", StorageBlocks.BEETROOT_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:beetroot_seeds", StorageBlocks.BEETROOT_SEEDS_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:blaze_powder", StorageBlocks.BLAZE_POWDER_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:blaze_rod", StorageBlocks.BLAZE_ROD_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:beetroot", StorageBlocks.BEETROOT_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:beetroot_seeds", StorageBlocks.BEETROOT_SEEDS_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:blaze_powder", StorageBlocks.BLAZE_POWDER_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:blaze_rod", StorageBlocks.BLAZE_ROD_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:blue_egg", BlueEggCrateBlock.BLOCK_ID.toString());
-        ALLOWED_ITEM_IDS.put("minecraft:breeze_rod", StorageBlocks.BREEZE_ROD_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:breeze_rod", StorageBlocks.BREEZE_ROD_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:brown_egg", BrownEggCrateBlock.BLOCK_ID.toString());
         ALLOWED_ITEM_IDS.put("minecraft:brown_mushroom", "minecraft:brown_mushroom_block");
-        ALLOWED_ITEM_IDS.put("minecraft:carrot", StorageBlocks.CARROT_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:charcoal", StorageBlocks.CHARCOAL_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:chorus_fruit", StorageBlocks.CHORUS_FRUIT_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:carrot", StorageBlocks.CARROT_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:charcoal", StorageBlocks.CHARCOAL_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:chorus_fruit", StorageBlocks.CHORUS_FRUIT_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:coal", "minecraft:coal_block");
         ALLOWED_ITEM_IDS.put("minecraft:dried_kelp", "minecraft:dried_kelp_block");
         ALLOWED_ITEM_IDS.put("minecraft:egg", EggCrateBlock.BLOCK_ID.toString());
-        ALLOWED_ITEM_IDS.put("minecraft:ender_pearl", StorageBlocks.ENDER_PEARL_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:flint", StorageBlocks.FLINT_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:ender_pearl", StorageBlocks.ENDER_PEARL_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:flint", StorageBlocks.FLINT_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:glowstone_dust", "minecraft:glowstone");
-        ALLOWED_ITEM_IDS.put("minecraft:golden_apple", StorageBlocks.GOLDEN_APPLE_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:golden_apple", StorageBlocks.GOLDEN_APPLE_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:gravel", "minecraft:gravel");
         ALLOWED_ITEM_IDS.put("minecraft:honeycomb", "minecraft:honeycomb_block");
-        ALLOWED_ITEM_IDS.put("minecraft:leather", StorageBlocks.LEATHER_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:melon_seeds", StorageBlocks.MELON_SEEDS_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:leather", StorageBlocks.LEATHER_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:melon_seeds", StorageBlocks.MELON_SEEDS_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:melon_slice", "minecraft:melon");
-        ALLOWED_ITEM_IDS.put("minecraft:nether_star", StorageBlocks.NETHER_STAR_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:nether_star", StorageBlocks.NETHER_STAR_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:nether_wart", "minecraft:nether_wart_block");
-        ALLOWED_ITEM_IDS.put("minecraft:paper", StorageBlocks.WALLPAPER_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:phantom_membrane", StorageBlocks.PHANTOM_MEMBRANE_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:potato", StorageBlocks.POTATO_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:pumpkin_seeds", StorageBlocks.PUMPKIN_SEEDS_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:paper", StorageBlocks.WALLPAPER_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:phantom_membrane", StorageBlocks.PHANTOM_MEMBRANE_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:potato", StorageBlocks.POTATO_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:pumpkin_seeds", StorageBlocks.PUMPKIN_SEEDS_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:red_mushroom", "minecraft:red_mushroom_block");
         ALLOWED_ITEM_IDS.put("minecraft:red_sand", "minecraft:red_sand");
         ALLOWED_ITEM_IDS.put("minecraft:redstone", "minecraft:redstone_block");
@@ -221,13 +221,13 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         ALLOWED_ITEM_IDS.put("minecraft:sand", "minecraft:sand");
         ALLOWED_ITEM_IDS.put("minecraft:sculk_vein", "minecraft:sculk");
         ALLOWED_ITEM_IDS.put("minecraft:slime_ball", "minecraft:slime_block");
-        ALLOWED_ITEM_IDS.put("minecraft:stick", StorageBlocks.STICK_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:sugar", StorageBlocks.SUGAR_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:sugar_cane", StorageBlocks.SUGAR_CANE_BLOCK.getIdAsString());
-        ALLOWED_ITEM_IDS.put("minecraft:totem_of_undying", StorageBlocks.TOTEM_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:stick", StorageBlocks.STICK_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:sugar", StorageBlocks.SUGAR_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:sugar_cane", StorageBlocks.SUGAR_CANE_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:totem_of_undying", StorageBlocks.TOTEM_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put(WarpedWartItem.ITEM_ID.toString(), "minecraft:warped_wart_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat", "minecraft:hay_block");
-        ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getIdAsString());
+        ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getRegisteredName());
 
         ALLOWED_ITEM_IDS.put("minecraft:white_dye", DyeBlock.makeId("white").toString());
         ALLOWED_ITEM_IDS.put("minecraft:light_gray_dye", DyeBlock.makeId("light_gray").toString());
@@ -281,53 +281,53 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         ALLOWED_ITEM_IDS.put(WaxItem.makeId("magenta").toString(), WaxBlock.makeId("magenta").toString());
         ALLOWED_ITEM_IDS.put(WaxItem.makeId("pink").toString(), WaxBlock.makeId("pink").toString());
 
-        MAIN_SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 9.0, 11.0);
-        LID_SHAPE = Block.createCuboidShape(6.0, 9.0, 6.0, 10.0, 10.0, 10.0);
+        MAIN_SHAPE = Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0);
+        LID_SHAPE = Block.box(6.0, 9.0, 6.0, 10.0, 10.0, 10.0);
     }
 
-    public GlassJarBlock(AbstractBlock.Settings settings) {
+    public GlassJarBlock(BlockBehaviour.Properties settings) {
         this();
     }
 
     public GlassJarBlock() {
-        super(Settings.copy(Blocks.GLASS).sounds(GLASS_JAR_SOUND_GROUP).nonOpaque().registryKey(REGISTRY_HELPER.makeBlockRegistryKey(GlassJarBlock.BLOCK_ID)));
+        super(Properties.ofFullCopy(Blocks.GLASS).sound(GLASS_JAR_SOUND_GROUP).noOcclusion().setId(REGISTRY_HELPER.makeBlockRegistryKey(GlassJarBlock.BLOCK_ID)));
 
-        this.setDefaultState(
-            this.stateManager
-                .getDefaultState()
-                .with(FACING, Direction.NORTH)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            this.stateDefinition
+                .any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
         );
     }
 
-    protected MapCodec<GlassJarBlock> getCodec() {
+    protected MapCodec<GlassJarBlock> codec() {
         return CODEC;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        PlayerEntity player = ctx.getPlayer();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Player player = ctx.getPlayer();
         Direction facing = Direction.NORTH;
 
         if (player != null) {
-            facing = player.getHorizontalFacing().getOpposite();
+            facing = player.getDirection().getOpposite();
         }
 
-        return this.getDefaultState()
-            .with(FACING, facing)
-            .with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+        return this.defaultBlockState()
+            .setValue(FACING, facing)
+            .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
-    protected BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         GlassJarBlockEntity entity;
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
@@ -344,46 +344,46 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         }
 
         SoundEvent sound = getMobSound(mobId);
-        if (world instanceof ClientWorld && sound != null && random.nextInt(100) == 0) {
-            world.playSound(null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 0.5F, 0.5F);
+        if (world instanceof ClientLevel && sound != null && random.nextInt(100) == 0) {
+            world.playSound(null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, sound, SoundSource.BLOCKS, 0.5F, 0.5F);
         }
     }
 
     @Nullable
     private SoundEvent getMobSound(String mobId) {
         return switch (mobId) {
-            case "minecraft:allay" -> SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM;
-            case "minecraft:bat" -> SoundEvents.ENTITY_BAT_AMBIENT;
-            case "minecraft:bee" -> SoundEvents.ENTITY_BEE_POLLINATE;
-            case "minecraft:endermite" -> SoundEvents.ENTITY_ENDERMITE_AMBIENT;
-            case "minecraft:silverfish" -> SoundEvents.ENTITY_SILVERFISH_AMBIENT;
-            case "minecraft:slime" -> SoundEvents.ENTITY_SLIME_SQUISH;
-            case "minecraft:vex" -> SoundEvents.ENTITY_VEX_AMBIENT;
+            case "minecraft:allay" -> SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM;
+            case "minecraft:bat" -> SoundEvents.BAT_AMBIENT;
+            case "minecraft:bee" -> SoundEvents.BEE_POLLINATE;
+            case "minecraft:endermite" -> SoundEvents.ENDERMITE_AMBIENT;
+            case "minecraft:silverfish" -> SoundEvents.SILVERFISH_AMBIENT;
+            case "minecraft:slime" -> SoundEvents.SLIME_SQUISH;
+            case "minecraft:vex" -> SoundEvents.VEX_AMBIENT;
             default -> null;
         };
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         GlassJarBlockEntity entity;
 
         try {
@@ -392,73 +392,73 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         if (isFilledBucket(stack)) {
-            Identifier stackId = Registries.ITEM.getId(stack.getItem());
+            ResourceLocation stackId = BuiltInRegistries.ITEM.getKey(stack.getItem());
             Fluid bucketFluid = getFluidType(stackId);
 
-            if (!bucketFluid.matchesType(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
-                replaceHeldItemOrDont(world, player, stack, Items.BUCKET.getDefaultStack());
-                if (world.isClient()) {
+            if (!bucketFluid.isSame(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
+                replaceHeldItemOrDont(world, player, stack, Items.BUCKET.getDefaultInstance());
+                if (world.isClientSide()) {
                     entity.playEmptyBucketSound(bucketFluid);
                 }
-                entity.markDirty();
+                entity.setChanged();
             }
         } else if (isFilledBottle(stack)) {
             if (
-                stack.isOf(Items.HONEY_BOTTLE)
+                stack.is(Items.HONEY_BOTTLE)
                     && entity.tryInsert(ModFluids.HONEY_FLUID.get(), GlassJarBlockEntity.BOTTLE_SIZE)
             ) {
-                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
-                if (world.isClient()) {
+                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultInstance());
+                if (world.isClientSide()) {
                     entity.playEmptyBottleSound();
                 }
-                entity.markDirty();
+                entity.setChanged();
             } else if (
-                stack.isOf(Items.POTION)
-                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
-                    && stack.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
+                stack.is(Items.POTION)
+                    && stack.getComponents().get(DataComponents.POTION_CONTENTS) != null
+                    && stack.getComponents().get(DataComponents.POTION_CONTENTS).is(Potions.WATER)
                     && entity.tryInsert(Fluids.WATER, GlassJarBlockEntity.BOTTLE_SIZE)
             ) {
-                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultStack());
-                if (world.isClient()) {
+                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultInstance());
+                if (world.isClientSide()) {
                     entity.playEmptyBottleSound();
                 }
-                entity.markDirty();
+                entity.setChanged();
             }
         } else if (
-            stack.isOf(Items.GLASS_BOTTLE)
+            stack.is(Items.GLASS_BOTTLE)
                 && entity.hasFluid()
                 && (entity.getStoredFluid() == Fluids.WATER || entity.getStoredFluid() == ModFluids.HONEY_FLUID.get())
         ) {
             ItemStack bottle = entity.getBottle();
 
-            if (bottle != null && !bottle.isOf(Items.GLASS_BOTTLE)) {
+            if (bottle != null && !bottle.is(Items.GLASS_BOTTLE)) {
                 replaceHeldItemOrDont(world, player, stack, bottle);
-                if (world.isClient()) {
+                if (world.isClientSide()) {
                     entity.playFillBottleSound();
                 }
             }
         } else if (isEmptyBucket(stack) && entity.hasFluid()) {
             Fluid fluid = entity.getBucket();
 
-            if (!fluid.matchesType(Fluids.EMPTY)) {
-                if (fluid.matchesType(Fluids.WATER)) {
-                    replaceHeldItemOrDont(world, player, stack, Items.WATER_BUCKET.getDefaultStack());
-                } else if (fluid.matchesType(Fluids.LAVA)) {
-                    replaceHeldItemOrDont(world, player, stack, Items.LAVA_BUCKET.getDefaultStack());
-                } else if (fluid.matchesType(ModFluids.MILK_FLUID.get())) {
-                    replaceHeldItemOrDont(world, player, stack, Items.MILK_BUCKET.getDefaultStack());
-                } else if (fluid.matchesType(ModFluids.HONEY_FLUID.get())) {
-                    replaceHeldItemOrDont(world, player, stack, ModFluids.HONEY_BUCKET.get().getDefaultStack());
+            if (!fluid.isSame(Fluids.EMPTY)) {
+                if (fluid.isSame(Fluids.WATER)) {
+                    replaceHeldItemOrDont(world, player, stack, Items.WATER_BUCKET.getDefaultInstance());
+                } else if (fluid.isSame(Fluids.LAVA)) {
+                    replaceHeldItemOrDont(world, player, stack, Items.LAVA_BUCKET.getDefaultInstance());
+                } else if (fluid.isSame(ModFluids.MILK_FLUID.get())) {
+                    replaceHeldItemOrDont(world, player, stack, Items.MILK_BUCKET.getDefaultInstance());
+                } else if (fluid.isSame(ModFluids.HONEY_FLUID.get())) {
+                    replaceHeldItemOrDont(world, player, stack, ModFluids.HONEY_BUCKET.get().getDefaultInstance());
                 }
 
-                if (world.isClient()) {
+                if (world.isClientSide()) {
                     entity.playFillBucketSound(fluid);
                 }
-                entity.markDirty();
+                entity.setChanged();
             }
         } else if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
             if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
@@ -468,37 +468,37 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
                 ItemStack remainingStack = entity.tryInsert(stack);
 
                 if (remainingStack.isEmpty() || originalStack.getCount() > remainingStack.getCount()) {
-                    player.setStackInHand(Hand.MAIN_HAND, remainingStack);
-                    if (world.isClient()) {
+                    player.setItemInHand(InteractionHand.MAIN_HAND, remainingStack);
+                    if (world.isClientSide()) {
                         entity.playAddItemSound();
                     }
-                    entity.markDirty();
+                    entity.setChanged();
                 }
             }
-        } else if (player.isSneaking() && stack.isEmpty()) {
+        } else if (player.isShiftKeyDown() && stack.isEmpty()) {
             if (entity.hasItem()) {
-                ItemScatterer.spawn(
+                Containers.dropItemStack(
                     world,
                     player.getX(),
                     player.getY(),
                     player.getZ(),
                     entity.removeStack()
                 );
-                if (world.isClient()) {
+                if (world.isClientSide()) {
                     entity.playRemoveItemSound();
                 }
-                entity.markDirty();
+                entity.setChanged();
             }
         }
 
-        world.markDirty(pos);
+        world.blockEntityChanged(pos);
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (world.isClient()) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (world.isClientSide()) {
             return;
         }
 
@@ -516,23 +516,23 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         if (blockEntity instanceof GlassJarBlockEntity entity) {
-            if (!world.isClient()) {
+            if (!world.isClientSide()) {
                 if (entity.isEmpty() && !player.isCreative()) {
                     ItemEntity itemEntity = new ItemEntity(
                         world,
                         (double) pos.getX() + 0.5D,
                         (double) pos.getY() + 0.5D,
                         (double) pos.getZ() + 0.5D,
-                        ContainerItems.GLASS_JAR_ITEM.get().getDefaultStack()
+                        ContainerItems.GLASS_JAR_ITEM.get().getDefaultInstance()
                     );
 
-                    itemEntity.setToDefaultPickupDelay();
+                    itemEntity.setDefaultPickUpDelay();
 
-                    world.spawnEntity(itemEntity);
+                    world.addFreshEntity(itemEntity);
                 } else if (!entity.isEmpty()) {
                     ItemStack itemStack = entity.toItemStack();
 
@@ -544,27 +544,27 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
                         itemStack
                     );
 
-                    itemEntity.setToDefaultPickupDelay();
+                    itemEntity.setDefaultPickUpDelay();
 
-                    world.spawnEntity(itemEntity);
+                    world.addFreshEntity(itemEntity);
                 }
             }
         }
 
-        world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
 
         return state;
     }
 
-    private void replaceHeldItemOrDont(World world, PlayerEntity player, ItemStack heldItem, ItemStack item) {
+    private void replaceHeldItemOrDont(Level world, Player player, ItemStack heldItem, ItemStack item) {
         ItemStack remaining = heldItem.copy();
-        remaining.decrement(1);
+        remaining.shrink(1);
 
         if (remaining.getCount() == 0) {
-            player.setStackInHand(Hand.MAIN_HAND, item);
+            player.setItemInHand(InteractionHand.MAIN_HAND, item);
         } else {
-            player.setStackInHand(Hand.MAIN_HAND, remaining);
-            ItemScatterer.spawn(
+            player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
+            Containers.dropItemStack(
                 world,
                 player.getX(),
                 player.getY(),
@@ -632,21 +632,21 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 //    }
 
     @Override
-    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    public void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         BlockEntity entity = world.getBlockEntity(pos);
 
         if (entity instanceof GlassJarBlockEntity) {
-            world.updateComparators(pos, this);
+            world.updateNeighbourForOutputSignal(pos, this);
         }
 
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
-    private Fluid getFluidType(Identifier heldItemId) {
-        Optional<Fluid> foundFluid = Registries.FLUID.stream()
+    private Fluid getFluidType(ResourceLocation heldItemId) {
+        Optional<Fluid> foundFluid = BuiltInRegistries.FLUID.stream()
             .filter(fluid -> {
-                Item bucket = fluid.getBucketItem();
-                return Registries.ITEM.getId(bucket).compareTo(heldItemId) == 0;
+                Item bucket = fluid.getBucket();
+                return BuiltInRegistries.ITEM.getKey(bucket).compareTo(heldItemId) == 0;
             })
             .findFirst();
 
@@ -658,7 +658,7 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
             return false;
         }
 
-        return item.isOf(Items.BUCKET);
+        return item.is(Items.BUCKET);
     }
 
     private boolean isFilledBottle(ItemStack item) {
@@ -667,14 +667,14 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
         }
 
         if (
-            item.isOf(Items.POTION)
-                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS) != null
-                && item.getComponents().get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)
+            item.is(Items.POTION)
+                && item.getComponents().get(DataComponents.POTION_CONTENTS) != null
+                && item.getComponents().get(DataComponents.POTION_CONTENTS).is(Potions.WATER)
         ) {
             return true;
         }
 
-        return item.isOf(Items.HONEY_BOTTLE);
+        return item.is(Items.HONEY_BOTTLE);
     }
 
     private boolean isFilledBucket(ItemStack item) {
@@ -684,19 +684,19 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
 
         if (
             !(item.getItem() instanceof BucketItem)
-                && !item.getItem().getTranslationKey().equals(Items.MILK_BUCKET.asItem().getTranslationKey())
+                && !item.getItem().getDescriptionId().equals(Items.MILK_BUCKET.asItem().getDescriptionId())
         ) {
             return false;
         }
 
-        Identifier itemId = Registries.ITEM.getId(item.getItem());
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
 
-        return itemId.compareTo(Registries.ITEM.getId(Items.BUCKET.asItem())) != 0;
+        return itemId.compareTo(BuiltInRegistries.ITEM.getKey(Items.BUCKET.asItem())) != 0;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.union(MAIN_SHAPE, LID_SHAPE);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.or(MAIN_SHAPE, LID_SHAPE);
     }
 
     public static ItemStack getStackToRender(ItemStack stack) {
@@ -704,12 +704,12 @@ public class GlassJarBlock extends BlockWithEntity implements Waterloggable {
             return stack;
         }
 
-        Identifier stackId = ItemHelpers.getIdentifier(stack);
+        ResourceLocation stackId = ItemHelpers.getIdentifier(stack);
 
         if (!ALLOWED_ITEM_IDS.containsKey(stackId.toString())) {
             return stack;
         }
 
-        return Registries.ITEM.get(Identifier.of(ALLOWED_ITEM_IDS.get(stackId.toString()))).getDefaultStack();
+        return BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(ALLOWED_ITEM_IDS.get(stackId.toString()))).getDefaultInstance();
     }
 }

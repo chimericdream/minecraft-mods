@@ -1,20 +1,20 @@
 package com.chimericdream.minekea.client;
 
 import com.chimericdream.minekea.ModInfo;
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
 public class Keybindings {
-    public static final KeyBinding CYCLE_PAINTER_COLOR = new KeyBinding(
+    public static final KeyMapping CYCLE_PAINTER_COLOR = new KeyMapping(
         "key.minekea.items.painter.cycle_color",
-        InputUtil.Type.KEYSYM,
-        InputUtil.GLFW_KEY_EQUAL,
-        KeyBinding.Category.create(Identifier.of(ModInfo.MOD_ID, "keybinds"))
+        InputConstants.Type.KEYSYM,
+        InputConstants.KEY_EQUALS,
+        KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "keybinds"))
     );
 
     static {

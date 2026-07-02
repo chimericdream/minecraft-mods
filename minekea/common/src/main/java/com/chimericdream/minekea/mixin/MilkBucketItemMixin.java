@@ -1,30 +1,30 @@
 package com.chimericdream.minekea.mixin;
 
 import com.chimericdream.minekea.fluid.ModFluids;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FluidModificationItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DispensibleContainerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -33,84 +33,84 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
-public class MilkBucketItemMixin implements FluidModificationItem {
+public class MilkBucketItemMixin implements DispensibleContainerItem {
     @Inject(method = "useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;", at = @At("HEAD"), cancellable = true)
-    public void mk$useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
-        ItemStack stack = context.getStack();
-        ConsumableComponent consumableComponent = stack.get(DataComponentTypes.CONSUMABLE);
-        if (consumableComponent == null || !consumableComponent.equals(ConsumableComponents.MILK_BUCKET)) {
+    public void mk$useOnBlock(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+        ItemStack stack = context.getItemInHand();
+        Consumable consumableComponent = stack.get(DataComponents.CONSUMABLE);
+        if (consumableComponent == null || !consumableComponent.equals(Consumables.MILK_BUCKET)) {
             return;
         }
 
-        PlayerEntity player = context.getPlayer();
+        Player player = context.getPlayer();
 
-        if (player == null || player.isSneaking()) {
+        if (player == null || player.isShiftKeyDown()) {
             return;
         }
 
-        World world = player.getEntityWorld();
+        Level world = player.level();
 
-        BlockPos blockPos = context.getBlockPos();
-        Direction direction = context.getSide();
-        BlockPos offset = blockPos.offset(direction);
+        BlockPos blockPos = context.getClickedPos();
+        Direction direction = context.getClickedFace();
+        BlockPos offset = blockPos.relative(direction);
 
-        if (world.canEntityModifyAt(player, blockPos) && player.canPlaceOn(offset, direction, stack)) {
-            if (this.placeFluid(player, world, offset, null)) {
-                this.onEmptied(player, world, stack, offset);
+        if (world.mayInteract(player, blockPos) && player.mayUseItemAt(offset, direction, stack)) {
+            if (this.emptyContents(player, world, offset, null)) {
+                this.checkExtraContent(player, world, stack, offset);
 
-                if (player instanceof ServerPlayerEntity) {
-                    Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, offset, stack);
+                if (player instanceof ServerPlayer) {
+                    CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, offset, stack);
                 }
 
-                cir.setReturnValue(ActionResult.SUCCESS);
+                cir.setReturnValue(InteractionResult.SUCCESS);
 
                 return;
             }
         }
 
-        cir.setReturnValue(ActionResult.FAIL);
+        cir.setReturnValue(InteractionResult.FAIL);
     }
 
     @Override
-    public boolean placeFluid(@Nullable LivingEntity livingEntity, World world, BlockPos pos, @Nullable BlockHitResult hit) {
-        if (!(livingEntity instanceof PlayerEntity player)) {
+    public boolean emptyContents(@Nullable LivingEntity livingEntity, Level world, BlockPos pos, @Nullable BlockHitResult hit) {
+        if (!(livingEntity instanceof Player player)) {
             return false;
         }
 
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        boolean canBucketPlace = state.canBucketPlace(ModFluids.MILK_FLUID.get());
+        boolean canBucketPlace = state.canBeReplaced(ModFluids.MILK_FLUID.get());
         boolean preventBucketPlace = state.isAir()
             || canBucketPlace
-            || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(player, world, pos, state, ModFluids.MILK_FLUID.get());
+            || block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(player, world, pos, state, ModFluids.MILK_FLUID.get());
 
         if (!preventBucketPlace) {
-            return hit != null && this.placeFluid(player, world, hit.getBlockPos().offset(hit.getSide()), null);
-        } else if (world.getDimension().ultrawarm()) {
+            return hit != null && this.emptyContents(player, world, hit.getBlockPos().relative(hit.getDirection()), null);
+        } else if (world.dimensionType().ultraWarm()) {
             int i = pos.getX();
             int j = pos.getY();
             int k = pos.getZ();
 
-            world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
+            world.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
             for (int l = 0; l < 8; ++l) {
-                world.addImportantParticleClient(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0, 0.0, 0.0);
+                world.addAlwaysVisibleParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0, 0.0, 0.0);
             }
 
             return true;
-        } else if (block instanceof FluidFillable) {
-            ((FluidFillable) block).tryFillWithFluid(world, pos, state, ModFluids.MILK_FLUID.get().getStill(false));
+        } else if (block instanceof LiquidBlockContainer) {
+            ((LiquidBlockContainer) block).placeLiquid(world, pos, state, ModFluids.MILK_FLUID.get().getSource(false));
 
             this.mk$playEmptyingSound(player, world, pos);
 
             return true;
         } else {
-            if (!world.isClient() && canBucketPlace) {
-                world.breakBlock(pos, true);
+            if (!world.isClientSide() && canBucketPlace) {
+                world.destroyBlock(pos, true);
             }
 
-            if (!world.setBlockState(pos, ModFluids.MILK_FLUID.get().getDefaultState().getBlockState(), 11) && !state.getFluidState().isStill()) {
+            if (!world.setBlock(pos, ModFluids.MILK_FLUID.get().defaultFluidState().createLegacyBlock(), 11) && !state.getFluidState().isSource()) {
                 return false;
             } else {
                 this.mk$playEmptyingSound(player, world, pos);
@@ -121,8 +121,8 @@ public class MilkBucketItemMixin implements FluidModificationItem {
     }
 
     @Unique
-    protected void mk$playEmptyingSound(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos) {
-        world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        world.emitGameEvent(player, GameEvent.FLUID_PLACE, pos);
+    protected void mk$playEmptyingSound(@Nullable Player player, LevelAccessor world, BlockPos pos) {
+        world.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        world.gameEvent(player, GameEvent.FLUID_PLACE, pos);
     }
 }

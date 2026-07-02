@@ -1,34 +1,33 @@
 package com.chimericdream.lib.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-
 import java.util.function.Function;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public interface BlockDataGenerator {
-    default void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+    default void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
     }
 
-    default void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
     }
 
-    default void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
+    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
     }
 
-    default void configureBlockLootTables(BlockLootTableGenerator generator) {
+    default void configureBlockLootTables(BlockLootSubProvider generator) {
     }
 
-    default void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    default void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
     }
 
-    default void configureItemModels(ItemModelGenerator itemModelGenerator) {
+    default void configureItemModels(ItemModelGenerators itemModelGenerator) {
     }
 
     default void generateTextures() {

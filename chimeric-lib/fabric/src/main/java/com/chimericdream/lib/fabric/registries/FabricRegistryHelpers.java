@@ -2,7 +2,7 @@ package com.chimericdream.lib.fabric.registries;
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class FabricRegistryHelpers {
     public static void registerFlammableBlock(Block block) {

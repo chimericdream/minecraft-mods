@@ -4,14 +4,13 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.block.furniture.bookshelves.Bookshelves;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -37,7 +36,7 @@ public class Doors implements ModThingGroup {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static Item.Settings getItemSettings(String material) {
-        return new Item.Settings().arch$tab(ItemGroups.REDSTONE);
+    public static Item.Properties getItemSettings(String material) {
+        return new Item.Properties().arch$tab(CreativeModeTabs.REDSTONE_BLOCKS);
     }
 }

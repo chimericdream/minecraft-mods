@@ -4,43 +4,43 @@ import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.block.furniture.armoires.Armoires;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.EquippableComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class ArmoireBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
+public class ArmoireBlockEntity extends BlockEntity implements ImplementedInventory, WorldlyContainer {
     private final BlockState cachedBlockState;
-    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(16, ItemStack.EMPTY);
-    private final List<ArmorStandEntity> armorStandEntities = new ArrayList<>();
+    private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
+    private final List<ArmorStand> armorStandEntities = new ArrayList<>();
 
     public ArmoireBlockEntity(BlockPos pos, BlockState state) {
         this(Armoires.ARMOIRE_BLOCK_ENTITY.get(), pos, state);
@@ -53,23 +53,23 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public void setWorld(World world) {
-        super.setWorld(world);
+    public void setLevel(Level world) {
+        super.setLevel(world);
 
-        if (world instanceof ServerWorld && armorStandEntities.isEmpty()) {
+        if (world instanceof ServerLevel && armorStandEntities.isEmpty()) {
             initializeArmorStands(cachedBlockState);
         }
     }
 
     @Override
-    public void markRemoved() {
-        super.markRemoved();
+    public void setRemoved() {
+        super.setRemoved();
         destroyArmorStands();
     }
 
     @Override
-    public void cancelRemoval() {
-        super.cancelRemoval();
+    public void clearRemoved() {
+        super.clearRemoved();
         if (armorStandEntities.isEmpty()) {
             initializeArmorStands(cachedBlockState);
         }
@@ -81,7 +81,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     public void initializeArmorStands(BlockState armoireState) {
-        if (this.world == null) {
+        if (this.level == null) {
             return;
         }
 
@@ -90,10 +90,10 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
         Triplet<Double, Double, Double> stand3Pos = getArmorStandPosition(2, armoireState);
         Triplet<Double, Double, Double> stand4Pos = getArmorStandPosition(3, armoireState);
 
-        armorStandEntities.add(new ArmorStandEntity(this.world, stand1Pos.getA(), stand1Pos.getB(), stand1Pos.getC()));
-        armorStandEntities.add(new ArmorStandEntity(this.world, stand2Pos.getA(), stand2Pos.getB(), stand2Pos.getC()));
-        armorStandEntities.add(new ArmorStandEntity(this.world, stand3Pos.getA(), stand3Pos.getB(), stand3Pos.getC()));
-        armorStandEntities.add(new ArmorStandEntity(this.world, stand4Pos.getA(), stand4Pos.getB(), stand4Pos.getC()));
+        armorStandEntities.add(new ArmorStand(this.level, stand1Pos.getA(), stand1Pos.getB(), stand1Pos.getC()));
+        armorStandEntities.add(new ArmorStand(this.level, stand2Pos.getA(), stand2Pos.getB(), stand2Pos.getC()));
+        armorStandEntities.add(new ArmorStand(this.level, stand3Pos.getA(), stand3Pos.getB(), stand3Pos.getC()));
+        armorStandEntities.add(new ArmorStand(this.level, stand4Pos.getA(), stand4Pos.getB(), stand4Pos.getC()));
 
         float yaw = getArmorStandYaw(armoireState);
 
@@ -102,12 +102,12 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
             entity.setNoGravity(true);
             entity.setSmall(true);
             entity.setMarker(true);
-            entity.setYaw(yaw);
+            entity.setYRot(yaw);
 
             // Disable all in-world interactions
             entity.disabledSlots = 16191;
 
-            world.spawnEntity(entity);
+            level.addFreshEntity(entity);
         });
 
         for (int i = 0; i < items.size(); i++) {
@@ -119,13 +119,13 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
             int armorStand = Math.floorDiv(i, 4);
 
             if (!items.get(i).isEmpty()) {
-                armorStandEntities.get(armorStand).equipStack(itemSlot, items.get(i));
+                armorStandEntities.get(armorStand).setItemSlot(itemSlot, items.get(i));
             }
         }
     }
 
     private float getArmorStandYaw(BlockState armoireState) {
-        return switch (armoireState.get(ArmoireBlock.FACING)) {
+        return switch (armoireState.getValue(ArmoireBlock.FACING)) {
             case NORTH -> -90.0f;
             case SOUTH -> 90.0f;
             case EAST -> 0.0f;
@@ -135,7 +135,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     private Triplet<Double, Double, Double> getArmorStandPosition(int stand, BlockState armoireState) {
-        double xOffset = switch (armoireState.get(ArmoireBlock.FACING)) {
+        double xOffset = switch (armoireState.getValue(ArmoireBlock.FACING)) {
             case NORTH -> 0.1875 + (0.21875 * stand);
             case SOUTH -> 0.8125 - (0.21875 * stand);
             case EAST -> 0.59375;
@@ -143,7 +143,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
             default -> 0.0;
         };
 
-        double zOffset = switch (armoireState.get(ArmoireBlock.FACING)) {
+        double zOffset = switch (armoireState.getValue(ArmoireBlock.FACING)) {
             case NORTH -> 0.40625;
             case SOUTH -> 0.59375;
             case EAST -> 0.1875 + (0.21875 * stand);
@@ -152,9 +152,9 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
         };
 
         return new Triplet<>(
-            this.pos.getX() + xOffset,
-            this.pos.getY() + 0.78125,
-            this.pos.getZ() + zOffset
+            this.worldPosition.getX() + xOffset,
+            this.worldPosition.getY() + 0.78125,
+            this.worldPosition.getZ() + zOffset
         );
     }
 
@@ -171,7 +171,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     public boolean canAccept(int slot, ItemStack item) {
-        EquippableComponent component = item.get(DataComponentTypes.EQUIPPABLE);
+        Equippable component = item.get(DataComponents.EQUIPPABLE);
 
         if (hasItem(slot) || component == null) {
             return false;
@@ -189,42 +189,42 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return items;
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        Inventories.writeData(view, this.items);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        ContainerHelper.saveAllItems(view, this.items);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        Inventories.readData(view, this.items);
-        if (this.items.getFirst().isOf(Blocks.BARRIER.asItem())) {
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        ContainerHelper.loadAllItems(view, this.items);
+        if (this.items.getFirst().is(Blocks.BARRIER.asItem())) {
             this.items.set(0, ItemStack.EMPTY);
         }
 
-        if (this.world != null && this.world instanceof ServerWorld) {
+        if (this.level != null && this.level instanceof ServerLevel) {
             updateArmorStands();
         }
     }
 
     @Nullable
     @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+        return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public int[] getAvailableSlots(Direction var1) {
+    public int[] getSlotsForFace(Direction var1) {
         int[] result = new int[getItems().size()];
 
         for (int i = 0; i < result.length; i++) {
@@ -235,18 +235,18 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction) {
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction direction) {
         return false;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction) {
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
         return true;
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        ItemStack items = Inventories.removeStack(getItems(), slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        ItemStack items = ContainerHelper.takeItem(getItems(), slot);
 
         if (!items.isEmpty()) {
             handleSuccessfulRemoval(slot);
@@ -256,8 +256,8 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public ItemStack removeStack(int slot, int count) {
-        ItemStack result = Inventories.splitStack(getItems(), slot, count);
+    public ItemStack removeItem(int slot, int count) {
+        ItemStack result = ContainerHelper.removeItem(getItems(), slot, count);
 
         if (!result.isEmpty()) {
             handleSuccessfulRemoval(slot);
@@ -276,11 +276,11 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
         ItemStack toInsert = stack.copy();
         toInsert.setCount(1);
 
-        setStack(slot, toInsert);
+        setItem(slot, toInsert);
 
-        ret.decrement(1);
+        ret.shrink(1);
 
-        if (!ItemStack.areEqual(ret, stack)) {
+        if (!ItemStack.matches(ret, stack)) {
             handleSuccessfulInsert(slot, toInsert.copy());
         }
 
@@ -302,13 +302,13 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
             return;
         }
 
-        armorStandEntities.get(armorStandIndex).equipStack(itemSlot, inserted);
+        armorStandEntities.get(armorStandIndex).setItemSlot(itemSlot, inserted);
 
         MinekeaMod.LOGGER.info("inserting into slot: {}, armor stand: {}", slot, armorStandIndex);
     }
 
     private void handleSuccessfulRemoval(int slot) {
-        markDirty();
+        setChanged();
 
         if (slot % 4 >= 2) {
             return;
@@ -321,38 +321,38 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
             return;
         }
 
-        armorStandEntities.get(armorStandIndex).equipStack(itemSlot, ItemStack.EMPTY);
+        armorStandEntities.get(armorStandIndex).setItemSlot(itemSlot, ItemStack.EMPTY);
     }
 
     @Override
-    public void markDirty() {
-        if (this.world == null) {
+    public void setChanged() {
+        if (this.level == null) {
             return;
         }
 
-        markDirtyInWorld(this.world, this.pos, this.getCachedState());
+        markDirtyInWorld(this.level, this.worldPosition, this.getBlockState());
     }
 
-    protected void markDirtyInWorld(World world, BlockPos pos, BlockState state) {
-        world.markDirty(pos);
+    protected void markDirtyInWorld(Level world, BlockPos pos, BlockState state) {
+        world.blockEntityChanged(pos);
 
-        if (!world.isClient()) {
-            ((ServerWorld) world).getChunkManager().markForUpdate(pos); // Mark changes to be synced to the client.
+        if (!world.isClientSide()) {
+            ((ServerLevel) world).getChunkSource().blockChanged(pos); // Mark changes to be synced to the client.
         }
     }
 
     public void playAddItemSound(int slot) {
         switch (slot) {
-            case 0, 1 -> playSound(SoundEvents.ITEM_ARMOR_EQUIP_GENERIC.value());
-            default -> playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);
+            case 0, 1 -> playSound(SoundEvents.ARMOR_EQUIP_GENERIC.value());
+            default -> playSound(SoundEvents.ITEM_FRAME_ADD_ITEM);
         }
     }
 
     public void playSound(SoundEvent soundEvent) {
-        if (this.world == null) {
+        if (this.level == null) {
             return;
         }
 
-        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        this.level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 }

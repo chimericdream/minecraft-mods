@@ -6,33 +6,32 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Seats implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_CHAIR_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_CHAIR_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_STOOL_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_STOOL_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
 
     public static final List<RegistrySupplier<Block>> CHAIR_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> STOOL_BLOCKS = new ArrayList<>();
 
-    public static Identifier SEAT_ENTITY_ID = Identifier.of(ModInfo.MOD_ID, "entities/mounts/seat");
+    public static ResourceLocation SEAT_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/mounts/seat");
     public static final RegistrySupplier<EntityType<SimpleSeatEntity>> SEAT_ENTITY = REGISTRY_HELPER.registerEntityType(
         SEAT_ENTITY_ID,
-        () -> EntityType.Builder.create(SimpleSeatEntity::new, SpawnGroup.MISC).build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, SEAT_ENTITY_ID))
+        () -> EntityType.Builder.of(SimpleSeatEntity::new, MobCategory.MISC).build(ResourceKey.create(Registries.ENTITY_TYPE, SEAT_ENTITY_ID))
     );
 
     static {

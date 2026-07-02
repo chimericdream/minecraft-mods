@@ -2,25 +2,25 @@ package com.chimericdream.minekea.block.furniture.doors;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class BookshelfDoorBlock extends DoorBlock {
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfDoorBlock(BlockSetType type, BlockConfig config) {
-        super(type, AbstractBlock.Settings.copy(config.getIngredient()).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        super(type, BlockBehaviour.Properties.ofFullCopy(config.getIngredient()).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("furniture/doors/bookshelves/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/doors/bookshelves/%s", material));
     }
 }

@@ -8,46 +8,46 @@ import com.chimericdream.minekea.tag.MinekeaItemTags;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.TypedEntityData;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.NbtReadView;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Objects;
 import java.util.Optional;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class GlassJarBlockEntity extends BlockEntity implements ImplementedInventory {
     static final Logger LOGGER = LogUtils.getLogger();
@@ -83,35 +83,35 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void readDataFromItemStack(ItemStack stack) {
-        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) {
             return;
         }
 
-        NbtCompound nbt = customData.copyNbt();
-        this.readData(NbtReadView.create(ErrorReporter.EMPTY, BuiltinRegistries.createWrapperLookup(), nbt));
+        CompoundTag nbt = customData.copyTag();
+        this.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, VanillaRegistries.createLookup(), nbt));
     }
 
-    public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientWorld world) {
-        GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ORIGIN, ContainerBlocks.GLASS_JAR.get().getDefaultState());
+    public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientLevel world) {
+        GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ZERO, ContainerBlocks.GLASS_JAR.get().defaultBlockState());
 
-        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) {
             return entity;
         }
 
-        NbtCompound nbt = customData.copyNbt();
-        entity.readData(NbtReadView.create(ErrorReporter.EMPTY, BuiltinRegistries.createWrapperLookup(), nbt));
+        CompoundTag nbt = customData.copyTag();
+        entity.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, VanillaRegistries.createLookup(), nbt));
 
         return entity;
     }
 
     public ItemStack toItemStack() {
         ItemStack stack = new ItemStack(ContainerItems.GLASS_JAR_ITEM.get());
-        NbtWriteView writeView = NbtWriteView.create(ErrorReporter.EMPTY);
-        this.writeData(writeView);
+        TagValueOutput writeView = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+        this.saveAdditional(writeView);
 
-        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(writeView.getNbt()));
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(writeView.buildResult()));
 
         return stack;
     }
@@ -154,12 +154,12 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        if (storedFluid.matchesType(Fluids.EMPTY)) {
+        if (storedFluid.isSame(Fluids.EMPTY)) {
             return true;
         }
 
         // If this is the same fluid we're already storing, AND the jar isn't full yet
-        return fluid.matchesType(storedFluid) && (fluidAmountInBuckets + amount) <= MAX_BUCKETS;
+        return fluid.isSame(storedFluid) && (fluidAmountInBuckets + amount) <= MAX_BUCKETS;
     }
 
     public boolean tryInsert(Fluid fluid) {
@@ -188,19 +188,19 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         if (!this.hasFluid()) {
-            return Items.GLASS_BOTTLE.getDefaultStack();
+            return Items.GLASS_BOTTLE.getDefaultInstance();
         }
 
         ItemStack retStack = null;
 
         if (this.getStoredFluid() == Fluids.WATER) {
             fluidAmountInBuckets -= BOTTLE_SIZE;
-            retStack = Items.POTION.getDefaultStack();
+            retStack = Items.POTION.getDefaultInstance();
         }
 
         if (this.getStoredFluid() == ModFluids.HONEY_FLUID) {
             fluidAmountInBuckets -= BOTTLE_SIZE;
-            retStack = Items.HONEY_BOTTLE.getDefaultStack();
+            retStack = Items.HONEY_BOTTLE.getDefaultInstance();
         }
 
         if (fluidAmountInBuckets < BOTTLE_SIZE) {
@@ -232,7 +232,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        if (!item.isIn(MinekeaItemTags.GLASS_JAR_STORABLE)) {
+        if (!item.is(MinekeaItemTags.GLASS_JAR_STORABLE)) {
             return false;
         }
 
@@ -241,7 +241,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         // If this is the same item we're already storing, AND the jar isn't full yet
-        return item.isOf(storedItem.getItem()) && (fullItemStacks < MAX_ITEM_STACKS || storedItem.getCount() < storedItem.getMaxCount());
+        return item.is(storedItem.getItem()) && (fullItemStacks < MAX_ITEM_STACKS || storedItem.getCount() < storedItem.getMaxStackSize());
     }
 
     @Override
@@ -258,12 +258,12 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         // We're full. No dice
-        if (this.fullItemStacks == MAX_ITEM_STACKS && storedItem.getCount() == storedItem.getMaxCount()) {
+        if (this.fullItemStacks == MAX_ITEM_STACKS && storedItem.getCount() == storedItem.getMaxStackSize()) {
             return stack;
         }
 
         // You can't insert different things
-        if (!stack.isOf(storedItem.getItem())) {
+        if (!stack.is(storedItem.getItem())) {
             return stack;
         }
 
@@ -271,13 +271,13 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         int storedItemCount = storedItem.getCount();
 
         // The stack coming in fits completely in the main inventory slot
-        if (itemCount + storedItemCount <= storedItem.getMaxCount()) {
+        if (itemCount + storedItemCount <= storedItem.getMaxStackSize()) {
             storedItem.setCount(itemCount + storedItemCount);
 
             return ItemStack.EMPTY;
         }
 
-        int remainder = (itemCount + storedItemCount) - storedItem.getMaxCount();
+        int remainder = (itemCount + storedItemCount) - storedItem.getMaxStackSize();
 
         // The stack coming in will fill up the main slot, plus a little overflow, but that's ok because we have room.
         if (this.fullItemStacks < MAX_ITEM_STACKS) {
@@ -289,7 +289,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         // At this point, we have MAX_ITEM_STACKS already stored, but a little space left in the "real" inventory slot
-        storedItem.setCount(storedItem.getMaxCount());
+        storedItem.setCount(storedItem.getMaxStackSize());
 
         stack.setCount(remainder);
 
@@ -305,7 +305,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         ItemStack stack = storedItem.copy();
 
         if (fullItemStacks > 1 || (fullItemStacks == 1 && stack.isStackable())) {
-            stack.setCount(stack.getMaxCount());
+            stack.setCount(stack.getMaxStackSize());
             fullItemStacks -= 1;
 
             return stack;
@@ -349,15 +349,15 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        return !storedMobData.copyNbtWithoutId().isEmpty();
+        return !storedMobData.copyTagWithoutId().isEmpty();
     }
 
     public boolean hasFluid() {
-        return !storedFluid.matchesType(Fluids.EMPTY);
+        return !storedFluid.isSame(Fluids.EMPTY);
     }
 
     public boolean hasItem() {
-        if (!storedFluid.matchesType(Fluids.EMPTY)) {
+        if (!storedFluid.isSame(Fluids.EMPTY)) {
             return false;
         }
 
@@ -365,10 +365,10 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
 
-        view.putString(ITEM_KEY, storedItem.getRegistryEntry().getIdAsString());
+        view.putString(ITEM_KEY, storedItem.getItemHolder().getRegisteredName());
         view.putInt(ITEM_QTY_KEY, storedItem.getCount());
         view.putInt(ITEM_STACKS_KEY, fullItemStacks);
 
@@ -376,50 +376,50 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         writeMobData(view);
     }
 
-    private void writeFluidData(WriteView view) {
-        if (storedFluid.matchesType(Fluids.EMPTY)) {
+    private void writeFluidData(ValueOutput view) {
+        if (storedFluid.isSame(Fluids.EMPTY)) {
             view.putString(FLUID_KEY, "NONE");
             view.putDouble(FLUID_AMT_KEY, 0.0);
 
             return;
         }
 
-        view.putString(FLUID_KEY, Registries.FLUID.getId(storedFluid).toString());
+        view.putString(FLUID_KEY, BuiltInRegistries.FLUID.getKey(storedFluid).toString());
         view.putDouble(FLUID_AMT_KEY, fluidAmountInBuckets);
     }
 
-    private void writeMobData(WriteView view) {
+    private void writeMobData(ValueOutput view) {
         if (!hasMob()) {
             return;
         }
 
-        NbtCompound nbt = storedMobData.copyNbtWithoutId();
+        CompoundTag nbt = storedMobData.copyTagWithoutId();
         nbt.putString("id", storedMobId);
 
-        view.put("minecraft:entity_data", NbtCompound.CODEC, nbt);
+        view.store("minecraft:entity_data", CompoundTag.CODEC, nbt);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
 
         boolean hasFluid = readFluidData(view);
         boolean hasMob = readMobData(view);
 
         if (!hasFluid && !hasMob) {
-            String storedItemKey = view.getString(ITEM_KEY, null);
+            String storedItemKey = view.getStringOr(ITEM_KEY, null);
             if (storedItemKey != null) {
-                storedItem = Registries.ITEM.get(Identifier.of(storedItemKey)).getDefaultStack();
-                storedItem.setCount(view.getInt(ITEM_QTY_KEY, 1));
+                storedItem = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(storedItemKey)).getDefaultInstance();
+                storedItem.setCount(view.getIntOr(ITEM_QTY_KEY, 1));
             }
-            fullItemStacks = view.getInt(ITEM_STACKS_KEY, 0);
+            fullItemStacks = view.getIntOr(ITEM_STACKS_KEY, 0);
         }
 
-        markDirty();
+        setChanged();
     }
 
-    private boolean readFluidData(ReadView view) {
-        String fluidKey = view.getString(FLUID_KEY, "NONE");
+    private boolean readFluidData(ValueInput view) {
+        String fluidKey = view.getStringOr(FLUID_KEY, "NONE");
 
         if (fluidKey.equals("NONE")) {
             storedFluid = Fluids.EMPTY;
@@ -428,36 +428,36 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        storedFluid = Registries.FLUID.get(Identifier.of(fluidKey));
-        fluidAmountInBuckets = view.getDouble(FLUID_AMT_KEY, 0.0);
+        storedFluid = BuiltInRegistries.FLUID.getValue(ResourceLocation.parse(fluidKey));
+        fluidAmountInBuckets = view.getDoubleOr(FLUID_AMT_KEY, 0.0);
 
         return true;
     }
 
-    private boolean readMobData(ReadView view) {
-        NbtCompound components = view.read("components", NbtCompound.CODEC).orElse(null);
+    private boolean readMobData(ValueInput view) {
+        CompoundTag components = view.read("components", CompoundTag.CODEC).orElse(null);
         if (components == null) {
             return false;
         }
 
-        NbtCompound entityNbt = components.get("minecraft:entity_data", NbtCompound.CODEC).orElse(null);
+        CompoundTag entityNbt = components.read("minecraft:entity_data", CompoundTag.CODEC).orElse(null);
 
         if (entityNbt == null) {
             return false;
         }
 
-        String id = entityNbt.getString("id", null);
+        String id = entityNbt.getStringOr("id", null);
 
         if (id == null) {
             return false;
         }
 
-        Optional<EntityType<?>> entityType = EntityType.get(id);
+        Optional<EntityType<?>> entityType = EntityType.byString(id);
         if (entityType.isEmpty()) {
             return false;
         }
 
-        storedMobData = TypedEntityData.create(entityType.get(), entityNbt);
+        storedMobData = TypedEntityData.of(entityType.get(), entityNbt);
         storedMobId = id;
 
         return true;
@@ -495,37 +495,37 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 //    }
 
     @Override
-    public void markDirty() {
-        if (this.world != null) {
-            markDirtyInWorld(this.world, this.pos, this.getCachedState());
+    public void setChanged() {
+        if (this.level != null) {
+            markDirtyInWorld(this.level, this.worldPosition, this.getBlockState());
         }
     }
 
-    protected void markDirtyInWorld(World world, BlockPos pos, BlockState state) {
-        world.markDirty(pos);
+    protected void markDirtyInWorld(Level world, BlockPos pos, BlockState state) {
+        world.blockEntityChanged(pos);
 
-        if (!world.isClient()) {
-            ((ServerWorld) world).getChunkManager().markForUpdate(pos); // Mark changes to be synced to the client.
+        if (!world.isClientSide()) {
+            ((ServerLevel) world).getChunkSource().blockChanged(pos); // Mark changes to be synced to the client.
         }
     }
 
     @Nullable
     @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+    public void preRemoveSideEffects(BlockPos pos, BlockState oldState) {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+        return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return null;
     }
 
@@ -539,58 +539,58 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void playEmptyBottleSound() {
-        playSound(SoundEvents.ITEM_BOTTLE_EMPTY);
+        playSound(SoundEvents.BOTTLE_EMPTY);
     }
 
     public void playFillBottleSound() {
-        playSound(SoundEvents.ITEM_BOTTLE_FILL);
+        playSound(SoundEvents.BOTTLE_FILL);
     }
 
     public void playEmptyBucketSound(Fluid fluid) {
         if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
-            playSound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA);
+            playSound(SoundEvents.BUCKET_EMPTY_LAVA);
         } else {
-            playSound(SoundEvents.ITEM_BUCKET_EMPTY);
+            playSound(SoundEvents.BUCKET_EMPTY);
         }
     }
 
     public void playFillBucketSound(Fluid fluid) {
         if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
-            playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
+            playSound(SoundEvents.BUCKET_FILL_LAVA);
         } else {
-            playSound(SoundEvents.ITEM_BUCKET_FILL);
+            playSound(SoundEvents.BUCKET_FILL);
         }
     }
 
     public void playAddItemSound() {
-        playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM);
+        playSound(SoundEvents.ITEM_FRAME_ADD_ITEM);
     }
 
     public void playRemoveItemSound() {
-        playSound(SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM);
+        playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM);
     }
 
     public void playSound(SoundEvent soundEvent) {
-        if (this.world == null) {
+        if (this.level == null) {
             return;
         }
 
-        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        this.level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     public record OccupantData(TypedEntityData<EntityType<?>> entityData) {
-        public static final Codec<OccupantData> CODEC = RecordCodecBuilder.create((instance) -> instance.group(TypedEntityData.createCodec(EntityType.CODEC).fieldOf("entity_data").forGetter(OccupantData::entityData)).apply(instance, OccupantData::new));
-        public static final PacketCodec<RegistryByteBuf, OccupantData> PACKET_CODEC;
+        public static final Codec<OccupantData> CODEC = RecordCodecBuilder.create((instance) -> instance.group(TypedEntityData.codec(EntityType.CODEC).fieldOf("entity_data").forGetter(OccupantData::entityData)).apply(instance, OccupantData::new));
+        public static final StreamCodec<RegistryFriendlyByteBuf, OccupantData> PACKET_CODEC;
 
         public static OccupantData of(Entity entity) {
             OccupantData data;
-            try (ErrorReporter.Logging logging = new ErrorReporter.Logging(entity.getErrorReporterContext(), LOGGER)) {
-                NbtWriteView nbtWriteView = NbtWriteView.create(logging, entity.getRegistryManager());
-                entity.saveData(nbtWriteView);
+            try (ProblemReporter.ScopedCollector logging = new ProblemReporter.ScopedCollector(entity.problemPath(), LOGGER)) {
+                TagValueOutput nbtWriteView = TagValueOutput.createWithContext(logging, entity.registryAccess());
+                entity.save(nbtWriteView);
                 Objects.requireNonNull(nbtWriteView);
-                NbtCompound nbtCompound = nbtWriteView.getNbt();
+                CompoundTag nbtCompound = nbtWriteView.buildResult();
 
-                data = new OccupantData(TypedEntityData.create(entity.getType(), nbtCompound));
+                data = new OccupantData(TypedEntityData.of(entity.getType(), nbtCompound));
             }
 
             return data;
@@ -614,7 +614,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 //        }
 
         static {
-            PACKET_CODEC = PacketCodec.tuple(TypedEntityData.createPacketCodec(EntityType.PACKET_CODEC), OccupantData::entityData, OccupantData::new);
+            PACKET_CODEC = StreamCodec.composite(TypedEntityData.streamCodec(EntityType.STREAM_CODEC), OccupantData::entityData, OccupantData::new);
         }
     }
 }

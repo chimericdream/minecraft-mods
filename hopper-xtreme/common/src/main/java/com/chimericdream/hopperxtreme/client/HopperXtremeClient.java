@@ -8,14 +8,14 @@ import com.chimericdream.hopperxtreme.client.screen.HopperItemFilterScreen;
 import com.chimericdream.hopperxtreme.item.ModItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.gui.screens.MenuScreens;
 
 @Environment(EnvType.CLIENT)
 public class HopperXtremeClient {
     public static void onInitializeClient() {
-        HandledScreens.register(ModBlocks.FILTERED_HOPPER_SCREEN_HANDLER.get(), FilteredHopperScreen::new);
-        HandledScreens.register(ModBlocks.FILTERED_GLAZED_HOPPER_SCREEN_HANDLER.get(), FilteredGlazedHopperScreen::new);
-        HandledScreens.register(ModBlocks.GLAZED_HOPPER_SCREEN_HANDLER.get(), GlazedHopperScreen::new);
-        HandledScreens.register(ModItems.HOPPER_ITEM_FILTER_SCREEN_HANDLER.get(), HopperItemFilterScreen::new);
+        MenuScreens.register(ModBlocks.FILTERED_HOPPER_SCREEN_HANDLER.get(), FilteredHopperScreen::new);
+        MenuScreens.register(ModBlocks.FILTERED_GLAZED_HOPPER_SCREEN_HANDLER.get(), FilteredGlazedHopperScreen::new);
+        MenuScreens.register(ModBlocks.GLAZED_HOPPER_SCREEN_HANDLER.get(), GlazedHopperScreen::new);
+        MenuScreens.register(ModItems.HOPPER_ITEM_FILTER_SCREEN_HANDLER.get(), HopperItemFilterScreen::new);
     }
 }

@@ -2,31 +2,31 @@ package com.chimericdream.hopperxtreme.client.screen;
 
 import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.lib.screen.ScreenHelpers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class GlazedHopperScreenHandler extends ScreenHandler {
-    public static final Identifier SCREEN_ID = Identifier.of(ModInfo.MOD_ID, "gui/glazed_hopper");
+public class GlazedHopperScreenHandler extends AbstractContainerMenu {
+    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/glazed_hopper");
 
-    private final Inventory hopper;
+    private final Container hopper;
 
-    public GlazedHopperScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(null, syncId, playerInventory, new SimpleInventory(1));
+    public GlazedHopperScreenHandler(int syncId, Inventory playerInventory) {
+        this(null, syncId, playerInventory, new SimpleContainer(1));
     }
 
-    public GlazedHopperScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory hopper) {
+    public GlazedHopperScreenHandler(MenuType<?> type, int syncId, Inventory playerInventory, Container hopper) {
         super(type, syncId);
 
         this.hopper = hopper;
 
-        hopper.onOpen(playerInventory.player);
+        hopper.startOpen(playerInventory.player);
 
         this.addSlot(new Slot(this.hopper, 0, 80, 20));
 
@@ -51,35 +51,35 @@ public class GlazedHopperScreenHandler extends ScreenHandler {
         }
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return hopper;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.hopper.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.hopper.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+    public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
         Slot slot = this.slots.get(invSlot);
-        if (slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
+        if (slot.hasItem()) {
+            ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            if (invSlot < this.hopper.size()) {
-                if (!this.insertItem(originalStack, this.hopper.size(), this.slots.size(), true)) {
+            if (invSlot < this.hopper.getContainerSize()) {
+                if (!this.moveItemStackTo(originalStack, this.hopper.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.hopper.size(), false)) {
+            } else if (!this.moveItemStackTo(originalStack, 0, this.hopper.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
 
             if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.setByPlayer(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
         }
 

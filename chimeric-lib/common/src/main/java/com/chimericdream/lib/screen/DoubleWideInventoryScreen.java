@@ -1,22 +1,22 @@
 package com.chimericdream.lib.screen;
 
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 
-public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends HandledScreen<Handler> {
-    private static final Identifier BG = Identifier.ofVanilla("textures/gui/demo_background.png");
+public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> extends AbstractContainerScreen<Handler> {
+    private static final ResourceLocation BG = ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
     private static final int BG_CORNER = 4;
     private static final int BG_X = 0;
     private static final int BG_Y = 0;
     private static final int BG_W = 350;
     private static final int BG_H = 344;
 
-    private static final Identifier CONTAINER = Identifier.ofVanilla("textures/gui/container/generic_54.png");
+    private static final ResourceLocation CONTAINER = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
     private static final int CINV_X = 7;
     private static final int CINV_Y = 17;
     private static final int CINV_COLS = 9;
@@ -38,32 +38,32 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
     private final int numCols;
     private final int numRows;
 
-    public DoubleWideInventoryScreen(Handler handler, int numRows, PlayerInventory inventory, Text title) {
+    public DoubleWideInventoryScreen(Handler handler, int numRows, Inventory inventory, Component title) {
         this(handler, 18, numRows, inventory, title);
     }
 
-    public DoubleWideInventoryScreen(Handler handler, int numCols, int numRows, PlayerInventory inventory, Text title) {
+    public DoubleWideInventoryScreen(Handler handler, int numCols, int numRows, Inventory inventory, Component title) {
         super(handler, inventory, title);
         this.numCols = numCols;
         this.numRows = numRows;
 
-        this.backgroundWidth = PL + (this.numCols * SLOT_SIZE) + PR;
-        this.backgroundHeight = PT + (this.numRows * SLOT_SIZE) + CINV_MB + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB;
-        this.titleX = PL + 1 - CINV_X;
-        this.titleY = PT - TEXT_LH;
-        this.playerInventoryTitleX = PL + ((this.numCols - CINV_COLS) * (SLOT_SIZE / 2)) + 1 - PINV_X;
-        this.playerInventoryTitleY = this.backgroundHeight - (TEXT_LH + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB);
+        this.imageWidth = PL + (this.numCols * SLOT_SIZE) + PR;
+        this.imageHeight = PT + (this.numRows * SLOT_SIZE) + CINV_MB + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB;
+        this.titleLabelX = PL + 1 - CINV_X;
+        this.titleLabelY = PT - TEXT_LH;
+        this.inventoryLabelX = PL + ((this.numCols - CINV_COLS) * (SLOT_SIZE / 2)) + 1 - PINV_X;
+        this.inventoryLabelY = this.imageHeight - (TEXT_LH + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB);
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(context, mouseX, mouseY);
+        this.renderTooltip(context, mouseX, mouseY);
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
 //        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
 //        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -71,23 +71,23 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         this.drawSlotTexture(context);
     }
 
-    private void drawBackgroundTexture(DrawContext context) {
-        int hnum = (this.backgroundWidth - (BG_CORNER * 2)) / (BG_W - (BG_CORNER * 2));
-        int hrem = (this.backgroundWidth - (BG_CORNER * 2)) % (BG_W - (BG_CORNER * 2));
+    private void drawBackgroundTexture(GuiGraphics context) {
+        int hnum = (this.imageWidth - (BG_CORNER * 2)) / (BG_W - (BG_CORNER * 2));
+        int hrem = (this.imageWidth - (BG_CORNER * 2)) % (BG_W - (BG_CORNER * 2));
 
-        int vnum = (this.backgroundHeight - (BG_CORNER * 2)) / (BG_H - (BG_CORNER * 2));
-        int vrem = (this.backgroundHeight - (BG_CORNER * 2)) % (BG_H - (BG_CORNER * 2));
+        int vnum = (this.imageHeight - (BG_CORNER * 2)) / (BG_H - (BG_CORNER * 2));
+        int vrem = (this.imageHeight - (BG_CORNER * 2)) % (BG_H - (BG_CORNER * 2));
 
         //
         // corner
         //
 
         // left-top
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x,
-            this.y,
+            this.leftPos,
+            this.topPos,
             BG_X,
             BG_Y,
             BG_CORNER,
@@ -97,11 +97,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // left-bottom
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x,
-            this.y + this.backgroundHeight - BG_CORNER,
+            this.leftPos,
+            this.topPos + this.imageHeight - BG_CORNER,
             BG_X,
             BG_H - BG_CORNER,
             BG_CORNER,
@@ -111,11 +111,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // right-top
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + this.backgroundWidth - BG_CORNER,
-            this.y,
+            this.leftPos + this.imageWidth - BG_CORNER,
+            this.topPos,
             BG_W - BG_CORNER,
             BG_Y,
             BG_CORNER,
@@ -125,11 +125,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // right-bottom
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + this.backgroundWidth - BG_CORNER,
-            this.y + this.backgroundHeight - BG_CORNER,
+            this.leftPos + this.imageWidth - BG_CORNER,
+            this.topPos + this.imageHeight - BG_CORNER,
             BG_W - BG_CORNER,
             BG_H - BG_CORNER,
             BG_CORNER,
@@ -144,11 +144,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
             // top
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
-                this.y,
+                this.leftPos + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
+                this.topPos,
                 BG_CORNER,
                 BG_Y,
                 BG_W - BG_CORNER * 2,
@@ -158,11 +158,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             );
 
             // bottom
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
-                this.y + this.backgroundHeight - BG_CORNER,
+                this.leftPos + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
+                this.topPos + this.imageHeight - BG_CORNER,
                 BG_CORNER,
                 BG_H - BG_CORNER,
                 BG_W - BG_CORNER * 2,
@@ -174,11 +174,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             // left
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x,
-                this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
+                this.leftPos,
+                this.topPos + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_X,
                 BG_CORNER,
                 BG_CORNER,
@@ -188,11 +188,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             );
 
             // right
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + this.backgroundWidth - BG_CORNER + 50,
-                this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
+                this.leftPos + this.imageWidth - BG_CORNER + 50,
+                this.topPos + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_W - BG_CORNER,
                 BG_CORNER,
                 BG_CORNER,
@@ -203,11 +203,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         }
 
         // top
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
-            this.y,
+            this.leftPos + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
+            this.topPos,
             BG_CORNER,
             BG_Y,
             hrem,
@@ -217,11 +217,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // bottom
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
-            this.y + this.backgroundHeight - BG_CORNER,
+            this.leftPos + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
+            this.topPos + this.imageHeight - BG_CORNER,
             BG_CORNER,
             BG_H - BG_CORNER,
             hrem,
@@ -231,11 +231,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // left
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x,
-            this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
+            this.leftPos,
+            this.topPos + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_X,
             BG_CORNER,
             BG_CORNER,
@@ -245,11 +245,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
 
         // right
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + this.backgroundWidth - BG_CORNER,
-            this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
+            this.leftPos + this.imageWidth - BG_CORNER,
+            this.topPos + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_W - BG_CORNER,
             BG_CORNER,
             BG_CORNER,
@@ -264,11 +264,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             for (int hcnt = 0; hcnt < hnum; ++hcnt) {
-                context.drawTexture(
+                context.blit(
                     RenderPipelines.GUI_TEXTURED,
                     BG,
-                    this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
-                    this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
+                    this.leftPos + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
+                    this.topPos + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                     BG_CORNER,
                     BG_CORNER,
                     BG_W - BG_CORNER * 2,
@@ -278,11 +278,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
                 );
             }
 
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
-                this.y + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
+                this.leftPos + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
+                this.topPos + BG_CORNER + vcnt * (BG_H - BG_CORNER * 2),
                 BG_CORNER,
                 BG_CORNER,
                 hrem,
@@ -293,11 +293,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         }
 
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BG,
-                this.x + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
-                this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
+                this.leftPos + BG_CORNER + hcnt * (BG_W - BG_CORNER * 2),
+                this.topPos + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
                 BG_CORNER,
                 BG_CORNER,
                 BG_W - BG_CORNER * 2,
@@ -307,11 +307,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             );
         }
 
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             BG,
-            this.x + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
-            this.y + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
+            this.leftPos + BG_CORNER + hnum * (BG_W - BG_CORNER * 2),
+            this.topPos + BG_CORNER + vnum * (BG_H - BG_CORNER * 2),
             BG_CORNER,
             BG_CORNER,
             hrem,
@@ -321,7 +321,7 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         );
     }
 
-    private void drawSlotTexture(DrawContext context) {
+    private void drawSlotTexture(GuiGraphics context) {
         //
         // container inventory
         //
@@ -334,11 +334,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
 
         for (int vcnt = 0; vcnt < vnum; ++vcnt) {
             for (int hcnt = 0; hcnt < hnum; ++hcnt) {
-                context.drawTexture(
+                context.blit(
                     RenderPipelines.GUI_TEXTURED,
                     CONTAINER,
-                    this.x + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
-                    this.y + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
+                    this.leftPos + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
+                    this.topPos + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
                     CINV_X,
                     CINV_Y,
                     CINV_COLS * SLOT_SIZE,
@@ -348,11 +348,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
                 );
             }
 
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 CONTAINER,
-                this.x + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
-                this.y + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
+                this.leftPos + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
+                this.topPos + CINV_Y + vcnt * CINV_ROWS * SLOT_SIZE,
                 CINV_X,
                 CINV_Y,
                 hrem,
@@ -363,11 +363,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         }
 
         for (int hcnt = 0; hcnt < hnum; ++hcnt) {
-            context.drawTexture(
+            context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 CONTAINER,
-                this.x + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
-                this.y + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
+                this.leftPos + CINV_X + hcnt * CINV_COLS * SLOT_SIZE,
+                this.topPos + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
                 CINV_X,
                 CINV_Y,
                 CINV_COLS * SLOT_SIZE,
@@ -377,11 +377,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
             );
         }
 
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             CONTAINER,
-            this.x + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
-            this.y + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
+            this.leftPos + CINV_X + hnum * CINV_COLS * SLOT_SIZE,
+            this.topPos + CINV_Y + vnum * CINV_ROWS * SLOT_SIZE,
             CINV_X,
             CINV_Y,
             hrem,
@@ -394,11 +394,11 @@ public class DoubleWideInventoryScreen<Handler extends ScreenHandler> extends Ha
         // player inventory
         //
 
-        context.drawTexture(
+        context.blit(
             RenderPipelines.GUI_TEXTURED,
             CONTAINER,
-            this.x + CINV_X + (this.numCols - CINV_COLS) * (SLOT_SIZE / 2),
-            this.y + CINV_Y + this.numRows * SLOT_SIZE + CINV_MB,
+            this.leftPos + CINV_X + (this.numCols - CINV_COLS) * (SLOT_SIZE / 2),
+            this.topPos + CINV_Y + this.numRows * SLOT_SIZE + CINV_MB,
             PINV_X,
             PINV_Y,
             PINV_W,

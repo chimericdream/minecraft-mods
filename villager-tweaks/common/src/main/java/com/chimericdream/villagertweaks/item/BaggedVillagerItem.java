@@ -1,76 +1,76 @@
 package com.chimericdream.villagertweaks.item;
 
 import com.chimericdream.villagertweaks.ModInfo;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.Items;
-import net.minecraft.storage.NbtReadView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
 
-import static net.minecraft.block.Block.sideCoversSmallSquare;
+import static net.minecraft.world.level.block.Block.canSupportCenter;
 
 public class BaggedVillagerItem extends Item {
-    public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "bagged_villager");
+    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "bagged_villager");
 
-    public BaggedVillagerItem(Settings settings) {
+    public BaggedVillagerItem(Properties settings) {
         super(settings);
     }
 
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
 
-        if (context.getSide() != Direction.UP || !sideCoversSmallSquare(world, context.getBlockPos(), Direction.UP)) {
-            return ActionResult.FAIL;
+        if (context.getClickedFace() != Direction.UP || !canSupportCenter(world, context.getClickedPos(), Direction.UP)) {
+            return InteractionResult.FAIL;
         }
 
-        if (!(world.getBlockState(context.getBlockPos().up(1)).isAir() && world.getBlockState(context.getBlockPos().up(2)).isAir())) {
-            return ActionResult.FAIL;
+        if (!(world.getBlockState(context.getClickedPos().above(1)).isAir() && world.getBlockState(context.getClickedPos().above(2)).isAir())) {
+            return InteractionResult.FAIL;
         }
 
-        return spawnVillager(context.getWorld(), context.getBlockPos().up(), context.getPlayer(), context.getHand());
+        return spawnVillager(context.getLevel(), context.getClickedPos().above(), context.getPlayer(), context.getHand());
     }
 
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (!user.isOnGround()) {
-            return ActionResult.PASS;
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!user.onGround()) {
+            return InteractionResult.PASS;
         }
 
-        return spawnVillager(world, user.getBlockPos(), user, hand);
+        return spawnVillager(world, user.blockPosition(), user, hand);
     }
 
-    private ActionResult spawnVillager(World world, BlockPos pos, PlayerEntity user, Hand hand) {
-        VillagerEntity villager = EntityType.VILLAGER.create(world, SpawnReason.BUCKET);
+    private InteractionResult spawnVillager(Level world, BlockPos pos, Player user, InteractionHand hand) {
+        Villager villager = EntityType.VILLAGER.create(world, EntitySpawnReason.BUCKET);
         assert villager != null;
 
         try {
-            NbtComponent component = user.getStackInHand(hand).get(DataComponentTypes.CUSTOM_DATA);
+            CustomData component = user.getItemInHand(hand).get(DataComponents.CUSTOM_DATA);
             assert component != null;
-            ReadView view = NbtReadView.create(ErrorReporter.EMPTY, user.getRegistryManager(), component.copyNbt());
+            ValueInput view = TagValueInput.create(ProblemReporter.DISCARDING, user.registryAccess(), component.copyTag());
 
-            villager.setCustomName(user.getStackInHand(hand).get(DataComponentTypes.CUSTOM_NAME));
-            villager.readCustomData(view);
-            villager.refreshPositionAndAngles(pos, 0, 0);
+            villager.setCustomName(user.getItemInHand(hand).get(DataComponents.CUSTOM_NAME));
+            villager.readAdditionalSaveData(view);
+            villager.snapTo(pos, 0, 0);
 
-            world.spawnEntity(villager);
+            world.addFreshEntity(villager);
 
-            user.setStackInHand(hand, Items.BUNDLE.getDefaultStack());
+            user.setItemInHand(hand, Items.BUNDLE.getDefaultInstance());
         } catch (Exception e) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

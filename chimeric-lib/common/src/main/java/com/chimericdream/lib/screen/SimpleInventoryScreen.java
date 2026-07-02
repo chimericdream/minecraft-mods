@@ -1,35 +1,35 @@
 package com.chimericdream.lib.screen;
 
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 
-public class SimpleInventoryScreen<Handler extends ScreenHandler> extends HandledScreen<Handler> {
-    private static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/container/generic_54.png");
+public class SimpleInventoryScreen<Handler extends AbstractContainerMenu> extends AbstractContainerScreen<Handler> {
+    private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
     private final int numRows;
 
-    public SimpleInventoryScreen(Handler handler, int numRows, PlayerInventory inventory, Text title) {
+    public SimpleInventoryScreen(Handler handler, int numRows, Inventory inventory, Component title) {
         super(handler, inventory, title);
         this.numRows = numRows;
-        this.backgroundHeight = 114 + this.numRows * ScreenHelpers.ROW_HEIGHT;
-        this.playerInventoryTitleY = this.backgroundHeight - 94;
+        this.imageHeight = 114 + this.numRows * ScreenHelpers.ROW_HEIGHT;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(context, mouseX, mouseY);
+        this.renderTooltip(context, mouseX, mouseY);
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        int x = (width - backgroundWidth) / 2;
-        int y = (height - backgroundHeight) / 2;
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, 256, 256);
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 }

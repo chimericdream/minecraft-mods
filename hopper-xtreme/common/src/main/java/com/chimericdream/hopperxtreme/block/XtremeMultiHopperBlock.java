@@ -2,36 +2,36 @@ package com.chimericdream.hopperxtreme.block;
 
 import com.chimericdream.hopperxtreme.entity.XtremeMultiHopperBlockEntity;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
 
 public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
-    public static final MapCodec<XtremeMultiHopperBlock> CODEC = createCodec(XtremeMultiHopperBlock::create);
+    public static final MapCodec<XtremeMultiHopperBlock> CODEC = simpleCodec(XtremeMultiHopperBlock::create);
 
     private final int cooldownInTicks;
     private final String baseKey;
     private final boolean withFilter;
 
-    static XtremeMultiHopperBlock create(Settings settings) {
+    static XtremeMultiHopperBlock create(Properties settings) {
         return new XtremeMultiHopperBlock(8, "default");
     }
 
@@ -41,13 +41,13 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
 
     public XtremeMultiHopperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
         super(
-            Settings.copy(Blocks.HOPPER)
-                .mapColor(MapColor.STONE_GRAY)
-                .requiresTool()
+            Properties.ofFullCopy(Blocks.HOPPER)
+                .mapColor(MapColor.STONE)
+                .requiresCorrectToolForDrops()
                 .strength(3.0F, 4.8F)
-                .sounds(BlockSoundGroup.METAL)
-                .nonOpaque()
-                .registryKey(REGISTRY_HELPER.makeBlockRegistryKey(baseKey))
+                .sound(SoundType.METAL)
+                .noOcclusion()
+                .setId(REGISTRY_HELPER.makeBlockRegistryKey(baseKey))
         );
 
         this.cooldownInTicks = cooldownInTicks;
@@ -64,57 +64,57 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected MapCodec<XtremeMultiHopperBlock> getCodec() {
+    protected MapCodec<XtremeMultiHopperBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new XtremeMultiHopperBlockEntity(pos, state, cooldownInTicks, withFilter);
     }
 
     @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient() ? null : validateTicker(type, XTREME_MULTI_HOPPER_BLOCK_ENTITY.get(), XtremeMultiHopperBlockEntity::serverTick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+        return world.isClientSide() ? null : createTickerHelper(type, XTREME_MULTI_HOPPER_BLOCK_ENTITY.get(), XtremeMultiHopperBlockEntity::serverTick);
     }
 
     @Override
-    protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!oldState.isOf(state.getBlock())) {
+    protected void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
+        if (!oldState.is(state.getBlock())) {
             this.updateEnabled(world, pos, state);
         }
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
-                player.openHandledScreen((XtremeMultiHopperBlockEntity) blockEntity);
-                player.incrementStat(Stats.INSPECT_HOPPER);
+                player.openMenu((XtremeMultiHopperBlockEntity) blockEntity);
+                player.awardStat(Stats.INSPECT_HOPPER);
             }
 
-            return ActionResult.CONSUME;
+            return InteractionResult.CONSUME;
         }
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
     }
 
-    private void updateEnabled(World world, BlockPos pos, BlockState state) {
-        boolean bl = !world.isReceivingRedstonePower(pos);
-        if (bl != state.get(ENABLED)) {
-            world.setBlockState(pos, state.with(ENABLED, bl), 2);
+    private void updateEnabled(Level world, BlockPos pos, BlockState state) {
+        boolean bl = !world.hasNeighborSignal(pos);
+        if (bl != state.getValue(ENABLED)) {
+            world.setBlock(pos, state.setValue(ENABLED, bl), 2);
         }
 
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
             XtremeMultiHopperBlockEntity.onEntityCollided(world, pos, state, entity, (XtremeMultiHopperBlockEntity) blockEntity);

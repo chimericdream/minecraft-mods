@@ -3,280 +3,280 @@ package com.chimericdream.minekea.item.containers;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BlockStateComponent;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.TypedEntityData;
-import net.minecraft.entity.mob.EndermiteEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.SilverfishEntity;
-import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.mob.VexEntity;
-import net.minecraft.entity.passive.AllayEntity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.monster.Endermite;
+import net.minecraft.world.entity.monster.Silverfish;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.BlockItemStateProperties;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class GlassJarItem extends BlockItem {
-    public GlassJarItem(RegistrySupplier<Block> block, Settings settings) {
-        super(block.get(), settings.registryKey(REGISTRY_HELPER.makeItemRegistryKey(GlassJarBlock.BLOCK_ID)));
+    public GlassJarItem(RegistrySupplier<Block> block, Properties settings) {
+        super(block.get(), settings.setId(REGISTRY_HELPER.makeItemRegistryKey(GlassJarBlock.BLOCK_ID)));
     }
 
     @Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
-        if (entity instanceof MobEntity mob && canCaptureMob(mob) && !hasStoredMob(stack)) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        if (entity instanceof Mob mob && canCaptureMob(mob) && !hasStoredMob(stack)) {
             mob.stopRiding();
-            mob.removeAllPassengers();
+            mob.ejectPassengers();
 
             ItemStack newStack = new ItemStack(this);
             newStack.setCount(1);
 
             TypedEntityData<EntityType<?>> entityData = GlassJarBlockEntity.OccupantData.of(mob).entityData();
-            newStack.set(DataComponentTypes.ENTITY_DATA, entityData);
+            newStack.set(DataComponents.ENTITY_DATA, entityData);
 
-            NbtCompound hasCustomNameNbt = new NbtCompound();
+            CompoundTag hasCustomNameNbt = new CompoundTag();
             if (mob.hasCustomName()) {
                 hasCustomNameNbt.putBoolean("HasCustomName", true);
-                newStack.set(DataComponentTypes.CUSTOM_NAME, mob.getCustomName());
+                newStack.set(DataComponents.CUSTOM_NAME, mob.getCustomName());
             } else {
                 hasCustomNameNbt.putBoolean("HasCustomName", false);
-                newStack.set(DataComponentTypes.CUSTOM_NAME, getDefaultName(mob));
+                newStack.set(DataComponents.CUSTOM_NAME, getDefaultName(mob));
             }
-            newStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(hasCustomNameNbt));
+            newStack.set(DataComponents.CUSTOM_DATA, CustomData.of(hasCustomNameNbt));
 
-            player.giveItemStack(newStack);
+            player.addItem(newStack);
             if (!player.isCreative()) {
-                stack.decrement(1);
+                stack.shrink(1);
             }
 
             mob.discard();
 
-            World world = player.getEntityWorld();
-            BlockPos blockPos = player.getBlockPos();
+            Level world = player.level();
+            BlockPos blockPos = player.blockPosition();
 
             world.playSound(
                 null,
                 (double) blockPos.getX() + 0.5,
                 (double) blockPos.getY() + 0.5,
                 (double) blockPos.getZ() + 0.5,
-                SoundEvents.ENTITY_ITEM_PICKUP,
-                SoundCategory.BLOCKS,
+                SoundEvents.ITEM_PICKUP,
+                SoundSource.BLOCKS,
                 0.5F,
                 0.5F
             );
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        ItemStack stack = context.getStack();
+    public InteractionResult useOn(UseOnContext context) {
+        ItemStack stack = context.getItemInHand();
 
-        World world = context.getWorld();
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+        Level world = context.getLevel();
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        if (context.getPlayer() != null && context.getPlayer().isSneaking() && hasStoredMob(stack)) {
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown() && hasStoredMob(stack)) {
             BlockPos releasePos = this.getReleasePosition(context);
 
-            this.releaseContents(context.getPlayer(), (ServerWorld) world, stack, releasePos);
+            this.releaseContents(context.getPlayer(), (ServerLevel) world, stack, releasePos);
 
-            return ActionResult.CONSUME;
+            return InteractionResult.CONSUME;
         }
 
-        return this.place(new ItemPlacementContext(context));
+        return this.place(new BlockPlaceContext(context));
     }
 
     @Override
-    public ActionResult place(ItemPlacementContext context) {
-        if (!this.getBlock().isEnabled(context.getWorld().getEnabledFeatures())) {
-            return ActionResult.FAIL;
+    public InteractionResult place(BlockPlaceContext context) {
+        if (!this.getBlock().isEnabled(context.getLevel().enabledFeatures())) {
+            return InteractionResult.FAIL;
         }
 
         if (!context.canPlace()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        ItemPlacementContext itemPlacementContext = this.getPlacementContext(context);
+        BlockPlaceContext itemPlacementContext = this.updatePlacementContext(context);
         if (itemPlacementContext == null) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         BlockState blockState = this.getPlacementState(itemPlacementContext);
         if (blockState == null) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        if (!this.place(itemPlacementContext, blockState)) {
-            return ActionResult.FAIL;
+        if (!this.placeBlock(itemPlacementContext, blockState)) {
+            return InteractionResult.FAIL;
         }
 
-        BlockPos blockPos = itemPlacementContext.getBlockPos();
-        World world = itemPlacementContext.getWorld();
-        PlayerEntity playerEntity = itemPlacementContext.getPlayer();
-        ItemStack itemStack = itemPlacementContext.getStack();
+        BlockPos blockPos = itemPlacementContext.getClickedPos();
+        Level world = itemPlacementContext.getLevel();
+        Player playerEntity = itemPlacementContext.getPlayer();
+        ItemStack itemStack = itemPlacementContext.getItemInHand();
         BlockState blockState2 = world.getBlockState(blockPos);
 
-        if (blockState2.isOf(blockState.getBlock())) {
-            blockState2 = this.placeFromNbt(blockPos, world, itemStack, blockState2);
-            this.postPlacement(blockPos, world, playerEntity, itemStack, blockState2);
-            copyComponentsToBlockEntity(world, blockPos, itemStack);
-            blockState2.getBlock().onPlaced(world, blockPos, blockState2, playerEntity, itemStack);
-            if (playerEntity instanceof ServerPlayerEntity) {
-                Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos, itemStack);
+        if (blockState2.is(blockState.getBlock())) {
+            blockState2 = this.updateBlockStateFromTag(blockPos, world, itemStack, blockState2);
+            this.updateCustomBlockEntityTag(blockPos, world, playerEntity, itemStack, blockState2);
+            updateBlockEntityComponents(world, blockPos, itemStack);
+            blockState2.getBlock().setPlacedBy(world, blockPos, blockState2, playerEntity, itemStack);
+            if (playerEntity instanceof ServerPlayer) {
+                CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) playerEntity, blockPos, itemStack);
             }
         }
 
-        BlockSoundGroup blockSoundGroup = blockState2.getSoundGroup();
-        world.playSound(playerEntity, blockPos, this.getPlaceSound(blockState2), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
-        world.emitGameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Emitter.of(playerEntity, blockState2));
-        itemStack.decrementUnlessCreative(1, playerEntity);
+        SoundType blockSoundGroup = blockState2.getSoundType();
+        world.playSound(playerEntity, blockPos, this.getPlaceSound(blockState2), SoundSource.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
+        world.gameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Context.of(playerEntity, blockState2));
+        itemStack.consume(1, playerEntity);
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    protected boolean place(ItemPlacementContext context, BlockState state) {
-        return context.getWorld().setBlockState(context.getBlockPos(), state, 11);
+    protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
+        return context.getLevel().setBlock(context.getClickedPos(), state, 11);
     }
 
-    private BlockState placeFromNbt(BlockPos pos, World world, ItemStack stack, BlockState state) {
-        BlockStateComponent blockStateComponent = stack.getOrDefault(DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT);
+    private BlockState updateBlockStateFromTag(BlockPos pos, Level world, ItemStack stack, BlockState state) {
+        BlockItemStateProperties blockStateComponent = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY);
         if (blockStateComponent.isEmpty()) {
             return state;
         }
 
-        BlockState blockState = blockStateComponent.applyToState(state);
+        BlockState blockState = blockStateComponent.apply(state);
         if (blockState != state) {
-            world.setBlockState(pos, blockState, 2);
+            world.setBlock(pos, blockState, 2);
         }
 
         return blockState;
     }
 
-    private static void copyComponentsToBlockEntity(World world, BlockPos pos, ItemStack stack) {
+    private static void updateBlockEntityComponents(Level world, BlockPos pos, ItemStack stack) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         if (blockEntity != null) {
-            blockEntity.readComponents(stack);
-            blockEntity.markDirty();
+            blockEntity.applyComponentsFromItemStack(stack);
+            blockEntity.setChanged();
         }
     }
 
-    private BlockPos getReleasePosition(ItemUsageContext context) {
-        BlockPos blockPos = context.getBlockPos();
-        BlockState blockState = context.getWorld().getBlockState(blockPos);
-        if (blockState.getCollisionShape(context.getWorld(), blockPos).isEmpty()) {
+    private BlockPos getReleasePosition(UseOnContext context) {
+        BlockPos blockPos = context.getClickedPos();
+        BlockState blockState = context.getLevel().getBlockState(blockPos);
+        if (blockState.getCollisionShape(context.getLevel(), blockPos).isEmpty()) {
             return blockPos;
         } else {
-            return blockPos.offset(context.getSide());
+            return blockPos.relative(context.getClickedFace());
         }
     }
 
-    public void releaseContents(@Nullable PlayerEntity player, ServerWorld world, ItemStack stack, BlockPos pos) {
-        TypedEntityData<EntityType<?>> entityData = stack.get(DataComponentTypes.ENTITY_DATA);
+    public void releaseContents(@Nullable Player player, ServerLevel world, ItemStack stack, BlockPos pos) {
+        TypedEntityData<EntityType<?>> entityData = stack.get(DataComponents.ENTITY_DATA);
 
         if (entityData == null) {
             return;
         }
 
-        EntityType<?> entityType = entityData.getType();
+        EntityType<?> entityType = entityData.type();
 
-        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
-        NbtCompound nbt = customData == null ? new NbtCompound() : customData.copyNbt();
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+        CompoundTag nbt = customData == null ? new CompoundTag() : customData.copyTag();
 
         ItemStack itemCopy = stack.copy();
-        boolean hasCustomName = nbt.getBoolean("HasCustomName", false);
+        boolean hasCustomName = nbt.getBooleanOr("HasCustomName", false);
         if (!hasCustomName) {
-            itemCopy.remove(DataComponentTypes.CUSTOM_NAME);
+            itemCopy.remove(DataComponents.CUSTOM_NAME);
         }
 
         Entity entity = entityType.create(
             world,
-            EntityType.copier(world, itemCopy, null),
+            EntityType.createDefaultStackConfig(world, itemCopy, null),
             pos,
-            SpawnReason.BUCKET,
+            EntitySpawnReason.BUCKET,
             true,
             false
         );
 
         if (entity != null) {
-            world.spawnEntity(entity);
+            world.addFreshEntity(entity);
             world.playSound(
                 null,
                 (double) pos.getX() + 0.5,
                 (double) pos.getY() + 0.5,
                 (double) pos.getZ() + 0.5,
-                SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM,
-                SoundCategory.BLOCKS,
+                SoundEvents.ITEM_FRAME_REMOVE_ITEM,
+                SoundSource.BLOCKS,
                 0.5F,
                 0.5F
             );
-            world.emitGameEvent(player, GameEvent.ENTITY_PLACE, pos);
+            world.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
         }
 
-        stack.decrement(1);
+        stack.shrink(1);
 
         if (player != null) {
             ItemStack newStack = new ItemStack(this);
             newStack.setCount(1);
-            player.giveItemStack(newStack);
+            player.addItem(newStack);
         }
     }
 
-    private Text getDefaultName(MobEntity mob) {
-        return Text.of(String.format("%s in a jar", mob.getName().getString()));
+    private Component getDefaultName(Mob mob) {
+        return Component.nullToEmpty(String.format("%s in a jar", mob.getName().getString()));
     }
 
-    public boolean canCaptureMob(MobEntity entity) {
+    public boolean canCaptureMob(Mob entity) {
         if (!entity.isAlive()) {
             return false;
         }
 
-        if (entity instanceof SlimeEntity) {
-            return ((SlimeEntity) entity).isSmall();
+        if (entity instanceof Slime) {
+            return ((Slime) entity).isTiny();
         }
 
-        return entity instanceof BeeEntity
-            || entity instanceof VexEntity
-            || entity instanceof AllayEntity
-            || entity instanceof SilverfishEntity
-            || entity instanceof EndermiteEntity
-            || entity instanceof BatEntity;
+        return entity instanceof Bee
+            || entity instanceof Vex
+            || entity instanceof Allay
+            || entity instanceof Silverfish
+            || entity instanceof Endermite
+            || entity instanceof Bat;
     }
 
     public boolean hasStoredMob(ItemStack stack) {
-        return stack.get(DataComponentTypes.ENTITY_DATA) != null;
+        return stack.get(DataComponents.ENTITY_DATA) != null;
     }
 }

@@ -5,30 +5,29 @@ import com.chimericdream.hopperxtreme.client.screen.HopperItemFilterScreenHandle
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.lib.inventories.ImplementedInventory;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.component.type.CustomModelDataComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
-
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.Level;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class HopperItemFilterItem extends Item {
-    public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "hopper_item_filter");
+    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "hopper_item_filter");
 
     public static final Map<FilterMode, String> TOOLTIP_KEYS = Map.of(
         FilterMode.INCLUDE, "item.hopperxtreme.hopper_item_filter.tooltip.include",
@@ -38,16 +37,16 @@ public class HopperItemFilterItem extends Item {
     @SuppressWarnings("UnstableApiUsage")
     public HopperItemFilterItem() {
         super(
-            new Settings()
-                .maxCount(1)
-                .arch$tab(ItemGroups.REDSTONE)
-                .useItemPrefixedTranslationKey()
-                .registryKey(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID))
+            new Properties()
+                .stacksTo(1)
+                .arch$tab(CreativeModeTabs.REDSTONE_BLOCKS)
+                .useItemDescriptionPrefix()
+                .setId(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID))
         );
     }
 
     @Override
-    public ItemStack getDefaultStack() {
+    public ItemStack getDefaultInstance() {
         ItemStack stack = new ItemStack(this);
 
         stack.set(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
@@ -56,11 +55,11 @@ public class HopperItemFilterItem extends Item {
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (player.getEntityWorld() != null && !player.getEntityWorld().isClient()) {
-            if (player.isSneaking()) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (player.level() != null && !player.level().isClientSide()) {
+            if (player.isShiftKeyDown()) {
                 try {
-                    ItemStack itemStack = player.getStackInHand(hand);
+                    ItemStack itemStack = player.getItemInHand(hand);
                     HopperXtremeFilterModeComponent component = itemStack.getOrDefault(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
 
                     FilterMode currentMode = FilterMode.fromString(component.mode());
@@ -69,32 +68,32 @@ public class HopperItemFilterItem extends Item {
                     HopperXtremeFilterModeComponent newComponent = new HopperXtremeFilterModeComponent(newMode.toString());
                     itemStack.set(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), newComponent);
 
-                    if (!world.isClient()) {
-                        player.sendMessage(Text.translatable(TOOLTIP_KEYS.get(newMode)), true);
+                    if (!world.isClientSide()) {
+                        player.displayClientMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)), true);
                     }
 
-                    return ActionResult.SUCCESS.withNewHandStack(player.getStackInHand(hand));
+                    return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
                 } catch (IllegalArgumentException e) {
-                    return ActionResult.FAIL;
+                    return InteractionResult.FAIL;
                 }
             } else {
-                openScreen(player, player.getStackInHand(hand));
+                openScreen(player, player.getItemInHand(hand));
             }
         }
 
-        return ActionResult.SUCCESS.withNewHandStack(player.getStackInHand(hand));
+        return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
     }
 
-    public static void openScreen(PlayerEntity player, ItemStack filter) {
-        if (player.getEntityWorld() != null && !player.getEntityWorld().isClient()) {
-            player.openHandledScreen(new NamedScreenHandlerFactory() {
+    public static void openScreen(Player player, ItemStack filter) {
+        if (player.level() != null && !player.level().isClientSide()) {
+            player.openMenu(new MenuProvider() {
                 @Override
-                public Text getDisplayName() {
-                    return Text.translatable(filter.getItem().getTranslationKey());
+                public Component getDisplayName() {
+                    return Component.translatable(filter.getItem().getDescriptionId());
                 }
 
                 @Override
-                public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+                public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
                     return new HopperItemFilterScreenHandler(syncId, inv, filter);
                 }
             });
@@ -105,15 +104,15 @@ public class HopperItemFilterItem extends Item {
         public static final int INVENTORY_SIZE = 5;
 
         private final ItemStack filterStack;
-        private final DefaultedList<ItemStack> items = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
+        private final NonNullList<ItemStack> items = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
 
         public FilterInventory(ItemStack stack) {
             filterStack = stack;
 
-            ContainerComponent inventory = filterStack.get(DataComponentTypes.CONTAINER);
+            ItemContainerContents inventory = filterStack.get(DataComponents.CONTAINER);
 
             if (inventory != null) {
-                inventory.copyTo(items);
+                inventory.copyInto(items);
             }
         }
 
@@ -122,7 +121,7 @@ public class HopperItemFilterItem extends Item {
         }
 
         @Override
-        public DefaultedList<ItemStack> getItems() {
+        public NonNullList<ItemStack> getItems() {
             return items;
         }
 
@@ -137,12 +136,12 @@ public class HopperItemFilterItem extends Item {
         }
 
         @Override
-        public void markDirty() {
-            filterStack.set(DataComponentTypes.CONTAINER, ContainerComponent.fromStacks(items));
+        public void setChanged() {
+            filterStack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
             if (this.hasAnyItems()) {
-                filterStack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(), List.of(), List.of("2233000"), List.of()));
+                filterStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(), List.of(), List.of("2233000"), List.of()));
             } else {
-                filterStack.remove(DataComponentTypes.CUSTOM_MODEL_DATA);
+                filterStack.remove(DataComponents.CUSTOM_MODEL_DATA);
             }
         }
     }
@@ -152,7 +151,7 @@ public class HopperItemFilterItem extends Item {
             return true;
         }
 
-        ContainerComponent component = filter.get(DataComponentTypes.CONTAINER);
+        ItemContainerContents component = filter.get(DataComponents.CONTAINER);
         HopperXtremeFilterModeComponent filterComponent = filter.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get());
 
         if (component == null) {
@@ -161,8 +160,8 @@ public class HopperItemFilterItem extends Item {
 
         FilterMode mode = filterComponent == null ? FilterMode.INCLUDE : FilterMode.fromString(filterComponent.mode());
 
-        for (ItemStack filterItem : component.iterateNonEmpty()) {
-            if (ItemStack.areItemsEqual(filterItem, stack)) {
+        for (ItemStack filterItem : component.nonEmptyItems()) {
+            if (ItemStack.isSameItem(filterItem, stack)) {
                 return mode.equals(FilterMode.INCLUDE);
             }
         }

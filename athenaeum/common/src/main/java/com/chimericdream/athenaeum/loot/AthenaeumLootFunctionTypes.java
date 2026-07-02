@@ -1,23 +1,23 @@
 package com.chimericdream.athenaeum.loot;
 
 import com.chimericdream.athenaeum.ModInfo;
-import net.minecraft.loot.function.LootFunctionType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
 import static com.chimericdream.athenaeum.AthenaeumMod.MANAGER;
 
 public class AthenaeumLootFunctionTypes {
-    public static LootFunctionType<GetRandomBookFunction> GET_RANDOM_BOOK = new LootFunctionType<>(GetRandomBookFunction.CODEC);
+    public static LootItemFunctionType<GetRandomBookFunction> GET_RANDOM_BOOK = new LootItemFunctionType<>(GetRandomBookFunction.CODEC);
 
     @SuppressWarnings("unchecked")
-    private static void register(String id, LootFunctionType<?> lootFunctionType) {
+    private static void register(String id, LootItemFunctionType<?> lootFunctionType) {
         MANAGER.get()
-            .get((RegistryKey<Registry<LootFunctionType<?>>>) Registries.LOOT_FUNCTION_TYPE.getKey())
+            .get((ResourceKey<Registry<LootItemFunctionType<?>>>) BuiltInRegistries.LOOT_FUNCTION_TYPE.key())
             .register(
-                Identifier.of(ModInfo.MOD_ID, id),
+                ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, id),
                 () -> lootFunctionType
             );
     }

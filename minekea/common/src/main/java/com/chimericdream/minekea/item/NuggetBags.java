@@ -3,11 +3,10 @@ package com.chimericdream.minekea.item;
 import com.chimericdream.minekea.item.currency.NuggetBag;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 

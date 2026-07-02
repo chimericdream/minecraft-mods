@@ -4,26 +4,26 @@ import com.chimericdream.lib.screen.ScreenHelpers;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.item.Tools;
 import com.chimericdream.minekea.item.tools.BlockPainterItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
-public class BlockPainterScreenHandler extends ScreenHandler {
-    public static final Identifier SCREEN_ID = Identifier.of(ModInfo.MOD_ID, "screens/items/block_painter");
+public class BlockPainterScreenHandler extends AbstractContainerMenu {
+    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/block_painter");
 
     private final BlockPainterItem.PainterInventory painter;
     private final int ROW_COUNT = 2;
 
-    public BlockPainterScreenHandler(int syncId, PlayerInventory playerInventory) {
+    public BlockPainterScreenHandler(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, new ItemStack(Tools.BLOCK_PAINTER_ITEM.get()));
     }
 
-    public BlockPainterScreenHandler(int syncId, PlayerInventory playerInventory, ItemStack stack) {
+    public BlockPainterScreenHandler(int syncId, Inventory playerInventory, ItemStack stack) {
         super(Tools.BLOCK_PAINTER_SCREEN_HANDLER.get(), syncId);
 
         painter = new BlockPainterItem.PainterInventory(stack);
@@ -61,35 +61,35 @@ public class BlockPainterScreenHandler extends ScreenHandler {
         }
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return painter;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.painter.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.painter.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+    public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
         Slot slot = this.slots.get(invSlot);
-        if (slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
+        if (slot.hasItem()) {
+            ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            if (invSlot < this.painter.size()) {
-                if (!this.insertItem(originalStack, this.painter.size(), this.slots.size(), true)) {
+            if (invSlot < this.painter.getContainerSize()) {
+                if (!this.moveItemStackTo(originalStack, this.painter.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.painter.size(), false)) {
+            } else if (!this.moveItemStackTo(originalStack, 0, this.painter.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
 
             if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.setByPlayer(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
         }
 
@@ -97,33 +97,33 @@ public class BlockPainterScreenHandler extends ScreenHandler {
     }
 
     private static class PainterSlot extends Slot {
-        public PainterSlot(Inventory inventory, int index, int x, int y) {
+        public PainterSlot(Container inventory, int index, int x, int y) {
             super(inventory, index, x, y);
         }
 
         @Override
-        public boolean canInsert(ItemStack stack) {
+        public boolean mayPlace(ItemStack stack) {
             return doesItemMatchSlot(stack);
         }
 
         private boolean doesItemMatchSlot(ItemStack item) {
-            return switch (this.getIndex()) {
-                case 0 -> item.isOf(Items.WHITE_DYE);
-                case 1 -> item.isOf(Items.LIGHT_GRAY_DYE);
-                case 2 -> item.isOf(Items.GRAY_DYE);
-                case 3 -> item.isOf(Items.BLACK_DYE);
-                case 4 -> item.isOf(Items.BROWN_DYE);
-                case 5 -> item.isOf(Items.RED_DYE);
-                case 6 -> item.isOf(Items.ORANGE_DYE);
-                case 7 -> item.isOf(Items.YELLOW_DYE);
-                case 8 -> item.isOf(Items.LIME_DYE);
-                case 9 -> item.isOf(Items.GREEN_DYE);
-                case 10 -> item.isOf(Items.CYAN_DYE);
-                case 11 -> item.isOf(Items.LIGHT_BLUE_DYE);
-                case 12 -> item.isOf(Items.BLUE_DYE);
-                case 13 -> item.isOf(Items.PURPLE_DYE);
-                case 14 -> item.isOf(Items.MAGENTA_DYE);
-                case 15 -> item.isOf(Items.PINK_DYE);
+            return switch (this.getContainerSlot()) {
+                case 0 -> item.is(Items.WHITE_DYE);
+                case 1 -> item.is(Items.LIGHT_GRAY_DYE);
+                case 2 -> item.is(Items.GRAY_DYE);
+                case 3 -> item.is(Items.BLACK_DYE);
+                case 4 -> item.is(Items.BROWN_DYE);
+                case 5 -> item.is(Items.RED_DYE);
+                case 6 -> item.is(Items.ORANGE_DYE);
+                case 7 -> item.is(Items.YELLOW_DYE);
+                case 8 -> item.is(Items.LIME_DYE);
+                case 9 -> item.is(Items.GREEN_DYE);
+                case 10 -> item.is(Items.CYAN_DYE);
+                case 11 -> item.is(Items.LIGHT_BLUE_DYE);
+                case 12 -> item.is(Items.BLUE_DYE);
+                case 13 -> item.is(Items.PURPLE_DYE);
+                case 14 -> item.is(Items.MAGENTA_DYE);
+                case 15 -> item.is(Items.PINK_DYE);
                 default -> false;
             };
         }

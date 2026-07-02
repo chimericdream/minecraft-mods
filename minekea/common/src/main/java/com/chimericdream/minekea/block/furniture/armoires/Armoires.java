@@ -6,26 +6,25 @@ import com.chimericdream.minekea.entity.block.furniture.ArmoireBlockEntity;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Armoires implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_ARMOIRE_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_ARMOIRE_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    public static Identifier ARMOIRE_BLOCK_ENTITY_ID = Identifier.of(ModInfo.MOD_ID, "entities/blocks/furniture/armoire");
+    public static ResourceLocation ARMOIRE_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/armoire");
     public static final RegistrySupplier<BlockEntityType<ArmoireBlockEntity>> ARMOIRE_BLOCK_ENTITY;
 
     static {

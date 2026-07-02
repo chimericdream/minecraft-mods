@@ -1,32 +1,31 @@
 package com.chimericdream.lib.loot;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 
 abstract public class LootTableModifier {
-    abstract protected void checkVanillaLootTables(Identifier id, List<LootPool.Builder> poolBuilders, RegistryWrapper.WrapperLookup wrapperLookup);
+    abstract protected void checkVanillaLootTables(ResourceLocation id, List<LootPool.Builder> poolBuilders, HolderLookup.Provider wrapperLookup);
 
     protected LootPool.Builder makeWeightedItem(Item item, int chance) {
-        LootPool.Builder builder = LootPool.builder()
-            .with(ItemEntry.builder(item));
+        LootPool.Builder builder = LootPool.lootPool()
+            .add(LootItem.lootTableItem(item));
 
         if (chance == 1) {
             return builder;
         }
 
-        return builder.with(ItemEntry.builder(Items.AIR).weight(chance - 1));
+        return builder.add(LootItem.lootTableItem(Items.AIR).setWeight(chance - 1));
     }
 
-    public List<LootPool.Builder> generatePoolBuilders(Identifier id, RegistryWrapper.WrapperLookup wrapperLookup) {
+    public List<LootPool.Builder> generatePoolBuilders(ResourceLocation id, HolderLookup.Provider wrapperLookup) {
         List<LootPool.Builder> poolBuilders = new ArrayList<>();
 
         checkVanillaLootTables(id, poolBuilders, wrapperLookup);
@@ -34,15 +33,15 @@ abstract public class LootTableModifier {
         return poolBuilders;
     }
 
-    public void modifyLootTables(RegistryKey<LootTable> id, LootTable.Builder tableBuilder, RegistryWrapper.WrapperLookup wrapperLookup) {
-        modifyLootTables(id.getValue(), tableBuilder, wrapperLookup);
+    public void modifyLootTables(ResourceKey<LootTable> id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
+        modifyLootTables(id.location(), tableBuilder, wrapperLookup);
     }
 
-    public void modifyLootTables(Identifier id, LootTable.Builder tableBuilder, RegistryWrapper.WrapperLookup wrapperLookup) {
+    public void modifyLootTables(ResourceLocation id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
         List<LootPool.Builder> poolBuilders = generatePoolBuilders(id, wrapperLookup);
 
         for (LootPool.Builder builder : poolBuilders) {
-            tableBuilder.pool(builder);
+            tableBuilder.withPool(builder);
         }
     }
 }

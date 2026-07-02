@@ -3,19 +3,18 @@ package com.chimericdream.minekea.block.building.framed;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class FramedBlocks implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_FRAMED_BLOCK_SETTINGS = new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS);
+    public static final Item.Properties DEFAULT_FRAMED_BLOCK_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
 
     public static final List<RegistrySupplier<Block>> FRAMED_PLANKS = new ArrayList<>();
 

@@ -1,25 +1,25 @@
 package com.chimericdream.artificialheart.block;
 
 import com.chimericdream.artificialheart.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class ArtificialCreakingHeartBlock extends Block {
-    public static final Identifier BLOCK_ID = Identifier.of(ModInfo.MOD_ID, "artificial_creaking_heart");
-    public static final RegistryKey<Block> BLOCK_REGISTRY_KEY = RegistryKey.of(RegistryKeys.BLOCK, BLOCK_ID);
-    public static final RegistryKey<Item> ITEM_REGISTRY_KEY = RegistryKey.of(RegistryKeys.ITEM, BLOCK_ID);
+    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "artificial_creaking_heart");
+    public static final ResourceKey<Block> BLOCK_REGISTRY_KEY = ResourceKey.create(Registries.BLOCK, BLOCK_ID);
+    public static final ResourceKey<Item> ITEM_REGISTRY_KEY = ResourceKey.create(Registries.ITEM, BLOCK_ID);
 
     public static final BooleanProperty ACTIVE_UP;
     public static final BooleanProperty ACTIVE_NORTH;
@@ -30,21 +30,21 @@ public class ArtificialCreakingHeartBlock extends Block {
     public static final EnumProperty<Direction.Axis> AXIS;
 
     public ArtificialCreakingHeartBlock() {
-        super(Settings.copy(Blocks.PALE_OAK_LOG).registryKey(BLOCK_REGISTRY_KEY));
+        super(Properties.ofFullCopy(Blocks.PALE_OAK_LOG).setId(BLOCK_REGISTRY_KEY));
 
-        this.setDefaultState(
-            this.stateManager.getDefaultState()
-                .with(ACTIVE_UP, false)
-                .with(ACTIVE_NORTH, false)
-                .with(ACTIVE_EAST, false)
-                .with(ACTIVE_SOUTH, false)
-                .with(ACTIVE_WEST, false)
-                .with(ACTIVE_DOWN, false)
-                .with(AXIS, Direction.Axis.Y)
+        this.registerDefaultState(
+            this.stateDefinition.any()
+                .setValue(ACTIVE_UP, false)
+                .setValue(ACTIVE_NORTH, false)
+                .setValue(ACTIVE_EAST, false)
+                .setValue(ACTIVE_SOUTH, false)
+                .setValue(ACTIVE_WEST, false)
+                .setValue(ACTIVE_DOWN, false)
+                .setValue(AXIS, Direction.Axis.Y)
         );
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(
             ACTIVE_UP,
             ACTIVE_NORTH,
@@ -55,13 +55,13 @@ public class ArtificialCreakingHeartBlock extends Block {
         );
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(AXIS, ctx.getSide().getAxis());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(AXIS, ctx.getClickedFace().getAxis());
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     public static BooleanProperty getFaceProp(Direction hitFace) {
@@ -76,12 +76,12 @@ public class ArtificialCreakingHeartBlock extends Block {
     }
 
     static {
-        ACTIVE_UP = BooleanProperty.of("active_up");
-        ACTIVE_NORTH = BooleanProperty.of("active_north");
-        ACTIVE_EAST = BooleanProperty.of("active_east");
-        ACTIVE_SOUTH = BooleanProperty.of("active_south");
-        ACTIVE_WEST = BooleanProperty.of("active_west");
-        ACTIVE_DOWN = BooleanProperty.of("active_down");
-        AXIS = Properties.AXIS;
+        ACTIVE_UP = BooleanProperty.create("active_up");
+        ACTIVE_NORTH = BooleanProperty.create("active_north");
+        ACTIVE_EAST = BooleanProperty.create("active_east");
+        ACTIVE_SOUTH = BooleanProperty.create("active_south");
+        ACTIVE_WEST = BooleanProperty.create("active_west");
+        ACTIVE_DOWN = BooleanProperty.create("active_down");
+        AXIS = BlockStateProperties.AXIS;
     }
 }

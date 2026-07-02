@@ -2,33 +2,33 @@ package com.chimericdream.minekea.block.building.dyed;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potions;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -36,64 +36,64 @@ public class DyedBlock extends Block {
     public static final EnumProperty<Direction.Axis> AXIS;
 
     static {
-        AXIS = Properties.AXIS;
+        AXIS = BlockStateProperties.AXIS;
     }
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
     public final DyeColor color;
 
     public DyedBlock(BlockConfig config, DyeColor color) {
-        super(config.getBaseSettings().mapColor(color).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), color))));
+        super(config.getBaseSettings().mapColor(color).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial(), color))));
 
         this.color = color;
 
         BLOCK_ID = makeId(config.getMaterial(), color);
         this.config = config;
 
-        this.setDefaultState(this.stateManager.getDefaultState().with(AXIS, Direction.Axis.Y));
+        this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.Y));
     }
 
-    public static Identifier makeId(String material, DyeColor color) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("building/dyed/%s/%s", material, color));
+    public static ResourceLocation makeId(String material, DyeColor color) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/dyed/%s/%s", material, color));
     }
 
     public BlockConfig getConfig() {
         return config;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AXIS);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(AXIS, ctx.getSide().getAxis());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(AXIS, ctx.getClickedFace().getAxis());
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        PotionContentsComponent potionContentsComponent = stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        PotionContents potionContentsComponent = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
-        if (hit.getSide() != Direction.DOWN && potionContentsComponent.matches(Potions.WATER)) {
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
-            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+        if (hit.getDirection() != Direction.DOWN && potionContentsComponent.is(Potions.WATER)) {
+            world.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
 
-            if (!world.isClient()) {
-                ServerWorld serverWorld = (ServerWorld) world;
+            if (!world.isClientSide()) {
+                ServerLevel serverWorld = (ServerLevel) world;
 
                 for (int i = 0; i < 5; ++i) {
-                    serverWorld.spawnParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.random.nextDouble(), pos.getY() + 1, (double) pos.getZ() + world.random.nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
+                    serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.random.nextDouble(), pos.getY() + 1, (double) pos.getZ() + world.random.nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
                 }
             }
 
-            world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
-            world.setBlockState(pos, config.getIngredient().getDefaultState());
+            world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            world.setBlockAndUpdate(pos, config.getIngredient().defaultBlockState());
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 }

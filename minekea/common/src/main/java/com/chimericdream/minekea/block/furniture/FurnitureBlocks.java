@@ -12,10 +12,9 @@ import com.chimericdream.minekea.block.furniture.tables.Tables;
 import com.chimericdream.minekea.block.furniture.trapdoors.Trapdoors;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.level.block.Block;
 
 public class FurnitureBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();

@@ -4,12 +4,11 @@ import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 

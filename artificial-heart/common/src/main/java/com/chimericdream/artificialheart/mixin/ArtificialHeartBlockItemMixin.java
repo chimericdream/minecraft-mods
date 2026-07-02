@@ -2,20 +2,20 @@ package com.chimericdream.artificialheart.mixin;
 
 import com.chimericdream.artificialheart.block.ArtificialCreakingHeartBlock;
 import com.chimericdream.lib.util.math.DirectionUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,48 +30,48 @@ abstract public class ArtificialHeartBlockItemMixin {
     abstract public Block getBlock();
 
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-    private void ah$useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
+    private void ah$useOnBlock(UseOnContext context, CallbackInfoReturnable<InteractionResult> info) {
         Block block = this.getBlock();
         //noinspection deprecation
-        if (!block.getRegistryEntry().matches(Blocks.RESIN_CLUMP.getRegistryEntry())) {
+        if (!block.builtInRegistryHolder().is(Blocks.RESIN_CLUMP.builtInRegistryHolder())) {
             return;
         }
 
-        PlayerEntity player = context.getPlayer();
-        if (player == null || !player.isSneaking()) {
+        Player player = context.getPlayer();
+        if (player == null || !player.isShiftKeyDown()) {
             return;
         }
 
-        BlockPos blockPos = context.getBlockPos();
-        World world = context.getWorld();
+        BlockPos blockPos = context.getClickedPos();
+        Level world = context.getLevel();
         BlockState state = world.getBlockState(blockPos);
 
         if (state.getBlock() instanceof ArtificialCreakingHeartBlock) {
-            BlockState updatedState = ah$getUpdatedState(state, context.getSide());
+            BlockState updatedState = ah$getUpdatedState(state, context.getClickedFace());
 
             if (updatedState == null) {
-                info.setReturnValue(ActionResult.FAIL);
+                info.setReturnValue(InteractionResult.FAIL);
                 return;
             }
 
-            world.setBlockState(blockPos, updatedState);
-            world.playSound(player, blockPos, SoundEvents.BLOCK_RESIN_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(context.getPlayer(), updatedState));
+            world.setBlockAndUpdate(blockPos, updatedState);
+            world.playSound(player, blockPos, SoundEvents.RESIN_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(context.getPlayer(), updatedState));
 
-            info.setReturnValue(ActionResult.SUCCESS);
+            info.setReturnValue(InteractionResult.SUCCESS);
         }
     }
 
     @Unique
     private @Nullable BlockState ah$getUpdatedState(BlockState state, Direction hitSide) {
-        Direction.Axis axis = state.get(ArtificialCreakingHeartBlock.AXIS);
+        Direction.Axis axis = state.getValue(ArtificialCreakingHeartBlock.AXIS);
         Direction face = DirectionUtils.getHitFace(axis, hitSide);
 
         BooleanProperty faceProp = ArtificialCreakingHeartBlock.getFaceProp(face);
-        if (state.get(faceProp)) {
+        if (state.getValue(faceProp)) {
             return null;
         }
 
-        return state.with(faceProp, true);
+        return state.setValue(faceProp, true);
     }
 }

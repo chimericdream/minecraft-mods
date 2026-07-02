@@ -1,17 +1,17 @@
 package com.chimericdream.villagertweaks.item;
 
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 
 import static com.chimericdream.villagertweaks.VillagerTweaksMod.REGISTRY_HELPER;
 
 public class ModItems {
-    private static final Item.Settings DEFAULT_SETTINGS = new Item.Settings().maxCount(1).arch$tab(ItemGroups.FUNCTIONAL);
+    private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().stacksTo(1).arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS);
 
     public static final RegistrySupplier<Item> BAGGED_VILLAGER_ITEM = REGISTRY_HELPER.registerItem(
         BaggedVillagerItem.ITEM_ID,
-        () -> new BaggedVillagerItem(DEFAULT_SETTINGS.registryKey(REGISTRY_HELPER.makeItemRegistryKey(BaggedVillagerItem.ITEM_ID)))
+        () -> new BaggedVillagerItem(DEFAULT_SETTINGS.setId(REGISTRY_HELPER.makeItemRegistryKey(BaggedVillagerItem.ITEM_ID)))
     );
 
     public static void init() {

@@ -1,12 +1,12 @@
 package com.chimericdream.hopperxtreme.tag;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class CommonTags {
-    public static final TagKey<Block> HOPPERS = TagKey.of(Registries.BLOCK.getKey(), Identifier.of("c", "hoppers"));
-    public static final TagKey<Item> WRENCHES = TagKey.of(Registries.ITEM.getKey(), Identifier.of("c", "tools/wrenches"));
+    public static final TagKey<Block> HOPPERS = TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath("c", "hoppers"));
+    public static final TagKey<Item> WRENCHES = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath("c", "tools/wrenches"));
 }

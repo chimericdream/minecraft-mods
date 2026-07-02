@@ -6,25 +6,25 @@ import dev.architectury.core.fluid.ArchitecturyFlowingFluid;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import dev.architectury.core.fluid.SimpleArchitecturyFluidAttributes;
 import dev.architectury.core.item.ArchitecturyBucketItem;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -38,9 +38,9 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
         .slopeFindDistance(2)
         .dropOff(2)
         .tickDelay(40)
-        .sourceTexture(Identifier.of(ModInfo.MOD_ID, "block/fluids/honey"))
-        .flowingTexture(Identifier.of(ModInfo.MOD_ID, "block/fluids/honey/flowing"))
-        .fillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA)
+        .sourceTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey"))
+        .flowingTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey/flowing"))
+        .fillSound(SoundEvents.BUCKET_FILL_LAVA)
         .color(0xFFFFFF);
 
     public HoneyFluid() {
@@ -48,8 +48,8 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
     }
 
     @Override
-    protected BlockState toBlockState(FluidState state) {
-        return ModFluids.HONEY_SOURCE_BLOCK.get().getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+    protected BlockState createLegacyBlock(FluidState state) {
+        return ModFluids.HONEY_SOURCE_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
     }
 
     public static class Flowing extends ArchitecturyFlowingFluid.Flowing {
@@ -58,29 +58,29 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
         }
 
         @Override
-        protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-            super.appendProperties(builder);
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+            super.createFluidStateDefinition(builder);
         }
     }
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.HONEY_FLUID, AbstractBlock.Settings.copy(Blocks.WATER).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.of(ModInfo.MOD_ID, "fluids/honey/source"))));
+            super(ModFluids.HONEY_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/honey/source"))));
         }
 
         @Override
-        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
-            super.onEntityCollision(state, world, pos, entity, handler, bl);
+        public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
+            super.entityInside(state, world, pos, entity, handler, bl);
 
-            if (!world.isClient() && entity instanceof LivingEntity) {
-                ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300, 2));
+            if (!world.isClientSide() && entity instanceof LivingEntity) {
+                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 300, 2));
             }
         }
     }
 
     public static class Bucket extends ArchitecturyBucketItem {
         public Bucket() {
-            super(ModFluids.HONEY_FLUID, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).arch$tab(ItemGroups.INGREDIENTS).registryKey(REGISTRY_HELPER.makeItemRegistryKey(Identifier.of(ModInfo.MOD_ID, "containers/honey_bucket"))));
+            super(ModFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).arch$tab(CreativeModeTabs.INGREDIENTS).setId(REGISTRY_HELPER.makeItemRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/honey_bucket"))));
         }
     }
 }

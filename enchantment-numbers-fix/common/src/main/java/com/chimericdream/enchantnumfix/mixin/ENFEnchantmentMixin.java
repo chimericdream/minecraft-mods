@@ -1,15 +1,15 @@
 package com.chimericdream.enchantnumfix.mixin;
 
 import com.chimericdream.enchantnumfix.RomanNumeralUtil;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.EnchantmentTags;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.Texts;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -20,17 +20,17 @@ public abstract class ENFEnchantmentMixin {
      * @reason Replace numbers with Roman numerals
      */
     @Overwrite
-    public static Text getName(RegistryEntry<Enchantment> enchantment, int level) {
-        MutableText mutableText = enchantment.value().description.copy();
+    public static Component getName(Holder<Enchantment> enchantment, int level) {
+        MutableComponent mutableText = enchantment.value().description.copy();
 
-        if (enchantment.isIn(EnchantmentTags.CURSE)) {
-            Texts.setStyleIfAbsent(mutableText, Style.EMPTY.withColor(Formatting.RED));
+        if (enchantment.is(EnchantmentTags.CURSE)) {
+            ComponentUtils.mergeStyles(mutableText, Style.EMPTY.withColor(ChatFormatting.RED));
         } else {
-            Texts.setStyleIfAbsent(mutableText, Style.EMPTY.withColor(Formatting.GRAY));
+            ComponentUtils.mergeStyles(mutableText, Style.EMPTY.withColor(ChatFormatting.GRAY));
         }
 
         if (level != 1 || enchantment.value().getMaxLevel() != 1) {
-            mutableText.append(ScreenTexts.SPACE).append(RomanNumeralUtil.toRoman(level));
+            mutableText.append(CommonComponents.SPACE).append(RomanNumeralUtil.toRoman(level));
         }
 
         return mutableText;

@@ -6,100 +6,100 @@ import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.entity.block.furniture.DisplayCaseBlockEntity;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
-    public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 8);
+public class DisplayCaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 8);
 
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape MAIN_SHAPE;
     private static final VoxelShape BASEBOARD_SHAPE;
 
-    public final Identifier BLOCK_ID;
+    public final ResourceLocation BLOCK_ID;
     public final BlockConfig config;
 
     static {
-        MAIN_SHAPE = Block.createCuboidShape(0.0, 2.0, 0.0, 16.0, 16.0, 16.0);
-        BASEBOARD_SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 2.0, 15.0);
+        MAIN_SHAPE = Block.box(0.0, 2.0, 0.0, 16.0, 16.0, 16.0);
+        BASEBOARD_SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 2.0, 15.0);
     }
 
     public DisplayCaseBlock(BlockConfig config) {
-        super(AbstractBlock.Settings.copy(config.getIngredient("planks")).registryKey(RegistryKey.of(RegistryKeys.BLOCK, makeId(config.getMaterial()))));
+        super(BlockBehaviour.Properties.ofFullCopy(config.getIngredient("planks")).setId(ResourceKey.create(Registries.BLOCK, makeId(config.getMaterial()))));
 
         BLOCK_ID = makeId(config.getMaterial());
         this.config = config;
 
-        this.setDefaultState(
-            this.stateManager.getDefaultState()
-                .with(ROTATION, 0)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            this.stateDefinition.any()
+                .setValue(ROTATION, 0)
+                .setValue(WATERLOGGED, false)
         );
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("furniture/display_cases/%s", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/display_cases/%s", material));
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState()
-            .with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState()
+            .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(ROTATION, WATERLOGGED);
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         DisplayCaseBlockEntity entity;
 
         try {
@@ -108,7 +108,7 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
         } catch (Exception e) {
             MinekeaMod.LOGGER.error(String.format("The display case at %s had an invalid block entity.\nBlock Entity: %s", pos, world.getBlockEntity(pos)));
 
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         if (entity.isEmpty()) {
@@ -117,85 +117,85 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
                 ItemStack toInsert = stack.copy();
                 toInsert.setCount(1);
 
-                entity.setStack(0, toInsert);
+                entity.setItem(0, toInsert);
 
-                stack.decrement(1);
+                stack.shrink(1);
 
-                world.setBlockState(pos, state);
-                entity.markDirty();
+                world.setBlockAndUpdate(pos, state);
+                entity.setChanged();
                 entity.playAddItemSound();
             }
 
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        if (player.isSneaking()) {
+        if (player.isShiftKeyDown()) {
             // If the player is sneaking, get what's in the case
-            ItemScatterer.spawn(
+            Containers.dropItemStack(
                 world,
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                entity.getStack(0).copy()
+                entity.getItem(0).copy()
             );
 
-            entity.clear();
+            entity.clearContent();
 
-            world.setBlockState(pos, state.with(ROTATION, 0));
-            entity.markDirty();
+            world.setBlockAndUpdate(pos, state.setValue(ROTATION, 0));
+            entity.setChanged();
             entity.playRemoveItemSound();
         } else {
             // If the player isn't sneaking, or if they have an item in their hand, rotate the item in the case
-            int rotation = state.get(ROTATION);
+            int rotation = state.getValue(ROTATION);
             int newRotation = rotation >= 7 ? 0 : rotation + 1;
 
-            world.setBlockState(pos, state.with(ROTATION, newRotation));
+            world.setBlockAndUpdate(pos, state.setValue(ROTATION, newRotation));
             entity.playRotateItemSound();
         }
 
-        world.markDirty(pos);
+        world.blockEntityChanged(pos);
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    public void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DisplayCaseBlockEntity) {
-            ItemScatterer.spawn(world, pos, (DisplayCaseBlockEntity) blockEntity);
-            world.updateComparators(pos, this);
+            Containers.dropContents(world, pos, (DisplayCaseBlockEntity) blockEntity);
+            world.updateNeighbourForOutputSignal(pos, this);
         }
 
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new DisplayCaseBlockEntity(pos, state);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.union(MAIN_SHAPE, BASEBOARD_SHAPE);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.or(MAIN_SHAPE, BASEBOARD_SHAPE);
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
         ImplementedInventory displayCase;
 
         try {
@@ -209,7 +209,7 @@ public class DisplayCaseBlock extends BlockWithEntity implements Waterloggable {
             return 0;
         }
 
-        int rotation = state.get(ROTATION);
+        int rotation = state.getValue(ROTATION);
 
         return (rotation * 2) + 1;
     }

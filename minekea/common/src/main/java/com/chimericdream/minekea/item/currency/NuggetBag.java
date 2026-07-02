@@ -1,20 +1,20 @@
 package com.chimericdream.minekea.item.currency;
 
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class NuggetBag extends Item {
-    public final Identifier ITEM_ID;
+    public final ResourceLocation ITEM_ID;
     public final String material;
     public final String materialName;
     public final Item ingredient;
 
     public NuggetBag(String material, String materialName, Item ingredient) {
-        super(new Item.Settings().arch$tab(ItemGroups.INGREDIENTS).registryKey(REGISTRY_HELPER.makeItemRegistryKey(makeId(material))));
+        super(new Item.Properties().arch$tab(CreativeModeTabs.INGREDIENTS).setId(REGISTRY_HELPER.makeItemRegistryKey(makeId(material))));
 
         ITEM_ID = makeId(material);
 
@@ -23,7 +23,7 @@ public class NuggetBag extends Item {
         this.ingredient = ingredient;
     }
 
-    public static Identifier makeId(String material) {
-        return Identifier.of(ModInfo.MOD_ID, String.format("currency/%s_nugget_bag", material));
+    public static ResourceLocation makeId(String material) {
+        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("currency/%s_nugget_bag", material));
     }
 }

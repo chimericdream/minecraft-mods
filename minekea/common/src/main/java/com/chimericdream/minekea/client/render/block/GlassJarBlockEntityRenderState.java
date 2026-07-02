@@ -1,16 +1,16 @@
 package com.chimericdream.minekea.client.render.block;
 
-import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 
 public class GlassJarBlockEntityRenderState extends BlockEntityRenderState {
     public Direction facing = Direction.NORTH;
 
-    public final ItemRenderState displayItem = new ItemRenderState();
+    public final ItemStackRenderState displayItem = new ItemStackRenderState();
     public boolean hasItem = false;
     public int fillLevel = 0;
 

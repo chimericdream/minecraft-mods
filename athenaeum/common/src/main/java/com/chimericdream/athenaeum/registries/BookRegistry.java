@@ -6,14 +6,6 @@ import com.chimericdream.athenaeum.data.AthenaeumBook;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.minecraft.component.type.WrittenBookContentComponent;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.text.RawFilteredPair;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.random.Random;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -23,17 +15,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.network.Filterable;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.component.WrittenBookContent;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 
 public class BookRegistry {
-    protected final Map<Identifier, AthenaeumBook> books = new HashMap<>();
-    protected final Map<String, Set<Identifier>> authors = new HashMap<>();
+    protected final Map<ResourceLocation, AthenaeumBook> books = new HashMap<>();
+    protected final Map<String, Set<ResourceLocation>> authors = new HashMap<>();
 
     public void clear() {
         this.books.clear();
         this.authors.clear();
     }
 
-    public void addFromInputStream(Identifier bookId, InputStream stream) {
+    public void addFromInputStream(ResourceLocation bookId, InputStream stream) {
         JsonObject json = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
         String title = Optional.ofNullable(json.get("title"))
@@ -67,12 +66,12 @@ public class BookRegistry {
         this.authors.get(author).add(bookId);
     }
 
-    public AthenaeumBook getById(Identifier bookId) {
+    public AthenaeumBook getById(ResourceLocation bookId) {
         return this.books.get(bookId);
     }
 
     public List<AthenaeumBook> getBooksByAuthor(String author) {
-        Set<Identifier> authorBooks = this.authors.get(author);
+        Set<ResourceLocation> authorBooks = this.authors.get(author);
 
         if (authorBooks == null) {
             return null;
@@ -84,7 +83,7 @@ public class BookRegistry {
         return bookList;
     }
 
-    public AthenaeumBook getRandomBook(Random random) {
+    public AthenaeumBook getRandomBook(RandomSource random) {
         List<AthenaeumBook> bookList = new ArrayList<>(this.books.values());
 
         if (bookList.isEmpty()) {
@@ -94,7 +93,7 @@ public class BookRegistry {
         return bookList.get(random.nextInt(bookList.size()));
     }
 
-    public AthenaeumBook getRandomBookByAuthor(String author, Random random) {
+    public AthenaeumBook getRandomBookByAuthor(String author, RandomSource random) {
         List<AthenaeumBook> bookList = this.getBooksByAuthor(author);
 
         if (bookList == null || bookList.isEmpty()) {
@@ -104,9 +103,9 @@ public class BookRegistry {
         return bookList.get(random.nextInt(bookList.size()));
     }
 
-    public WrittenBookContentComponent getRandomBookForLootTable(
+    public WrittenBookContent getRandomBookForLootTable(
         List<String> authors,
-        LootNumberProvider editionProvider,
+        NumberProvider editionProvider,
         LootContext context
     ) {
         List<AthenaeumBook> bookList;
@@ -131,18 +130,18 @@ public class BookRegistry {
         AthenaeumBook book = bookList.get(context.getRandom().nextInt(bookList.size()));
 
         int edition = getRandomEdition(context);
-        if (editionProvider.nextInt(context) != -1) {
-            edition = Math.clamp(editionProvider.nextInt(context), 0, 3);
+        if (editionProvider.getInt(context) != -1) {
+            edition = Math.clamp(editionProvider.getInt(context), 0, 3);
         }
 
-        List<RawFilteredPair<Text>> pages = book.pages
+        List<Filterable<Component>> pages = book.pages
             .stream()
-            .map(Text::of)
-            .map(RawFilteredPair::of)
+            .map(Component::nullToEmpty)
+            .map(Filterable::passThrough)
             .toList();
 
-        return new WrittenBookContentComponent(
-            RawFilteredPair.of(book.title),
+        return new WrittenBookContent(
+            Filterable.passThrough(book.title),
             book.author,
             edition,
             pages,

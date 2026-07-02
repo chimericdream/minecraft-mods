@@ -5,22 +5,22 @@ import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.core.fluid.ArchitecturyFlowingFluid;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import dev.architectury.core.fluid.SimpleArchitecturyFluidAttributes;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -33,9 +33,9 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
         .slopeFindDistance(2)
         .dropOff(2)
         .tickDelay(10)
-        .sourceTexture(Identifier.of(ModInfo.MOD_ID, "block/fluids/milk"))
-        .flowingTexture(Identifier.of(ModInfo.MOD_ID, "block/fluids/milk/flowing"))
-        .fillSound(SoundEvents.ITEM_BUCKET_FILL)
+        .sourceTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk"))
+        .flowingTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk/flowing"))
+        .fillSound(SoundEvents.BUCKET_FILL)
         .color(0xFFFFFF);
 
     public MilkFluid() {
@@ -43,13 +43,13 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
     }
 
     @Override
-    public Item getBucketItem() {
+    public Item getBucket() {
         return Items.MILK_BUCKET;
     }
 
     @Override
-    protected BlockState toBlockState(FluidState state) {
-        return ModFluids.MILK_SOURCE_BLOCK.get().getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+    protected BlockState createLegacyBlock(FluidState state) {
+        return ModFluids.MILK_SOURCE_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
     }
 
     public static class Flowing extends ArchitecturyFlowingFluid.Flowing {
@@ -58,24 +58,24 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
         }
 
         @Override
-        protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-            super.appendProperties(builder);
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+            super.createFluidStateDefinition(builder);
         }
     }
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.MILK_FLUID, AbstractBlock.Settings.copy(Blocks.WATER).registryKey(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.of(ModInfo.MOD_ID, "fluids/milk/source"))));
+            super(ModFluids.MILK_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/milk/source"))));
         }
 
         @Override
-        public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
-            super.onEntityCollision(state, world, pos, entity, handler, bl);
+        public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
+            super.entityInside(state, world, pos, entity, handler, bl);
 
-            int level = state.get(FluidBlock.LEVEL);
+            int level = state.getValue(LiquidBlock.LEVEL);
 
-            if (!world.isClient() && entity instanceof LivingEntity && level == 0) {
-                ((LivingEntity) entity).clearStatusEffects();
+            if (!world.isClientSide() && entity instanceof LivingEntity && level == 0) {
+                ((LivingEntity) entity).removeAllEffects();
             }
         }
     }

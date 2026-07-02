@@ -2,11 +2,11 @@ package com.chimericdream.minekea.client.screen.crate;
 
 import com.chimericdream.lib.screen.DoubleWideInventoryScreen;
 import com.chimericdream.minekea.block.containers.crates.CrateBlock;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class DoubleCrateScreen extends DoubleWideInventoryScreen<DoubleCrateScreenHandler> {
-    public DoubleCrateScreen(DoubleCrateScreenHandler handler, PlayerInventory inventory, Text title) {
+    public DoubleCrateScreen(DoubleCrateScreenHandler handler, Inventory inventory, Component title) {
         super(handler, CrateBlock.ROW_COUNT, inventory, title);
     }
 }

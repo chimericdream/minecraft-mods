@@ -4,29 +4,29 @@ import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
 import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.lib.screen.ScreenHelpers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class HopperItemFilterScreenHandler extends ScreenHandler {
-    public static final Identifier SCREEN_ID = Identifier.of(ModInfo.MOD_ID, "screens/items/hopper_item_filter");
+public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
+    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/hopper_item_filter");
 
-    private final Inventory filter;
+    private final Container filter;
 
-    public HopperItemFilterScreenHandler(int syncId, PlayerInventory playerInventory) {
+    public HopperItemFilterScreenHandler(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
     }
 
-    public HopperItemFilterScreenHandler(int syncId, PlayerInventory playerInventory, ItemStack stack) {
+    public HopperItemFilterScreenHandler(int syncId, Inventory playerInventory, ItemStack stack) {
         super(ModItems.HOPPER_ITEM_FILTER_SCREEN_HANDLER.get(), syncId);
 
         filter = new HopperItemFilterItem.FilterInventory(stack);
 
-        filter.onOpen(playerInventory.player);
+        filter.startOpen(playerInventory.player);
 
         this.addSlot(new FilterSlot(this.filter, 0, 44, 20));
         this.addSlot(new FilterSlot(this.filter, 1, 62, 20));
@@ -55,43 +55,43 @@ public class HopperItemFilterScreenHandler extends ScreenHandler {
         }
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return filter;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+    public ItemStack quickMoveStack(Player player, int invSlot) {
         return ItemStack.EMPTY;
     }
 
     private static class FilterSlot extends Slot {
-        public FilterSlot(Inventory inventory, int index, int x, int y) {
+        public FilterSlot(Container inventory, int index, int x, int y) {
             super(inventory, index, x, y);
         }
 
         @Override
-        public boolean canInsert(ItemStack stack) {
-            return !stack.isOf(ModItems.HOPPER_ITEM_FILTER_ITEM.get());
+        public boolean mayPlace(ItemStack stack) {
+            return !stack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get());
         }
 
         @Override
-        public ItemStack insertStack(ItemStack stack, int count) {
+        public ItemStack safeInsert(ItemStack stack, int count) {
             ItemStack copy = stack.copy();
             copy.setCount(1);
 
-            super.insertStack(copy, 1);
+            super.safeInsert(copy, 1);
 
             return stack;
         }
 
         @Override
-        public ItemStack takeStack(int amount) {
-            super.takeStack(amount);
+        public ItemStack remove(int amount) {
+            super.remove(amount);
 
             return ItemStack.EMPTY;
         }

@@ -6,28 +6,27 @@ import com.chimericdream.minekea.entity.block.furniture.ShelfBlockEntity;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Shelves implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_SHELF_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_SHELF_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> SHELF_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> FLOATING_SHELF_BLOCKS = new ArrayList<>();
 
-    public static final Identifier SHELF_BLOCK_ENTITY_ID = Identifier.of(ModInfo.MOD_ID, "entities/blocks/furniture/shelf");
+    public static final ResourceLocation SHELF_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/shelf");
     public static RegistrySupplier<BlockEntityType<ShelfBlockEntity>> SHELF_BLOCK_ENTITY;
 
     static {

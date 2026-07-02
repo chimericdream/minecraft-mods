@@ -1,24 +1,24 @@
 package com.chimericdream.lib.colors;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import net.minecraft.util.ARGB;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class ColorHelpers {
     public record RGB(int r, int g, int b) {
         public static RGB fromInt(int color) {
-            return new RGB(ColorHelper.getRed(color), ColorHelper.getGreen(color), ColorHelper.getBlue(color));
+            return new RGB(ARGB.red(color), ARGB.green(color), ARGB.blue(color));
         }
 
         public int getColor() {
-            return ColorHelper.getArgb(0, r, g, b);
+            return ARGB.color(0, r, g, b);
         }
 
         public String toHex() {
@@ -26,7 +26,7 @@ public class ColorHelpers {
         }
 
         public int toInt() {
-            return ColorHelper.getArgb(0, r, g, b);
+            return ARGB.color(0, r, g, b);
         }
     }
 
@@ -77,7 +77,7 @@ public class ColorHelpers {
     }
 
     public static String getName(DyeColor color) {
-        return getName(color.asString());
+        return getName(color.getSerializedName());
     }
 
     public static String getName(String color) {
@@ -103,7 +103,7 @@ public class ColorHelpers {
     }
 
     public static Item getDye(DyeColor color) {
-        return getDye(color.asString());
+        return getDye(color.getSerializedName());
     }
 
     public static Item getDye(String color) {
@@ -158,10 +158,10 @@ public class ColorHelpers {
         int m = rgb == null ? 0 : 1;
 
         for (DyeItem dyeItem : dyes) {
-            int p = dyeItem.getColor().getEntityColor();
-            int q = ColorHelper.getRed(p);
-            int r = ColorHelper.getGreen(p);
-            int s = ColorHelper.getBlue(p);
+            int p = dyeItem.getDyeColor().getTextureDiffuseColor();
+            int q = ARGB.red(p);
+            int r = ARGB.green(p);
+            int s = ARGB.blue(p);
             l += Math.max(q, Math.max(r, s));
             i += q;
             j += r;

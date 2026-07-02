@@ -4,22 +4,21 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class Shutters implements ModThingGroup {
     @SuppressWarnings("UnstableApiUsage")
-    public static final Item.Settings DEFAULT_SHUTTER_SETTINGS = new Item.Settings().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
-    public static final Item.Settings DEFAULT_SHUTTER_HALF_SETTINGS = new Item.Settings();
+    public static final Item.Properties DEFAULT_SHUTTER_SETTINGS = new Item.Properties().arch$tab(ModItemGroups.FURNITURE_ITEM_GROUP);
+    public static final Item.Properties DEFAULT_SHUTTER_HALF_SETTINGS = new Item.Properties();
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final Map<String, BlockConfig> CONFIGS = new LinkedHashMap<>();

@@ -5,37 +5,37 @@ import com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock;
 import com.chimericdream.minekea.entity.block.furniture.DisplayCaseBlockEntity;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.CustomModelDataComponent;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<DisplayCaseBlockEntity, DisplayCaseBlockEntityRenderState> {
-    private final BlockEntityRendererFactory.Context context;
+    private final BlockEntityRendererProvider.Context context;
 
-    public DisplayCaseBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+    public DisplayCaseBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         this.context = ctx;
     }
 
@@ -45,11 +45,11 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
     }
 
     @Override
-    public void updateRenderState(DisplayCaseBlockEntity entity, DisplayCaseBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
-        BlockEntityRenderer.super.updateRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
-        BlockState blockState = entity.getCachedState();
+    public void updateRenderState(DisplayCaseBlockEntity entity, DisplayCaseBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
+        BlockState blockState = entity.getBlockState();
 
-        ItemStack stack = entity.getStack(0);
+        ItemStack stack = entity.getItem(0);
         ItemDisplayContext displayContext;
 
         if (stack.isEmpty()) {
@@ -59,9 +59,9 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             boolean isBlock = stack.getItem() instanceof BlockItem;
 
             state.setItem(stack);
-            state.rotation = blockState.get(DisplayCaseBlock.ROTATION);
+            state.rotation = blockState.getValue(DisplayCaseBlock.ROTATION);
             state.isBlock = isBlock;
-            state.distanceToCamera = cameraPos.squaredDistanceTo(entity.getPos().toCenterPos());
+            state.distanceToCamera = cameraPos.distanceToSqr(entity.getBlockPos().getCenter());
 
             displayContext = isBlock ? ItemDisplayContext.GROUND : ItemDisplayContext.FIXED;
 
@@ -70,19 +70,19 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             }
 
             if (isBaggedItem(stack)) {
-                stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(List.of(9001f), List.of(), List.of(), List.of()));
+                stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(9001f), List.of(), List.of(), List.of()));
             }
         }
 
-        this.context.itemModelManager().update(state.displayItem, stack, displayContext, null, null, 0);
+        this.context.itemModelResolver().appendItemLayers(state.displayItem, stack, displayContext, null, null, 0);
     }
 
     @Override
-    public void render(DisplayCaseBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
-        matrices.push();
+    public void render(DisplayCaseBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
+        matrices.pushPose();
 
         if (state.hasCustomName) {
-            queue.submitLabel(matrices, state.nameLabelPos, 0, state.customName, true, state.lightmapCoordinates, state.distanceToCamera, cameraState);
+            queue.submitNameTag(matrices, state.nameLabelPos, 0, state.customName, true, state.lightCoords, state.distanceToCamera, cameraState);
         }
 
         boolean isHead = isHeadItem(state.itemId);
@@ -91,26 +91,26 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         int rotation = state.rotation;
 
         if (state.isBlock) {
-            Block block = Registries.BLOCK.get(state.itemId);
-            double maxY = block.getOutlineShape(block.getDefaultState(), null, null, null).getMax(Direction.Axis.Y);
+            Block block = BuiltInRegistries.BLOCK.getValue(state.itemId);
+            double maxY = block.getShape(block.defaultBlockState(), null, null, null).max(Direction.Axis.Y);
 
             matrices.translate(0.5, 0.65 + Math.min((0.3 * Math.abs(maxY - 1.0)), 0.125), 0.5);
 
             if (!isHead) {
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotation * 45));
+                matrices.mulPose(Axis.YP.rotationDegrees(rotation * 45));
             }
         } else {
             matrices.translate(0.5, 0.85, 0.5);
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotation * 45));
+            matrices.mulPose(Axis.XP.rotationDegrees(90));
+            matrices.mulPose(Axis.ZP.rotationDegrees(rotation * 45));
             matrices.scale(0.5f, 0.5f, 0.5f);
         }
 
         // Rotate some items so they face up instead of being half inside the case
         if (isHead || isJar || isLantern) {
 //            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180 - (rotation * 45)));
-            matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
+            matrices.mulPose(Axis.YP.rotationDegrees(180 - (rotation * 45)));
+            matrices.mulPose(Axis.XN.rotationDegrees(90));
             matrices.translate(0, -0.0625, 0);
         }
 
@@ -119,53 +119,53 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             matrices.translate(0, 0, 0.09375);
         }
 
-        state.displayItem.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+        state.displayItem.submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
-        matrices.pop();
+        matrices.popPose();
     }
 
     private boolean isBaggedItem(ItemStack stack) {
-        return stack.isIn(MinekeaItemTags.BAGGED_ITEMS);
+        return stack.is(MinekeaItemTags.BAGGED_ITEMS);
     }
 
-    private boolean isJarItem(Identifier id) {
+    private boolean isJarItem(ResourceLocation id) {
         if (id == null) {
             return false;
         }
 
-        return id.compareTo(Registries.ITEM.getId(ContainerItems.GLASS_JAR_ITEM.get())) == 0;
+        return id.compareTo(BuiltInRegistries.ITEM.getKey(ContainerItems.GLASS_JAR_ITEM.get())) == 0;
     }
 
-    private boolean isHeadItem(Identifier id) {
-        if (id == null) {
-            return false;
-        }
-
-        return
-            id.compareTo(Registries.ITEM.getId(Items.PLAYER_HEAD)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.ZOMBIE_HEAD)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.SKELETON_SKULL)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.CREEPER_HEAD)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.WITHER_SKELETON_SKULL)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.PIGLIN_HEAD)) == 0;
-    }
-
-    private boolean isLanternItem(Identifier id) {
+    private boolean isHeadItem(ResourceLocation id) {
         if (id == null) {
             return false;
         }
 
         return
-            id.compareTo(Registries.ITEM.getId(Items.LANTERN)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.SOUL_LANTERN)) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.exposed())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.oxidized())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.unaffected())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxed())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedExposed())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedOxidized())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.waxedWeathered())) == 0
-                || id.compareTo(Registries.ITEM.getId(Items.COPPER_LANTERNS.weathered())) == 0
+            id.compareTo(BuiltInRegistries.ITEM.getKey(Items.PLAYER_HEAD)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.ZOMBIE_HEAD)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.SKELETON_SKULL)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.CREEPER_HEAD)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.WITHER_SKELETON_SKULL)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.PIGLIN_HEAD)) == 0;
+    }
+
+    private boolean isLanternItem(ResourceLocation id) {
+        if (id == null) {
+            return false;
+        }
+
+        return
+            id.compareTo(BuiltInRegistries.ITEM.getKey(Items.LANTERN)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.SOUL_LANTERN)) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.exposed())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.oxidized())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.unaffected())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedExposed())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedOxidized())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedWeathered())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathered())) == 0
                 || Lanterns.BLOCKS.stream().anyMatch(block -> id.compareTo(block.getId()) == 0);
     }
 
