@@ -20,8 +20,8 @@ public abstract class ENFEnchantmentMixin {
      * @reason Replace numbers with Roman numerals
      */
     @Overwrite
-    public static Component getName(Holder<Enchantment> enchantment, int level) {
-        MutableComponent mutableText = enchantment.value().description.copy();
+    public static Component getFullname(Holder<Enchantment> enchantment, int level) {
+        MutableComponent mutableText = enchantment.value().description().copy();
 
         if (enchantment.is(EnchantmentTags.CURSE)) {
             ComponentUtils.mergeStyles(mutableText, Style.EMPTY.withColor(ChatFormatting.RED));
