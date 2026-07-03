@@ -26,7 +26,7 @@ public class BCTweaksConduitMixin {
     @Mutable
     @Final
     @Shadow
-    private static Block[] ACTIVATING_BLOCKS;
+    private static Block[] VALID_BLOCKS;
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void updateBlocks(CallbackInfo ci) {
@@ -38,12 +38,12 @@ public class BCTweaksConduitMixin {
                 .map(BuiltInRegistries.BLOCK::getValue)
                 .collect(Collectors.toSet());
 
-            Collections.addAll(modifierBlocks, ACTIVATING_BLOCKS);
-            ACTIVATING_BLOCKS = modifierBlocks.toArray(new Block[]{});
+            Collections.addAll(modifierBlocks, VALID_BLOCKS);
+            VALID_BLOCKS = modifierBlocks.toArray(new Block[]{});
         }
     }
 
-    @ModifyVariable(method = "givePlayersEffects(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD"), ordinal = 1)
+    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD"), name = "j")
     private static int bct$modifiedRange(int _unused, Level world, BlockPos pos, List<BlockPos> activatingBlocks) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
 

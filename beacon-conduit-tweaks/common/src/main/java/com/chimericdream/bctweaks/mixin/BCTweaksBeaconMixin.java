@@ -4,6 +4,7 @@ import com.chimericdream.bctweaks.BeaconAccessor;
 import com.chimericdream.bctweaks.config.BCTweaksConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -27,14 +28,16 @@ import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(value = BeaconBlockEntity.class, priority = 4101)
 public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
+    @Unique
     private static final Map<Vec3i, BeaconAccessor> bct$beacons = new HashMap<>();
+    @Unique
     double bct$range = 0.0;
 
     public BCTweaksBeaconMixin(BlockPos pos, BlockState state) {
         super(BlockEntityType.BEACON, pos, state);
     }
 
-    @Inject(method = "updateLevel(Lnet/minecraft/world/World;III)I", at = @At(value = "HEAD"))
+    @Inject(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "HEAD"))
     private static void bct$updateLevelHead(Level world, int x, int y, int z, CallbackInfoReturnable<Integer> cir) {
         BlockEntity entity = world.getBlockEntity(new BlockPos(x, y, z));
 
@@ -44,7 +47,7 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
         }
     }
 
-    @Redirect(method = "updateLevel(Lnet/minecraft/world/World;III)I", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"))
+    @Redirect(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z"))
     private static boolean bct$updateLevel(BlockState instance, TagKey<Block> tag, Level world, int x, int y, int z) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
 
@@ -58,12 +61,12 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
         return instance.is(tag);
     }
 
-    @Inject(method = "updateLevel(Lnet/minecraft/world/World;III)I", at = @At(value = "TAIL"))
+    @Inject(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "TAIL"))
     private static void bct$updateLevelTail(Level world, int x, int y, int z, CallbackInfoReturnable<Integer> cir) {
         bct$beacons.remove(new Vec3i(x, y, z));
     }
 
-    @ModifyVariable(method = "applyPlayerEffects(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)V", at = @At(value = "LOAD", ordinal = 0))
+    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)V", at = @At(value = "LOAD", ordinal = 0), name = "d")
     private static double bct$modifiedRange(double d, Level world, BlockPos pos, int beaconLevel, @Nullable Holder<MobEffect> primaryEffect, @Nullable Holder<MobEffect> secondaryEffect) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
         BlockEntity entity = world.getBlockEntity(pos);
