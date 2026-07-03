@@ -10,6 +10,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import org.jetbrains.annotations.NotNull;
 
 public class AthenaeumReloadListener implements ResourceManagerReloadListener {
     public static void register() {
@@ -38,7 +39,7 @@ public class AthenaeumReloadListener implements ResourceManagerReloadListener {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "athenaeum_book_resource_listener").toString();
     }
 }

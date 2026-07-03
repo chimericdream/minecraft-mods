@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class GetRandomBookFunction extends LootItemConditionalFunction {
@@ -53,12 +54,12 @@ public class GetRandomBookFunction extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType<GetRandomBookFunction> getType() {
+    public @NotNull LootItemFunctionType<GetRandomBookFunction> getType() {
         return AthenaeumLootFunctionTypes.GET_RANDOM_BOOK;
     }
 
     @Override
-    protected ItemStack run(ItemStack stack, LootContext context) {
+    protected @NotNull ItemStack run(ItemStack stack, LootContext context) {
         if (!stack.is(Items.WRITTEN_BOOK)) {
             return stack;
         }
