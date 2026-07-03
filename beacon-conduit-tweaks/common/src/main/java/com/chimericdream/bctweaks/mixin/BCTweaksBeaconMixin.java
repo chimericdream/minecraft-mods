@@ -66,7 +66,8 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
         bct$beacons.remove(new Vec3i(x, y, z));
     }
 
-    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)V", at = @At(value = "LOAD", ordinal = 0), name = "d")
+    @SuppressWarnings("ModifyVariableMayUseName")
+    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)V", at = @At(value = "LOAD", ordinal = 0), ordinal = 0)
     private static double bct$modifiedRange(double d, Level world, BlockPos pos, int beaconLevel, @Nullable Holder<MobEffect> primaryEffect, @Nullable Holder<MobEffect> secondaryEffect) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
         BlockEntity entity = world.getBlockEntity(pos);
