@@ -19,7 +19,7 @@ public class SuspiciousPackedMudBlock extends BrushableFloatingBlock {
             SoundEvents.BRUSH_GRAVEL,
             SoundEvents.BRUSH_GRAVEL_COMPLETED,
             BlockBehaviour.Properties
-                .ofLegacyCopy(Blocks.DIRT)
+                .ofFullCopy(Blocks.DIRT)
                 .strength(1.0F, 3.0F)
                 .sound(SoundType.PACKED_MUD)
                 .pushReaction(PushReaction.DESTROY)

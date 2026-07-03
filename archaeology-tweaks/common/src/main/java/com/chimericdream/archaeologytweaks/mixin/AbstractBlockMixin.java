@@ -79,8 +79,8 @@ public abstract class AbstractBlockMixin {
         return ModBlocks.SUSPICIOUS_SOUL_SOIL.get().defaultBlockState();
     }
 
-    @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
-    protected void onUse(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    @Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
+    protected void useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         Block target = state.getBlock();
         if (!at$canHideItems(target)) {
             return;

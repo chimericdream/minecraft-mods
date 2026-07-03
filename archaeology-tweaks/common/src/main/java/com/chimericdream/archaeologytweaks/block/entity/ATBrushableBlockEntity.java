@@ -32,6 +32,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -188,7 +189,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
         return true;
     }
 
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag nbtCompound = super.getUpdateTag(registries);
         nbtCompound.storeNullable("hit_direction", Direction.LEGACY_ID_CODEC, this.hitDirection);
         if (!this.item.isEmpty()) {

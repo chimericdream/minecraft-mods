@@ -20,7 +20,7 @@ public class SuspiciousMudBlock extends BrushableFloatingNonFullBlock {
             SoundEvents.BRUSH_GRAVEL,
             SoundEvents.BRUSH_GRAVEL_COMPLETED,
             BlockBehaviour.Properties
-                .ofLegacyCopy(Blocks.DIRT)
+                .ofFullCopy(Blocks.DIRT)
                 .mapColor(MapColor.TERRACOTTA_CYAN)
                 .isRedstoneConductor(Blocks::always)
                 .isViewBlocking(Blocks::always)

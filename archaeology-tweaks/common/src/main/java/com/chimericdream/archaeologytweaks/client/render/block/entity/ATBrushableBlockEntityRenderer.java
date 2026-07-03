@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
@@ -30,11 +31,11 @@ public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBru
         this.itemModelManager = context.itemModelResolver();
     }
 
-    public ATBrushableBlockEntityRenderState createRenderState() {
+    public @NotNull ATBrushableBlockEntityRenderState createRenderState() {
         return new ATBrushableBlockEntityRenderState();
     }
 
-    public void updateRenderState(ATBrushableBlockEntity blockEntity, ATBrushableBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+    public void extractRenderState(ATBrushableBlockEntity blockEntity, ATBrushableBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, f, vec3d, crumblingOverlayCommand);
         renderState.face = blockEntity.getHitDirection();
         renderState.dusted = (Integer) blockEntity.getBlockState().getValue(BlockStateProperties.DUSTED);
@@ -45,7 +46,8 @@ public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBru
         this.itemModelManager.updateForTopItem(renderState.itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), (ItemOwner) null, 0);
     }
 
-    public void render(ATBrushableBlockEntityRenderState renderState, PoseStack matrixStack, SubmitNodeCollector orderedRenderCommandQueue, CameraRenderState cameraRenderState) {
+    @Override
+    public void submit(ATBrushableBlockEntityRenderState renderState, PoseStack matrixStack, SubmitNodeCollector orderedRenderCommandQueue, CameraRenderState cameraRenderState) {
         if (renderState.dusted > 0 && renderState.face != null && !renderState.itemRenderState.isEmpty()) {
             matrixStack.pushPose();
             matrixStack.translate(0.0F, 0.5F, 0.0F);

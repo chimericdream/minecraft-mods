@@ -21,21 +21,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BrushItem.class)
 abstract public class BrushItemMixin {
     @Shadow
-    abstract public HitResult getHitResult(Player user);
+    abstract public HitResult calculateHitResult(Player user);
 
     @Shadow
-    abstract public int getMaxUseTime(ItemStack stack, LivingEntity user);
+    abstract public int getUseDuration(ItemStack stack, LivingEntity user);
 
     @Inject(
-        method = "usageTick(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;I)V",
+        method = "onUseTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
         at = @At(value = "HEAD")
     )
-    public void usageTick(Level world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci) {
+    public void onUseTick(Level world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci) {
         if (remainingUseTicks >= 0 && user instanceof Player playerEntity) {
-            HitResult hitResult = this.getHitResult(playerEntity);
+            HitResult hitResult = this.calculateHitResult(playerEntity);
             if (hitResult instanceof BlockHitResult blockHitResult) {
                 if (hitResult.getType() == HitResult.Type.BLOCK) {
-                    int i = this.getMaxUseTime(stack, user) - remainingUseTicks + 1;
+                    int i = this.getUseDuration(stack, user) - remainingUseTicks + 1;
                     boolean bl = i % 10 == 5;
                     if (bl) {
                         BlockPos blockPos = blockHitResult.getBlockPos();
