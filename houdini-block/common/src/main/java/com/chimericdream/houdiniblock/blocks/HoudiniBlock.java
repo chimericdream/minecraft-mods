@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.houdiniblock.items.ModItems.HOUDINI_BLOCK_ITEM;
 
@@ -78,7 +79,7 @@ public class HoudiniBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (state.getValue(REPLACE_BLOCK)) {
             return this.replaceWithBlockInHand(stack, state, world, pos, player, hand, hit);
         }
@@ -113,7 +114,7 @@ public class HoudiniBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         this.spawnDestroyParticles(world, player, pos, state);
         this.spawnHoudiniBlockItem(world, player, pos);
 

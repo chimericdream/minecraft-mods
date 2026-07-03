@@ -20,6 +20,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class HoudiniBlockItem extends BlockItem {
     public static final CustomData DEFAULT_NBT;
@@ -41,7 +42,7 @@ public class HoudiniBlockItem extends BlockItem {
         super(block, settings);
     }
 
-    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResult use(Level world, Player player, InteractionHand hand) {
         if (!player.isShiftKeyDown()) {
             return InteractionResult.PASS;
         }
@@ -75,7 +76,7 @@ public class HoudiniBlockItem extends BlockItem {
         }
     }
 
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
         CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, DEFAULT_NBT).copyTag();
         PlacementMode mode = PlacementMode.getFromNbt(nbt);

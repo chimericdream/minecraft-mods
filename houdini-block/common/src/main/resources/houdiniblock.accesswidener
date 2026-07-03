@@ -1,5 +1,8 @@
 accessWidener v2 named
-accessible field net/minecraft/item/ItemPlacementContext placementPos Lnet/minecraft/util/math/BlockPos;
-mutable field net/minecraft/item/ItemPlacementContext placementPos Lnet/minecraft/util/math/BlockPos;
+accessible field net/minecraft/world/item/context/BlockPlaceContext relativePos Lnet/minecraft/core/BlockPos;
+mutable field net/minecraft/world/item/context/BlockPlaceContext relativePos Lnet/minecraft/core/BlockPos;
+
+accessible field net/minecraft/world/item/context/BlockPlaceContext replaceClicked Z
+mutable field net/minecraft/world/item/context/BlockPlaceContext replaceClicked Z
 
 accessible field net/minecraft/item/ItemPlacementContext canReplaceExisting Z

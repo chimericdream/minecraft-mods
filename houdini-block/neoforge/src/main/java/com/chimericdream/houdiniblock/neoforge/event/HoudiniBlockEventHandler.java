@@ -4,10 +4,10 @@ import com.chimericdream.houdiniblock.ModInfo;
 import com.chimericdream.houdiniblock.items.HoudiniBlockItem;
 import com.chimericdream.houdiniblock.items.ModItems;
 import com.chimericdream.lib.text.TextHelpers;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -23,14 +23,14 @@ public class HoudiniBlockEventHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
 
-        if (!stack.isOf(ModItems.HOUDINI_BLOCK_ITEM.get())) {
+        if (!stack.is(ModItems.HOUDINI_BLOCK_ITEM.get())) {
             return;
         }
 
-        NbtCompound nbt = stack.getComponents().getOrDefault(DataComponentTypes.CUSTOM_DATA, DEFAULT_NBT).copyNbt();
+        CompoundTag nbt = stack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, DEFAULT_NBT).copyTag();
         HoudiniBlockItem.PlacementMode currentMode = HoudiniBlockItem.PlacementMode.getFromNbt(nbt);
 
-        List<Text> tooltip = event.getToolTip();
+        List<Component> tooltip = event.getToolTip();
         tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEYS.get(currentMode)));
     }
 }
