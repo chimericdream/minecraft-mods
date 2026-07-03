@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 abstract public class BaseClippedEyeblossomBlock extends FlowerBlock {
     public BaseClippedEyeblossomBlock(Holder<MobEffect> stewEffect, float effectLengthInSeconds, Properties settings) {
@@ -19,7 +20,7 @@ abstract public class BaseClippedEyeblossomBlock extends FlowerBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 

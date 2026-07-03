@@ -29,7 +29,7 @@ abstract public class ArtificialHeartBlockItemMixin {
     @Shadow
     abstract public Block getBlock();
 
-    @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
     private void ah$useOnBlock(UseOnContext context, CallbackInfoReturnable<InteractionResult> info) {
         Block block = this.getBlock();
         //noinspection deprecation
