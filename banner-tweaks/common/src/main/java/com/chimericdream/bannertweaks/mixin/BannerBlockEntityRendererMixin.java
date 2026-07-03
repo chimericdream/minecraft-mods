@@ -20,12 +20,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BannerRenderer.class)
 abstract public class BannerBlockEntityRendererMixin {
-    @Inject(method = "updateRenderState(Lnet/minecraft/block/entity/BannerBlockEntity;Lnet/minecraft/client/render/block/entity/state/BannerBlockEntityRenderState;FLnet/minecraft/util/math/Vec3d;Lnet/minecraft/client/render/command/ModelCommandRenderer$CrumblingOverlayCommand;)V", at = @At("TAIL"))
+    @Inject(method = "Lnet/minecraft/client/renderer/blockentity/BannerRenderer;extractRenderState(Lnet/minecraft/world/level/block/entity/BannerBlockEntity;Lnet/minecraft/client/renderer/blockentity/state/BannerRenderState;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V", at = @At("TAIL"))
     public void bt$updateRenderState(BannerBlockEntity entity, BannerRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand, CallbackInfo ci) {
         ((BannerBlockEntityRenderStateAccessor) renderState).bt$setCustomName(entity.getCustomName());
     }
 
-    @Inject(method = "render(Lnet/minecraft/client/render/block/entity/state/BannerBlockEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/command/OrderedRenderCommandQueue;Lnet/minecraft/client/render/state/CameraRenderState;)V", at = @At("TAIL"))
+    @Inject(method = "Lnet/minecraft/client/renderer/blockentity/BannerRenderer;submit(Lnet/minecraft/client/renderer/blockentity/state/BannerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("TAIL"))
     private void bt$renderBannerName(BannerRenderState renderState, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, CameraRenderState cameraRenderState, CallbackInfo ci) {
         bt$renderLabelIfPresent(renderState, matrices, orderedRenderCommandQueue, cameraRenderState, renderState.lightCoords);
     }

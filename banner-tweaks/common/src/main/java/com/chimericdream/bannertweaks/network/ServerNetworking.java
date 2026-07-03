@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import org.jetbrains.annotations.NotNull;
 
 public class ServerNetworking {
     public static void init() {
@@ -14,7 +15,7 @@ public class ServerNetworking {
         public static final StreamCodec<FriendlyByteBuf, BannerLayerLimitPayload> CODEC = StreamCodec.composite(ByteBufCodecs.INT, BannerLayerLimitPayload::limit, BannerLayerLimitPayload::new);
 
         @Override
-        public Type<BannerLayerLimitPayload> type() {
+        public @NotNull Type<BannerLayerLimitPayload> type() {
             return ID;
         }
 

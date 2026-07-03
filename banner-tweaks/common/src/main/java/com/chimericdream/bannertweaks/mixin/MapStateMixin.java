@@ -27,13 +27,13 @@ abstract public class MapStateMixin {
     public ResourceKey<Level> dimension;
 
     @Shadow
-    abstract protected void markDecorationsDirty();
+    abstract protected void setDecorationsDirty();
 
     @Shadow
     abstract protected void removeDecoration(String id);
 
     @Shadow
-    abstract public boolean decorationCountNotLessThan(int iconCount);
+    abstract public boolean isTrackedCountOverLimit(int iconCount);
 
     @Shadow
     @Final
@@ -48,20 +48,20 @@ abstract public class MapStateMixin {
     @Final
     private boolean unlimitedTracking;
     @Shadow
-    private int decorationCount;
+    private int trackedDecorationCount;
 
     @Shadow
     @Final
     Map<String, MapDecoration> decorations;
     @Shadow
-    private @Final Map<String, MapBanner> banners;
+    private @Final Map<String, MapBanner> bannerMarkers;
 
     /**
      * @author chimericdream (with additional credit to @jason-green-io)
      * @reason fixes MC-144406
      */
     @Overwrite
-    public final void addDecoration(Holder<MapDecorationType> type, @Nullable LevelAccessor world, String key, double x, double z, double rotation, @Nullable Component text) {
+    public void addDecoration(Holder<MapDecorationType> type, @Nullable LevelAccessor world, String key, double x, double z, double rotation, @Nullable Component text) {
         int i = 1 << this.scale;
         float f = (float) (x - (double) this.centerX) / (float) i;
         float g = (float) (z - (double) this.centerZ) / (float) i;
@@ -116,14 +116,14 @@ abstract public class MapStateMixin {
         MapDecoration mapDecoration2 = this.decorations.put(key, mapDecoration);
         if (!mapDecoration.equals(mapDecoration2)) {
             if (mapDecoration2 != null && mapDecoration2.type().value().trackCount()) {
-                --this.decorationCount;
+                --this.trackedDecorationCount;
             }
 
             if (type.value().trackCount()) {
-                ++this.decorationCount;
+                ++this.trackedDecorationCount;
             }
 
-            this.markDecorationsDirty();
+            this.setDecorationsDirty();
         }
 
     }
@@ -133,7 +133,7 @@ abstract public class MapStateMixin {
      * @reason fixes MC-144406
      */
     @Overwrite
-    public boolean addBanner(LevelAccessor world, BlockPos pos) {
+    public boolean toggleBanner(LevelAccessor world, BlockPos pos) {
         double d = (double) pos.getX() + 0.5;
         double e = (double) pos.getZ() + 0.5;
         int i = 1 << this.scale;
@@ -146,13 +146,13 @@ abstract public class MapStateMixin {
                 return false;
             }
 
-            if (this.banners.remove(mapBannerMarker.getId(), mapBannerMarker)) {
+            if (this.bannerMarkers.remove(mapBannerMarker.getId(), mapBannerMarker)) {
                 this.removeDecoration(mapBannerMarker.getId());
                 return true;
             }
 
-            if (!this.decorationCountNotLessThan(256)) {
-                this.banners.put(mapBannerMarker.getId(), mapBannerMarker);
+            if (!this.isTrackedCountOverLimit(256)) {
+                this.bannerMarkers.put(mapBannerMarker.getId(), mapBannerMarker);
                 this.addDecoration(mapBannerMarker.getDecoration(), world, mapBannerMarker.getId(), d, e, 180.0, mapBannerMarker.name().orElse(null));
                 return true;
             }

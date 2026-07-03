@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(BannerPatternLayers.class)
 public class BannerPatternsComponentMixin {
-    @ModifyConstant(method = "appendTooltip", constant = @Constant(intValue = 6))
+    @ModifyConstant(method = "addToTooltip", constant = @Constant(intValue = 6))
     private int getLimit(int curr) {
         return BannerTweaksConfig.HANDLER.instance().maxBannerLayers;
     }
