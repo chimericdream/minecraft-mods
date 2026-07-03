@@ -3,6 +3,7 @@ package com.chimericdream.hopperxtreme.block;
 import com.chimericdream.hopperxtreme.entity.XtremeMultiHupperBlockEntity;
 import com.chimericdream.hopperxtreme.tag.CommonTags;
 import com.mojang.serialization.MapCodec;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
         WEST_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(0.0, 6.0, 6.0, 4.0, 8.0, 10.0));
     }
 
-    public MapCodec<XtremeMultiHupperBlock> codec() {
+    public @NotNull MapCodec<XtremeMultiHupperBlock> codec() {
         return CODEC;
     }
 
@@ -169,7 +170,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         List<VoxelShape> parts = new ArrayList<>();
 
         if (state.getValue(NORTH_CONNECTED)) {
@@ -192,7 +193,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+    protected @NotNull VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         List<VoxelShape> parts = new ArrayList<>();
 
         if (state.getValue(NORTH_CONNECTED)) {
@@ -237,7 +238,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
@@ -264,7 +265,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // Temporary workaround until the next version of Minekea adds its wrench to the common tag.
         if (!stack.is(CommonTags.WRENCHES) && !stack.getItem().builtInRegistryHolder().key().location().equals(ResourceLocation.parse("minekea:tools/wrench"))) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
@@ -320,7 +321,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -335,12 +336,12 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    protected @NotNull BlockState rotate(BlockState state, Rotation rotation) {
         return state;
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    protected @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state;
     }
 

@@ -4,6 +4,7 @@ import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.block.XtremeHopperBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -99,7 +100,7 @@ public class XtremeHopperBlockEntity extends RandomizableContainerBlockEntity im
         return this.inventory.size();
     }
 
-    public ItemStack removeItem(int slot, int amount) {
+    public @NotNull ItemStack removeItem(int slot, int amount) {
         this.unpackLootTable(null);
         return ContainerHelper.removeItem(this.getItems(), slot, amount);
     }
@@ -115,7 +116,7 @@ public class XtremeHopperBlockEntity extends RandomizableContainerBlockEntity im
         this.facing = state.getValue(XtremeHopperBlock.FACING);
     }
 
-    protected Component getDefaultName() {
+    protected @NotNull Component getDefaultName() {
         Block block = this.getBlockState().getBlock();
 
         if (block instanceof XtremeHopperBlock) {
@@ -494,7 +495,7 @@ public class XtremeHopperBlockEntity extends RandomizableContainerBlockEntity im
 
     @Nullable
     private static Container getEntityInventoryAt(Level world, double x, double y, double z) {
-        List<Entity> list = world.getEntities(null, new AABB(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5), EntitySelector.CONTAINER_ENTITY_SELECTOR);
+        List<Entity> list = world.getEntities((Entity) null, new AABB(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5), EntitySelector.CONTAINER_ENTITY_SELECTOR);
         return !list.isEmpty() ? (Container) list.get(world.random.nextInt(list.size())) : null;
     }
 
@@ -530,7 +531,7 @@ public class XtremeHopperBlockEntity extends RandomizableContainerBlockEntity im
         return this.transferCooldown > this.cooldownInTicks;
     }
 
-    protected NonNullList<ItemStack> getItems() {
+    protected @NotNull NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 
@@ -546,7 +547,7 @@ public class XtremeHopperBlockEntity extends RandomizableContainerBlockEntity im
         }
     }
 
-    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         if (this.withFilter) {
             return new FilteredHopperScreenHandler(FILTERED_HOPPER_SCREEN_HANDLER.get(), syncId, playerInventory, this);
         }

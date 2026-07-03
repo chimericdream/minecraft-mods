@@ -2,34 +2,29 @@ package com.chimericdream.hopperxtreme.fabric.block;
 
 import com.chimericdream.hopperxtreme.block.ModBlocks;
 import com.chimericdream.hopperxtreme.item.ModItems;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Pair;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.*;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
 
-public class XtremeHopperRecipeGenerator extends RecipeGenerator {
-    private final RegistryEntryLookup<Item> itemLookup;
+public class XtremeHopperRecipeGenerator extends RecipeProvider {
+    private final HolderGetter<Item> itemLookup;
 
-    public XtremeHopperRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+    public XtremeHopperRecipeGenerator(HolderLookup.Provider registries, RecipeOutput exporter) {
         super(registries, exporter);
 
-        this.itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
+        this.itemLookup = registries.getOrThrow(Registries.ITEM).value();
     }
 
     @Override
-    public void generate() {
+    public void buildRecipes() {
         generateHopperRecipes();
         generateGlazedHopperRecipes();
         generateFilteredHopperRecipes();
@@ -39,7 +34,7 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
     }
 
     private static String getCleanKey(Item item) {
-        return item.getTranslationKey().replace(":", "/").replaceAll("block\\.[_a-zA-Z]+\\.", "");
+        return item.getDescriptionId().replace(":", "/").replaceAll("block\\.[_a-zA-Z]+\\.", "");
     }
 
     private void generateHopperRecipes() {
@@ -52,9 +47,9 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
 
     private void generateGlazedHopperRecipes() {
         makeShapedRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), "glazed_hoppers", List.of("IGI", "ICI", " I "), List.of(
-            new Pair<>('I', Items.IRON_INGOT),
-            new Pair<>('G', Items.GRAY_GLAZED_TERRACOTTA),
-            new Pair<>('C', Items.CHEST)
+            new Tuple<>('I', Items.IRON_INGOT),
+            new Tuple<>('G', Items.GRAY_GLAZED_TERRACOTTA),
+            new Tuple<>('C', Items.CHEST)
         ));
         makeShapelessUpgradeRecipe(Items.HOPPER, Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_hopper");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), Items.HONEYCOMB, 1, ModBlocks.HONEY_GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_glazed");
@@ -128,7 +123,7 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
         makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_MULTI_HUPPER.get().asItem(), Items.DIAMOND, 4, ModBlocks.DIAMOND_MULTI_HUPPER.get().asItem(), "multi_huppers");
     }
 
-    private void makeShapedRecipe(Item output, String prefix, List<String> patterns, List<Pair<Character, ItemConvertible>> inputs) {
+    private void makeShapedRecipe(Item output, String prefix, List<String> patterns, List<Tuple<Character, ItemLike>> inputs) {
         if (patterns.size() > 3) {
             throw new IllegalArgumentException("Too many patterns");
         }
@@ -137,28 +132,28 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
             throw new IllegalArgumentException("Too many inputs");
         }
 
-        ShapedRecipeJsonBuilder builder = ShapedRecipeJsonBuilder
-            .create(itemLookup, RecipeCategory.REDSTONE, output, 1);
+        ShapedRecipeBuilder builder = ShapedRecipeBuilder
+            .shaped(itemLookup, RecipeCategory.REDSTONE, output, 1);
 
         for (String pattern : patterns) {
             builder.pattern(pattern);
         }
 
-        for (Pair<Character, ItemConvertible> input : inputs) {
-            builder.input(input.getLeft(), input.getRight());
+        for (Tuple<Character, ItemLike> input : inputs) {
+            builder.define(input.getA(), input.getB());
         }
 
-        builder.criterion(hasItem(output), conditionsFromItem(output))
-            .offerTo(exporter, prefix + "/" + getCleanKey(output));
+        builder.unlockedBy(getHasName(output), has(output))
+            .save(this.output, prefix + "/" + getCleanKey(output));
     }
 
     private void makeSmithingRecipe(Item template, Item base, Item addition, Item output, String prefix) {
-        SmithingTransformRecipeJsonBuilder
-            .create(Ingredient.ofItem(template), Ingredient.ofItem(base), Ingredient.ofItem(addition), RecipeCategory.REDSTONE, output)
-            .criterion(hasItem(template), conditionsFromItem(template))
-            .criterion(hasItem(base), conditionsFromItem(base))
-            .criterion(hasItem(addition), conditionsFromItem(addition))
-            .offerTo(exporter, prefix + "/" + getCleanKey(output) + "_smithing");
+        SmithingTransformRecipeBuilder
+            .smithing(Ingredient.of(template), Ingredient.of(base), Ingredient.of(addition), RecipeCategory.REDSTONE, output)
+            .unlocks(getHasName(template), has(template))
+            .unlocks(getHasName(base), has(base))
+            .unlocks(getHasName(addition), has(addition))
+            .save(this.output, prefix + "/" + getCleanKey(output) + "_smithing");
     }
 
     private void makeShapelessUpgradeRecipe(Item base, Item ingredient, Item output, String prefix) {
@@ -170,13 +165,13 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
     }
 
     private void makeShapelessUpgradeRecipe(Item base, Item ingredient, int qty, Item output, String prefix, String suffix) {
-        ShapelessRecipeJsonBuilder
-            .create(itemLookup, RecipeCategory.REDSTONE, output, 1)
-            .input(base)
-            .input(ingredient, qty)
-            .criterion(hasItem(base), conditionsFromItem(base))
-            .criterion(hasItem(ingredient), conditionsFromItem(ingredient))
-            .offerTo(exporter, prefix + "/" + getCleanKey(output) + suffix);
+        ShapelessRecipeBuilder
+            .shapeless(itemLookup, RecipeCategory.REDSTONE, output, 1)
+            .requires(base)
+            .requires(ingredient, qty)
+            .unlockedBy(getHasName(base), has(base))
+            .unlockedBy(getHasName(ingredient), has(ingredient))
+            .save(this.output, prefix + "/" + getCleanKey(output) + suffix);
     }
 
     private void makeShapelessConversionRecipe(Item item1, Item item2, String prefix) {
@@ -193,10 +188,10 @@ public class XtremeHopperRecipeGenerator extends RecipeGenerator {
     }
 
     private void makeShapelessConversionRecipe(Item item1, int count1, Item item2, int count2, String prefix) {
-        ShapelessRecipeJsonBuilder
-            .create(itemLookup, RecipeCategory.REDSTONE, item2, count2)
-            .input(item1, count1)
-            .criterion(hasItem(item1), conditionsFromItem(item1))
-            .offerTo(exporter, prefix + "/" + getCleanKey(item2) + "_from_" + getCleanKey(item1));
+        ShapelessRecipeBuilder
+            .shapeless(itemLookup, RecipeCategory.REDSTONE, item2, count2)
+            .requires(item1, count1)
+            .unlockedBy(getHasName(item1), has(item1))
+            .save(this.output, prefix + "/" + getCleanKey(item2) + "_from_" + getCleanKey(item1));
     }
 }

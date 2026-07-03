@@ -23,6 +23,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 abstract public class AbstractHopperBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING;
@@ -53,7 +54,7 @@ abstract public class AbstractHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case DOWN -> {
                 return DOWN_SHAPE;
@@ -77,7 +78,7 @@ abstract public class AbstractHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+    protected @NotNull VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         switch (state.getValue(FACING)) {
             case DOWN -> {
                 return DOWN_RAYCAST_SHAPE;
@@ -113,7 +114,7 @@ abstract public class AbstractHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -128,12 +129,12 @@ abstract public class AbstractHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    protected @NotNull BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    protected @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 

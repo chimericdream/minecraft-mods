@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
@@ -64,7 +65,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected MapCodec<XtremeMultiHopperBlock> codec() {
+    protected @NotNull MapCodec<XtremeMultiHopperBlock> codec() {
         return CODEC;
     }
 
@@ -86,18 +87,18 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
-        } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
-                player.openMenu((XtremeMultiHopperBlockEntity) blockEntity);
-                player.awardStat(Stats.INSPECT_HOPPER);
-            }
-
-            return InteractionResult.CONSUME;
         }
+
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof XtremeMultiHopperBlockEntity) {
+            player.openMenu((XtremeMultiHopperBlockEntity) blockEntity);
+            player.awardStat(Stats.INSPECT_HOPPER);
+        }
+
+        return InteractionResult.CONSUME;
     }
 
     @Override

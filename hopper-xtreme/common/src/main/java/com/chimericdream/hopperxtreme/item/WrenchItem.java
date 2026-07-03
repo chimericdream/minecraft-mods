@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
@@ -58,9 +59,7 @@ public class WrenchItem extends Item {
         }
 
         if (state.getOptionalValue(BlockStateProperties.FACING_HOPPER).isPresent()) {
-            if (tryPlacing(pos, state.cycle(BlockStateProperties.FACING_HOPPER), world)) {
-                return true;
-            }
+            return tryPlacing(pos, state.cycle(BlockStateProperties.FACING_HOPPER), world);
         }
 
         return false;
@@ -74,9 +73,7 @@ public class WrenchItem extends Item {
         }
 
         if (state.getOptionalValue(BlockStateProperties.HORIZONTAL_AXIS).isPresent()) {
-            if (tryPlacing(pos, state.cycle(BlockStateProperties.HORIZONTAL_AXIS), world)) {
-                return true;
-            }
+            return tryPlacing(pos, state.cycle(BlockStateProperties.HORIZONTAL_AXIS), world);
         }
 
         return false;
@@ -106,7 +103,7 @@ public class WrenchItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);

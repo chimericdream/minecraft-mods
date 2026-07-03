@@ -33,6 +33,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     public static final BooleanProperty ENABLED;
@@ -86,7 +87,7 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         List<VoxelShape> parts = new ArrayList<>();
 
         if (state.getValue(NORTH_CONNECTED)) {
@@ -109,7 +110,7 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+    protected @NotNull VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         List<VoxelShape> parts = new ArrayList<>();
 
         if (state.getValue(NORTH_CONNECTED)) {
@@ -149,7 +150,7 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // Temporary workaround until the next version of Minekea adds its wrench to the common tag.
         if (!stack.is(CommonTags.WRENCHES) && !stack.getItem().builtInRegistryHolder().key().location().equals(ResourceLocation.parse("minekea:tools/wrench"))) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
@@ -192,7 +193,7 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -207,12 +208,12 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    protected @NotNull BlockState rotate(BlockState state, Rotation rotation) {
         return state;
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    protected @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state;
     }
 

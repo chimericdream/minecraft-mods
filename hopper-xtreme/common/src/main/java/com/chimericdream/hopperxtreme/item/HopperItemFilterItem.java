@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
@@ -46,7 +47,7 @@ public class HopperItemFilterItem extends Item {
     }
 
     @Override
-    public ItemStack getDefaultInstance() {
+    public @NotNull ItemStack getDefaultInstance() {
         ItemStack stack = new ItemStack(this);
 
         stack.set(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
@@ -55,7 +56,7 @@ public class HopperItemFilterItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResult use(Level world, Player player, InteractionHand hand) {
         if (player.level() != null && !player.level().isClientSide()) {
             if (player.isShiftKeyDown()) {
                 try {

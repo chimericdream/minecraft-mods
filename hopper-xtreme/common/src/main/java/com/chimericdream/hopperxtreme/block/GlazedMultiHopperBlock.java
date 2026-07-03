@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
@@ -64,7 +65,7 @@ public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected MapCodec<GlazedMultiHopperBlock> codec() {
+    protected @NotNull MapCodec<GlazedMultiHopperBlock> codec() {
         return CODEC;
     }
 
@@ -86,7 +87,7 @@ public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {

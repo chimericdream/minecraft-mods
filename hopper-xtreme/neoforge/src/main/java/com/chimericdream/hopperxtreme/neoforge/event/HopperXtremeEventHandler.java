@@ -7,8 +7,8 @@ import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
 import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.lib.text.TextHelpers;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -24,18 +24,18 @@ public class HopperXtremeEventHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
 
-        List<Text> tooltip = event.getToolTip();
+        List<Component> tooltip = event.getToolTip();
 
-        if (stack.isOf(ModBlocks.HONEY_GLAZED_HOPPER.get().asItem())) {
+        if (stack.is(ModBlocks.HONEY_GLAZED_HOPPER.get().asItem())) {
             tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEY));
             return;
         }
 
-        if (stack.isOf(ModItems.HOPPER_ITEM_FILTER_ITEM.get())) {
+        if (stack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get())) {
             HopperXtremeFilterModeComponent component = stack.getOrDefault(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
             HopperItemFilterItem.FilterMode mode = HopperItemFilterItem.FilterMode.fromString(component.mode());
 
-            tooltip.add(Text.translatable(TOOLTIP_KEYS.get(mode)));
+            tooltip.add(Component.translatable(TOOLTIP_KEYS.get(mode)));
             return;
         }
     }

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
     public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/hopper_item_filter");
@@ -65,7 +66,7 @@ public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int invSlot) {
+    public @NotNull ItemStack quickMoveStack(Player player, int invSlot) {
         return ItemStack.EMPTY;
     }
 
@@ -80,7 +81,7 @@ public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public ItemStack safeInsert(ItemStack stack, int count) {
+        public @NotNull ItemStack safeInsert(ItemStack stack, int count) {
             ItemStack copy = stack.copy();
             copy.setCount(1);
 
@@ -90,7 +91,7 @@ public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public ItemStack remove(int amount) {
+        public @NotNull ItemStack remove(int amount) {
             super.remove(amount);
 
             return ItemStack.EMPTY;

@@ -39,6 +39,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
@@ -91,7 +92,7 @@ public class XtremeHupperBlock extends BaseEntityBlock {
         WEST_RAYCAST_SHAPE = Shapes.or(INSIDE_SHAPE, Block.box(0.0, 6.0, 6.0, 4.0, 8.0, 10.0));
     }
 
-    public MapCodec<XtremeHupperBlock> codec() {
+    public @NotNull MapCodec<XtremeHupperBlock> codec() {
         return CODEC;
     }
 
@@ -135,7 +136,7 @@ public class XtremeHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         switch ((Direction) state.getValue(FACING)) {
             case UP -> {
                 return UP_SHAPE;
@@ -159,7 +160,7 @@ public class XtremeHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+    protected @NotNull VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         switch ((Direction) state.getValue(FACING)) {
             case UP -> {
                 return UP_RAYCAST_SHAPE;
@@ -206,7 +207,7 @@ public class XtremeHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
@@ -244,7 +245,7 @@ public class XtremeHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -259,12 +260,12 @@ public class XtremeHupperBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    protected @NotNull BlockState rotate(BlockState state, Rotation rotation) {
         return (BlockState) state.setValue(FACING, rotation.rotate((Direction) state.getValue(FACING)));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    protected @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation((Direction) state.getValue(FACING)));
     }
 
