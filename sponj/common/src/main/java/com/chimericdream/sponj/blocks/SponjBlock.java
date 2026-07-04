@@ -50,7 +50,6 @@ public class SponjBlock extends Block {
             world.setBlock(pos, ModBlocks.WET_SPONJ_BLOCK.get().defaultBlockState(), 2);
             world.levelEvent(2001, pos, Block.getId(Blocks.WATER.defaultBlockState()));
         }
-
     }
 
     private boolean absorbWater(Level world, BlockPos pos) {

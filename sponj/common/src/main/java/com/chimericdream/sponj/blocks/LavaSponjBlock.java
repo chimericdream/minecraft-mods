@@ -49,7 +49,6 @@ public class LavaSponjBlock extends Block {
             world.setBlock(pos, ModBlocks.WET_LAVA_SPONJ_BLOCK.get().defaultBlockState(), 2);
             world.levelEvent(2001, pos, Block.getId(Blocks.LAVA.defaultBlockState()));
         }
-
     }
 
     private boolean absorbLava(Level world, BlockPos pos) {
