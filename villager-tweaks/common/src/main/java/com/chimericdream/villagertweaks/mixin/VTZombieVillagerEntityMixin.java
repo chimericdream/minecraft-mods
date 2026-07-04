@@ -90,6 +90,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
             this.setCustomNameVisible(this.vt$wasPrevNameVisible);
         } else {
             this.setCustomName(null);
+            this.setCustomNameVisible(false);
         }
 
         this.vt$isTimerShowing = false;
@@ -97,7 +98,6 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void vt$writePreviousNameData(ValueOutput view, CallbackInfo ci) {
-
         if (this.vt$prevName != null) {
             String json = this.vt$gson.toJson(ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, this.vt$prevName).getOrThrow());
             view.putString("VTPrevName", json);
