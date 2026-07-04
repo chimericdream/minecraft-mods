@@ -16,14 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ZombieVillager.class)
 abstract public class MMZombieVillagerEntityMixin extends MMEntityMixin {
     @Shadow
-    private MerchantOffers offerData;
+    private MerchantOffers tradeOffers;
 
     @Shadow
-    private int experience;
+    private int villagerXp;
 
     @Shadow
     @Final
-    private static EntityDataAccessor<VillagerData> VILLAGER_DATA;
+    private static EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA;
 
     @Inject(method = "setVillagerData", at = @At("TAIL"))
     private void mm$updateVillagerData(VillagerData data, CallbackInfo ci) {
@@ -33,9 +33,9 @@ abstract public class MMZombieVillagerEntityMixin extends MMEntityMixin {
             return;
         }
 
-        this.dataTracker.set(VILLAGER_DATA, data.withLevel(5));
+        this.entityData.set(DATA_VILLAGER_DATA, data.withLevel(5));
 
-        this.offerData = ModProfessions.getOffersForProfession(profession);
-        this.experience = 250;
+        this.tradeOffers = ModProfessions.getOffersForProfession(profession);
+        this.villagerXp = 250;
     }
 }

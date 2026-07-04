@@ -15,7 +15,7 @@ public class MiniblockMerchantsClient implements ClientModInitializer {
         MiniblockMerchantsMod.LOGGER.info("Initializing client code");
 
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, list) -> {
-            if (!itemStack.getItem().getTranslationKey().startsWith(ModInfo.MOD_ID)) {
+            if (!itemStack.getItem().getDescriptionId().startsWith(ModInfo.MOD_ID)) {
                 return;
             }
 

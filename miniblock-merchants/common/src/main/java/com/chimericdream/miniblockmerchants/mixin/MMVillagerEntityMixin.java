@@ -46,17 +46,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Villager.class)
 abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
     @Shadow
-    private void sayNo() {
+    private void setUnhappy() {
     }
 
     @Shadow
-    private int experience;
+    private int villagerXp;
 
     @Shadow
     abstract public VillagerData getVillagerData();
 
     @Shadow
-    abstract public void reinitializeBrain(ServerLevel world);
+    abstract public void refreshBrain(ServerLevel world);
 
     @Shadow
     abstract public void setVillagerData(VillagerData villagerData);
@@ -83,12 +83,12 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
         return msg;
     }
 
-    @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void mm$tryConvertingVillager(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (itemStack.getItem() instanceof VillagerConversionItem item && this.isAlive() && !this.hasCustomer() && !this.isSleeping()) {
+        if (itemStack.getItem() instanceof VillagerConversionItem item && this.isAlive() && !this.isTrading() && !this.isSleeping()) {
             if (this.isBaby()) {
-                this.sayNo();
+                this.setUnhappy();
                 cir.setReturnValue(InteractionResult.SUCCESS);
 
                 return;
@@ -111,12 +111,12 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
                     this.setVillagerData(new VillagerData(villager, profession, 5));
 
                     this.offers = ModProfessions.getOffersForProfession(item.profession);
-                    this.experience = 250;
+                    this.villagerXp = 250;
 
-                    this.produceParticles(ParticleTypes.HAPPY_VILLAGER);
+                    this.addParticlesAroundSelf(ParticleTypes.HAPPY_VILLAGER);
                     this.setPersistenceRequired();
 
-                    this.reinitializeBrain((ServerLevel) world);
+                    this.refreshBrain((ServerLevel) world);
 
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
@@ -130,7 +130,7 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
         }
     }
 
-    @Inject(method = "readCustomData", at = @At("TAIL"))
+    @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void mm$setBlockTraderOffers(ValueInput view, CallbackInfo ci) {
         VillagerData data = view.read("VillagerData", VillagerData.CODEC).orElseGet(Villager::createDefaultVillagerData);
         String profession = data.profession().getRegisteredName();
@@ -140,12 +140,12 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
         }
 
         this.offers = ModProfessions.getOffersForProfession(profession);
-        this.experience = 250;
+        this.villagerXp = 250;
     }
 
-    @Inject(method = "afterUsing", at = @At("TAIL"))
+    @Inject(method = "rewardTradeXp", at = @At("TAIL"))
     private void mm$incrementMiniblockTrade(MerchantOffer offer, CallbackInfo ci) {
-        if (this.getCustomer() instanceof ServerPlayer player && ModProfessions.isMiniblockMerchant(this.getVillagerData().profession())) {
+        if (this.getTradingPlayer() instanceof ServerPlayer player && ModProfessions.isMiniblockMerchant(this.getVillagerData().profession())) {
             player.awardStat(ModStats.TRADE_FOR_MINIBLOCK_ID);
             mm$checkPlayerAdvancements(player);
         }
@@ -184,10 +184,10 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
     }
 
     @ModifyArg(
-        method = "beginTradeWith",
+        method = "startTrading",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/entity/passive/VillagerEntity;sendOffers(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/text/Text;I)V"
+            target = "Lnet/minecraft/world/entity/npc/Villager;openTradingScreen(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;I)V"
         ),
         index = 1
     )

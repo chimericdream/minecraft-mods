@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerHeadItem.class)
 public class MMPlayerHeadItemMixin {
-    @Inject(method = "getName(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/text/Text;", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getName(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/network/chat/Component;", at = @At("RETURN"), cancellable = true)
     private void mm$getName(ItemStack stack, CallbackInfoReturnable<Component> cir) {
         String currentName = cir.getReturnValue().getString();
 

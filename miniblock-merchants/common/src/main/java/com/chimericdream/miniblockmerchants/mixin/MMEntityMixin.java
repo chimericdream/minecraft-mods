@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(Entity.class)
 abstract public class MMEntityMixin {
     @Shadow
-    public abstract Level getEntityWorld();
+    public abstract Level level();
 
     @Shadow
     @Final
-    protected SynchedEntityData dataTracker;
+    protected SynchedEntityData entityData;
 }

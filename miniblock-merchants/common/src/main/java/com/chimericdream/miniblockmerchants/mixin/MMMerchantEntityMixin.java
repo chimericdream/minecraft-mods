@@ -17,14 +17,14 @@ abstract public class MMMerchantEntityMixin extends Mob {
     protected MerchantOffers offers;
 
     @Shadow
-    abstract public boolean hasCustomer();
+    abstract public boolean isTrading();
 
     @Shadow
-    abstract protected void produceParticles(ParticleOptions parameters);
+    abstract protected void addParticlesAroundSelf(ParticleOptions parameters);
 
     @Shadow
     @Nullable
-    public abstract Player getCustomer();
+    public abstract Player getTradingPlayer();
 
     protected MMMerchantEntityMixin(EntityType<? extends Mob> entityType, Level world) {
         super(entityType, world);
