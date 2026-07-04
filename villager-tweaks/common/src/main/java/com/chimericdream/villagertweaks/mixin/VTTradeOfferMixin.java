@@ -20,13 +20,13 @@ public class VTTradeOfferMixin {
     @Shadow
     private @Mutable int uses;
     @Shadow
-    private int demandBonus;
+    private int demand;
     @Shadow
-    private @Final ItemStack sellItem;
+    private @Final ItemStack result;
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void forceHighMaxUseCount(CallbackInfo ci) {
-        if (this.sellItem.is(ModTags.IGNORED_ITEMS)) {
+        if (this.result.is(ModTags.IGNORED_ITEMS)) {
             return;
         }
 
@@ -39,24 +39,24 @@ public class VTTradeOfferMixin {
         }
 
         if (!config.enableDemandBonus) {
-            this.demandBonus = 0;
+            this.demand = 0;
         }
     }
 
-    @Inject(method = "updateDemandBonus", at = @At("RETURN"))
+    @Inject(method = "updateDemand", at = @At("RETURN"))
     public void resetDemandBonus(CallbackInfo ci) {
-        if (this.sellItem.is(ModTags.IGNORED_ITEMS)) {
+        if (this.result.is(ModTags.IGNORED_ITEMS)) {
             return;
         }
 
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 
         if (!config.enableDemandBonus) {
-            this.demandBonus = 0;
+            this.demand = 0;
         }
     }
 
-    @Inject(method = "use", at = @At("TAIL"))
+    @Inject(method = "increaseUses", at = @At("TAIL"))
     public void checkInfiniteUses(CallbackInfo ci) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 

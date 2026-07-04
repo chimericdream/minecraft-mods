@@ -38,13 +38,13 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
     private final UUID GLOBAL_UUID = UUID.fromString("00000001-0000-0001-0000-000100000001");
 
     @Shadow
-    public @Final GossipContainer gossip;
+    public @Final GossipContainer gossips;
 
     public VTVillagerEntityMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
         super(entityType, world);
     }
 
-    @Inject(method = "getReputation", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getPlayerReputation", at = @At("HEAD"), cancellable = true)
     private void injected(Player player, CallbackInfoReturnable<Integer> cir) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
         UUID playerId = config.enableGlobalReputation ? GLOBAL_UUID : player.getUUID();
@@ -53,11 +53,11 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
             return;
         }
 
-        cir.setReturnValue(this.gossip.getReputation(playerId, (t) -> t != GossipType.MINOR_NEGATIVE && t != GossipType.MAJOR_NEGATIVE));
+        cir.setReturnValue(this.gossips.getReputation(playerId, (t) -> t != GossipType.MINOR_NEGATIVE && t != GossipType.MAJOR_NEGATIVE));
     }
 
     // This used to be a TemptGoal, and the better way to do it is probably a task, but I couldn't get that to work
-    @Inject(method = "mobTick", at = @At("TAIL"))
+    @Inject(method = "customServerAiStep", at = @At("TAIL"))
     public void vt$mobTick(ServerLevel world, CallbackInfo ci) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
         if (
@@ -81,7 +81,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
         }
     }
 
-    @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void vt_bagTheVillager(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (!this.level().isClientSide()) {
             ItemStack itemStack = player.getItemInHand(hand);
@@ -89,7 +89,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
             if (itemStack.getItem() == Items.BUNDLE && player.isShiftKeyDown()) {
                 VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 
-                this.gossip.add(
+                this.gossips.add(
                     config.enableGlobalReputation ? GLOBAL_UUID : player.getUUID(),
                     GossipType.MINOR_NEGATIVE,
                     25
@@ -111,7 +111,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
         }
     }
 
-    @Inject(method = "onInteractionWith", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "onReputationEventFrom", at = @At(value = "HEAD"), cancellable = true)
     private void vt_overrideSettingGossip(ReputationEventType interaction, Entity entity, CallbackInfo ci) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
         if (!config.enableGlobalReputation) {
@@ -120,14 +120,14 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
         if (entity instanceof Player) {
             if (interaction == ReputationEventType.ZOMBIE_VILLAGER_CURED) {
-                this.gossip.add(GLOBAL_UUID, GossipType.MAJOR_POSITIVE, 20);
-                this.gossip.add(GLOBAL_UUID, GossipType.MINOR_POSITIVE, 25);
+                this.gossips.add(GLOBAL_UUID, GossipType.MAJOR_POSITIVE, 20);
+                this.gossips.add(GLOBAL_UUID, GossipType.MINOR_POSITIVE, 25);
             } else if (interaction == ReputationEventType.TRADE) {
-                this.gossip.add(GLOBAL_UUID, GossipType.TRADING, 2);
+                this.gossips.add(GLOBAL_UUID, GossipType.TRADING, 2);
             } else if (interaction == ReputationEventType.VILLAGER_HURT) {
-                this.gossip.add(GLOBAL_UUID, GossipType.MINOR_NEGATIVE, 25);
+                this.gossips.add(GLOBAL_UUID, GossipType.MINOR_NEGATIVE, 25);
             } else if (interaction == ReputationEventType.VILLAGER_KILLED) {
-                this.gossip.add(GLOBAL_UUID, GossipType.MAJOR_NEGATIVE, 25);
+                this.gossips.add(GLOBAL_UUID, GossipType.MAJOR_NEGATIVE, 25);
             }
 
             ci.cancel();

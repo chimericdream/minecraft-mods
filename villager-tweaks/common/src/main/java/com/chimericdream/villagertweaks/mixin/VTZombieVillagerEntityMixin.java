@@ -22,10 +22,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ZombieVillager.class)
 public abstract class VTZombieVillagerEntityMixin extends Entity {
-    private Gson gson = new Gson();
+    @Unique
+    private final Gson vt$gson = new Gson();
 
     @Shadow
-    private int conversionTimer;
+    private int villagerConversionTime;
 
     @Shadow
     public abstract boolean isConverting();
@@ -35,17 +36,17 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     }
 
     @Unique
-    private Component prevName = null;
+    private Component vt$prevName = null;
 
     @Unique
-    private boolean wasPrevNameVisible = false;
+    private boolean vt$wasPrevNameVisible = false;
 
     @Unique
-    private boolean isTimerShowing = false;
+    private boolean vt$isTimerShowing = false;
 
     @ModifyArg(
-        method = "interactMob",
-        at = @At(value = "INVOKE", target = "net/minecraft/entity/mob/ZombieVillagerEntity.setConverting(Ljava/util/UUID;I)V"),
+        method = "mobInteract",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/ZombieVillager;startConverting(Ljava/util/UUID;I)V"),
         index = 1
     )
     private int vt$modifyConversionTime(int time) {
@@ -62,60 +63,60 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
     private void vt$onTick(CallbackInfo ci) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
 
-        if (!this.isConverting() || !config.displayConversionTime || this.conversionTimer <= 0) {
+        if (!this.isConverting() || !config.displayConversionTime || this.villagerConversionTime <= 0) {
             return;
         }
 
-        int secondsLeft = this.conversionTimer / 20;
-        if (isTimerShowing) {
+        int secondsLeft = this.villagerConversionTime / 20;
+        if (vt$isTimerShowing) {
             this.setCustomName(vt$getFormattedTime(secondsLeft));
         } else {
             if (this.hasCustomName()) {
-                this.prevName = this.getCustomName();
-                this.wasPrevNameVisible = this.isCustomNameVisible();
+                this.vt$prevName = this.getCustomName();
+                this.vt$wasPrevNameVisible = this.isCustomNameVisible();
             }
 
             this.setCustomName(vt$getFormattedTime(secondsLeft));
 
             this.setCustomNameVisible(true);
-            this.isTimerShowing = true;
+            this.vt$isTimerShowing = true;
         }
     }
 
     @Inject(method = "finishConversion", at = @At("HEAD"))
     private void vt$onFinishConversion(CallbackInfo ci) {
-        if (this.prevName != null) {
-            this.setCustomName(this.prevName);
-            this.setCustomNameVisible(this.wasPrevNameVisible);
+        if (this.vt$prevName != null) {
+            this.setCustomName(this.vt$prevName);
+            this.setCustomNameVisible(this.vt$wasPrevNameVisible);
         } else {
             this.setCustomName(null);
         }
 
-        this.isTimerShowing = false;
+        this.vt$isTimerShowing = false;
     }
 
-    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void vt$writePreviousNameData(ValueOutput view, CallbackInfo ci) {
 
-        if (this.prevName != null) {
-            String json = this.gson.toJson(ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, this.prevName).getOrThrow());
+        if (this.vt$prevName != null) {
+            String json = this.vt$gson.toJson(ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, this.vt$prevName).getOrThrow());
             view.putString("VTPrevName", json);
-            view.putBoolean("VTWasPrevNameVisible", this.wasPrevNameVisible);
+            view.putBoolean("VTWasPrevNameVisible", this.vt$wasPrevNameVisible);
         }
     }
 
-    @Inject(method = "readCustomData", at = @At("TAIL"))
+    @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void vt$readPreviousNameData(ValueInput view, CallbackInfo ci) {
         if (view.contains("VTPrevName")) {
             String jsonString = view.getStringOr("VTPrevName", "Uh oh!");
 
-            this.prevName = ComponentSerialization.CODEC
-                .decode(JsonOps.INSTANCE, this.gson.fromJson(jsonString, JsonElement.class))
+            this.vt$prevName = ComponentSerialization.CODEC
+                .decode(JsonOps.INSTANCE, this.vt$gson.fromJson(jsonString, JsonElement.class))
                 .getOrThrow()
                 .getFirst();
 
-            this.wasPrevNameVisible = view.getBooleanOr("VTWasPrevNameVisible", false);
-            this.isTimerShowing = true;
+            this.vt$wasPrevNameVisible = view.getBooleanOr("VTWasPrevNameVisible", false);
+            this.vt$isTimerShowing = true;
         }
     }
 

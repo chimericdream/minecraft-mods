@@ -19,6 +19,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
+import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.level.block.Block.canSupportCenter;
 
@@ -29,7 +30,7 @@ public class BaggedVillagerItem extends Item {
         super(settings);
     }
 
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
 
         if (context.getClickedFace() != Direction.UP || !canSupportCenter(world, context.getClickedPos(), Direction.UP)) {
@@ -43,7 +44,7 @@ public class BaggedVillagerItem extends Item {
         return spawnVillager(context.getLevel(), context.getClickedPos().above(), context.getPlayer(), context.getHand());
     }
 
-    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+    public @NotNull InteractionResult use(Level world, Player user, InteractionHand hand) {
         if (!user.onGround()) {
             return InteractionResult.PASS;
         }

@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Zombie.class)
 public class VTZombieEntityMixin {
     @Redirect(
-        method = "onKilledOther",
-        at = @At(value = "INVOKE", target = "net/minecraft/server/world/ServerWorld.getDifficulty()Lnet/minecraft/world/Difficulty;")
+        method = "killedEntity",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getDifficulty()Lnet/minecraft/world/Difficulty;")
     )
     private Difficulty modifyConversionTime(ServerLevel world) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
