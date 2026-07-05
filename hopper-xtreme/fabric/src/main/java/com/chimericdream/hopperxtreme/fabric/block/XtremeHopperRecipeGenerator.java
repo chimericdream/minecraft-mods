@@ -20,7 +20,7 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
     public XtremeHopperRecipeGenerator(HolderLookup.Provider registries, RecipeOutput exporter) {
         super(registries, exporter);
 
-        this.itemLookup = registries.getOrThrow(Registries.ITEM).value();
+        this.itemLookup = registries.lookupOrThrow(Registries.ITEM);
     }
 
     @Override
