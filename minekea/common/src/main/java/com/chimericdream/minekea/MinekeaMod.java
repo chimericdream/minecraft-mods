@@ -5,7 +5,6 @@ import com.chimericdream.minekea.block.ModBlocks;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.ModItems;
-import com.chimericdream.minekea.item.WaxItems;
 import com.chimericdream.minekea.network.ServerNetworking;
 import com.chimericdream.minekea.registry.ColoredBlocksRegistry;
 import com.chimericdream.minekea.registry.ModItemGroups;
@@ -37,15 +36,21 @@ public final class MinekeaMod {
         ColoredBlocksRegistry.init();
 
         REGISTRY_HELPER.init();
+    }
 
+    /**
+     * Runs logic that depends on registry objects actually being resolvable via {@code .get()}.
+     * On NeoForge, DeferredRegister entries aren't available until RegisterEvent fires, which
+     * happens after all mods finish construction - so this must run from a post-registration
+     * lifecycle hook (e.g. FMLCommonSetupEvent), not from {@link #init()} itself. On Fabric,
+     * registration is synchronous, so calling this immediately after {@link #init()} is safe.
+     */
+    public static void postInit() {
         ModFluids.postInit();
         ModBlocks.postInit();
         ModCrops.postInit();
         ModItems.postInit();
         ModItemGroups.postInit();
-
-        // @TODO: move this somewhere else?
-        WaxItems.init();
     }
 
     public static void initVillagerPois() {

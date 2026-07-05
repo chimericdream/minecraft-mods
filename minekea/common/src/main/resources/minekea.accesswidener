@@ -19,8 +19,10 @@ accessible field net/minecraft/world/entity/decoration/ArmorStand disabledSlots 
 #accessible method net/minecraft/data/client/TextureKey of (Ljava/lang/String;)Lnet/minecraft/data/client/TextureKey;
 #accessible method net/minecraft/data/client/TextureKey of (Ljava/lang/String;Lnet/minecraft/data/client/TextureKey;)Lnet/minecraft/data/client/TextureKey;
 
-#accessible method net/minecraft/client/gui/screen/ingame/HandledScreens register (Lnet/minecraft/screen/ScreenHandlerType;Lnet/minecraft/client/gui/screen/ingame/HandledScreens$Provider;)V
-#accessible class net/minecraft/client/gui/screen/ingame/HandledScreens$Provider
+accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+
+accessible field net/minecraft/client/renderer/special/SpecialModelRenderers ID_MAPPER Lnet/minecraft/util/ExtraCodecs$LateBoundIdMapper;
 
 # This should be in chimericlib, but I need to figure out how to get transitive accesswideners working with Fabric, NeoForge, and Architectury
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V

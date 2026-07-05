@@ -53,7 +53,7 @@ public class WaxItems implements ModThingGroup {
         WAX_ITEMS.put("pink", PINK_WAX_ITEM);
     }
 
-    public static void init() {
+    public static void postInit() {
         GlassJarBlock.ALLOWED_ITEMS.addAll(WAX_ITEMS.values().stream().map(Supplier::get).toList());
     }
 }

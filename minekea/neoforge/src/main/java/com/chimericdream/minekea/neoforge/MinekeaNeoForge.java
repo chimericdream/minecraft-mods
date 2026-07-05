@@ -22,6 +22,7 @@ public final class MinekeaNeoForge {
 
     @SubscribeEvent
     public static void onSetup(FMLCommonSetupEvent event) {
+        MinekeaMod.postInit();
         MinekeaMod.initVillagerPois();
     }
 }

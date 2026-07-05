@@ -30,5 +30,6 @@ public class ModItems {
     }
 
     public static void postInit() {
+        WaxItems.postInit();
     }
 }
