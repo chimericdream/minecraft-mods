@@ -50,10 +50,8 @@ public class HammerItemDataGenerator extends ChimericLibItemDataGenerator {
                 .pattern(" S ")
                 .define('I', ITEM.itemIngredient)
                 .define('S', Items.STICK)
-                .unlockedBy(RecipeProvider.getHasName(ITEM.itemIngredient),
-                        generator.has(ITEM.itemIngredient))
-                .unlockedBy(RecipeProvider.getHasName(Items.STICK),
-                        generator.has(Items.STICK))
+                .unlockedBy(RecipeProvider.getHasName(ITEM.itemIngredient), generator.has(ITEM.itemIngredient))
+                .unlockedBy(RecipeProvider.getHasName(Items.STICK), generator.has(Items.STICK))
                 .save(exporter);
     }
 
@@ -72,12 +70,9 @@ public class HammerItemDataGenerator extends ChimericLibItemDataGenerator {
                             RecipeCategory.TOOLS,
                             Tools.NETHERITE_HAMMER_ITEM.get()
                     )
-//                    .unlockedBy(RecipeProvider.getHasName(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-//                            generator.has(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
-//                    .unlockedBy(RecipeProvider.getHasName(Tools.DIAMOND_HAMMER_ITEM.get()),
-//                            generator.has(Tools.DIAMOND_HAMMER_ITEM.get()))
-//                    .unlockedBy(RecipeProvider.getHasName(Items.NETHERITE_INGOT),
-//                            generator.has(Items.NETHERITE_INGOT))
+                    .unlocks(RecipeProvider.getHasName(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), generator.has(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
+                    .unlocks(RecipeProvider.getHasName(Tools.DIAMOND_HAMMER_ITEM.get()), generator.has(Tools.DIAMOND_HAMMER_ITEM.get()))
+                    .unlocks(RecipeProvider.getHasName(Items.NETHERITE_INGOT), generator.has(Items.NETHERITE_INGOT))
                     .save(exporter, ((HammerItem) Tools.NETHERITE_HAMMER_ITEM.get()).ITEM_ID.withSuffix("_upgrade_from_diamond").toString());
         }
     }

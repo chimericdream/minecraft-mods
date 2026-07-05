@@ -7,6 +7,7 @@ import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockSta
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -28,7 +29,7 @@ public class WarpedWartCropDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
-        HolderLookup<Enchantment> impl = registryLookup.getOrThrow(Registries.ENCHANTMENT).value();
+        HolderGetter<Enchantment> impl = registryLookup.lookupOrThrow(Registries.ENCHANTMENT);
 
         generator.add(
             BLOCK,

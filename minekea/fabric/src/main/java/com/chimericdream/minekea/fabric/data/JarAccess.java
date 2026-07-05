@@ -20,7 +20,7 @@ import java.util.jar.JarFile;
  * The location of the jar itself should be specified via the {@value #ENV_KEY} environment variable.
  *
  * @author Jaxydog
- * @author chimericdrea
+ * @author chimericdream
  * @link https://github.com/Jaxydog/Astral
  */
 public final class JarAccess {

@@ -37,7 +37,7 @@ public class BasaltBricksDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
-        HolderGetter<Item> itemLookup = registryLookup.getOrThrow(Registries.ITEM).value();
+        HolderGetter<Item> itemLookup = registryLookup.lookupOrThrow(Registries.ITEM);
 
         generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 4)
             .pattern("##")
