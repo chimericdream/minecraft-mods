@@ -8,7 +8,6 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -30,7 +29,7 @@ public class CompressedColumnBlockDataGenerator extends CompressedBlockDataGener
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().<Block>generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().<Block>generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).endTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_end"));
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).sideTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_side"));
         });

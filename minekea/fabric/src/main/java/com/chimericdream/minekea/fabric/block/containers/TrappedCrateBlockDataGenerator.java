@@ -8,10 +8,10 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -53,7 +53,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
             final Optional<BufferedImage> source = instance.getImage(String.format("%s_planks", BLOCK.config.getMaterial()));
 
             if (source.isPresent()) {

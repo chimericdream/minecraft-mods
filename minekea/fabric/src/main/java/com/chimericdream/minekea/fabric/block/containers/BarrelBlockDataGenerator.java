@@ -127,7 +127,7 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     public static void generateTextures(String faceKey, String sideKey, ResourceLocation blockId) {
-        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
             final Optional<BufferedImage> faceTexture = instance.getImage(faceKey);
             final Optional<BufferedImage> sideTexture = instance.getImage(sideKey);
 

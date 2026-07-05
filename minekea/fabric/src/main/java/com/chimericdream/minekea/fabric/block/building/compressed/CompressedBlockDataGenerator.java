@@ -74,7 +74,7 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().<Block>generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().<Block>generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial(), BLOCK.BLOCK_ID);
         });
     }
