@@ -4,6 +4,7 @@ import com.chimericdream.hopperxtreme.block.ModBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.core.HolderLookup;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -13,7 +14,7 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootTableProvider
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "X-Treme Hopper loot table generator";
     }
 
