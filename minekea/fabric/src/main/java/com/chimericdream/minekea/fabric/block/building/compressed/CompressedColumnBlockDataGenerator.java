@@ -30,7 +30,7 @@ public class CompressedColumnBlockDataGenerator extends CompressedBlockDataGener
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().<Block>generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).endTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_end"));
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).sideTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_side"));
         });

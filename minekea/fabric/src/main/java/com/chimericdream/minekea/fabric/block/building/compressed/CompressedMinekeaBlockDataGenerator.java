@@ -15,7 +15,7 @@ public class CompressedMinekeaBlockDataGenerator extends CompressedBlockDataGene
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
+        TextureGenerator.getInstance().<Block>generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
             final Optional<BufferedImage> source = instance.getMinekeaImage(((CompressedMinekeaBlock) BLOCK).baseBlockId.withPrefix("block/").getPath());
             addTextureOverlay(instance, source, BLOCK.BLOCK_ID);
         });
