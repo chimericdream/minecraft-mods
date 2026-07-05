@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -48,7 +49,7 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
     }
 
     @Override
-    protected BlockState createLegacyBlock(FluidState state) {
+    protected @NotNull BlockState createLegacyBlock(FluidState state) {
         return ModFluids.HONEY_SOURCE_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
     }
 

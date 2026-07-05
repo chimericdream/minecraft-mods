@@ -23,10 +23,10 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.item.Item;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 import static com.chimericdream.minekea.client.Keybindings.CYCLE_PAINTER_COLOR;
@@ -61,20 +61,20 @@ public final class MinekeaFabricClient implements ClientModInitializer {
                 return;
             }
 
-            RegistryEntry<Item> registryEntry = itemStack.getRegistryEntry();
+            Holder<Item> registryEntry = itemStack.getItemHolder();
 
-            if (registryEntry.matchesKey(REGISTRY_HELPER.makeItemRegistryKey(FakeCakeBlock.BLOCK_ID))) {
+            if (registryEntry.is(REGISTRY_HELPER.makeItemRegistryKey(FakeCakeBlock.BLOCK_ID))) {
                 list.addAll(((FakeCakeBlock) DecorationBlocks.FAKE_CAKE.get()).getTooltip());
                 return;
             }
 
-            if (registryEntry.matches(key -> key.toString().contains("minekea:") && key.toString().contains("table"))) {
+            if (registryEntry.is(key -> key.toString().contains("minekea:") && key.toString().contains("table"))) {
                 list.addAll(((TableBlock) Tables.BLOCKS.getFirst().get()).getTooltip());
                 return;
             }
 
-            if (registryEntry.getIdAsString().contains("minekea:building/compressed")) {
-                RegistrySupplier<Block> block = CompressedBlocks.COMPRESSED_BLOCKS_BY_ID.get(registryEntry.getIdAsString());
+            if (registryEntry.getRegisteredName().contains("minekea:building/compressed")) {
+                RegistrySupplier<Block> block = CompressedBlocks.COMPRESSED_BLOCKS_BY_ID.get(registryEntry.getRegisteredName());
                 if (block != null) {
                     list.addAll(((CompressedBlock) block.get()).getTooltip());
                 }
@@ -84,10 +84,10 @@ public final class MinekeaFabricClient implements ClientModInitializer {
     }
 
     private void initializeBlockRenderLayers() {
-        DisplayCases.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.CUTOUT));
-        StorageBlocks.DYE_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.TRANSLUCENT));
-        StorageBlocks.BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.CUTOUT));
-        VotiveCandles.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), BlockRenderLayer.TRANSLUCENT));
+        DisplayCases.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
+        StorageBlocks.DYE_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
+        StorageBlocks.BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
+        VotiveCandles.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
 
         BlockEntityRendererRegistry.register(
             ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
@@ -97,13 +97,13 @@ public final class MinekeaFabricClient implements ClientModInitializer {
 //        BuiltinItemRendererRegistry.INSTANCE.register(GLASS_JAR_ITEM.get(), new GlassJarItemRenderer());
 
         BlockRenderLayerMap.putBlocks(
-            BlockRenderLayer.TRANSLUCENT,
+            ChunkSectionLayer.TRANSLUCENT,
             StorageBlocks.SUGAR_CANE_BLOCK.get(),
             ContainerBlocks.GLASS_JAR.get()
         );
 
         BlockRenderLayerMap.putBlocks(
-            BlockRenderLayer.CUTOUT,
+            ChunkSectionLayer.CUTOUT,
             StorageBlocks.EGG_CRATE_BLOCK.get(),
             ModCrops.WARPED_WART_PLANT_BLOCK.get()
         );
@@ -111,7 +111,7 @@ public final class MinekeaFabricClient implements ClientModInitializer {
 
     private void initializeKeybindings() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (CYCLE_PAINTER_COLOR.wasPressed()) {
+            if (CYCLE_PAINTER_COLOR.isDown()) {
                 ClientPlayNetworking.send(new CyclePainterColorPayload(true));
             }
         });

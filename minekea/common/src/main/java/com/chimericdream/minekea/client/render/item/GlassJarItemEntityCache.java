@@ -32,7 +32,7 @@ public class GlassJarItemEntityCache {
                 }
 
                 GlassJarBlockEntityRenderState state = renderer.createRenderState();
-                renderer.updateRenderState(entity, state, 1f, Vec3.ZERO, null);
+                renderer.extractRenderState(entity, state, 1f, Vec3.ZERO, null);
                 return state;
             }
         );

@@ -3,13 +3,13 @@ package com.chimericdream.minekea.fabric.item.tools;
 import com.chimericdream.minekea.fabric.data.ChimericLibItemDataGenerator;
 import com.chimericdream.minekea.item.Tools;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 public class BlockPainterItemDataGenerator extends ChimericLibItemDataGenerator {
     public final Item ITEM;
@@ -27,24 +27,24 @@ public class BlockPainterItemDataGenerator extends ChimericLibItemDataGenerator 
 //    }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.TOOLS, ITEM, 1)
             .pattern(" NW")
             .pattern(" SN")
             .pattern("S  ")
-            .input('N', Items.IRON_NUGGET)
-            .input('S', Items.STICK)
-            .input('W', ItemTags.WOOL)
-            .criterion(RecipeGenerator.hasItem(Items.IRON_NUGGET),
-                generator.conditionsFromItem(Items.IRON_NUGGET))
-            .criterion(RecipeGenerator.hasItem(Items.STICK),
-                generator.conditionsFromItem(Items.STICK))
-            .criterion("has_wool", generator.conditionsFromTag(ItemTags.WOOL))
-            .offerTo(exporter);
+            .define('N', Items.IRON_NUGGET)
+            .define('S', Items.STICK)
+            .define('W', ItemTags.WOOL)
+            .unlockedBy(RecipeProvider.getHasName(Items.IRON_NUGGET),
+                generator.has(Items.IRON_NUGGET))
+            .unlockedBy(RecipeProvider.getHasName(Items.STICK),
+                generator.has(Items.STICK))
+            .unlockedBy("has_wool", generator.has(ItemTags.WOOL))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(ITEM, "Block Painter");
     }
 }

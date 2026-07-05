@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ShelfBlockEntity extends BlockEntity implements ImplementedInventory, WorldlyContainer {
@@ -64,12 +65,12 @@ public class ShelfBlockEntity extends BlockEntity implements ImplementedInventor
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
         return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public int[] getSlotsForFace(Direction var1) {
+    public int @NotNull [] getSlotsForFace(Direction var1) {
         int[] result = new int[getItems().size()];
 
         for (int i = 0; i < result.length; i++) {

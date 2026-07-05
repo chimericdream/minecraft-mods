@@ -4,16 +4,16 @@ import com.chimericdream.lib.colors.ColorHelpers;
 import com.chimericdream.minekea.fabric.data.ChimericLibItemDataGenerator;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.client.data.Models;
-import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
     public WaxItem ITEM;
@@ -23,34 +23,34 @@ public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        CookingRecipeJsonBuilder.createSmelting(
-                Ingredient.ofItems(ITEM.ingredient),
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        SimpleCookingRecipeBuilder.smelting(
+                Ingredient.of(ITEM.ingredient),
                 RecipeCategory.MISC,
                 ITEM,
                 0.1f,
                 200
             )
-            .criterion(RecipeGenerator.hasItem(ITEM.ingredient),
-                generator.conditionsFromItem(ITEM.ingredient))
-            .offerTo(exporter);
+            .unlockedBy(RecipeProvider.getHasName(ITEM.ingredient),
+                generator.has(ITEM.ingredient))
+            .save(exporter);
 
         if (ITEM.color.equals("plain")) {
-            CookingRecipeJsonBuilder.createSmelting(
-                    Ingredient.ofItems(Items.HONEYCOMB),
+            SimpleCookingRecipeBuilder.smelting(
+                    Ingredient.of(Items.HONEYCOMB),
                     RecipeCategory.MISC,
                     ITEM,
                     0.1f,
                     200
                 )
-                .criterion(RecipeGenerator.hasItem(Items.HONEYCOMB),
-                    generator.conditionsFromItem(Items.HONEYCOMB))
-                .offerTo(exporter, ITEM.ITEM_ID.withSuffixedPath("_from_honeycomb").toString());
+                .unlockedBy(RecipeProvider.getHasName(Items.HONEYCOMB),
+                    generator.has(Items.HONEYCOMB))
+                .save(exporter, ITEM.ITEM_ID.withSuffix("_from_honeycomb").toString());
         }
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (ITEM.color.equals("plain")) {
             translationBuilder.add(ITEM, "Wax");
 
@@ -61,7 +61,7 @@ public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
     }
 
     @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ITEM, Models.GENERATED);
+    public void configureItemModels(ItemModelGenerators itemModelGenerator) {
+        itemModelGenerator.createFlatItemModel(ITEM, ModelTemplates.FLAT_ITEM);
     }
 }

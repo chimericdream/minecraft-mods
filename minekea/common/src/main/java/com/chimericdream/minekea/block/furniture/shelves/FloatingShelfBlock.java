@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class FloatingShelfBlock extends ShelfBlock {
     public FloatingShelfBlock(BlockConfig config) {
@@ -21,7 +22,7 @@ public class FloatingShelfBlock extends ShelfBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction wall = state.getValue(WALL_SIDE);
 
         return switch (wall) {

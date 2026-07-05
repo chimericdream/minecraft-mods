@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.core.cauldron.CauldronInteraction.newInteractionMap;
 import static net.minecraft.core.cauldron.CauldronInteraction.fillBucket;
@@ -140,7 +141,7 @@ public class HoneyCauldronBlock extends LayeredCauldronBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+    public @NotNull ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return Items.CAULDRON.getDefaultInstance();
     }
 }

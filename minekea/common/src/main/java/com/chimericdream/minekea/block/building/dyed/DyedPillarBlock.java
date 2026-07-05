@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -70,12 +71,12 @@ public class DyedPillarBlock extends RotatedPillarBlock {
         builder.add(AXIS);
     }
 
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    public @NotNull BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return this.defaultBlockState().setValue(AXIS, ctx.getClickedFace().getAxis());
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         PotionContents potionContentsComponent = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
         BlockState blockState = world.getBlockState(pos);
         if (hit.getDirection() != Direction.DOWN && potionContentsComponent.is(Potions.WATER)) {

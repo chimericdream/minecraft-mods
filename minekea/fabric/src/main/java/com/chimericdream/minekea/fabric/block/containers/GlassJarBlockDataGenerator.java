@@ -3,15 +3,15 @@ package com.chimericdream.minekea.fabric.block.containers;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Function;
 
@@ -20,27 +20,27 @@ import static com.chimericdream.minekea.block.containers.GlassJarBlock.ALLOWED_I
 
 public class GlassJarBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
-    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, ProvidedTagBuilder<Item, Item>> getBuilder) {
-        ProvidedTagBuilder<Item, Item> builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+        TagAppender<Item, Item> builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);
 
         ALLOWED_ITEMS.forEach(builder::add);
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShaped(RecipeCategory.DECORATIONS, GLASS_JAR.get(), 3)
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.DECORATIONS, GLASS_JAR.get(), 3)
             .pattern(" L ")
             .pattern("G G")
             .pattern("GGG")
-            .input('L', ItemTags.PLANKS)
-            .input('G', Items.GLASS_PANE)
-            .criterion(RecipeGenerator.hasItem(Items.GLASS_PANE),
-                generator.conditionsFromItem(Items.GLASS_PANE))
-            .offerTo(exporter);
+            .define('L', ItemTags.PLANKS)
+            .define('G', Items.GLASS_PANE)
+            .unlockedBy(RecipeProvider.getHasName(Items.GLASS_PANE),
+                generator.has(Items.GLASS_PANE))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(GLASS_JAR.get(), "Glass Jar");
         translationBuilder.add(GLASS_JAR.get().asItem(), "Glass Jar");
     }

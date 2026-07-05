@@ -22,7 +22,7 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     private static final CameraRenderState CAMERA_STATE = new CameraRenderState();
 
     @Override
-    public void render(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
+    public void submit(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
 //        if (data != null) {
 //            data.light = light;
 //        }

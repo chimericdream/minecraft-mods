@@ -5,6 +5,7 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreenHandler;
 import com.chimericdream.minekea.entity.block.containers.CrateBlockEntity;
 import com.mojang.serialization.MapCodec;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -80,20 +81,20 @@ public class CrateBlock extends BaseEntityBlock {
         CONNECTED_WEST = BooleanProperty.create("connected_west");
 
         INVENTORY_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
-            public Optional<Container> getFromBoth(CrateBlockEntity crate1, CrateBlockEntity crate2) {
+            public @NotNull Optional<Container> acceptDouble(CrateBlockEntity crate1, CrateBlockEntity crate2) {
                 return Optional.of(new CompoundContainer(crate1, crate2));
             }
 
-            public Optional<Container> getFrom(CrateBlockEntity chestBlockEntity) {
+            public @NotNull Optional<Container> acceptSingle(CrateBlockEntity chestBlockEntity) {
                 return Optional.of(chestBlockEntity);
             }
 
-            public Optional<Container> acceptNone() {
+            public @NotNull Optional<Container> acceptNone() {
                 return Optional.empty();
             }
         };
         SCREEN_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
-            public Optional<MenuProvider> getFromBoth(final CrateBlockEntity crate1, final CrateBlockEntity crate2) {
+            public @NotNull Optional<MenuProvider> acceptDouble(final CrateBlockEntity crate1, final CrateBlockEntity crate2) {
                 final Container inventory = new CompoundContainer(crate1, crate2);
 
                 return Optional.of(new MenuProvider() {
@@ -101,7 +102,7 @@ public class CrateBlock extends BaseEntityBlock {
                         return new DoubleCrateScreenHandler(Crates.DOUBLE_CRATE_SCREEN_HANDLER.get(), i, playerInventory, inventory);
                     }
 
-                    public Component getDisplayName() {
+                    public @NotNull Component getDisplayName() {
                         if (crate1.isTrapped()) {
                             return Component.translatable(DoubleCrateScreenHandler.TRAPPED_SCREEN_ID.toLanguageKey());
                         }
@@ -111,11 +112,11 @@ public class CrateBlock extends BaseEntityBlock {
                 });
             }
 
-            public Optional<MenuProvider> getFrom(CrateBlockEntity crate) {
+            public @NotNull Optional<MenuProvider> acceptSingle(CrateBlockEntity crate) {
                 return Optional.of(crate);
             }
 
-            public Optional<MenuProvider> acceptNone() {
+            public @NotNull Optional<MenuProvider> acceptNone() {
                 return Optional.empty();
             }
         };
@@ -154,7 +155,7 @@ public class CrateBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<CrateBlock> codec() {
+    protected @NotNull MapCodec<CrateBlock> codec() {
         return CODEC;
     }
 
@@ -267,7 +268,7 @@ public class CrateBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+    protected @NotNull BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         if (state.getValue(getConnectionProperty(direction)) && !neighborState.is(this)) {
             return state.setValue(getConnectionProperty(direction), false).setValue(CRATE_TYPE, ChestType.SINGLE);
         }
@@ -300,12 +301,12 @@ public class CrateBlock extends BaseEntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    public @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         }

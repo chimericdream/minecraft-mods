@@ -2,33 +2,34 @@ package com.chimericdream.minekea.fabric.block.furniture;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.util.Tool;
+import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.TexturedModel;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    private static final Model DISPLAY_CASE_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
+    private static final ModelTemplate DISPLAY_CASE_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(Identifier.of("minekea:block/furniture/display_case")),
+        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/display_case")),
         Optional.empty(),
         MinekeaTextures.MATERIAL,
         MinekeaTextures.STRIPPED_MATERIAL
@@ -40,53 +41,53 @@ public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator
         BLOCK = (DisplayCaseBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block plankIngredient = BLOCK.config.getIngredient("planks");
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern(" G ")
             .pattern("X X")
             .pattern("###")
-            .input('G', Blocks.GLASS)
-            .input('X', plankIngredient)
-            .input('#', logIngredient)
-            .criterion(RecipeGenerator.hasItem(Blocks.GLASS),
-                generator.conditionsFromItem(Blocks.GLASS))
-            .criterion(RecipeGenerator.hasItem(plankIngredient),
-                generator.conditionsFromItem(plankIngredient))
-            .criterion(RecipeGenerator.hasItem(logIngredient),
-                generator.conditionsFromItem(logIngredient))
-            .offerTo(exporter);
+            .define('G', Blocks.GLASS)
+            .define('X', plankIngredient)
+            .define('#', logIngredient)
+            .unlockedBy(RecipeProvider.getHasName(Blocks.GLASS),
+                generator.has(Blocks.GLASS))
+            .unlockedBy(RecipeProvider.getHasName(plankIngredient),
+                generator.has(plankIngredient))
+            .unlockedBy(RecipeProvider.getHasName(logIngredient),
+                generator.has(logIngredient))
+            .save(exporter);
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Display Case", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Display Case", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block logIngredient = BLOCK.config.getIngredient("log");
         Block strippedLogIngredient = Optional.ofNullable(BLOCK.config.getIngredient("stripped_log")).orElse(logIngredient);
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.MATERIAL, TextureMap.getId(logIngredient))
-            .put(MinekeaTextures.STRIPPED_MATERIAL, TextureMap.getId(strippedLogIngredient));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(logIngredient))
+            .put(MinekeaTextures.STRIPPED_MATERIAL, TextureMapping.getBlockTexture(strippedLogIngredient));
 
-        blockStateModelGenerator.registerSingleton(
+        blockStateModelGenerator.createTrivialBlock(
             BLOCK,
-            TexturedModel.makeFactory((unused) -> textures, DISPLAY_CASE_MODEL)
+            TexturedModel.createDefault((unused) -> textures, DISPLAY_CASE_MODEL)
         );
     }
 }

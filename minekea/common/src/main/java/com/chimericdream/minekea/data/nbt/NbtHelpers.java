@@ -12,9 +12,8 @@ public class NbtHelpers {
 
     public static CompoundTag getOrCreateNbt(ItemStack stack) {
         CustomData component = stack.get(DataComponents.CUSTOM_DATA);
-        CompoundTag nbt = component != null ? component.copyTag() : new CompoundTag();
 
-        return nbt;
+        return component != null ? component.copyTag() : new CompoundTag();
     }
 //
 //    public static DefaultedList<ItemStack> getInventory(ItemStack stack, int size, RegistryWrapper.WrapperLookup registries) {

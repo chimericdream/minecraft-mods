@@ -5,19 +5,19 @@ import com.chimericdream.minekea.block.building.stairs.StairsBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Models;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -30,7 +30,7 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -38,46 +38,46 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
             .pattern("#  ")
             .pattern("## ")
             .pattern("###")
-            .input('#', ingredient)
-            .criterion(RecipeGenerator.hasItem(ingredient),
-                generator.conditionsFromItem(ingredient))
-            .offerTo(exporter);
+            .define('#', ingredient)
+            .unlockedBy(RecipeProvider.getHasName(ingredient),
+                generator.has(ingredient))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Stairs", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        ResourceLocation textureId = BLOCK.config.getTexture();
 
-        TextureMap textures = new TextureMap()
-            .put(TextureKey.BOTTOM, textureId)
-            .put(TextureKey.TOP, textureId)
-            .put(TextureKey.SIDE, textureId);
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.BOTTOM, textureId)
+            .put(TextureSlot.TOP, textureId)
+            .put(TextureSlot.SIDE, textureId);
 
         ModelUtils.registerStairsBlock(
             blockStateModelGenerator,
             BLOCK,
             textures,
-            Models.INNER_STAIRS,
-            Models.STAIRS,
-            Models.OUTER_STAIRS
+            ModelTemplates.STAIRS_INNER,
+            ModelTemplates.STAIRS_STRAIGHT,
+            ModelTemplates.STAIRS_OUTER
         );
     }
 }

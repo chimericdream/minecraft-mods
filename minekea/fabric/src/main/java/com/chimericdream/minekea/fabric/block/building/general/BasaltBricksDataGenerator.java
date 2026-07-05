@@ -3,21 +3,21 @@ package com.chimericdream.minekea.fabric.block.building.general;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Function;
 
@@ -29,41 +29,41 @@ public class BasaltBricksDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
-        getBuilder.apply(BlockTags.PICKAXE_MINEABLE)
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+        getBuilder.apply(BlockTags.MINEABLE_WITH_PICKAXE)
             .setReplace(false)
             .add(BLOCK);
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        RegistryEntryLookup<Item> itemLookup = registryLookup.getOrThrow(RegistryKeys.ITEM);
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        HolderGetter<Item> itemLookup = registryLookup.getOrThrow(Registries.ITEM).value();
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 4)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 4)
             .pattern("##")
             .pattern("##")
-            .input('#', Blocks.SMOOTH_BASALT)
-            .criterion(RecipeGenerator.hasItem(Blocks.SMOOTH_BASALT),
-                RecipeGenerator.conditionsFromPredicates(ItemPredicate.Builder.create().items(itemLookup, Blocks.SMOOTH_BASALT)))
-            .offerTo(exporter);
+            .define('#', Blocks.SMOOTH_BASALT)
+            .unlockedBy(RecipeProvider.getHasName(Blocks.SMOOTH_BASALT),
+                RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(itemLookup, Blocks.SMOOTH_BASALT)))
+            .save(exporter);
 
-        generator.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, BLOCK, Blocks.SMOOTH_BASALT, 1);
-        generator.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_BASALT, BLOCK, 1);
+        generator.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, BLOCK, Blocks.SMOOTH_BASALT, 1);
+        generator.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_BASALT, BLOCK, 1);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Basalt Bricks");
         translationBuilder.add(BLOCK.asItem(), "Basalt Bricks");
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(BLOCK);
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        blockStateModelGenerator.createTrivialCube(BLOCK);
     }
 }

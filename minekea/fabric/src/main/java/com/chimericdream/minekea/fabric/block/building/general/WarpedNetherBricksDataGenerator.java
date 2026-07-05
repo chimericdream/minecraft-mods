@@ -4,17 +4,17 @@ import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Function;
 
@@ -26,39 +26,39 @@ public class WarpedNetherBricksDataGenerator extends ChimericLibBlockDataGenerat
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
-        getBuilder.apply(BlockTags.PICKAXE_MINEABLE)
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+        getBuilder.apply(BlockTags.MINEABLE_WITH_PICKAXE)
             .setReplace(false)
             .add(BLOCK);
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("AB")
             .pattern("BA")
-            .input('A', ModCrops.WARPED_WART_ITEM.get())
-            .input('B', Items.NETHER_BRICK)
-            .criterion(RecipeGenerator.hasItem(ModCrops.WARPED_WART_ITEM.get()),
-                generator.conditionsFromItem(ModCrops.WARPED_WART_ITEM.get()))
-            .criterion(RecipeGenerator.hasItem(Items.NETHER_BRICK),
-                generator.conditionsFromItem(Items.NETHER_BRICK))
-            .offerTo(exporter);
+            .define('A', ModCrops.WARPED_WART_ITEM.get())
+            .define('B', Items.NETHER_BRICK)
+            .unlockedBy(RecipeProvider.getHasName(ModCrops.WARPED_WART_ITEM.get()),
+                generator.has(ModCrops.WARPED_WART_ITEM.get()))
+            .unlockedBy(RecipeProvider.getHasName(Items.NETHER_BRICK),
+                generator.has(Items.NETHER_BRICK))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Warped Nether Bricks");
         translationBuilder.add(BLOCK.asItem(), "Warped Nether Bricks");
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(BLOCK);
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        blockStateModelGenerator.createTrivialCube(BLOCK);
     }
 }

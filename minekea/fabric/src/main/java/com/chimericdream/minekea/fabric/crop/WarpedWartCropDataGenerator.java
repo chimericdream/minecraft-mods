@@ -5,68 +5,68 @@ import com.chimericdream.minekea.crop.WarpedWartPlantBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.StatePredicate;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.state.property.Properties;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class WarpedWartCropDataGenerator extends ChimericLibBlockDataGenerator {
     public static final Block BLOCK = ModCrops.WARPED_WART_PLANT_BLOCK.get();
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        RegistryWrapper.Impl<Enchantment> impl = registryLookup.getOrThrow(RegistryKeys.ENCHANTMENT);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        HolderLookup<Enchantment> impl = registryLookup.getOrThrow(Registries.ENCHANTMENT).value();
 
-        generator.addDrop(
+        generator.add(
             BLOCK,
-            block -> LootTable.builder()
+            block -> LootTable.lootTable()
                 .pool(
                     generator.applyExplosionDecay(
                         block,
-                        LootPool.builder()
-                            .rolls(ConstantLootNumberProvider.create(1.0F))
-                            .with(
-                                ItemEntry.builder(ModCrops.WARPED_WART_ITEM.get())
+                        LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0F))
+                            .add(
+                                LootItem.lootTableItem(ModCrops.WARPED_WART_ITEM.get())
                                     .apply(
-                                        SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F))
-                                            .conditionally(
-                                                BlockStatePropertyLootCondition
-                                                    .builder(block)
-                                                    .properties(StatePredicate.Builder.create().exactMatch(WarpedWartPlantBlock.AGE, 3))
+                                        SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))
+                                            .when(
+                                                LootItemBlockStatePropertyCondition
+                                                    .hasBlockStateProperties(block)
+                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(WarpedWartPlantBlock.AGE, 3))
                                             )
                                     )
                                     .apply(
-                                        ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE))
-                                            .conditionally(
-                                                BlockStatePropertyLootCondition
-                                                    .builder(block)
-                                                    .properties(StatePredicate.Builder.create().exactMatch(WarpedWartPlantBlock.AGE, 3))
+                                        ApplyBonusCount.addUniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE))
+                                            .when(
+                                                LootItemBlockStatePropertyCondition
+                                                    .hasBlockStateProperties(block)
+                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(WarpedWartPlantBlock.AGE, 3))
                                             )
                                     )
                             )
-                    )
+                    ).build()
                 )
         );
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, "Warped Wart");
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        CustomBlockStateModelSupplier.registerCrop(blockStateModelGenerator, BLOCK, Properties.AGE_3, 0, 1, 1, 2);
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        CustomBlockStateModelSupplier.registerCrop(blockStateModelGenerator, BLOCK, BlockStateProperties.AGE_3, 0, 1, 1, 2);
     }
 }

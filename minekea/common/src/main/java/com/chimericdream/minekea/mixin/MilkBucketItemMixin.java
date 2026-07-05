@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
 public class MilkBucketItemMixin implements DispensibleContainerItem {
-    @Inject(method = "useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "useOn(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;", at = @At("HEAD"), cancellable = true)
     public void mk$useOnBlock(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = context.getItemInHand();
         Consumable consumableComponent = stack.get(DataComponents.CONSUMABLE);

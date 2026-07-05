@@ -5,29 +5,33 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.shutters.ShutterBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
+import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.*;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model CLOSED_MODEL = makeModel("block/furniture/shutters/closed");
-    protected static final Model OPEN_MODEL = makeModel("block/furniture/shutters/open");
+    protected static final ModelTemplate CLOSED_MODEL = makeModel("block/furniture/shutters/closed");
+    protected static final ModelTemplate OPEN_MODEL = makeModel("block/furniture/shutters/open");
 
     protected final ShutterBlock BLOCK;
 
@@ -35,9 +39,9 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
         BLOCK = (ShutterBlock) block;
     }
 
-    protected static Model makeModel(String path) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, path)),
+    protected static ModelTemplate makeModel(String path) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.PANEL,
             MinekeaTextures.FRAME
@@ -45,25 +49,25 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .pattern("#X#")
             .pattern("#X#")
             .pattern("#X#")
-            .input('X', plankIngredient)
-            .input('#', logIngredient)
-            .criterion(RecipeGenerator.hasItem(plankIngredient),
-                generator.conditionsFromItem(plankIngredient))
-            .criterion(RecipeGenerator.hasItem(logIngredient),
-                generator.conditionsFromItem(logIngredient))
-            .offerTo(exporter);
+            .define('X', plankIngredient)
+            .define('#', logIngredient)
+            .unlockedBy(RecipeProvider.getHasName(plankIngredient),
+                generator.has(plankIngredient))
+            .unlockedBy(RecipeProvider.getHasName(logIngredient),
+                generator.has(logIngredient))
+            .save(exporter);
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -71,44 +75,44 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Shutters", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Shutters", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.FRAME, Registries.BLOCK.getId(logIngredient).withPrefixedPath("block/"))
-            .put(MinekeaTextures.PANEL, Registries.BLOCK.getId(plankIngredient).withPrefixedPath("block/"));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.FRAME, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
+            .put(MinekeaTextures.PANEL, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        Identifier closedModelId = blockStateModelGenerator.createSubModel(BLOCK, "", CLOSED_MODEL, unused -> textures);
-        Identifier openModelId = blockStateModelGenerator.createSubModel(BLOCK, "_open", OPEN_MODEL, unused -> textures);
+        ResourceLocation closedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CLOSED_MODEL, unused -> textures);
+        ResourceLocation openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
 
-        WeightedVariant closedModel = BlockStateModelGenerator.createWeightedVariant(closedModelId);
-        WeightedVariant openModel = BlockStateModelGenerator.createWeightedVariant(openModelId);
+        MultiVariant closedModel = BlockModelGenerators.plainVariant(closedModelId);
+        MultiVariant openModel = BlockModelGenerators.plainVariant(openModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                MultiVariantGenerator.dispatch(BLOCK)
                     .with(
-                        BlockStateVariantMap.models(ShutterBlock.OPEN, ShutterBlock.WALL_SIDE)
-                            .register(false, Direction.NORTH, closedModel.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180)))
-                            .register(false, Direction.SOUTH, closedModel)
-                            .register(false, Direction.EAST, closedModel.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                            .register(false, Direction.WEST, closedModel.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
-                            .register(true, Direction.NORTH, openModel)
-                            .register(true, Direction.SOUTH, openModel)
-                            .register(true, Direction.EAST, openModel)
-                            .register(true, Direction.WEST, openModel)
+                        PropertyDispatch.initial(ShutterBlock.OPEN, ShutterBlock.WALL_SIDE)
+                            .select(false, Direction.NORTH, closedModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
+                            .select(false, Direction.SOUTH, closedModel)
+                            .select(false, Direction.EAST, closedModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
+                            .select(false, Direction.WEST, closedModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                            .select(true, Direction.NORTH, openModel)
+                            .select(true, Direction.SOUTH, openModel)
+                            .select(true, Direction.EAST, openModel)
+                            .select(true, Direction.WEST, openModel)
                     )
             );
     }

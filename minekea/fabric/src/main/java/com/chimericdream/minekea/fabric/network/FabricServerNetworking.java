@@ -5,7 +5,7 @@ import com.chimericdream.minekea.network.ServerNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 public class FabricServerNetworking extends ServerNetworking {
     public static void init() {
@@ -15,7 +15,7 @@ public class FabricServerNetworking extends ServerNetworking {
 
     private static void receiveCyclePainterColorPacket(CyclePainterColorPayload payload, ServerPlayNetworking.Context context) {
         MinecraftServer server = context.server();
-        ServerPlayerEntity player = context.player();
+        ServerPlayer player = context.player();
 
         handleCyclePainterColorPacket(server, player);
     }

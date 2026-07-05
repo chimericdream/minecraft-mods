@@ -27,6 +27,7 @@ import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -40,12 +41,12 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
     }
 
     @Override
-    public DisplayCaseBlockEntityRenderState createRenderState() {
+    public @NotNull DisplayCaseBlockEntityRenderState createRenderState() {
         return new DisplayCaseBlockEntityRenderState();
     }
 
     @Override
-    public void updateRenderState(DisplayCaseBlockEntity entity, DisplayCaseBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(DisplayCaseBlockEntity entity, DisplayCaseBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
         BlockState blockState = entity.getBlockState();
 
@@ -78,7 +79,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
     }
 
     @Override
-    public void render(DisplayCaseBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
+    public void submit(DisplayCaseBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         matrices.pushPose();
 
         if (state.hasCustomName) {

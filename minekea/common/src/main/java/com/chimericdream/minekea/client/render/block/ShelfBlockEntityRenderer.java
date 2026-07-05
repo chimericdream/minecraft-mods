@@ -5,6 +5,7 @@ import com.chimericdream.minekea.entity.block.furniture.ShelfBlockEntity;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
@@ -43,12 +44,12 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
     }
 
     @Override
-    public ShelfBlockEntityRenderState createRenderState() {
+    public @NotNull ShelfBlockEntityRenderState createRenderState() {
         return new ShelfBlockEntityRenderState();
     }
 
     @Override
-    public void updateRenderState(ShelfBlockEntity entity, ShelfBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(ShelfBlockEntity entity, ShelfBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
         BlockState blockState = entity.getBlockState();
 
@@ -83,7 +84,7 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
 //    }
 
     @Override
-    public void render(ShelfBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
+    public void submit(ShelfBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         Quaternionf rotation;
         Axis axis = Axis.YP;
         switch (state.wallSide) {
@@ -96,11 +97,11 @@ public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockE
         }
 
         for (int i = 0; i < state.displayItems.length; i += 1) {
-            render(state, matrices, queue, rotation, i);
+            submit(state, matrices, queue, rotation, i);
         }
     }
 
-    private void render(
+    private void submit(
         ShelfBlockEntityRenderState state,
         PoseStack matrices,
         SubmitNodeCollector queue,

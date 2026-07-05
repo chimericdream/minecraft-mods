@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 import static net.minecraft.core.cauldron.CauldronInteraction.*;
@@ -70,7 +71,7 @@ public class MilkCauldronBlock extends AbstractCauldronBlock {
     }
 
     @Override
-    protected MapCodec<MilkCauldronBlock> codec() {
+    protected @NotNull MapCodec<MilkCauldronBlock> codec() {
         return CODEC;
     }
 
@@ -102,7 +103,7 @@ public class MilkCauldronBlock extends AbstractCauldronBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+    public @NotNull ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return Items.CAULDRON.getDefaultInstance();
     }
 }

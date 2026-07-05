@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.NotNull;
 
 public class CrateBlockEntity extends RandomizableContainerBlockEntity implements MenuProvider, ImplementedInventory {
     public static final ResourceLocation ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/containers/crate");
@@ -98,27 +99,22 @@ public class CrateBlockEntity extends RandomizableContainerBlockEntity implement
     }
 
     @Override
-    public NonNullList<ItemStack> getItems() {
+    public @NotNull NonNullList<ItemStack> getItems() {
         return items;
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+    public @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         return new CrateScreenHandler(Crates.CRATE_SCREEN_HANDLER.get(), syncId, playerInventory, this);
     }
 
     @Override
-    public Component getDefaultName() {
+    public @NotNull Component getDefaultName() {
         if (this.isTrapped) {
             return Component.translatable(CrateScreenHandler.TRAPPED_SCREEN_ID.toLanguageKey());
         }
 
         return Component.translatable(CrateScreenHandler.SCREEN_ID.toLanguageKey());
-    }
-
-    @Override
-    protected NonNullList<ItemStack> getItems() {
-        return this.items;
     }
 
     @Override

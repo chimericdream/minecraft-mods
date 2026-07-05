@@ -7,32 +7,32 @@ import com.chimericdream.minekea.block.building.storage.DyeBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.TexturedModel;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 
 public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public final DyeBlock BLOCK;
 
-    private static final Model DYE_BLOCK_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
+    private static final ModelTemplate DYE_BLOCK_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.TRANSLUCENT,
-        Optional.of(Identifier.of("minekea:block/storage/dye_block")),
+        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/dye_block")),
         Optional.empty(),
-        TextureKey.BOTTOM,
-        TextureKey.SIDE,
-        TextureKey.TOP
+        TextureSlot.BOTTOM,
+        TextureSlot.SIDE,
+        TextureSlot.TOP
     );
 
     public DyeBlockDataGenerator(Block block) {
@@ -40,46 +40,46 @@ public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Item dye = ColorHelpers.getDye(BLOCK.color);
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("###")
             .pattern("###")
             .pattern("###")
-            .input('#', dye)
-            .criterion(RecipeGenerator.hasItem(dye),
-                generator.conditionsFromItem(dye))
-            .offerTo(exporter);
+            .define('#', dye)
+            .unlockedBy(RecipeProvider.getHasName(dye),
+                generator.has(dye))
+            .save(exporter);
 
-        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, dye, 9)
-            .input(BLOCK)
-            .criterion(RecipeGenerator.hasItem(BLOCK),
-                generator.conditionsFromItem(BLOCK))
-            .offerTo(exporter);
+        generator.shapeless(RecipeCategory.BUILDING_BLOCKS, dye, 9)
+            .requires(BLOCK)
+            .unlockedBy(RecipeProvider.getHasName(BLOCK),
+                generator.has(BLOCK))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("Compressed %s Dye", ColorHelpers.getName(BLOCK.color)));
         translationBuilder.add(BLOCK.asItem(), String.format("Compressed %s Dye", ColorHelpers.getName(BLOCK.color)));
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textures = new TextureMap()
-            .put(TextureKey.BOTTOM, Identifier.of(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color)))
-            .put(TextureKey.SIDE, Identifier.of(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color)))
-            .put(TextureKey.TOP, Identifier.of(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color)));
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.BOTTOM, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color)))
+            .put(TextureSlot.SIDE, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color)))
+            .put(TextureSlot.TOP, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color)));
 
-        blockStateModelGenerator.registerSingleton(
+        blockStateModelGenerator.createTrivialBlock(
             BLOCK,
-            TexturedModel.makeFactory((unused) -> textures, DYE_BLOCK_MODEL)
+            TexturedModel.createDefault((unused) -> textures, DYE_BLOCK_MODEL)
         );
     }
 }

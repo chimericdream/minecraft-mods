@@ -3,36 +3,36 @@ package com.chimericdream.minekea.fabric.crop;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fabric.data.ChimericLibItemDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 
 public class WarpedWartItemDataGenerator extends ChimericLibItemDataGenerator {
     public static final Item ITEM = ModCrops.WARPED_WART_ITEM.get();
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, ITEM, 9)
-            .input(Blocks.WARPED_WART_BLOCK)
-            .criterion(RecipeGenerator.hasItem(Blocks.WARPED_WART_BLOCK),
-                generator.conditionsFromItem(Blocks.WARPED_WART_BLOCK))
-            .offerTo(exporter);
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shapeless(RecipeCategory.BUILDING_BLOCKS, ITEM, 9)
+            .requires(Blocks.WARPED_WART_BLOCK)
+            .unlockedBy(RecipeProvider.getHasName(Blocks.WARPED_WART_BLOCK),
+                generator.has(Blocks.WARPED_WART_BLOCK))
+            .save(exporter);
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, Blocks.WARPED_WART_BLOCK, 1)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.WARPED_WART_BLOCK, 1)
             .pattern("###")
             .pattern("###")
             .pattern("###")
-            .input('#', ITEM)
-            .criterion(RecipeGenerator.hasItem(ITEM),
-                generator.conditionsFromItem(ITEM))
-            .offerTo(exporter);
+            .define('#', ITEM)
+            .unlockedBy(RecipeProvider.getHasName(ITEM),
+                generator.has(ITEM))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(ITEM, "Warped Wart");
     }
 }

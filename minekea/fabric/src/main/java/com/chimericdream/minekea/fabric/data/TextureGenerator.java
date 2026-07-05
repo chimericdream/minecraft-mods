@@ -6,15 +6,12 @@ import com.google.common.hash.HashingOutputStream;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.data.DataOutput.OutputType;
-import net.minecraft.data.DataOutput.PathResolver;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.DataWriter;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +45,7 @@ public class TextureGenerator implements DataProvider {
 
     private static @Nullable TextureGenerator instance;
 
-    private final Map<RegistryKey<? extends Registry<?>>, Instance<?>> instances = new Object2ObjectOpenHashMap<>();
+    private final Map<ResourceLocation, Instance<?>> instances = new Object2ObjectOpenHashMap<>();
     private final Pack pack;
 
     public TextureGenerator(Pack pack) {
@@ -77,19 +74,19 @@ public class TextureGenerator implements DataProvider {
      * @param <T>         The registry's associated type.
      */
     @SuppressWarnings("unchecked")
-    public <T> void generate(RegistryKey<? extends Registry<T>> registryKey, Consumer<Instance<T>> consumer) {
+    public <T> void generate(ResourceLocation registryKey, Consumer<Instance<T>> consumer) {
         consumer.accept((Instance<T>) this.instances.computeIfAbsent(registryKey,
             (key) -> this.pack.addProvider((output, future) -> new Instance<>(output, registryKey, future))
         ));
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Textures";
     }
 
     @Override
-    public CompletableFuture<?> run(DataWriter writer) {
+    public @NotNull CompletableFuture<?> run(CachedOutput writer) {
         return CompletableFuture.allOf((CompletableFuture<?>[]) this.instances.values()
             .stream()
             .map(v -> v.run(writer))
@@ -106,21 +103,21 @@ public class TextureGenerator implements DataProvider {
         private static final Map<String, BufferedImage> IMAGE_CACHE = new Object2ObjectOpenHashMap<>();
         private static final Map<String, BufferedImage> MINEKEA_IMAGE_CACHE = new Object2ObjectOpenHashMap<>();
 
-        private final Map<Identifier, BufferedImage> images = new Object2ObjectOpenHashMap<>();
+        private final Map<ResourceLocation, BufferedImage> images = new Object2ObjectOpenHashMap<>();
 
-        private final RegistryKey<? extends Registry<T>> registryKey;
-        private final CompletableFuture<WrapperLookup> lookupFuture;
-        private final PathResolver pathResolver;
+        private final ResourceLocation registryKey;
+        private final CompletableFuture<HolderLookup.Provider> lookupFuture;
+        private final PackOutput.PathProvider pathResolver;
 
         private Instance(
             FabricDataOutput output,
-            RegistryKey<? extends Registry<T>> registryKey,
-            CompletableFuture<WrapperLookup> lookupFuture
+            ResourceLocation registryKey,
+            CompletableFuture<HolderLookup.Provider> lookupFuture
         ) {
             this.registryKey = registryKey;
             this.lookupFuture = lookupFuture;
-            this.pathResolver = output.getResolver(OutputType.RESOURCE_PACK,
-                "textures/" + registryKey.getValue().getPath()
+            this.pathResolver = output.createPathProvider(PackOutput.Target.RESOURCE_PACK,
+                "textures/" + registryKey.getPath()
             );
         }
 
@@ -150,7 +147,7 @@ public class TextureGenerator implements DataProvider {
          * @param identifier The texture's identifier.
          * @param image      The texture.
          */
-        public void generate(Identifier identifier, BufferedImage image) {
+        public void generate(ResourceLocation identifier, BufferedImage image) {
             this.images.put(identifier, image);
         }
 
@@ -195,7 +192,7 @@ public class TextureGenerator implements DataProvider {
 
             // We currently only support loading directly from the Minecraft jar.
             // As such, we can safely assume all file paths are within `BASE_PATH`.
-            final String jarPath = "%s/%s/%s.png".formatted(BASE_PATH, this.registryKey.getValue().getPath(), path);
+            final String jarPath = "%s/%s/%s.png".formatted(BASE_PATH, this.registryKey.getPath(), path);
 
             return JarAccess.getInputStream(jarPath).flatMap(stream -> {
                 try {
@@ -213,13 +210,13 @@ public class TextureGenerator implements DataProvider {
         }
 
         @Override
-        public String getName() {
+        public @NotNull String getName() {
             return "Textures for " + this.registryKey;
         }
 
         @SuppressWarnings("UnstableApiUsage")
         @Override
-        public CompletableFuture<?> run(DataWriter writer) {
+        public @NotNull CompletableFuture<?> run(CachedOutput writer) {
             return this.lookupFuture.thenCompose(lookup -> CompletableFuture.allOf(this.images.entrySet()
                 .stream()
                 .map(entry -> CompletableFuture.runAsync(() -> {
@@ -230,19 +227,19 @@ public class TextureGenerator implements DataProvider {
                     // For hashing, we don't need anything cryptographic, just consistent between runs.
                     // For this case, `sha1` works perfectly fine, as it's fast and stupid.
                     @SuppressWarnings("deprecation") final HashingOutputStream hash = new HashingOutputStream(Hashing.sha1(), output);
-                    final Path path = this.pathResolver.resolve(entry.getKey(), "png");
+                    final Path path = this.pathResolver.file(entry.getKey(), "png");
 
                     try (final ImageOutputStream stream = ImageIO.createImageOutputStream(hash)) {
                         ImageIO.write(entry.getValue(), "png", stream);
 
                         // Ensure that all bytes are written to the stream before writing the file.
                         stream.flush();
-                        writer.write(path, output.toByteArray(), hash.hash());
+                        writer.writeIfNeeded(path, output.toByteArray(), hash.hash());
                     } catch (IOException exception) {
                         MinekeaMod.LOGGER.error("Failed to save file to {}", path);
                         MinekeaMod.LOGGER.error(exception.getLocalizedMessage());
                     }
-                }, Util.getMainWorkerExecutor()))
+                }, Util.backgroundExecutor()))
                 .toArray(CompletableFuture[]::new)));
         }
     }

@@ -4,6 +4,7 @@ import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.block.furniture.armoires.Armoires;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Triplet;
 
@@ -219,12 +220,12 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
         return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public int[] getSlotsForFace(Direction var1) {
+    public int @NotNull [] getSlotsForFace(Direction var1) {
         int[] result = new int[getItems().size()];
 
         for (int i = 0; i < result.length; i++) {
@@ -245,7 +246,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         ItemStack items = ContainerHelper.takeItem(getItems(), slot);
 
         if (!items.isEmpty()) {
@@ -256,7 +257,7 @@ public class ArmoireBlockEntity extends BlockEntity implements ImplementedInvent
     }
 
     @Override
-    public ItemStack removeItem(int slot, int count) {
+    public @NotNull ItemStack removeItem(int slot, int count) {
         ItemStack result = ContainerHelper.removeItem(getItems(), slot, count);
 
         if (!result.isEmpty()) {

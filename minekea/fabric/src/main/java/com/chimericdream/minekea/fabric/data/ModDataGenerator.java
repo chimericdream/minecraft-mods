@@ -13,11 +13,12 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -28,7 +29,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(MinekeaModelGenerator::new);
         pack.addProvider(MinekeaBlockLootTables::new);
-        pack.addProvider(MinekeaRecipeGenerator::new);
+        pack.addProvider(MinekeaRecipeProvider::new);
         pack.addProvider(MinekeaEnglishLangProvider::new);
         pack.addProvider(MinekeaBlockTagGenerator::new);
         pack.addProvider(MinekeaItemTagGenerator::new);
@@ -41,16 +42,16 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class MinekeaRecipeGenerator extends FabricRecipeProvider {
-        public MinekeaRecipeGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    private static class MinekeaRecipeProvider extends FabricRecipeProvider {
+        public MinekeaRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
-            return new RecipeGenerator(registryLookup, exporter) {
+        protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+            return new RecipeProvider(registryLookup, exporter) {
                 @Override
-                public void generate() {
+                public void buildRecipes() {
                     for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                         group.configureRecipes(registryLookup, exporter, this);
                     }
@@ -65,18 +66,18 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public String getName() {
-            return "MinekeaRecipeGenerator";
+        public @NotNull String getName() {
+            return "MinekeaRecipeProvider";
         }
     }
 
     private static class MinekeaBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
-        public MinekeaBlockTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public MinekeaBlockTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                 group.configureBlockTags(arg, this::valueLookupBuilder);
             }
@@ -86,12 +87,12 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaItemTagGenerator extends FabricTagProvider.ItemTagProvider {
-        public MinekeaItemTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public MinekeaItemTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                 group.configureItemTags(arg, this::valueLookupBuilder);
             }
@@ -105,12 +106,12 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaEnglishLangProvider extends FabricLanguageProvider {
-        protected MinekeaEnglishLangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected MinekeaEnglishLangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
         @Override
-        public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
+        public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                 group.configureTranslations(registryLookup, translationBuilder);
             }
@@ -126,9 +127,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaBlockLootTables extends FabricBlockLootTableProvider {
-        private final RegistryWrapper.WrapperLookup registryLookup;
+        private final HolderLookup.Provider registryLookup;
 
-        protected MinekeaBlockLootTables(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected MinekeaBlockLootTables(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
             this.registryLookup = registryLookup.join();
         }
@@ -149,7 +150,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                 group.configureBlockStateModels(blockStateModelGenerator);
             }
@@ -158,7 +159,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        public void generateItemModels(ItemModelGenerators itemModelGenerator) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                 group.configureItemModels(itemModelGenerator);
             }
@@ -171,7 +172,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public String getName() {
+        public @NotNull String getName() {
             return "MinekeaModelGenerator";
         }
     }

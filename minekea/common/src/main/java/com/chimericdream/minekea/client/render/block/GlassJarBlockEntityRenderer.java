@@ -4,6 +4,7 @@ import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
@@ -52,12 +53,12 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
     }
 
     @Override
-    public GlassJarBlockEntityRenderState createRenderState() {
+    public @NotNull GlassJarBlockEntityRenderState createRenderState() {
         return new GlassJarBlockEntityRenderState();
     }
 
     @Override
-    public void updateRenderState(GlassJarBlockEntity entity, GlassJarBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(GlassJarBlockEntity entity, GlassJarBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
 
         state.facing = entity.getBlockState().getValue(GlassJarBlock.FACING);
@@ -105,7 +106,7 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
     }
 
     @Override
-    public void render(GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
+    public void submit(GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         if (state.hasItem) {
             renderJar(state, matrices, queue);
         } else if (state.hasFluid) {
@@ -170,6 +171,7 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
             matrices.mulPose((new Quaternionf()).rotationY(1.5707964f));
         }
 
+        //noinspection SwitchStatementWithTooFewBranches
         switch (state.mobId) {
             case "minecraft:allay":
                 matrices.translate(0f, 0.125f, 0f);

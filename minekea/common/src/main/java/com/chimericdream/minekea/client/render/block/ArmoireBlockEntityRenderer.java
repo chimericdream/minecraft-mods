@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
@@ -33,12 +34,12 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
     }
 
     @Override
-    public ArmoireBlockEntityRenderState createRenderState() {
+    public @NotNull ArmoireBlockEntityRenderState createRenderState() {
         return new ArmoireBlockEntityRenderState();
     }
 
     @Override
-    public void updateRenderState(ArmoireBlockEntity entity, ArmoireBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(ArmoireBlockEntity entity, ArmoireBlockEntityRenderState state, float tickProgress, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(entity, state, tickProgress, cameraPos, crumblingOverlay);
         BlockState blockState = entity.getBlockState();
 
@@ -88,7 +89,7 @@ public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBl
     }
 
     @Override
-    public void render(ArmoireBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
+    public void submit(ArmoireBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         Direction facing = state.facing;
 
         Quaternionf rotation;

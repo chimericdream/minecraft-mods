@@ -5,26 +5,26 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.seats.ChairBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
+import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -32,8 +32,8 @@ import java.util.function.Function;
 public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private final ChairBlock BLOCK;
 
-    protected static final Model CHAIR_MODEL = new Model(
-        Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/seating/chair")),
+    protected static final ModelTemplate CHAIR_MODEL = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/seating/chair")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
@@ -43,60 +43,60 @@ public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
         this.BLOCK = (ChairBlock) block;
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 2)
             .pattern("P ")
             .pattern("PP")
             .pattern("LL")
-            .input('P', plankIngredient)
-            .input('L', logIngredient)
-            .criterion(RecipeGenerator.hasItem(plankIngredient),
-                generator.conditionsFromItem(plankIngredient))
-            .criterion(RecipeGenerator.hasItem(logIngredient),
-                generator.conditionsFromItem(logIngredient))
-            .offerTo(exporter);
+            .define('P', plankIngredient)
+            .define('L', logIngredient)
+            .unlockedBy(RecipeProvider.getHasName(plankIngredient),
+                generator.has(plankIngredient))
+            .unlockedBy(RecipeProvider.getHasName(logIngredient),
+                generator.has(logIngredient))
+            .save(exporter);
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Chair", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Chair", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.LOG, Registries.BLOCK.getId(logIngredient).withPrefixedPath("block/"))
-            .put(MinekeaTextures.PLANKS, Registries.BLOCK.getId(plankIngredient).withPrefixedPath("block/"));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.LOG, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
+            .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", CHAIR_MODEL, unused -> textures);
+        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CHAIR_MODEL, unused -> textures);
 
-        WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(modelId);
+        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                MultiVariantGenerator.dispatch(BLOCK)
                     .with(
-                        BlockStateVariantMap.models(ChairBlock.FACING)
-                            .register(Direction.NORTH, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
-                            .register(Direction.EAST, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180)))
-                            .register(Direction.SOUTH, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                            .register(Direction.WEST, model)
+                        PropertyDispatch.initial(ChairBlock.FACING)
+                            .select(Direction.NORTH, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                            .select(Direction.EAST, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
+                            .select(Direction.SOUTH, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
+                            .select(Direction.WEST, model)
                     )
             );
     }

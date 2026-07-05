@@ -5,38 +5,38 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.doors.BookshelfDoorBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
+import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.enums.DoorHinge;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model ITEM_MODEL = makeModel("item/furniture/doors/bookshelf");
-    protected static final Model BOTTOM_MODEL = makeModel("block/furniture/doors/bookshelves/bottom");
-    protected static final Model BOTTOM_HINGE_MODEL = makeModel("block/furniture/doors/bookshelves/bottom_rh");
-    protected static final Model TOP_MODEL = makeModel("block/furniture/doors/bookshelves/top");
-    protected static final Model TOP_HINGE_MODEL = makeModel("block/furniture/doors/bookshelves/top_rh");
+    protected static final ModelTemplate ITEM_MODEL = makeModel("item/furniture/doors/bookshelf");
+    protected static final ModelTemplate BOTTOM_MODEL = makeModel("block/furniture/doors/bookshelves/bottom");
+    protected static final ModelTemplate BOTTOM_HINGE_MODEL = makeModel("block/furniture/doors/bookshelves/bottom_rh");
+    protected static final ModelTemplate TOP_MODEL = makeModel("block/furniture/doors/bookshelves/top");
+    protected static final ModelTemplate TOP_HINGE_MODEL = makeModel("block/furniture/doors/bookshelves/top_rh");
 
     protected final BookshelfDoorBlock BLOCK;
 
@@ -44,214 +44,214 @@ public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerat
         BLOCK = (BookshelfDoorBlock) block;
     }
 
-    protected static Model makeModel(String path) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, path)),
+    protected static ModelTemplate makeModel(String path) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.MATERIAL,
             MinekeaTextures.SHELF
         );
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block bookshelf = BLOCK.config.getIngredient();
 
         assert bookshelf != null;
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("##")
             .pattern("##")
             .pattern("##")
-            .input('#', bookshelf)
-            .criterion(RecipeGenerator.hasItem(bookshelf),
-                generator.conditionsFromItem(bookshelf))
-            .offerTo(exporter);
+            .define('#', bookshelf)
+            .unlockedBy(RecipeProvider.getHasName(bookshelf),
+                generator.has(bookshelf))
+            .save(exporter);
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.doorDrops(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.createDoorTable(BLOCK);
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Door", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Door", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient("planks");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.MATERIAL, TextureMap.getId(plankIngredient))
-            .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
+            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
 
-        Identifier bottomModelId = blockStateModelGenerator.createSubModel(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
-        Identifier bottomHingeModelId = blockStateModelGenerator.createSubModel(BLOCK, "_bottom_rh", BOTTOM_HINGE_MODEL, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSubModel(BLOCK, "_top", TOP_MODEL, unused -> textures);
-        Identifier topHingeModelId = blockStateModelGenerator.createSubModel(BLOCK, "_top_rh", TOP_HINGE_MODEL, unused -> textures);
+        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
+        ResourceLocation bottomHingeModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom_rh", BOTTOM_HINGE_MODEL, unused -> textures);
+        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
+        ResourceLocation topHingeModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top_rh", TOP_HINGE_MODEL, unused -> textures);
 
-        WeightedVariant bottom = BlockStateModelGenerator.createWeightedVariant(bottomModelId);
-        WeightedVariant bottomHinge = BlockStateModelGenerator.createWeightedVariant(bottomHingeModelId);
-        WeightedVariant top = BlockStateModelGenerator.createWeightedVariant(topModelId);
-        WeightedVariant topHinge = BlockStateModelGenerator.createWeightedVariant(topHingeModelId);
+        MultiVariant bottom = BlockModelGenerators.plainVariant(bottomModelId);
+        MultiVariant bottomHinge = BlockModelGenerators.plainVariant(bottomHingeModelId);
+        MultiVariant top = BlockModelGenerators.plainVariant(topModelId);
+        MultiVariant topHinge = BlockModelGenerators.plainVariant(topHingeModelId);
 
-        blockStateModelGenerator.registerParentedItemModel(BLOCK, BLOCK.BLOCK_ID.withPrefixedPath("item/"));
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, BLOCK.BLOCK_ID.withPrefix("item/"));
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                MultiVariantGenerator.dispatch(BLOCK)
                     .with(
-                        BlockStateVariantMap
-                            .models(BookshelfDoorBlock.FACING, BookshelfDoorBlock.HALF, BookshelfDoorBlock.HINGE, BookshelfDoorBlock.OPEN)
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHinge.LEFT, false,
+                        PropertyDispatch
+                            .initial(BookshelfDoorBlock.FACING, BookshelfDoorBlock.HALF, BookshelfDoorBlock.HINGE, BookshelfDoorBlock.OPEN)
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, false,
                                 bottom
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, true,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, true,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHinge.LEFT, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, true,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, true,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHinge.LEFT, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, true,
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, true,
                                 bottom
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHinge.LEFT, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, true,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, true,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHinge.LEFT, true,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, true,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, false,
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, false,
                                 bottomHinge
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHinge.LEFT, true,
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, true,
                                 bottomHinge
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, false,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, false,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHinge.LEFT, true,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, true,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, false,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, false,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHinge.LEFT, true,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHingeSide.LEFT, true,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHinge.RIGHT, false,
-                                bottomHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.LOWER, DoorHingeSide.RIGHT, false,
+                                bottomHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHinge.LEFT, false,
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, false,
                                 top
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, true,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, true,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHinge.LEFT, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, true,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, true,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHinge.LEFT, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, true,
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, true,
                                 top
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHinge.LEFT, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, true,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, true,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHinge.LEFT, true,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, true,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, false,
+                            .select(
+                                Direction.EAST, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, false,
                                 topHinge
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHinge.LEFT, true,
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, true,
                                 topHinge
                             )
-                            .register(
-                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, false,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.NORTH, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, false,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHinge.LEFT, true,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, true,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, false,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.SOUTH, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, false,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHinge.LEFT, true,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHingeSide.LEFT, true,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHinge.RIGHT, false,
-                                topHinge.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.WEST, DoubleBlockHalf.UPPER, DoorHingeSide.RIGHT, false,
+                                topHinge.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
                     )
             );
     }
 
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
+    public void configureItemModels(ItemModelGenerators itemModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient("planks");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.MATERIAL, TextureMap.getId(plankIngredient))
-            .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
+            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
 
-        ITEM_MODEL.upload(
-            BLOCK.BLOCK_ID.withPrefixedPath("item/"),
+        ITEM_MODEL.create(
+            BLOCK.BLOCK_ID.withPrefix("item/"),
             textures,
-            itemModelGenerator.modelCollector
+            itemModelGenerator.modelOutput
         );
     }
 }

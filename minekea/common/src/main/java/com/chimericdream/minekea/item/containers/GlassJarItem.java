@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
@@ -50,7 +51,7 @@ public class GlassJarItem extends BlockItem {
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+    public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         if (entity instanceof Mob mob && canCaptureMob(mob) && !hasStoredMob(stack)) {
             mob.stopRiding();
             mob.ejectPassengers();
@@ -99,7 +100,7 @@ public class GlassJarItem extends BlockItem {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
 
         Level world = context.getLevel();
@@ -119,7 +120,7 @@ public class GlassJarItem extends BlockItem {
     }
 
     @Override
-    public InteractionResult place(BlockPlaceContext context) {
+    public @NotNull InteractionResult place(BlockPlaceContext context) {
         if (!this.getBlock().isEnabled(context.getLevel().enabledFeatures())) {
             return InteractionResult.FAIL;
         }

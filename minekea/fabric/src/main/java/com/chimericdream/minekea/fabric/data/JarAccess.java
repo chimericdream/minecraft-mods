@@ -2,7 +2,7 @@ package com.chimericdream.minekea.fabric.data;
 
 import com.chimericdream.minekea.MinekeaMod;
 import com.mojang.serialization.DataResult;
-import net.minecraft.util.path.PathUtil;
+import net.minecraft.FileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -110,7 +110,7 @@ public final class JarAccess {
             final Predicate<JarEntry> filter = e -> {
                 if (!allowDirs && e.isDirectory()) return false;
 
-                final DataResult<List<String>> maybeParts = PathUtil.split(e.getName());
+                final DataResult<List<String>> maybeParts = FileUtil.decomposePath(e.getName());
                 // This converts the returned optional list into a concrete list of distinct parts.
                 final List<String> parts = maybeParts.result().stream().flatMap(List::stream).distinct().toList();
 

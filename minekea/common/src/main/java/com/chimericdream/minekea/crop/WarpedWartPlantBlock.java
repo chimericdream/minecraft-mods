@@ -2,7 +2,6 @@ package com.chimericdream.minekea.crop;
 
 import com.chimericdream.minekea.ModInfo;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -37,11 +37,11 @@ public class WarpedWartPlantBlock extends VegetationBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
-    public MapCodec<WarpedWartPlantBlock> codec() {
+    public @NotNull MapCodec<WarpedWartPlantBlock> codec() {
         return CODEC;
     }
 
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return AGE_TO_SHAPE[state.getValue(AGE)];
     }
 

@@ -28,6 +28,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -60,7 +61,7 @@ public class BlockPainterItem extends Item {
     }
 
     @Override
-    public ItemStack getDefaultInstance() {
+    public @NotNull ItemStack getDefaultInstance() {
         ItemStack stack = new ItemStack(this);
 
         NbtHelpers.setCustomDataFromNbt(stack, makeNbt(new CompoundTag(), BlockColor.WHITE));
@@ -103,7 +104,7 @@ public class BlockPainterItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResult use(Level world, Player player, InteractionHand hand) {
         if (player.level() != null && !player.level().isClientSide()) {
             if (player.isShiftKeyDown()) {
                 openScreen(player, player.getItemInHand(hand));
@@ -117,7 +118,7 @@ public class BlockPainterItem extends Item {
         if (player.level() != null && !player.level().isClientSide()) {
             player.openMenu(new MenuProvider() {
                 @Override
-                public Component getDisplayName() {
+                public @NotNull Component getDisplayName() {
                     return Component.translatable(painter.getItem().getDescriptionId());
                 }
 
@@ -130,7 +131,7 @@ public class BlockPainterItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         if (context.getLevel().isClientSide() || (context.getPlayer() != null && context.getPlayer().isShiftKeyDown())) {
             return super.useOn(context);
         }

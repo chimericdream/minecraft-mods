@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.RodBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -22,7 +23,7 @@ public class EndlessRodBlock extends RodBlock {
     public final static ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/lighting/endless_rod");
     public static final MapCodec<EndlessRodBlock> CODEC = simpleCodec(EndlessRodBlock::new);
 
-    public MapCodec<EndlessRodBlock> codec() {
+    public @NotNull MapCodec<EndlessRodBlock> codec() {
         return CODEC;
     }
 

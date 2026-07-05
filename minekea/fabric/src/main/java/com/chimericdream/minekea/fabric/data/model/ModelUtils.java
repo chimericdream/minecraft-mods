@@ -4,101 +4,101 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.block.building.slabs.VerticalSlabBlock;
 import com.chimericdream.minekea.block.building.stairs.VerticalStairsBlock;
 import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.WallBlock;
-import net.minecraft.block.enums.SlabType;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.Models;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
+import com.mojang.math.Quadrant;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 
 import java.util.Optional;
 
 public class ModelUtils {
-    public static final Model CUSTOM_TEMPLATE_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
+    public static final ModelTemplate CUSTOM_TEMPLATE_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(Identifier.ofVanilla("block/template_lantern")),
+        Optional.of(ResourceLocation.withDefaultNamespace("block/template_lantern")),
         Optional.empty(),
-        TextureKey.LANTERN
+        TextureSlot.LANTERN
     );
 
-    public static final Model CUSTOM_TEMPLATE_HANGING_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
+    public static final ModelTemplate CUSTOM_TEMPLATE_HANGING_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(Identifier.ofVanilla("block/template_hanging_lantern")),
+        Optional.of(ResourceLocation.withDefaultNamespace("block/template_hanging_lantern")),
         Optional.empty(),
-        TextureKey.LANTERN
+        TextureSlot.LANTERN
     );
 
-    public static void registerGeneratedItem(ItemModelGenerator itemModelGenerator, Block block) {
-        itemModelGenerator.register(block.asItem(), Models.GENERATED);
+    public static void registerGeneratedItem(ItemModelGenerators itemModelGenerator, Block block) {
+        itemModelGenerator.generateFlatItem(block.asItem(), ModelTemplates.FLAT_ITEM);
     }
 
     public static void registerSlabBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         SlabBlock block,
-        TextureMap textures,
-        Model bottomModel,
-        Model topModel,
-        Model doubleModel
+        TextureMapping textures,
+        ModelTemplate bottomModel,
+        ModelTemplate topModel,
+        ModelTemplate doubleModel
     ) {
-        Identifier bottomModelId = blockStateModelGenerator.createSubModel(block, "", bottomModel, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSubModel(block, "_top", topModel, unused -> textures);
-        Identifier doubleModelId = blockStateModelGenerator.createSubModel(block, "_double", doubleModel, unused -> textures);
+        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(block, "", bottomModel, unused -> textures);
+        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(block, "_top", topModel, unused -> textures);
+        ResourceLocation doubleModelId = blockStateModelGenerator.createSuffixedVariant(block, "_double", doubleModel, unused -> textures);
 
-        WeightedVariant bottomVariant = BlockStateModelGenerator.createWeightedVariant(bottomModelId);
-        WeightedVariant topVariant = BlockStateModelGenerator.createWeightedVariant(topModelId);
-        WeightedVariant doubleVariant = BlockStateModelGenerator.createWeightedVariant(doubleModelId);
+        MultiVariant bottomVariant = BlockModelGenerators.plainVariant(bottomModelId);
+        MultiVariant topVariant = BlockModelGenerators.plainVariant(topModelId);
+        MultiVariant doubleVariant = BlockModelGenerators.plainVariant(doubleModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(SlabBlock.TYPE)
-                        .register(SlabType.BOTTOM, bottomVariant)
-                        .register(SlabType.TOP, topVariant)
-                        .register(SlabType.DOUBLE, doubleVariant))
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(SlabBlock.TYPE)
+                        .select(SlabType.BOTTOM, bottomVariant)
+                        .select(SlabType.TOP, topVariant)
+                        .select(SlabType.DOUBLE, doubleVariant))
             );
     }
 
     public static void registerVerticalSlabBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         VerticalSlabBlock block,
-        TextureMap textures,
-        Model model
+        TextureMapping textures,
+        ModelTemplate model
     ) {
-        Identifier modelId = blockStateModelGenerator.createSubModel(block, "", model, unused -> textures);
+        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
 
-        WeightedVariant variant = BlockStateModelGenerator.createWeightedVariant(modelId).apply(ModelVariantOperator.UV_LOCK.withValue(true));
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelId).with(VariantMutator.UV_LOCK.withValue(true));
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(VerticalSlabBlock.FACING)
-                        .register(
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(VerticalSlabBlock.FACING)
+                        .select(
                             Direction.NORTH,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                         )
-                        .register(
+                        .select(
                             Direction.EAST,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                         )
-                        .register(
+                        .select(
                             Direction.SOUTH,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                         )
-                        .register(
+                        .select(
                             Direction.WEST,
                             variant
                         )
@@ -107,170 +107,170 @@ public class ModelUtils {
     }
 
     public static void registerStairsBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
-        StairsBlock block,
-        TextureMap textures,
-        Model innerModel,
-        Model straightModel,
-        Model outerModel
+        BlockModelGenerators blockStateModelGenerator,
+        StairBlock block,
+        TextureMapping textures,
+        ModelTemplate innerModel,
+        ModelTemplate straightModel,
+        ModelTemplate outerModel
     ) {
-        Identifier innerModelId = blockStateModelGenerator.createSubModel(block, "_inner", innerModel, unused -> textures);
-        Identifier straightModelId = blockStateModelGenerator.createSubModel(block, "", straightModel, unused -> textures);
-        Identifier outerModelId = blockStateModelGenerator.createSubModel(block, "_outer", outerModel, unused -> textures);
+        ResourceLocation innerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_inner", innerModel, unused -> textures);
+        ResourceLocation straightModelId = blockStateModelGenerator.createSuffixedVariant(block, "", straightModel, unused -> textures);
+        ResourceLocation outerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_outer", outerModel, unused -> textures);
 
-        WeightedVariant innerVariant = BlockStateModelGenerator.createWeightedVariant(innerModelId);
-        WeightedVariant straightVariant = BlockStateModelGenerator.createWeightedVariant(straightModelId);
-        WeightedVariant outerVariant = BlockStateModelGenerator.createWeightedVariant(outerModelId);
+        MultiVariant innerVariant = BlockModelGenerators.plainVariant(innerModelId);
+        MultiVariant straightVariant = BlockModelGenerators.plainVariant(straightModelId);
+        MultiVariant outerVariant = BlockModelGenerators.plainVariant(outerModelId);
 
-        blockStateModelGenerator.blockStateCollector
-            .accept(BlockStateModelGenerator.createStairsBlockState(block, innerVariant, straightVariant, outerVariant));
+        blockStateModelGenerator.blockStateOutput
+            .accept(BlockModelGenerators.createStairs(block, innerVariant, straightVariant, outerVariant));
     }
 
     public static void registerVerticalStairsBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         VerticalStairsBlock block,
-        TextureMap textures,
-        Model model
+        TextureMapping textures,
+        ModelTemplate model
     ) {
-        Identifier modelId = blockStateModelGenerator.createSubModel(block, "", model, unused -> textures);
-        WeightedVariant variant = BlockStateModelGenerator.createWeightedVariant(modelId).apply(ModelVariantOperator.UV_LOCK.withValue(true));
+        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelId).with(VariantMutator.UV_LOCK.withValue(true));
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(VerticalSlabBlock.FACING)
-                        .register(
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(VerticalSlabBlock.FACING)
+                        .select(
                             Direction.NORTH,
                             variant
                         )
-                        .register(
+                        .select(
                             Direction.EAST,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                         )
-                        .register(
+                        .select(
                             Direction.SOUTH,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                         )
-                        .register(
+                        .select(
                             Direction.WEST,
-                            variant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            variant.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                         )
                     )
             );
     }
 
     public static void registerWallBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         WallBlock block,
-        TextureMap textures,
-        Model inventoryModel,
-        Model postModel,
-        Model sideModel,
-        Model sideTallModel
+        TextureMapping textures,
+        ModelTemplate inventoryModel,
+        ModelTemplate postModel,
+        ModelTemplate sideModel,
+        ModelTemplate sideTallModel
     ) {
-        Identifier inventoryModelId = blockStateModelGenerator.createSubModel(block, "", inventoryModel, unused -> textures);
-        Identifier postModelId = blockStateModelGenerator.createSubModel(block, "", postModel, unused -> textures);
-        Identifier sideModelId = blockStateModelGenerator.createSubModel(block, "", sideModel, unused -> textures);
-        Identifier sideTallModelId = blockStateModelGenerator.createSubModel(block, "", sideTallModel, unused -> textures);
+        ResourceLocation inventoryModelId = blockStateModelGenerator.createSuffixedVariant(block, "", inventoryModel, unused -> textures);
+        ResourceLocation postModelId = blockStateModelGenerator.createSuffixedVariant(block, "", postModel, unused -> textures);
+        ResourceLocation sideModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideModel, unused -> textures);
+        ResourceLocation sideTallModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideTallModel, unused -> textures);
 
-        WeightedVariant postVariant = BlockStateModelGenerator.createWeightedVariant(postModelId);
-        WeightedVariant sideVariant = BlockStateModelGenerator.createWeightedVariant(sideModelId);
-        WeightedVariant sideTallVariant = BlockStateModelGenerator.createWeightedVariant(sideTallModelId);
+        MultiVariant postVariant = BlockModelGenerators.plainVariant(postModelId);
+        MultiVariant sideVariant = BlockModelGenerators.plainVariant(sideModelId);
+        MultiVariant sideTallVariant = BlockModelGenerators.plainVariant(sideTallModelId);
 
-        blockStateModelGenerator.blockStateCollector
-            .accept(BlockStateModelGenerator.createWallBlockState(block, postVariant, sideVariant, sideTallVariant));
-        blockStateModelGenerator.registerParentedItemModel(block, inventoryModelId);
+        blockStateModelGenerator.blockStateOutput
+            .accept(BlockModelGenerators.createWall(block, postVariant, sideVariant, sideTallVariant));
+        blockStateModelGenerator.registerSimpleItemModel(block, inventoryModelId);
     }
 
     public static void registerLanternBlock(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         Block block,
-        Identifier blockId
+        ResourceLocation blockId
     ) {
-        TextureMap textures = new TextureMap()
-            .put(TextureKey.LANTERN, blockId.withPrefixedPath("block/"));
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.LANTERN, blockId.withPrefix("block/"));
 
-        Identifier baseModelId = blockStateModelGenerator.createSubModel(block, "_base", CUSTOM_TEMPLATE_LANTERN, unused -> textures);
-        Identifier hangingModelId = blockStateModelGenerator.createSubModel(block, "_hanging", CUSTOM_TEMPLATE_HANGING_LANTERN, unused -> textures);
+        ResourceLocation baseModelId = blockStateModelGenerator.createSuffixedVariant(block, "_base", CUSTOM_TEMPLATE_LANTERN, unused -> textures);
+        ResourceLocation hangingModelId = blockStateModelGenerator.createSuffixedVariant(block, "_hanging", CUSTOM_TEMPLATE_HANGING_LANTERN, unused -> textures);
 
-        WeightedVariant baseModel = BlockStateModelGenerator.createWeightedVariant(baseModelId);
-        WeightedVariant hangingModel = BlockStateModelGenerator.createWeightedVariant(hangingModelId);
+        MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
+        MultiVariant hangingModel = BlockModelGenerators.plainVariant(hangingModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(Properties.HANGING)
-                        .register(true, hangingModel)
-                        .register(false, baseModel))
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(BlockStateProperties.HANGING)
+                        .select(true, hangingModel)
+                        .select(false, baseModel))
             );
     }
 
     public static void registerBlockWithAxis(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction.Axis> axis,
         Block block,
-        Identifier subModelId
+        ResourceLocation subModelId
     ) {
-        WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(subModelId);
+        MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(axis)
-                        .register(Direction.Axis.X, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R90)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
-                        .register(Direction.Axis.Y, model)
-                        .register(Direction.Axis.Z, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R90)))
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(axis)
+                        .select(Direction.Axis.X, model.with(VariantMutator.X_ROT.withValue(Quadrant.R90)).with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                        .select(Direction.Axis.Y, model)
+                        .select(Direction.Axis.Z, model.with(VariantMutator.X_ROT.withValue(Quadrant.R90)))
                     )
             );
     }
 
     public static void registerBlockWithWallSide(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> wallSide,
         Block block,
-        Identifier subModelId
+        ResourceLocation subModelId
     ) {
         registerBlockWithHorizontalFacing(blockStateModelGenerator, wallSide, block, subModelId);
     }
 
     public static void registerBlockWithHorizontalFacing(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> facing,
         Block block,
-        Identifier subModelId
+        ResourceLocation subModelId
     ) {
-        WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(subModelId);
+        MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(facing)
-                        .register(Direction.NORTH, model)
-                        .register(Direction.EAST, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
-                        .register(Direction.SOUTH, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180)))
-                        .register(Direction.WEST, model.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(facing)
+                        .select(Direction.NORTH, model)
+                        .select(Direction.EAST, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                        .select(Direction.SOUTH, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
+                        .select(Direction.WEST, model.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
                     )
             );
     }
 
     public static void registerBlockWithFacing(
-        BlockStateModelGenerator blockStateModelGenerator,
+        BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> facing,
         Block block,
-        Identifier subModelId
+        ResourceLocation subModelId
     ) {
-        WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(subModelId);
+        MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(block)
-                    .with(BlockStateVariantMap.models(facing)
-                        .register(Direction.NORTH, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R90)))
-                        .register(Direction.EAST, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R90)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90)))
-                        .register(Direction.SOUTH, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R270)))
-                        .register(Direction.WEST, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R90)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(Direction.UP, model)
-                        .register(Direction.DOWN, model.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R180)))
+                MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(facing)
+                        .select(Direction.NORTH, model.with(VariantMutator.X_ROT.withValue(Quadrant.R90)))
+                        .select(Direction.EAST, model.with(VariantMutator.X_ROT.withValue(Quadrant.R90)).with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                        .select(Direction.SOUTH, model.with(VariantMutator.X_ROT.withValue(Quadrant.R270)))
+                        .select(Direction.WEST, model.with(VariantMutator.X_ROT.withValue(Quadrant.R90)).with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
+                        .select(Direction.UP, model)
+                        .select(Direction.DOWN, model.with(VariantMutator.X_ROT.withValue(Quadrant.R180)))
                     )
             );
     }

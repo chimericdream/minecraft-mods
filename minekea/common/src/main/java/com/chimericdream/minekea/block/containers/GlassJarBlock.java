@@ -15,6 +15,7 @@ import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.containers.ContainerItems;
 import com.chimericdream.minekea.item.ingredients.WaxItem;
 import com.mojang.serialization.MapCodec;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -300,7 +301,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         );
     }
 
-    protected MapCodec<GlassJarBlock> codec() {
+    protected @NotNull MapCodec<GlassJarBlock> codec() {
         return CODEC;
     }
 
@@ -322,7 +323,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -364,12 +365,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     }
 
     @Override
-    public FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+    public @NotNull BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         if (state.getValue(WATERLOGGED)) {
             tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
@@ -383,7 +384,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         GlassJarBlockEntity entity;
 
         try {
@@ -516,7 +517,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     }
 
     @Override
-    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         if (blockEntity instanceof GlassJarBlockEntity entity) {
@@ -695,7 +696,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return Shapes.or(MAIN_SHAPE, LID_SHAPE);
     }
 

@@ -5,34 +5,34 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.trapdoors.BookshelfTrapdoorBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
+import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.enums.BlockHalf;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.Half;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model BOTTOM_MODEL = makeModel("block/furniture/trapdoors/bookshelves/bottom");
-    protected static final Model TOP_MODEL = makeModel("block/furniture/trapdoors/bookshelves/top");
-    protected static final Model OPEN_MODEL = makeModel("block/furniture/trapdoors/bookshelves/open");
+    protected static final ModelTemplate BOTTOM_MODEL = makeModel("block/furniture/trapdoors/bookshelves/bottom");
+    protected static final ModelTemplate TOP_MODEL = makeModel("block/furniture/trapdoors/bookshelves/top");
+    protected static final ModelTemplate OPEN_MODEL = makeModel("block/furniture/trapdoors/bookshelves/open");
 
     protected final BookshelfTrapdoorBlock BLOCK;
 
@@ -40,131 +40,131 @@ public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGen
         BLOCK = (BookshelfTrapdoorBlock) block;
     }
 
-    protected static Model makeModel(String path) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, path)),
+    protected static ModelTemplate makeModel(String path) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.MATERIAL,
             MinekeaTextures.SHELF
         );
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block bookshelf = BLOCK.config.getIngredient();
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 12)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 12)
             .pattern("###")
             .pattern("###")
-            .input('#', bookshelf)
-            .criterion(RecipeGenerator.hasItem(bookshelf),
-                generator.conditionsFromItem(bookshelf))
-            .offerTo(exporter);
+            .define('#', bookshelf)
+            .unlockedBy(RecipeProvider.getHasName(bookshelf),
+                generator.has(bookshelf))
+            .save(exporter);
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
             .add(BLOCK);
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient("planks");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.MATERIAL, TextureMap.getId(plankIngredient))
-            .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
+            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
 
-        Identifier bottomModelId = blockStateModelGenerator.createSubModel(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSubModel(BLOCK, "_top", TOP_MODEL, unused -> textures);
-        Identifier openModelId = blockStateModelGenerator.createSubModel(BLOCK, "_open", OPEN_MODEL, unused -> textures);
+        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
+        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
+        ResourceLocation openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
 
-        WeightedVariant bottom = BlockStateModelGenerator.createWeightedVariant(bottomModelId);
-        WeightedVariant top = BlockStateModelGenerator.createWeightedVariant(topModelId);
-        WeightedVariant open = BlockStateModelGenerator.createWeightedVariant(openModelId);
+        MultiVariant bottom = BlockModelGenerators.plainVariant(bottomModelId);
+        MultiVariant top = BlockModelGenerators.plainVariant(topModelId);
+        MultiVariant open = BlockModelGenerators.plainVariant(openModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(BLOCK)
+                MultiVariantGenerator.dispatch(BLOCK)
                     .with(
-                        BlockStateVariantMap
-                            .models(BookshelfTrapdoorBlock.FACING, BookshelfTrapdoorBlock.HALF, BookshelfTrapdoorBlock.OPEN)
-                            .register(
-                                Direction.EAST, BlockHalf.BOTTOM, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                        PropertyDispatch
+                            .initial(BookshelfTrapdoorBlock.FACING, BookshelfTrapdoorBlock.HALF, BookshelfTrapdoorBlock.OPEN)
+                            .select(
+                                Direction.EAST, Half.BOTTOM, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.NORTH, BlockHalf.BOTTOM, false,
+                            .select(
+                                Direction.NORTH, Half.BOTTOM, false,
                                 bottom
                             )
-                            .register(
-                                Direction.SOUTH, BlockHalf.BOTTOM, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, Half.BOTTOM, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, BlockHalf.BOTTOM, false,
-                                bottom.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.WEST, Half.BOTTOM, false,
+                                bottom.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.EAST, BlockHalf.TOP, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.EAST, Half.TOP, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.NORTH, BlockHalf.TOP, false,
+                            .select(
+                                Direction.NORTH, Half.TOP, false,
                                 top
                             )
-                            .register(
-                                Direction.SOUTH, BlockHalf.TOP, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, Half.TOP, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, BlockHalf.TOP, false,
-                                top.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.WEST, Half.TOP, false,
+                                top.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.EAST, BlockHalf.BOTTOM, true,
-                                open.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.EAST, Half.BOTTOM, true,
+                                open.with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
-                            .register(
-                                Direction.NORTH, BlockHalf.BOTTOM, true,
+                            .select(
+                                Direction.NORTH, Half.BOTTOM, true,
                                 open
                             )
-                            .register(
-                                Direction.SOUTH, BlockHalf.BOTTOM, true,
-                                open.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, Half.BOTTOM, true,
+                                open.with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, BlockHalf.BOTTOM, true,
-                                open.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.WEST, Half.BOTTOM, true,
+                                open.with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.EAST, BlockHalf.TOP, true,
-                                open.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R180)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270))
+                            .select(
+                                Direction.EAST, Half.TOP, true,
+                                open.with(VariantMutator.X_ROT.withValue(Quadrant.R180)).with(VariantMutator.Y_ROT.withValue(Quadrant.R270))
                             )
-                            .register(
-                                Direction.NORTH, BlockHalf.TOP, true,
-                                open.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R180)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.NORTH, Half.TOP, true,
+                                open.with(VariantMutator.X_ROT.withValue(Quadrant.R180)).with(VariantMutator.Y_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.SOUTH, BlockHalf.TOP, true,
-                                open.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R180))
+                            .select(
+                                Direction.SOUTH, Half.TOP, true,
+                                open.with(VariantMutator.X_ROT.withValue(Quadrant.R180))
                             )
-                            .register(
-                                Direction.WEST, BlockHalf.TOP, true,
-                                open.apply(ModelVariantOperator.ROTATION_X.withValue(AxisRotation.R180)).apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R90))
+                            .select(
+                                Direction.WEST, Half.TOP, true,
+                                open.with(VariantMutator.X_ROT.withValue(Quadrant.R180)).with(VariantMutator.Y_ROT.withValue(Quadrant.R90))
                             )
                     )
             );
 
-        blockStateModelGenerator.registerParentedItemModel(BLOCK, bottomModelId);
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, bottomModelId);
     }
 }

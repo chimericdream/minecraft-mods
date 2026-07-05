@@ -6,15 +6,15 @@ import com.chimericdream.minekea.block.furniture.pillows.PillowBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Function;
 
@@ -25,7 +25,7 @@ public class PillowBlockDataGenerator extends ChimericLibBlockDataGenerator {
         BLOCK = (PillowBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.PILLOWS)
             .setReplace(false)
             .add(BLOCK);
@@ -35,34 +35,34 @@ public class PillowBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .add(BLOCK);
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block wool = ColorHelpers.getWool(BLOCK.color);
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("##")
             .pattern("##")
-            .input('#', wool)
-            .criterion(RecipeGenerator.hasItem(wool),
-                generator.conditionsFromItem(wool))
-            .offerTo(exporter);
+            .define('#', wool)
+            .unlockedBy(RecipeProvider.getHasName(wool),
+                generator.has(wool))
+            .save(exporter);
 
-        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, wool, 4)
-            .input(BLOCK)
-            .criterion(RecipeGenerator.hasItem(BLOCK),
-                generator.conditionsFromItem(BLOCK))
-            .offerTo(exporter);
+        generator.shapeless(RecipeCategory.BUILDING_BLOCKS, wool, 4)
+            .requires(BLOCK)
+            .unlockedBy(RecipeProvider.getHasName(BLOCK),
+                generator.has(BLOCK))
+            .save(exporter);
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(BLOCK);
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        blockStateModelGenerator.createTrivialCube(BLOCK);
     }
 }

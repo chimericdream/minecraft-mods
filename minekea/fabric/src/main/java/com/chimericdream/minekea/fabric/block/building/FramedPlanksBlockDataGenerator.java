@@ -7,38 +7,38 @@ import com.chimericdream.minekea.block.building.framed.FramedPlanksBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
+import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.AxisRotation;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model CORE_MODEL = new Model(
-        Optional.of(Identifier.of(ModInfo.MOD_ID, "block/building/framed_planks/core")),
+    protected static final ModelTemplate CORE_MODEL = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/framed_planks/core")),
         Optional.empty(),
         MinekeaTextures.BRACE,
         MinekeaTextures.MATERIAL
     );
-    protected static final Model A_CONNECTED_MODEL = makeModel("a");
-    protected static final Model B_CONNECTED_MODEL = makeModel("b");
-    protected static final Model AB_CONNECTED_MODEL = makeModel("ab");
+    protected static final ModelTemplate A_CONNECTED_MODEL = makeModel("a");
+    protected static final ModelTemplate B_CONNECTED_MODEL = makeModel("b");
+    protected static final ModelTemplate AB_CONNECTED_MODEL = makeModel("ab");
 
     public FramedPlanksBlock BLOCK;
 
@@ -46,9 +46,9 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
         BLOCK = (FramedPlanksBlock) block;
     }
 
-    protected static Model makeModel(String direction) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, String.format("block/building/framed_planks/%s_connected", direction))),
+    protected static ModelTemplate makeModel(String direction) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/framed_planks/%s_connected", direction))),
             Optional.empty(),
             MinekeaTextures.BRACE,
             MinekeaTextures.MATERIAL
@@ -56,7 +56,7 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.FRAMED_PLANKS)
             .setReplace(false)
             .add(BLOCK);
@@ -68,86 +68,86 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
-            .input(plankIngredient)
-            .input(plankIngredient)
-            .input(plankIngredient)
-            .input(plankIngredient)
-            .input(logIngredient)
-            .criterion(RecipeGenerator.hasItem(plankIngredient),
-                generator.conditionsFromItem(plankIngredient))
-            .criterion(RecipeGenerator.hasItem(logIngredient),
-                generator.conditionsFromItem(logIngredient))
-            .offerTo(exporter);
+        generator.shapeless(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+            .requires(plankIngredient)
+            .requires(plankIngredient)
+            .requires(plankIngredient)
+            .requires(plankIngredient)
+            .requires(logIngredient)
+            .unlockedBy(RecipeProvider.getHasName(plankIngredient),
+                generator.has(plankIngredient))
+            .unlockedBy(RecipeProvider.getHasName(logIngredient),
+                generator.has(logIngredient))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient();
         Block logIngredient = BLOCK.config.getIngredient("log");
 
-        TextureMap textures = new TextureMap()
+        TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.MATERIAL, TextureUtils.block(plankIngredient))
             .put(MinekeaTextures.BRACE, TextureUtils.block(logIngredient));
 
-        Identifier modelId = blockStateModelGenerator.createSubModel(BLOCK, "", CORE_MODEL, unused -> textures);
-        Identifier aConnectedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_a_connected", A_CONNECTED_MODEL, unused -> textures);
-        Identifier bConnectedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_b_connected", B_CONNECTED_MODEL, unused -> textures);
-        Identifier abConnectedModelId = blockStateModelGenerator.createSubModel(BLOCK, "_ab_connected", AB_CONNECTED_MODEL, unused -> textures);
+        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
+        ResourceLocation aConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_a_connected", A_CONNECTED_MODEL, unused -> textures);
+        ResourceLocation bConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_b_connected", B_CONNECTED_MODEL, unused -> textures);
+        ResourceLocation abConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_ab_connected", AB_CONNECTED_MODEL, unused -> textures);
 
-        WeightedVariant coreVariant = BlockStateModelGenerator.createWeightedVariant(modelId);
-        WeightedVariant aConnectedVariant = BlockStateModelGenerator.createWeightedVariant(aConnectedModelId);
-        WeightedVariant bConnectedVariant = BlockStateModelGenerator.createWeightedVariant(bConnectedModelId);
-        WeightedVariant abConnectedVariant = BlockStateModelGenerator.createWeightedVariant(abConnectedModelId);
+        MultiVariant coreVariant = BlockModelGenerators.plainVariant(modelId);
+        MultiVariant aConnectedVariant = BlockModelGenerators.plainVariant(aConnectedModelId);
+        MultiVariant bConnectedVariant = BlockModelGenerators.plainVariant(bConnectedModelId);
+        MultiVariant abConnectedVariant = BlockModelGenerators.plainVariant(abConnectedModelId);
 
-        WeightedVariant invalidVariant = makeInvalidVariant(blockStateModelGenerator, BLOCK);
+        MultiVariant invalidVariant = makeInvalidVariant(blockStateModelGenerator, BLOCK);
 
-        blockStateModelGenerator.registerParentedItemModel(BLOCK, modelId);
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, modelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                VariantsBlockModelDefinitionCreator.of(BLOCK).with(
-                    BlockStateVariantMap
-                        .models(
+                MultiVariantGenerator.dispatch(BLOCK).with(
+                    PropertyDispatch
+                        .initial(
                             FramedPlanksBlock.CONNECTED_EAST,
                             FramedPlanksBlock.CONNECTED_WEST,
                             FramedPlanksBlock.CONNECTED_NORTH,
                             FramedPlanksBlock.CONNECTED_SOUTH
                         )
-                        .register(false, false, false, false, coreVariant)
-                        .register(true, false, false, false, aConnectedVariant)
-                        .register(false, true, false, false, bConnectedVariant)
-                        .register(false, false, true, false, aConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
-                        .register(false, false, false, true, bConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .select(false, false, false, false, coreVariant)
+                        .select(true, false, false, false, aConnectedVariant)
+                        .select(false, true, false, false, bConnectedVariant)
+                        .select(false, false, true, false, aConnectedVariant.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
+                        .select(false, false, false, true, bConnectedVariant.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
 
-                        .register(true, true, false, false, abConnectedVariant)
-                        .register(true, false, true, false, invalidVariant)
-                        .register(true, false, false, true, invalidVariant)
-                        .register(false, true, true, false, invalidVariant)
-                        .register(false, true, false, true, invalidVariant)
-                        .register(false, false, true, true, abConnectedVariant.apply(ModelVariantOperator.ROTATION_Y.withValue(AxisRotation.R270)))
+                        .select(true, true, false, false, abConnectedVariant)
+                        .select(true, false, true, false, invalidVariant)
+                        .select(true, false, false, true, invalidVariant)
+                        .select(false, true, true, false, invalidVariant)
+                        .select(false, true, false, true, invalidVariant)
+                        .select(false, false, true, true, abConnectedVariant.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
 
-                        .register(true, true, true, false, invalidVariant)
-                        .register(true, true, false, true, invalidVariant)
-                        .register(true, false, true, true, invalidVariant)
-                        .register(false, true, true, true, invalidVariant)
+                        .select(true, true, true, false, invalidVariant)
+                        .select(true, true, false, true, invalidVariant)
+                        .select(true, false, true, true, invalidVariant)
+                        .select(false, true, true, true, invalidVariant)
 
-                        .register(true, true, true, true, invalidVariant)
+                        .select(true, true, true, true, invalidVariant)
                 )
             );
     }

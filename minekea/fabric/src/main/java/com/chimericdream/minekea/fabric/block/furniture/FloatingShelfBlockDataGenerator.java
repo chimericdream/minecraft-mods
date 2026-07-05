@@ -4,15 +4,15 @@ import com.chimericdream.minekea.block.furniture.shelves.ShelfBlock;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 public class FloatingShelfBlockDataGenerator extends ShelfBlockDataGenerator {
     public FloatingShelfBlockDataGenerator(Block block) {
@@ -20,36 +20,36 @@ public class FloatingShelfBlockDataGenerator extends ShelfBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block slabIngredient = BLOCK.config.getIngredient("slab");
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("XXX")
             .pattern("# #")
             .pattern("XXX")
-            .input('X', slabIngredient)
-            .input('#', Items.IRON_INGOT)
-            .criterion(RecipeGenerator.hasItem(slabIngredient),
-                generator.conditionsFromItem(slabIngredient))
-            .criterion(RecipeGenerator.hasItem(Items.IRON_INGOT),
-                generator.conditionsFromItem(Items.IRON_INGOT))
-            .offerTo(exporter);
+            .define('X', slabIngredient)
+            .define('#', Items.IRON_INGOT)
+            .unlockedBy(RecipeProvider.getHasName(slabIngredient),
+                generator.has(slabIngredient))
+            .unlockedBy(RecipeProvider.getHasName(Items.IRON_INGOT),
+                generator.has(Items.IRON_INGOT))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Floating Shelf", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Floating Shelf", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Block plankIngredient = BLOCK.config.getIngredient("planks");
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.PLANKS, TextureMap.getId(plankIngredient));
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.PLANKS, TextureMapping.getBlockTexture(plankIngredient));
 
-        Identifier subModelId = blockStateModelGenerator.createSubModel(BLOCK, "", FLOATING_SHELF_MODEL, unused -> textures);
+        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", FLOATING_SHELF_MODEL, unused -> textures);
 
         ModelUtils.registerBlockWithWallSide(blockStateModelGenerator, ShelfBlock.WALL_SIDE, BLOCK, subModelId);
     }

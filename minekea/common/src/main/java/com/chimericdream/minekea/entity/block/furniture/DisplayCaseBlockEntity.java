@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock.ROTATION;
@@ -87,12 +88,12 @@ public class DisplayCaseBlockEntity extends BlockEntity implements ImplementedIn
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
         return saveWithoutMetadata(registryLookup);
     }
 
     @Override
-    public int[] getSlotsForFace(Direction var1) {
+    public int @NotNull [] getSlotsForFace(Direction var1) {
         return new int[]{};
     }
 

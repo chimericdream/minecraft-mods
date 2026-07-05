@@ -5,17 +5,17 @@ import com.chimericdream.minekea.block.building.compressed.CompressedBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -30,7 +30,7 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -38,48 +38,48 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        Block parentBlock = Registries.BLOCK.get(BLOCK.PARENT_BLOCK_ID);
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        Block parentBlock = BuiltInRegistries.BLOCK.getValue(BLOCK.PARENT_BLOCK_ID);
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
             .pattern("###")
             .pattern("###")
             .pattern("###")
-            .input('#', parentBlock)
-            .criterion(RecipeGenerator.hasItem(parentBlock), generator.conditionsFromItem(parentBlock))
-            .offerTo(exporter);
+            .define('#', parentBlock)
+            .unlockedBy(RecipeProvider.getHasName(parentBlock), generator.has(parentBlock))
+            .save(exporter);
 
-        generator.createShapeless(RecipeCategory.BUILDING_BLOCKS, parentBlock, 9)
-            .input(BLOCK)
-            .criterion(RecipeGenerator.hasItem(BLOCK), generator.conditionsFromItem(parentBlock))
-            .offerTo(exporter, BLOCK.PARENT_BLOCK_ID.withSuffixedPath("_from_compressed").toString());
+        generator.shapeless(RecipeCategory.BUILDING_BLOCKS, parentBlock, 9)
+            .requires(BLOCK)
+            .unlockedBy(RecipeProvider.getHasName(BLOCK), generator.has(parentBlock))
+            .save(exporter, BLOCK.PARENT_BLOCK_ID.withSuffix("_from_compressed").toString());
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.compressionLevel == 1) {
-            translationBuilder.add(BLOCK.getTranslationKey(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
+            translationBuilder.add(BLOCK.getDescriptionId(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
         }
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(BLOCK);
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        blockStateModelGenerator.createTrivialCube(BLOCK);
     }
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().generate(Registries.BLOCK.getKey(), instance -> {
+        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial(), BLOCK.BLOCK_ID);
         });
     }
 
-    protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, Identifier blockId) {
+    protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, ResourceLocation blockId) {
         if (source.isPresent()) {
             BufferedImage sourceImage = source.get();
             BufferedImage overlayImage = instance.getMinekeaImage(String.format("block/building/compressed/level-%d", BLOCK.compressionLevel)).orElse(null);
@@ -96,14 +96,14 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
         }
     }
 
-    protected void generateTexture(TextureGenerator.Instance<Block> instance, String key, Identifier blockId) {
+    protected void generateTexture(TextureGenerator.Instance<Block> instance, String key, ResourceLocation blockId) {
         final Optional<BufferedImage> source = instance.getImage(key);
         addTextureOverlay(instance, source, blockId);
     }
 
     public static class CompressedBlockTooltipDataGenerator extends ChimericLibBlockDataGenerator {
         @Override
-        public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+        public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
             translationBuilder.add(CompressedBlock.TOOLTIP_LEVEL, "%dx Compressed");
             translationBuilder.add(CompressedBlock.TOOLTIP_COUNT, "(%s blocks)");
         }

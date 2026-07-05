@@ -6,31 +6,31 @@ import com.chimericdream.minekea.block.furniture.bookshelves.BookshelfBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariant;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Items;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    public static final Model BOOKSHELF_MODEL = new Model(
-        Optional.of(Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/bookshelf")),
+    public static final ModelTemplate BOOKSHELF_MODEL = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/bookshelf")),
         Optional.empty(),
         MinekeaTextures.MATERIAL,
         MinekeaTextures.SHELF
@@ -42,7 +42,7 @@ public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
         BLOCK = (BookshelfBlock) block;
     }
 
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         getBuilder.apply(BlockTags.ENCHANTMENT_POWER_PROVIDER).setReplace(false).add(BLOCK);
 
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
@@ -51,56 +51,56 @@ public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .add(BLOCK);
     }
 
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 3)
             .pattern("###")
             .pattern("XXX")
             .pattern("###")
-            .input('#', ingredient)
-            .input('X', Items.BOOK)
-            .criterion(RecipeGenerator.hasItem(ingredient),
-                generator.conditionsFromItem(ingredient))
-            .criterion(RecipeGenerator.hasItem(Items.BOOK),
-                generator.conditionsFromItem(Items.BOOK))
-            .offerTo(exporter);
+            .define('#', ingredient)
+            .define('X', Items.BOOK)
+            .unlockedBy(RecipeProvider.getHasName(ingredient),
+                generator.has(ingredient))
+            .unlockedBy(RecipeProvider.getHasName(Items.BOOK),
+                generator.has(Items.BOOK))
+            .save(exporter);
     }
 
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK, generator.drops(BLOCK, Items.BOOK, ConstantLootNumberProvider.create(3)));
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.add(BLOCK, generator.createSingleItemTableWithSilkTouch(BLOCK, Items.BOOK, ConstantValue.exactly(3)));
     }
 
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf", BLOCK.config.getMaterialName()));
     }
 
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textures = new TextureMap().put(MinekeaTextures.MATERIAL, BLOCK.config.getTexture());
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        TextureMapping textures = new TextureMapping().put(MinekeaTextures.MATERIAL, BLOCK.config.getTexture());
 
-        Identifier variant0Id = blockStateModelGenerator.createSubModel(BLOCK, "_v0", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
-        Identifier variant1Id = blockStateModelGenerator.createSubModel(BLOCK, "_v1", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf1")));
-        Identifier variant2Id = blockStateModelGenerator.createSubModel(BLOCK, "_v2", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf2")));
-        Identifier variant3Id = blockStateModelGenerator.createSubModel(BLOCK, "_v3", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf3")));
-        Identifier variant4Id = blockStateModelGenerator.createSubModel(BLOCK, "_v4", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf4")));
-        Identifier variant5Id = blockStateModelGenerator.createSubModel(BLOCK, "_v5", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf5")));
-        Identifier variant6Id = blockStateModelGenerator.createSubModel(BLOCK, "_v6", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf6")));
+        ResourceLocation variant0Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v0", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
+        ResourceLocation variant1Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v1", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf1")));
+        ResourceLocation variant2Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v2", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf2")));
+        ResourceLocation variant3Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v3", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf3")));
+        ResourceLocation variant4Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v4", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf4")));
+        ResourceLocation variant5Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v5", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf5")));
+        ResourceLocation variant6Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v6", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf6")));
 
-        ModelVariant variant0 = BlockStateModelGenerator.createModelVariant(variant0Id);
-        ModelVariant variant1 = BlockStateModelGenerator.createModelVariant(variant1Id);
-        ModelVariant variant2 = BlockStateModelGenerator.createModelVariant(variant2Id);
-        ModelVariant variant3 = BlockStateModelGenerator.createModelVariant(variant3Id);
-        ModelVariant variant4 = BlockStateModelGenerator.createModelVariant(variant4Id);
-        ModelVariant variant5 = BlockStateModelGenerator.createModelVariant(variant5Id);
-        ModelVariant variant6 = BlockStateModelGenerator.createModelVariant(variant6Id);
+        Variant variant0 = BlockModelGenerators.plainModel(variant0Id);
+        Variant variant1 = BlockModelGenerators.plainModel(variant1Id);
+        Variant variant2 = BlockModelGenerators.plainModel(variant2Id);
+        Variant variant3 = BlockModelGenerators.plainModel(variant3Id);
+        Variant variant4 = BlockModelGenerators.plainModel(variant4Id);
+        Variant variant5 = BlockModelGenerators.plainModel(variant5Id);
+        Variant variant6 = BlockModelGenerators.plainModel(variant6Id);
 
-        WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(variant0, variant1, variant2, variant3, variant4, variant5, variant6);
+        MultiVariant weightedVariant = BlockModelGenerators.variants(variant0, variant1, variant2, variant3, variant4, variant5, variant6);
 
-        blockStateModelGenerator.blockStateCollector.accept(
-            VariantsBlockModelDefinitionCreator.of(BLOCK, weightedVariant)
+        blockStateModelGenerator.blockStateOutput.accept(
+            MultiVariantGenerator.dispatch(BLOCK, weightedVariant)
         );
 
-        blockStateModelGenerator.registerParentedItemModel(BLOCK, variant0Id);
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, variant0Id);
     }
 }

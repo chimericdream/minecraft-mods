@@ -5,15 +5,15 @@ import com.chimericdream.minekea.block.containers.crates.TrappedCrateBlock;
 import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -25,26 +25,26 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShapeless(RecipeCategory.REDSTONE, BLOCK, 1)
-            .input(((TrappedCrateBlock) BLOCK).BASE_CRATE.get())
-            .input(Items.TRIPWIRE_HOOK)
-            .criterion(RecipeGenerator.hasItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()),
-                generator.conditionsFromItem(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()))
-            .criterion(RecipeGenerator.hasItem(Items.TRIPWIRE_HOOK),
-                generator.conditionsFromItem(Items.TRIPWIRE_HOOK))
-            .offerTo(exporter);
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shapeless(RecipeCategory.REDSTONE, BLOCK, 1)
+            .requires(((TrappedCrateBlock) BLOCK).BASE_CRATE.get())
+            .requires(Items.TRIPWIRE_HOOK)
+            .unlockedBy(RecipeProvider.getHasName(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()),
+                generator.has(((TrappedCrateBlock) BLOCK).BASE_CRATE.get()))
+            .unlockedBy(RecipeProvider.getHasName(Items.TRIPWIRE_HOOK),
+                generator.has(Items.TRIPWIRE_HOOK))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textures = new TextureMap()
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.BRACE, BLOCK.config.getTexture("brace"))
             .put(MinekeaTextures.MATERIAL, TextureUtils.block(BLOCK.BLOCK_ID, "_material"));
 
@@ -53,7 +53,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().generate(Registries.BLOCK.getKey(), instance -> {
+        TextureGenerator.getInstance().generate(BuiltInRegistries.BLOCK.getDefaultKey(), instance -> {
             final Optional<BufferedImage> source = instance.getImage(String.format("%s_planks", BLOCK.config.getMaterial()));
 
             if (source.isPresent()) {
@@ -71,7 +71,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
 
                 g.dispose();
 
-                instance.generate(BLOCK.BLOCK_ID.withSuffixedPath("_material"), combined);
+                instance.generate(BLOCK.BLOCK_ID.withSuffix("_material"), combined);
             }
         });
     }

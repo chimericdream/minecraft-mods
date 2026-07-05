@@ -4,14 +4,14 @@ import com.chimericdream.minekea.fabric.data.ChimericLibItemDataGenerator;
 import com.chimericdream.minekea.item.Tools;
 import com.chimericdream.minekea.item.tools.HammerItem;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class HammerItemDataGenerator extends ChimericLibItemDataGenerator {
     private final HammerItem ITEM;
@@ -27,58 +27,58 @@ public class HammerItemDataGenerator extends ChimericLibItemDataGenerator {
 //    }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         if (ITEM.itemIngredient == null) {
-            generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
+            generator.shaped(RecipeCategory.TOOLS, ITEM, 1)
                     .pattern("ISI")
                     .pattern(" S ")
                     .pattern(" S ")
-                    .input('I', ITEM.itemIngredientTag)
-                    .input('S', Items.STICK)
-                    .criterion("has_item_from_tag",
-                            generator.conditionsFromTag(ITEM.itemIngredientTag))
-                    .criterion(RecipeGenerator.hasItem(Items.STICK),
-                            generator.conditionsFromItem(Items.STICK))
-                    .offerTo(exporter);
+                    .define('I', ITEM.itemIngredientTag)
+                    .define('S', Items.STICK)
+                    .unlockedBy("has_item_from_tag",
+                        generator.has(ITEM.itemIngredientTag))
+                    .unlockedBy(RecipeProvider.getHasName(Items.STICK),
+                        generator.has(Items.STICK))
+                    .save(exporter);
 
             return;
         }
 
-        generator.createShaped(RecipeCategory.TOOLS, ITEM, 1)
+        generator.shaped(RecipeCategory.TOOLS, ITEM, 1)
                 .pattern("ISI")
                 .pattern(" S ")
                 .pattern(" S ")
-                .input('I', ITEM.itemIngredient)
-                .input('S', Items.STICK)
-                .criterion(RecipeGenerator.hasItem(ITEM.itemIngredient),
-                        generator.conditionsFromItem(ITEM.itemIngredient))
-                .criterion(RecipeGenerator.hasItem(Items.STICK),
-                        generator.conditionsFromItem(Items.STICK))
-                .offerTo(exporter);
+                .define('I', ITEM.itemIngredient)
+                .define('S', Items.STICK)
+                .unlockedBy(RecipeProvider.getHasName(ITEM.itemIngredient),
+                        generator.has(ITEM.itemIngredient))
+                .unlockedBy(RecipeProvider.getHasName(Items.STICK),
+                        generator.has(Items.STICK))
+                .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(ITEM, String.format("%s Hammer", ITEM.materialName));
     }
 
     public static class NetheriteUpgrade extends ChimericLibItemDataGenerator {
         @Override
-        public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-            SmithingTransformRecipeJsonBuilder.create(
-                            Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                            Ingredient.ofItems(Tools.DIAMOND_HAMMER_ITEM.get()),
-                            Ingredient.ofItems(Items.NETHERITE_INGOT),
+        public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+            SmithingTransformRecipeBuilder.smithing(
+                            Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                            Ingredient.of(Tools.DIAMOND_HAMMER_ITEM.get()),
+                            Ingredient.of(Items.NETHERITE_INGOT),
                             RecipeCategory.TOOLS,
                             Tools.NETHERITE_HAMMER_ITEM.get()
                     )
-                    .criterion(RecipeGenerator.hasItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                            generator.conditionsFromItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
-                    .criterion(RecipeGenerator.hasItem(Tools.DIAMOND_HAMMER_ITEM.get()),
-                            generator.conditionsFromItem(Tools.DIAMOND_HAMMER_ITEM.get()))
-                    .criterion(RecipeGenerator.hasItem(Items.NETHERITE_INGOT),
-                            generator.conditionsFromItem(Items.NETHERITE_INGOT))
-                    .offerTo(exporter, ((HammerItem) Tools.NETHERITE_HAMMER_ITEM.get()).ITEM_ID.withSuffixedPath("_upgrade_from_diamond").toString());
+//                    .unlockedBy(RecipeProvider.getHasName(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+//                            generator.has(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
+//                    .unlockedBy(RecipeProvider.getHasName(Tools.DIAMOND_HAMMER_ITEM.get()),
+//                            generator.has(Tools.DIAMOND_HAMMER_ITEM.get()))
+//                    .unlockedBy(RecipeProvider.getHasName(Items.NETHERITE_INGOT),
+//                            generator.has(Items.NETHERITE_INGOT))
+                    .save(exporter, ((HammerItem) Tools.NETHERITE_HAMMER_ITEM.get()).ITEM_ID.withSuffix("_upgrade_from_diamond").toString());
         }
     }
 }

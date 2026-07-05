@@ -5,31 +5,31 @@ import com.chimericdream.minekea.block.building.stairs.BookshelfStairsBlock;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 
 public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator {
-    protected static final Model INNER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/inner");
-    protected static final Model MAIN_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/main");
-    protected static final Model OUTER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/outer");
+    protected static final ModelTemplate INNER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/inner");
+    protected static final ModelTemplate MAIN_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/main");
+    protected static final ModelTemplate OUTER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/outer");
 
     public BookshelfStairsBlockDataGenerator(Block block) {
         super(block);
     }
 
-    protected static Model makeModel(String path) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, path)),
+    protected static ModelTemplate makeModel(String path) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.SHELF,
             MinekeaTextures.MATERIAL
@@ -37,32 +37,32 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        Identifier ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
-        Block ingredient = Registries.BLOCK.get(ingredientId);
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        ResourceLocation ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
+        Block ingredient = BuiltInRegistries.BLOCK.getValue(ingredientId);
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
             .pattern("#  ")
             .pattern("## ")
             .pattern("###")
-            .input('#', ingredient)
-            .criterion(RecipeGenerator.hasItem(ingredient),
-                generator.conditionsFromItem(ingredient))
-            .offerTo(exporter);
+            .define('#', ingredient)
+            .unlockedBy(RecipeProvider.getHasName(ingredient),
+                generator.has(ingredient))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        ResourceLocation textureId = BLOCK.config.getTexture();
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
         ModelUtils.registerStairsBlock(

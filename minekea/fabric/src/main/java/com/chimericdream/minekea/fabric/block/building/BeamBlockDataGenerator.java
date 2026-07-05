@@ -6,23 +6,23 @@ import com.chimericdream.minekea.block.building.beams.BeamBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.MultipartBlockModelDefinitionCreator;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.client.render.model.json.MultipartModelConditionBuilder;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.ConditionBuilder;
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -35,14 +35,14 @@ import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED
 import static com.chimericdream.minekea.block.building.beams.BeamBlock.CONNECTED_WEST;
 
 public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model CONNECTED_NORTH_MODEL = makeModel("north");
-    protected static final Model CONNECTED_SOUTH_MODEL = makeModel("south");
-    protected static final Model CONNECTED_EAST_MODEL = makeModel("east");
-    protected static final Model CONNECTED_WEST_MODEL = makeModel("west");
-    protected static final Model CONNECTED_UP_MODEL = makeModel("up");
-    protected static final Model CONNECTED_DOWN_MODEL = makeModel("down");
-    protected static final Model CORE_MODEL = makeModel(Identifier.of(ModInfo.MOD_ID, "block/building/beams/core"));
-    protected static final Model ITEM_MODEL = makeModel(Identifier.of(ModInfo.MOD_ID, "item/building/beam"));
+    protected static final ModelTemplate CONNECTED_NORTH_MODEL = makeModel("north");
+    protected static final ModelTemplate CONNECTED_SOUTH_MODEL = makeModel("south");
+    protected static final ModelTemplate CONNECTED_EAST_MODEL = makeModel("east");
+    protected static final ModelTemplate CONNECTED_WEST_MODEL = makeModel("west");
+    protected static final ModelTemplate CONNECTED_UP_MODEL = makeModel("up");
+    protected static final ModelTemplate CONNECTED_DOWN_MODEL = makeModel("down");
+    protected static final ModelTemplate CORE_MODEL = makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/beams/core"));
+    protected static final ModelTemplate ITEM_MODEL = makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "item/building/beam"));
 
     public BeamBlock BLOCK;
 
@@ -50,16 +50,16 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
         BLOCK = (BeamBlock) block;
     }
 
-    private static Model makeModel(String direction) {
-        return makeModel(Identifier.of(ModInfo.MOD_ID, String.format("block/building/beams/connected_%s", direction)));
+    private static ModelTemplate makeModel(String direction) {
+        return makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/beams/connected_%s", direction)));
     }
 
-    private static Model makeModel(Identifier id) {
-        return new Model(
+    private static ModelTemplate makeModel(ResourceLocation id) {
+        return new ModelTemplate(
             Optional.of(id),
             Optional.empty(),
-            TextureKey.SIDE,
-            TextureKey.END
+            TextureSlot.SIDE,
+            TextureSlot.END
         );
     }
 
@@ -68,7 +68,7 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         getBuilder.apply(MinekeaBlockTags.BEAMS)
             .setReplace(false)
             .add(BLOCK);
@@ -80,78 +80,78 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block ingredient = BLOCK.config.getIngredient();
 
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .pattern("# #")
             .pattern("# #")
             .pattern("# #")
-            .input('#', ingredient)
-            .criterion(RecipeGenerator.hasItem(ingredient),
-                generator.conditionsFromItem(ingredient))
-            .offerTo(exporter);
+            .define('#', ingredient)
+            .unlockedBy(RecipeProvider.getHasName(ingredient),
+                generator.has(ingredient))
+            .save(exporter);
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Beam", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK);
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textures = getTextures();
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        TextureMapping textures = getTextures();
 
-        Identifier coreModelId = blockStateModelGenerator.createSubModel(BLOCK, "", CORE_MODEL, unused -> textures);
-        Identifier northModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_north", CONNECTED_NORTH_MODEL, unused -> textures);
-        Identifier southModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_south", CONNECTED_SOUTH_MODEL, unused -> textures);
-        Identifier eastModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_east", CONNECTED_EAST_MODEL, unused -> textures);
-        Identifier westModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_west", CONNECTED_WEST_MODEL, unused -> textures);
-        Identifier upModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
-        Identifier downModelId = blockStateModelGenerator.createSubModel(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
+        ResourceLocation coreModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
+        ResourceLocation northModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north", CONNECTED_NORTH_MODEL, unused -> textures);
+        ResourceLocation southModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south", CONNECTED_SOUTH_MODEL, unused -> textures);
+        ResourceLocation eastModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_east", CONNECTED_EAST_MODEL, unused -> textures);
+        ResourceLocation westModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", CONNECTED_WEST_MODEL, unused -> textures);
+        ResourceLocation upModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
+        ResourceLocation downModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
 
-        WeightedVariant coreVariant = BlockStateModelGenerator.createWeightedVariant(coreModelId);
-        WeightedVariant northVariant = BlockStateModelGenerator.createWeightedVariant(northModelId);
-        WeightedVariant southVariant = BlockStateModelGenerator.createWeightedVariant(southModelId);
-        WeightedVariant eastVariant = BlockStateModelGenerator.createWeightedVariant(eastModelId);
-        WeightedVariant westVariant = BlockStateModelGenerator.createWeightedVariant(westModelId);
-        WeightedVariant upVariant = BlockStateModelGenerator.createWeightedVariant(upModelId);
-        WeightedVariant downVariant = BlockStateModelGenerator.createWeightedVariant(downModelId);
+        MultiVariant coreVariant = BlockModelGenerators.plainVariant(coreModelId);
+        MultiVariant northVariant = BlockModelGenerators.plainVariant(northModelId);
+        MultiVariant southVariant = BlockModelGenerators.plainVariant(southModelId);
+        MultiVariant eastVariant = BlockModelGenerators.plainVariant(eastModelId);
+        MultiVariant westVariant = BlockModelGenerators.plainVariant(westModelId);
+        MultiVariant upVariant = BlockModelGenerators.plainVariant(upModelId);
+        MultiVariant downVariant = BlockModelGenerators.plainVariant(downModelId);
 
-        blockStateModelGenerator.blockStateCollector
+        blockStateModelGenerator.blockStateOutput
             .accept(
-                MultipartBlockModelDefinitionCreator.create(BLOCK)
+                MultiPartGenerator.multiPart(BLOCK)
                     .with(coreVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_NORTH, true), northVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_SOUTH, true), southVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_EAST, true), eastVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_WEST, true), westVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_UP, true), upVariant)
-                    .with((new MultipartModelConditionBuilder()).put(CONNECTED_DOWN, true), downVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_NORTH, true), northVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_SOUTH, true), southVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_EAST, true), eastVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_WEST, true), westVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_UP, true), upVariant)
+                    .with((new ConditionBuilder()).term(CONNECTED_DOWN, true), downVariant)
             );
     }
 
-    private TextureMap getTextures() {
-        Identifier sideTexture = BLOCK.config.getTexture();
-        Identifier endTexture = Optional.ofNullable(BLOCK.config.getTexture("end")).orElse(sideTexture);
+    private TextureMapping getTextures() {
+        ResourceLocation sideTexture = BLOCK.config.getTexture();
+        ResourceLocation endTexture = Optional.ofNullable(BLOCK.config.getTexture("end")).orElse(sideTexture);
 
-        return new TextureMap()
-            .put(TextureKey.SIDE, sideTexture)
-            .put(TextureKey.END, endTexture);
+        return new TextureMapping()
+            .put(TextureSlot.SIDE, sideTexture)
+            .put(TextureSlot.END, endTexture);
     }
 
     @Override
-    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-        ITEM_MODEL.upload(
-            BLOCK.BLOCK_ID.withPrefixedPath("item/"),
+    public void configureItemModels(ItemModelGenerators itemModelGenerator) {
+        ITEM_MODEL.create(
+            BLOCK.BLOCK_ID.withPrefix("item/"),
             getTextures(),
-            itemModelGenerator.modelCollector
+            itemModelGenerator.modelOutput
         );
     }
 }

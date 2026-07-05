@@ -7,19 +7,19 @@ import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.block.Block;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.Model;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -27,8 +27,8 @@ import java.util.function.Function;
 import static com.chimericdream.minekea.fabric.block.furniture.BookshelfBlockDataGenerator.BOOKSHELF_MODEL;
 
 public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    protected static final Model BOTTOM_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/bottom");
-    protected static final Model TOP_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/top");
+    protected static final ModelTemplate BOTTOM_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/bottom");
+    protected static final ModelTemplate TOP_BOOKSHELF_SLAB_MODEL = makeModel("block/building/slabs/bookshelves/top");
 
     private final BookshelfSlabBlock BLOCK;
 
@@ -36,9 +36,9 @@ public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerat
         BLOCK = (BookshelfSlabBlock) block;
     }
 
-    protected static Model makeModel(String path) {
-        return new Model(
-            Optional.of(Identifier.of(ModInfo.MOD_ID, path)),
+    protected static ModelTemplate makeModel(String path) {
+        return new ModelTemplate(
+            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.SHELF,
             MinekeaTextures.MATERIAL
@@ -46,7 +46,7 @@ public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerat
     }
 
     @Override
-    public void configureBlockTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Block>, ProvidedTagBuilder<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
@@ -54,32 +54,32 @@ public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerat
     }
 
     @Override
-    public void configureRecipes(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter, RecipeGenerator generator) {
-        generator.createShaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 6)
             .pattern("###")
-            .input('#', Registries.BLOCK.get(BLOCK.BASE_BLOCK_ID))
-            .criterion(RecipeGenerator.hasItem(Registries.BLOCK.get(BLOCK.BASE_BLOCK_ID)),
-                generator.conditionsFromItem(Registries.BLOCK.get(BLOCK.BASE_BLOCK_ID)))
-            .offerTo(exporter);
+            .define('#', BuiltInRegistries.BLOCK.getValue(BLOCK.BASE_BLOCK_ID))
+            .unlockedBy(RecipeProvider.getHasName(BuiltInRegistries.BLOCK.getValue(BLOCK.BASE_BLOCK_ID)),
+                generator.has(BuiltInRegistries.BLOCK.getValue(BLOCK.BASE_BLOCK_ID)))
+            .save(exporter);
     }
 
     @Override
-    public void configureBlockLootTables(BlockLootTableGenerator generator, RegistryWrapper.WrapperLookup registryLookup) {
-        generator.addDrop(BLOCK, generator.slabDrops(BLOCK));
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.add(BLOCK, generator.createSlabItemTable(BLOCK));
     }
 
     @Override
-    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(BLOCK, String.format("%s Bookshelf Slab", BLOCK.config.getMaterialName()));
         translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Slab", BLOCK.config.getMaterialName()));
     }
 
     @Override
-    public void configureBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+    public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        ResourceLocation textureId = BLOCK.config.getTexture();
 
-        TextureMap textures = new TextureMap()
-            .put(MinekeaTextures.SHELF, Identifier.of(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
+        TextureMapping textures = new TextureMapping()
+            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
         ModelUtils.registerSlabBlock(
