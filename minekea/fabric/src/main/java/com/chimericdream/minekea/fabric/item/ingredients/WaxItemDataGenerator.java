@@ -62,6 +62,6 @@ public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
 
     @Override
     public void configureItemModels(ItemModelGenerators itemModelGenerator) {
-        itemModelGenerator.createFlatItemModel(ITEM, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(ITEM, ModelTemplates.FLAT_ITEM);
     }
 }
