@@ -17,7 +17,8 @@
       "y": 90
     },
     "facing=south,half=lower": {
-      "model": "minekea:block/furniture/armoires/acacia_bottom"
+      "model": "minekea:block/furniture/armoires/acacia_bottom",
+      "y": 270
     },
     "facing=south,half=upper": {
       "model": "minekea:block/furniture/armoires/acacia_top",

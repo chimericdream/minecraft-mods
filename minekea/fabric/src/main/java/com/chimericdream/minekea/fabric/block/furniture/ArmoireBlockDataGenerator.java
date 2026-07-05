@@ -122,7 +122,7 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
                         PropertyDispatch.initial(ArmoireBlock.FACING, ArmoireBlock.HALF)
                             .select(Direction.NORTH, DoubleBlockHalf.LOWER, bottomModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
                             .select(Direction.NORTH, DoubleBlockHalf.UPPER, topModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
-                            .select(Direction.SOUTH, DoubleBlockHalf.LOWER, bottomModel)
+                            .select(Direction.SOUTH, DoubleBlockHalf.LOWER, bottomModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
                             .select(Direction.SOUTH, DoubleBlockHalf.UPPER, topModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
                             .select(Direction.EAST, DoubleBlockHalf.LOWER, bottomModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
                             .select(Direction.EAST, DoubleBlockHalf.UPPER, topModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
