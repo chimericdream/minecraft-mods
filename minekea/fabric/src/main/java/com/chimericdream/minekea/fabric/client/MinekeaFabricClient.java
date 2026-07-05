@@ -43,6 +43,8 @@ public final class MinekeaFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         MinekeaClient.initializeClientRegistries();
         MinekeaClient.onInitializeClient();
+        MinekeaClient.registerEntityRenderers();
+        MinekeaClient.registerBlockEntityRenderers();
 
         initializeBlockRenderLayers();
         initializeKeybindings();

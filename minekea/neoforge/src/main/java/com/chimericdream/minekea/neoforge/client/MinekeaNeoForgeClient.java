@@ -30,6 +30,8 @@ public class MinekeaNeoForgeClient {
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        MinekeaClient.registerBlockEntityRenderers();
+
         event.registerBlockEntityRenderer(
             ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
             NeoForgeGlassJarBlockEntityRenderer::new

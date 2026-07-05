@@ -29,18 +29,21 @@ public class MinekeaClient {
         MenuScreens.register(Crates.DOUBLE_CRATE_SCREEN_HANDLER.get(), DoubleCrateScreen::new);
         MenuScreens.register(Tools.BLOCK_PAINTER_SCREEN_HANDLER.get(), BlockPainterScreen::new);
         Keybindings.init();
-        registerEntityRenderers();
     }
 
     public static void initializeClientRegistries() {
     }
 
+    // NeoForge must call this during mod construction (see MinekeaNeoForge's constructor) - any lifecycle
+    // event is too late, since architectury's own RegisterRenderers listener fires on its bus before ours.
     public static void registerEntityRenderers() {
         EntityRendererRegistry.register(
             Seats.SEAT_ENTITY,
             SimpleSeatEntity.EmptyRenderer::new
         );
+    }
 
+    public static void registerBlockEntityRenderers() {
         BlockEntityRendererRegistry.register(
             Armoires.ARMOIRE_BLOCK_ENTITY.get(),
             ArmoireBlockEntityRenderer::new
