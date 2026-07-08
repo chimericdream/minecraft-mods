@@ -7,27 +7,28 @@ import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
 import com.chimericdream.shulkerstuff.tag.ShulkerStuffItemTags;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.StackReference;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,93 +36,93 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 @Mixin(Item.class)
 public class ShulkerStuff$ItemMixin {
-    @Inject(method = "appendTooltip", at = @At("TAIL"))
-    private void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, CallbackInfo cir) {
-        if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
-            return;
-        }
-
-        ShulkerStuffHardenedComponent ssHardenedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
-        if (ssHardenedComponent != null && ssHardenedComponent.value()) {
-            MutableText text = Text.translatable(Identifier.of(ModInfo.MOD_ID, "tooltip.upgrades.hardened").toTranslationKey());
-            tooltip.add(text.formatted(Formatting.DARK_PURPLE));
-        }
-
-        ShulkerStuffPlatedComponent ssPlatedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
-        if (ssPlatedComponent != null && ssPlatedComponent.value()) {
-            MutableText text = Text.translatable(Identifier.of(ModInfo.MOD_ID, "tooltip.upgrades.plated").toTranslationKey());
-            tooltip.add(text.formatted(Formatting.DARK_GRAY));
-        }
-    }
+//    @Inject(method = "appendHoverText", at = @At("TAIL"))
+//    private void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag, CallbackInfo cir) {
+//        if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+//            return;
+//        }
+//
+//        ShulkerStuffHardenedComponent ssHardenedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
+//        if (ssHardenedComponent != null && ssHardenedComponent.value()) {
+//            MutableComponent text = Component.translatable(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tooltip.upgrades.hardened").toLanguageKey());
+//            tooltip.add(text.withStyle(ChatFormatting.DARK_PURPLE));
+//        }
+//
+//        ShulkerStuffPlatedComponent ssPlatedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
+//        if (ssPlatedComponent != null && ssPlatedComponent.value()) {
+//            MutableComponent text = Component.translatable(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tooltip.upgrades.plated").toLanguageKey());
+//            tooltip.add(text.withStyle(ChatFormatting.DARK_GRAY));
+//        }
+//    }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        ItemStack stack = player.getStackInHand(hand);
+    private void use(Level world, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        ItemStack stack = player.getItemInHand(hand);
 
-        if (!player.isSneaking() || !(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+        if (!player.shouldShowName() || !(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
             return;
         }
 
         if (this.ssItem$dropFirstItem(stack, player)) {
-            cir.setReturnValue(TypedActionResult.success(stack, world.isClient()));
+            cir.setReturnValue(InteractionResult.SUCCESS);
         } else {
-            cir.setReturnValue(TypedActionResult.fail(stack));
+            cir.setReturnValue(InteractionResult.FAIL);
         }
     }
 
-    @Inject(method = "onStackClicked", at = @At("HEAD"), cancellable = true)
-    private void onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "overrideStackedOnOther", at = @At("HEAD"), cancellable = true)
+    private void ss$overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickType, Player player, CallbackInfoReturnable<Boolean> cir) {
         try {
             if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
                 return;
             }
 
-            if (clickType != ClickType.RIGHT) {
+            if (clickType != ClickAction.SECONDARY) {
                 cir.setReturnValue(false);
 
                 return;
             }
 
-            ContainerComponent contents = stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+            ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
             ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
 
-            ItemStack itemStack = slot.getStack();
+            ItemStack itemStack = slot.getItem();
             if (itemStack.isEmpty()) {
                 ItemStack itemStack2 = builder.removeFirst();
                 if (!itemStack2.isEmpty()) {
-                    ItemStack itemStack3 = slot.insertStack(itemStack2);
+                    ItemStack itemStack3 = slot.safeInsert(itemStack2);
                     builder.addStack(itemStack3);
                     this.ssItem$playRemoveOneSound(player);
                 }
-            } else if (itemStack.getItem().canBeNested()) {
+            } else if (itemStack.getItem().canFitInsideContainerItems()) {
                 int i = builder.addFromSlot(slot, player);
                 if (i > 0) {
                     this.ssItem$playInsertSound(player);
                 }
             }
 
-            stack.set(DataComponentTypes.CONTAINER, builder.build());
+            stack.set(DataComponents.CONTAINER, builder.build());
             cir.setReturnValue(true);
         } catch (Exception e) {
             ShulkerStuffMod.LOGGER.error("An error occurred while processing a shulker box item click.", e);
         }
     }
 
-    @Inject(method = "onClicked", at = @At("HEAD"), cancellable = true)
-    private void onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "overrideOtherStackedOnMe", at = @At("HEAD"), cancellable = true)
+    private void ss$overrideOtherStackedOnMe(ItemStack stack, ItemStack otherStack, Slot slot, ClickAction clickType, Player player, SlotAccess cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
         if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
             return;
         }
 
-        if (clickType != ClickType.RIGHT || !slot.canTakePartial(player)) {
+        if (clickType != ClickAction.SECONDARY || !slot.mayPickup(player)) {
             return;
         }
 
-        ContainerComponent contents = stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+        ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
         ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
 
         if (otherStack.isEmpty()) {
@@ -139,40 +140,40 @@ public class ShulkerStuff$ItemMixin {
             cursorStackReference.set(otherStack);
         }
 
-        stack.set(DataComponentTypes.CONTAINER, builder.build());
+        stack.set(DataComponents.CONTAINER, builder.build());
         cir.setReturnValue(true);
     }
 
-    @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
-    private void isEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (stack.isIn(ShulkerStuffItemTags.SHULKER_BOX_ITEMS)) {
-            cir.setReturnValue(true);
-        }
-    }
+//    @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
+//    private void isEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+//        if (stack.is(ShulkerStuffItemTags.SHULKER_BOX_ITEMS)) {
+//            cir.setReturnValue(true);
+//        }
+//    }
 
-    @Inject(method = "getEnchantability", at = @At("HEAD"), cancellable = true)
-    private void getEnchantability(CallbackInfoReturnable<Integer> cir) {
-        //noinspection ConstantValue
-        if (!((Object) this instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
-            return;
-        }
-
-        cir.setReturnValue(20);
-    }
+//    @Inject(method = "getEnchantability", at = @At("HEAD"), cancellable = true)
+//    private void getEnchantability(CallbackInfoReturnable<Integer> cir) {
+//        //noinspection ConstantValue
+//        if (!((Object) this instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+//            return;
+//        }
+//
+//        cir.setReturnValue(20);
+//    }
 
     @Unique
     private void ssItem$playRemoveOneSound(Entity entity) {
-        entity.playSound(SoundEvents.ENTITY_SHULKER_HURT_CLOSED, 0.2F, 0.95F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+        entity.playSound(SoundEvents.SHULKER_HURT_CLOSED, 0.2F, 0.95F + entity.level().getRandom().nextFloat() * 0.4F);
     }
 
     @Unique
     private void ssItem$playInsertSound(Entity entity) {
-        entity.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 0.2F, 0.95F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+        entity.playSound(SoundEvents.SHULKER_BULLET_HURT, 0.2F, 0.95F + entity.level().getRandom().nextFloat() * 0.4F);
     }
 
     @Unique
-    private boolean ssItem$dropFirstItem(ItemStack stack, PlayerEntity player) {
-        ContainerComponent contents = stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+    private boolean ssItem$dropFirstItem(ItemStack stack, Player player) {
+        ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
         ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
 
         ItemStack stack2 = builder.removeFirst();
@@ -180,13 +181,13 @@ public class ShulkerStuff$ItemMixin {
             return false;
         }
 
-        if (player instanceof ServerPlayerEntity) {
-            player.dropItem(stack2, true);
+        if (player instanceof ServerPlayer) {
+            player.drop(stack2, true);
         }
 
         this.ssItem$playRemoveOneSound(player);
 
-        stack.set(DataComponentTypes.CONTAINER, builder.build());
+        stack.set(DataComponents.CONTAINER, builder.build());
 
         return true;
     }

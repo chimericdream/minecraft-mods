@@ -1,28 +1,28 @@
 package com.chimericdream.shulkerstuff.component.type;
 
 import com.chimericdream.shulkerstuff.ShulkerStuffMod;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 
 import java.util.List;
 
 public class ContainerComponentBuilder {
     private final int size = 27;
-    private final DefaultedList<ItemStack> heldStacks = DefaultedList.ofSize(27, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> heldStacks = NonNullList.withSize(27, ItemStack.EMPTY);
 
-    public ContainerComponentBuilder(ContainerComponent base) {
-        if (base.stacks.size() > 27) {
+    public ContainerComponentBuilder(ItemContainerContents base) {
+        List<ItemStack> contents = base.nonEmptyStream().toList();
+        if (contents.size() > 27) {
             throw new IllegalArgumentException("Cannot create a ContainerComponentBuilder from a ContainerComponent with more than 27 stacks.");
         }
 
-        for (int i = 0; i < base.stacks.size(); ++i) {
-            this.heldStacks.set(i, base.stacks.get(i));
+        for (int i = 0; i < contents.size(); ++i) {
+            this.heldStacks.set(i, contents.get(i));
         }
     }
-
 
     private int getFirstNonEmptySlot() {
         for (int i = 0; i < this.heldStacks.size(); ++i) {
@@ -43,8 +43,8 @@ public class ContainerComponentBuilder {
 
         int maxAllowed = 0;
         for (ItemStack itemStack : heldStacks) {
-            if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
-                maxAllowed += stack.getMaxCount() - itemStack.getCount();
+            if (ItemStack.isSameItemSameComponents(itemStack, stack)) {
+                maxAllowed += stack.getMaxStackSize() - itemStack.getCount();
             }
 
             if (maxAllowed >= stack.getCount()) {
@@ -55,11 +55,11 @@ public class ContainerComponentBuilder {
         return maxAllowed;
     }
 
-    public int addFromSlot(Slot slot, PlayerEntity player) {
-        ItemStack itemStack = slot.getStack();
+    public int addFromSlot(Slot slot, Player player) {
+        ItemStack itemStack = slot.getItem();
         int allowedQty = this.getMaxAllowed(itemStack);
 
-        this.addStack(slot.takeStackRange(itemStack.getCount(), allowedQty, player));
+        this.addStack(slot.safeTake(itemStack.getCount(), allowedQty, player));
 
         return allowedQty;
     }
@@ -70,7 +70,7 @@ public class ContainerComponentBuilder {
             return;
         }
 
-        if (stack.isEmpty() || !stack.getItem().canBeNested()) {
+        if (stack.isEmpty() || !stack.getItem().canFitInsideContainerItems()) {
             return;
         }
 
@@ -78,7 +78,7 @@ public class ContainerComponentBuilder {
     }
 
     public void addStackForVoid(ItemStack stack) {
-        if (stack.isEmpty() || !stack.getItem().canBeNested()) {
+        if (stack.isEmpty() || !stack.getItem().canFitInsideContainerItems()) {
             return;
         }
 
@@ -89,11 +89,11 @@ public class ContainerComponentBuilder {
             return;
         }
 
-        stack.decrement(stack.getCount());
+        stack.shrink(stack.getCount());
     }
 
     public void addStack(ItemStack stack) {
-        if (stack.isEmpty() || !stack.getItem().canBeNested()) {
+        if (stack.isEmpty() || !stack.getItem().canFitInsideContainerItems()) {
             return;
         }
 
@@ -119,7 +119,7 @@ public class ContainerComponentBuilder {
     }
 
     private int getMaxCount(ItemStack stack) {
-        return Math.min(99, stack.getMaxCount());
+        return Math.min(99, stack.getMaxStackSize());
     }
 
     public ItemStack getStack(int slot) {
@@ -128,18 +128,18 @@ public class ContainerComponentBuilder {
 
     public void setStack(int slot, ItemStack stack) {
         this.heldStacks.set(slot, stack);
-        stack.capCount(this.getMaxCount(stack));
+        stack.limitSize(this.getMaxCount(stack));
     }
 
     public boolean contains(ItemStack stack) {
-        return this.heldStacks.stream().anyMatch((itemStack) -> ItemStack.areItemsAndComponentsEqual(itemStack, stack));
+        return this.heldStacks.stream().anyMatch((itemStack) -> ItemStack.isSameItemSameComponents(itemStack, stack));
     }
 
     public ItemStack getFirstMatchingStack(ItemStack stack) {
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
-            if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
-                return itemStack.copyAndEmpty();
+            if (ItemStack.isSameItemSameComponents(itemStack, stack)) {
+                return itemStack.copyAndClear();
             }
         }
 
@@ -150,20 +150,20 @@ public class ContainerComponentBuilder {
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
             if (itemStack.isEmpty()) {
-                this.setStack(i, stack.copyAndEmpty());
+                this.setStack(i, stack.copyAndClear());
                 return;
             }
         }
     }
 
     private void addToExistingSlot(ItemStack stack) {
-        ShulkerStuffMod.LOGGER.trace("Attempting to add {} {} to existing slots", stack.getCount(), stack.getName());
+        ShulkerStuffMod.LOGGER.trace("Attempting to add {} {} to existing slots", stack.getCount(), stack.getDisplayName());
         for (int i = 0; i < this.size; ++i) {
             ItemStack itemStack = this.getStack(i);
-            if (ItemStack.areItemsAndComponentsEqual(itemStack, stack)) {
-                ShulkerStuffMod.LOGGER.trace("{} of {} before adding to to slot {}", stack.getCount(), stack.getName(), i);
+            if (ItemStack.isSameItemSameComponents(itemStack, stack)) {
+                ShulkerStuffMod.LOGGER.trace("{} of {} before adding to to slot {}", stack.getCount(), stack.getDisplayName(), i);
                 this.transfer(stack, itemStack);
-                ShulkerStuffMod.LOGGER.trace("{} of {} after adding to to slot {}", stack.getCount(), stack.getName(), i);
+                ShulkerStuffMod.LOGGER.trace("{} of {} after adding to to slot {}", stack.getCount(), stack.getDisplayName(), i);
                 if (stack.isEmpty()) {
                     return;
                 }
@@ -175,12 +175,12 @@ public class ContainerComponentBuilder {
         int i = this.getMaxCount(target);
         int j = Math.min(source.getCount(), i - target.getCount());
         if (j > 0) {
-            target.increment(j);
-            source.decrement(j);
+            target.grow(j);
+            source.shrink(j);
         }
     }
 
-    public ContainerComponent build() {
-        return ContainerComponent.fromStacks(List.copyOf(this.heldStacks));
+    public ItemContainerContents build() {
+        return ItemContainerContents.fromItems(List.copyOf(this.heldStacks));
     }
 }

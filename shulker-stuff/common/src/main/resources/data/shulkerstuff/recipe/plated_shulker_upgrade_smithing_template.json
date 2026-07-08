@@ -2,15 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "key": {
-        "#": {
-            "item": "minecraft:diamond"
-        },
-        "N": {
-            "item": "minecraft:netherite_ingot"
-        },
-        "S": {
-            "item": "shulkerstuff:plated_shulker_upgrade_smithing_template"
-        }
+        "#": "minecraft:diamond",
+        "N": "minecraft:netherite_ingot",
+        "S": "shulkerstuff:plated_shulker_upgrade_smithing_template"
     },
     "pattern": [
         "#S#",

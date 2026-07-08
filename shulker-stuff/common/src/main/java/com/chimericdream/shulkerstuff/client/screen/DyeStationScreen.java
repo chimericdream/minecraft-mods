@@ -1,35 +1,31 @@
 package com.chimericdream.shulkerstuff.client.screen;
 
 import com.chimericdream.shulkerstuff.ModInfo;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
-public class DyeStationScreen extends HandledScreen<DyeStationScreenHandler> {
-    private static final Identifier TEXTURE = Identifier.of(ModInfo.MOD_ID, "textures/gui/block/dye_station.png");
+public class DyeStationScreen extends AbstractContainerScreen<DyeStationScreenHandler> {
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "textures/gui/block/dye_station.png");
 
-    public DyeStationScreen(DyeStationScreenHandler handler, PlayerInventory inventory, Text title) {
+    public DyeStationScreen(DyeStationScreenHandler handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(context, mouseX, mouseY);
+        this.renderTooltip(context, mouseX, mouseY);
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        int x = (width - backgroundWidth) / 2;
-        int y = (height - backgroundHeight) / 2;
-        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 }

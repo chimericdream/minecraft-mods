@@ -7,15 +7,12 @@
     ],
     "mixins": [
         "ShulkerStuff$AbstractBlockMixin",
-        "ShulkerStuff$BlockDustParticleMixin",
         "ShulkerStuff$BlockEntityMixin",
         "ShulkerStuff$ItemEntityMixin",
         "ShulkerStuff$ItemMixin",
-        "ShulkerStuff$ParticleAccessor",
         "ShulkerStuff$PlayerInventoryMixin",
         "ShulkerStuff$ServerPlayerEntityMixin",
-        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin",
-        "ShulkerStuff$SpriteBillboardParticleAccessor"
+        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

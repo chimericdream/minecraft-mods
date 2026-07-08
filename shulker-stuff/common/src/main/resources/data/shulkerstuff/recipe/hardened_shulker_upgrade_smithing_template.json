@@ -2,15 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "key": {
-        "#": {
-            "item": "minecraft:diamond"
-        },
-        "O": {
-            "item": "minecraft:obsidian"
-        },
-        "S": {
-            "item": "shulkerstuff:hardened_shulker_upgrade_smithing_template"
-        }
+        "#": "minecraft:diamond",
+        "O": "minecraft:obsidian",
+        "S": "shulkerstuff:hardened_shulker_upgrade_smithing_template"
     },
     "pattern": [
         "#S#",
