@@ -12,7 +12,8 @@
         "ShulkerStuff$ItemMixin",
         "ShulkerStuff$PlayerInventoryMixin",
         "ShulkerStuff$ServerPlayerEntityMixin",
-        "ShulkerStuff$ShulkerBoxBlockEntityRendererMixin"
+        "ShulkerStuff$ShulkerBoxRenderStateMixin",
+        "ShulkerStuff$ShulkerBoxRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1
