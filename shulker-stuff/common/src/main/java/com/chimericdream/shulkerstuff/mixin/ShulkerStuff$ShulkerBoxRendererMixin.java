@@ -4,6 +4,8 @@ import com.chimericdream.shulkerstuff.client.render.block.entity.state.ShulkerBo
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -24,6 +26,7 @@ import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,14 +35,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
     @Shadow
     @Final
-    public ShulkerBoxRenderer.ShulkerBoxModel model;
-
-    @Shadow
-    @Final
     public MaterialSet materials;
 
+    // ShulkerBoxRenderer's own "model" field is a single instance shared by every shulker box block
+    // entity, vanilla-colored ones included. Vanilla-colored boxes never get cancelled below, so
+    // vanilla's own (unmodified) submit() still runs for them and calls model.setupAnim(...), mutating
+    // the very same "lid"/"base" ModelPart objects a mixin reading that field would see - which
+    // corrupted our boxes' lid position whenever a vanilla-colored box shared a frame with one of ours.
+    // Bake a completely separate part tree that only this mixin ever touches, so vanilla's rendering
+    // can't cross-contaminate it.
+    @Unique
+    private ModelPart ss$ownRoot;
+
+    @Unique
+    private ModelPart ss$ownRoot() {
+        if (this.ss$ownRoot == null) {
+            this.ss$ownRoot = Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.SHULKER_BOX);
+        }
+
+        return this.ss$ownRoot;
+    }
+
     @Inject(
-        method = "Lnet/minecraft/client/renderer/blockentity/ShulkerBoxRenderer;extractRenderState(Lnet/minecraft/world/level/block/entity/ShulkerBoxBlockEntity;Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V",
+        method = "extractRenderState(Lnet/minecraft/world/level/block/entity/ShulkerBoxBlockEntity;Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V",
         at = @At("TAIL")
     )
     private void ss$extractRenderState(ShulkerBoxBlockEntity blockEntity, ShulkerBoxRenderState renderState, float partialTick, Vec3 vec3, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay, CallbackInfo ci) {
@@ -64,7 +82,7 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
     }
 
     @Inject(
-        method = "Lnet/minecraft/client/renderer/blockentity/ShulkerBoxRenderer;submit(Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+        method = "submit(Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
         at = @At("HEAD"),
         cancellable = true
     )
@@ -86,18 +104,17 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         poseStack.scale(1.0F, -1.0F, -1.0F);
         poseStack.translate(0.0F, -1.0F, 0.0F);
 
-        // this.model is a single instance shared by every shulker box block entity, so its parts
-        // can't be used as scratch space for per-entity animation: submitModelPart doesn't bake
-        // vertices immediately, it queues the ModelPart reference for a later batched draw pass, so
-        // mutating shared pose/visibility here (as the old ModelPart#setupAnim/visible-toggle
-        // approach did) leaks whichever entity rendered last into every other queued shulker box.
-        // Pin the lid's own pose to a constant neutral rest (harmless no matter which entity's call
-        // sets it last, since every entity sets it to the same value) and drive the open animation
-        // entirely through the PoseStack instead, which is copied per submission.
+        // submitModelPart doesn't bake vertices immediately, it queues the ModelPart reference for a
+        // later batched draw pass, so mutating shared pose/visibility here (as the old
+        // ModelPart#setupAnim/visible-toggle approach did) leaks whichever entity rendered last into
+        // every other queued shulker box - see ss$ownRoot(). Pin the lid's own pose to a constant
+        // neutral rest (harmless no matter which entity's call sets it last, since every entity sets
+        // it to the same value) and drive the open animation entirely through the PoseStack instead,
+        // which is copied per submission.
         // "lid" and "base" are both direct children of root (siblings, not parent/child of each
         // other) per ShulkerModel's shared mesh definition, so fetch them by name rather than by
         // Model#allParts() iteration order (which puts lid before base, opposite of what you'd guess).
-        ModelPart root = this.model.root();
+        ModelPart root = ss$ownRoot();
         ModelPart base = root.getChild("base");
         ModelPart lid = root.getChild("lid");
 
