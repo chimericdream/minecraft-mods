@@ -20,6 +20,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -85,15 +86,33 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         poseStack.scale(1.0F, -1.0F, -1.0F);
         poseStack.translate(0.0F, -1.0F, 0.0F);
 
-        this.model.setupAnim(renderState.progress);
-
+        // this.model is a single instance shared by every shulker box block entity, so its parts
+        // can't be used as scratch space for per-entity animation: submitModelPart doesn't bake
+        // vertices immediately, it queues the ModelPart reference for a later batched draw pass, so
+        // mutating shared pose/visibility here (as the old ModelPart#setupAnim/visible-toggle
+        // approach did) leaks whichever entity rendered last into every other queued shulker box.
+        // Pin the lid's own pose to a constant neutral rest (harmless no matter which entity's call
+        // sets it last, since every entity sets it to the same value) and drive the open animation
+        // entirely through the PoseStack instead, which is copied per submission.
+        // "lid" and "base" are both direct children of root (siblings, not parent/child of each
+        // other) per ShulkerModel's shared mesh definition, so fetch them by name rather than by
+        // Model#allParts() iteration order (which puts lid before base, opposite of what you'd guess).
         ModelPart root = this.model.root();
+        ModelPart base = root.getChild("base");
         ModelPart lid = root.getChild("lid");
 
-        lid.visible = false;
-        collector.submitModelPart(root, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, sprite, false, false, accessor.ss$getBaseColor(), renderState.breakProgress, 0);
-        lid.visible = true;
+        lid.setPos(0.0F, 0.0F, 0.0F);
+        lid.xRot = 0.0F;
+        lid.yRot = 0.0F;
+        lid.zRot = 0.0F;
+
+        collector.submitModelPart(base, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, sprite, false, false, accessor.ss$getBaseColor(), renderState.breakProgress, 0);
+
+        poseStack.pushPose();
+        poseStack.translate(0.0F, 1.5F - renderState.progress * 0.5F, 0.0F);
+        poseStack.mulPose(new Quaternionf().rotationY(270.0F * renderState.progress * ((float) Math.PI / 180F)));
         collector.submitModelPart(lid, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, sprite, false, false, accessor.ss$getLidColor(), renderState.breakProgress, 0);
+        poseStack.popPose();
 
         poseStack.popPose();
 
