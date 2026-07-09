@@ -70,7 +70,8 @@ public class ShulkerBoxItemRendererLogic {
     }
 
     public record RenderData(int lidColor, int baseColor) {
-        private static final RenderData DEFAULT = new RenderData(9922455, 9922455);
+//        private static final RenderData DEFAULT = new RenderData(9922455, 9922455);
+        private static final RenderData DEFAULT = new RenderData(-1, -1);
     }
 
     public static class Renderer implements SpecialModelRenderer<RenderData> {

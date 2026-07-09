@@ -8,7 +8,6 @@
     "mixins": [
         "ShulkerStuff$AbstractBlockMixin",
         "ShulkerStuff$BlockEntityMixin",
-        "ShulkerStuff$ItemEntityMixin",
         "ShulkerStuff$ItemMixin",
         "ShulkerStuff$PlayerInventoryMixin",
         "ShulkerStuff$ServerPlayerEntityMixin",

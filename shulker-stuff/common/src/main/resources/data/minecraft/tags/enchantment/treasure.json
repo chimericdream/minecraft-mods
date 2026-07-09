@@ -1,7 +1,6 @@
 {
     "replace": false,
     "values": [
-        "shulkerstuff:deep_storage",
         "shulkerstuff:refill",
         "shulkerstuff:vacuum",
         "shulkerstuff:void"

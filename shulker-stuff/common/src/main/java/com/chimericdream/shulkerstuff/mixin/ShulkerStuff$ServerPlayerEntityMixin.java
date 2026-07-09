@@ -1,20 +1,19 @@
 package com.chimericdream.shulkerstuff.mixin;
 
-//import com.chimericdream.shulkerstuff.component.type.ContainerComponentBuilder;
-//import com.chimericdream.shulkerstuff.enchantment.ModEnchantments;
-//import net.minecraft.core.Holder;
-//import net.minecraft.core.Registry;
-//import net.minecraft.core.component.DataComponents;
-//import net.minecraft.core.registries.Registries;
+import com.chimericdream.shulkerstuff.component.type.ContainerComponentBuilder;
+import com.chimericdream.shulkerstuff.enchantment.ModEnchantments;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
-//import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-//import net.minecraft.world.item.component.ItemContainerContents;
-//import net.minecraft.world.item.enchantment.Enchantment;
-//import net.minecraft.world.item.enchantment.ItemEnchantments;
-//import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -95,40 +94,40 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
         this.ss$hasOpenScreen = false;
     }
 
-//    @Unique
-//    private Holder.Reference<Registry<Enchantment>> ss$getEnchantmentRegistry() {
-//        return ((ServerPlayer) (Object) this).level()
-//            .registryAccess()
-//            .getOrThrow(Registries.ENCHANTMENT);
-//    }
+    @Unique
+    private Registry<Enchantment> ss$getEnchantmentRegistry() {
+        return ((ServerPlayer) (Object) this).level()
+            .registryAccess()
+            .lookupOrThrow(Registries.ENCHANTMENT);
+    }
 
     @Unique
     private void ss$refillSlot(int slot) {
-//        ServerPlayer player = (ServerPlayer) (Object) this;
-//        Inventory inventory = player.getInventory();
-//        Registry<Enchantment> registry = this.ss$getEnchantmentRegistry().value();
-//
-//        for (ItemStack stack : inventory.getNonEquipmentItems()) {
-//            if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
-//                continue;
-//            }
-//
-//            ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
-//            if (enchantments == null || enchantments.getLevel(registry.getOrThrow(ModEnchantments.REFILLING)) == 0) {
-//                continue;
-//            }
-//
-//            ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
-//            ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
-//
-//            ItemStack refillingStack = builder.getFirstMatchingStack(this.ss$previousMainHandStack);
-//
-//            if (!refillingStack.isEmpty()) {
-//                inventory.setItem(slot, refillingStack);
-//                stack.set(DataComponents.CONTAINER, builder.build());
-//
-//                return;
-//            }
-//        }
+        ServerPlayer player = (ServerPlayer) (Object) this;
+        Inventory inventory = player.getInventory();
+        Registry<Enchantment> registry = this.ss$getEnchantmentRegistry();
+
+        for (ItemStack stack : inventory.getNonEquipmentItems()) {
+            if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+                continue;
+            }
+
+            ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
+            if (enchantments == null || enchantments.getLevel(registry.getOrThrow(ModEnchantments.REFILLING)) == 0) {
+                continue;
+            }
+
+            ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+            ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
+
+            ItemStack refillingStack = builder.getFirstMatchingStack(this.ss$previousMainHandStack);
+
+            if (!refillingStack.isEmpty()) {
+                inventory.setItem(slot, refillingStack);
+                stack.set(DataComponents.CONTAINER, builder.build());
+
+                return;
+            }
+        }
     }
 }

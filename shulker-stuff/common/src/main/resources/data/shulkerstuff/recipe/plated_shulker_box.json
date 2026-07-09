@@ -7,9 +7,11 @@
         "id": "minecraft:shulker_box",
         "components": {
             "minecraft:damage_resistant": {
-                "types": "#minecraft:is_fire"
+                "types": "#shulkerstuff:explosion_and_fire"
             },
-            "shulkerstuff:plated": {}
+            "shulkerstuff:plated": {
+                "value": true
+            }
         }
     },
     "template": "shulkerstuff:plated_shulker_upgrade_smithing_template"

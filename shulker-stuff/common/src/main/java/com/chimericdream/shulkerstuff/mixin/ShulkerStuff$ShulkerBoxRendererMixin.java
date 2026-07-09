@@ -72,9 +72,11 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
 
         ShulkerStuffDyedColorComponent ssDyedColorComponent = blockEntity.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
         if (ssDyedColorComponent == null) {
-            // This is roughly the same as the default color for shulker boxes
-            accessor.ss$setLidColor(9922455);
-            accessor.ss$setBaseColor(9922455);
+            accessor.ss$setLidColor(-1);
+            accessor.ss$setBaseColor(-1);
+//            // This is roughly the same as the default color for shulker boxes
+//            accessor.ss$setLidColor(9922455);
+//            accessor.ss$setBaseColor(9922455);
         } else {
             accessor.ss$setLidColor(ssDyedColorComponent.lidColor());
             accessor.ss$setBaseColor(ssDyedColorComponent.baseColor());

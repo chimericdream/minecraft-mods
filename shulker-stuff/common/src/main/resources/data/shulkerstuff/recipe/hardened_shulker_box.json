@@ -9,7 +9,9 @@
             "minecraft:damage_resistant": {
                 "types": "#minecraft:is_explosion"
             },
-            "shulkerstuff:hardened": {}
+            "shulkerstuff:hardened": {
+                "value": true
+            }
         }
     },
     "template": "shulkerstuff:hardened_shulker_upgrade_smithing_template"

@@ -1,7 +1,7 @@
 package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
+import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Explosion;
@@ -32,12 +32,12 @@ public class ShulkerStuff$AbstractBlockMixin {
             return;
         }
 
-        ShulkerStuffHardenedComponent ssHardenedComponent = shulker.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
-        if (ssHardenedComponent == null) {
+        ShulkerStuffPlatedComponent ssPlatedComponent = shulker.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
+        if (ssPlatedComponent == null) {
             return;
         }
 
-        if (ssHardenedComponent.value()) {
+        if (ssPlatedComponent.value()) {
             cir.cancel();
         }
     }

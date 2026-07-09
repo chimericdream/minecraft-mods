@@ -2,7 +2,6 @@ package com.chimericdream.shulkerstuff.mixin;
 
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
-import com.chimericdream.shulkerstuff.component.type.ShulkerStuffHardenedComponent;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -29,11 +28,6 @@ abstract public class ShulkerStuff$BlockEntityMixin {
         ShulkerStuffDyedColorComponent ssDyedColorComponent = self.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_DYED_COLOR_COMPONENT.get());
         if (ssDyedColorComponent != null) {
             components.put(ShulkerStuffDyedColorComponent.COMPONENT_ID.toString(), ssDyedColorComponent.toNbt());
-        }
-
-        ShulkerStuffHardenedComponent ssHardenedComponent = self.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_HARDENED_COMPONENT.get());
-        if (ssHardenedComponent != null) {
-            components.put(ShulkerStuffHardenedComponent.COMPONENT_ID.toString(), ssHardenedComponent.toNbt());
         }
 
         ShulkerStuffPlatedComponent ssPlatedComponent = self.components().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
