@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
@@ -94,9 +93,16 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
             return;
         }
 
-        DyeColor dyeColor = renderState.color;
-        Material material = dyeColor == null ? Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION : Sheets.getShulkerBoxMaterial(dyeColor);
-        TextureAtlasSprite sprite = this.materials.get(material);
+        // -1 means that part was never dyed by this mod, so it keeps the plain undyed (purple-hued)
+        // texture; only a genuinely dyed part switches to the near-grayscale white texture so its tint
+        // comes out as the intended hue instead of shifting within the undyed texture's own purple.
+        int baseColor = accessor.ss$getBaseColor();
+        int lidColor = accessor.ss$getLidColor();
+        boolean baseDyed = baseColor != -1;
+        boolean lidDyed = lidColor != -1;
+
+        TextureAtlasSprite defaultSprite = this.materials.get(Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION);
+        TextureAtlasSprite dyedSprite = this.materials.get(Sheets.getShulkerBoxMaterial(DyeColor.WHITE));
         RenderType renderType = Sheets.shulkerBoxSheet();
 
         poseStack.pushPose();
@@ -125,12 +131,12 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         lid.yRot = 0.0F;
         lid.zRot = 0.0F;
 
-        collector.submitModelPart(base, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, sprite, false, false, accessor.ss$getBaseColor(), renderState.breakProgress, 0);
+        collector.submitModelPart(base, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, baseDyed ? dyedSprite : defaultSprite, false, false, baseColor, renderState.breakProgress, 0);
 
         poseStack.pushPose();
         poseStack.translate(0.0F, 1.5F - renderState.progress * 0.5F, 0.0F);
         poseStack.mulPose(new Quaternionf().rotationY(270.0F * renderState.progress * ((float) Math.PI / 180F)));
-        collector.submitModelPart(lid, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, sprite, false, false, accessor.ss$getLidColor(), renderState.breakProgress, 0);
+        collector.submitModelPart(lid, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, lidDyed ? dyedSprite : defaultSprite, false, false, lidColor, renderState.breakProgress, 0);
         poseStack.popPose();
 
         poseStack.popPose();

@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ResolvedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -76,11 +77,13 @@ public class ShulkerBoxItemRendererLogic {
 
     public static class Renderer implements SpecialModelRenderer<RenderData> {
         private final ShulkerBoxRenderer vanillaRenderer;
-        private final Material material;
+        private final Material defaultMaterial;
+        private final Material dyedMaterial;
 
-        public Renderer(ShulkerBoxRenderer vanillaRenderer, Material material) {
+        public Renderer(ShulkerBoxRenderer vanillaRenderer, Material defaultMaterial, Material dyedMaterial) {
             this.vanillaRenderer = vanillaRenderer;
-            this.material = material;
+            this.defaultMaterial = defaultMaterial;
+            this.dyedMaterial = dyedMaterial;
         }
 
         @Override
@@ -100,10 +103,13 @@ public class ShulkerBoxItemRendererLogic {
             poseStack.scale(1.0F, -1.0F, -1.0F);
             poseStack.translate(0.0F, -1.0F, 0.0F);
 
-            // The atlas isn't stitched yet when this Renderer is baked, so the sprite can only be
-            // resolved lazily here, at submit time.
-            TextureAtlasSprite sprite = vanillaRenderer.materials.get(material);
-            RenderType renderType = material.renderType(vanillaRenderer.model::renderType);
+            // The atlas isn't stitched yet when this Renderer is baked, so the sprites can only be
+            // resolved lazily here, at submit time. -1 means that part was never dyed by this mod, so it
+            // keeps the plain undyed (purple-hued) texture at full brightness; only a genuinely dyed part
+            // switches to the near-grayscale white texture so its tint comes out as the intended hue.
+            TextureAtlasSprite defaultSprite = vanillaRenderer.materials.get(defaultMaterial);
+            TextureAtlasSprite dyedSprite = vanillaRenderer.materials.get(dyedMaterial);
+            RenderType renderType = defaultMaterial.renderType(vanillaRenderer.model::renderType);
 
             // Item display always shows the box closed, and nothing else ever calls setupAnim on this
             // Renderer's own ShulkerBoxRenderer instance, so "lid" stays at its baked (closed) rest pose
@@ -112,16 +118,19 @@ public class ShulkerBoxItemRendererLogic {
             ModelPart base = root.getChild("base");
             ModelPart lid = root.getChild("lid");
 
+            boolean baseDyed = data.baseColor() != -1;
+            boolean lidDyed = data.lidColor() != -1;
+
             // ShulkerStuffDyedColorComponent stores plain 24-bit RGB (alpha byte 0x00). World/hand
             // rendering ignores the tint's alpha channel, but the GUI item-icon path bakes into an
             // offscreen atlas texture that's later alpha-composited onto the screen - there, alpha=0x00
             // baked in as fully transparent, which is why the icon was invisible even though the world
             // and in-hand renders (same colors) looked correct. Force full alpha for the tint only.
-            int baseColor = data.baseColor() | 0xFF000000;
-            int lidColor = data.lidColor() | 0xFF000000;
+            int baseColor = baseDyed ? (data.baseColor() | 0xFF000000) : 0xFFFFFFFF;
+            int lidColor = lidDyed ? (data.lidColor() | 0xFF000000) : 0xFFFFFFFF;
 
-            collector.submitModelPart(base, poseStack, renderType, light, overlay, sprite, false, false, baseColor, null, outlineColor);
-            collector.submitModelPart(lid, poseStack, renderType, light, overlay, sprite, false, false, lidColor, null, outlineColor);
+            collector.submitModelPart(base, poseStack, renderType, light, overlay, baseDyed ? dyedSprite : defaultSprite, false, false, baseColor, null, outlineColor);
+            collector.submitModelPart(lid, poseStack, renderType, light, overlay, lidDyed ? dyedSprite : defaultSprite, false, false, lidColor, null, outlineColor);
 
             poseStack.popPose();
         }
@@ -156,7 +165,7 @@ public class ShulkerBoxItemRendererLogic {
         @Override
         public Renderer bake(SpecialModelRenderer.BakingContext context) {
             ShulkerBoxRenderer vanillaRenderer = new ShulkerBoxRenderer(context);
-            return new Renderer(vanillaRenderer, Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION);
+            return new Renderer(vanillaRenderer, Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION, Sheets.getShulkerBoxMaterial(DyeColor.WHITE));
         }
     }
 }
