@@ -4,13 +4,13 @@ import com.chimericdream.villagertweaks.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import static net.minecraft.world.level.block.Block.canSupportCenter;
 
 public class BaggedVillagerItem extends Item {
-    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "bagged_villager");
+    public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "bagged_villager");
 
     public BaggedVillagerItem(Properties settings) {
         super(settings);

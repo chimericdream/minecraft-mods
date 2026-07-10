@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +27,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 import static net.minecraft.core.cauldron.CauldronInteraction.*;
 
 public class MilkCauldronBlock extends AbstractCauldronBlock {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/milk");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/milk");
     public static CauldronInteraction.InteractionMap BEHAVIORS = newInteractionMap("milk");
     public static final MapCodec<MilkCauldronBlock> CODEC = simpleCodec(MilkCauldronBlock::new);
 

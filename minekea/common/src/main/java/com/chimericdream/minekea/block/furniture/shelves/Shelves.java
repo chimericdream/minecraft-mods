@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,7 +26,7 @@ public class Shelves implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> SHELF_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> FLOATING_SHELF_BLOCKS = new ArrayList<>();
 
-    public static final ResourceLocation SHELF_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/shelf");
+    public static final Identifier SHELF_BLOCK_ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/shelf");
     public static RegistrySupplier<BlockEntityType<ShelfBlockEntity>> SHELF_BLOCK_ENTITY;
 
     static {

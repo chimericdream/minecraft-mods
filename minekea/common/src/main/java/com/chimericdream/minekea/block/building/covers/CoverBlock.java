@@ -4,7 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,7 +33,7 @@ public class CoverBlock extends CarpetBlock implements SimpleWaterloggedBlock {
         WATERLOGGED = BlockStateProperties.WATERLOGGED;
     }
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public CoverBlock(BlockConfig config) {
@@ -49,8 +49,8 @@ public class CoverBlock extends CarpetBlock implements SimpleWaterloggedBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/covers/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/covers/%s", material));
     }
 
     public BlockConfig getConfig() {

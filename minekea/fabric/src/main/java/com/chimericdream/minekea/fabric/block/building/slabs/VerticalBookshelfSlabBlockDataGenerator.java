@@ -17,7 +17,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 public class VerticalBookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate VERTICAL_BOOKSHELF_SLAB_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/slabs/bookshelves/vertical")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/slabs/bookshelves/vertical")),
         Optional.empty(),
         MinekeaTextures.SHELF,
         MinekeaTextures.MATERIAL
@@ -71,10 +71,10 @@ public class VerticalBookshelfSlabBlockDataGenerator extends ChimericLibBlockDat
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation textureId = BLOCK.config.getTexture();
+        Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
+            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
         ModelUtils.registerVerticalSlabBlock(

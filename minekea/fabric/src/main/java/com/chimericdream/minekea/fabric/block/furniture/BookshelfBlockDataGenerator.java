@@ -18,7 +18,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
@@ -30,7 +30,7 @@ import java.util.function.Function;
 
 public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public static final ModelTemplate BOOKSHELF_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/bookshelf")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/bookshelf")),
         Optional.empty(),
         MinekeaTextures.MATERIAL,
         MinekeaTextures.SHELF
@@ -79,13 +79,13 @@ public class BookshelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping().put(MinekeaTextures.MATERIAL, BLOCK.config.getTexture());
 
-        ResourceLocation variant0Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v0", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
-        ResourceLocation variant1Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v1", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf1")));
-        ResourceLocation variant2Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v2", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf2")));
-        ResourceLocation variant3Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v3", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf3")));
-        ResourceLocation variant4Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v4", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf4")));
-        ResourceLocation variant5Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v5", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf5")));
-        ResourceLocation variant6Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v6", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf6")));
+        Identifier variant0Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v0", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
+        Identifier variant1Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v1", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf1")));
+        Identifier variant2Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v2", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf2")));
+        Identifier variant3Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v3", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf3")));
+        Identifier variant4Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v4", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf4")));
+        Identifier variant5Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v5", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf5")));
+        Identifier variant6Id = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_v6", BOOKSHELF_MODEL, unused -> textures.put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf6")));
 
         Variant variant0 = BlockModelGenerators.plainModel(variant0Id);
         Variant variant1 = BlockModelGenerators.plainModel(variant1Id);

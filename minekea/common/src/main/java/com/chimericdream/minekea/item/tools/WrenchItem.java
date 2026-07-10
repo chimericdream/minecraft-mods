@@ -4,7 +4,7 @@ import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import org.jetbrains.annotations.NotNull;
 
 public class WrenchItem extends Item {
-    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench");
+    public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench");
 
     public WrenchItem() {
         super(new Item.Properties().stacksTo(1).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).setId(ResourceKey.create(Registries.ITEM, ITEM_ID)));

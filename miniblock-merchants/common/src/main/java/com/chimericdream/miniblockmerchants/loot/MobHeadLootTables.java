@@ -2,8 +2,8 @@ package com.chimericdream.miniblockmerchants.loot;
 
 import com.chimericdream.miniblockmerchants.util.DataUtil;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.NbtPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.PlainTextContents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -120,7 +120,7 @@ public class MobHeadLootTables {
 
         LootItemFunction.Builder nameBuilder = () -> SetNameFunction.setName(formattedName, SetNameFunction.Target.ITEM_NAME).build();
         LootItemFunction.Builder textureBuilder = () -> SetComponentsFunction.setComponent(DataComponents.PROFILE, ResolvableProfile.createResolved(gameProfile)).build();
-        LootItemFunction.Builder nbSoundBuilder = () -> SetComponentsFunction.setComponent(DataComponents.NOTE_BLOCK_SOUND, ResourceLocation.parse(nbSound)).build();
+        LootItemFunction.Builder nbSoundBuilder = () -> SetComponentsFunction.setComponent(DataComponents.NOTE_BLOCK_SOUND, Identifier.parse(nbSound)).build();
 
         NbtPredicate professionPredicate = makeProfessionPredicate(profession);
 

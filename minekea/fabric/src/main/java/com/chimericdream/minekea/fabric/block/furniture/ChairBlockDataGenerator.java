@@ -22,7 +22,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -33,7 +33,7 @@ public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private final ChairBlock BLOCK;
 
     protected static final ModelTemplate CHAIR_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/seating/chair")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/seating/chair")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
@@ -84,7 +84,7 @@ public class ChairBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(MinekeaTextures.LOG, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
             .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CHAIR_MODEL, unused -> textures);
+        Identifier modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CHAIR_MODEL, unused -> textures);
 
         MultiVariant model = BlockModelGenerators.plainVariant(modelId);
 

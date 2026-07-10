@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class ShelfBlockEntityRenderState extends BlockEntityRenderState {
@@ -15,7 +15,7 @@ public class ShelfBlockEntityRenderState extends BlockEntityRenderState {
         new ItemStackRenderState(),
         new ItemStackRenderState()
     };
-    public ResourceLocation[] itemIds = {null, null, null, null};
+    public Identifier[] itemIds = {null, null, null, null};
     public boolean[] isBlockItem = {false, false, false, false};
     public boolean[] isJarItem = {false, false, false, false};
     public Direction wallSide = null;

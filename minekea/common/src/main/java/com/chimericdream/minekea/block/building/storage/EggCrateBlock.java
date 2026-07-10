@@ -5,7 +5,7 @@ import com.chimericdream.minekea.sound.MinekeaSoundGroup;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -30,7 +30,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 // @TODO: turn this into a slab-like block with top/bottom/full variations
 public class EggCrateBlock extends Block implements SimpleWaterloggedBlock {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "storage/egg_crate");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "storage/egg_crate");
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 

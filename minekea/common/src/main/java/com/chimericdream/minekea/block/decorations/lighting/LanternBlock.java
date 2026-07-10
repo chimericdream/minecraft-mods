@@ -2,14 +2,14 @@ package com.chimericdream.minekea.block.decorations.lighting;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class LanternBlock extends net.minecraft.world.level.block.LanternBlock {
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public LanternBlock(BlockConfig config, String name) {
@@ -19,7 +19,7 @@ public class LanternBlock extends net.minecraft.world.level.block.LanternBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String name) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("decorations/lighting/%s_lantern", name));
+    public static Identifier makeId(String name) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("decorations/lighting/%s_lantern", name));
     }
 }

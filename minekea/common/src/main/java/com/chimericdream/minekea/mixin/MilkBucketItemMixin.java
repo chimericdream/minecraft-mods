@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DispensibleContainerItem;
@@ -87,7 +88,7 @@ public class MilkBucketItemMixin implements DispensibleContainerItem {
 
         if (!preventBucketPlace) {
             return hit != null && this.emptyContents(player, world, hit.getBlockPos().relative(hit.getDirection()), null);
-        } else if (world.dimensionType().ultraWarm()) {
+        } else if (world.dimensionType().attributes().contains(EnvironmentAttributes.WATER_EVAPORATES)) {
             int i = pos.getX();
             int j = pos.getY();
             int k = pos.getZ();

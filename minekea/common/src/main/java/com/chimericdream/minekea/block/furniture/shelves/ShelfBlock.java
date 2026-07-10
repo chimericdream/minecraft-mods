@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -48,7 +48,7 @@ public class ShelfBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     static {
@@ -59,7 +59,7 @@ public class ShelfBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
         this(config, makeId(config.getMaterial()));
     }
 
-    public ShelfBlock(BlockConfig config, ResourceLocation blockId) {
+    public ShelfBlock(BlockConfig config, Identifier blockId) {
         super(BlockBehaviour.Properties.ofFullCopy(config.getIngredient("planks")).setId(ResourceKey.create(Registries.BLOCK, blockId)));
 
         this.registerDefaultState(
@@ -72,8 +72,8 @@ public class ShelfBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shelves/supported/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shelves/supported/%s", material));
     }
 
     @Override

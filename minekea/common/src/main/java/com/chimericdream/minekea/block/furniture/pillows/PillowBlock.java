@@ -2,7 +2,7 @@ package com.chimericdream.minekea.block.furniture.pillows;
 
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.DyeColor;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class PillowBlock extends Block {
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final String color;
 
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
@@ -32,8 +32,8 @@ public class PillowBlock extends Block {
         BLOCK_ID = makeId(color);
     }
 
-    public static ResourceLocation makeId(String color) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/pillows/%s", color));
+    public static Identifier makeId(String color) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/pillows/%s", color));
     }
 
     @Override

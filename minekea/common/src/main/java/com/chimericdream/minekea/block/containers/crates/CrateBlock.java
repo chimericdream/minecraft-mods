@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.CompoundContainer;
@@ -63,7 +63,7 @@ public class CrateBlock extends BaseEntityBlock {
     public static final BooleanProperty CONNECTED_EAST;
     public static final BooleanProperty CONNECTED_WEST;
 
-    public ResourceLocation BLOCK_ID;
+    public Identifier BLOCK_ID;
     public final BlockConfig config;
 
     private static final DoubleBlockCombiner.Combiner<CrateBlockEntity, Optional<Container>> INVENTORY_RETRIEVER;
@@ -130,7 +130,7 @@ public class CrateBlock extends BaseEntityBlock {
         this(config, makeId(config.getMaterial()));
     }
 
-    public CrateBlock(BlockConfig config, ResourceLocation blockId) {
+    public CrateBlock(BlockConfig config, Identifier blockId) {
         super(BlockBehaviour.Properties.ofFullCopy(Blocks.BARREL).setId(REGISTRY_HELPER.makeBlockRegistryKey(blockId)));
 
         BLOCK_ID = blockId;
@@ -150,8 +150,8 @@ public class CrateBlock extends BaseEntityBlock {
         );
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/crates/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/crates/%s", material));
     }
 
     @Override

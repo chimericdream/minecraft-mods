@@ -4,7 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -51,14 +51,14 @@ public class VerticalStairsBlock extends Block implements SimpleWaterloggedBlock
         FACING = BlockStateProperties.HORIZONTAL_FACING;
     }
 
-    public ResourceLocation BLOCK_ID;
+    public Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public VerticalStairsBlock(BlockConfig config) {
         this(config, makeId(config.getMaterial()));
     }
 
-    public VerticalStairsBlock(BlockConfig config, ResourceLocation id) {
+    public VerticalStairsBlock(BlockConfig config, Identifier id) {
         super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(id)));
 
         this.registerDefaultState(
@@ -71,8 +71,8 @@ public class VerticalStairsBlock extends Block implements SimpleWaterloggedBlock
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/stairs/vertical/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/stairs/vertical/%s", material));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

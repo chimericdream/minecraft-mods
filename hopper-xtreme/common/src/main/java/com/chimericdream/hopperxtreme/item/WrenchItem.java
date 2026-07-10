@@ -2,7 +2,7 @@ package com.chimericdream.hopperxtreme.item;
 
 import com.chimericdream.hopperxtreme.ModInfo;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class WrenchItem extends Item {
-    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench");
+    public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench");
 
     @SuppressWarnings("UnstableApiUsage")
     public WrenchItem() {

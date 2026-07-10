@@ -6,7 +6,7 @@ import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -67,7 +67,7 @@ public class BeamBlock extends Block implements SimpleWaterloggedBlock {
         CONNECTED_DOWN = BooleanProperty.create("connected_down");
     }
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public BeamBlock(BlockConfig config) {
@@ -90,8 +90,8 @@ public class BeamBlock extends Block implements SimpleWaterloggedBlock {
         );
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "building/beams/" + material);
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "building/beams/" + material);
     }
 
     public BlockConfig getConfig() {

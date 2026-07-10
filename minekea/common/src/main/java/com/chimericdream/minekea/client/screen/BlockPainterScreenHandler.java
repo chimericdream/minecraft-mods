@@ -4,7 +4,7 @@ import com.chimericdream.lib.screen.ScreenHelpers;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.item.Tools;
 import com.chimericdream.minekea.item.tools.BlockPainterItem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockPainterScreenHandler extends AbstractContainerMenu {
-    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/block_painter");
+    public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/block_painter");
 
     private final BlockPainterItem.PainterInventory painter;
     private final int ROW_COUNT = 2;

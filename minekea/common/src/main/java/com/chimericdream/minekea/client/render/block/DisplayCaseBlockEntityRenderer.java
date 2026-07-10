@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -129,7 +129,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         return stack.is(MinekeaItemTags.BAGGED_ITEMS);
     }
 
-    private boolean isJarItem(ResourceLocation id) {
+    private boolean isJarItem(Identifier id) {
         if (id == null) {
             return false;
         }
@@ -137,7 +137,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         return id.compareTo(BuiltInRegistries.ITEM.getKey(ContainerItems.GLASS_JAR_ITEM.get())) == 0;
     }
 
-    private boolean isHeadItem(ResourceLocation id) {
+    private boolean isHeadItem(Identifier id) {
         if (id == null) {
             return false;
         }
@@ -151,7 +151,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
                 || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.PIGLIN_HEAD)) == 0;
     }
 
-    private boolean isLanternItem(ResourceLocation id) {
+    private boolean isLanternItem(Identifier id) {
         if (id == null) {
             return false;
         }

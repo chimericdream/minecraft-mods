@@ -12,7 +12,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class BlockPainterItem extends Item {
-    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/painter");
+    public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/painter");
 
     public BlockPainterItem() {
         super(new Item.Properties().stacksTo(1).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).setId(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID)));

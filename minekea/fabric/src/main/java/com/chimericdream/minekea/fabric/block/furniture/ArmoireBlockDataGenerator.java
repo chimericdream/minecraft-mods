@@ -24,7 +24,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -48,7 +48,7 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static ModelTemplate makeModel(String id) {
         return new CustomBlockStateModelSupplier.CustomBlockModel(
             BlockConfig.RenderType.CUTOUT,
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, id)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, id)),
             Optional.empty(),
             MinekeaTextures.BAR,
             MinekeaTextures.MATERIAL,
@@ -106,9 +106,9 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(MinekeaTextures.MATERIAL, BuiltInRegistries.BLOCK.getKey(BLOCK.config.getIngredient("log")).withPrefix("block/"))
             .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(Blocks.OAK_PLANKS).withPrefix("block/"));
 
-        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
-        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
-        ResourceLocation itemModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_item", ITEM_MODEL, unused -> textures);
+        Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
+        Identifier topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
+        Identifier itemModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_item", ITEM_MODEL, unused -> textures);
 
         MultiVariant bottomModel = BlockModelGenerators.plainVariant(bottomModelId);
         MultiVariant topModel = BlockModelGenerators.plainVariant(topModelId);

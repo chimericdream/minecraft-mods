@@ -12,7 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 
@@ -28,7 +28,7 @@ public class ShulkerStuffClient {
 
             ShulkerStuffPlatedComponent ssPlatedComponent = stack.getComponents().get(ShulkerStuffComponentTypes.SHULKER_STUFF_PLATED_COMPONENT.get());
             if (ssPlatedComponent != null && ssPlatedComponent.value()) {
-                MutableComponent text = Component.translatable(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tooltip.upgrades.plated").toLanguageKey());
+                MutableComponent text = Component.translatable(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "tooltip.upgrades.plated").toLanguageKey());
                 lines.add(text.withStyle(ChatFormatting.DARK_GRAY));
             }
         });

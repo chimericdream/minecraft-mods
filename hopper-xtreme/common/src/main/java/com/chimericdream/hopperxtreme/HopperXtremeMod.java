@@ -21,10 +21,6 @@ public final class HopperXtremeMod {
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
-//        if (Platform.isModLoaded("patchouli")) {
-//            PatchouliFlags.init();
-//        }
-
         ModBlocks.init();
         ModItems.init();
         ModItemGroups.init();

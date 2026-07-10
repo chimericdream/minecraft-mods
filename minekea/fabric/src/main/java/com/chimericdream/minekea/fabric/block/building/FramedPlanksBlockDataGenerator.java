@@ -22,7 +22,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -31,7 +31,7 @@ import java.util.function.Function;
 
 public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate CORE_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/framed_planks/core")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/framed_planks/core")),
         Optional.empty(),
         MinekeaTextures.BRACE,
         MinekeaTextures.MATERIAL
@@ -48,7 +48,7 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
 
     protected static ModelTemplate makeModel(String direction) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/framed_planks/%s_connected", direction))),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/framed_planks/%s_connected", direction))),
             Optional.empty(),
             MinekeaTextures.BRACE,
             MinekeaTextures.MATERIAL
@@ -105,10 +105,10 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
             .put(MinekeaTextures.MATERIAL, TextureUtils.block(plankIngredient))
             .put(MinekeaTextures.BRACE, TextureUtils.block(logIngredient));
 
-        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
-        ResourceLocation aConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_a_connected", A_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation bConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_b_connected", B_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation abConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_ab_connected", AB_CONNECTED_MODEL, unused -> textures);
+        Identifier modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
+        Identifier aConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_a_connected", A_CONNECTED_MODEL, unused -> textures);
+        Identifier bConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_b_connected", B_CONNECTED_MODEL, unused -> textures);
+        Identifier abConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_ab_connected", AB_CONNECTED_MODEL, unused -> textures);
 
         MultiVariant coreVariant = BlockModelGenerators.plainVariant(modelId);
         MultiVariant aConnectedVariant = BlockModelGenerators.plainVariant(aConnectedModelId);

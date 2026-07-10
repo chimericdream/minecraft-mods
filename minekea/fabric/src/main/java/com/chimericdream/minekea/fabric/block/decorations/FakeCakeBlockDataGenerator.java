@@ -15,7 +15,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -57,7 +57,7 @@ public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation identifier = ModelLocationUtils.getModelLocation(Blocks.CAKE);
+        Identifier identifier = ModelLocationUtils.getModelLocation(Blocks.CAKE);
         MultiVariant model = BlockModelGenerators.plainVariant(identifier);
 
         blockStateModelGenerator.registerSimpleItemModel(DecorationBlocks.FAKE_CAKE.get(), ModelLocationUtils.getModelLocation(Items.CAKE));

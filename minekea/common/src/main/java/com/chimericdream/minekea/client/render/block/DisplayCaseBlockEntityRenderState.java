@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
@@ -17,7 +17,7 @@ public class DisplayCaseBlockEntityRenderState extends BlockEntityRenderState {
     public boolean hasItem = false;
     public boolean isBlock = false;
     public int rotation;
-    public ResourceLocation itemId;
+    public Identifier itemId;
     public double distanceToCamera = 0;
 
     public void clear() {

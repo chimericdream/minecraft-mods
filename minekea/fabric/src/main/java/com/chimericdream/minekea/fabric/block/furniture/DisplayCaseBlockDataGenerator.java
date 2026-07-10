@@ -18,7 +18,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -29,7 +29,7 @@ import java.util.function.Function;
 public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private static final ModelTemplate DISPLAY_CASE_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/display_case")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/display_case")),
         Optional.empty(),
         MinekeaTextures.MATERIAL,
         MinekeaTextures.STRIPPED_MATERIAL

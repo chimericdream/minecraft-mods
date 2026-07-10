@@ -10,7 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +35,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 public class CrateBlockEntity extends RandomizableContainerBlockEntity implements MenuProvider, ImplementedInventory {
-    public static final ResourceLocation ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/containers/crate");
+    public static final Identifier ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/containers/crate");
 
     private NonNullList<ItemStack> items = NonNullList.withSize(CrateBlock.ROW_COUNT * 9, ItemStack.EMPTY);
     private final ContainerOpenersCounter stateManager;

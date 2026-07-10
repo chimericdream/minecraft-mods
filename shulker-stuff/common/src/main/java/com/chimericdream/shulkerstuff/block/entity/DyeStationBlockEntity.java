@@ -7,7 +7,7 @@ import com.chimericdream.shulkerstuff.client.screen.DyeStationScreenHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.shulkerstuff.block.ModBlocks.DYE_STATION_BLOCK_ENTITY;
 
 public class DyeStationBlockEntity extends BaseContainerBlockEntity implements MenuProvider, ImplementedInventory {
-    public static final ResourceLocation ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/entity/dye_station");
+    public static final Identifier ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/entity/dye_station");
 
     public static final int INVENTORY_SIZE = 7;
 

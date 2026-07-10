@@ -9,7 +9,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -20,7 +20,7 @@ public class ContainerBlocks implements ModThingGroup {
 
     public static final RegistrySupplier<Block> GLASS_JAR = REGISTRY_HELPER.registerBlock(GlassJarBlock.BLOCK_ID, GlassJarBlock::new);
 
-    public static final ResourceLocation GLASS_JAR_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/containers/glass_jar");
+    public static final Identifier GLASS_JAR_BLOCK_ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/containers/glass_jar");
     public static RegistrySupplier<BlockEntityType<GlassJarBlockEntity>> GLASS_JAR_BLOCK_ENTITY;
 
     static {

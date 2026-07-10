@@ -20,7 +20,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -41,8 +41,8 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate CONNECTED_WEST_MODEL = makeModel("west");
     protected static final ModelTemplate CONNECTED_UP_MODEL = makeModel("up");
     protected static final ModelTemplate CONNECTED_DOWN_MODEL = makeModel("down");
-    protected static final ModelTemplate CORE_MODEL = makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/beams/core"));
-    protected static final ModelTemplate ITEM_MODEL = makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "item/building/beam"));
+    protected static final ModelTemplate CORE_MODEL = makeModel(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/beams/core"));
+    protected static final ModelTemplate ITEM_MODEL = makeModel(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "item/building/beam"));
 
     public BeamBlock BLOCK;
 
@@ -51,10 +51,10 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     private static ModelTemplate makeModel(String direction) {
-        return makeModel(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/beams/connected_%s", direction)));
+        return makeModel(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/building/beams/connected_%s", direction)));
     }
 
-    private static ModelTemplate makeModel(ResourceLocation id) {
+    private static ModelTemplate makeModel(Identifier id) {
         return new ModelTemplate(
             Optional.of(id),
             Optional.empty(),
@@ -108,13 +108,13 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = getTextures();
 
-        ResourceLocation coreModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
-        ResourceLocation northModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north", CONNECTED_NORTH_MODEL, unused -> textures);
-        ResourceLocation southModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south", CONNECTED_SOUTH_MODEL, unused -> textures);
-        ResourceLocation eastModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_east", CONNECTED_EAST_MODEL, unused -> textures);
-        ResourceLocation westModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", CONNECTED_WEST_MODEL, unused -> textures);
-        ResourceLocation upModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
-        ResourceLocation downModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
+        Identifier coreModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
+        Identifier northModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north", CONNECTED_NORTH_MODEL, unused -> textures);
+        Identifier southModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south", CONNECTED_SOUTH_MODEL, unused -> textures);
+        Identifier eastModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_east", CONNECTED_EAST_MODEL, unused -> textures);
+        Identifier westModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", CONNECTED_WEST_MODEL, unused -> textures);
+        Identifier upModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
+        Identifier downModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
 
         MultiVariant coreVariant = BlockModelGenerators.plainVariant(coreModelId);
         MultiVariant northVariant = BlockModelGenerators.plainVariant(northModelId);
@@ -138,8 +138,8 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     private TextureMapping getTextures() {
-        ResourceLocation sideTexture = BLOCK.config.getTexture();
-        ResourceLocation endTexture = Optional.ofNullable(BLOCK.config.getTexture("end")).orElse(sideTexture);
+        Identifier sideTexture = BLOCK.config.getTexture();
+        Identifier endTexture = Optional.ofNullable(BLOCK.config.getTexture("end")).orElse(sideTexture);
 
         return new TextureMapping()
             .put(TextureSlot.SIDE, sideTexture)

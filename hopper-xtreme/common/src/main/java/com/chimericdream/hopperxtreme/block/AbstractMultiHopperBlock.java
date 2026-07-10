@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
@@ -152,7 +152,7 @@ abstract public class AbstractMultiHopperBlock extends BaseEntityBlock {
     @Override
     protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // Temporary workaround until the next version of Minekea adds its wrench to the common tag.
-        if (!stack.is(CommonTags.WRENCHES) && !stack.getItem().builtInRegistryHolder().key().location().equals(ResourceLocation.parse("minekea:tools/wrench"))) {
+        if (!stack.is(CommonTags.WRENCHES) && !stack.getItem().builtInRegistryHolder().key().identifier().equals(Identifier.parse("minekea:tools/wrench"))) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
 

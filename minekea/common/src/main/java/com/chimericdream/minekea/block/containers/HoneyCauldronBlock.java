@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -37,7 +37,7 @@ import static net.minecraft.core.cauldron.CauldronInteraction.fillBucket;
 import static net.minecraft.core.cauldron.CauldronInteraction.emptyBucket;
 
 public class HoneyCauldronBlock extends LayeredCauldronBlock {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/honey");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/honey");
     public static CauldronInteraction.InteractionMap BEHAVIORS = newInteractionMap("honey");
 
     public static final CauldronInteraction FILL_WITH_HONEY;

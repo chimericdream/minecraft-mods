@@ -17,7 +17,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -75,7 +75,7 @@ public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator 
             .put(TextureSlot.END, TextureUtils.block(BLOCK.BLOCK_ID, "_end"))
             .put(TextureSlot.SIDE, TextureUtils.block(BLOCK.BLOCK_ID, "_side"));
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_COLUMN, unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_COLUMN, unused -> textures);
 
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, DyedPillarBlock.AXIS, BLOCK, subModelId);
     }

@@ -4,7 +4,7 @@ import com.chimericdream.archaeologytweaks.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -17,9 +17,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import org.jspecify.annotations.NonNull;
 
 public class SuspiciousRootedDirtBlock extends BrushableFloatingBlock implements BonemealableBlock {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "suspicious_rooted_dirt");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "suspicious_rooted_dirt");
 
     public SuspiciousRootedDirtBlock() {
         super(
@@ -48,7 +49,7 @@ public class SuspiciousRootedDirtBlock extends BrushableFloatingBlock implements
         world.setBlockAndUpdate(pos.below(), Blocks.HANGING_ROOTS.defaultBlockState());
     }
 
-    public BlockPos getParticlePos(BlockPos pos) {
+    public @NonNull BlockPos getParticlePos(BlockPos pos) {
         return pos.below();
     }
 }

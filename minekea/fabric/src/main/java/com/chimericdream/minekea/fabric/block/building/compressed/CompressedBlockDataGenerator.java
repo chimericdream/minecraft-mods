@@ -13,7 +13,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -74,12 +74,12 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().<Block>generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
+        TextureGenerator.getInstance().<Block>generate(Identifier.withDefaultNamespace("block"), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial(), BLOCK.BLOCK_ID);
         });
     }
 
-    protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, ResourceLocation blockId) {
+    protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, Identifier blockId) {
         if (source.isPresent()) {
             BufferedImage sourceImage = source.get();
             BufferedImage overlayImage = instance.getMinekeaImage(String.format("block/building/compressed/level-%d", BLOCK.compressionLevel)).orElse(null);
@@ -96,7 +96,7 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
         }
     }
 
-    protected void generateTexture(TextureGenerator.Instance<Block> instance, String key, ResourceLocation blockId) {
+    protected void generateTexture(TextureGenerator.Instance<Block> instance, String key, Identifier blockId) {
         final Optional<BufferedImage> source = instance.getImage(key);
         addTextureOverlay(instance, source, blockId);
     }

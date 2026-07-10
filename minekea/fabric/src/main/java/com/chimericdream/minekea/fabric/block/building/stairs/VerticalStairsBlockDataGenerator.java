@@ -16,7 +16,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -25,7 +25,7 @@ import java.util.function.Function;
 
 public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public static final ModelTemplate VERTICAL_STAIRS_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/stairs/vertical")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/stairs/vertical")),
         Optional.empty(),
         TextureSlot.ALL
     );

@@ -8,7 +8,7 @@ import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeItem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DyeStationScreenHandler extends AbstractContainerMenu {
-    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/block/dye_station");
+    public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/block/dye_station");
 
     private final Container inventory;
     private final Container output;

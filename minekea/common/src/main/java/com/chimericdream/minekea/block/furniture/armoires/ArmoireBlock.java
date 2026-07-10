@@ -7,7 +7,7 @@ import com.chimericdream.minekea.entity.block.furniture.ArmoireBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -124,7 +124,7 @@ public class ArmoireBlock extends BaseEntityBlock {
         );
     }
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public ArmoireBlock(BlockConfig config) {
@@ -141,8 +141,8 @@ public class ArmoireBlock extends BaseEntityBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/armoires/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/armoires/%s", material));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

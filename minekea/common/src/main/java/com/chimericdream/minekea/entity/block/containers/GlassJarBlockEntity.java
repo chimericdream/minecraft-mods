@@ -27,7 +27,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -410,7 +410,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         if (!hasFluid && !hasMob) {
             String storedItemKey = view.getStringOr(ITEM_KEY, null);
             if (storedItemKey != null) {
-                storedItem = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(storedItemKey)).getDefaultInstance();
+                storedItem = BuiltInRegistries.ITEM.getValue(Identifier.parse(storedItemKey)).getDefaultInstance();
                 storedItem.setCount(view.getIntOr(ITEM_QTY_KEY, 1));
             }
             fullItemStacks = view.getIntOr(ITEM_STACKS_KEY, 0);
@@ -429,7 +429,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        storedFluid = BuiltInRegistries.FLUID.getValue(ResourceLocation.parse(fluidKey));
+        storedFluid = BuiltInRegistries.FLUID.getValue(Identifier.parse(fluidKey));
         fluidAmountInBuckets = view.getDoubleOr(FLUID_AMT_KEY, 0.0);
 
         return true;

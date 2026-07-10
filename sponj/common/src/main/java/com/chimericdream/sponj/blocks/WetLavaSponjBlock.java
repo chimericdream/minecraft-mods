@@ -6,10 +6,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.attribute.BedRule;
+import net.minecraft.world.attribute.EnvironmentAttributeMap;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -18,7 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class WetLavaSponjBlock extends Block {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "wet_lava_sponj");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "wet_lava_sponj");
     public static final ResourceKey<Block> BLOCK_REGISTRY_KEY = ResourceKey.create(Registries.BLOCK, BLOCK_ID);
     public static final ResourceKey<Item> ITEM_REGISTRY_KEY = ResourceKey.create(Registries.ITEM, BLOCK_ID);
 
@@ -27,7 +30,14 @@ public class WetLavaSponjBlock extends Block {
     }
 
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!world.dimensionType().bedWorks() && !world.dimensionType().ultraWarm()) {
+        EnvironmentAttributeMap attributes = world.dimensionType().attributes();
+        if (
+            (
+                !attributes.contains(EnvironmentAttributes.BED_RULE)
+                || attributes.get(EnvironmentAttributes.BED_RULE).equals(BedRule.EXPLODES)
+            )
+            && !world.dimensionType().attributes().contains(EnvironmentAttributes.WATER_EVAPORATES)
+        ) {
             world.setBlock(pos, ModBlocks.LAVA_SPONJ_BLOCK.get().defaultBlockState(), 3);
             world.levelEvent(2009, pos, 0);
             world.playSound((Player) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);

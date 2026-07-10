@@ -16,7 +16,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -28,7 +28,7 @@ import static com.chimericdream.minekea.block.building.covers.CoverBlock.FACING;
 public class CoverBlockDataGenerator extends ChimericLibBlockDataGenerator {
     // yowza
     public static final ModelTemplate COVER_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/cover")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/cover")),
         Optional.empty(),
         TextureSlot.END,
         TextureSlot.SIDE
@@ -75,14 +75,14 @@ public class CoverBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation endTextureId = BLOCK.config.getTexture();
-        ResourceLocation sideTextureId = Optional.ofNullable(BLOCK.config.getTexture("side")).orElse(endTextureId);
+        Identifier endTextureId = BLOCK.config.getTexture();
+        Identifier sideTextureId = Optional.ofNullable(BLOCK.config.getTexture("side")).orElse(endTextureId);
 
         TextureMapping textures = new TextureMapping()
             .put(TextureSlot.END, endTextureId)
             .put(TextureSlot.SIDE, sideTextureId);
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", COVER_MODEL, unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", COVER_MODEL, unused -> textures);
 
         ModelUtils.registerBlockWithHorizontalFacing(blockStateModelGenerator, FACING, BLOCK, subModelId);
     }

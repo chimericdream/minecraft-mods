@@ -5,7 +5,7 @@ import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorCompon
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.ShulkerBoxRenderer;
@@ -16,14 +16,15 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ResolvedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * As of 1.21.10, item-form rendering of block entities (shulker boxes, chests, etc.) no longer goes
@@ -45,7 +46,7 @@ public class ShulkerBoxItemRendererLogic {
     // why using it left the item rendering at full block scale everywhere, including invisible/wrongly
     // placed in the 2D GUI viewport. item/shulker_box (via item/template_shulker_box) is the one vanilla
     // actually ships GUI/hand/ground/fixed display transforms on.
-    private static final ResourceLocation BASE_MODEL_ID = ResourceLocation.withDefaultNamespace("item/shulker_box");
+    private static final Identifier BASE_MODEL_ID = Identifier.withDefaultNamespace("item/shulker_box");
 
     /**
      * Builds the baked {@link ItemModel} to use for the plain shulker box item, wiring our custom
@@ -142,7 +143,7 @@ public class ShulkerBoxItemRendererLogic {
         }
 
         @Override
-        public void getExtents(Set<Vector3f> extents) {
+        public void getExtents(Consumer<Vector3fc> extents) {
             PoseStack poseStack = new PoseStack();
             poseStack.translate(0.5, 0.5, 0.5);
             poseStack.scale(0.9995F, 0.9995F, 0.9995F);

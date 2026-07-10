@@ -4,14 +4,14 @@ import com.chimericdream.shulkerstuff.ModInfo;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public record ShulkerStuffPlatedComponent(boolean value) {
     public static final Codec<ShulkerStuffPlatedComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(
         Codec.BOOL.optionalFieldOf("value", false).forGetter(ShulkerStuffPlatedComponent::value)
     ).apply(builder, ShulkerStuffPlatedComponent::new));
 
-    public static final ResourceLocation COMPONENT_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "plated");
+    public static final Identifier COMPONENT_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "plated");
 
     public CompoundTag toNbt() {
         CompoundTag nbt = new CompoundTag();

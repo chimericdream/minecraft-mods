@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +24,7 @@ public class DisplayCases implements ModThingGroup {
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    public static ResourceLocation DISPLAY_CASE_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/display_case");
+    public static Identifier DISPLAY_CASE_BLOCK_ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/display_case");
     public static RegistrySupplier<BlockEntityType<DisplayCaseBlockEntity>> DISPLAY_CASE_BLOCK_ENTITY;
 
     static {

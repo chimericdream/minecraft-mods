@@ -6,7 +6,7 @@ import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class Keybindings {
@@ -14,7 +14,7 @@ public class Keybindings {
         "key.minekea.items.painter.cycle_color",
         InputConstants.Type.KEYSYM,
         InputConstants.KEY_EQUALS,
-        KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "keybinds"))
+        KeyMapping.Category.register(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "keybinds"))
     );
 
     static {

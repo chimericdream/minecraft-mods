@@ -13,10 +13,10 @@ import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.Consumer;
 
 public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockEntityRenderState> {
     private static final CameraRenderState CAMERA_STATE = new CameraRenderState();
@@ -35,7 +35,7 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     }
 
     @Override
-    public void getExtents(Set<Vector3f> vertices) {
+    public void getExtents(Consumer<Vector3fc> vertices) {
     }
 
     @Override

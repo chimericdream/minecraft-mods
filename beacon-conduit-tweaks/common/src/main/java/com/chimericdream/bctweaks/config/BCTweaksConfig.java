@@ -15,7 +15,7 @@ import dev.isxander.yacl3.platform.YACLPlatform;
 import java.util.Map;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BCTweaksConfig {
     @SerialEntry
@@ -30,7 +30,7 @@ public class BCTweaksConfig {
     public transient Map<String, Double> conduitRangePerBlock = Defaults.CONDUIT_RANGE_PER_BLOCK;
 
     public static ConfigClassHandler<BCTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(BCTweaksConfig.class)
-        .id(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
+        .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
             .setPath(YACLPlatform.getConfigDir().resolve("beacon-conduit-tweaks.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)

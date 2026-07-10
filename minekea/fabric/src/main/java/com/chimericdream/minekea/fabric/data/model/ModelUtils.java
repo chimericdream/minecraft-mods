@@ -16,7 +16,7 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.Block;
@@ -30,14 +30,14 @@ import java.util.Optional;
 public class ModelUtils {
     public static final ModelTemplate CUSTOM_TEMPLATE_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(ResourceLocation.withDefaultNamespace("block/template_lantern")),
+        Optional.of(Identifier.withDefaultNamespace("block/template_lantern")),
         Optional.empty(),
         TextureSlot.LANTERN
     );
 
     public static final ModelTemplate CUSTOM_TEMPLATE_HANGING_LANTERN = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
-        Optional.of(ResourceLocation.withDefaultNamespace("block/template_hanging_lantern")),
+        Optional.of(Identifier.withDefaultNamespace("block/template_hanging_lantern")),
         Optional.empty(),
         TextureSlot.LANTERN
     );
@@ -54,9 +54,9 @@ public class ModelUtils {
         ModelTemplate topModel,
         ModelTemplate doubleModel
     ) {
-        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(block, "", bottomModel, unused -> textures);
-        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(block, "_top", topModel, unused -> textures);
-        ResourceLocation doubleModelId = blockStateModelGenerator.createSuffixedVariant(block, "_double", doubleModel, unused -> textures);
+        Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(block, "", bottomModel, unused -> textures);
+        Identifier topModelId = blockStateModelGenerator.createSuffixedVariant(block, "_top", topModel, unused -> textures);
+        Identifier doubleModelId = blockStateModelGenerator.createSuffixedVariant(block, "_double", doubleModel, unused -> textures);
 
         MultiVariant bottomVariant = BlockModelGenerators.plainVariant(bottomModelId);
         MultiVariant topVariant = BlockModelGenerators.plainVariant(topModelId);
@@ -78,7 +78,7 @@ public class ModelUtils {
         TextureMapping textures,
         ModelTemplate model
     ) {
-        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
+        Identifier modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
 
         MultiVariant variant = BlockModelGenerators.plainVariant(modelId).with(VariantMutator.UV_LOCK.withValue(true));
 
@@ -114,9 +114,9 @@ public class ModelUtils {
         ModelTemplate straightModel,
         ModelTemplate outerModel
     ) {
-        ResourceLocation innerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_inner", innerModel, unused -> textures);
-        ResourceLocation straightModelId = blockStateModelGenerator.createSuffixedVariant(block, "", straightModel, unused -> textures);
-        ResourceLocation outerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_outer", outerModel, unused -> textures);
+        Identifier innerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_inner", innerModel, unused -> textures);
+        Identifier straightModelId = blockStateModelGenerator.createSuffixedVariant(block, "", straightModel, unused -> textures);
+        Identifier outerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_outer", outerModel, unused -> textures);
 
         MultiVariant innerVariant = BlockModelGenerators.plainVariant(innerModelId);
         MultiVariant straightVariant = BlockModelGenerators.plainVariant(straightModelId);
@@ -132,7 +132,7 @@ public class ModelUtils {
         TextureMapping textures,
         ModelTemplate model
     ) {
-        ResourceLocation modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
+        Identifier modelId = blockStateModelGenerator.createSuffixedVariant(block, "", model, unused -> textures);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelId).with(VariantMutator.UV_LOCK.withValue(true));
 
         blockStateModelGenerator.blockStateOutput
@@ -168,10 +168,10 @@ public class ModelUtils {
         ModelTemplate sideModel,
         ModelTemplate sideTallModel
     ) {
-        ResourceLocation inventoryModelId = blockStateModelGenerator.createSuffixedVariant(block, "", inventoryModel, unused -> textures);
-        ResourceLocation postModelId = blockStateModelGenerator.createSuffixedVariant(block, "", postModel, unused -> textures);
-        ResourceLocation sideModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideModel, unused -> textures);
-        ResourceLocation sideTallModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideTallModel, unused -> textures);
+        Identifier inventoryModelId = blockStateModelGenerator.createSuffixedVariant(block, "", inventoryModel, unused -> textures);
+        Identifier postModelId = blockStateModelGenerator.createSuffixedVariant(block, "", postModel, unused -> textures);
+        Identifier sideModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideModel, unused -> textures);
+        Identifier sideTallModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideTallModel, unused -> textures);
 
         MultiVariant postVariant = BlockModelGenerators.plainVariant(postModelId);
         MultiVariant sideVariant = BlockModelGenerators.plainVariant(sideModelId);
@@ -185,13 +185,13 @@ public class ModelUtils {
     public static void registerLanternBlock(
         BlockModelGenerators blockStateModelGenerator,
         Block block,
-        ResourceLocation blockId
+        Identifier blockId
     ) {
         TextureMapping textures = new TextureMapping()
             .put(TextureSlot.LANTERN, blockId.withPrefix("block/"));
 
-        ResourceLocation baseModelId = blockStateModelGenerator.createSuffixedVariant(block, "_base", CUSTOM_TEMPLATE_LANTERN, unused -> textures);
-        ResourceLocation hangingModelId = blockStateModelGenerator.createSuffixedVariant(block, "_hanging", CUSTOM_TEMPLATE_HANGING_LANTERN, unused -> textures);
+        Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(block, "_base", CUSTOM_TEMPLATE_LANTERN, unused -> textures);
+        Identifier hangingModelId = blockStateModelGenerator.createSuffixedVariant(block, "_hanging", CUSTOM_TEMPLATE_HANGING_LANTERN, unused -> textures);
 
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
         MultiVariant hangingModel = BlockModelGenerators.plainVariant(hangingModelId);
@@ -209,7 +209,7 @@ public class ModelUtils {
         BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction.Axis> axis,
         Block block,
-        ResourceLocation subModelId
+        Identifier subModelId
     ) {
         MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 
@@ -228,7 +228,7 @@ public class ModelUtils {
         BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> wallSide,
         Block block,
-        ResourceLocation subModelId
+        Identifier subModelId
     ) {
         registerBlockWithHorizontalFacing(blockStateModelGenerator, wallSide, block, subModelId);
     }
@@ -237,7 +237,7 @@ public class ModelUtils {
         BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> facing,
         Block block,
-        ResourceLocation subModelId
+        Identifier subModelId
     ) {
         MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 
@@ -257,7 +257,7 @@ public class ModelUtils {
         BlockModelGenerators blockStateModelGenerator,
         EnumProperty<Direction> facing,
         Block block,
-        ResourceLocation subModelId
+        Identifier subModelId
     ) {
         MultiVariant model = BlockModelGenerators.plainVariant(subModelId);
 

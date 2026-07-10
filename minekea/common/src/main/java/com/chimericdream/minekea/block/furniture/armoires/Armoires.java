@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +24,7 @@ public class Armoires implements ModThingGroup {
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    public static ResourceLocation ARMOIRE_BLOCK_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/armoire");
+    public static Identifier ARMOIRE_BLOCK_ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/blocks/furniture/armoire");
     public static final RegistrySupplier<BlockEntityType<ArmoireBlockEntity>> ARMOIRE_BLOCK_ENTITY;
 
     static {

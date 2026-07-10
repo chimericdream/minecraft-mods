@@ -4,7 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -40,7 +40,7 @@ import java.util.Map;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class OpenShutterHalfBlock extends Block implements SimpleWaterloggedBlock {
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
     protected final BlockSetType blockSetType;
 
@@ -88,8 +88,8 @@ public class OpenShutterHalfBlock extends Block implements SimpleWaterloggedBloc
         this.blockSetType = type;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shutters/%s_open", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shutters/%s_open", material));
     }
 
     @Override

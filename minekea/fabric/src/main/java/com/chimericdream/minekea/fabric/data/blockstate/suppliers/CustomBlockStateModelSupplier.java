@@ -13,7 +13,7 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.block.model.Variant;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -34,11 +34,11 @@ public class CustomBlockStateModelSupplier {
             throw new IllegalArgumentException();
         }
 
-        Int2ObjectMap<ResourceLocation> int2ObjectMap = new Int2ObjectOpenHashMap<>();
+        Int2ObjectMap<Identifier> int2ObjectMap = new Int2ObjectOpenHashMap<>();
         PropertyDispatch<MultiVariant> blockStateVariantMap = PropertyDispatch.initial(ageProperty).generate((integer) -> {
             int i = ageTextureIndices[integer];
 
-            ResourceLocation identifier = int2ObjectMap.computeIfAbsent(i, (j) -> generator.createSuffixedVariant(crop, "_stage" + i, CUSTOM_CROP, TextureMapping::crop));
+            Identifier identifier = int2ObjectMap.computeIfAbsent(i, (j) -> generator.createSuffixedVariant(crop, "_stage" + i, CUSTOM_CROP, TextureMapping::crop));
 
             return new MultiVariant(WeightedList.of(new Variant(identifier)));
         });
@@ -50,19 +50,19 @@ public class CustomBlockStateModelSupplier {
     public static class CustomBlockModel extends ModelTemplate {
         private final BlockConfig.RenderType renderType;
 
-        public CustomBlockModel(Optional<ResourceLocation> parent, Optional<String> variant, TextureSlot... requiredTextureSlots) {
+        public CustomBlockModel(Optional<Identifier> parent, Optional<String> variant, TextureSlot... requiredTextureSlots) {
             this(BlockConfig.RenderType.SOLID, parent, variant, requiredTextureSlots);
         }
 
-        public CustomBlockModel(BlockConfig.RenderType renderType, Optional<ResourceLocation> parent, Optional<String> variant, TextureSlot... requiredTextureSlots) {
+        public CustomBlockModel(BlockConfig.RenderType renderType, Optional<Identifier> parent, Optional<String> variant, TextureSlot... requiredTextureSlots) {
             super(parent, variant, requiredTextureSlots);
 
             this.renderType = renderType;
         }
 
         @Override
-        public @NotNull ResourceLocation create(ResourceLocation id, TextureMapping textures, BiConsumer<ResourceLocation, ModelInstance> modelCollector) {
-            Map<TextureSlot, ResourceLocation> map = this.createMap(textures);
+        public @NotNull Identifier create(Identifier id, TextureMapping textures, BiConsumer<Identifier, ModelInstance> modelCollector) {
+            Map<TextureSlot, Identifier> map = this.createMap(textures);
             modelCollector.accept(id, (ModelInstance) () -> {
                 JsonObject jsonObject = new JsonObject();
                 this.model.ifPresent((identifier) -> jsonObject.addProperty("parent", identifier.toString()));
@@ -86,7 +86,7 @@ public class CustomBlockStateModelSupplier {
      */
     public static class CustomCropModel extends CustomBlockModel {
         public CustomCropModel() {
-            super(BlockConfig.RenderType.CUTOUT, Optional.of(ResourceLocation.withDefaultNamespace("block/crop")), Optional.empty(), TextureSlot.CROP);
+            super(BlockConfig.RenderType.CUTOUT, Optional.of(Identifier.withDefaultNamespace("block/crop")), Optional.empty(), TextureSlot.CROP);
         }
     }
 }

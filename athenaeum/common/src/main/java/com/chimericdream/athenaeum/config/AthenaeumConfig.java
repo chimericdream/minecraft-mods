@@ -14,7 +14,7 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class AthenaeumConfig {
     @SerialEntry
@@ -25,7 +25,7 @@ public class AthenaeumConfig {
     public double thirdEditionChance = Defaults.THIRD_EDITION_CHANCE;
 
     public static ConfigClassHandler<AthenaeumConfig> HANDLER = ConfigClassHandler.createBuilder(AthenaeumConfig.class)
-        .id(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
+        .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
             .setPath(YACLPlatform.getConfigDir().resolve("athenaeum.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)

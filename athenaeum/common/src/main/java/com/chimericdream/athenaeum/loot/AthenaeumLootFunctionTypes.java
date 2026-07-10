@@ -4,7 +4,7 @@ import com.chimericdream.athenaeum.ModInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
 import static com.chimericdream.athenaeum.AthenaeumMod.MANAGER;
@@ -17,7 +17,7 @@ public class AthenaeumLootFunctionTypes {
         MANAGER.get()
             .get((ResourceKey<Registry<LootItemFunctionType<?>>>) BuiltInRegistries.LOOT_FUNCTION_TYPE.key())
             .register(
-                ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, id),
+                Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, id),
                 () -> lootFunctionType
             );
     }

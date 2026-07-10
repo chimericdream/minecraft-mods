@@ -3,7 +3,7 @@ package com.chimericdream.shulkerstuff.fabric.client.render.item;
 import com.chimericdream.shulkerstuff.client.render.item.ShulkerBoxItemRendererLogic;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Fabric API doesn't (yet) expose the {@code ExtraCodecs.LateBoundIdMapper} that backs vanilla's
@@ -23,7 +23,7 @@ public class ShulkerBoxModelLoadingPlugin implements ModelLoadingPlugin {
         });
     }
 
-    private static boolean isShulkerBoxItem(ResourceLocation itemId) {
-        return itemId.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "shulker_box"));
+    private static boolean isShulkerBoxItem(Identifier itemId) {
+        return itemId.equals(Identifier.fromNamespaceAndPath("minecraft", "shulker_box"));
     }
 }

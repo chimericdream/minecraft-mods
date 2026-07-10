@@ -19,7 +19,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -30,61 +30,61 @@ public class TableBlockDataGenerator extends ChimericLibBlockDataGenerator {
     private final TableBlock BLOCK;
 
     protected static final ModelTemplate CORE_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/table")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/table")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate ALL_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_all_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_all_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate NORTH_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate SOUTH_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate EAST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_east_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_east_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate WEST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_west_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_west_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate NORTH_EAST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_east_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_east_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate SOUTH_EAST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_east_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_east_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate NORTH_WEST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_west_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_north_west_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate SOUTH_WEST_CONNECTED_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_west_connected")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/tables/table_south_west_connected")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
@@ -140,16 +140,16 @@ public class TableBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(MinekeaTextures.LOG, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
             .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        ResourceLocation coreModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
-        ResourceLocation allConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_all_connected", ALL_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation northConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north", NORTH_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation southConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south", SOUTH_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation eastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_east", EAST_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation westConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", WEST_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation northEastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north_east", NORTH_EAST_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation southEastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south_east", SOUTH_EAST_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation northWestConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north_west", NORTH_WEST_CONNECTED_MODEL, unused -> textures);
-        ResourceLocation southWestConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south_west", SOUTH_WEST_CONNECTED_MODEL, unused -> textures);
+        Identifier coreModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
+        Identifier allConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_all_connected", ALL_CONNECTED_MODEL, unused -> textures);
+        Identifier northConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north", NORTH_CONNECTED_MODEL, unused -> textures);
+        Identifier southConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south", SOUTH_CONNECTED_MODEL, unused -> textures);
+        Identifier eastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_east", EAST_CONNECTED_MODEL, unused -> textures);
+        Identifier westConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", WEST_CONNECTED_MODEL, unused -> textures);
+        Identifier northEastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north_east", NORTH_EAST_CONNECTED_MODEL, unused -> textures);
+        Identifier southEastConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south_east", SOUTH_EAST_CONNECTED_MODEL, unused -> textures);
+        Identifier northWestConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_north_west", NORTH_WEST_CONNECTED_MODEL, unused -> textures);
+        Identifier southWestConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_south_west", SOUTH_WEST_CONNECTED_MODEL, unused -> textures);
 
         MultiVariant coreModel = BlockModelGenerators.plainVariant(coreModelId);
         MultiVariant allConnectedModel = BlockModelGenerators.plainVariant(allConnectedModelId);

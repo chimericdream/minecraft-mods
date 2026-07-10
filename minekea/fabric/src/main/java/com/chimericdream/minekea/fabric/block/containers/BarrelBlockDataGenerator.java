@@ -23,7 +23,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -79,10 +79,10 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation bottomTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_bottom");
-        ResourceLocation sideTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_side");
-        ResourceLocation topTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_top");
-        ResourceLocation topOpenTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_top_open");
+        Identifier bottomTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_bottom");
+        Identifier sideTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_side");
+        Identifier topTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_top");
+        Identifier topOpenTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_top_open");
 
         TextureMapping baseTextures = new TextureMapping()
             .put(TextureSlot.BOTTOM, bottomTexture)
@@ -94,8 +94,8 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(TextureSlot.SIDE, sideTexture)
             .put(TextureSlot.TOP, topOpenTexture);
 
-        ResourceLocation baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_BOTTOM_TOP, unused -> baseTextures);
-        ResourceLocation openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", ModelTemplates.CUBE_BOTTOM_TOP, unused -> openTextures);
+        Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_BOTTOM_TOP, unused -> baseTextures);
+        Identifier openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", ModelTemplates.CUBE_BOTTOM_TOP, unused -> openTextures);
 
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
         MultiVariant openModel = BlockModelGenerators.plainVariant(openModelId);
@@ -126,8 +126,8 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
         generateTextures(BLOCK.faceTextureKey, BLOCK.sideTextureKey, BLOCK.BLOCK_ID);
     }
 
-    public static void generateTextures(String faceKey, String sideKey, ResourceLocation blockId) {
-        TextureGenerator.getInstance().generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
+    public static void generateTextures(String faceKey, String sideKey, Identifier blockId) {
+        TextureGenerator.getInstance().generate(Identifier.withDefaultNamespace("block"), instance -> {
             final Optional<BufferedImage> faceTexture = instance.getImage(faceKey);
             final Optional<BufferedImage> sideTexture = instance.getImage(sideKey);
 

@@ -10,7 +10,7 @@ import java.util.Map;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class HopperItemFilterItem extends Item {
-    public static final ResourceLocation ITEM_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "hopper_item_filter");
+    public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "hopper_item_filter");
 
     public static final Map<FilterMode, String> TOOLTIP_KEYS = Map.of(
         FilterMode.INCLUDE, "item.hopperxtreme.hopper_item_filter.tooltip.include",

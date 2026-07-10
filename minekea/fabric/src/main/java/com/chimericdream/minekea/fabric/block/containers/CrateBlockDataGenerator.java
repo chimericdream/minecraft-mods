@@ -24,7 +24,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -44,7 +44,7 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     protected static ModelTemplate makeModel(String path) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.BRACE,
             MinekeaTextures.MATERIAL
@@ -87,13 +87,13 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     protected void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator, TextureMapping textures) {
-        ResourceLocation baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CRATE_MODEL, unused -> textures);
-        ResourceLocation halfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_double_half", HALF_DOUBLE_CRATE_MODEL, unused -> textures);
+        Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CRATE_MODEL, unused -> textures);
+        Identifier halfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_double_half", HALF_DOUBLE_CRATE_MODEL, unused -> textures);
 
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
         MultiVariant halfModel = BlockModelGenerators.plainVariant(halfModelId);
 
-        MultiVariant brokenModel = BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.createWithSuffix(BLOCK, "_broken", TextureMapping.singleSlot(TextureSlot.ALL, ResourceLocation.withDefaultNamespace("")), blockStateModelGenerator.modelOutput));
+        MultiVariant brokenModel = BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.createWithSuffix(BLOCK, "_broken", TextureMapping.singleSlot(TextureSlot.ALL, Identifier.withDefaultNamespace("")), blockStateModelGenerator.modelOutput));
 
         blockStateModelGenerator.blockStateOutput
             .accept(

@@ -10,7 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -49,7 +49,7 @@ public class FloatingShelfBlockDataGenerator extends ShelfBlockDataGenerator {
         TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.PLANKS, TextureMapping.getBlockTexture(plankIngredient));
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", FLOATING_SHELF_MODEL, unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", FLOATING_SHELF_MODEL, unused -> textures);
 
         ModelUtils.registerBlockWithWallSide(blockStateModelGenerator, ShelfBlock.WALL_SIDE, BLOCK, subModelId);
     }

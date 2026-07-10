@@ -17,7 +17,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -28,7 +28,7 @@ public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     private static final ModelTemplate DYE_BLOCK_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
         BlockConfig.RenderType.TRANSLUCENT,
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/dye_block")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/dye_block")),
         Optional.empty(),
         TextureSlot.BOTTOM,
         TextureSlot.SIDE,
@@ -73,9 +73,9 @@ public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color)))
-            .put(TextureSlot.SIDE, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color)))
-            .put(TextureSlot.TOP, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color)));
+            .put(TextureSlot.BOTTOM, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color)))
+            .put(TextureSlot.SIDE, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color)))
+            .put(TextureSlot.TOP, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color)));
 
         blockStateModelGenerator.createTrivialBlock(
             BLOCK,

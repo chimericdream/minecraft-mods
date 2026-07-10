@@ -21,7 +21,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -52,7 +52,7 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
     protected static ModelTemplate makeModel(String template) {
         return new CustomBlockStateModelSupplier.CustomBlockModel(
             BlockConfig.RenderType.TRANSLUCENT,
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, template)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, template)),
             Optional.empty(),
             TextureSlot.CANDLE,
             TextureSlot.SIDE
@@ -125,15 +125,15 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
             .put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(ingredient).withSuffix("_lit"))
             .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(Blocks.GLASS));
 
-        ResourceLocation candleItemModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", VOTIVE_ITEM_MODEL, unused -> textures);
-        ResourceLocation oneCandleModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_one", ONE_VOTIVE_MODEL, unused -> textures);
-        ResourceLocation oneCandleLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_one_lit", ONE_VOTIVE_LIT_MODEL, unused -> litTextures);
-        ResourceLocation twoCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_two", TWO_VOTIVES_MODEL, unused -> textures);
-        ResourceLocation twoCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_two_lit", TWO_VOTIVES_LIT_MODEL, unused -> litTextures);
-        ResourceLocation threeCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_three", THREE_VOTIVES_MODEL, unused -> textures);
-        ResourceLocation threeCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_three_lit", THREE_VOTIVES_LIT_MODEL, unused -> litTextures);
-        ResourceLocation fourCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_four", FOUR_VOTIVES_MODEL, unused -> textures);
-        ResourceLocation fourCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_four_lit", FOUR_VOTIVES_LIT_MODEL, unused -> litTextures);
+        Identifier candleItemModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", VOTIVE_ITEM_MODEL, unused -> textures);
+        Identifier oneCandleModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_one", ONE_VOTIVE_MODEL, unused -> textures);
+        Identifier oneCandleLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_one_lit", ONE_VOTIVE_LIT_MODEL, unused -> litTextures);
+        Identifier twoCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_two", TWO_VOTIVES_MODEL, unused -> textures);
+        Identifier twoCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_two_lit", TWO_VOTIVES_LIT_MODEL, unused -> litTextures);
+        Identifier threeCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_three", THREE_VOTIVES_MODEL, unused -> textures);
+        Identifier threeCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_three_lit", THREE_VOTIVES_LIT_MODEL, unused -> litTextures);
+        Identifier fourCandlesModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_four", FOUR_VOTIVES_MODEL, unused -> textures);
+        Identifier fourCandlesLitModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_four_lit", FOUR_VOTIVES_LIT_MODEL, unused -> litTextures);
 
         blockStateModelGenerator.registerSimpleItemModel(BLOCK, candleItemModelId);
 

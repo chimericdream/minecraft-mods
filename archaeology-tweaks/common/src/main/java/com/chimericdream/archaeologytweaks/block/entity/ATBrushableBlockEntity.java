@@ -103,7 +103,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
                 case 0 -> ItemStack.EMPTY;
                 case 1 -> objectArrayList.getFirst();
                 default -> {
-                    LOGGER.warn("Expected max 1 loot from loot table {}, but got {}", this.lootTable.location(), objectArrayList.size());
+                    LOGGER.warn("Expected max 1 loot from loot table {}, but got {}", this.lootTable.identifier(), objectArrayList.size());
                     yield objectArrayList.getFirst();
                 }
             };

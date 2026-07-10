@@ -4,7 +4,7 @@ import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
 import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.lib.screen.ScreenHelpers;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
-    public static final ResourceLocation SCREEN_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/hopper_item_filter");
+    public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "screens/items/hopper_item_filter");
 
     private final Container filter;
 

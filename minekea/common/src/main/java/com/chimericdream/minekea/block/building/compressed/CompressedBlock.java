@@ -10,7 +10,7 @@ import java.util.List;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -29,8 +29,8 @@ public class CompressedBlock extends Block {
 
     public static final EnumProperty<Direction.Axis> AXIS;
 
-    public final ResourceLocation BLOCK_ID;
-    public ResourceLocation PARENT_BLOCK_ID;
+    public final Identifier BLOCK_ID;
+    public Identifier PARENT_BLOCK_ID;
     public final BlockConfig config;
     public final int compressionLevel;
 
@@ -60,7 +60,7 @@ public class CompressedBlock extends Block {
         BLOCK_ID = makeId(config.getMaterial(), compressionLevel);
 
         if (compressionLevel > 1) {
-            PARENT_BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", config.getMaterial(), compressionLevel - 1));
+            PARENT_BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", config.getMaterial(), compressionLevel - 1));
         } else {
             PARENT_BLOCK_ID = BuiltInRegistries.BLOCK.getKey(config.getIngredient());
         }
@@ -69,11 +69,11 @@ public class CompressedBlock extends Block {
     }
 
     public static String makeTranslationKey(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s", material)).toLanguageKey().replace('/', '.');
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s", material)).toLanguageKey().replace('/', '.');
     }
 
-    public static ResourceLocation makeId(String material, int compressionLevel) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", material, compressionLevel));
+    public static Identifier makeId(String material, int compressionLevel) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", material, compressionLevel));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

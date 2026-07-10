@@ -6,7 +6,7 @@ import dev.architectury.core.fluid.ArchitecturyFlowingFluid;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import dev.architectury.core.fluid.SimpleArchitecturyFluidAttributes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
@@ -34,8 +34,8 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
         .slopeFindDistance(2)
         .dropOff(2)
         .tickDelay(10)
-        .sourceTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk"))
-        .flowingTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk/flowing"))
+        .sourceTexture(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk"))
+        .flowingTexture(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/milk/flowing"))
         .fillSound(SoundEvents.BUCKET_FILL)
         .color(0xFFFFFF);
 
@@ -66,7 +66,7 @@ public class MilkFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.MILK_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/milk/source"))));
+            super(ModFluids.MILK_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/milk/source"))));
         }
 
         @Override

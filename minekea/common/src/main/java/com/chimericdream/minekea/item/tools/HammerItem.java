@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -33,7 +33,7 @@ import java.util.List;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class HammerItem extends Item {
-    public final ResourceLocation ITEM_ID;
+    public final Identifier ITEM_ID;
 
     public final ToolMaterial material;
     public final int maxSlots;
@@ -57,8 +57,8 @@ public class HammerItem extends Item {
         this.ITEM_ID = makeId(materialName);
     }
 
-    public static ResourceLocation makeId(String materialName) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("tools/hammers/%s", materialName.toLowerCase()));
+    public static Identifier makeId(String materialName) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("tools/hammers/%s", materialName.toLowerCase()));
     }
 
     @Override

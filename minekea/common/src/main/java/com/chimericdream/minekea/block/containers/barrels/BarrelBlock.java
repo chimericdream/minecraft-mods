@@ -6,7 +6,7 @@ import com.chimericdream.minekea.entity.block.containers.MinekeaBarrelBlockEntit
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -39,7 +39,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 public class BarrelBlock extends BaseEntityBlock {
     public static final MapCodec<BarrelBlock> CODEC = simpleCodec(BarrelBlock::new);
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
     public final String sideTextureKey;
     public final String faceTextureKey;
@@ -72,8 +72,8 @@ public class BarrelBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, false));
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/barrels/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/barrels/%s", material));
     }
 
     public BlockConfig getConfig() {

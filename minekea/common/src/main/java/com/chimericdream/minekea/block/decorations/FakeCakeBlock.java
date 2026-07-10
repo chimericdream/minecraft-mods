@@ -5,7 +5,7 @@ import com.chimericdream.minekea.ModInfo;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -20,7 +20,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class FakeCakeBlock extends CakeBlock {
     public final static String TOOLTIP_KEY = "block.minekea.decorations.misc.fake_cake.tooltip";
-    public final static ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/misc/fake_cake");
+    public final static Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/misc/fake_cake");
 
     public FakeCakeBlock() {
         super(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID)));

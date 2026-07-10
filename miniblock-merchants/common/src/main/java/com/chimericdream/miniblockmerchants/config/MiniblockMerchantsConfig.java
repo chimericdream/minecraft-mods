@@ -13,7 +13,7 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MiniblockMerchantsConfig {
     @SerialEntry
@@ -70,7 +70,7 @@ public class MiniblockMerchantsConfig {
     public int wagyuBeefChance = Defaults.WAGYU_BEEF_CHANCE;
 
     public static ConfigClassHandler<MiniblockMerchantsConfig> HANDLER = ConfigClassHandler.createBuilder(MiniblockMerchantsConfig.class)
-        .id(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
+        .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
             .setPath(YACLPlatform.getConfigDir().resolve("miniblockmerchants.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)

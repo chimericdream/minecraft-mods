@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -20,15 +20,15 @@ import static com.chimericdream.miniblockmerchants.loot.MobHeadLootTables.getVil
 import static com.chimericdream.miniblockmerchants.loot.MobHeadLootTables.getZombieVillagerHeadLootTable;
 
 public class MMLootTables {
-    private static final ResourceLocation CARROT_LOOT_TABLE_ID = Blocks.CARROTS.getLootTable().get().location();
-    private static final ResourceLocation CLAY_LOOT_TABLE_ID = Blocks.CLAY.getLootTable().get().location();
-    private static final ResourceLocation CREEPER_LOOT_TABLE_ID = EntityType.CREEPER.getDefaultLootTable().get().location();
-    private static final ResourceLocation OAK_LEAVES_TABLE_ID = Blocks.OAK_LEAVES.getLootTable().get().location();
-    private static final ResourceLocation REDSTONE_ORE_TABLE_ID = Blocks.REDSTONE_ORE.getLootTable().get().location();
-    private static final ResourceLocation SPRUCE_LEAVES_TABLE_ID = Blocks.SPRUCE_LEAVES.getLootTable().get().location();
-    private static final ResourceLocation VILLAGER_LOOT_TABLE_ID = EntityType.VILLAGER.getDefaultLootTable().get().location();
-    private static final ResourceLocation WHEAT_TABLE_ID = Blocks.WHEAT.getLootTable().get().location();
-    private static final ResourceLocation ZOMBIE_VILLAGER_LOOT_TABLE_ID = EntityType.ZOMBIE_VILLAGER.getDefaultLootTable().get().location();
+    private static final Identifier CARROT_LOOT_TABLE_ID = Blocks.CARROTS.getLootTable().get().identifier();
+    private static final Identifier CLAY_LOOT_TABLE_ID = Blocks.CLAY.getLootTable().get().identifier();
+    private static final Identifier CREEPER_LOOT_TABLE_ID = EntityType.CREEPER.getDefaultLootTable().get().identifier();
+    private static final Identifier OAK_LEAVES_TABLE_ID = Blocks.OAK_LEAVES.getLootTable().get().identifier();
+    private static final Identifier REDSTONE_ORE_TABLE_ID = Blocks.REDSTONE_ORE.getLootTable().get().identifier();
+    private static final Identifier SPRUCE_LEAVES_TABLE_ID = Blocks.SPRUCE_LEAVES.getLootTable().get().identifier();
+    private static final Identifier VILLAGER_LOOT_TABLE_ID = EntityType.VILLAGER.getDefaultLootTable().get().identifier();
+    private static final Identifier WHEAT_TABLE_ID = Blocks.WHEAT.getLootTable().get().identifier();
+    private static final Identifier ZOMBIE_VILLAGER_LOOT_TABLE_ID = EntityType.ZOMBIE_VILLAGER.getDefaultLootTable().get().identifier();
 
     private static LootPool.Builder makeBuilder(Item item, int chance) {
         LootPool.Builder builder = LootPool.lootPool()
@@ -41,7 +41,7 @@ public class MMLootTables {
         return builder.add(LootItem.lootTableItem(Items.AIR).setWeight(chance - 1));
     }
 
-    private static void checkVanillaLootTables(ResourceLocation id, List<LootPool.Builder> poolBuilders, MiniblockMerchantsConfig config, HolderLookup.Provider wrapperLookup) {
+    private static void checkVanillaLootTables(Identifier id, List<LootPool.Builder> poolBuilders, MiniblockMerchantsConfig config, HolderLookup.Provider wrapperLookup) {
         if (config.overgrownCarrotChance > 0 && CARROT_LOOT_TABLE_ID.equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.OVERGROWN_CARROT_ITEM.get(), config.overgrownCarrotChance));
         }
@@ -66,7 +66,7 @@ public class MMLootTables {
             poolBuilders.add(makeBuilder(ModItems.SHIMMERING_WHEAT_ITEM.get(), config.shimmeringWheatChance));
         }
 
-        if (BuiltInLootTables.FISHING_TREASURE.location().equals(id)) {
+        if (BuiltInLootTables.FISHING_TREASURE.identifier().equals(id)) {
             if (config.forgottenScrapMetalChance > 0) {
                 poolBuilders.add(makeBuilder(ModItems.FORGOTTEN_SCRAP_METAL_ITEM.get(), config.forgottenScrapMetalChance));
             }
@@ -92,47 +92,47 @@ public class MMLootTables {
             }
         }
 
-        if (config.mastercraftedIronChance > 0 && BuiltInLootTables.VILLAGE_ARMORER.location().equals(id)) {
+        if (config.mastercraftedIronChance > 0 && BuiltInLootTables.VILLAGE_ARMORER.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.MASTERCRAFTED_IRON_ITEM.get(), config.mastercraftedIronChance));
         }
 
-        if (config.wagyuBeefChance > 0 && BuiltInLootTables.VILLAGE_BUTCHER.location().equals(id)) {
+        if (config.wagyuBeefChance > 0 && BuiltInLootTables.VILLAGE_BUTCHER.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.WAGYU_BEEF_ITEM.get(), config.wagyuBeefChance));
         }
 
-        if (config.fineThreadChance > 0 && BuiltInLootTables.VILLAGE_SHEPHERD.location().equals(id)) {
+        if (config.fineThreadChance > 0 && BuiltInLootTables.VILLAGE_SHEPHERD.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.FINE_THREAD_ITEM.get(), config.fineThreadChance));
         }
 
-        if (config.unusuallyDenseRockChance > 0 && BuiltInLootTables.ABANDONED_MINESHAFT.location().equals(id)) {
+        if (config.unusuallyDenseRockChance > 0 && BuiltInLootTables.ABANDONED_MINESHAFT.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.UNUSUALLY_DENSE_ROCK_ITEM.get(), config.unusuallyDenseRockChance));
         }
 
-        if (config.buddingCactusChance > 0 && BuiltInLootTables.DESERT_PYRAMID.location().equals(id)) {
+        if (config.buddingCactusChance > 0 && BuiltInLootTables.DESERT_PYRAMID.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.BUDDING_CACTUS_ITEM.get(), config.buddingCactusChance));
         }
 
-        if (config.galileanSpyglassChance > 0 && BuiltInLootTables.IGLOO_CHEST.location().equals(id)) {
+        if (config.galileanSpyglassChance > 0 && BuiltInLootTables.IGLOO_CHEST.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.GALILEAN_SPYGLASS_ITEM.get(), config.galileanSpyglassChance));
         }
 
-        if (config.prismaticHoneycombChance > 0 && BuiltInLootTables.JUNGLE_TEMPLE.location().equals(id)) {
+        if (config.prismaticHoneycombChance > 0 && BuiltInLootTables.JUNGLE_TEMPLE.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.PRISMATIC_HONEYCOMB_ITEM.get(), config.prismaticHoneycombChance));
         }
 
-        if (config.fragrantFlowerChance > 0 && BuiltInLootTables.PILLAGER_OUTPOST.location().equals(id)) {
+        if (config.fragrantFlowerChance > 0 && BuiltInLootTables.PILLAGER_OUTPOST.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.FRAGRANT_FLOWER_ITEM.get(), config.fragrantFlowerChance));
         }
 
-        if (config.sparklingBlazePowderChance > 0 && BuiltInLootTables.RUINED_PORTAL.location().equals(id)) {
+        if (config.sparklingBlazePowderChance > 0 && BuiltInLootTables.RUINED_PORTAL.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.SPARKLING_BLAZE_POWDER_ITEM.get(), config.sparklingBlazePowderChance));
         }
 
-        if (config.pureGoldChance > 0 && BuiltInLootTables.SIMPLE_DUNGEON.location().equals(id)) {
+        if (config.pureGoldChance > 0 && BuiltInLootTables.SIMPLE_DUNGEON.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.PURE_GOLD_ITEM.get(), config.pureGoldChance));
         }
 
-        if (BuiltInLootTables.STRONGHOLD_LIBRARY.location().equals(id)) {
+        if (BuiltInLootTables.STRONGHOLD_LIBRARY.identifier().equals(id)) {
             if (config.endlessBookshelfChance > 0) {
                 poolBuilders.add(makeBuilder(ModItems.ENDLESS_BOOKSHELF_ITEM.get(), config.endlessBookshelfChance));
             }
@@ -142,7 +142,7 @@ public class MMLootTables {
             }
         }
 
-        if (config.ancientShellChance > 0 && BuiltInLootTables.UNDERWATER_RUIN_BIG.location().equals(id)) {
+        if (config.ancientShellChance > 0 && BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier().equals(id)) {
             poolBuilders.add(makeBuilder(ModItems.ANCIENT_SHELL_ITEM.get(), config.ancientShellChance));
         }
 
@@ -159,7 +159,7 @@ public class MMLootTables {
         }
     }
 
-    public static List<LootPool.Builder> generatePoolbuilders(ResourceLocation id, HolderLookup.Provider wrapperLookup) {
+    public static List<LootPool.Builder> generatePoolbuilders(Identifier id, HolderLookup.Provider wrapperLookup) {
         MiniblockMerchantsConfig config = MiniblockMerchantsConfig.HANDLER.instance();
 
         List<LootPool.Builder> poolBuilders = new ArrayList<>();
@@ -170,10 +170,10 @@ public class MMLootTables {
     }
 
     public static void modifyLootTables(ResourceKey<LootTable> id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
-        modifyLootTables(id.location(), tableBuilder, wrapperLookup);
+        modifyLootTables(id.identifier(), tableBuilder, wrapperLookup);
     }
 
-    public static void modifyLootTables(ResourceLocation id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
+    public static void modifyLootTables(Identifier id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
         List<LootPool.Builder> poolBuilders = generatePoolbuilders(id, wrapperLookup);
 
         for (LootPool.Builder builder : poolBuilders) {

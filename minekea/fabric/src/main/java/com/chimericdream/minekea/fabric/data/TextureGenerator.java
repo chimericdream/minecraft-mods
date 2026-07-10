@@ -10,8 +10,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.Util;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,7 +45,7 @@ public class TextureGenerator implements DataProvider {
 
     private static @Nullable TextureGenerator instance;
 
-    private final Map<ResourceLocation, Instance<?>> instances = new Object2ObjectOpenHashMap<>();
+    private final Map<Identifier, Instance<?>> instances = new Object2ObjectOpenHashMap<>();
     private final Pack pack;
 
     public TextureGenerator(Pack pack) {
@@ -74,7 +74,7 @@ public class TextureGenerator implements DataProvider {
      * @param <T>         The registry's associated type.
      */
     @SuppressWarnings("unchecked")
-    public <T> void generate(ResourceLocation registryKey, Consumer<Instance<T>> consumer) {
+    public <T> void generate(Identifier registryKey, Consumer<Instance<T>> consumer) {
         consumer.accept((Instance<T>) this.instances.computeIfAbsent(registryKey,
             (key) -> this.pack.addProvider((output, future) -> new Instance<>(output, registryKey, future))
         ));
@@ -103,15 +103,15 @@ public class TextureGenerator implements DataProvider {
         private static final Map<String, BufferedImage> IMAGE_CACHE = new Object2ObjectOpenHashMap<>();
         private static final Map<String, BufferedImage> MINEKEA_IMAGE_CACHE = new Object2ObjectOpenHashMap<>();
 
-        private final Map<ResourceLocation, BufferedImage> images = new Object2ObjectOpenHashMap<>();
+        private final Map<Identifier, BufferedImage> images = new Object2ObjectOpenHashMap<>();
 
-        private final ResourceLocation registryKey;
+        private final Identifier registryKey;
         private final CompletableFuture<HolderLookup.Provider> lookupFuture;
         private final PackOutput.PathProvider pathResolver;
 
         private Instance(
             FabricDataOutput output,
-            ResourceLocation registryKey,
+            Identifier registryKey,
             CompletableFuture<HolderLookup.Provider> lookupFuture
         ) {
             this.registryKey = registryKey;
@@ -147,7 +147,7 @@ public class TextureGenerator implements DataProvider {
          * @param identifier The texture's identifier.
          * @param image      The texture.
          */
-        public void generate(ResourceLocation identifier, BufferedImage image) {
+        public void generate(Identifier identifier, BufferedImage image) {
             this.images.put(identifier, image);
         }
 

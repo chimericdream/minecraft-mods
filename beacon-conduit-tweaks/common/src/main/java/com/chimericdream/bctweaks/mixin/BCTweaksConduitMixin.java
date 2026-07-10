@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
@@ -34,7 +34,7 @@ public class BCTweaksConduitMixin {
 
         if (!config.conduitRangePerBlock.isEmpty()) {
             Set<Block> modifierBlocks = config.conduitRangePerBlock.keySet().stream()
-                .map(ResourceLocation::parse)
+                .map(Identifier::parse)
                 .map(BuiltInRegistries.BLOCK::getValue)
                 .collect(Collectors.toSet());
 

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.component.WrittenBookContent;
@@ -24,15 +24,15 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 
 public class BookRegistry {
-    protected final Map<ResourceLocation, AthenaeumBook> books = new HashMap<>();
-    protected final Map<String, Set<ResourceLocation>> authors = new HashMap<>();
+    protected final Map<Identifier, AthenaeumBook> books = new HashMap<>();
+    protected final Map<String, Set<Identifier>> authors = new HashMap<>();
 
     public void clear() {
         this.books.clear();
         this.authors.clear();
     }
 
-    public void addFromInputStream(ResourceLocation bookId, InputStream stream) {
+    public void addFromInputStream(Identifier bookId, InputStream stream) {
         JsonObject json = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
         String title = Optional.ofNullable(json.get("title"))
@@ -66,12 +66,12 @@ public class BookRegistry {
         this.authors.get(author).add(bookId);
     }
 
-    public AthenaeumBook getById(ResourceLocation bookId) {
+    public AthenaeumBook getById(Identifier bookId) {
         return this.books.get(bookId);
     }
 
     public List<AthenaeumBook> getBooksByAuthor(String author) {
-        Set<ResourceLocation> authorBooks = this.authors.get(author);
+        Set<Identifier> authorBooks = this.authors.get(author);
 
         if (authorBooks == null) {
             return null;

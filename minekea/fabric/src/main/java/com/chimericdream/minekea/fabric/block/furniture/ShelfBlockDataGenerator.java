@@ -16,7 +16,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -26,13 +26,13 @@ import java.util.function.Function;
 
 public class ShelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate SHELF_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/shelves/supported")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/shelves/supported")),
         Optional.empty(),
         MinekeaTextures.LOG,
         MinekeaTextures.PLANKS
     );
     protected static final ModelTemplate FLOATING_SHELF_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/shelves/floating")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/shelves/floating")),
         Optional.empty(),
         MinekeaTextures.PLANKS
     );
@@ -83,7 +83,7 @@ public class ShelfBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(MinekeaTextures.LOG, TextureMapping.getBlockTexture(logIngredient))
             .put(MinekeaTextures.PLANKS, TextureMapping.getBlockTexture(plankIngredient));
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", SHELF_MODEL, unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", SHELF_MODEL, unused -> textures);
 
         ModelUtils.registerBlockWithWallSide(blockStateModelGenerator, ShelfBlock.WALL_SIDE, BLOCK, subModelId);
     }

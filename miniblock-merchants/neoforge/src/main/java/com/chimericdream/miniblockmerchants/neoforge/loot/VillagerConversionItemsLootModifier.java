@@ -7,7 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -42,7 +42,7 @@ public class VillagerConversionItemsLootModifier extends LootModifier {
         this.item = item;
     }
 
-    protected static List<LootPool> getPoolBuilders(ResourceLocation id, LootContext context) {
+    protected static List<LootPool> getPoolBuilders(Identifier id, LootContext context) {
         if (LOOT_POOL_CACHE.containsKey(id.toString())) {
             return LOOT_POOL_CACHE.get(id.toString());
         }
@@ -61,7 +61,7 @@ public class VillagerConversionItemsLootModifier extends LootModifier {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        ResourceLocation id = context.getQueriedLootTableId();
+        Identifier id = context.getQueriedLootTableId();
         List<LootPool> lootPools = getPoolBuilders(id, context);
 
         for (LootPool pool : lootPools) {

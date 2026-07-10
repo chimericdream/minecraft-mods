@@ -2,7 +2,7 @@ package com.chimericdream.minekea.block.furniture.doors;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class BookshelfDoorBlock extends DoorBlock {
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public BookshelfDoorBlock(BlockSetType type, BlockConfig config) {
@@ -20,7 +20,7 @@ public class BookshelfDoorBlock extends DoorBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/doors/bookshelves/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/doors/bookshelves/%s", material));
     }
 }

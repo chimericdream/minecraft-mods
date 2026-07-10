@@ -2,22 +2,22 @@ package com.chimericdream.minekea.block.building.compressed;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class CompressedMinekeaBlock extends CompressedBlock {
-    public final ResourceLocation baseBlockId;
+    public final Identifier baseBlockId;
 
     public CompressedMinekeaBlock(
         BlockConfig config,
         int compressionLevel,
-        ResourceLocation baseBlockId
+        Identifier baseBlockId
     ) {
         super(config, compressionLevel);
 
         this.baseBlockId = baseBlockId;
 
         if (compressionLevel > 1) {
-            PARENT_BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", config.getMaterial(), compressionLevel - 1));
+            PARENT_BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/compressed/%s/%dx", config.getMaterial(), compressionLevel - 1));
         } else {
             PARENT_BLOCK_ID = baseBlockId;
         }

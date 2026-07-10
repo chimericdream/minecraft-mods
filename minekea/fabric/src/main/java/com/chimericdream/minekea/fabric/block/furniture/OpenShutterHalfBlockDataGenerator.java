@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -36,7 +36,7 @@ public class OpenShutterHalfBlockDataGenerator extends ChimericLibBlockDataGener
 
     protected static ModelTemplate makeModel(String path) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.PANEL,
             MinekeaTextures.FRAME
@@ -60,8 +60,8 @@ public class OpenShutterHalfBlockDataGenerator extends ChimericLibBlockDataGener
             .put(MinekeaTextures.FRAME, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
             .put(MinekeaTextures.PANEL, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        ResourceLocation leftHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_left_half", LEFT_HALF_MODEL, unused -> textures);
-        ResourceLocation rightHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_right_half", RIGHT_HALF_MODEL, unused -> textures);
+        Identifier leftHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_left_half", LEFT_HALF_MODEL, unused -> textures);
+        Identifier rightHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_right_half", RIGHT_HALF_MODEL, unused -> textures);
 
         MultiVariant leftHalfModel = BlockModelGenerators.plainVariant(leftHalfModelId);
         MultiVariant rightHalfModel = BlockModelGenerators.plainVariant(rightHalfModelId);

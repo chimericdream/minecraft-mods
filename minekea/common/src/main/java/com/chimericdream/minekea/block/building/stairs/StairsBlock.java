@@ -2,12 +2,12 @@ package com.chimericdream.minekea.block.building.stairs;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class StairsBlock extends net.minecraft.world.level.block.StairBlock {
-    public ResourceLocation BLOCK_ID;
+    public Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public StairsBlock(BlockConfig config) {
@@ -17,7 +17,7 @@ public class StairsBlock extends net.minecraft.world.level.block.StairBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/stairs/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/stairs/%s", material));
     }
 }

@@ -3,7 +3,7 @@ package com.chimericdream.minekea.neoforge.client.render.block;
 import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.textures.FluidSpriteCache;
@@ -21,7 +21,7 @@ public class NeoForgeGlassJarBlockEntityRenderer extends GlassJarBlockEntityRend
 
     protected TextureAtlasSprite getFluidTexture(Fluid fluid) {
         IClientFluidTypeExtensions renderProperties = IClientFluidTypeExtensions.of(fluid);
-        ResourceLocation sprite = renderProperties.getStillTexture();
+        Identifier sprite = renderProperties.getStillTexture();
         return FluidSpriteCache.getSprite(sprite);
     }
 }

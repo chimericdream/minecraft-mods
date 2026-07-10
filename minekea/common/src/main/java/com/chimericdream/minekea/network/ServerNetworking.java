@@ -6,7 +6,7 @@ import com.chimericdream.minekea.item.tools.BlockPainterItem;
 import com.chimericdream.minekea.registry.ColoredBlocksRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.component.CustomModelData;
 import java.util.List;
 
 public class ServerNetworking {
-    public static ResourceLocation CYCLE_PAINTER_COLOR = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "events/items/painter/cycle");
+    public static Identifier CYCLE_PAINTER_COLOR = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "events/items/painter/cycle");
 
     public static void init() {
     }

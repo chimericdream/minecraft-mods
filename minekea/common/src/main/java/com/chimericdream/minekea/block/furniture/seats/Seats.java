@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
@@ -28,7 +28,7 @@ public class Seats implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> CHAIR_BLOCKS = new ArrayList<>();
     public static final List<RegistrySupplier<Block>> STOOL_BLOCKS = new ArrayList<>();
 
-    public static ResourceLocation SEAT_ENTITY_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/mounts/seat");
+    public static Identifier SEAT_ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "entities/mounts/seat");
     public static final RegistrySupplier<EntityType<SimpleSeatEntity>> SEAT_ENTITY = REGISTRY_HELPER.registerEntityType(
         SEAT_ENTITY_ID,
         () -> EntityType.Builder.of(SimpleSeatEntity::new, MobCategory.MISC).build(ResourceKey.create(Registries.ENTITY_TYPE, SEAT_ENTITY_ID))

@@ -21,7 +21,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -42,7 +42,7 @@ public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGen
 
     protected static ModelTemplate makeModel(String path) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.MATERIAL,
             MinekeaTextures.SHELF
@@ -82,11 +82,11 @@ public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGen
 
         TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
-            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
 
-        ResourceLocation bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
-        ResourceLocation topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
-        ResourceLocation openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
+        Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
+        Identifier topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);
+        Identifier openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
 
         MultiVariant bottom = BlockModelGenerators.plainVariant(bottomModelId);
         MultiVariant top = BlockModelGenerators.plainVariant(topModelId);

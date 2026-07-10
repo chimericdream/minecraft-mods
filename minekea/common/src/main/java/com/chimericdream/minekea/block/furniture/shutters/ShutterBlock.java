@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
@@ -41,7 +41,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
     protected final BlockSetType blockSetType;
 
@@ -102,8 +102,8 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         this.blockSetType = type;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shutters/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("furniture/shutters/%s", material));
     }
 
     @Override

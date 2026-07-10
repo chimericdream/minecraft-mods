@@ -1,5 +1,5 @@
 accessWidener v2 named
-accessible field net/minecraft/world/entity/npc/Villager gossips Lnet/minecraft/world/entity/ai/gossip/GossipContainer;
-accessible method net/minecraft/world/entity/npc/Villager readAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueInput;)V
+accessible field net/minecraft/world/entity/npc/villager/Villager gossips Lnet/minecraft/world/entity/ai/gossip/GossipContainer;
+accessible method net/minecraft/world/entity/npc/villager/Villager readAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueInput;)V
 
 #accessible method net/minecraft/entity/passive/VillagerEntity initGoals ()V

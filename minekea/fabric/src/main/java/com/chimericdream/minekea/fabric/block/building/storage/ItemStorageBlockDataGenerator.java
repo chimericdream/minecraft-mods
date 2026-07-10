@@ -27,7 +27,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -45,7 +45,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     protected static ModelTemplate makeCubeModel(BlockConfig.RenderType renderType) {
         return new CustomBlockStateModelSupplier.CustomBlockModel(
             renderType,
-            Optional.of(ResourceLocation.withDefaultNamespace("block/cube_all")),
+            Optional.of(Identifier.withDefaultNamespace("block/cube_all")),
             Optional.empty(),
             TextureSlot.ALL
         );
@@ -54,7 +54,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     protected static ModelTemplate makeColumnModel(BlockConfig.RenderType renderType) {
         return new CustomBlockStateModelSupplier.CustomBlockModel(
             renderType,
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_column")),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_column")),
             Optional.empty(),
             TextureSlot.BOTTOM,
             TextureSlot.SIDE,
@@ -65,7 +65,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     protected static ModelTemplate makeBaggedModel(BlockConfig.RenderType renderType) {
         return new CustomBlockStateModelSupplier.CustomBlockModel(
             renderType,
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/bagged_block")),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/bagged_block")),
             Optional.empty(),
             MinekeaTextures.CONTENTS
         );
@@ -127,15 +127,15 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     public void configureBaggedBlockModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.CONTENTS, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())))
-            .put(TextureSlot.ALL, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())));
+            .put(MinekeaTextures.CONTENTS, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())))
+            .put(TextureSlot.ALL, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())));
 
         configureBaggedBlockModels(blockStateModelGenerator, textures);
     }
 
     public void configureBaggedBlockModels(BlockModelGenerators blockStateModelGenerator, TextureMapping textures) {
-        ResourceLocation baggedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bagged", makeBaggedModel(BlockConfig.RenderType.CUTOUT), unused -> textures);
-        ResourceLocation baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_ALL, unused -> textures);
+        Identifier baggedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bagged", makeBaggedModel(BlockConfig.RenderType.CUTOUT), unused -> textures);
+        Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_ALL, unused -> textures);
 
         MultiVariant baggedModel = BlockModelGenerators.plainVariant(baggedModelId);
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
@@ -179,8 +179,8 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected void configureCustomBaggedBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation contentsTexture = BLOCK.config.getTexture("contents");
-        ResourceLocation allTexture = BLOCK.config.getTexture("all");
+        Identifier contentsTexture = BLOCK.config.getTexture("contents");
+        Identifier allTexture = BLOCK.config.getTexture("all");
 
         if (contentsTexture == null || allTexture == null) {
             throw new RuntimeException("Missing textures for block model");
@@ -194,30 +194,30 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected void configureBlockStateModelsWithFacing(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_bottom", BLOCK.BLOCK_ID.getPath()));
-        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath()));
-        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_top", BLOCK.BLOCK_ID.getPath()));
+        Identifier bottomTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_bottom", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath()));
+        Identifier topTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_top", BLOCK.BLOCK_ID.getPath()));
 
         TextureMapping textures = new TextureMapping()
             .put(TextureSlot.BOTTOM, bottomTexture)
             .put(TextureSlot.SIDE, sideTexture)
             .put(TextureSlot.TOP, topTexture);
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
 
         ModelUtils.registerBlockWithFacing(blockStateModelGenerator, ItemStorageBlock.FACING, BLOCK, subModelId);
     }
 
     protected void configureBlockStateModelsWithAxis(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation endTexture = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath()));
-        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath()));
+        Identifier endTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath()));
 
         TextureMapping textures = new TextureMapping()
             .put(TextureSlot.BOTTOM, endTexture)
             .put(TextureSlot.SIDE, sideTexture)
             .put(TextureSlot.TOP, endTexture);
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
 
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, ItemStorageBlock.AXIS, BLOCK, subModelId);
     }

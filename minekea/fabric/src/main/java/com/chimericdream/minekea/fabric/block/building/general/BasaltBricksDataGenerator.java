@@ -3,7 +3,7 @@ package com.chimericdream.minekea.fabric.block.building.general;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;

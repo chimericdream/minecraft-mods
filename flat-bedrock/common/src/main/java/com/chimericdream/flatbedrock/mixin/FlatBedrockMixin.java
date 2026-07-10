@@ -1,6 +1,6 @@
 package com.chimericdream.flatbedrock.mixin;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,11 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract public class FlatBedrockMixin {
     @Shadow
     @Final
-    private ResourceLocation randomName;
+    private Identifier randomName;
     @Unique
-    private static final ResourceLocation fb$bedrockFloor = ResourceLocation.withDefaultNamespace("bedrock_floor");
+    private static final Identifier fb$bedrockFloor = Identifier.withDefaultNamespace("bedrock_floor");
     @Unique
-    private static final ResourceLocation fb$bedrockRoof = ResourceLocation.withDefaultNamespace("bedrock_roof");
+    private static final Identifier fb$bedrockRoof = Identifier.withDefaultNamespace("bedrock_roof");
     @Unique
     private static final VerticalAnchor fb$aboveBottom = VerticalAnchor.aboveBottom(1);
     @Unique

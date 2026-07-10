@@ -4,7 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -34,7 +34,7 @@ public class VerticalSlabBlock extends Block implements SimpleWaterloggedBlock {
     public static final VoxelShape EAST_SHAPE = Block.box(8.0, 0.0, 0.0, 16.0, 16.0, 16.0);
     public static final VoxelShape WEST_SHAPE = Block.box(0.0, 0.0, 0.0, 8.0, 16.0, 16.0);
 
-    public ResourceLocation BLOCK_ID;
+    public Identifier BLOCK_ID;
     public final BlockConfig config;
 
     static {
@@ -45,7 +45,7 @@ public class VerticalSlabBlock extends Block implements SimpleWaterloggedBlock {
         this(config, makeId(config.getMaterial()));
     }
 
-    public VerticalSlabBlock(BlockConfig config, ResourceLocation id) {
+    public VerticalSlabBlock(BlockConfig config, Identifier id) {
         super(config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(id)));
 
         this.registerDefaultState(
@@ -58,8 +58,8 @@ public class VerticalSlabBlock extends Block implements SimpleWaterloggedBlock {
         this.config = config;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/slabs/vertical/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/slabs/vertical/%s", material));
     }
 
     public BlockConfig getConfig() {

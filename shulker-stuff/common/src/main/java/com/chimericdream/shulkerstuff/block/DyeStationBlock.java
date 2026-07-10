@@ -5,7 +5,7 @@ import com.chimericdream.shulkerstuff.block.entity.DyeStationBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.shulkerstuff.ShulkerStuffMod.REGISTRY_HELPER;
 
 public class DyeStationBlock extends BaseEntityBlock {
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "dye_station");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "dye_station");
     public static final MapCodec<DyeStationBlock> CODEC = simpleCodec(DyeStationBlock::create);
 
     private static final VoxelShape DEFAULT_SHAPE;

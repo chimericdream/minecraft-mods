@@ -28,7 +28,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -82,7 +82,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
     public static final EnumProperty<Direction> FACING;
     public static final BooleanProperty WATERLOGGED;
 
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/glass_jar");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/glass_jar");
 
     private static final VoxelShape MAIN_SHAPE;
     private static final VoxelShape LID_SHAPE;
@@ -397,7 +397,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         }
 
         if (isFilledBucket(stack)) {
-            ResourceLocation stackId = BuiltInRegistries.ITEM.getKey(stack.getItem());
+            Identifier stackId = BuiltInRegistries.ITEM.getKey(stack.getItem());
             Fluid bucketFluid = getFluidType(stackId);
 
             if (!bucketFluid.isSame(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
@@ -643,7 +643,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
-    private Fluid getFluidType(ResourceLocation heldItemId) {
+    private Fluid getFluidType(Identifier heldItemId) {
         Optional<Fluid> foundFluid = BuiltInRegistries.FLUID.stream()
             .filter(fluid -> {
                 Item bucket = fluid.getBucket();
@@ -690,7 +690,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
             return false;
         }
 
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
 
         return itemId.compareTo(BuiltInRegistries.ITEM.getKey(Items.BUCKET.asItem())) != 0;
     }
@@ -705,12 +705,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
             return stack;
         }
 
-        ResourceLocation stackId = ItemHelpers.getIdentifier(stack);
+        Identifier stackId = ItemHelpers.getIdentifier(stack);
 
         if (!ALLOWED_ITEM_IDS.containsKey(stackId.toString())) {
             return stack;
         }
 
-        return BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(ALLOWED_ITEM_IDS.get(stackId.toString()))).getDefaultInstance();
+        return BuiltInRegistries.ITEM.getValue(Identifier.parse(ALLOWED_ITEM_IDS.get(stackId.toString()))).getDefaultInstance();
     }
 }

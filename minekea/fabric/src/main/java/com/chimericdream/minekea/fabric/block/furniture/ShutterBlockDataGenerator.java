@@ -22,7 +22,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -41,7 +41,7 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     protected static ModelTemplate makeModel(String path) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.PANEL,
             MinekeaTextures.FRAME
@@ -94,8 +94,8 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .put(MinekeaTextures.FRAME, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
             .put(MinekeaTextures.PANEL, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
 
-        ResourceLocation closedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CLOSED_MODEL, unused -> textures);
-        ResourceLocation openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
+        Identifier closedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CLOSED_MODEL, unused -> textures);
+        Identifier openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);
 
         MultiVariant closedModel = BlockModelGenerators.plainVariant(closedModelId);
         MultiVariant openModel = BlockModelGenerators.plainVariant(openModelId);

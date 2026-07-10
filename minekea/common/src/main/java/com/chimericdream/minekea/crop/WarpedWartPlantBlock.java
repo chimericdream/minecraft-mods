@@ -3,7 +3,7 @@ package com.chimericdream.minekea.crop;
 import com.chimericdream.minekea.ModInfo;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +27,7 @@ import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 public class WarpedWartPlantBlock extends VegetationBlock {
     public static final MapCodec<WarpedWartPlantBlock> CODEC = simpleCodec(_unused -> new WarpedWartPlantBlock());
 
-    public static final ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "crops/warped_wart/block");
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "crops/warped_wart/block");
     public static final IntegerProperty AGE;
     private static final VoxelShape[] AGE_TO_SHAPE;
 

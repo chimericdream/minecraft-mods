@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -46,7 +46,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
 
     @ModifyArg(
         method = "mobInteract",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/ZombieVillager;startConverting(Ljava/util/UUID;I)V"),
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/zombie/ZombieVillager;startConverting(Ljava/util/UUID;I)V"),
         index = 1
     )
     private int vt$modifyConversionTime(int time) {

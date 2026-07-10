@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
 public class EndlessRodBlock extends RodBlock {
-    public final static ResourceLocation BLOCK_ID = ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/lighting/endless_rod");
+    public final static Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "decorations/lighting/endless_rod");
     public static final MapCodec<EndlessRodBlock> CODEC = simpleCodec(EndlessRodBlock::new);
 
     public @NotNull MapCodec<EndlessRodBlock> codec() {

@@ -5,7 +5,7 @@ import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.Arrays;
 import java.util.HashSet;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +27,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SUSPICIOUS_SOUL_SOIL = REGISTRY_HELPER.registerWithItem(SuspiciousSoulSoilBlock.BLOCK_ID, SuspiciousSoulSoilBlock::new, DEFAULT_SETTINGS);
 
     public static final RegistrySupplier<BlockEntityType<ATBrushableBlockEntity>> BRUSHABLE_MOD_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
-        ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "brushable_block_entity_type"),
+        Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "brushable_block_entity_type"),
         () -> new BlockEntityType<>(
             ATBrushableBlockEntity::new,
             new HashSet<>(Arrays.asList(

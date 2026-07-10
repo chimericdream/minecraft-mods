@@ -4,7 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -32,7 +32,7 @@ public class FramedPlanksBlock extends Block {
         CONNECTED_WEST = BooleanProperty.create("connected_west");
     }
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
 
     public FramedPlanksBlock(BlockConfig config) {
@@ -51,8 +51,8 @@ public class FramedPlanksBlock extends Block {
         );
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/general/framed_planks/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/general/framed_planks/%s", material));
     }
 
     public BlockConfig getConfig() {

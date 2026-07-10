@@ -5,7 +5,7 @@ import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.client.screen.HopperItemFilterScreenHandler;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -25,7 +25,7 @@ public class ModItems {
             HopperXtremeMod.LOGGER.info("Minekea is loaded! Skipping registration of Hopper X-Treme's wrench.");
         } else {
             HopperXtremeMod.LOGGER.info("Minekea not loaded. Registering Hopper X-Treme's wrench.");
-            WRENCH = REGISTRY_HELPER.registerItem(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench"), WrenchItem::new);
+            WRENCH = REGISTRY_HELPER.registerItem(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "tools/wrench"), WrenchItem::new);
         }
     }
 }

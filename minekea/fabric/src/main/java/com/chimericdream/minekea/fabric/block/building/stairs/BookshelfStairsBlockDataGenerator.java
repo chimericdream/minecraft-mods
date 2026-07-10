@@ -13,7 +13,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
@@ -29,7 +29,7 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
 
     protected static ModelTemplate makeModel(String path) {
         return new ModelTemplate(
-            Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, path)),
             Optional.empty(),
             MinekeaTextures.SHELF,
             MinekeaTextures.MATERIAL
@@ -38,7 +38,7 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
 
     @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
-        ResourceLocation ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
+        Identifier ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
         Block ingredient = BuiltInRegistries.BLOCK.getValue(ingredientId);
 
         generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
@@ -59,10 +59,10 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation textureId = BLOCK.config.getTexture();
+        Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.SHELF, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
+            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
             .put(MinekeaTextures.MATERIAL, textureId);
 
         ModelUtils.registerStairsBlock(

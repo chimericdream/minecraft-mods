@@ -13,7 +13,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -47,7 +47,7 @@ abstract public class ChimericLibBlockDataGenerator {
     }
 
     public static MultiVariant makeInvalidVariant(BlockModelGenerators blockStateModelGenerator, Block block) {
-        ResourceLocation invalidModelId = blockStateModelGenerator.createSuffixedVariant(block, "_invalid", ModelTemplates.CUBE_ALL, unused -> TextureMapping.singleSlot(TextureSlot.ALL, TextureMapping.getBlockTexture(Blocks.BEDROCK)));
+        Identifier invalidModelId = blockStateModelGenerator.createSuffixedVariant(block, "_invalid", ModelTemplates.CUBE_ALL, unused -> TextureMapping.singleSlot(TextureSlot.ALL, TextureMapping.getBlockTexture(Blocks.BEDROCK)));
 
         return BlockModelGenerators.plainVariant(invalidModelId);
     }

@@ -8,7 +8,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 public class CompressedColumnBlockDataGenerator extends CompressedBlockDataGenerator {
@@ -19,17 +19,17 @@ public class CompressedColumnBlockDataGenerator extends CompressedBlockDataGener
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.END, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath())))
-            .put(TextureSlot.SIDE, ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath())));
+            .put(TextureSlot.END, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath())))
+            .put(TextureSlot.SIDE, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath())));
 
-        ResourceLocation subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_COLUMN, unused -> textures);
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_COLUMN, unused -> textures);
 
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, CompressedColumnBlock.AXIS, BLOCK, subModelId);
     }
 
     @Override
     public void generateTextures() {
-        TextureGenerator.getInstance().<Block>generate(ResourceLocation.withDefaultNamespace("block"), instance -> {
+        TextureGenerator.getInstance().<Block>generate(Identifier.withDefaultNamespace("block"), instance -> {
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).endTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_end"));
             generateTexture(instance, BLOCK.config.getMaterial() + ((CompressedColumnBlock) BLOCK).sideTextureSuffix, BLOCK.BLOCK_ID.withSuffix("_side"));
         });

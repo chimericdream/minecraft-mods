@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -40,7 +40,7 @@ public class DyedBlock extends Block {
         AXIS = BlockStateProperties.AXIS;
     }
 
-    public final ResourceLocation BLOCK_ID;
+    public final Identifier BLOCK_ID;
     public final BlockConfig config;
     public final DyeColor color;
 
@@ -55,8 +55,8 @@ public class DyedBlock extends Block {
         this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.Y));
     }
 
-    public static ResourceLocation makeId(String material, DyeColor color) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/dyed/%s/%s", material, color));
+    public static Identifier makeId(String material, DyeColor color) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("building/dyed/%s/%s", material, color));
     }
 
     public BlockConfig getConfig() {

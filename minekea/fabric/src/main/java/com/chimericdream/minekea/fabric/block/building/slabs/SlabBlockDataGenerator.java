@@ -15,7 +15,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -62,7 +62,7 @@ public class SlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation textureId = BLOCK.config.getTexture();
+        Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping()
             .put(TextureSlot.BOTTOM, textureId)

@@ -1,4 +1,4 @@
-package com.chimericdream.bannertweaks.fabric;
+package com.chimericdream.bannertweaks.fabric.client;
 
 import com.chimericdream.bannertweaks.BannerTweaksMod;
 import com.chimericdream.bannertweaks.fabric.network.FabricServerNetworking;

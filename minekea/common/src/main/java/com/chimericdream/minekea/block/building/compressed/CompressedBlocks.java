@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,7 +37,7 @@ public class CompressedBlocks implements ModThingGroup {
 
     protected static final List<Triplet<Pair<String, String>, Block, Tool>> BLOCKS_TO_COMPRESS = new ArrayList<>();
     protected static final List<Quartet<Pair<String, String>, Block, Pair<String, String>, Tool>> COLUMN_BLOCKS_TO_COMPRESS = new ArrayList<>();
-    protected static final List<Quartet<Pair<String, String>, Supplier<Block>, ResourceLocation, Tool>> MINEKEA_BLOCKS_TO_COMPRESS = new ArrayList<>();
+    protected static final List<Quartet<Pair<String, String>, Supplier<Block>, Identifier, Tool>> MINEKEA_BLOCKS_TO_COMPRESS = new ArrayList<>();
 
     static {
         BLOCKS_TO_COMPRESS.add(new Triplet<>(new Pair<>("Amethyst", "amethyst_block"), Blocks.AMETHYST_BLOCK, null));
@@ -177,7 +177,7 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedBlock(
@@ -230,7 +230,7 @@ public class CompressedBlocks implements ModThingGroup {
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedColumnBlock(
@@ -265,14 +265,14 @@ public class CompressedBlocks implements ModThingGroup {
             String materialName = data.getA().getA();
             String material = data.getA().getB();
             Supplier<Block> ingredient = data.getB();
-            ResourceLocation baseBlockId = data.getC();
+            Identifier baseBlockId = data.getC();
             Tool tool = data.getD();
 
             List<RegistrySupplier<Block>> compressedBlocks = new ArrayList<>();
 
             for (int i = 1; i <= 9; i += 1) {
                 int compressionLevel = i;
-                ResourceLocation blockId = CompressedBlock.makeId(material, compressionLevel);
+                Identifier blockId = CompressedBlock.makeId(material, compressionLevel);
                 RegistrySupplier<Block> compressedBlock = REGISTRY_HELPER.registerWithItem(
                     blockId,
                     () -> new CompressedMinekeaBlock(

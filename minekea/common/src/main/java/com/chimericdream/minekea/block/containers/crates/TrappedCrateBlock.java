@@ -6,7 +6,7 @@ import com.chimericdream.minekea.entity.block.containers.CrateBlockEntity;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -27,8 +27,8 @@ public class TrappedCrateBlock extends CrateBlock {
         BASE_CRATE = baseCrate;
     }
 
-    public static ResourceLocation makeId(String material) {
-        return ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/crates/trapped/%s", material));
+    public static Identifier makeId(String material) {
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("containers/crates/trapped/%s", material));
     }
 
     @Override

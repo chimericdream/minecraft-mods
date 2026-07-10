@@ -7,7 +7,7 @@ import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import dev.architectury.core.fluid.SimpleArchitecturyFluidAttributes;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -39,8 +39,8 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
         .slopeFindDistance(2)
         .dropOff(2)
         .tickDelay(40)
-        .sourceTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey"))
-        .flowingTexture(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey/flowing"))
+        .sourceTexture(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey"))
+        .flowingTexture(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/fluids/honey/flowing"))
         .fillSound(SoundEvents.BUCKET_FILL_LAVA)
         .color(0xFFFFFF);
 
@@ -66,7 +66,7 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Block extends ArchitecturyLiquidBlock {
         public Block() {
-            super(ModFluids.HONEY_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/honey/source"))));
+            super(ModFluids.HONEY_FLUID, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).setId(REGISTRY_HELPER.makeBlockRegistryKey(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fluids/honey/source"))));
         }
 
         @Override
@@ -81,7 +81,7 @@ public class HoneyFluid extends ArchitecturyFlowingFluid.Source {
 
     public static class Bucket extends ArchitecturyBucketItem {
         public Bucket() {
-            super(ModFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).arch$tab(CreativeModeTabs.INGREDIENTS).setId(REGISTRY_HELPER.makeItemRegistryKey(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/honey_bucket"))));
+            super(ModFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).arch$tab(CreativeModeTabs.INGREDIENTS).setId(REGISTRY_HELPER.makeItemRegistryKey(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/honey_bucket"))));
         }
     }
 }

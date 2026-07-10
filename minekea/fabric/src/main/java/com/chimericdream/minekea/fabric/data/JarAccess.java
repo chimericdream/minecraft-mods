@@ -2,7 +2,7 @@ package com.chimericdream.minekea.fabric.data;
 
 import com.chimericdream.minekea.MinekeaMod;
 import com.mojang.serialization.DataResult;
-import net.minecraft.FileUtil;
+import net.minecraft.util.FileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

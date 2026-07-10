@@ -16,7 +16,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -25,7 +25,7 @@ import java.util.function.Function;
 
 public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public static final ModelTemplate VERTICAL_SLAB_MODEL = new ModelTemplate(
-        Optional.of(ResourceLocation.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/slabs/vertical")),
+        Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/slabs/vertical")),
         Optional.empty(),
         TextureSlot.ALL
     );
@@ -71,7 +71,7 @@ public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerato
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        ResourceLocation textureId = BLOCK.config.getTexture();
+        Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, textureId);
 
