@@ -112,8 +112,6 @@ subprojects {
             modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
             modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-//            modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-FABRIC"
-
             modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
         }
     }
@@ -135,8 +133,6 @@ subprojects {
             modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
             modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
-//            modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-FABRIC"
-
             modImplementation "com.terraformersmc:modmenu:${rootProject.mod_menu_version}"
             modImplementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
         }
@@ -146,8 +142,6 @@ subprojects {
         dependencies {
             neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
             modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
-
-//            modImplementation "vazkii.patchouli:Patchouli:${rootProject.patchouli_version}-NEOFORGE"
 
             modImplementation("dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-neoforge") {
                 exclude(group: "net.neoforged.fancymodloader", module: "loader")

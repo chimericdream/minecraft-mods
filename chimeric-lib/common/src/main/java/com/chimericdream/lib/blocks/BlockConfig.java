@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +28,7 @@ public class BlockConfig {
     protected final Map<String, TagKey<Item>> tagIngredients = new LinkedHashMap<>();
     protected boolean isFlammable = false;
     protected boolean isTranslucent = false;
-    protected final Map<String, ResourceLocation> textures = new LinkedHashMap<>();
+    protected final Map<String, Identifier> textures = new LinkedHashMap<>();
     protected RenderType renderType = RenderType.SOLID;
 
     public BlockConfig settings(BlockBehaviour.Properties baseSettings) {
@@ -178,20 +178,20 @@ public class BlockConfig {
         return isTranslucent;
     }
 
-    public BlockConfig texture(ResourceLocation texture) {
+    public BlockConfig texture(Identifier texture) {
         return texture("default", texture);
     }
 
-    public BlockConfig texture(String name, ResourceLocation texture) {
+    public BlockConfig texture(String name, Identifier texture) {
         this.textures.put(name, texture);
         return this;
     }
 
-    public @Nullable ResourceLocation getTexture() {
+    public @Nullable Identifier getTexture() {
         return textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()));
     }
 
-    public @Nullable ResourceLocation getTexture(String name) {
+    public @Nullable Identifier getTexture(String name) {
         return textures.get(name);
     }
 

@@ -4,19 +4,19 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> extends AbstractContainerScreen<Handler> {
-    private static final ResourceLocation BG = ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
+    private static final Identifier BG = Identifier.withDefaultNamespace("textures/gui/demo_background.png");
     private static final int BG_CORNER = 4;
     private static final int BG_X = 0;
     private static final int BG_Y = 0;
     private static final int BG_W = 350;
     private static final int BG_H = 344;
 
-    private static final ResourceLocation CONTAINER = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
+    private static final Identifier CONTAINER = Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
     private static final int CINV_X = 7;
     private static final int CINV_Y = 17;
     private static final int CINV_COLS = 9;

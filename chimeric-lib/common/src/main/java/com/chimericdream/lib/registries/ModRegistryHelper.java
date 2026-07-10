@@ -13,9 +13,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -37,7 +37,7 @@ public class ModRegistryHelper {
     public final DeferredRegister<EntityType<?>> ENTITY_TYPES;
     public final DeferredRegister<MenuType<?>> SCREEN_HANDLERS;
     public final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
-    public final DeferredRegister<ResourceLocation> CUSTOM_STATS;
+    public final DeferredRegister<Identifier> CUSTOM_STATS;
     public final DeferredRegister<DataComponentType<?>> CUSTOM_COMPONENTS;
 
     @SuppressWarnings("unchecked")
@@ -53,7 +53,7 @@ public class ModRegistryHelper {
         ENTITY_TYPES = DeferredRegister.create(modId, (ResourceKey<Registry<EntityType<?>>>) BuiltInRegistries.ENTITY_TYPE.key());
         SCREEN_HANDLERS = DeferredRegister.create(modId, (ResourceKey<Registry<MenuType<?>>>) BuiltInRegistries.MENU.key());
         VILLAGER_PROFESSIONS = DeferredRegister.create(modId, (ResourceKey<Registry<VillagerProfession>>) BuiltInRegistries.VILLAGER_PROFESSION.key());
-        CUSTOM_STATS = DeferredRegister.create(modId, (ResourceKey<Registry<ResourceLocation>>) BuiltInRegistries.CUSTOM_STAT.key());
+        CUSTOM_STATS = DeferredRegister.create(modId, (ResourceKey<Registry<Identifier>>) BuiltInRegistries.CUSTOM_STAT.key());
         CUSTOM_COMPONENTS = DeferredRegister.create(modId, (ResourceKey<Registry<DataComponentType<?>>>) BuiltInRegistries.DATA_COMPONENT_TYPE.key());
     }
 
@@ -89,15 +89,15 @@ public class ModRegistryHelper {
         CUSTOM_COMPONENTS.register();
     }
 
-    public ResourceLocation makeId(String key) {
-        return ResourceLocation.fromNamespaceAndPath(this.modId, key);
+    public Identifier makeId(String key) {
+        return Identifier.fromNamespaceAndPath(this.modId, key);
     }
 
     public ResourceKey<Block> makeBlockRegistryKey(String key) {
         return makeBlockRegistryKey(makeId(key));
     }
 
-    public ResourceKey<Block> makeBlockRegistryKey(ResourceLocation id) {
+    public ResourceKey<Block> makeBlockRegistryKey(Identifier id) {
         return ResourceKey.create(Registries.BLOCK, id);
     }
 
@@ -105,15 +105,15 @@ public class ModRegistryHelper {
         return makeItemRegistryKey(makeId(key));
     }
 
-    public ResourceKey<Item> makeItemRegistryKey(ResourceLocation id) {
+    public ResourceKey<Item> makeItemRegistryKey(Identifier id) {
         return ResourceKey.create(Registries.ITEM, id);
     }
 
     public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String name, final Supplier<T> supplier) {
-        return registerBlockEntity(ResourceLocation.fromNamespaceAndPath(this.modId, name), supplier);
+        return registerBlockEntity(Identifier.fromNamespaceAndPath(this.modId, name), supplier);
     }
 
-    public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final ResourceLocation id, final Supplier<T> supplier) {
+    public <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final Identifier id, final Supplier<T> supplier) {
         return BLOCK_ENTITY_TYPES.register(id, supplier);
     }
 
@@ -121,15 +121,15 @@ public class ModRegistryHelper {
         return registerWithItem(name, supplier, new Item.Properties());
     }
 
-    public RegistrySupplier<Block> registerWithItem(ResourceLocation id, Supplier<Block> supplier) {
+    public RegistrySupplier<Block> registerWithItem(Identifier id, Supplier<Block> supplier) {
         return registerWithItem(id, supplier, new Item.Properties());
     }
 
     public RegistrySupplier<Block> registerWithItem(String name, Supplier<Block> supplier, Item.Properties itemSettings) {
-        return registerWithItem(ResourceLocation.fromNamespaceAndPath(this.modId, name), supplier, itemSettings);
+        return registerWithItem(Identifier.fromNamespaceAndPath(this.modId, name), supplier, itemSettings);
     }
 
-    public RegistrySupplier<Block> registerWithItem(ResourceLocation id, Supplier<Block> supplier, Item.Properties itemSettings) {
+    public RegistrySupplier<Block> registerWithItem(Identifier id, Supplier<Block> supplier, Item.Properties itemSettings) {
         RegistrySupplier<Block> block = registerBlock(id, supplier);
 
         registerItem(
@@ -144,10 +144,10 @@ public class ModRegistryHelper {
     }
 
     public <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
-        return registerBlock(ResourceLocation.fromNamespaceAndPath(this.modId, name), block);
+        return registerBlock(Identifier.fromNamespaceAndPath(this.modId, name), block);
     }
 
-    public <T extends Block> RegistrySupplier<T> registerBlock(ResourceLocation id, Supplier<T> block) {
+    public <T extends Block> RegistrySupplier<T> registerBlock(Identifier id, Supplier<T> block) {
         if (Platform.isNeoForge()) {
             return BLOCKS.register(id.getPath(), block);
         }
@@ -156,18 +156,18 @@ public class ModRegistryHelper {
     }
 
     public <T extends Fluid> RegistrySupplier<T> registerFluid(String name, Supplier<T> fluidSupplier) {
-        return registerFluid(ResourceLocation.fromNamespaceAndPath(this.modId, name), fluidSupplier);
+        return registerFluid(Identifier.fromNamespaceAndPath(this.modId, name), fluidSupplier);
     }
 
-    public <T extends Fluid> RegistrySupplier<T> registerFluid(ResourceLocation id, Supplier<T> fluidSupplier) {
+    public <T extends Fluid> RegistrySupplier<T> registerFluid(Identifier id, Supplier<T> fluidSupplier) {
         return FLUIDS.register(id, fluidSupplier);
     }
 
     public <T extends Item> RegistrySupplier<T> registerItem(String name, Supplier<T> itemSupplier) {
-        return registerItem(ResourceLocation.fromNamespaceAndPath(this.modId, name), itemSupplier);
+        return registerItem(Identifier.fromNamespaceAndPath(this.modId, name), itemSupplier);
     }
 
-    public <T extends Item> RegistrySupplier<T> registerItem(ResourceLocation id, Supplier<T> itemSupplier) {
+    public <T extends Item> RegistrySupplier<T> registerItem(Identifier id, Supplier<T> itemSupplier) {
         if (Platform.isNeoForge()) {
             return ITEMS.register(id.getPath(), itemSupplier);
         }
@@ -186,10 +186,10 @@ public class ModRegistryHelper {
     }
 
     public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(String name, Supplier<T> entitySupplier) {
-        return registerEntityType(ResourceLocation.fromNamespaceAndPath(this.modId, name), entitySupplier);
+        return registerEntityType(Identifier.fromNamespaceAndPath(this.modId, name), entitySupplier);
     }
 
-    public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(ResourceLocation id, Supplier<T> entitySupplier) {
+    public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(Identifier id, Supplier<T> entitySupplier) {
         if (Platform.isNeoForge()) {
             return ENTITY_TYPES.register(id.getPath(), entitySupplier);
         }
@@ -198,10 +198,10 @@ public class ModRegistryHelper {
     }
 
     public <T extends MenuType<?>> RegistrySupplier<T> registerScreenHandler(String name, Supplier<T> screenHandlerSupplier) {
-        return registerScreenHandler(ResourceLocation.fromNamespaceAndPath(this.modId, name), screenHandlerSupplier);
+        return registerScreenHandler(Identifier.fromNamespaceAndPath(this.modId, name), screenHandlerSupplier);
     }
 
-    public <T extends MenuType<?>> RegistrySupplier<T> registerScreenHandler(ResourceLocation id, Supplier<T> screenHandlerSupplier) {
+    public <T extends MenuType<?>> RegistrySupplier<T> registerScreenHandler(Identifier id, Supplier<T> screenHandlerSupplier) {
         if (Platform.isNeoForge()) {
             return SCREEN_HANDLERS.register(id.getPath(), screenHandlerSupplier);
         }
@@ -210,10 +210,10 @@ public class ModRegistryHelper {
     }
 
     public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(String name, Supplier<T> professionSupplier) {
-        return registerVillagerProfession(ResourceLocation.fromNamespaceAndPath(this.modId, name), professionSupplier);
+        return registerVillagerProfession(Identifier.fromNamespaceAndPath(this.modId, name), professionSupplier);
     }
 
-    public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(ResourceLocation id, Supplier<T> professionSupplier) {
+    public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(Identifier id, Supplier<T> professionSupplier) {
         if (Platform.isNeoForge()) {
             return VILLAGER_PROFESSIONS.register(id.getPath(), professionSupplier);
         }
@@ -222,10 +222,10 @@ public class ModRegistryHelper {
     }
 
     public void registerCustomStat(String name) {
-        registerCustomStat(ResourceLocation.fromNamespaceAndPath(this.modId, name));
+        registerCustomStat(Identifier.fromNamespaceAndPath(this.modId, name));
     }
 
-    public void registerCustomStat(ResourceLocation id) {
+    public void registerCustomStat(Identifier id) {
         if (Platform.isNeoForge()) {
             CUSTOM_STATS.register(id.getPath(), () -> id);
             return;

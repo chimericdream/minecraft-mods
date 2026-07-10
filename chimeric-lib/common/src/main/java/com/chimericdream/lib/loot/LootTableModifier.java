@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 
 abstract public class LootTableModifier {
-    abstract protected void checkVanillaLootTables(ResourceLocation id, List<LootPool.Builder> poolBuilders, HolderLookup.Provider wrapperLookup);
+    abstract protected void checkVanillaLootTables(Identifier id, List<LootPool.Builder> poolBuilders, HolderLookup.Provider wrapperLookup);
 
     protected LootPool.Builder makeWeightedItem(Item item, int chance) {
         LootPool.Builder builder = LootPool.lootPool()
@@ -25,7 +25,7 @@ abstract public class LootTableModifier {
         return builder.add(LootItem.lootTableItem(Items.AIR).setWeight(chance - 1));
     }
 
-    public List<LootPool.Builder> generatePoolBuilders(ResourceLocation id, HolderLookup.Provider wrapperLookup) {
+    public List<LootPool.Builder> generatePoolBuilders(Identifier id, HolderLookup.Provider wrapperLookup) {
         List<LootPool.Builder> poolBuilders = new ArrayList<>();
 
         checkVanillaLootTables(id, poolBuilders, wrapperLookup);
@@ -34,10 +34,10 @@ abstract public class LootTableModifier {
     }
 
     public void modifyLootTables(ResourceKey<LootTable> id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
-        modifyLootTables(id.location(), tableBuilder, wrapperLookup);
+        modifyLootTables(id.identifier(), tableBuilder, wrapperLookup);
     }
 
-    public void modifyLootTables(ResourceLocation id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
+    public void modifyLootTables(Identifier id, LootTable.Builder tableBuilder, HolderLookup.Provider wrapperLookup) {
         List<LootPool.Builder> poolBuilders = generatePoolBuilders(id, wrapperLookup);
 
         for (LootPool.Builder builder : poolBuilders) {
