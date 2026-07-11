@@ -10,7 +10,7 @@ pluginManagement {
 rootProject.name = 'chimeric-mods'
 
 def projectList = [
-//        'archaeology-tweaks',
+        'archaeology-tweaks',
 //        'artificial-heart',
 //        'athenaeum',
 //        'banner-tweaks',

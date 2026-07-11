@@ -84,27 +84,27 @@ subprojects {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
     }
 
-//    if (project.parent != null && project.parent.name !== 'chimeric-lib') {
-//        if (project.name == 'common') {
-//            dependencies {
-//                implementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
-//            }
-//        }
-//
-//        if (project.name == 'fabric') {
-//            dependencies {
-//                implementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
-//            }
-//        }
-//
-//        if (project.name == 'neoforge') {
-//            dependencies {
-//                implementation("com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}") {
-//                    exclude(group: "net.neoforged.fancymodloader", module: "loader")
-//                }
-//            }
-//        }
-//    }
+    if (project.parent != null && project.parent.name !== 'chimeric-lib') {
+        if (project.name == 'common') {
+            dependencies {
+                implementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
+            }
+        }
+
+        if (project.name == 'fabric') {
+            dependencies {
+                implementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
+            }
+        }
+
+        if (project.name == 'neoforge') {
+            dependencies {
+                implementation("com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}") {
+                    exclude(group: "net.neoforged.fancymodloader", module: "loader")
+                }
+            }
+        }
+    }
 
     if (project.name == 'common') {
         dependencies {
@@ -177,7 +177,6 @@ subprojects {
                 mavenJava(MavenPublication) {
                     artifactId = base.archivesName.get()
                     version = "${rootProject.minecraft_compatibility}-${project.mod_version}"
-                    from components.java
                 }
             }
 
@@ -189,6 +188,17 @@ subprojects {
                 // retrieving dependencies.
                 mavenLocal()
             }
+        }
+
+        // Deferred: projects that apply the shadow plugin (fabric/neoforge) reclassify the plain
+        // `jar` task as "raw" and put the real bundled output (incl. mixin resources) in `shadowJar`.
+        // Publishing components.java would wire consumers to the raw jar, which is missing bundled
+        // classes/resources. Use afterEvaluate since shadow is applied later in each mod's own
+        // build.gradle, after this subprojects block runs.
+        afterEvaluate {
+            publishing.publications.mavenJava.from(
+                project.plugins.hasPlugin('com.gradleup.shadow') ? components.shadow : components.java
+            )
         }
     }
 }

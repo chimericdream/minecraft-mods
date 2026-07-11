@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ItemOwner;
@@ -40,7 +40,7 @@ public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBru
         renderState.face = blockEntity.getHitDirection();
         renderState.dusted = (Integer) blockEntity.getBlockState().getValue(BlockStateProperties.DUSTED);
         if (blockEntity.getLevel() != null && blockEntity.getHitDirection() != null) {
-            renderState.lightCoords = LevelRenderer.getLightColor(BrightnessGetter.DEFAULT, blockEntity.getLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos().relative(blockEntity.getHitDirection()));
+            renderState.lightCoords = LevelRenderer.getLightCoords(BrightnessGetter.DEFAULT, blockEntity.getLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos().relative(blockEntity.getHitDirection()));
         }
 
         this.itemModelManager.updateForTopItem(renderState.itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), (ItemOwner) null, 0);

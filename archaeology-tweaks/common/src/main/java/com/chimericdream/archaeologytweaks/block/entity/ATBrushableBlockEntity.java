@@ -139,7 +139,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
             double g = (double) blockPos.getX() + (double) 0.5F * e + f;
             double h = (double) blockPos.getY() + (double) 0.5F + (double) (EntityType.ITEM.getHeight() / 2.0F);
             double i = (double) blockPos.getZ() + (double) 0.5F * e + f;
-            ItemEntity itemEntity = new ItemEntity(world, g, h, i, this.item.split(world.random.nextInt(21) + 10));
+            ItemEntity itemEntity = new ItemEntity(world, g, h, i, this.item.split(world.getRandom().nextInt(21) + 10));
             itemEntity.setDeltaMovement(Vec3.ZERO);
             world.addFreshEntity(itemEntity);
             this.item = ItemStack.EMPTY;

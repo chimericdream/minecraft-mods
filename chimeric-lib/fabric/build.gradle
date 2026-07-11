@@ -18,16 +18,3 @@ dependencies {
     common(project(path: ':chimeric-lib:common')) { transitive false }
     shadowBundle project(path: ':chimeric-lib:common', configuration: 'transformProductionFabric')
 }
-
-jar {
-    archiveClassifier = "raw"
-}
-
-shadowJar {
-    dependsOn(jar)
-    mainSpec.sourcePaths.clear()
-    from(zipTree(jar.archiveFile))
-
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = null
-}
