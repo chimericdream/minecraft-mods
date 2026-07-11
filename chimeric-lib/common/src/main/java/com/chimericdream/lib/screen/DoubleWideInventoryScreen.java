@@ -1,12 +1,13 @@
 package com.chimericdream.lib.screen;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import org.jspecify.annotations.NonNull;
 
 public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> extends AbstractContainerScreen<Handler> {
     private static final Identifier BG = Identifier.withDefaultNamespace("textures/gui/demo_background.png");
@@ -43,35 +44,36 @@ public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> ex
     }
 
     public DoubleWideInventoryScreen(Handler handler, int numCols, int numRows, Inventory inventory, Component title) {
-        super(handler, inventory, title);
+        super(
+            handler,
+            inventory,
+            title,
+            PL + (numCols * SLOT_SIZE) + PR,
+            PT + (numRows * SLOT_SIZE) + CINV_MB + (3 * SLOT_SIZE) + PINV_MB + SLOT_SIZE + PB
+        );
         this.numCols = numCols;
         this.numRows = numRows;
 
-        this.imageWidth = PL + (this.numCols * SLOT_SIZE) + PR;
-        this.imageHeight = PT + (this.numRows * SLOT_SIZE) + CINV_MB + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB;
         this.titleLabelX = PL + 1 - CINV_X;
         this.titleLabelY = PT - TEXT_LH;
         this.inventoryLabelX = PL + ((this.numCols - CINV_COLS) * (SLOT_SIZE / 2)) + 1 - PINV_X;
-        this.inventoryLabelY = this.imageHeight - (TEXT_LH + (3 * SLOT_SIZE) + PINV_MB + (1 * SLOT_SIZE) + PB);
+        this.inventoryLabelY = this.imageHeight - (TEXT_LH + (3 * SLOT_SIZE) + PINV_MB + SLOT_SIZE + PB);
     }
 
-    @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
-        this.renderTooltip(context, mouseX, mouseY);
-    }
+//    @Override
+//    public void extractRenderState(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+//        this.renderBackground(context, mouseX, mouseY, delta);
+//        super.render(context, mouseX, mouseY, delta);
+//        this.renderTooltip(context, mouseX, mouseY);
+//    }
 
     @Override
-    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
-//        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
+    public void extractBackground(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         this.drawBackgroundTexture(context);
         this.drawSlotTexture(context);
     }
 
-    private void drawBackgroundTexture(GuiGraphics context) {
+    private void drawBackgroundTexture(GuiGraphicsExtractor context) {
         int hnum = (this.imageWidth - (BG_CORNER * 2)) / (BG_W - (BG_CORNER * 2));
         int hrem = (this.imageWidth - (BG_CORNER * 2)) % (BG_W - (BG_CORNER * 2));
 
@@ -321,7 +323,7 @@ public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> ex
         );
     }
 
-    private void drawSlotTexture(GuiGraphics context) {
+    private void drawSlotTexture(GuiGraphicsExtractor context) {
         //
         // container inventory
         //

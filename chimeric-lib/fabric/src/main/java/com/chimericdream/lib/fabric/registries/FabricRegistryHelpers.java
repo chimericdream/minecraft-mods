@@ -1,7 +1,7 @@
 package com.chimericdream.lib.fabric.registries;
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
+import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.minecraft.world.level.block.Block;
 
 public class FabricRegistryHelpers {
@@ -18,7 +18,7 @@ public class FabricRegistryHelpers {
     }
 
     public static void registerFlammableBlock(Block block, int burnTime, int burnChance, int spreadChance) {
-        FuelRegistryEvents.BUILD.register((builder, context) -> {
+        FuelValueEvents.BUILD.register((builder, context) -> {
             builder.add(block, burnTime);
         });
         FlammableBlockRegistry.getDefaultInstance().add(block, burnChance, spreadChance);

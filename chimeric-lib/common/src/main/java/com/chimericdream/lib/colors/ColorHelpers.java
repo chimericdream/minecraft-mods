@@ -5,7 +5,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -150,15 +149,15 @@ public class ColorHelpers {
         };
     }
 
-    public static ColorHelpers.RGB mixColors(@Nullable ColorHelpers.RGB rgb, List<DyeItem> dyes) {
+    public static ColorHelpers.RGB mixColors(@Nullable ColorHelpers.RGB rgb, List<DyeColor> colors) {
         int l = rgb == null ? 0 : Math.max(rgb.r, Math.max(rgb.g, rgb.b));
         int i = rgb == null ? 0 : rgb.r;
         int j = rgb == null ? 0 : rgb.g;
         int k = rgb == null ? 0 : rgb.b;
         int m = rgb == null ? 0 : 1;
 
-        for (DyeItem dyeItem : dyes) {
-            int p = dyeItem.getDyeColor().getTextureDiffuseColor();
+        for (DyeColor color : colors) {
+            int p = color.getTextureDiffuseColor();
             int q = ARGB.red(p);
             int r = ARGB.green(p);
             int s = ARGB.blue(p);

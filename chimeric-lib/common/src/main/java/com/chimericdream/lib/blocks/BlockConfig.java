@@ -188,7 +188,7 @@ public class BlockConfig {
     }
 
     public @Nullable Identifier getTexture() {
-        return textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()));
+        return textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()).sprite());
     }
 
     public @Nullable Identifier getTexture(String name) {
