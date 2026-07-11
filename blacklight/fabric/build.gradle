@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':blacklight:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':blacklight:common')) { transitive false }
     shadowBundle project(path: ':blacklight:common', configuration: 'transformProductionFabric')
 }

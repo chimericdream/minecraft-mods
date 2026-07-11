@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':houdini-block:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':houdini-block:common')) { transitive false }
     shadowBundle project(path: ':houdini-block:common', configuration: 'transformProductionFabric')
 }

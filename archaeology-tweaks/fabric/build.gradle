@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':archaeology-tweaks:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':archaeology-tweaks:common')) { transitive false }
     shadowBundle project(path: ':archaeology-tweaks:common', configuration: 'transformProductionFabric')
 }

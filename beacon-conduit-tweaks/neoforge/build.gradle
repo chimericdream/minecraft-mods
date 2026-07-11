@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":beacon-conduit-tweaks:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "beaconconduittweaks.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':beacon-conduit-tweaks:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':beacon-conduit-tweaks:common')) { transitive false }
     shadowBundle project(path: ':beacon-conduit-tweaks:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("beaconconduittweaks.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("beaconconduittweaks.accesswidener")
+//}

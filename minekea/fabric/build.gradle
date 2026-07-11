@@ -22,6 +22,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':minekea:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':minekea:common')) { transitive false }
     shadowBundle project(path: ':minekea:common', configuration: 'transformProductionFabric')
 }

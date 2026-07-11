@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":minekea:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "minekea.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':minekea:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':minekea:common')) { transitive false }
     shadowBundle project(path: ':minekea:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("minekea.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("minekea.accesswidener")
+//}

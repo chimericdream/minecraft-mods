@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":shulker-stuff:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "shulkerstuff.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':shulker-stuff:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':shulker-stuff:common')) { transitive false }
     shadowBundle project(path: ':shulker-stuff:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("shulkerstuff.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("shulkerstuff.accesswidener")
+//}

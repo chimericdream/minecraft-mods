@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":artificial-heart:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "artificialheart.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':artificial-heart:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':artificial-heart:common')) { transitive false }
     shadowBundle project(path: ':artificial-heart:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("artificialheart.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("artificialheart.accesswidener")
+//}

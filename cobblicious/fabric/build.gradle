@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':cobblicious:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':cobblicious:common')) { transitive false }
     shadowBundle project(path: ':cobblicious:common', configuration: 'transformProductionFabric')
 }

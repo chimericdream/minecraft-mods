@@ -22,6 +22,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':hopper-xtreme:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':hopper-xtreme:common')) { transitive false }
     shadowBundle project(path: ':hopper-xtreme:common', configuration: 'transformProductionFabric')
 }

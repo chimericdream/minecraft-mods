@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":flat-bedrock:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "flatbedrock.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':flat-bedrock:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':flat-bedrock:common')) { transitive false }
     shadowBundle project(path: ':flat-bedrock:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("flatbedrock.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("flatbedrock.accesswidener")
+//}

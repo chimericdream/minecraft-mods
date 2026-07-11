@@ -7,6 +7,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':athenaeum:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':athenaeum:common')) { transitive false }
     shadowBundle project(path: ':athenaeum:common', configuration: 'transformProductionNeoForge')
 }

@@ -7,6 +7,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':enchantment-numbers-fix:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':enchantment-numbers-fix:common')) { transitive false }
     shadowBundle project(path: ':enchantment-numbers-fix:common', configuration: 'transformProductionFabric')
 }

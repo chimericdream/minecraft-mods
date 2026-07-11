@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":jdcrafte:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "jdcrafte.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':jdcrafte:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':jdcrafte:common')) { transitive false }
     shadowBundle project(path: ':jdcrafte:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("jdcrafte.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("jdcrafte.accesswidener")
+//}

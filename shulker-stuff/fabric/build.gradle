@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':shulker-stuff:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':shulker-stuff:common')) { transitive false }
     shadowBundle project(path: ':shulker-stuff:common', configuration: 'transformProductionFabric')
 }

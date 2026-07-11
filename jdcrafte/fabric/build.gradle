@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':jdcrafte:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':jdcrafte:common')) { transitive false }
     shadowBundle project(path: ':jdcrafte:common', configuration: 'transformProductionFabric')
 }

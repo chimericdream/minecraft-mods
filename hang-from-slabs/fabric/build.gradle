@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':hang-from-slabs:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':hang-from-slabs:common')) { transitive false }
     shadowBundle project(path: ':hang-from-slabs:common', configuration: 'transformProductionFabric')
 }

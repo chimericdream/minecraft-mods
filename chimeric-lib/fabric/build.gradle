@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':chimeric-lib:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':chimeric-lib:common')) { transitive false }
     shadowBundle project(path: ':chimeric-lib:common', configuration: 'transformProductionFabric')
 }

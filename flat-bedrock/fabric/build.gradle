@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':flat-bedrock:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':flat-bedrock:common')) { transitive false }
     shadowBundle project(path: ':flat-bedrock:common', configuration: 'transformProductionFabric')
 }

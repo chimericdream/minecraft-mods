@@ -7,6 +7,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':miniblock-merchants:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':miniblock-merchants:common')) { transitive false }
     shadowBundle project(path: ':miniblock-merchants:common', configuration: 'transformProductionNeoForge')
 }

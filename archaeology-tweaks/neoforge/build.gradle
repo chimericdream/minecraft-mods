@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":archaeology-tweaks:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "archtweaks.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':archaeology-tweaks:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':archaeology-tweaks:common')) { transitive false }
     shadowBundle project(path: ':archaeology-tweaks:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("archtweaks.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("archtweaks.accesswidener")
+//}

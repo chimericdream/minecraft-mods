@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':{{FOLDER_NAME}}:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':{{FOLDER_NAME}}:common')) { transitive false }
     shadowBundle project(path: ':{{FOLDER_NAME}}:common', configuration: 'transformProductionFabric')
 }

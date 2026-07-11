@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":playgrounds:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "playgrounds.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':playgrounds:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':playgrounds:common')) { transitive false }
     shadowBundle project(path: ':playgrounds:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("playgrounds.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("playgrounds.accesswidener")
+//}

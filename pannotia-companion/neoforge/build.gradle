@@ -1,9 +1,15 @@
+import org.gradle.jvm.tasks.Jar
+
 architectury {
     neoForge()
 }
 
 loom {
     accessWidenerPath = project(":pannotia-companion:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "pannotiacompanion.accesswidener")
+    }
 }
 
 configurations {
@@ -11,10 +17,10 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':pannotia-companion:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':pannotia-companion:common')) { transitive false }
     shadowBundle project(path: ':pannotia-companion:common', configuration: 'transformProductionNeoForge')
 }
 
-remapJar {
-    atAccessWideners.add("pannotiacompanion.accesswidener")
-}
+//jar {
+//    atAccessWideners.add("pannotiacompanion.accesswidener")
+//}

@@ -39,9 +39,9 @@ subprojects {
         archiveClassifier = 'dev-shadow'
     }
 
-    remapJar {
-        input.set shadowJar.archiveFile
-    }
+//    jar {
+//        input.set shadowJar.archiveFile
+//    }
 
     // Configure Maven publishing.
     publishing {

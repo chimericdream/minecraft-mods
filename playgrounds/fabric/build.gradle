@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':playgrounds:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':playgrounds:common')) { transitive false }
     shadowBundle project(path: ':playgrounds:common', configuration: 'transformProductionFabric')
 }

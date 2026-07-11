@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':artificial-heart:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':artificial-heart:common')) { transitive false }
     shadowBundle project(path: ':artificial-heart:common', configuration: 'transformProductionFabric')
 }

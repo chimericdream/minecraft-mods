@@ -7,6 +7,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':sponj:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':sponj:common')) { transitive false }
     shadowBundle project(path: ':sponj:common', configuration: 'transformProductionNeoForge')
 }

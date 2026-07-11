@@ -40,7 +40,7 @@ subprojects {
         archiveClassifier = 'dev-shadow'
     }
 
-    remapJar {
-        input.set shadowJar.archiveFile
-    }
+//     jar {
+//        input.set shadowJar.archiveFile
+//    }
 }

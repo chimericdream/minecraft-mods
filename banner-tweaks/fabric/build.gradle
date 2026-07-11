@@ -11,6 +11,6 @@ configurations {
 }
 
 dependencies {
-    common(project(path: ':banner-tweaks:common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':banner-tweaks:common')) { transitive false }
     shadowBundle project(path: ':banner-tweaks:common', configuration: 'transformProductionFabric')
 }
