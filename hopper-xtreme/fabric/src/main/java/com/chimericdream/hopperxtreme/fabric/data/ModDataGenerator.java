@@ -4,7 +4,7 @@ import com.chimericdream.hopperxtreme.fabric.block.XtremeHopperLootTableGenerato
 import com.chimericdream.hopperxtreme.fabric.block.XtremeHopperRecipeGenerator;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -23,7 +23,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class ModRecipeProvider extends FabricRecipeProvider {
-        public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        public ModRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 

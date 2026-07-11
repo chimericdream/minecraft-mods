@@ -22,7 +22,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+//import net.fabricmc.fabric.api.client.rendering.v1.ChunkSectionLayerMap;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
@@ -63,7 +63,7 @@ public final class MinekeaFabricClient implements ClientModInitializer {
                 return;
             }
 
-            Holder<Item> registryEntry = itemStack.getItemHolder();
+            Holder<Item> registryEntry = itemStack.typeHolder();
 
             if (registryEntry.is(REGISTRY_HELPER.makeItemRegistryKey(FakeCakeBlock.BLOCK_ID))) {
                 list.addAll(((FakeCakeBlock) DecorationBlocks.FAKE_CAKE.get()).getTooltip());
@@ -86,10 +86,10 @@ public final class MinekeaFabricClient implements ClientModInitializer {
     }
 
     private void initializeBlockRenderLayers() {
-        DisplayCases.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
-        StorageBlocks.DYE_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
-        StorageBlocks.BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
-        VotiveCandles.BLOCKS.forEach(block -> BlockRenderLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
+//        DisplayCases.BLOCKS.forEach(block -> ChunkSectionLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
+//        StorageBlocks.DYE_BLOCKS.forEach(block -> ChunkSectionLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
+//        StorageBlocks.BAGGED_BLOCKS.forEach(block -> ChunkSectionLayerMap.putBlock(block.get(), ChunkSectionLayer.CUTOUT));
+//        VotiveCandles.BLOCKS.forEach(block -> ChunkSectionLayerMap.putBlock(block.get(), ChunkSectionLayer.TRANSLUCENT));
 
         BlockEntityRendererRegistry.register(
             ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(),
@@ -98,17 +98,17 @@ public final class MinekeaFabricClient implements ClientModInitializer {
 
 //        BuiltinItemRendererRegistry.INSTANCE.register(GLASS_JAR_ITEM.get(), new GlassJarItemRenderer());
 
-        BlockRenderLayerMap.putBlocks(
-            ChunkSectionLayer.TRANSLUCENT,
-            StorageBlocks.SUGAR_CANE_BLOCK.get(),
-            ContainerBlocks.GLASS_JAR.get()
-        );
+//        ChunkSectionLayerMap.putBlocks(
+//            ChunkSectionLayer.TRANSLUCENT,
+//            StorageBlocks.SUGAR_CANE_BLOCK.get(),
+//            ContainerBlocks.GLASS_JAR.get()
+//        );
 
-        BlockRenderLayerMap.putBlocks(
-            ChunkSectionLayer.CUTOUT,
-            StorageBlocks.EGG_CRATE_BLOCK.get(),
-            ModCrops.WARPED_WART_PLANT_BLOCK.get()
-        );
+//        ChunkSectionLayerMap.putBlocks(
+//            ChunkSectionLayer.CUTOUT,
+//            StorageBlocks.EGG_CRATE_BLOCK.get(),
+//            ModCrops.WARPED_WART_PLANT_BLOCK.get()
+//        );
     }
 
     private void initializeKeybindings() {

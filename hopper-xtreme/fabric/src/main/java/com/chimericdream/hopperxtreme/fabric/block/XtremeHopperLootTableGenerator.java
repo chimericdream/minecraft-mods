@@ -1,15 +1,15 @@
 package com.chimericdream.hopperxtreme.fabric.block;
 
 import com.chimericdream.hopperxtreme.block.ModBlocks;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.minecraft.core.HolderLookup;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class XtremeHopperLootTableGenerator extends FabricBlockLootTableProvider {
-    public XtremeHopperLootTableGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
+    public XtremeHopperLootTableGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 

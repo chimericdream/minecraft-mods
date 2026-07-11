@@ -5,7 +5,7 @@ import com.google.common.hash.Hashing;
 import com.google.common.hash.HashingOutputStream;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -110,7 +110,7 @@ public class TextureGenerator implements DataProvider {
         private final PackOutput.PathProvider pathResolver;
 
         private Instance(
-            FabricDataOutput output,
+            FabricPackOutput output,
             Identifier registryKey,
             CompletableFuture<HolderLookup.Provider> lookupFuture
         ) {

@@ -8,11 +8,8 @@ import com.chimericdream.minekea.fabric.util.ItemDataGeneratorGroup;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
@@ -43,7 +40,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaRecipeProvider extends FabricRecipeProvider {
-        public MinekeaRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        public MinekeaRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
@@ -71,8 +68,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class MinekeaBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
-        public MinekeaBlockTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+    private static class MinekeaBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
+        public MinekeaBlockTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
@@ -86,8 +83,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class MinekeaItemTagGenerator extends FabricTagProvider.ItemTagProvider {
-        public MinekeaItemTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+    private static class MinekeaItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
+        public MinekeaItemTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
@@ -106,7 +103,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaEnglishLangProvider extends FabricLanguageProvider {
-        protected MinekeaEnglishLangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        protected MinekeaEnglishLangProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
@@ -126,10 +123,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class MinekeaBlockLootTables extends FabricBlockLootTableProvider {
+    private static class MinekeaBlockLootTables extends FabricBlockLootSubProvider {
         private final HolderLookup.Provider registryLookup;
 
-        protected MinekeaBlockLootTables(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        protected MinekeaBlockLootTables(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
             this.registryLookup = registryLookup.join();
         }
@@ -145,7 +142,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class MinekeaModelGenerator extends FabricModelProvider {
-        private MinekeaModelGenerator(FabricDataOutput generator) {
+        private MinekeaModelGenerator(FabricPackOutput generator) {
             super(generator);
         }
 
