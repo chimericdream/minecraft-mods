@@ -23,6 +23,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -68,12 +70,21 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     private TypedEntityData<EntityType<?>> storedMobData = null;
     private String storedMobId = null;
 
+    // The item's own display name (either the mob's real, player-given name, or our generated
+    // "<mob> in a jar" fallback) and whether it's the former. Lives on the ItemStack as vanilla's
+    // CUSTOM_NAME component / a flag inside CUSTOM_DATA, so it has to be captured here too or it's
+    // lost the moment the jar is placed and later broken back into an item via toItemStack().
+    private Component customName = null;
+    private boolean hasCustomName = false;
+
     public static final String ITEM_KEY = "StoredItem";
     public static final String ITEM_QTY_KEY = "StoredItemQty";
     public static final String ITEM_STACKS_KEY = "FullItemStacks";
     public static final String FLUID_KEY = "StoredFluid";
     public static final String FLUID_AMT_KEY = "StoredFluidAmount";
     public static final String MOB_DATA_KEY = "StoredMobData";
+    public static final String CUSTOM_NAME_KEY = "CustomName";
+    public static final String HAS_CUSTOM_NAME_KEY = "HasCustomName";
 
     public GlassJarBlockEntity(BlockPos pos, BlockState state) {
         this(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), pos, state);
@@ -84,6 +95,9 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void readDataFromItemStack(ItemStack stack) {
+        readMobDataFromComponent(stack);
+        readCustomNameFromStack(stack);
+
         CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) {
             return;
@@ -95,6 +109,10 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientLevel world) {
         GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ZERO, ContainerBlocks.GLASS_JAR.get().defaultBlockState());
+        entity.setLevel(world);
+
+        entity.readMobDataFromComponent(stack);
+        entity.readCustomNameFromStack(stack);
 
         CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) {
@@ -107,12 +125,61 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         return entity;
     }
 
+    /*
+     * A freshly captured mob is stored on the ItemStack via the vanilla DataComponents.ENTITY_DATA
+     * component (set in GlassJarItem#interactLivingEntity), not under CUSTOM_DATA. A placed block only
+     * picks this up indirectly, once the server resyncs it to the client and BlockEntity's own
+     * component -> "components" NBT plumbing round-trips it back through readMobData. The item-render
+     * preview (fromItemStack) never goes through that resync, so it needs to read the component directly.
+     */
+    private void readMobDataFromComponent(ItemStack stack) {
+        TypedEntityData<EntityType<?>> entityData = stack.get(DataComponents.ENTITY_DATA);
+        if (entityData == null) {
+            return;
+        }
+
+        storedMobData = entityData;
+        storedMobId = EntityType.getKey(entityData.type()).toString();
+    }
+
+    /*
+     * The display name ("Allay in a jar", or the mob's own name) lives on the ItemStack's vanilla
+     * CUSTOM_NAME component, set once at capture time in GlassJarItem#interactLivingEntity. It's never
+     * part of CUSTOM_DATA, so it has to be read from the stack directly, same as the mob's entity data.
+     */
+    private void readCustomNameFromStack(ItemStack stack) {
+        Component name = stack.get(DataComponents.CUSTOM_NAME);
+        if (name != null) {
+            customName = name;
+        }
+    }
+
     public ItemStack toItemStack() {
         ItemStack stack = new ItemStack(ContainerItems.GLASS_JAR_ITEM.get());
         TagValueOutput writeView = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
-        this.saveAdditional(writeView);
+
+        // saveAdditional() is also what the vanilla chunk save/load machinery uses to persist a placed,
+        // never-picked-up block entity, so it always writes the mob's full entity NBT into CUSTOM_DATA.
+        // Here, though, that same data is being set a few lines down as the real ENTITY_DATA/CUSTOM_NAME
+        // components - exactly like a fresh capture looks - so CUSTOM_DATA only needs the one flag that
+        // has no component equivalent. For fluid/item jars there's no such component, so their state
+        // still has to go into CUSTOM_DATA in full.
+        writeView.putBoolean(HAS_CUSTOM_NAME_KEY, hasCustomName);
+
+        if (hasMob()) {
+            stack.set(DataComponents.ENTITY_DATA, storedMobData);
+        } else {
+            writeView.putString(ITEM_KEY, storedItem.getItemHolder().getRegisteredName());
+            writeView.putInt(ITEM_QTY_KEY, storedItem.getCount());
+            writeView.putInt(ITEM_STACKS_KEY, fullItemStacks);
+            writeFluidData(writeView);
+        }
 
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(writeView.buildResult()));
+
+        if (customName != null) {
+            stack.set(DataComponents.CUSTOM_NAME, customName);
+        }
 
         return stack;
     }
@@ -375,6 +442,15 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
         writeFluidData(view);
         writeMobData(view);
+        writeCustomNameData(view);
+    }
+
+    private void writeCustomNameData(ValueOutput view) {
+        if (customName != null) {
+            view.store(CUSTOM_NAME_KEY, ComponentSerialization.CODEC, customName);
+        }
+
+        view.putBoolean(HAS_CUSTOM_NAME_KEY, hasCustomName);
     }
 
     private void writeFluidData(ValueOutput view) {
@@ -406,6 +482,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
         boolean hasFluid = readFluidData(view);
         boolean hasMob = readMobData(view);
+        readCustomNameData(view);
 
         if (!hasFluid && !hasMob) {
             String storedItemKey = view.getStringOr(ITEM_KEY, null);
@@ -417,6 +494,11 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         setChanged();
+    }
+
+    private void readCustomNameData(ValueInput view) {
+        view.read(CUSTOM_NAME_KEY, ComponentSerialization.CODEC).ifPresent(name -> customName = name);
+        hasCustomName = view.getBooleanOr(HAS_CUSTOM_NAME_KEY, hasCustomName);
     }
 
     private boolean readFluidData(ValueInput view) {
@@ -436,12 +518,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     private boolean readMobData(ValueInput view) {
-        CompoundTag components = view.read("components", CompoundTag.CODEC).orElse(null);
-        if (components == null) {
-            return false;
-        }
-
-        CompoundTag entityNbt = components.read("minecraft:entity_data", CompoundTag.CODEC).orElse(null);
+        CompoundTag entityNbt = view.read("minecraft:entity_data", CompoundTag.CODEC).orElse(null);
 
         if (entityNbt == null) {
             return false;

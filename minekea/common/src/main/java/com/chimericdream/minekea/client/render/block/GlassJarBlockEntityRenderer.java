@@ -4,12 +4,12 @@ import com.chimericdream.minekea.MinekeaMod;
 import com.chimericdream.minekea.block.containers.GlassJarBlock;
 import com.chimericdream.minekea.entity.block.containers.GlassJarBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.world.entity.EntityProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
-import java.util.function.Function;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -93,7 +93,7 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
 
             nbt.remove("equipment");
 
-            mobEntity = EntityType.loadEntityRecursive(nbt, entity.getLevel(), EntitySpawnReason.SPAWNER, Function.identity());
+            mobEntity = EntityType.loadEntityRecursive(nbt, entity.getLevel(), EntitySpawnReason.SPAWNER, EntityProcessor.NOP);
         }
 
         if (mobEntity != null) {
@@ -138,7 +138,7 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
     public static void renderFluidJar(GlassJarBlockEntityRenderState state, int color, TextureAtlasSprite texture, PoseStack matrices, SubmitNodeCollector queue) {
         queue.submitCustomGeometry(
             matrices,
-            RenderType.translucentMovingBlock(),
+            RenderTypes.translucentMovingBlock(),
             new GlassJarFluidRenderCommandQueue(color, texture, state.lightCoords, state.fluidAmountInBuckets)
         );
     }

@@ -233,6 +233,8 @@ public class GlassJarItem extends BlockItem {
         );
 
         if (entity != null) {
+            entity.setPos(pos.getCenter());
+
             world.addFreshEntity(entity);
             world.playSound(
                 null,

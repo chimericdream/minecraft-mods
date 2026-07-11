@@ -23,9 +23,14 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
 
     @Override
     public void submit(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
-//        if (data != null) {
-//            data.light = light;
-//        }
+        if (state != null) {
+            // The render state is cached once per ItemStack (see GlassJarItemEntityCache), so the
+            // lightCoords baked in at extraction time reflect wherever the backing entity happened to
+            // be in the world, not the item's actual current display context. Overwrite them with the
+            // light the item renderer is actually asking us to draw with.
+            state.lightCoords = light;
+            state.mobDisplay.lightCoords = light;
+        }
 
         matrices.pushPose();
         matrices.translate(1f, 0f, 1f);

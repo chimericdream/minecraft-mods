@@ -6,6 +6,7 @@
     "client": [
     ],
     "mixins": [
+        "AllayMixin",
         "MilkBucketItemMixin"
     ],
     "injectors": {
