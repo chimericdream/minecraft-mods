@@ -16,7 +16,6 @@
                                 "minecraft:container_loot",
                                 "minecraft:enchantments",
                                 "shulkerstuff:dyed_color",
-                                "shulkerstuff:hardened",
                                 "shulkerstuff:plated"
                             ],
                             "source": "block_entity"

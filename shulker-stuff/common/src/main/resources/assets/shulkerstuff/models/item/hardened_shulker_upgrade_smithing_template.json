@@ -1,6 +1,0 @@
-{
-    "parent": "minecraft:item/handheld",
-    "textures": {
-        "layer0": "shulkerstuff:item/hardened_shulker_upgrade_smithing_template"
-    }
-}
