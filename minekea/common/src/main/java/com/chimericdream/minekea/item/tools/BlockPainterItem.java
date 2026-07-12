@@ -180,8 +180,7 @@ public class BlockPainterItem extends Item {
             return ItemStack.EMPTY;
         }
 
-        return inventory.stream()
-            .toList().stream()
+        return inventory.nonEmptyItemCopyStream()
             .filter(stack -> stack.getItem() == dye)
             .findFirst()
             .orElse(ItemStack.EMPTY);

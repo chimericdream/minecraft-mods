@@ -122,7 +122,7 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
             .put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(ingredient))
             .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(Blocks.GLASS));
         TextureMapping litTextures = new TextureMapping()
-            .put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(ingredient).withSuffix("_lit"))
+            .put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(ingredient, "_lit"))
             .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(Blocks.GLASS));
 
         Identifier candleItemModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", VOTIVE_ITEM_MODEL, unused -> textures);

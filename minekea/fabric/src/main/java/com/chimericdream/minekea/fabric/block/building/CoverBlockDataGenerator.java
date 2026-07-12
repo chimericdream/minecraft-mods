@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -79,8 +80,8 @@ public class CoverBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier sideTextureId = Optional.ofNullable(BLOCK.config.getTexture("side")).orElse(endTextureId);
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.END, endTextureId)
-            .put(TextureSlot.SIDE, sideTextureId);
+            .put(TextureSlot.END, new Material(endTextureId))
+            .put(TextureSlot.SIDE, new Material(sideTextureId));
 
         Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", COVER_MODEL, unused -> textures);
 

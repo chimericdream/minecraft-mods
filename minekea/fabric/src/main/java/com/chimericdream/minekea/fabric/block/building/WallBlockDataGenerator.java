@@ -9,6 +9,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -68,7 +69,7 @@ public class WallBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.WALL, BLOCK.config.getTexture());
+            .put(TextureSlot.WALL, new Material(BLOCK.config.getTexture()));
 
         ModelUtils.registerWallBlock(
             blockStateModelGenerator,

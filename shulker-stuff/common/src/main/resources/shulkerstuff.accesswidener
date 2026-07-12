@@ -1,9 +1,7 @@
 accessWidener v2 official
-#accessible field net/minecraft/component/type/ContainerComponent stacks Lnet/minecraft/util/collection/DefaultedList;
-
 accessible class net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer$ShulkerBoxModel
 accessible field net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer model Lnet/minecraft/client/renderer/blockentity/ShulkerBoxRenderer$ShulkerBoxModel;
-accessible field net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer materials Lnet/minecraft/client/resources/model/MaterialSet;
+accessible field net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer sprites Lnet/minecraft/client/resources/model/sprite/SpriteGetter;
 
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor

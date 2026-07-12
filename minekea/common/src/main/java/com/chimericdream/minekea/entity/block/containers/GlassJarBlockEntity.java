@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 
 import java.util.Objects;
 import java.util.Optional;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -107,7 +106,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         this.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, VanillaRegistries.createLookup(), nbt));
     }
 
-    public static GlassJarBlockEntity fromItemStack(ItemStack stack, ClientLevel world) {
+    public static GlassJarBlockEntity fromItemStack(ItemStack stack, Level world) {
         GlassJarBlockEntity entity = new GlassJarBlockEntity(ContainerBlocks.GLASS_JAR_BLOCK_ENTITY.get(), BlockPos.ZERO, ContainerBlocks.GLASS_JAR.get().defaultBlockState());
         entity.setLevel(world);
 
@@ -169,7 +168,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         if (hasMob()) {
             stack.set(DataComponents.ENTITY_DATA, storedMobData);
         } else {
-            writeView.putString(ITEM_KEY, storedItem.getItemHolder().getRegisteredName());
+            writeView.putString(ITEM_KEY, storedItem.typeHolder().getRegisteredName());
             writeView.putInt(ITEM_QTY_KEY, storedItem.getCount());
             writeView.putInt(ITEM_STACKS_KEY, fullItemStacks);
             writeFluidData(writeView);
@@ -436,7 +435,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     protected void saveAdditional(ValueOutput view) {
         super.saveAdditional(view);
 
-        view.putString(ITEM_KEY, storedItem.getItemHolder().getRegisteredName());
+        view.putString(ITEM_KEY, storedItem.typeHolder().getRegisteredName());
         view.putInt(ITEM_QTY_KEY, storedItem.getCount());
         view.putInt(ITEM_STACKS_KEY, fullItemStacks);
 

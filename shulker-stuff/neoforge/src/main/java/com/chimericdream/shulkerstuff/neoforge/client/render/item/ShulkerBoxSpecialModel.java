@@ -7,19 +7,21 @@ import net.minecraft.resources.Identifier;
 /**
  * NeoForge dispatches "special" item model rendering through a real, moddable registry
  * ({@code RegisterSpecialModelRendererEvent}), keyed by id. This is the id this mod's dyed shulker box
- * special model is registered under; the item model json for the plain shulker box item needs to
- * reference it, e.g.:
+ * special model is registered under. The plain shulker box item's model json must reference it; this
+ * mod ships that override (NeoForge-only) at {@code assets/minecraft/items/shulker_box.json}:
  * <pre>
  * {
  *   "model": {
  *     "type": "minecraft:special",
- *     "base": "minecraft:block/shulker_box",
+ *     "base": "minecraft:item/shulker_box",
  *     "model": {
  *       "type": "shulkerstuff:dyed_shulker_box"
  *     }
  *   }
  * }
  * </pre>
+ * The base is {@code item/shulker_box}, not {@code block/shulker_box}: only the former ships the
+ * GUI/hand/ground display transforms (see {@code ShulkerBoxItemRendererLogic}).
  */
 public class ShulkerBoxSpecialModel {
     public static final Identifier TYPE_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "dyed_shulker_box");

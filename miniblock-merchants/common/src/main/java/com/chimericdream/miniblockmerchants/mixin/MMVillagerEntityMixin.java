@@ -103,7 +103,7 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
                 if (world.isClientSide()) {
                     world.playSound(player, this, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
                 } else {
-                    ((ServerPlayer) player).displayClientMessage(mm$getPlayerMessage(item.profession), false);
+                    ((ServerPlayer) player).sendSystemMessage(mm$getPlayerMessage(item.profession));
 
                     Holder<VillagerType> villager = BuiltInRegistries.VILLAGER_TYPE.wrapAsHolder(BuiltInRegistries.VILLAGER_TYPE.getValue(VillagerType.PLAINS));
                     Holder<VillagerProfession> profession = BuiltInRegistries.VILLAGER_PROFESSION.wrapAsHolder(BuiltInRegistries.VILLAGER_PROFESSION.getValue(newProfession));
@@ -187,7 +187,7 @@ abstract public class MMVillagerEntityMixin extends MMMerchantEntityMixin {
         method = "startTrading",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/npc/Villager;openTradingScreen(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;I)V"
+            target = "Lnet/minecraft/world/entity/npc/villager/Villager;openTradingScreen(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;I)V"
         ),
         index = 1
     )

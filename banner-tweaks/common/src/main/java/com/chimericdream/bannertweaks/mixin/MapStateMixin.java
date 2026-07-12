@@ -72,8 +72,8 @@ abstract public class MapStateMixin {
         if (f >= -64.0F && g >= -64.0F && f <= 64.0F && g <= 64.0F) {
             rotation += rotation < 0.0 ? -8.0 : 8.0;
             d = (byte) ((int) (rotation * 16.0 / 360.0));
-            if (this.dimension == Level.NETHER && world != null) {
-                int k = (int) (world.getLevelData().getDayTime() / 10L);
+            if (this.dimension == Level.NETHER && world instanceof Level level) {
+                int k = (int) (level.getDefaultClockTime() / 10L);
                 d = (byte) (k * k * 34187121 + k * 121 >> 15 & 15);
             }
         } else {

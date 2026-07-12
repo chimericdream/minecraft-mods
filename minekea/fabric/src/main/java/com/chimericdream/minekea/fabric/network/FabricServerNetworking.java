@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 public class FabricServerNetworking extends ServerNetworking {
     public static void init() {
-        PayloadTypeRegistry.playC2S().register(CyclePainterColorPayload.ID, CyclePainterColorPayload.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(CyclePainterColorPayload.ID, CyclePainterColorPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(CyclePainterColorPayload.ID, FabricServerNetworking::receiveCyclePainterColorPacket);
     }
 

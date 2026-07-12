@@ -15,7 +15,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -102,8 +103,8 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
         Block logIngredient = BLOCK.config.getIngredient("log");
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.MATERIAL, TextureUtils.block(plankIngredient))
-            .put(MinekeaTextures.BRACE, TextureUtils.block(logIngredient));
+            .put(MinekeaTextures.MATERIAL, new Material(TextureUtils.block(plankIngredient)))
+            .put(MinekeaTextures.BRACE, new Material(TextureUtils.block(logIngredient)));
 
         Identifier modelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CORE_MODEL, unused -> textures);
         Identifier aConnectedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_a_connected", A_CONNECTED_MODEL, unused -> textures);

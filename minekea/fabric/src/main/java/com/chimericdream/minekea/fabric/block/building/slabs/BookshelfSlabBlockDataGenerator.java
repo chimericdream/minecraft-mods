@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -79,8 +80,8 @@ public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerat
         Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"))
-            .put(MinekeaTextures.MATERIAL, textureId);
+            .put(MinekeaTextures.SHELF, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")))
+            .put(MinekeaTextures.MATERIAL, new Material(textureId));
 
         ModelUtils.registerSlabBlock(
             blockStateModelGenerator,

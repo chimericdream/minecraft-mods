@@ -14,13 +14,13 @@ import net.minecraft.client.renderer.item.ModelRenderProperties;
 import net.minecraft.client.renderer.item.SpecialModelWrapper;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ResolvedModel;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3fc;
 
 import java.util.Set;
@@ -54,12 +54,7 @@ public class ShulkerBoxItemRendererLogic {
      * special-rendered items.
      */
     public static ItemModel createItemModel(ItemModel.BakingContext context) {
-        SpecialModelRenderer.BakingContext specialContext = new SpecialModelRenderer.BakingContext.Simple(
-            context.entityModelSet(),
-            context.materials(),
-            context.playerSkinRenderCache()
-        );
-        Renderer renderer = new Unbaked().bake(specialContext);
+        Renderer renderer = new Unbaked().bake(context);
 
         ResolvedModel resolvedModel = context.blockModelBaker().getModel(BASE_MODEL_ID);
         ModelRenderProperties properties = ModelRenderProperties.fromResolvedModel(
@@ -68,7 +63,7 @@ public class ShulkerBoxItemRendererLogic {
             resolvedModel.getTopTextureSlots()
         );
 
-        return new SpecialModelWrapper<>(renderer, properties);
+        return new SpecialModelWrapper<>(renderer, properties, new Matrix4f());
     }
 
     public record RenderData(int lidColor, int baseColor) {
@@ -78,10 +73,10 @@ public class ShulkerBoxItemRendererLogic {
 
     public static class Renderer implements SpecialModelRenderer<RenderData> {
         private final ShulkerBoxRenderer vanillaRenderer;
-        private final Material defaultMaterial;
-        private final Material dyedMaterial;
+        private final SpriteId defaultMaterial;
+        private final SpriteId dyedMaterial;
 
-        public Renderer(ShulkerBoxRenderer vanillaRenderer, Material defaultMaterial, Material dyedMaterial) {
+        public Renderer(ShulkerBoxRenderer vanillaRenderer, SpriteId defaultMaterial, SpriteId dyedMaterial) {
             this.vanillaRenderer = vanillaRenderer;
             this.defaultMaterial = defaultMaterial;
             this.dyedMaterial = dyedMaterial;
@@ -90,7 +85,6 @@ public class ShulkerBoxItemRendererLogic {
         @Override
         public void submit(
             RenderData data,
-            ItemDisplayContext displayContext,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             int light,
@@ -108,8 +102,8 @@ public class ShulkerBoxItemRendererLogic {
             // resolved lazily here, at submit time. -1 means that part was never dyed by this mod, so it
             // keeps the plain undyed (purple-hued) texture at full brightness; only a genuinely dyed part
             // switches to the near-grayscale white texture so its tint comes out as the intended hue.
-            TextureAtlasSprite defaultSprite = vanillaRenderer.materials.get(defaultMaterial);
-            TextureAtlasSprite dyedSprite = vanillaRenderer.materials.get(dyedMaterial);
+            TextureAtlasSprite defaultSprite = vanillaRenderer.sprites.get(defaultMaterial);
+            TextureAtlasSprite dyedSprite = vanillaRenderer.sprites.get(dyedMaterial);
             RenderType renderType = defaultMaterial.renderType(vanillaRenderer.model::renderType);
 
             // Item display always shows the box closed, and nothing else ever calls setupAnim on this
@@ -153,7 +147,7 @@ public class ShulkerBoxItemRendererLogic {
         }
     }
 
-    public static class Unbaked implements SpecialModelRenderer.Unbaked {
+    public static class Unbaked implements SpecialModelRenderer.Unbaked<RenderData> {
         // Not deserialized from JSON in this mod's own wiring (Fabric replaces the baked ItemModel directly),
         // but NeoForge dispatches special models through this codec, so it needs to be a real one.
         public static final MapCodec<Unbaked> MAP_CODEC = MapCodec.unit(Unbaked::new);
@@ -166,7 +160,7 @@ public class ShulkerBoxItemRendererLogic {
         @Override
         public Renderer bake(SpecialModelRenderer.BakingContext context) {
             ShulkerBoxRenderer vanillaRenderer = new ShulkerBoxRenderer(context);
-            return new Renderer(vanillaRenderer, Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION, Sheets.getShulkerBoxMaterial(DyeColor.WHITE));
+            return new Renderer(vanillaRenderer, Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION, Sheets.getShulkerBoxSprite(DyeColor.WHITE));
         }
     }
 }

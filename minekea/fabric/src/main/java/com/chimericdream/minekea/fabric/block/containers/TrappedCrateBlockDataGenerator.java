@@ -7,6 +7,7 @@ import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -45,8 +46,8 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.BRACE, BLOCK.config.getTexture("brace"))
-            .put(MinekeaTextures.MATERIAL, TextureUtils.block(BLOCK.BLOCK_ID, "_material"));
+            .put(MinekeaTextures.BRACE, new Material(BLOCK.config.getTexture("brace")))
+            .put(MinekeaTextures.MATERIAL, new Material(TextureUtils.block(BLOCK.BLOCK_ID, "_material")));
 
         configureBlockStateModels(blockStateModelGenerator, textures);
     }

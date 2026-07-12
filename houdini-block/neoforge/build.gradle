@@ -1,5 +1,19 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
 architectury {
     neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":houdini-block:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "houdiniblock.accesswidener")
+    }
 }
 
 configurations {

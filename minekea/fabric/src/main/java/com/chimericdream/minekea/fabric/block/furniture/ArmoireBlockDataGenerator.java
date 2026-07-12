@@ -15,7 +15,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -102,9 +103,9 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.BAR, BuiltInRegistries.BLOCK.getKey(Blocks.NETHERITE_BLOCK).withPrefix("block/"))
-            .put(MinekeaTextures.MATERIAL, BuiltInRegistries.BLOCK.getKey(BLOCK.config.getIngredient("log")).withPrefix("block/"))
-            .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(Blocks.OAK_PLANKS).withPrefix("block/"));
+            .put(MinekeaTextures.BAR, new Material(BuiltInRegistries.BLOCK.getKey(Blocks.NETHERITE_BLOCK).withPrefix("block/")))
+            .put(MinekeaTextures.MATERIAL, new Material(BuiltInRegistries.BLOCK.getKey(BLOCK.config.getIngredient("log")).withPrefix("block/")))
+            .put(MinekeaTextures.PLANKS, new Material(BuiltInRegistries.BLOCK.getKey(Blocks.OAK_PLANKS).withPrefix("block/")));
 
         Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
         Identifier topModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_top", TOP_MODEL, unused -> textures);

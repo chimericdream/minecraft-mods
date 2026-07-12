@@ -43,6 +43,3 @@ side = "BOTH"
 
 [[mixins]]
 config = "META-INF/houdiniblock.neoforge.mixins.json"
-
-[[accessTransformers]]
-file = "META-INF/accesstransformer.cfg"

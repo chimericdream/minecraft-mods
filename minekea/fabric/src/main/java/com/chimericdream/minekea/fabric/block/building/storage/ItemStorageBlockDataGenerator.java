@@ -20,6 +20,7 @@ import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -127,8 +128,8 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     public void configureBaggedBlockModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.CONTENTS, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())))
-            .put(TextureSlot.ALL, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath())));
+            .put(MinekeaTextures.CONTENTS, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath()))))
+            .put(TextureSlot.ALL, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s", BLOCK.BLOCK_ID.getPath()))));
 
         configureBaggedBlockModels(blockStateModelGenerator, textures);
     }
@@ -187,8 +188,8 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         }
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.CONTENTS, contentsTexture)
-            .put(TextureSlot.ALL, allTexture);
+            .put(MinekeaTextures.CONTENTS, new Material(contentsTexture))
+            .put(TextureSlot.ALL, new Material(allTexture));
 
         configureBaggedBlockModels(blockStateModelGenerator, textures);
     }
@@ -199,9 +200,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         Identifier topTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_top", BLOCK.BLOCK_ID.getPath()));
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, bottomTexture)
-            .put(TextureSlot.SIDE, sideTexture)
-            .put(TextureSlot.TOP, topTexture);
+            .put(TextureSlot.BOTTOM, new Material(bottomTexture))
+            .put(TextureSlot.SIDE, new Material(sideTexture))
+            .put(TextureSlot.TOP, new Material(topTexture));
 
         Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
 
@@ -213,9 +214,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         Identifier sideTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side", BLOCK.BLOCK_ID.getPath()));
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, endTexture)
-            .put(TextureSlot.SIDE, sideTexture)
-            .put(TextureSlot.TOP, endTexture);
+            .put(TextureSlot.BOTTOM, new Material(endTexture))
+            .put(TextureSlot.SIDE, new Material(sideTexture))
+            .put(TextureSlot.TOP, new Material(endTexture));
 
         Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeColumnModel(BLOCK.config.getRenderType()), unused -> textures);
 
@@ -223,7 +224,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected void configureDefaultBlockStateModel(BlockModelGenerators blockStateModelGenerator) {
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, TextureUtils.block(BLOCK));
+        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(TextureUtils.block(BLOCK)));
         blockStateModelGenerator.createTrivialBlock(
             BLOCK,
             TexturedModel.createDefault((unused) -> textures, makeCubeModel(BLOCK.config.getRenderType()))

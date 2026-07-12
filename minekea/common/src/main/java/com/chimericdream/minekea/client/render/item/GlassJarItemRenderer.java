@@ -9,8 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3fc;
@@ -22,7 +21,7 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     private static final CameraRenderState CAMERA_STATE = new CameraRenderState();
 
     @Override
-    public void submit(@Nullable GlassJarBlockEntityRenderState state, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
+    public void submit(@Nullable GlassJarBlockEntityRenderState state, PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, boolean glint, int i) {
         if (state != null) {
             // The render state is cached once per ItemStack (see GlassJarItemEntityCache), so the
             // lightCoords baked in at extraction time reflect wherever the backing entity happened to
@@ -54,15 +53,16 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
     }
 
     @Environment(EnvType.CLIENT)
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
+    public record Unbaked() implements SpecialModelRenderer.Unbaked<GlassJarBlockEntityRenderState> {
         public static final GlassJarItemRenderer.Unbaked INSTANCE = new GlassJarItemRenderer.Unbaked();
         public static final MapCodec<com.chimericdream.minekea.client.render.item.GlassJarItemRenderer.Unbaked> CODEC;
 
         @Override
-        public SpecialModelRenderer<?> bake(BakingContext context) {
+        public SpecialModelRenderer<GlassJarBlockEntityRenderState> bake(BakingContext context) {
             return new GlassJarItemRenderer();
         }
 
+        @Override
         public MapCodec<GlassJarItemRenderer.Unbaked> type() {
             return CODEC;
         }
@@ -71,39 +71,4 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
             CODEC = MapCodec.unit(INSTANCE);
         }
     }
-
-//    public static <M extends BakedModel> void render(
-//        ItemStack stack,
-//        MatrixStack matrices,
-//        VertexConsumerProvider vertexConsumers,
-//        int light,
-//        int overlay,
-//        M model
-//    ) {
-//        BlockState defaultState = ContainerBlocks.GLASS_JAR.get().getDefaultState();
-//        matrices.push();
-//        matrices.translate(0.5, 0.5, 0.5);
-//        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.NONE, false, matrices, vertexConsumers, light, overlay, model);
-//        matrices.pop();
-//
-//        GlassJarBlockEntity entity = new GlassJarBlockEntity(BlockPos.ORIGIN, defaultState);
-//
-//        NbtComponent customData = stack.getComponents().get(DataComponentTypes.CUSTOM_DATA);
-//        if (customData != null && MinecraftClient.getInstance().world != null) {
-//            NbtCompound data = customData.copyNbt();
-//            if (!data.isEmpty()) {
-//                entity.readNbt(data, MinecraftClient.getInstance().world.getRegistryManager());
-//            }
-//        }
-//
-//        NbtComponent entityData = stack.getComponents().get(DataComponentTypes.ENTITY_DATA);
-//        if (entityData != null && MinecraftClient.getInstance().world != null) {
-//            NbtCompound mobData = entityData.copyNbt();
-//            if (!mobData.isEmpty()) {
-//                entity.readMobNbt(mobData, MinecraftClient.getInstance().world.getRegistryManager());
-//            }
-//        }
-//
-//        MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(entity, matrices, vertexConsumers, light, overlay);
-//    }
 }

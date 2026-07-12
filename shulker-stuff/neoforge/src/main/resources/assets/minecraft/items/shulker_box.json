@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "minecraft:item/shulker_box",
+    "model": {
+      "type": "shulkerstuff:dyed_shulker_box"
+    }
+  }
+}

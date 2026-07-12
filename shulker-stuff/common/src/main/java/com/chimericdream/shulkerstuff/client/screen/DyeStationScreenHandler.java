@@ -6,7 +6,9 @@ import com.chimericdream.shulkerstuff.ModInfo;
 import com.chimericdream.shulkerstuff.block.entity.DyeStationBlockEntity;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffDyedColorComponent;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
@@ -129,8 +131,8 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
                 return;
             }
 
-            List<DyeItem> topHalfDyes = new ArrayList<>();
-            List<DyeItem> bottomHalfDyes = new ArrayList<>();
+            List<DyeColor> topHalfDyes = new ArrayList<>();
+            List<DyeColor> bottomHalfDyes = new ArrayList<>();
 
             for (int i = 0; i < 3; i++) {
                 ItemStack dye = this.container.getItem(i);
@@ -138,7 +140,10 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
                     continue;
                 }
 
-                topHalfDyes.add((DyeItem) dye.getItem());
+                DyeColor dyeColor = dye.get(DataComponents.DYE);
+                if (dyeColor != null) {
+                    topHalfDyes.add(dyeColor);
+                }
             }
 
             for (int i = 4; i < 7; i++) {
@@ -147,7 +152,10 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
                     continue;
                 }
 
-                bottomHalfDyes.add((DyeItem) dye.getItem());
+                DyeColor dyeColor = dye.get(DataComponents.DYE);
+                if (dyeColor != null) {
+                    bottomHalfDyes.add(dyeColor);
+                }
             }
 
             if (topHalfDyes.isEmpty() && bottomHalfDyes.isEmpty()) {

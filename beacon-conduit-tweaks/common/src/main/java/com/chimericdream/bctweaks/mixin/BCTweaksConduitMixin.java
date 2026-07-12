@@ -43,7 +43,8 @@ public class BCTweaksConduitMixin {
         }
     }
 
-    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD"), name = "j")
+    @SuppressWarnings("ModifyVariableMayUseName")
+    @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD", ordinal = 0), ordinal = 1)
     private static int bct$modifiedRange(int _unused, Level world, BlockPos pos, List<BlockPos> activatingBlocks) {
         BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
 

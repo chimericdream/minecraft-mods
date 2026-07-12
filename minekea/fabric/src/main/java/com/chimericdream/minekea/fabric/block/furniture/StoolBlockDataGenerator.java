@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -75,8 +76,8 @@ public class StoolBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Block logIngredient = BLOCK.config.getIngredient("log");
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.LOG, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
-            .put(MinekeaTextures.PLANKS, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
+            .put(MinekeaTextures.LOG, new Material(BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/")))
+            .put(MinekeaTextures.PLANKS, new Material(BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/")));
 
         blockStateModelGenerator.createTrivialBlock(
             BLOCK,

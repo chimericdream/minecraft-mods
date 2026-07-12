@@ -12,7 +12,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,8 +58,8 @@ public class OpenShutterHalfBlockDataGenerator extends ChimericLibBlockDataGener
         Block logIngredient = BLOCK.config.getIngredient("log");
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.FRAME, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
-            .put(MinekeaTextures.PANEL, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
+            .put(MinekeaTextures.FRAME, new Material(BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/")))
+            .put(MinekeaTextures.PANEL, new Material(BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/")));
 
         Identifier leftHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_left_half", LEFT_HALF_MODEL, unused -> textures);
         Identifier rightHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_right_half", RIGHT_HALF_MODEL, unused -> textures);

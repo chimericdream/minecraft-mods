@@ -12,7 +12,8 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.Block;
@@ -62,13 +63,13 @@ public class CustomBlockStateModelSupplier {
 
         @Override
         public @NotNull Identifier create(Identifier id, TextureMapping textures, BiConsumer<Identifier, ModelInstance> modelCollector) {
-            Map<TextureSlot, Identifier> map = this.createMap(textures);
+            Map<TextureSlot, Material> map = this.createMap(textures);
             modelCollector.accept(id, (ModelInstance) () -> {
                 JsonObject jsonObject = new JsonObject();
                 this.model.ifPresent((identifier) -> jsonObject.addProperty("parent", identifier.toString()));
                 if (!map.isEmpty()) {
                     JsonObject jsonObject2 = new JsonObject();
-                    map.forEach((textureKey, identifier) -> jsonObject2.addProperty(textureKey.getId(), identifier.toString()));
+                    map.forEach((textureKey, material) -> jsonObject2.addProperty(textureKey.getId(), material.sprite().toString()));
                     jsonObject.add("textures", jsonObject2);
                 }
 

@@ -14,7 +14,8 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -85,14 +86,14 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier topOpenTexture = TextureUtils.block(BLOCK.BLOCK_ID, "_top_open");
 
         TextureMapping baseTextures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, bottomTexture)
-            .put(TextureSlot.SIDE, sideTexture)
-            .put(TextureSlot.TOP, topTexture);
+            .put(TextureSlot.BOTTOM, new Material(bottomTexture))
+            .put(TextureSlot.SIDE, new Material(sideTexture))
+            .put(TextureSlot.TOP, new Material(topTexture));
 
         TextureMapping openTextures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, bottomTexture)
-            .put(TextureSlot.SIDE, sideTexture)
-            .put(TextureSlot.TOP, topOpenTexture);
+            .put(TextureSlot.BOTTOM, new Material(bottomTexture))
+            .put(TextureSlot.SIDE, new Material(sideTexture))
+            .put(TextureSlot.TOP, new Material(topOpenTexture));
 
         Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_BOTTOM_TOP, unused -> baseTextures);
         Identifier openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", ModelTemplates.CUBE_BOTTOM_TOP, unused -> openTextures);

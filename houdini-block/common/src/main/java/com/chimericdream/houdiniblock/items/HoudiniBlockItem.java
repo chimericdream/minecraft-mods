@@ -67,7 +67,7 @@ public class HoudiniBlockItem extends BlockItem {
             }
 
             if (!world.isClientSide()) {
-                player.displayClientMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)), true);
+                player.sendOverlayMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)));
             }
 
             return InteractionResult.SUCCESS;

@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public class FabricServerNetworking {
     public static void init() {
-        PayloadTypeRegistry.playS2C().register(ServerNetworking.BannerLayerLimitPayload.ID, ServerNetworking.BannerLayerLimitPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ServerNetworking.BannerLayerLimitPayload.ID, ServerNetworking.BannerLayerLimitPayload.CODEC);
     }
 
     @Environment(EnvType.CLIENT)

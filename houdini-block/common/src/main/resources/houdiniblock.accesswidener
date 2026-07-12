@@ -4,5 +4,3 @@ mutable field net/minecraft/world/item/context/BlockPlaceContext relativePos Lne
 
 accessible field net/minecraft/world/item/context/BlockPlaceContext replaceClicked Z
 mutable field net/minecraft/world/item/context/BlockPlaceContext replaceClicked Z
-
-accessible field net/minecraft/item/ItemPlacementContext canReplaceExisting Z

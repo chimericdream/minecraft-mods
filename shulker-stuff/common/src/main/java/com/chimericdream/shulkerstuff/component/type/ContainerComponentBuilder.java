@@ -14,7 +14,7 @@ public class ContainerComponentBuilder {
     private final NonNullList<ItemStack> heldStacks = NonNullList.withSize(27, ItemStack.EMPTY);
 
     public ContainerComponentBuilder(ItemContainerContents base) {
-        List<ItemStack> contents = base.nonEmptyStream().toList();
+        List<ItemStack> contents = base.nonEmptyItemCopyStream().toList();
         if (contents.size() > 27) {
             throw new IllegalArgumentException("Cannot create a ContainerComponentBuilder from a ContainerComponent with more than 27 stacks.");
         }

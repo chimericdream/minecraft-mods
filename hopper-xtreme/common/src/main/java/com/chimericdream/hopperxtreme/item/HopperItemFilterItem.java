@@ -70,7 +70,7 @@ public class HopperItemFilterItem extends Item {
                     itemStack.set(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), newComponent);
 
                     if (!world.isClientSide()) {
-                        player.displayClientMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)), true);
+                        player.sendOverlayMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)));
                     }
 
                     return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
@@ -161,7 +161,7 @@ public class HopperItemFilterItem extends Item {
 
         FilterMode mode = filterComponent == null ? FilterMode.INCLUDE : FilterMode.fromString(filterComponent.mode());
 
-        for (ItemStack filterItem : component.nonEmptyItems()) {
+        for (ItemStack filterItem : component.nonEmptyItemCopyStream().toList()) {
             if (ItemStack.isSameItem(filterItem, stack)) {
                 return mode.equals(FilterMode.INCLUDE);
             }

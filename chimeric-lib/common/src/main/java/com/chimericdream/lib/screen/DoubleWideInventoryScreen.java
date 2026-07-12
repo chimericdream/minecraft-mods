@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.jspecify.annotations.NonNull;
 
 public class DoubleWideInventoryScreen<Handler extends AbstractContainerMenu> extends AbstractContainerScreen<Handler> {
-    private static final Identifier BG = Identifier.withDefaultNamespace("textures/gui/demo_background.png");
+    private static final Identifier BG = Identifier.fromNamespaceAndPath("chimericlib", "textures/gui/demo_background.png");
     private static final int BG_CORNER = 4;
     private static final int BG_X = 0;
     private static final int BG_Y = 0;

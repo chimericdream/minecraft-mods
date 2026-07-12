@@ -10,15 +10,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.attribute.BedRule;
-import net.minecraft.world.attribute.EnvironmentAttributeMap;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.NonNull;
 
 public class WetLavaSponjBlock extends Block {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "wet_lava_sponj");
@@ -29,22 +27,16 @@ public class WetLavaSponjBlock extends Block {
         super(Properties.ofFullCopy(Blocks.SPONGE).setId(BLOCK_REGISTRY_KEY));
     }
 
-    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
-        EnvironmentAttributeMap attributes = world.dimensionType().attributes();
-        if (
-            (
-                !attributes.contains(EnvironmentAttributes.BED_RULE)
-                || attributes.get(EnvironmentAttributes.BED_RULE).equals(BedRule.EXPLODES)
-            )
-            && !world.dimensionType().attributes().contains(EnvironmentAttributes.WATER_EVAPORATES)
-        ) {
+    public void onPlace(@NonNull BlockState state, Level world, @NonNull BlockPos pos, @NonNull BlockState oldState, boolean notify) {
+        Identifier dimensionId = world.dimension().identifier();
+        if (dimensionId.equals(Identifier.withDefaultNamespace("the_end"))) {
             world.setBlock(pos, ModBlocks.LAVA_SPONJ_BLOCK.get().defaultBlockState(), 3);
             world.levelEvent(2009, pos, 0);
             world.playSound((Player) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
     }
 
-    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+    public void animateTick(@NonNull BlockState state, @NonNull Level world, @NonNull BlockPos pos, @NonNull RandomSource random) {
         Direction direction = Direction.getRandom(random);
         if (direction != Direction.UP) {
             BlockPos blockPos = pos.relative(direction);

@@ -1,7 +1,7 @@
 package com.chimericdream.hopperxtreme.client.screen;
 
 import com.chimericdream.hopperxtreme.ModInfo;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -12,20 +12,12 @@ public class FilteredHopperScreen extends AbstractContainerScreen<FilteredHopper
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "textures/gui/filtered_hopper.png");
 
     public FilteredHopperScreen(FilteredHopperScreenHandler handler, Inventory inventory, Component title) {
-        super(handler, inventory, title);
-        this.imageHeight = 133;
+        super(handler, inventory, title, DEFAULT_IMAGE_WIDTH, 133);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
-        this.renderTooltip(context, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         context.blit(

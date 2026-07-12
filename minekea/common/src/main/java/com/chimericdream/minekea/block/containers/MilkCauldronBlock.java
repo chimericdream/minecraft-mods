@@ -2,10 +2,13 @@ package com.chimericdream.minekea.block.containers;
 
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.fluid.ModFluids;
+import com.chimericdream.minekea.mixin.CauldronDispatcherAccessor;
+import com.chimericdream.minekea.mixin.CauldronInteractionsAccessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.cauldron.CauldronInteractions;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -24,18 +27,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
-import static net.minecraft.core.cauldron.CauldronInteraction.*;
 
 public class MilkCauldronBlock extends AbstractCauldronBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/milk");
-    public static CauldronInteraction.InteractionMap BEHAVIORS = newInteractionMap("milk");
+    public static CauldronInteraction.Dispatcher BEHAVIORS = new CauldronInteraction.Dispatcher();
     public static final MapCodec<MilkCauldronBlock> CODEC = simpleCodec(MilkCauldronBlock::new);
 
     public static final CauldronInteraction FILL_WITH_MILK;
     public static final CauldronInteraction EMPTY_CAULDRON;
 
     static {
-        FILL_WITH_MILK = (state, world, pos, player, hand, stack) -> emptyBucket(
+        FILL_WITH_MILK = (state, world, pos, player, hand, stack) -> CauldronInteractionsAccessor.minekea$invokeEmptyBucket(
             world,
             pos,
             player,
@@ -44,7 +46,7 @@ public class MilkCauldronBlock extends AbstractCauldronBlock {
             ModFluids.MILK_CAULDRON.get().defaultBlockState(),
             SoundEvents.BUCKET_EMPTY
         );
-        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> fillBucket(
+        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> CauldronInteractionsAccessor.minekea$invokeFillBucket(
             state,
             world,
             pos,
@@ -56,10 +58,10 @@ public class MilkCauldronBlock extends AbstractCauldronBlock {
             SoundEvents.BUCKET_FILL
         );
 
-        BEHAVIORS.map().put(Items.MILK_BUCKET, FILL_WITH_MILK);
-        BEHAVIORS.map().put(Items.BUCKET, EMPTY_CAULDRON);
+        ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(Items.MILK_BUCKET, FILL_WITH_MILK);
+        ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(Items.BUCKET, EMPTY_CAULDRON);
 
-        CauldronInteraction.EMPTY.map().put(Items.MILK_BUCKET, FILL_WITH_MILK);
+        ((CauldronDispatcherAccessor) (Object) CauldronInteractions.EMPTY).minekea$invokePut(Items.MILK_BUCKET, FILL_WITH_MILK);
     }
 
     public MilkCauldronBlock(BlockBehaviour.Properties settings) {

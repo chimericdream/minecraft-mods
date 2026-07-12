@@ -8,7 +8,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,8 +36,8 @@ public class VillagerConversionItemsLootModifier extends LootModifier {
     );
     private final Item item;
 
-    public VillagerConversionItemsLootModifier(LootItemCondition[] conditionsIn, Item item) {
-        super(conditionsIn);
+    public VillagerConversionItemsLootModifier(LootItemCondition[] conditionsIn, int priority, Item item) {
+        super(conditionsIn, priority);
         this.item = item;
     }
 
@@ -48,8 +47,7 @@ public class VillagerConversionItemsLootModifier extends LootModifier {
         }
 
         ServerLevel world = context.getLevel();
-        MinecraftServer server = world.getServer();
-        HolderLookup.Provider wrapperLookup = server.getServerResources().managers().getRegistryLookup();
+        HolderLookup.Provider wrapperLookup = world.registryAccess();
 
         List<LootPool.Builder> poolBuilders = MMLootTables.generatePoolbuilders(id, wrapperLookup);
         List<LootPool> lootPools = poolBuilders.stream().map(LootPool.Builder::build).toList();

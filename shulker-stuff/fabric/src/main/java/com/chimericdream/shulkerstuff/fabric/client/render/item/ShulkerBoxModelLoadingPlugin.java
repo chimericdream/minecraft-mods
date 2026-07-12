@@ -16,7 +16,7 @@ public class ShulkerBoxModelLoadingPlugin implements ModelLoadingPlugin {
     public void initialize(Context pluginContext) {
         pluginContext.modifyItemModelAfterBake().register(ModelModifier.OVERRIDE_PHASE, (model, context) -> {
             if (isShulkerBoxItem(context.itemId())) {
-                return ShulkerBoxItemRendererLogic.createItemModel(context.bakeContext());
+                return ShulkerBoxItemRendererLogic.createItemModel(context.bakingContext());
             }
 
             return model;

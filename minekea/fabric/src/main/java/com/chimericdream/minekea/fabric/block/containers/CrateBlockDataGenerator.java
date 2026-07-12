@@ -17,7 +17,8 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -93,7 +94,7 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
         MultiVariant halfModel = BlockModelGenerators.plainVariant(halfModelId);
 
-        MultiVariant brokenModel = BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.createWithSuffix(BLOCK, "_broken", TextureMapping.singleSlot(TextureSlot.ALL, Identifier.withDefaultNamespace("")), blockStateModelGenerator.modelOutput));
+        MultiVariant brokenModel = BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.createWithSuffix(BLOCK, "_broken", TextureMapping.singleSlot(TextureSlot.ALL, new Material(Identifier.withDefaultNamespace(""))), blockStateModelGenerator.modelOutput));
 
         blockStateModelGenerator.blockStateOutput
             .accept(
@@ -128,8 +129,8 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.BRACE, BLOCK.config.getTexture("brace"))
-            .put(MinekeaTextures.MATERIAL, BLOCK.config.getTexture());
+            .put(MinekeaTextures.BRACE, new Material(BLOCK.config.getTexture("brace")))
+            .put(MinekeaTextures.MATERIAL, new Material(BLOCK.config.getTexture()));
 
         this.configureBlockStateModels(blockStateModelGenerator, textures);
     }

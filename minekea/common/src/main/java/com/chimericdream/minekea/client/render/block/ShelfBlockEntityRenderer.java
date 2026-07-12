@@ -10,14 +10,12 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 import java.util.List;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -36,7 +34,6 @@ import net.minecraft.world.phys.Vec3;
  * https://www.curseforge.com/minecraft/mc-mods/simple-shelves
  */
 public class ShelfBlockEntityRenderer implements BlockEntityRenderer<ShelfBlockEntity, ShelfBlockEntityRenderState> {
-    private final ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
     private final BlockEntityRendererProvider.Context context;
 
     public ShelfBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {

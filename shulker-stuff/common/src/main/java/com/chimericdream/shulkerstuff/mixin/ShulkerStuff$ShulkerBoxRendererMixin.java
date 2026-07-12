@@ -13,10 +13,12 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.ShulkerBoxRenderer;
 import net.minecraft.client.renderer.blockentity.state.ShulkerBoxRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
     @Shadow
     @Final
-    public MaterialSet materials;
+    public SpriteGetter sprites;
 
     // ShulkerBoxRenderer's own "model" field is a single instance shared by every shulker box block
     // entity, vanilla-colored ones included. Vanilla-colored boxes never get cancelled below, so
@@ -73,9 +75,6 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         if (ssDyedColorComponent == null) {
             accessor.ss$setLidColor(-1);
             accessor.ss$setBaseColor(-1);
-//            // This is roughly the same as the default color for shulker boxes
-//            accessor.ss$setLidColor(9922455);
-//            accessor.ss$setBaseColor(9922455);
         } else {
             accessor.ss$setLidColor(ssDyedColorComponent.lidColor());
             accessor.ss$setBaseColor(ssDyedColorComponent.baseColor());
@@ -83,7 +82,7 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
     }
 
     @Inject(
-        method = "submit(Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+        method = "submit(Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
         at = @At("HEAD"),
         cancellable = true
     )
@@ -101,9 +100,10 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         boolean baseDyed = baseColor != -1;
         boolean lidDyed = lidColor != -1;
 
-        TextureAtlasSprite defaultSprite = this.materials.get(Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION);
-        TextureAtlasSprite dyedSprite = this.materials.get(Sheets.getShulkerBoxMaterial(DyeColor.WHITE));
-        RenderType renderType = Sheets.shulkerBoxSheet();
+        SpriteId defaultMaterial = Sheets.DEFAULT_SHULKER_TEXTURE_LOCATION;
+        TextureAtlasSprite defaultSprite = this.sprites.get(defaultMaterial);
+        TextureAtlasSprite dyedSprite = this.sprites.get(Sheets.getShulkerBoxSprite(DyeColor.WHITE));
+        RenderType renderType = defaultMaterial.renderType(RenderTypes::entityCutout);
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);

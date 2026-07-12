@@ -9,6 +9,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -65,9 +66,9 @@ public class SlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier textureId = BLOCK.config.getTexture();
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, textureId)
-            .put(TextureSlot.TOP, textureId)
-            .put(TextureSlot.ALL, textureId);
+            .put(TextureSlot.BOTTOM, new Material(textureId))
+            .put(TextureSlot.TOP, new Material(textureId))
+            .put(TextureSlot.ALL, new Material(textureId));
 
         ModelUtils.registerSlabBlock(
             blockStateModelGenerator,

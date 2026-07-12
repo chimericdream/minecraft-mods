@@ -14,7 +14,8 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -188,7 +189,7 @@ public class ModelUtils {
         Identifier blockId
     ) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.LANTERN, blockId.withPrefix("block/"));
+            .put(TextureSlot.LANTERN, new Material(blockId.withPrefix("block/")));
 
         Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(block, "_base", CUSTOM_TEMPLATE_LANTERN, unused -> textures);
         Identifier hangingModelId = blockStateModelGenerator.createSuffixedVariant(block, "_hanging", CUSTOM_TEMPLATE_HANGING_LANTERN, unused -> textures);

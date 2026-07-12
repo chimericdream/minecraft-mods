@@ -2,8 +2,11 @@ package com.chimericdream.minekea.block.containers;
 
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.fluid.ModFluids;
+import com.chimericdream.minekea.mixin.CauldronDispatcherAccessor;
+import com.chimericdream.minekea.mixin.CauldronInteractionsAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.cauldron.CauldronInteractions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -32,20 +35,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static net.minecraft.core.cauldron.CauldronInteraction.newInteractionMap;
-import static net.minecraft.core.cauldron.CauldronInteraction.fillBucket;
-import static net.minecraft.core.cauldron.CauldronInteraction.emptyBucket;
-
 public class HoneyCauldronBlock extends LayeredCauldronBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "containers/cauldrons/honey");
-    public static CauldronInteraction.InteractionMap BEHAVIORS = newInteractionMap("honey");
+    public static CauldronInteraction.Dispatcher BEHAVIORS = new CauldronInteraction.Dispatcher();
 
     public static final CauldronInteraction FILL_WITH_HONEY;
     public static final CauldronInteraction EMPTY_CAULDRON;
     public static final CauldronInteraction FILL_FROM_BOTTLE;
 
     static {
-        FILL_WITH_HONEY = (state, world, pos, player, hand, stack) -> emptyBucket(
+        FILL_WITH_HONEY = (state, world, pos, player, hand, stack) -> CauldronInteractionsAccessor.minekea$invokeEmptyBucket(
             world,
             pos,
             player,
@@ -54,7 +53,7 @@ public class HoneyCauldronBlock extends LayeredCauldronBlock {
             ModFluids.HONEY_CAULDRON.get().defaultBlockState().setValue(LEVEL, 3),
             SoundEvents.BUCKET_EMPTY_LAVA
         );
-        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> fillBucket(
+        EMPTY_CAULDRON = (state, world, pos, player, hand, stack) -> CauldronInteractionsAccessor.minekea$invokeFillBucket(
             state,
             world,
             pos,
@@ -79,8 +78,8 @@ public class HoneyCauldronBlock extends LayeredCauldronBlock {
             return InteractionResult.SUCCESS;
         };
 
-        BEHAVIORS.map().put(Items.BUCKET, EMPTY_CAULDRON);
-        BEHAVIORS.map().put(Items.GLASS_BOTTLE, (state, world, pos, player, hand, stack) -> {
+        ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(Items.BUCKET, EMPTY_CAULDRON);
+        ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(Items.GLASS_BOTTLE, (state, world, pos, player, hand, stack) -> {
             if (!world.isClientSide()) {
                 Item item = stack.getItem();
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.HONEY_BOTTLE.getDefaultInstance()));
@@ -93,7 +92,7 @@ public class HoneyCauldronBlock extends LayeredCauldronBlock {
 
             return InteractionResult.SUCCESS;
         });
-        BEHAVIORS.map().put(Items.HONEY_BOTTLE, (state, world, pos, player, hand, stack) -> {
+        ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(Items.HONEY_BOTTLE, (state, world, pos, player, hand, stack) -> {
             if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
                 if (!world.isClientSide()) {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
@@ -110,11 +109,11 @@ public class HoneyCauldronBlock extends LayeredCauldronBlock {
             }
         });
 
-        CauldronInteraction.EMPTY.map().put(Items.HONEY_BOTTLE, FILL_FROM_BOTTLE);
+        ((CauldronDispatcherAccessor) (Object) CauldronInteractions.EMPTY).minekea$invokePut(Items.HONEY_BOTTLE, FILL_FROM_BOTTLE);
 
         ModFluids.HONEY_BUCKET.listen((bucket) -> {
-            BEHAVIORS.map().put(bucket, FILL_WITH_HONEY);
-            CauldronInteraction.EMPTY.map().put(bucket, FILL_WITH_HONEY);
+            ((CauldronDispatcherAccessor) (Object) BEHAVIORS).minekea$invokePut(bucket, FILL_WITH_HONEY);
+            ((CauldronDispatcherAccessor) (Object) CauldronInteractions.EMPTY).minekea$invokePut(bucket, FILL_WITH_HONEY);
         });
     }
 

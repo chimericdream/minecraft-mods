@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -73,7 +74,7 @@ public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerato
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Identifier textureId = BLOCK.config.getTexture();
 
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, textureId);
+        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(textureId));
 
         ModelUtils.registerVerticalSlabBlock(
             blockStateModelGenerator,

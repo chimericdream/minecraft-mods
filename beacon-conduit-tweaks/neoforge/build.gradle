@@ -1,5 +1,9 @@
 import org.gradle.jvm.tasks.Jar
 
+plugins {
+    id 'com.gradleup.shadow'
+}
+
 architectury {
     neoForge()
 }
@@ -20,7 +24,3 @@ dependencies {
     common(project(path: ':beacon-conduit-tweaks:common')) { transitive false }
     shadowBundle project(path: ':beacon-conduit-tweaks:common', configuration: 'transformProductionNeoForge')
 }
-
-//jar {
-//    atAccessWideners.add("beaconconduittweaks.accesswidener")
-//}

@@ -573,7 +573,7 @@ public class XtremeMultiHopperBlockEntity extends RandomizableContainerBlockEnti
     @Nullable
     private static Container getEntityInventoryAt(Level world, double x, double y, double z) {
         List<Entity> list = world.getEntities((Entity) null, new AABB(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5), EntitySelector.CONTAINER_ENTITY_SELECTOR);
-        return !list.isEmpty() ? (Container) list.get(world.random.nextInt(list.size())) : null;
+        return !list.isEmpty() ? (Container) list.get(world.getRandom().nextInt(list.size())) : null;
     }
 
     private static boolean canMergeItems(ItemStack first, ItemStack second) {

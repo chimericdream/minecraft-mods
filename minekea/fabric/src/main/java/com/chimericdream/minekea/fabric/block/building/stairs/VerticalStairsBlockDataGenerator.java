@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -71,7 +72,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, BLOCK.config.getTexture());
+        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(BLOCK.config.getTexture()));
 
         ModelUtils.registerVerticalStairsBlock(
             blockStateModelGenerator,

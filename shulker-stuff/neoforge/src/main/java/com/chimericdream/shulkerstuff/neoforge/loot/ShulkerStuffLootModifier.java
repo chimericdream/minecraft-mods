@@ -5,16 +5,15 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
@@ -37,8 +36,8 @@ public class ShulkerStuffLootModifier extends LootModifier {
     );
     private final Item item;
 
-    public ShulkerStuffLootModifier(LootCondition[] conditionsIn, Item item) {
-        super(conditionsIn);
+    public ShulkerStuffLootModifier(LootItemCondition[] conditionsIn, int priority, Item item) {
+        super(conditionsIn, priority);
         this.item = item;
     }
 
@@ -47,9 +46,8 @@ public class ShulkerStuffLootModifier extends LootModifier {
             return LOOT_POOL_CACHE.get(id.toString());
         }
 
-        ServerWorld world = context.getWorld();
-        MinecraftServer server = world.getServer();
-        RegistryWrapper.WrapperLookup wrapperLookup = server.getServerResources().dataPackContents().getRegistryLookup();
+        ServerLevel level = context.getLevel();
+        HolderLookup.Provider wrapperLookup = level.registryAccess();
 
         List<LootPool.Builder> poolBuilders = ShulkerStuffNeoForge.LOOT_TABLE_MODIFIER.generatePoolBuilders(id, wrapperLookup);
         List<LootPool> lootPools = poolBuilders.stream().map(LootPool.Builder::build).toList();
@@ -65,7 +63,7 @@ public class ShulkerStuffLootModifier extends LootModifier {
         List<LootPool> lootPools = getPoolBuilders(id, context);
 
         for (LootPool pool : lootPools) {
-            pool.addGeneratedLoot(generatedLoot::add, context);
+            pool.addRandomItems(generatedLoot::add, context);
         }
 
         return generatedLoot;

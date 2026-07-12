@@ -8,6 +8,8 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -187,7 +189,8 @@ public class ModProfessions {
                         PoiType.NONE,
                         ImmutableSet.of(),
                         ImmutableSet.of(),
-                        SoundEvents.VILLAGER_WORK_MASON
+                        SoundEvents.VILLAGER_WORK_MASON,
+                        Int2ObjectMaps.emptyMap()
                 )
         );
 

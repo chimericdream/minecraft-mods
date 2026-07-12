@@ -14,7 +14,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -89,7 +90,7 @@ public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerat
 
         TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
-            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+            .put(MinekeaTextures.SHELF, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
 
         Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom", BOTTOM_MODEL, unused -> textures);
         Identifier bottomHingeModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_bottom_rh", BOTTOM_HINGE_MODEL, unused -> textures);
@@ -246,7 +247,7 @@ public class BookshelfDoorBlockDataGenerator extends ChimericLibBlockDataGenerat
 
         TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.MATERIAL, TextureMapping.getBlockTexture(plankIngredient))
-            .put(MinekeaTextures.SHELF, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0"));
+            .put(MinekeaTextures.SHELF, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")));
 
         ITEM_MODEL.create(
             BLOCK.BLOCK_ID.withPrefix("item/"),

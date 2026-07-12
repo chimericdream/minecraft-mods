@@ -14,6 +14,7 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -142,8 +143,8 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier endTexture = Optional.ofNullable(BLOCK.config.getTexture("end")).orElse(sideTexture);
 
         return new TextureMapping()
-            .put(TextureSlot.SIDE, sideTexture)
-            .put(TextureSlot.END, endTexture);
+            .put(TextureSlot.SIDE, new Material(sideTexture))
+            .put(TextureSlot.END, new Material(endTexture));
     }
 
     @Override

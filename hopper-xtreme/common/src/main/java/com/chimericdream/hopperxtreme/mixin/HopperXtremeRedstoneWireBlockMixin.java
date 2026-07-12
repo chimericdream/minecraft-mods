@@ -10,11 +10,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(RedStoneWireBlock.class)
 public class HopperXtremeRedstoneWireBlockMixin {
+	// BlockState#is(Block) is now the erased TypedInstance#is(T) default method, so the call this
+	// redirects (state.is(Blocks.HOPPER)) is emitted as BlockState.is(Ljava/lang/Object;)Z.
 	@Redirect(
 		method = "canSurviveOn",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z")
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Ljava/lang/Object;)Z")
 	)
-	private boolean hx$CanRunOnTop(BlockState state, Block block) {
-		return state.is(block) || state.is(CommonTags.HOPPERS);
+	private boolean hx$CanRunOnTop(BlockState state, Object block) {
+		return state.is((Block) block) || state.is(CommonTags.HOPPERS);
 	}
 }

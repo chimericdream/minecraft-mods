@@ -88,7 +88,7 @@ public class DyedPillarBlock extends RotatedPillarBlock {
                 ServerLevel serverWorld = (ServerLevel) world;
 
                 for (int i = 0; i < 5; ++i) {
-                    serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.random.nextDouble(), pos.getY() + 1, (double) pos.getZ() + world.random.nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
+                    serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.getRandom().nextDouble(), pos.getY() + 1, (double) pos.getZ() + world.getRandom().nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
                 }
             }
 

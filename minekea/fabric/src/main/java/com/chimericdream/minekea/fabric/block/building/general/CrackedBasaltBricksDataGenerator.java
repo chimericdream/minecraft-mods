@@ -12,6 +12,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CrackedBasaltBricksDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
-        generator.oreSmelting(List.of(BuildingBlocks.BASALT_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BLOCK, 0.1f, 200, "minekea");
+        generator.oreSmelting(List.of(BuildingBlocks.BASALT_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS, BLOCK, 0.1f, 200, "minekea");
         generator.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, BLOCK, BuildingBlocks.BASALT_BRICKS.get(), 1);
         generator.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, BuildingBlocks.BASALT_BRICKS.get(), BLOCK, 1);
     }

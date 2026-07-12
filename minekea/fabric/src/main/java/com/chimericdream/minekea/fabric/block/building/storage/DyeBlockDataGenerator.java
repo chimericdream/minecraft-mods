@@ -12,6 +12,7 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -73,9 +74,9 @@ public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color)))
-            .put(TextureSlot.SIDE, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color)))
-            .put(TextureSlot.TOP, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color)));
+            .put(TextureSlot.BOTTOM, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/bottom", BLOCK.color))))
+            .put(TextureSlot.SIDE, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/side", BLOCK.color))))
+            .put(TextureSlot.TOP, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/storage/dyes/%s/top", BLOCK.color))));
 
         blockStateModelGenerator.createTrivialBlock(
             BLOCK,

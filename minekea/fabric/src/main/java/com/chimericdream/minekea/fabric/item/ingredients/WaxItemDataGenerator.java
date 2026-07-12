@@ -13,6 +13,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
@@ -27,6 +28,7 @@ public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
         SimpleCookingRecipeBuilder.smelting(
                 Ingredient.of(ITEM.ingredient),
                 RecipeCategory.MISC,
+                CookingBookCategory.MISC,
                 ITEM,
                 0.1f,
                 200
@@ -39,6 +41,7 @@ public class WaxItemDataGenerator extends ChimericLibItemDataGenerator {
             SimpleCookingRecipeBuilder.smelting(
                     Ingredient.of(Items.HONEYCOMB),
                     RecipeCategory.MISC,
+                    CookingBookCategory.MISC,
                     ITEM,
                     0.1f,
                     200

@@ -13,7 +13,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -91,8 +92,8 @@ public class ShutterBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Block logIngredient = BLOCK.config.getIngredient("log");
 
         TextureMapping textures = new TextureMapping()
-            .put(MinekeaTextures.FRAME, BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/"))
-            .put(MinekeaTextures.PANEL, BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/"));
+            .put(MinekeaTextures.FRAME, new Material(BuiltInRegistries.BLOCK.getKey(logIngredient).withPrefix("block/")))
+            .put(MinekeaTextures.PANEL, new Material(BuiltInRegistries.BLOCK.getKey(plankIngredient).withPrefix("block/")));
 
         Identifier closedModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CLOSED_MODEL, unused -> textures);
         Identifier openModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_open", OPEN_MODEL, unused -> textures);

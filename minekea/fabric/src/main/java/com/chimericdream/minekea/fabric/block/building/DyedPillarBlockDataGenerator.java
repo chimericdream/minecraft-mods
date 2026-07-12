@@ -11,6 +11,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -72,8 +73,8 @@ public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.END, TextureUtils.block(BLOCK.BLOCK_ID, "_end"))
-            .put(TextureSlot.SIDE, TextureUtils.block(BLOCK.BLOCK_ID, "_side"));
+            .put(TextureSlot.END, new Material(TextureUtils.block(BLOCK.BLOCK_ID, "_end")))
+            .put(TextureSlot.SIDE, new Material(TextureUtils.block(BLOCK.BLOCK_ID, "_side")));
 
         Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", ModelTemplates.CUBE_COLUMN, unused -> textures);
 
