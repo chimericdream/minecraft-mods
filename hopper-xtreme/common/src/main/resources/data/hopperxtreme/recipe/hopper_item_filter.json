@@ -4,7 +4,7 @@
     "key": {
         "#": "minecraft:stick",
         "W": "minecraft:cobweb",
-        "C": "minecraft:chain"
+        "C": "minecraft:iron_chain"
     },
     "pattern": [
         "#W#",
