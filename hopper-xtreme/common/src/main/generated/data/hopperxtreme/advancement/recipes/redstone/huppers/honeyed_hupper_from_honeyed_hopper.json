@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:huppers/honeyed_hupper_from_honeyed_hopper"
+        "recipe": "hopperxtreme:huppers/honeyed_hupper_from_honeyed_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:huppers/honeyed_hupper_from_honeyed_hopper"
+      "hopperxtreme:huppers/honeyed_hupper_from_honeyed_hopper"
     ]
   }
 }

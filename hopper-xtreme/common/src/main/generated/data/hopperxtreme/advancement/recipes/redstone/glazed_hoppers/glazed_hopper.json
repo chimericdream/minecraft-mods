@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:glazed_hoppers/glazed_hopper"
+        "recipe": "hopperxtreme:glazed_hoppers/glazed_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:glazed_hoppers/glazed_hopper"
+      "hopperxtreme:glazed_hoppers/glazed_hopper"
     ]
   }
 }

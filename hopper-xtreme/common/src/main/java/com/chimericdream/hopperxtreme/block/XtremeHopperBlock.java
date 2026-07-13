@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HOPPER_BLOCK_ENTITY;
 
-public class XtremeHopperBlock extends AbstractHopperBlock {
+public class XtremeHopperBlock extends AbstractHopperBlock implements HopperVariantBlock {
     public static final MapCodec<XtremeHopperBlock> CODEC = simpleCodec(XtremeHopperBlock::create);
 
     private final int cooldownInTicks;
@@ -63,6 +63,11 @@ public class XtremeHopperBlock extends AbstractHopperBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public boolean isWithFilter() {
+        return withFilter;
     }
 
     @Override

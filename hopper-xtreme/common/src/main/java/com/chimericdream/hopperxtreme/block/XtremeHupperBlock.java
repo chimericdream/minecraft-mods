@@ -45,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_HUPPER_BLOCK_ENTITY;
 
-public class XtremeHupperBlock extends BaseEntityBlock {
+public class XtremeHupperBlock extends BaseEntityBlock implements HopperVariantBlock {
     public static final MapCodec<XtremeHupperBlock> CODEC = simpleCodec(XtremeHupperBlock::create);
 
     public static final EnumProperty<Direction> FACING;
@@ -133,6 +133,11 @@ public class XtremeHupperBlock extends BaseEntityBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public boolean isWithFilter() {
+        return withFilter;
     }
 
     @Override

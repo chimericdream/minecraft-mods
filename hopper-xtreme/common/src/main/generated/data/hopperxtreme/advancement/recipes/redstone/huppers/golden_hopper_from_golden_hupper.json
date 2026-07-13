@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:huppers/golden_hopper_from_golden_hupper"
+        "recipe": "hopperxtreme:huppers/golden_hopper_from_golden_hupper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:huppers/golden_hopper_from_golden_hupper"
+      "hopperxtreme:huppers/golden_hopper_from_golden_hupper"
     ]
   }
 }

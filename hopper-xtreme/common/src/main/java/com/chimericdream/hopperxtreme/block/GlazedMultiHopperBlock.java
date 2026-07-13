@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_MULTI_HOPPER_BLOCK_ENTITY;
 
-public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock {
+public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock implements HopperVariantBlock {
     public static final MapCodec<GlazedMultiHopperBlock> CODEC = simpleCodec(GlazedMultiHopperBlock::create);
 
     private final int cooldownInTicks;
@@ -62,6 +62,11 @@ public class GlazedMultiHopperBlock extends AbstractMultiHopperBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public boolean isWithFilter() {
+        return withFilter;
     }
 
     @Override

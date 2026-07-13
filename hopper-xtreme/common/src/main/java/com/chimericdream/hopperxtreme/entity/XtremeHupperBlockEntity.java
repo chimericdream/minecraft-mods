@@ -1,6 +1,8 @@
 package com.chimericdream.hopperxtreme.entity;
 
 import com.chimericdream.hopperxtreme.ModInfo;
+import com.chimericdream.hopperxtreme.block.HopperDeprecation;
+import com.chimericdream.hopperxtreme.block.HopperVariantBlock;
 import com.chimericdream.hopperxtreme.block.XtremeHupperBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
@@ -74,7 +76,11 @@ public class XtremeHupperBlockEntity extends RandomizableContainerBlockEntity im
     @Override
     protected void loadAdditional(ValueInput view) {
         super.loadAdditional(view);
-        this.withFilter = view.getBooleanOr(ModInfo.FILTER_NBT_KEY, false);
+
+        // Every hupper is now filter-capable; derive the flag from the block so placed blocks saved
+        // before this change (withFilter=false in NBT) are upgraded on load.
+        Block block = this.getBlockState().getBlock();
+        this.withFilter = block instanceof HopperVariantBlock variant ? variant.isWithFilter() : this.withFilter;
 
         this.inventory = NonNullList.withSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
         if (!this.tryLoadLootTable(view)) {
@@ -136,6 +142,10 @@ public class XtremeHupperBlockEntity extends RandomizableContainerBlockEntity im
     }
 
     public static void serverTick(Level world, BlockPos pos, BlockState state, XtremeHupperBlockEntity blockEntity) {
+        if (HopperDeprecation.convertIfDeprecated(world, pos, state)) {
+            return;
+        }
+
         --blockEntity.transferCooldown;
         blockEntity.lastTickTime = world.getGameTime();
 
@@ -206,9 +216,6 @@ public class XtremeHupperBlockEntity extends RandomizableContainerBlockEntity im
         }
 
         for (int i = 0; i < blockEntity.getContainerSize(); ++i) {
-            if (blockEntity.withFilter && i == blockEntity.getContainerSize() - 1) {
-                continue;
-            }
 
             ItemStack itemStack = blockEntity.getItem(i);
 

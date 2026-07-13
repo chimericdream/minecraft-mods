@@ -11,6 +11,8 @@ import com.chimericdream.hopperxtreme.entity.XtremeMultiHopperBlockEntity;
 import com.chimericdream.hopperxtreme.entity.XtremeMultiHupperBlockEntity;
 import com.chimericdream.hopperxtreme.registry.ModItemGroups;
 import dev.architectury.registry.registries.RegistrySupplier;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
@@ -194,84 +196,133 @@ public class ModBlocks {
         () -> new MenuType<>(FilteredHopperScreenHandler::new, FeatureFlagSet.of())
     );
 
+    /**
+     * Maps each deprecated {@code filtered_*} block key to the canonical (filter-capable) block that
+     * replaces it. Used by {@link HopperDeprecation} to convert placed deprecated blocks in place.
+     */
+    private static final Map<String, RegistrySupplier<Block>> CANONICAL_FOR_DEPRECATED = new HashMap<>();
+
+    static {
+        CANONICAL_FOR_DEPRECATED.put("filtered_golden_hopper", GOLDEN_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_diamond_hopper", DIAMOND_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_netherite_hopper", NETHERITE_HOPPER);
+
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_golden_hopper", GLAZED_GOLDEN_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_diamond_hopper", GLAZED_DIAMOND_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_netherite_hopper", GLAZED_NETHERITE_HOPPER);
+
+        CANONICAL_FOR_DEPRECATED.put("filtered_golden_multi_hopper", GOLDEN_MULTI_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_diamond_multi_hopper", DIAMOND_MULTI_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_netherite_multi_hopper", NETHERITE_MULTI_HOPPER);
+
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_golden_multi_hopper", GLAZED_GOLDEN_MULTI_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_diamond_multi_hopper", GLAZED_DIAMOND_MULTI_HOPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_glazed_netherite_multi_hopper", GLAZED_NETHERITE_MULTI_HOPPER);
+
+        CANONICAL_FOR_DEPRECATED.put("filtered_golden_hupper", GOLDEN_HUPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_diamond_hupper", DIAMOND_HUPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_netherite_hupper", NETHERITE_HUPPER);
+
+        CANONICAL_FOR_DEPRECATED.put("filtered_golden_multi_hupper", GOLDEN_MULTI_HUPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_diamond_multi_hupper", DIAMOND_MULTI_HUPPER);
+        CANONICAL_FOR_DEPRECATED.put("filtered_netherite_multi_hupper", NETHERITE_MULTI_HUPPER);
+    }
+
+    public static Block getCanonicalForDeprecated(String deprecatedKey) {
+        RegistrySupplier<Block> supplier = CANONICAL_FOR_DEPRECATED.get(deprecatedKey);
+        return supplier == null ? null : supplier.get();
+    }
+
+    private static boolean isDeprecatedKey(String key) {
+        return key.startsWith("filtered_");
+    }
+
     public static void init() {
     }
 
     private static RegistrySupplier<Block> registerHopper(String key, int ticks) {
-        return registerHopper(key, ticks, false);
+        return registerHopper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerHopper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeHopperBlock(ticks, key, withFilter),
-            getDefaultHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks) {
-        return registerGlazedHopper(key, ticks, false);
+        return registerGlazedHopper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new GlazedHopperBlock(ticks, key, withFilter),
-            getDefaultHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks) {
-        return registerMultiHopper(key, ticks, false);
+        return registerMultiHopper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeMultiHopperBlock(ticks, key, withFilter),
-            getDefaultMultiHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks) {
-        return registerGlazedMultiHopper(key, ticks, false);
+        return registerGlazedMultiHopper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new GlazedMultiHopperBlock(ticks, key, withFilter),
-            getDefaultMultiHopperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerHupper(String key, int ticks) {
-        return registerHupper(key, ticks, false);
+        return registerHupper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerHupper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeHupperBlock(ticks, key, withFilter),
-            getDefaultHupperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHupperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks) {
-        return registerMultiHupper(key, ticks, false);
+        return registerMultiHupper(key, ticks, true);
     }
 
     private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks, boolean withFilter) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
             () -> new XtremeMultiHupperBlock(ticks, key, withFilter),
-            getDefaultMultiHupperSettings().setId(REGISTRY_HELPER.makeItemRegistryKey(key))
+            (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHupperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     @SuppressWarnings("UnstableApiUsage")
     public static Item.Properties getDefaultHopperSettings() {
         return new Item.Properties().arch$tab(ModItemGroups.HOPPER_ITEM_GROUP).useBlockDescriptionPrefix();
+    }
+
+    /**
+     * Item settings for the deprecated {@code filtered_*} variants: no creative tab, so they no
+     * longer appear in the creative menu. They remain registered so existing worlds/inventories load.
+     */
+    public static Item.Properties getDeprecatedSettings() {
+        return new Item.Properties().useBlockDescriptionPrefix();
     }
 
     @SuppressWarnings("UnstableApiUsage")

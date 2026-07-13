@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "hopperxtreme:diamond_hopper",
   "result": {
-    "count": 1,
     "id": "hopperxtreme:netherite_hopper"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

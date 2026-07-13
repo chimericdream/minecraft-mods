@@ -1,7 +1,6 @@
 package com.chimericdream.hopperxtreme.fabric.block;
 
 import com.chimericdream.hopperxtreme.block.ModBlocks;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -27,7 +26,6 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
     public void buildRecipes() {
         generateHopperRecipes();
         generateGlazedHopperRecipes();
-        generateFilteredHopperRecipes();
         generateMultiHopperRecipes();
         generateHupperRecipes();
         generateMultiHupperRecipes();
@@ -68,32 +66,6 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
         makeBiDirectionalConversionRecipe(ModBlocks.GLAZED_NETHERITE_HOPPER.get().asItem(), 4, ModBlocks.GLAZED_NETHERITE_MULTI_HOPPER.get().asItem(), 1, "glazed_multi_hoppers");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_MULTI_HOPPER.get().asItem(), Items.GOLD_INGOT, 4, ModBlocks.GLAZED_GOLDEN_MULTI_HOPPER.get().asItem(), "glazed_multi_hoppers");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_GOLDEN_MULTI_HOPPER.get().asItem(), Items.DIAMOND, 4, ModBlocks.GLAZED_DIAMOND_MULTI_HOPPER.get().asItem(), "glazed_multi_hoppers");
-    }
-
-    private void generateFilteredHopperRecipes() {
-        makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_GOLDEN_HOPPER.get().asItem(), "filtered_hoppers", "_from_golden");
-        makeShapelessUpgradeRecipe(ModBlocks.DIAMOND_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_DIAMOND_HOPPER.get().asItem(), "filtered_hoppers", "_from_diamond");
-        makeShapelessUpgradeRecipe(ModBlocks.NETHERITE_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_NETHERITE_HOPPER.get().asItem(), "filtered_hoppers", "_from_netherite");
-
-        makeShapelessUpgradeRecipe(ModBlocks.GLAZED_GOLDEN_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_GLAZED_GOLDEN_HOPPER.get().asItem(), "filtered_hoppers", "_from_glazed_golden");
-        makeShapelessUpgradeRecipe(ModBlocks.GLAZED_DIAMOND_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_GLAZED_DIAMOND_HOPPER.get().asItem(), "filtered_hoppers", "_from_glazed_diamond");
-        makeShapelessUpgradeRecipe(ModBlocks.GLAZED_NETHERITE_HOPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_GLAZED_NETHERITE_HOPPER.get().asItem(), "filtered_hoppers", "_from_glazed_netherite");
-
-        makeShapelessUpgradeRecipe(ModBlocks.FILTERED_GOLDEN_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.FILTERED_GLAZED_GOLDEN_HOPPER.get().asItem(), "filtered_hoppers", "_from_filtered_golden");
-        makeShapelessUpgradeRecipe(ModBlocks.FILTERED_DIAMOND_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.FILTERED_GLAZED_DIAMOND_HOPPER.get().asItem(), "filtered_hoppers", "_from_filtered_diamond");
-        makeShapelessUpgradeRecipe(ModBlocks.FILTERED_NETHERITE_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.FILTERED_GLAZED_NETHERITE_HOPPER.get().asItem(), "filtered_hoppers", "_from_filtered_netherite");
-
-        makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_HUPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_GOLDEN_HUPPER.get().asItem(), "filtered_huppers", "_from_golden");
-        makeShapelessUpgradeRecipe(ModBlocks.DIAMOND_HUPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_DIAMOND_HUPPER.get().asItem(), "filtered_huppers", "_from_diamond");
-        makeShapelessUpgradeRecipe(ModBlocks.NETHERITE_HUPPER.get().asItem(), ModItems.HOPPER_ITEM_FILTER_ITEM.get(), 1, ModBlocks.FILTERED_NETHERITE_HUPPER.get().asItem(), "filtered_huppers", "_from_netherite");
-
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_GOLDEN_HOPPER.get().asItem(), ModBlocks.FILTERED_GOLDEN_HUPPER.get().asItem(), "filtered_huppers");
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_DIAMOND_HOPPER.get().asItem(), ModBlocks.FILTERED_DIAMOND_HUPPER.get().asItem(), "filtered_huppers");
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_NETHERITE_HOPPER.get().asItem(), ModBlocks.FILTERED_NETHERITE_HUPPER.get().asItem(), "filtered_huppers");
-
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_GOLDEN_HOPPER.get().asItem(), 4, ModBlocks.FILTERED_GOLDEN_MULTI_HOPPER.get().asItem(), 1, "filtered_multi_hoppers");
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_DIAMOND_HOPPER.get().asItem(), 4, ModBlocks.FILTERED_DIAMOND_MULTI_HOPPER.get().asItem(), 1, "filtered_multi_hoppers");
-        makeBiDirectionalConversionRecipe(ModBlocks.FILTERED_NETHERITE_HOPPER.get().asItem(), 4, ModBlocks.FILTERED_NETHERITE_MULTI_HOPPER.get().asItem(), 1, "filtered_multi_hoppers");
     }
 
     private void generateMultiHopperRecipes() {

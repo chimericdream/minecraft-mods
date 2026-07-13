@@ -1,6 +1,8 @@
 package com.chimericdream.hopperxtreme.entity;
 
 import com.chimericdream.hopperxtreme.ModInfo;
+import com.chimericdream.hopperxtreme.block.HopperDeprecation;
+import com.chimericdream.hopperxtreme.block.HopperVariantBlock;
 import com.chimericdream.hopperxtreme.block.XtremeMultiHupperBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
@@ -91,7 +93,11 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
     @Override
     protected void loadAdditional(ValueInput view) {
         super.loadAdditional(view);
-        this.withFilter = view.getBooleanOr(ModInfo.FILTER_NBT_KEY, false);
+
+        // Every multi-hupper is now filter-capable; derive the flag from the block so placed blocks
+        // saved before this change (withFilter=false in NBT) are upgraded on load.
+        Block block = this.getBlockState().getBlock();
+        this.withFilter = block instanceof HopperVariantBlock variant ? variant.isWithFilter() : this.withFilter;
 
         this.inventory = NonNullList.withSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
         if (!this.tryLoadLootTable(view)) {
@@ -113,6 +119,10 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
     }
 
     public int getContainerSize() {
+        if (this.withFilter) {
+            return this.inventory.size() - 1;
+        }
+
         return this.inventory.size();
     }
 
@@ -149,6 +159,10 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
     }
 
     public static void serverTick(Level world, BlockPos pos, BlockState state, XtremeMultiHupperBlockEntity blockEntity) {
+        if (HopperDeprecation.convertIfDeprecated(world, pos, state)) {
+            return;
+        }
+
         --blockEntity.transferCooldown;
         blockEntity.lastTickTime = world.getGameTime();
 
@@ -265,9 +279,6 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
 
     private static boolean insert(Level world, BlockPos pos, XtremeMultiHupperBlockEntity blockEntity) {
         for (int i = 0; i < blockEntity.getContainerSize(); ++i) {
-            if (blockEntity.withFilter && i == blockEntity.getContainerSize() - 1) {
-                continue;
-            }
 
             ItemStack itemStack = blockEntity.getItem(i);
 

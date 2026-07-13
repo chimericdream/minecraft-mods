@@ -7,23 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Gold-tier hoppers and huppers, as well as their multi- and glazed variants, are able to be upgraded to accept item filters."
-        },
-        {
-            "type": "patchouli:crafting",
-            "recipe": "hopperxtreme:filtered_diamond_hopper",
-            "recipe2": "hopperxtreme:filtered_diamond_hupper",
-            "title": "Recipe Examples"
-        },
-        {
-            "type": "patchouli:text",
-            "text": "The multi- variants of filtered hoppers are crafted in the same manner as the non-filtered versions."
-        },
-        {
-            "type": "patchouli:crafting",
-            "recipe": "hopperxtreme:filtered_diamond_multi_hopper",
-            "recipe2": "hopperxtreme:filtered_diamond_multi_hupper",
-            "title": "Recipe Examples"
+            "text": "Every Hopper X-Treme hopper and hupper$(br)- including the multi- and glazed variants - is filter-capable. There is no separate block to craft anymore.$(br2)Just place a Hopper Item Filter into a hopper's filter slot to start filtering."
         },
         {
             "type": "patchouli:image",

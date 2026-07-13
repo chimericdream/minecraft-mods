@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:huppers/netherite_hopper_from_netherite_hupper"
+        "recipe": "hopperxtreme:huppers/netherite_hopper_from_netherite_hupper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:huppers/netherite_hopper_from_netherite_hupper"
+      "hopperxtreme:huppers/netherite_hopper_from_netherite_hupper"
     ]
   }
 }

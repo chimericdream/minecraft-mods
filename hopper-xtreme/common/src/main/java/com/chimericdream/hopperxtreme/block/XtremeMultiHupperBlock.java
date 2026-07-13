@@ -53,7 +53,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.XTREME_MULTI_HUPPER_BLOCK_ENTITY;
 
-public class XtremeMultiHupperBlock extends BaseEntityBlock {
+public class XtremeMultiHupperBlock extends BaseEntityBlock implements HopperVariantBlock {
     public static final MapCodec<XtremeMultiHupperBlock> CODEC = simpleCodec(XtremeMultiHupperBlock::create);
 
     public static final BooleanProperty ENABLED;
@@ -157,6 +157,11 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public boolean isWithFilter() {
+        return withFilter;
     }
 
     private BooleanProperty getConnectionProperty(Direction direction) {

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:glazed_hoppers/glazed_netherite_hopper_from_netherite"
+        "recipe": "hopperxtreme:glazed_hoppers/glazed_netherite_hopper_from_netherite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:glazed_hoppers/glazed_netherite_hopper_from_netherite"
+      "hopperxtreme:glazed_hoppers/glazed_netherite_hopper_from_netherite"
     ]
   }
 }

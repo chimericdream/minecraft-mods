@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
+        "recipe": "hopperxtreme:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
+      "hopperxtreme:multi_hoppers/diamond_multi_hopper_from_diamond_hopper"
     ]
   }
 }

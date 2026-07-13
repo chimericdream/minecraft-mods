@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 import static com.chimericdream.hopperxtreme.block.ModBlocks.GLAZED_HOPPER_BLOCK_ENTITY;
 
-public class GlazedHopperBlock extends AbstractHopperBlock {
+public class GlazedHopperBlock extends AbstractHopperBlock implements HopperVariantBlock {
     public static final MapCodec<GlazedHopperBlock> CODEC = simpleCodec(GlazedHopperBlock::create);
     public static final String TOOLTIP_KEY = "block.hopperxtreme.honey_glazed_hopper.tooltip";
 
@@ -64,6 +64,11 @@ public class GlazedHopperBlock extends AbstractHopperBlock {
 
     public String getBaseKey() {
         return baseKey;
+    }
+
+    @Override
+    public boolean isWithFilter() {
+        return withFilter;
     }
 
     @Override

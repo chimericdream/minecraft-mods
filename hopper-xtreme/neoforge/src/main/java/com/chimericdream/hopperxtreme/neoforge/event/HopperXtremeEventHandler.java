@@ -1,6 +1,7 @@
 package com.chimericdream.hopperxtreme.neoforge.event;
 
 import com.chimericdream.hopperxtreme.ModInfo;
+import com.chimericdream.hopperxtreme.block.HopperDeprecation;
 import com.chimericdream.hopperxtreme.block.ModBlocks;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
@@ -25,6 +26,11 @@ public class HopperXtremeEventHandler {
         ItemStack stack = event.getItemStack();
 
         List<Component> tooltip = event.getToolTip();
+
+        if (HopperDeprecation.isDeprecatedItem(stack)) {
+            tooltip.add(TextHelpers.getTooltip(HopperDeprecation.DEPRECATED_TOOLTIP_KEY));
+            return;
+        }
 
         if (stack.is(ModBlocks.HONEY_GLAZED_HOPPER.get().asItem())) {
             tooltip.add(TextHelpers.getTooltip(TOOLTIP_KEY));

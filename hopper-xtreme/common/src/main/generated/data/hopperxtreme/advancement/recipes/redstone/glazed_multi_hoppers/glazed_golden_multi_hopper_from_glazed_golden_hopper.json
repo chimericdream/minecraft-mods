@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:glazed_multi_hoppers/glazed_golden_multi_hopper_from_glazed_golden_hopper"
+        "recipe": "hopperxtreme:glazed_multi_hoppers/glazed_golden_multi_hopper_from_glazed_golden_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:glazed_multi_hoppers/glazed_golden_multi_hopper_from_glazed_golden_hopper"
+      "hopperxtreme:glazed_multi_hoppers/glazed_golden_multi_hopper_from_glazed_golden_hopper"
     ]
   }
 }

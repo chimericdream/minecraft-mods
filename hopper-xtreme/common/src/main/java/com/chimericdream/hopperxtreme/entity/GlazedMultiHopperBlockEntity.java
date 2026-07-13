@@ -2,6 +2,8 @@ package com.chimericdream.hopperxtreme.entity;
 
 import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.block.GlazedMultiHopperBlock;
+import com.chimericdream.hopperxtreme.block.HopperDeprecation;
+import com.chimericdream.hopperxtreme.block.HopperVariantBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredGlazedHopperScreenHandler;
 import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreenHandler;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
@@ -84,9 +86,13 @@ public class GlazedMultiHopperBlockEntity extends RandomizableContainerBlockEnti
     @Override
     protected void loadAdditional(ValueInput view) {
         super.loadAdditional(view);
-        this.withFilter = view.getBooleanOr(ModInfo.FILTER_NBT_KEY, false);
 
-        this.inventory = NonNullList.withSize(this.withFilter ? 6 : 5, ItemStack.EMPTY);
+        // Every glazed multi-hopper is now filter-capable; derive the flag from the block so placed
+        // blocks saved before this change (withFilter=false in NBT) are upgraded on load.
+        Block block = this.getBlockState().getBlock();
+        this.withFilter = block instanceof HopperVariantBlock variant ? variant.isWithFilter() : this.withFilter;
+
+        this.inventory = NonNullList.withSize(this.withFilter ? 2 : 1, ItemStack.EMPTY);
         if (!this.tryLoadLootTable(view)) {
             ContainerHelper.loadAllItems(view, this.inventory);
         }
@@ -146,6 +152,10 @@ public class GlazedMultiHopperBlockEntity extends RandomizableContainerBlockEnti
     }
 
     public static void serverTick(Level world, BlockPos pos, BlockState state, GlazedMultiHopperBlockEntity blockEntity) {
+        if (HopperDeprecation.convertIfDeprecated(world, pos, state)) {
+            return;
+        }
+
         --blockEntity.transferCooldown;
         blockEntity.lastTickTime = world.getGameTime();
 

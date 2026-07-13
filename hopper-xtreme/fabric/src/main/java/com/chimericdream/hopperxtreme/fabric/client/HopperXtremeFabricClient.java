@@ -1,5 +1,6 @@
 package com.chimericdream.hopperxtreme.fabric.client;
 
+import com.chimericdream.hopperxtreme.block.HopperDeprecation;
 import com.chimericdream.hopperxtreme.block.ModBlocks;
 import com.chimericdream.hopperxtreme.client.HopperXtremeClient;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
@@ -20,6 +21,11 @@ public final class HopperXtremeFabricClient implements ClientModInitializer {
         HopperXtremeClient.onInitializeClient();
 
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, list) -> {
+            if (HopperDeprecation.isDeprecatedItem(itemStack)) {
+                list.add(TextHelpers.getTooltip(HopperDeprecation.DEPRECATED_TOOLTIP_KEY));
+                return;
+            }
+
             if (itemStack.is(ModBlocks.HONEY_GLAZED_HOPPER.get().asItem())) {
                 list.add(TextHelpers.getTooltip(TOOLTIP_KEY));
                 return;

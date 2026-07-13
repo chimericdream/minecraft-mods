@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:multi_hoppers/hopper_from_multi_hopper"
+        "recipe": "hopperxtreme:multi_hoppers/hopper_from_multi_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:multi_hoppers/hopper_from_multi_hopper"
+      "hopperxtreme:multi_hoppers/hopper_from_multi_hopper"
     ]
   }
 }
