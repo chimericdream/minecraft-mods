@@ -4,8 +4,6 @@ import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.entity.block.furniture.ArmoireBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -25,7 +23,6 @@ import org.joml.Quaternionf;
 import java.util.ArrayList;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 public class ArmoireBlockEntityRenderer implements BlockEntityRenderer<ArmoireBlockEntity, ArmoireBlockEntityRenderState> {
     private final BlockEntityRendererProvider.Context context;
 

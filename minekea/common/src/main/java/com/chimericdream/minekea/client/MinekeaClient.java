@@ -17,12 +17,9 @@ import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreen;
 import com.chimericdream.minekea.item.Tools;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
 
-@Environment(EnvType.CLIENT)
 public class MinekeaClient {
     public static void onInitializeClient() {
         MenuScreens.register(Crates.CRATE_SCREEN_HANDLER.get(), CrateScreen::new);

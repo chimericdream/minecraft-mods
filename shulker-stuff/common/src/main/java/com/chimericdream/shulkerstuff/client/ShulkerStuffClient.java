@@ -6,8 +6,6 @@ import com.chimericdream.shulkerstuff.client.screen.DyeStationScreen;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffComponentTypes;
 import com.chimericdream.shulkerstuff.component.type.ShulkerStuffPlatedComponent;
 import dev.architectury.event.events.client.ClientTooltipEvent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
@@ -16,7 +14,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 
-@Environment(EnvType.CLIENT)
 public class ShulkerStuffClient {
     public static void onInitializeClient() {
         MenuScreens.register(ModBlocks.DYE_STATION_SCREEN_HANDLER.get(), DyeStationScreen::new);

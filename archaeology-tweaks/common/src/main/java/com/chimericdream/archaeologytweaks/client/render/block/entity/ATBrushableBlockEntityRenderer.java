@@ -4,8 +4,6 @@ import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import com.chimericdream.archaeologytweaks.client.render.block.entity.state.ATBrushableBlockEntityRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LevelRenderer.BrightnessGetter;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -23,7 +21,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Environment(EnvType.CLIENT)
 public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBrushableBlockEntity, ATBrushableBlockEntityRenderState> {
     private final ItemModelResolver itemModelManager;
 

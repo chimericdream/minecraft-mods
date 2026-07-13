@@ -3,8 +3,6 @@ package com.chimericdream.minekea.client.render.item;
 import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -52,7 +50,6 @@ public class GlassJarItemRenderer implements SpecialModelRenderer<GlassJarBlockE
         return GlassJarItemEntityCache.getOrCreate(stack, world);
     }
 
-    @Environment(EnvType.CLIENT)
     public record Unbaked() implements SpecialModelRenderer.Unbaked<GlassJarBlockEntityRenderState> {
         public static final GlassJarItemRenderer.Unbaked INSTANCE = new GlassJarItemRenderer.Unbaked();
         public static final MapCodec<com.chimericdream.minekea.client.render.item.GlassJarItemRenderer.Unbaked> CODEC;

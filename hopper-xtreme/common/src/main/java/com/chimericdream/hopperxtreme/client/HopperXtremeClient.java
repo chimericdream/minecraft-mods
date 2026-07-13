@@ -6,11 +6,8 @@ import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreen;
 import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreen;
 import com.chimericdream.hopperxtreme.client.screen.HopperItemFilterScreen;
 import com.chimericdream.hopperxtreme.item.ModItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
 
-@Environment(EnvType.CLIENT)
 public class HopperXtremeClient {
     public static void onInitializeClient() {
         MenuScreens.register(ModBlocks.FILTERED_HOPPER_SCREEN_HANDLER.get(), FilteredHopperScreen::new);
