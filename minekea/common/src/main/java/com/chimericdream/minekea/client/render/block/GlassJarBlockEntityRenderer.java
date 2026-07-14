@@ -25,6 +25,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TypedEntityData;
@@ -97,11 +98,34 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
         }
 
         if (mobEntity != null) {
+            normalizeMobFacing(mobEntity);
+
             state.mobId = entityId;
             state.mobDisplay = this.context.entityRenderer().extractEntity(mobEntity, 0f);
             state.mobDisplay.lightCoords = state.lightCoords;
             state.mobHeight = mobEntity.getBbHeight();
             state.mobWidth = mobEntity.getBbWidth();
+        }
+    }
+
+    /*
+     * A captured mob keeps whatever rotation it had at the moment it was scooped up, so two jars of the
+     * same mob type would otherwise render their occupants facing different ways. Zero out the body/head
+     * yaw and pitch (both current and previous-tick values, since the render state interpolates between
+     * them) so every jar shows the mob in a single canonical facing. The per-jar block FACING rotation is
+     * still applied on top of this in renderMobJar, so the mob correctly turns to face out of the block.
+     */
+    private static void normalizeMobFacing(Entity mobEntity) {
+        mobEntity.setYRot(0f);
+        mobEntity.setXRot(0f);
+        mobEntity.yRotO = 0f;
+        mobEntity.xRotO = 0f;
+
+        if (mobEntity instanceof LivingEntity living) {
+            living.yBodyRot = 0f;
+            living.yBodyRotO = 0f;
+            living.yHeadRot = 0f;
+            living.yHeadRotO = 0f;
         }
     }
 
