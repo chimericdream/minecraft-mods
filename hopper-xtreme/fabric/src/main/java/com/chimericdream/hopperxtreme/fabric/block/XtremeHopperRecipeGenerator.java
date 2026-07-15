@@ -5,7 +5,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
-import net.minecraft.util.Tuple;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -45,20 +45,20 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
 
     private void generateGlazedHopperRecipes() {
         makeShapedRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), "glazed_hoppers", List.of("IGI", "ICI", " I "), List.of(
-            new Tuple<>('I', Items.IRON_INGOT),
-            new Tuple<>('G', Items.GRAY_GLAZED_TERRACOTTA),
-            new Tuple<>('C', Items.CHEST)
+            Pair.of('I', Items.IRON_INGOT),
+            Pair.of('G', Items.GLAZED_TERRACOTTA.gray()),
+            Pair.of('C', Items.CHEST)
         ));
-        makeShapelessUpgradeRecipe(Items.HOPPER, Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_hopper");
+        makeShapelessUpgradeRecipe(Items.HOPPER, Items.GLAZED_TERRACOTTA.gray(), 1, ModBlocks.GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_hopper");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), Items.HONEYCOMB, 1, ModBlocks.HONEY_GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_glazed");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), Items.GOLD_INGOT, 1, ModBlocks.GLAZED_GOLDEN_HOPPER.get().asItem(), "glazed_hoppers", "_from_glazed");
         makeShapelessUpgradeRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), Items.DIAMOND, 1, ModBlocks.GLAZED_DIAMOND_HOPPER.get().asItem(), "glazed_hoppers", "_from_glazed");
         makeSmithingRecipe(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, ModBlocks.GLAZED_DIAMOND_HOPPER.get().asItem(), Items.NETHERITE_INGOT, ModBlocks.GLAZED_NETHERITE_HOPPER.get().asItem(), "glazed_hoppers");
 
-        makeShapelessUpgradeRecipe(ModBlocks.HONEYED_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.HONEY_GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_honeyed");
-        makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.GLAZED_GOLDEN_HOPPER.get().asItem(), "glazed_hoppers", "_from_golden");
-        makeShapelessUpgradeRecipe(ModBlocks.DIAMOND_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.GLAZED_DIAMOND_HOPPER.get().asItem(), "glazed_hoppers", "_from_diamond");
-        makeShapelessUpgradeRecipe(ModBlocks.NETHERITE_HOPPER.get().asItem(), Items.GRAY_GLAZED_TERRACOTTA, 1, ModBlocks.GLAZED_NETHERITE_HOPPER.get().asItem(), "glazed_hoppers", "_from_netherite");
+        makeShapelessUpgradeRecipe(ModBlocks.HONEYED_HOPPER.get().asItem(), Items.GLAZED_TERRACOTTA.gray(), 1, ModBlocks.HONEY_GLAZED_HOPPER.get().asItem(), "glazed_hoppers", "_from_honeyed");
+        makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_HOPPER.get().asItem(), Items.GLAZED_TERRACOTTA.gray(), 1, ModBlocks.GLAZED_GOLDEN_HOPPER.get().asItem(), "glazed_hoppers", "_from_golden");
+        makeShapelessUpgradeRecipe(ModBlocks.DIAMOND_HOPPER.get().asItem(), Items.GLAZED_TERRACOTTA.gray(), 1, ModBlocks.GLAZED_DIAMOND_HOPPER.get().asItem(), "glazed_hoppers", "_from_diamond");
+        makeShapelessUpgradeRecipe(ModBlocks.NETHERITE_HOPPER.get().asItem(), Items.GLAZED_TERRACOTTA.gray(), 1, ModBlocks.GLAZED_NETHERITE_HOPPER.get().asItem(), "glazed_hoppers", "_from_netherite");
 
         makeBiDirectionalConversionRecipe(ModBlocks.GLAZED_HOPPER.get().asItem(), 4, ModBlocks.GLAZED_MULTI_HOPPER.get().asItem(), 1, "glazed_multi_hoppers");
         makeBiDirectionalConversionRecipe(ModBlocks.GLAZED_GOLDEN_HOPPER.get().asItem(), 4, ModBlocks.GLAZED_GOLDEN_MULTI_HOPPER.get().asItem(), 1, "glazed_multi_hoppers");
@@ -95,7 +95,7 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
         makeShapelessUpgradeRecipe(ModBlocks.GOLDEN_MULTI_HUPPER.get().asItem(), Items.DIAMOND, 4, ModBlocks.DIAMOND_MULTI_HUPPER.get().asItem(), "multi_huppers");
     }
 
-    private void makeShapedRecipe(Item output, String prefix, List<String> patterns, List<Tuple<Character, ItemLike>> inputs) {
+    private void makeShapedRecipe(Item output, String prefix, List<String> patterns, List<Pair<Character, ItemLike>> inputs) {
         if (patterns.size() > 3) {
             throw new IllegalArgumentException("Too many patterns");
         }
@@ -111,8 +111,8 @@ public class XtremeHopperRecipeGenerator extends RecipeProvider {
             builder.pattern(pattern);
         }
 
-        for (Tuple<Character, ItemLike> input : inputs) {
-            builder.define(input.getA(), input.getB());
+        for (Pair<Character, ItemLike> input : inputs) {
+            builder.define(input.getFirst(), input.getSecond());
         }
 
         builder.unlockedBy(getHasName(output), has(output))
