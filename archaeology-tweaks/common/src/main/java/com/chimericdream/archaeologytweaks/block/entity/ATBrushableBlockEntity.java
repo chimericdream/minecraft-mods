@@ -3,7 +3,7 @@ package com.chimericdream.archaeologytweaks.block.entity;
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -15,7 +15,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -131,13 +131,13 @@ public class ATBrushableBlockEntity extends BlockEntity {
     private void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush) {
         this.generateItem(world, brusher, brush);
         if (!this.item.isEmpty()) {
-            double d = EntityType.ITEM.getWidth();
+            double d = EntityTypes.ITEM.getWidth();
             double e = (double) 1.0F - d;
             double f = d / (double) 2.0F;
             Direction direction = Objects.requireNonNullElse(this.hitDirection, Direction.UP);
             BlockPos blockPos = this.worldPosition.relative(direction, 1);
             double g = (double) blockPos.getX() + (double) 0.5F * e + f;
-            double h = (double) blockPos.getY() + (double) 0.5F + (double) (EntityType.ITEM.getHeight() / 2.0F);
+            double h = (double) blockPos.getY() + (double) 0.5F + (double) (EntityTypes.ITEM.getHeight() / 2.0F);
             double i = (double) blockPos.getZ() + (double) 0.5F * e + f;
             ItemEntity itemEntity = new ItemEntity(world, g, h, i, this.item.split(world.getRandom().nextInt(21) + 10));
             itemEntity.setDeltaMovement(Vec3.ZERO);

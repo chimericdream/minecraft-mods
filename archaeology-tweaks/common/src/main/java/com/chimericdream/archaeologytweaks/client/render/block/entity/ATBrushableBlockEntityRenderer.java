@@ -4,8 +4,8 @@ import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import com.chimericdream.archaeologytweaks.client.render.block.entity.state.ATBrushableBlockEntityRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.LevelRenderer.BrightnessGetter;
+import net.minecraft.util.LightCoordsUtil;
+import net.minecraft.util.LightCoordsUtil.BrightnessGetter;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -37,7 +37,7 @@ public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBru
         renderState.face = blockEntity.getHitDirection();
         renderState.dusted = (Integer) blockEntity.getBlockState().getValue(BlockStateProperties.DUSTED);
         if (blockEntity.getLevel() != null && blockEntity.getHitDirection() != null) {
-            renderState.lightCoords = LevelRenderer.getLightCoords(BrightnessGetter.DEFAULT, blockEntity.getLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos().relative(blockEntity.getHitDirection()));
+            renderState.lightCoords = LightCoordsUtil.getLightCoords(BrightnessGetter.DEFAULT, blockEntity.getLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos().relative(blockEntity.getHitDirection()));
         }
 
         this.itemModelManager.updateForTopItem(renderState.itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), (ItemOwner) null, 0);
