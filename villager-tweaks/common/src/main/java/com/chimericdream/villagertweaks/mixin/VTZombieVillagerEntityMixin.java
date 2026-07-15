@@ -107,7 +107,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void vt$readPreviousNameData(ValueInput view, CallbackInfo ci) {
-        if (view.contains("VTPrevName")) {
+        if (view.getString("VTPrevName").isPresent()) {
             String jsonString = view.getStringOr("VTPrevName", "Uh oh!");
 
             this.vt$prevName = ComponentSerialization.CODEC

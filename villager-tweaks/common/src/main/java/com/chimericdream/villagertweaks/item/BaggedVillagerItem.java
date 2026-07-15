@@ -9,7 +9,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -53,7 +53,7 @@ public class BaggedVillagerItem extends Item {
     }
 
     private InteractionResult spawnVillager(Level world, BlockPos pos, Player user, InteractionHand hand) {
-        Villager villager = EntityType.VILLAGER.create(world, EntitySpawnReason.BUCKET);
+        Villager villager = EntityTypes.VILLAGER.create(world, EntitySpawnReason.BUCKET);
         assert villager != null;
 
         try {
