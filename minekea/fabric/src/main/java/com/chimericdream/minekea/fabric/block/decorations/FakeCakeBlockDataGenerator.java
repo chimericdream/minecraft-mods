@@ -24,10 +24,10 @@ import net.minecraft.world.level.block.Blocks;
 import java.util.function.Function;
 
 public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         getBuilder.apply(CommonBlockTags.SHEARS_MINEABLE)
             .setReplace(false)
-            .add(DecorationBlocks.FAKE_CAKE.get());
+            .add(DecorationBlocks.FAKE_CAKE.get().builtInRegistryHolder().key());
     }
 
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
@@ -35,16 +35,16 @@ public class FakeCakeBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .pattern("AAA")
             .pattern("BEB")
             .pattern("CCC")
-            .define('A', Items.WHITE_CARPET)
-            .define('B', Items.WHITE_DYE)
-            .define('C', Items.BROWN_WOOL)
+            .define('A', Items.CARPET.white())
+            .define('B', Items.DYE.white())
+            .define('C', Items.WOOL.brown())
             .define('E', Items.REDSTONE)
-            .unlockedBy(RecipeProvider.getHasName(Items.WHITE_CARPET),
-                generator.has(Items.WHITE_CARPET))
-            .unlockedBy(RecipeProvider.getHasName(Items.WHITE_DYE),
-                generator.has(Items.WHITE_DYE))
-            .unlockedBy(RecipeProvider.getHasName(Items.BROWN_WOOL),
-                generator.has(Items.BROWN_WOOL))
+            .unlockedBy(RecipeProvider.getHasName(Items.CARPET.white()),
+                generator.has(Items.CARPET.white()))
+            .unlockedBy(RecipeProvider.getHasName(Items.DYE.white()),
+                generator.has(Items.DYE.white()))
+            .unlockedBy(RecipeProvider.getHasName(Items.WOOL.brown()),
+                generator.has(Items.WOOL.brown()))
             .unlockedBy(RecipeProvider.getHasName(Items.REDSTONE),
                 generator.has(Items.REDSTONE))
             .save(exporter);

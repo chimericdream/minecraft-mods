@@ -25,10 +25,10 @@ public class CrimsonBasaltBricksDataGenerator extends ChimericLibBlockDataGenera
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         getBuilder.apply(BlockTags.MINEABLE_WITH_PICKAXE)
             .setReplace(false)
-            .add(BLOCK);
+            .add(BLOCK.builtInRegistryHolder().key());
     }
 
     @Override

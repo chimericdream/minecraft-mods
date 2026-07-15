@@ -28,7 +28,7 @@ public interface ItemDataGeneratorGroup {
         getItemGenerators().forEach(ChimericLibItemDataGenerator::generateTextures);
     }
 
-    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
         getItemGenerators().forEach(generator -> generator.configureItemTags(registryLookup, getBuilder));
     }
 

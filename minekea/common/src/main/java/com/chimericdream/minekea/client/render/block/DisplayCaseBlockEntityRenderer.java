@@ -59,7 +59,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
             state.setItem(stack);
             state.rotation = blockState.getValue(DisplayCaseBlock.ROTATION);
             state.isBlock = isBlock;
-            state.distanceToCamera = cameraPos.distanceToSqr(entity.getBlockPos().getCenter());
+            state.distanceToCamera = entity.getBlockPos().distToCenterSqr(cameraPos);
 
             displayContext = isBlock ? ItemDisplayContext.GROUND : ItemDisplayContext.FIXED;
 
@@ -80,7 +80,7 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         matrices.pushPose();
 
         if (state.hasCustomName) {
-            queue.submitNameTag(matrices, state.nameLabelPos, 0, state.customName, true, state.lightCoords, state.distanceToCamera, cameraState);
+            queue.submitNameTag(matrices, state.nameLabelPos, 0, state.customName, true, state.lightCoords, cameraState);
         }
 
         boolean isHead = isHeadItem(state.itemId);
@@ -156,14 +156,14 @@ public class DisplayCaseBlockEntityRenderer implements BlockEntityRenderer<Displ
         return
             id.compareTo(BuiltInRegistries.ITEM.getKey(Items.LANTERN)) == 0
                 || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.SOUL_LANTERN)) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.exposed())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.oxidized())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.unaffected())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedExposed())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedOxidized())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxedWeathered())) == 0
-                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathered())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathering().exposed())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathering().oxidized())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathering().unaffected())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed().unaffected())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed().exposed())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed().oxidized())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.waxed().weathered())) == 0
+                || id.compareTo(BuiltInRegistries.ITEM.getKey(Items.COPPER_LANTERN.weathering().weathered())) == 0
                 || Lanterns.BLOCKS.stream().anyMatch(block -> id.compareTo(block.getId()) == 0);
     }
 

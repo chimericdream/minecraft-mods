@@ -20,10 +20,10 @@ import static com.chimericdream.minekea.block.containers.GlassJarBlock.ALLOWED_I
 
 public class GlassJarBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
-    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
-        TagAppender<Item, Item> builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
+        TagAppender<Item> builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);
 
-        ALLOWED_ITEMS.forEach(builder::add);
+        ALLOWED_ITEMS.forEach(item -> builder.add(item.builtInRegistryHolder().key()));
     }
 
     @Override

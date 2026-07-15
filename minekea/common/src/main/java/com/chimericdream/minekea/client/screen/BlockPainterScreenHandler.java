@@ -109,22 +109,22 @@ public class BlockPainterScreenHandler extends AbstractContainerMenu {
 
         private boolean doesItemMatchSlot(ItemStack item) {
             return switch (this.getContainerSlot()) {
-                case 0 -> item.is(Items.WHITE_DYE);
-                case 1 -> item.is(Items.LIGHT_GRAY_DYE);
-                case 2 -> item.is(Items.GRAY_DYE);
-                case 3 -> item.is(Items.BLACK_DYE);
-                case 4 -> item.is(Items.BROWN_DYE);
-                case 5 -> item.is(Items.RED_DYE);
-                case 6 -> item.is(Items.ORANGE_DYE);
-                case 7 -> item.is(Items.YELLOW_DYE);
-                case 8 -> item.is(Items.LIME_DYE);
-                case 9 -> item.is(Items.GREEN_DYE);
-                case 10 -> item.is(Items.CYAN_DYE);
-                case 11 -> item.is(Items.LIGHT_BLUE_DYE);
-                case 12 -> item.is(Items.BLUE_DYE);
-                case 13 -> item.is(Items.PURPLE_DYE);
-                case 14 -> item.is(Items.MAGENTA_DYE);
-                case 15 -> item.is(Items.PINK_DYE);
+                case 0 -> item.is(Items.DYE.white());
+                case 1 -> item.is(Items.DYE.lightGray());
+                case 2 -> item.is(Items.DYE.gray());
+                case 3 -> item.is(Items.DYE.black());
+                case 4 -> item.is(Items.DYE.brown());
+                case 5 -> item.is(Items.DYE.red());
+                case 6 -> item.is(Items.DYE.orange());
+                case 7 -> item.is(Items.DYE.yellow());
+                case 8 -> item.is(Items.DYE.lime());
+                case 9 -> item.is(Items.DYE.green());
+                case 10 -> item.is(Items.DYE.cyan());
+                case 11 -> item.is(Items.DYE.lightBlue());
+                case 12 -> item.is(Items.DYE.blue());
+                case 13 -> item.is(Items.DYE.purple());
+                case 14 -> item.is(Items.DYE.magenta());
+                case 15 -> item.is(Items.DYE.pink());
                 default -> false;
             };
         }

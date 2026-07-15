@@ -25,10 +25,10 @@ public class EggCrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         getBuilder.apply(BlockTags.MINEABLE_WITH_HOE)
             .setReplace(false)
-            .add(BLOCK);
+            .add(BLOCK.builtInRegistryHolder().key());
     }
 
     @Override

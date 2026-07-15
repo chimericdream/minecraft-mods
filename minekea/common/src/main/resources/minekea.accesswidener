@@ -27,6 +27,8 @@ accessible field net/minecraft/client/renderer/special/SpecialModelRenderers ID_
 # This should be in chimericlib, but I need to figure out how to get transitive accesswideners working with Fabric, NeoForge, and Architectury
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
 
+accessible method net/minecraft/client/data/models/model/TextureSlot create (Ljava/lang/String;)Lnet/minecraft/client/data/models/model/TextureSlot;
+
 accessible method net/minecraft/client/data/models/model/ModelTemplate createMap (Lnet/minecraft/client/data/models/model/TextureMapping;)Ljava/util/Map;
 accessible field net/minecraft/client/data/models/model/ModelTemplate model Ljava/util/Optional;
 accessible field net/minecraft/client/data/models/model/ModelTemplate requiredSlots Ljava/util/Set;

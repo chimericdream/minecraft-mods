@@ -25,7 +25,7 @@ public class PillowBlock extends Block {
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
 
     public PillowBlock(String color) {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).mapColor(DyeColor.byName(color, DyeColor.WHITE)).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()).mapColor(DyeColor.byName(color, DyeColor.WHITE)).setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(color))));
 
         this.color = color;
 

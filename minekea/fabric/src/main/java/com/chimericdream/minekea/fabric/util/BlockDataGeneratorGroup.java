@@ -39,11 +39,11 @@ public interface BlockDataGeneratorGroup {
         getBlockGenerators().forEach(ChimericLibBlockDataGenerator::generateTextures);
     }
 
-    default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         getBlockGenerators().forEach(generator -> generator.configureBlockTags(registryLookup, getBuilder));
     }
 
-    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
         getBlockGenerators().forEach(generator -> generator.configureItemTags(registryLookup, getBuilder));
     }
 

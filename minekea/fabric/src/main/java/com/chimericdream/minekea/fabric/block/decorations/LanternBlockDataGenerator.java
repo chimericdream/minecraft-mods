@@ -27,8 +27,8 @@ public class LanternBlockDataGenerator extends ChimericLibBlockDataGenerator {
         BLOCK = (LanternBlock) block;
     }
 
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        getBuilder.apply(MinekeaBlockTags.LANTERNS).add(BLOCK);
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
+        getBuilder.apply(MinekeaBlockTags.LANTERNS).add(BLOCK.builtInRegistryHolder().key());
     }
 
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {

@@ -62,7 +62,7 @@ public class WarpedWartPlantBlock extends VegetationBlock {
     }
 
     public ItemStack getPickStack(LevelReader world, BlockPos pos, BlockState state) {
-        return new ItemStack(ModCrops.WARPED_WART_ITEM);
+        return new ItemStack(ModCrops.WARPED_WART_ITEM.get());
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

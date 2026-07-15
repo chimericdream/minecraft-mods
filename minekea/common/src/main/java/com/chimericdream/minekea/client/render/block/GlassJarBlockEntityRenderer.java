@@ -24,6 +24,7 @@ import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntitySpawnRequest;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -94,7 +95,7 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
 
             nbt.remove("equipment");
 
-            mobEntity = EntityType.loadEntityRecursive(nbt, entity.getLevel(), EntitySpawnReason.SPAWNER, EntityProcessor.NOP);
+            mobEntity = EntityType.loadEntityRecursive(nbt, entity.getLevel(), new EntitySpawnRequest(EntitySpawnReason.SPAWNER, false), EntityProcessor.NOP);
         }
 
         if (mobEntity != null) {

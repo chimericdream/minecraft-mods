@@ -76,7 +76,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureBlockTags(arg, this::valueLookupBuilder);
+                group.configureBlockTags(arg, this::builder);
             }
 
 //            MinekeaMod.ITEMS.configureBlockTags(arg, this::getOrCreateTagBuilder);
@@ -91,11 +91,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider arg) {
             for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
-                group.configureItemTags(arg, this::valueLookupBuilder);
+                group.configureItemTags(arg, this::builder);
             }
 
             for (ItemDataGeneratorGroup group : ModItemDataGenerators.ITEM_GROUPS) {
-                group.configureItemTags(arg, this::valueLookupBuilder);
+                group.configureItemTags(arg, this::builder);
             }
 
 //            MinekeaMod.ITEMS.configureItemTags(arg, this::getOrCreateTagBuilder);

@@ -529,7 +529,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
             return false;
         }
 
-        Optional<EntityType<?>> entityType = EntityType.byString(id);
+        Optional<EntityType<?>> entityType = Optional.ofNullable(Identifier.tryParse(id)).flatMap(BuiltInRegistries.ENTITY_TYPE::getOptional);
         if (entityType.isEmpty()) {
             return false;
         }

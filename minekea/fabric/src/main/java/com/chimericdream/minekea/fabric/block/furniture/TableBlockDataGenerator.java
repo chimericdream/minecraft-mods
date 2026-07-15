@@ -96,11 +96,11 @@ public class TableBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
-            .add(BLOCK);
+            .add(BLOCK.builtInRegistryHolder().key());
     }
 
     @Override

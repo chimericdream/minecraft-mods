@@ -43,10 +43,10 @@ public class WrenchItemDataGenerator extends ChimericLibItemDataGenerator {
     }
 
     @Override
-    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
         getBuilder.apply(CommonItemTags.WRENCHES)
             .setReplace(false)
-            .add(ITEM);
+            .add(ITEM.builtInRegistryHolder().key());
     }
 
     @Override

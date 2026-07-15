@@ -73,19 +73,19 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
         getBuilder.apply(tool.getMineableTag())
             .setReplace(false)
-            .add(BLOCK);
+            .add(BLOCK.builtInRegistryHolder().key());
     }
 
     @Override
-    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
         if (BLOCK.isBaggedItem) {
             getBuilder.apply(MinekeaItemTags.BAGGED_ITEMS)
                 .setReplace(false)
-                .add(BLOCK.asItem());
+                .add(BLOCK.asItem().builtInRegistryHolder().key());
         }
     }
 

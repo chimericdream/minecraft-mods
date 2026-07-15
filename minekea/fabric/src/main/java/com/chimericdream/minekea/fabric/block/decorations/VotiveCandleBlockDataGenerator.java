@@ -59,12 +59,12 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
         );
     }
 
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        getBuilder.apply(BlockTags.CANDLES).add(BLOCK);
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
+        getBuilder.apply(BlockTags.CANDLES).add(BLOCK.builtInRegistryHolder().key());
     }
 
-    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
-        getBuilder.apply(MinekeaItemTags.VOTIVE_CANDLES).add(BLOCK.asItem());
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
+        getBuilder.apply(MinekeaItemTags.VOTIVE_CANDLES).add(BLOCK.asItem().builtInRegistryHolder().key());
     }
 
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
