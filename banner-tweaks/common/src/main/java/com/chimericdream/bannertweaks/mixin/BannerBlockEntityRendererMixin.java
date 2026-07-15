@@ -41,7 +41,7 @@ abstract public class BannerBlockEntityRendererMixin {
 
         Component text = ((BannerBlockEntityRenderStateAccessor) renderState).bt$getCustomName();
 
-        if (!Minecraft.renderNames() || text == null) {
+        if (Minecraft.getInstance().gui.hud.isHidden() || text == null) {
             return;
         }
 
@@ -51,6 +51,6 @@ abstract public class BannerBlockEntityRendererMixin {
         }
 
         Vec3 nameLabelPos = new Vec3(0.5f, 1.625f + verticalOffset, 0.5f);
-        queue.submitNameTag(matrices, nameLabelPos, 0, text, true, light, squaredDistanceToCamera, cameraRenderState);
+        queue.submitNameTag(matrices, nameLabelPos, 0, text, true, light, cameraRenderState);
     }
 }
