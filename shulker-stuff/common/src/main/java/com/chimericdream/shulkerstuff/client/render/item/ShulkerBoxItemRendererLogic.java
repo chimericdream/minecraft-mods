@@ -124,8 +124,8 @@ public class ShulkerBoxItemRendererLogic {
             int baseColor = baseDyed ? (data.baseColor() | 0xFF000000) : 0xFFFFFFFF;
             int lidColor = lidDyed ? (data.lidColor() | 0xFF000000) : 0xFFFFFFFF;
 
-            collector.submitModelPart(base, poseStack, renderType, light, overlay, baseDyed ? dyedSprite : defaultSprite, false, false, baseColor, null, outlineColor);
-            collector.submitModelPart(lid, poseStack, renderType, light, overlay, lidDyed ? dyedSprite : defaultSprite, false, false, lidColor, null, outlineColor);
+            collector.submitModelPart(base, poseStack, renderType, light, overlay, baseDyed ? dyedSprite : defaultSprite, baseColor, null, outlineColor);
+            collector.submitModelPart(lid, poseStack, renderType, light, overlay, lidDyed ? dyedSprite : defaultSprite, lidColor, null, outlineColor);
 
             poseStack.popPose();
         }

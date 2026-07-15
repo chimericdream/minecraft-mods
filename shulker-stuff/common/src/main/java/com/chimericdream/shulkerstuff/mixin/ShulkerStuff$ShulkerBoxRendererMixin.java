@@ -131,12 +131,12 @@ abstract public class ShulkerStuff$ShulkerBoxRendererMixin {
         lid.yRot = 0.0F;
         lid.zRot = 0.0F;
 
-        collector.submitModelPart(base, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, baseDyed ? dyedSprite : defaultSprite, false, false, baseColor, renderState.breakProgress, 0);
+        collector.submitModelPart(base, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, baseDyed ? dyedSprite : defaultSprite, baseColor, renderState.breakProgress, 0);
 
         poseStack.pushPose();
         poseStack.translate(0.0F, 1.5F - renderState.progress * 0.5F, 0.0F);
         poseStack.mulPose(new Quaternionf().rotationY(270.0F * renderState.progress * ((float) Math.PI / 180F)));
-        collector.submitModelPart(lid, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, lidDyed ? dyedSprite : defaultSprite, false, false, lidColor, renderState.breakProgress, 0);
+        collector.submitModelPart(lid, poseStack, renderType, renderState.lightCoords, OverlayTexture.NO_OVERLAY, lidDyed ? dyedSprite : defaultSprite, lidColor, renderState.breakProgress, 0);
         poseStack.popPose();
 
         poseStack.popPose();
