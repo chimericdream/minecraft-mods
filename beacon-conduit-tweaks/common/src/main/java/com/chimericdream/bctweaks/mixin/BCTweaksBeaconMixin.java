@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(value = BeaconBlockEntity.class, priority = 4101)
@@ -34,7 +34,7 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
     double bct$range = 0.0;
 
     public BCTweaksBeaconMixin(BlockPos pos, BlockState state) {
-        super(BlockEntityType.BEACON, pos, state);
+        super(BlockEntityTypes.BEACON, pos, state);
     }
 
     @Inject(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "HEAD"))
