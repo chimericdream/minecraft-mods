@@ -7,7 +7,7 @@ import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -22,13 +22,13 @@ import static com.chimericdream.miniblockmerchants.loot.MobHeadLootTables.getZom
 public class MMLootTables {
     private static final Identifier CARROT_LOOT_TABLE_ID = Blocks.CARROTS.getLootTable().get().identifier();
     private static final Identifier CLAY_LOOT_TABLE_ID = Blocks.CLAY.getLootTable().get().identifier();
-    private static final Identifier CREEPER_LOOT_TABLE_ID = EntityType.CREEPER.getDefaultLootTable().get().identifier();
+    private static final Identifier CREEPER_LOOT_TABLE_ID = EntityTypes.CREEPER.getDefaultLootTable().get().identifier();
     private static final Identifier OAK_LEAVES_TABLE_ID = Blocks.OAK_LEAVES.getLootTable().get().identifier();
     private static final Identifier REDSTONE_ORE_TABLE_ID = Blocks.REDSTONE_ORE.getLootTable().get().identifier();
     private static final Identifier SPRUCE_LEAVES_TABLE_ID = Blocks.SPRUCE_LEAVES.getLootTable().get().identifier();
-    private static final Identifier VILLAGER_LOOT_TABLE_ID = EntityType.VILLAGER.getDefaultLootTable().get().identifier();
+    private static final Identifier VILLAGER_LOOT_TABLE_ID = EntityTypes.VILLAGER.getDefaultLootTable().get().identifier();
     private static final Identifier WHEAT_TABLE_ID = Blocks.WHEAT.getLootTable().get().identifier();
-    private static final Identifier ZOMBIE_VILLAGER_LOOT_TABLE_ID = EntityType.ZOMBIE_VILLAGER.getDefaultLootTable().get().identifier();
+    private static final Identifier ZOMBIE_VILLAGER_LOOT_TABLE_ID = EntityTypes.ZOMBIE_VILLAGER.getDefaultLootTable().get().identifier();
 
     private static LootPool.Builder makeBuilder(Item item, int chance) {
         LootPool.Builder builder = LootPool.lootPool()

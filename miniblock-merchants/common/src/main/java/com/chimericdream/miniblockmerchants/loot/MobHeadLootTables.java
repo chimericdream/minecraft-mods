@@ -2,8 +2,9 @@ package com.chimericdream.miniblockmerchants.loot;
 
 import com.chimericdream.miniblockmerchants.util.DataUtil;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.NbtPredicate;
+import net.minecraft.advancements.predicates.NbtPredicate;
+import net.minecraft.advancements.predicates.entity.EntityNbtPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Tuple;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
@@ -94,15 +95,15 @@ public class MobHeadLootTables {
 
     }
 
-    private static LootPoolEntryContainer.Builder<?> getZombieHeadLootTable(String name, String profession, Tuple<String, int[]> data) {
+    private static LootPoolEntryContainer.Builder<?> getZombieHeadLootTable(String name, String profession, Pair<String, int[]> data) {
         return getHeadLootTable(name, profession, data, true);
     }
 
-    private static LootPoolEntryContainer.Builder<?> getHeadLootTable(String name, String profession, Tuple<String, int[]> data) {
+    private static LootPoolEntryContainer.Builder<?> getHeadLootTable(String name, String profession, Pair<String, int[]> data) {
         return getHeadLootTable(name, profession, data, false);
     }
 
-    private static LootPoolEntryContainer.Builder<?> getHeadLootTable(String name, String profession, Tuple<String, int[]> data, boolean isZombieVillager) {
+    private static LootPoolEntryContainer.Builder<?> getHeadLootTable(String name, String profession, Pair<String, int[]> data, boolean isZombieVillager) {
         Item headItem = Items.PLAYER_HEAD;
 
         String nbSound;
@@ -128,7 +129,7 @@ public class MobHeadLootTables {
             .apply(nameBuilder)
             .apply(textureBuilder)
             .apply(nbSoundBuilder)
-            .when(() -> LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().nbt(professionPredicate)).build());
+            .when(() -> LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().put(EntityNbtPredicate.CODEC, new EntityNbtPredicate(professionPredicate))).build());
     }
 
     public static LootPool.Builder getVillagerHeadLootTable() {
