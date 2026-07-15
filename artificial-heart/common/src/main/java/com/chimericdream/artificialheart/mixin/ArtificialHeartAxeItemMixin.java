@@ -3,7 +3,7 @@ package com.chimericdream.artificialheart.mixin;
 import com.chimericdream.artificialheart.block.ArtificialCreakingHeartBlock;
 import com.chimericdream.artificialheart.block.ModBlocks;
 import com.chimericdream.lib.util.math.DirectionUtils;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
