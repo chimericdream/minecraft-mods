@@ -107,44 +107,44 @@ public class ColorHelpers {
 
     public static Item getDye(String color) {
         return switch (color) {
-            case "white" -> Items.WHITE_DYE;
-            case "light_gray" -> Items.LIGHT_GRAY_DYE;
-            case "gray" -> Items.GRAY_DYE;
-            case "black" -> Items.BLACK_DYE;
-            case "brown" -> Items.BROWN_DYE;
-            case "red" -> Items.RED_DYE;
-            case "orange" -> Items.ORANGE_DYE;
-            case "yellow" -> Items.YELLOW_DYE;
-            case "lime" -> Items.LIME_DYE;
-            case "green" -> Items.GREEN_DYE;
-            case "cyan" -> Items.CYAN_DYE;
-            case "light_blue" -> Items.LIGHT_BLUE_DYE;
-            case "blue" -> Items.BLUE_DYE;
-            case "purple" -> Items.PURPLE_DYE;
-            case "magenta" -> Items.MAGENTA_DYE;
-            case "pink" -> Items.PINK_DYE;
+            case "white" -> Items.DYE.white();
+            case "light_gray" -> Items.DYE.lightGray();
+            case "gray" -> Items.DYE.gray();
+            case "black" -> Items.DYE.black();
+            case "brown" -> Items.DYE.brown();
+            case "red" -> Items.DYE.red();
+            case "orange" -> Items.DYE.orange();
+            case "yellow" -> Items.DYE.yellow();
+            case "lime" -> Items.DYE.lime();
+            case "green" -> Items.DYE.green();
+            case "cyan" -> Items.DYE.cyan();
+            case "light_blue" -> Items.DYE.lightBlue();
+            case "blue" -> Items.DYE.blue();
+            case "purple" -> Items.DYE.purple();
+            case "magenta" -> Items.DYE.magenta();
+            case "pink" -> Items.DYE.pink();
             default -> throw new RuntimeException(String.format("Invalid color %s", color));
         };
     }
 
     public static Block getWool(String color) {
         return switch (color) {
-            case "white" -> Blocks.WHITE_WOOL;
-            case "light_gray" -> Blocks.LIGHT_GRAY_WOOL;
-            case "gray" -> Blocks.GRAY_WOOL;
-            case "black" -> Blocks.BLACK_WOOL;
-            case "brown" -> Blocks.BROWN_WOOL;
-            case "red" -> Blocks.RED_WOOL;
-            case "orange" -> Blocks.ORANGE_WOOL;
-            case "yellow" -> Blocks.YELLOW_WOOL;
-            case "lime" -> Blocks.LIME_WOOL;
-            case "green" -> Blocks.GREEN_WOOL;
-            case "cyan" -> Blocks.CYAN_WOOL;
-            case "light_blue" -> Blocks.LIGHT_BLUE_WOOL;
-            case "blue" -> Blocks.BLUE_WOOL;
-            case "purple" -> Blocks.PURPLE_WOOL;
-            case "magenta" -> Blocks.MAGENTA_WOOL;
-            case "pink" -> Blocks.PINK_WOOL;
+            case "white" -> Blocks.WOOL.white();
+            case "light_gray" -> Blocks.WOOL.lightGray();
+            case "gray" -> Blocks.WOOL.gray();
+            case "black" -> Blocks.WOOL.black();
+            case "brown" -> Blocks.WOOL.brown();
+            case "red" -> Blocks.WOOL.red();
+            case "orange" -> Blocks.WOOL.orange();
+            case "yellow" -> Blocks.WOOL.yellow();
+            case "lime" -> Blocks.WOOL.lime();
+            case "green" -> Blocks.WOOL.green();
+            case "cyan" -> Blocks.WOOL.cyan();
+            case "light_blue" -> Blocks.WOOL.lightBlue();
+            case "blue" -> Blocks.WOOL.blue();
+            case "purple" -> Blocks.WOOL.purple();
+            case "magenta" -> Blocks.WOOL.magenta();
+            case "pink" -> Blocks.WOOL.pink();
             default -> throw new RuntimeException(String.format("Invalid color %s", color));
         };
     }

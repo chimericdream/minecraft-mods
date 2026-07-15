@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A simple entity that does nothing but exist to be sat upon (aka "ridden").
@@ -26,19 +27,19 @@ public class SimpleSeatEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NonNull Builder builder) {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput data) {
+    protected void readAdditionalSaveData(@NonNull ValueInput data) {
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput data) {
+    protected void addAdditionalSaveData(@NonNull ValueOutput data) {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entityTrackerEntry) {
+    public @NonNull Packet<ClientGamePacketListener> getAddEntityPacket(@NonNull ServerEntity entityTrackerEntry) {
         return new ClientboundAddEntityPacket(this, entityTrackerEntry);
     }
 
@@ -52,7 +53,7 @@ public class SimpleSeatEntity extends Entity {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+    public boolean hurtServer(@NonNull ServerLevel world, @NonNull DamageSource source, float amount) {
         return false;
     }
 
@@ -62,12 +63,12 @@ public class SimpleSeatEntity extends Entity {
         }
 
         @Override
-        public boolean shouldRender(SimpleSeatEntity entity, Frustum frustum, double d, double e, double f) {
+        public boolean shouldRender(@NonNull SimpleSeatEntity entity, @NonNull Frustum frustum, double d, double e, double f) {
             return false;
         }
 
         @Override
-        public EntityRenderState createRenderState() {
+        public @NonNull EntityRenderState createRenderState() {
             return new EntityRenderState();
         }
     }

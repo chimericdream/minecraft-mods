@@ -15,10 +15,10 @@ public interface BlockDataGenerator {
     default void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
     }
 
-    default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+    default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
     }
 
-    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+    default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
     }
 
     default void configureBlockLootTables(BlockLootSubProvider generator) {

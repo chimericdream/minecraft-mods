@@ -8,6 +8,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
 
 public class SimpleInventoryScreenHandler extends AbstractContainerMenu {
     private final Container inventory;
@@ -63,12 +64,12 @@ public class SimpleInventoryScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@NonNull Player player) {
         return this.inventory.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int invSlot) {
+    public @NonNull ItemStack quickMoveStack(@NonNull Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
         Slot slot = this.slots.get(invSlot);
