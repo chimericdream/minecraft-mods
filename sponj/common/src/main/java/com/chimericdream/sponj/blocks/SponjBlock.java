@@ -13,7 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Tuple;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -59,16 +59,16 @@ public class SponjBlock extends Block {
         int absorptionRadius = 6 + (3 * (sponjCount - 1));
         int maxAbsorption = 64 * sponjCount;
 
-        Queue<Tuple<BlockPos, Integer>> queue = Lists.newLinkedList();
-        queue.add(new Tuple<>(pos, 0));
+        Queue<Pair<BlockPos, Integer>> queue = Lists.newLinkedList();
+        queue.add(Pair.of(pos, 0));
 
         int i = 0;
 
         while (!queue.isEmpty()) {
-            Tuple<BlockPos, Integer> pair = queue.poll();
-            BlockPos blockPos = pair.getA();
+            Pair<BlockPos, Integer> pair = queue.poll();
+            BlockPos blockPos = pair.getFirst();
 
-            int j = pair.getB();
+            int j = pair.getSecond();
 
             Direction[] directions = Direction.values();
 
@@ -82,13 +82,13 @@ public class SponjBlock extends Block {
                         ++i;
 
                         if (j < absorptionRadius) {
-                            queue.add(new Tuple<>(blockPos2, j + 1));
+                            queue.add(Pair.of(blockPos2, j + 1));
                         }
                     } else if (blockState.getBlock() instanceof LiquidBlock) {
                         world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
                         ++i;
                         if (j < absorptionRadius) {
-                            queue.add(new Tuple<>(blockPos2, j + 1));
+                            queue.add(Pair.of(blockPos2, j + 1));
                         }
                     } else if (blockState.canBeReplaced()) {
                         BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
@@ -96,7 +96,7 @@ public class SponjBlock extends Block {
                         world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
                         ++i;
                         if (j < 6) {
-                            queue.add(new Tuple<>(blockPos2, j + 1));
+                            queue.add(Pair.of(blockPos2, j + 1));
                         }
                     }
                 }
