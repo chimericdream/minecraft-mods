@@ -9,9 +9,11 @@ accessible method net/minecraft/world/level/block/state/BlockBehaviour getShape 
 #accessible field net/minecraft/world/poi/PointOfInterestType blockStates Ljava/util/Set;
 #mutable field net/minecraft/world/poi/PointOfInterestType blockStates Ljava/util/Set;
 
-accessible method net/minecraft/world/entity/decoration/ArmorStand setSmall (Z)V
-accessible method net/minecraft/world/entity/decoration/ArmorStand setMarker (Z)V
+# Used to identify (and clean up) the invisible armor stands that old armoires used to display armor
 accessible field net/minecraft/world/entity/decoration/ArmorStand disabledSlots I
+
+# Used to build an EquipmentLayerRenderer for the armoire block entity renderer
+accessible field net/minecraft/client/renderer/entity/EntityRenderDispatcher equipmentAssets Lnet/minecraft/client/resources/model/EquipmentAssetManager;
 
 #accessible method net/minecraft/data/client/BlockStateVariantMap getProperties ()Ljava/util/List;
 #accessible method net/minecraft/data/client/BlockStateVariantMap getVariants ()Ljava/util/Map;

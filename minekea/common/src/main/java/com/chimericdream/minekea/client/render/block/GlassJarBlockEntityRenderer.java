@@ -99,6 +99,9 @@ abstract public class GlassJarBlockEntityRenderer implements BlockEntityRenderer
         }
 
         if (mobEntity != null) {
+            // This entity is never added to the world, so it has no network ID; as of MC 26.x,
+            // extracting its render state throws unless one has been assigned (0 means unassigned)
+            mobEntity.setId(-1);
             normalizeMobFacing(mobEntity);
 
             state.mobId = entityId;
