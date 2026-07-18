@@ -31,11 +31,28 @@ project during prototyping).
   published variant with
   `testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<version>"))` — no
   copying. `BootstrapMinecraft` is the first helper; the GameTest harness helpers land here too.
-* **GameTests** — classes in `fabric/src/main/java/com/chimericdream/lib/fabric/test/` (match the
-  actual package root, `com.chimericdream.lib`), registered under the `fabric-gametest` entrypoint,
-  structures under `common/src/main/resources/data/chimericlib/gametest/structure/`. Fixture
-  content (a test block using `RegisterableBlock`, a test container using `ImplementedInventory`, a
-  sittable test block) should be registered from the test entrypoint only, never in the shipped jar.
+* **GameTests** — live in the fabric subproject's dedicated **`gametest` source set**
+  (`fabric/src/gametest/...`), created by `fabricApi.configureTests { createSourceSet = true }` in the
+  root `build.gradle`. This source set's classpath is extended from `main` (so it sees Minecraft,
+  fabric-api's gametest module, and chimeric-lib common) but its output goes only to the `runGameTest`
+  run config — **never** into the shipped/published jar. That is the isolation boundary: fixture
+  content and test classes both live here and cannot reach production. Test classes are in
+  `com.chimericdream.lib.fabric.test`, registered under the `fabric-gametest` entrypoint of a separate
+  test mod (`chimericlib_test`, `fabric/src/gametest/resources/fabric.mod.json`); its `main` entrypoint
+  registers the fixture content. Fixture content lives in `com.chimericdream.lib.fabric.test.fixture`
+  (a test block via `ModRegistryHelper`/`registerWithItem`, an `ImplementedInventory` container BE, a
+  `SimpleSeatEntity` `EntityType`, `MenuType`s for the screen handlers, and a `LootTableModifier`
+  subclass). Tests use the default `fabric-gametest-api-v1:empty` structure (8×8×8 air) and `setBlock`
+  at relative positions, so **no `.snbt` structure files are needed**. Run with
+  `./gradlew :chimeric-lib:fabric:runGameTest`.
+* **Shared GameTest harness helpers (published)** — the reusable, mod-agnostic helpers
+  (`GameTestContainers`, `GameTestEntities`, `GameTestMenus`) live in **common's `testFixtures`**
+  source set (`common/src/testFixtures/java/com/chimericdream/lib/testkit/gametest/`), published in the
+  same `testFixtures` variant as `BootstrapMinecraft`. chimeric-lib's own `gametest` source set
+  consumes them via `gametestImplementation(testFixtures(project(":chimeric-lib:common")))`; a
+  downstream mod consumes the published variant the same way from its own `gametest` source set. They
+  operate only on vanilla `GameTestHelper`/`Container`/`AbstractContainerMenu`, so they compile in
+  common and never drag test code into any production jar.
 
 ## Manual test plan
 
@@ -87,23 +104,29 @@ wiring the other mods copy (enchantment-numbers-fix next).
 
 ### GameTests — world-coupled pieces (against fixture content)
 
-* **`registerableBlockRegistersEverything`** — register a fixture block through
-  `ModRegistryHelper`/`BlockConfig` in the test entrypoint; assert block, item, and (if configured)
-  block entity all resolve under the expected ids.
-* **`implementedInventoryPersists`** — fixture container block: fill via code, save/load BE NBT
-  round-trip, assert contents; hopper insert/extract against it (reuse the Hopper X-Treme chest
-  pattern) to prove the `Container` contract behaves.
-* **`simpleAndDoubleWideScreenHandlers`** — open each handler server-side with a mock player over
-  the fixture container: slot count/layout, shift-click routing in both directions, close returns
-  cursor stack.
-* **`simpleSeatEntityLifecycle`** — sittable fixture block: mock player sits (entity created at
-  expected offset), dismounts (entity removed), block broken while seated (player freed, entity
-  removed, **no leaked entities** after 10 repetitions), and dismount position is never inside a
-  wall (place the seat against a wall to test the safety logic — currently a known gap per
-  POTENTIAL_FEATURES' "SimpleSeatEntity polish").
-* **`lootTableModifierInjects`** — subclass `LootTableModifier` in the test to inject a marker
-  entry into a vanilla table; assert the loaded table contains it; assert non-targeted tables
-  untouched; reload idempotence (inject once, not twice, after `/reload`).
+**Status: implemented.** Nine GameTests across five classes, all green via
+`./gradlew :chimeric-lib:fabric:runGameTest` (see "Test conventions" for the isolated `gametest`
+source set + published-`testFixtures` structure).
+
+* **`RegisterableBlockGameTest`** — ✅ done. Registers a plain block+item and a block+item+block-entity
+  through `ModRegistryHelper`, then asserts each resolves under the expected id (`BuiltInRegistries`
+  lookups by identity, `hasBlockEntity()` for the trio).
+* **`ImplementedInventoryGameTest`** — ✅ done. Fixture container BE: fill via code + slot assertions,
+  a `saveWithFullMetadata`→`loadStatic` NBT round-trip preserving contents, and a **vanilla hopper**
+  inserting into it (proves the `Container` contract behaves for real game systems).
+* **`ScreenHandlerGameTest`** — ✅ done. Opens `SimpleInventoryScreenHandler` and
+  `DoubleWideInventoryScreenHandler` server-side with a mock player over a fixture container: asserts
+  slot count/layout and shift-click (`quickMoveStack`) routing in both directions.
+* **`SimpleSeatEntityGameTest`** — ✅ done (lifecycle). Mock player sits, dismounts, and the seat
+  auto-despawns past its 20-tick grace window, leaving **no leaked entities**. Two behaviours the
+  earlier draft listed are **deliberately not asserted** because they don't exist yet (known gaps,
+  POTENTIAL_FEATURES "SimpleSeatEntity polish"): freeing the rider when the seat block is broken
+  mid-sit, and keeping the dismount position out of walls. Asserting them would only encode the gap;
+  add the tests when the safety logic lands.
+* **`LootTableModifierGameTest`** — ✅ done. Subclass injects a guaranteed marker pool into exactly one
+  targeted table id; asserts non-targeted ids are untouched, and rolls the modified table to prove the
+  marker actually drops. (Reload idempotence is a property of the fabric loot event firing once per
+  load, not of `LootTableModifier` itself, so it's out of scope for this unit-of-code test.)
 
 ### Datagen verification tests
 
@@ -137,11 +160,17 @@ the acceptance criteria.
   variant, imported downstream via `testImplementation(testFixtures("…:chimericlib-common-<mc>:<ver>"))`.
   One loom wart to copy: the custom `testFixtures` source set doesn't inherit loom's Minecraft
   classpath, so `common/build.gradle` does `sourceSets.testFixtures.compileClasspath += sourceSets.main.compileClasspath`.
+* **GameTest fixture-content location** (was an open question) — the fully-isolated approach won: the
+  fabric **`gametest` source set** (from `configureTests { createSourceSet = true }`) is the isolation
+  boundary. Fixture content and test classes live there and are built only for `runGameTest`, never
+  the shipped jar — no separate `chimericlib-testmod` subproject, no gametest code behind the
+  production `main` entrypoint. The reusable *helpers* are published from common's `testFixtures`
+  variant (see conventions). Hopper X-Treme predates this and puts its gametests in `main`; its
+  TEST_PLAN carries a note to refactor to this pattern.
 
 ## Open questions
 
-* Should GameTest **fixture content** (fixture blocks/containers/sittable blocks) live in a
-  dedicated `chimericlib-testmod` subproject (cleanest) or behind the gametest entrypoint in the
-  fabric subproject (simplest)? The `playgrounds` project is a third option already sitting in the
-  repo. (This is about world-loaded fixture *content*; the pure-JUnit *helper* sharing is resolved
-  above.)
+* None outstanding for chimeric-lib's own tests. Remaining work is the broader **GameTest harness
+  helper backlog** (POTENTIAL_FEATURES "Developer & testing tools" — redstone gate, update detector,
+  villager fixture builder, etc.) and their self-tests; the three helpers shipped so far
+  (`GameTestContainers`/`GameTestEntities`/`GameTestMenus`) are the first slice.

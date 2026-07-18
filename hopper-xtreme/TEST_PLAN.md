@@ -15,6 +15,17 @@ All in `fabric/src/main/java/com/chimericdream/hopperxtreme/fabric/test/`, regis
 `fabric-gametest` in `fabric.mod.json`, structures in
 `common/src/main/resources/data/hopperxtreme/gametest/structure/`:
 
+> **Refactor note (structure):** these GameTests live in the `main` source set, so their classes ship
+> (inert) in the production jar. ChimericLib has since established the isolated pattern — GameTests and
+> fixture content in the dedicated **`gametest` source set** (`fabric/src/gametest/...`, created by
+> `configureTests { createSourceSet = true }`), which is built only for `runGameTest` and never
+> shipped, with shared helpers consumed from ChimericLib's published `testFixtures` variant
+> (`GameTestContainers`/`GameTestEntities`/`GameTestMenus`). Hopper X-Treme should be migrated to that
+> layout: move `fabric/src/main/java/.../fabric/test/` → `fabric/src/gametest/java/...`, move the
+> `fabric-gametest` entrypoint into a `gametest`-only `fabric.mod.json`, and adopt the shared helpers
+> (the hand-rolled `getChestAt`/`getHopperAt` and slot assertions are exactly what the kit absorbs —
+> see "ChimericLib helper opportunities" below). See `chimeric-lib/TEST_PLAN.md` for the reference.
+
 * **`TransferSpeedTest`** — honeyed/copper/golden/diamond/netherite: 4 items move in the expected
   tick window (copper variant also proves redstone immunity by never unlocking it).
 * **`SixSlotTransferTest`** — golden/diamond/netherite: all 5 storage slots drain in order into the
