@@ -47,19 +47,33 @@ Keep this short list:
 
 ### Unit tests — pure utilities (highest value, cheapest)
 
-* **`DirectionUtils`** — full table tests: `getHitFace(axis, clickedFace)` across all 3 axes × 6
-  faces (Artificial Heart depends on this exact matrix); any rotation/opposite helpers likewise.
-* **`ColorHelpers`** — known color conversions/blends round-trip; boundary values (0, 255,
-  alpha handling).
-* **`TextHelpers`** — component building/formatting: literal/translatable output, style
-  application; assert flattened strings.
+**Status: implemented.** All pure-utility suites below are live in the fabric `test` source set
+(`fabric/src/test/java/com/chimericdream/chimericlib/test/`), 30 tests across 7 classes, run with
+`./gradlew :chimeric-lib:fabric:test`. Registry-touching tests extend the `BootstrapMinecraft` base
+class, which runs the vanilla bootstrap and bakes data components so headless `ItemStack`
+construction works on MC 26.2 (plain `Bootstrap.bootStrap()` leaves them unbound — see that class's
+javadoc). This is the canonical JUnit wiring the other mods copy (enchantment-numbers-fix next).
+
+* **`DirectionUtils`** — ✅ done. Full table tests: `getHitFace(axis, clickedFace)` across all 3
+  axes × 6 faces (Artificial Heart depends on this exact matrix). No rotation/opposite helpers
+  exist on the class today.
+* **`ColorHelpers`** — ✅ done. `RGB` round-trip and boundary values (0, 255, alpha handling),
+  `getTint` in/out-of-range, `getName`/`getColors`, `getDye`/`getWool` resolution + rejection,
+  `mixColors` null/identity/blend paths.
+* **`TextHelpers`** — ✅ done. Component building/formatting: literal/translatable output, aqua+italic
+  style application; asserts flattened strings.
+* **`ItemHelpers`** — ✅ done (not originally listed): `getIdentifier` for a populated stack and
+  `ItemStack.EMPTY` → `minecraft:air`.
 * **`RomanNumeral`-adjacent note** — lives in enchantment-numbers-fix, not here; if it migrates to
   the lib, its unit suite (see that mod's plan) moves with it.
-* **`TextureUtils` / `Tool` / `ModConfigurable`** — whatever pure logic they contain (path
-  building, tool-tier predicates, config binding): pin with table tests.
-* **`InventoryUtils`** — stack merging/insertion math with component-sensitive stacks, full
-  inventories, max-stack-size edge cases (Shulker Stuff's builder mirrors this — dedupe where
-  possible).
+* **`TextureUtils` / `Tool` / `ModConfigurable`** — ✅ done for `TextureUtils` (path prefix/suffix
+  building, namespace preservation, registered-block id lookup) and `Tool` (full `getItemTag` /
+  `getMineableTag` enum mapping incl. SHEARS/NONE nulls). `ModConfigurable` is a single-method
+  interface with no logic — nothing to unit-test.
+* **`InventoryUtils`** — ✅ done for the current surface (`convertListToInventory`: size, per-index
+  contents, empty case). The stack merging/insertion math described here (component-sensitive
+  stacks, max-stack-size edges, Shulker Stuff's builder) is aspirational — that logic does not yet
+  live in this class; expand the suite when it lands.
 
 ### GameTests — world-coupled pieces (against fixture content)
 
