@@ -18,10 +18,19 @@ project during prototyping).
 
 ## Test conventions
 
-* **Unit tests** — add a `test` source set to `common` (JUnit; none of the repo's projects have one
-  yet — chimeric-lib should pioneer the Gradle wiring the other mods will copy). Helpers that touch
-  registries need the Fabric loader JUnit bootstrap (`fabric-loader-junit`) so `Identifier`,
-  `ItemStack`, etc. work off-thread; document that wiring in the test class once.
+* **Unit tests** — the `test` source set lives in the **fabric** subproject (JUnit, wired in the
+  root `build.gradle` under `project.name == 'fabric'`: `fabric-loader-junit` + `useJUnitPlatform()`).
+  It went to fabric rather than common because the loader-junit bootstrap that makes `Identifier`,
+  `ItemStack`, etc. resolve off-thread is a fabric artifact. Registry-touching tests extend the
+  shared `BootstrapMinecraft` helper (see below) — the canonical wiring the other mods copy.
+* **Shared test helpers (`testFixtures`)** — cross-mod unit-test helpers live in chimeric-lib
+  **`common`'s `testFixtures` source set** (`common/src/testFixtures/java/com/chimericdream/lib/testkit/`)
+  and publish as a `testFixtures` variant on `components.java` (a `-test-fixtures.jar` described in
+  Gradle Module Metadata). chimeric-lib's own fabric tests consume it via
+  `testImplementation(testFixtures(project(":chimeric-lib:common")))`; a downstream mod imports the
+  published variant with
+  `testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<version>"))` — no
+  copying. `BootstrapMinecraft` is the first helper; the GameTest harness helpers land here too.
 * **GameTests** — classes in `fabric/src/main/java/com/chimericdream/lib/fabric/test/` (match the
   actual package root, `com.chimericdream.lib`), registered under the `fabric-gametest` entrypoint,
   structures under `common/src/main/resources/data/chimericlib/gametest/structure/`. Fixture
@@ -49,10 +58,11 @@ Keep this short list:
 
 **Status: implemented.** All pure-utility suites below are live in the fabric `test` source set
 (`fabric/src/test/java/com/chimericdream/chimericlib/test/`), 30 tests across 7 classes, run with
-`./gradlew :chimeric-lib:fabric:test`. Registry-touching tests extend the `BootstrapMinecraft` base
-class, which runs the vanilla bootstrap and bakes data components so headless `ItemStack`
-construction works on MC 26.2 (plain `Bootstrap.bootStrap()` leaves them unbound — see that class's
-javadoc). This is the canonical JUnit wiring the other mods copy (enchantment-numbers-fix next).
+`./gradlew :chimeric-lib:fabric:test`. Registry-touching tests extend the shared `BootstrapMinecraft`
+helper (published from common's `testFixtures` — see "Test conventions"), which runs the vanilla
+bootstrap and bakes data components so headless `ItemStack` construction works on MC 26.2 (plain
+`Bootstrap.bootStrap()` leaves them unbound — see that class's javadoc). This is the canonical JUnit
+wiring the other mods copy (enchantment-numbers-fix next).
 
 * **`DirectionUtils`** — ✅ done. Full table tests: `getHitFace(axis, clickedFace)` across all 3
   axes × 6 faces (Artificial Heart depends on this exact matrix). No rotation/opposite helpers
@@ -119,11 +129,19 @@ every other TEST_PLAN.md in the repo. The consolidated, prioritized list lives i
 opportunities" sections as its requirements backlog, and this plan's "helper self-tests" section as
 the acceptance criteria.
 
+## Resolved decisions
+
+* **JUnit `test` source set wiring** (was an open question) — the `test` source set lives in the
+  **fabric** subproject with `fabric-loader-junit` + `useJUnitPlatform()` (root `build.gradle`).
+  Shared helpers live in **common's `testFixtures`** source set and publish as a `testFixtures`
+  variant, imported downstream via `testImplementation(testFixtures("…:chimericlib-common-<mc>:<ver>"))`.
+  One loom wart to copy: the custom `testFixtures` source set doesn't inherit loom's Minecraft
+  classpath, so `common/build.gradle` does `sourceSets.testFixtures.compileClasspath += sourceSets.main.compileClasspath`.
+
 ## Open questions
 
-* Gradle wiring for a JUnit `test` source set under Architectury (loom + common split) — decide the
-  canonical pattern here before replicating to other mods (enchantment-numbers-fix is the second
-  customer).
-* Should fixture content live in a dedicated `chimericlib-testmod` subproject (cleanest) or behind
-  the gametest entrypoint in the fabric subproject (simplest)? The `playgrounds` project is a third
-  option already sitting in the repo.
+* Should GameTest **fixture content** (fixture blocks/containers/sittable blocks) live in a
+  dedicated `chimericlib-testmod` subproject (cleanest) or behind the gametest entrypoint in the
+  fabric subproject (simplest)? The `playgrounds` project is a third option already sitting in the
+  repo. (This is about world-loaded fixture *content*; the pure-JUnit *helper* sharing is resolved
+  above.)

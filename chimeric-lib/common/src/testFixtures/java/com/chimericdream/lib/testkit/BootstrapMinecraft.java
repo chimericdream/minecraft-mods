@@ -1,4 +1,4 @@
-package com.chimericdream.chimericlib.test;
+package com.chimericdream.lib.testkit;
 
 import net.minecraft.SharedConstants;
 import net.minecraft.core.HolderLookup;
@@ -10,11 +10,20 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * Base class for unit tests that touch Minecraft registries, items, blocks, or tags.
  *
- * <p>These tests run outside a live game, so the static registries ({@code Items}, {@code Blocks},
+ * <p>This lives in chimeric-lib's {@code testFixtures} source set so every consumer mod can reuse it
+ * instead of copying the bootstrap logic. In this repo's own build, chimeric-lib's fabric tests pull
+ * it in via {@code testImplementation(testFixtures(project(":chimeric-lib:common")))}; a downstream
+ * mod adds it to its fabric {@code test} source set with:
+ *
+ * <pre>{@code
+ * testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<version>"))
+ * }</pre>
+ *
+ * <p>Tests run outside a live game, so the static registries ({@code Items}, {@code Blocks},
  * {@code BuiltInRegistries}, ...) are unpopulated until Minecraft's bootstrap runs. The
- * {@code fabric-loader-junit} dependency (wired in the root {@code build.gradle} for the fabric
- * subproject's {@code test} source set) puts the Fabric loader and the named Minecraft jar on the
- * test classpath; this base then triggers the vanilla bootstrap so registry lookups resolve.
+ * {@code fabric-loader-junit} dependency (wired into the fabric subproject's {@code test} source
+ * set) puts the Fabric loader and the named Minecraft jar on the test classpath; this base then
+ * triggers the vanilla bootstrap so registry lookups resolve.
  *
  * <p>As of MC 26.2 an item's data components are data-driven: {@link Bootstrap#bootStrap()}
  * populates the registries but leaves each {@code Holder.Reference}'s components <em>unbound</em>,

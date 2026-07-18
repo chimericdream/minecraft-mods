@@ -1,6 +1,6 @@
 package com.chimericdream.chimericlib.test.items;
 
-import com.chimericdream.chimericlib.test.BootstrapMinecraft;
+import com.chimericdream.lib.testkit.BootstrapMinecraft;
 import com.chimericdream.lib.items.ItemHelpers;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;

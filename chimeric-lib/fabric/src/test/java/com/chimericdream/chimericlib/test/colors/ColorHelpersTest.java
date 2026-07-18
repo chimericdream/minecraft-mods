@@ -1,6 +1,6 @@
 package com.chimericdream.chimericlib.test.colors;
 
-import com.chimericdream.chimericlib.test.BootstrapMinecraft;
+import com.chimericdream.lib.testkit.BootstrapMinecraft;
 import com.chimericdream.lib.colors.ColorHelpers;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;

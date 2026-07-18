@@ -1,6 +1,6 @@
 package com.chimericdream.chimericlib.test.inventories;
 
-import com.chimericdream.chimericlib.test.BootstrapMinecraft;
+import com.chimericdream.lib.testkit.BootstrapMinecraft;
 import com.chimericdream.lib.inventories.InventoryUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;

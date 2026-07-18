@@ -136,6 +136,13 @@ subprojects {
             implementation "dev.isxander:yet-another-config-lib:${rootProject.yacl_version}-fabric"
 
             testImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
+
+            // chimeric-lib's own tests reuse its shared test fixtures (BootstrapMinecraft, ...) via
+            // the local project. A downstream mod instead consumes the published variant with:
+            //   testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<ver>"))
+            if (project.parent.name == 'chimeric-lib') {
+                testImplementation(testFixtures(project(":chimeric-lib:common")))
+            }
         }
 
         test {

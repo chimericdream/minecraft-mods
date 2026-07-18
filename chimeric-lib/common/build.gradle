@@ -5,3 +5,24 @@ architectury {
 //loom {
 //    accessWidenerPath = file("src/main/resources/chimericlib.accesswidener")
 //}
+
+// Publish a `testFixtures` variant so consumer mods can reuse the shared unit-test helpers
+// (e.g. BootstrapMinecraft) instead of copying them. The variant is added to components.java,
+// which this subproject already publishes (common has no shadow plugin).
+apply plugin: 'java-test-fixtures'
+
+// Loom attaches the named Minecraft jar + libraries directly to the main source set's classpath
+// (not to a config the custom testFixtures source set inherits), so share it explicitly. This is a
+// raw file view, so it never leaks into the published testFixtures variant's dependencies —
+// consumers get Minecraft from their own loom setup.
+sourceSets {
+    testFixtures {
+        compileClasspath += sourceSets.main.compileClasspath
+    }
+}
+
+dependencies {
+    // JUnit API for the fixtures' @BeforeAll; fabric-loader-junit is the same artifact the
+    // consuming fabric `test` source set runs with, so versions stay aligned.
+    testFixturesImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
+}

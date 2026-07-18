@@ -1,6 +1,6 @@
 package com.chimericdream.chimericlib.test.util;
 
-import com.chimericdream.chimericlib.test.BootstrapMinecraft;
+import com.chimericdream.lib.testkit.BootstrapMinecraft;
 import com.chimericdream.lib.tags.CommonBlockTags;
 import com.chimericdream.lib.util.Tool;
 import net.minecraft.tags.BlockTags;

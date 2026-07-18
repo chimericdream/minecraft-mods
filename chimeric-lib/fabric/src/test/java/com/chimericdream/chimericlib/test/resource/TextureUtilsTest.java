@@ -1,6 +1,6 @@
 package com.chimericdream.chimericlib.test.resource;
 
-import com.chimericdream.chimericlib.test.BootstrapMinecraft;
+import com.chimericdream.lib.testkit.BootstrapMinecraft;
 import com.chimericdream.lib.resource.TextureUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
