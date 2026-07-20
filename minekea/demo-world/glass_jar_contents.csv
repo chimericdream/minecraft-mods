@@ -1,0 +1,108 @@
+kind,id,label
+empty,,Empty Jar
+item,minecraft:amethyst_shard,Amethyst Shard
+item,minecraft:apple,Apple
+item,minecraft:bamboo,Bamboo
+item,minecraft:beetroot,Beetroot
+item,minecraft:beetroot_seeds,Beetroot Seeds
+item,minecraft:blaze_powder,Blaze Powder
+item,minecraft:blaze_rod,Blaze Rod
+item,minecraft:blue_egg,Blue Egg
+item,minecraft:breeze_rod,Breeze Rod
+item,minecraft:brown_egg,Brown Egg
+item,minecraft:brown_mushroom,Brown Mushroom
+item,minecraft:carrot,Carrot
+item,minecraft:charcoal,Charcoal
+item,minecraft:chorus_fruit,Chorus Fruit
+item,minecraft:coal,Coal
+item,minecraft:dried_kelp,Dried Kelp
+item,minecraft:egg,Egg
+item,minecraft:ender_pearl,Ender Pearl
+item,minecraft:flint,Flint
+item,minecraft:glowstone_dust,Glowstone Dust
+item,minecraft:golden_apple,Golden Apple
+item,minecraft:gravel,Gravel
+item,minecraft:honeycomb,Honeycomb
+item,minecraft:leather,Leather
+item,minecraft:melon_seeds,Melon Seeds
+item,minecraft:melon_slice,Melon Slice
+item,minecraft:nether_star,Nether Star
+item,minecraft:nether_wart,Nether Wart
+item,minecraft:paper,Paper
+item,minecraft:phantom_membrane,Phantom Membrane
+item,minecraft:potato,Potato
+item,minecraft:pumpkin_seeds,Pumpkin Seeds
+item,minecraft:red_mushroom,Red Mushroom
+item,minecraft:red_sand,Red Sand
+item,minecraft:redstone,Redstone
+item,minecraft:resin_clump,Resin Clump
+item,minecraft:sand,Sand
+item,minecraft:sculk_vein,Sculk Vein
+item,minecraft:slime_ball,Slime Ball
+item,minecraft:stick,Stick
+item,minecraft:sugar,Sugar
+item,minecraft:sugar_cane,Sugar Cane
+item,minecraft:totem_of_undying,Totem Of Undying
+item,minekea:crops/warped_wart,Warped Wart
+item,minecraft:wheat,Wheat
+item,minecraft:wheat_seeds,Wheat Seeds
+item,minecraft:white_dye,White Dye
+item,minecraft:light_gray_dye,Light Gray Dye
+item,minecraft:gray_dye,Gray Dye
+item,minecraft:black_dye,Black Dye
+item,minecraft:brown_dye,Brown Dye
+item,minecraft:red_dye,Red Dye
+item,minecraft:orange_dye,Orange Dye
+item,minecraft:yellow_dye,Yellow Dye
+item,minecraft:lime_dye,Lime Dye
+item,minecraft:green_dye,Green Dye
+item,minecraft:cyan_dye,Cyan Dye
+item,minecraft:light_blue_dye,Light Blue Dye
+item,minecraft:blue_dye,Blue Dye
+item,minecraft:purple_dye,Purple Dye
+item,minecraft:magenta_dye,Magenta Dye
+item,minecraft:pink_dye,Pink Dye
+item,minecraft:white_concrete_powder,White Concrete Powder
+item,minecraft:light_gray_concrete_powder,Light Gray Concrete Powder
+item,minecraft:gray_concrete_powder,Gray Concrete Powder
+item,minecraft:black_concrete_powder,Black Concrete Powder
+item,minecraft:brown_concrete_powder,Brown Concrete Powder
+item,minecraft:red_concrete_powder,Red Concrete Powder
+item,minecraft:orange_concrete_powder,Orange Concrete Powder
+item,minecraft:yellow_concrete_powder,Yellow Concrete Powder
+item,minecraft:lime_concrete_powder,Lime Concrete Powder
+item,minecraft:green_concrete_powder,Green Concrete Powder
+item,minecraft:cyan_concrete_powder,Cyan Concrete Powder
+item,minecraft:light_blue_concrete_powder,Light Blue Concrete Powder
+item,minecraft:blue_concrete_powder,Blue Concrete Powder
+item,minecraft:purple_concrete_powder,Purple Concrete Powder
+item,minecraft:magenta_concrete_powder,Magenta Concrete Powder
+item,minecraft:pink_concrete_powder,Pink Concrete Powder
+item,minekea:ingredients/wax/plain,Plain Wax
+item,minekea:ingredients/wax/white,White Wax
+item,minekea:ingredients/wax/light_gray,Light Gray Wax
+item,minekea:ingredients/wax/gray,Gray Wax
+item,minekea:ingredients/wax/black,Black Wax
+item,minekea:ingredients/wax/brown,Brown Wax
+item,minekea:ingredients/wax/red,Red Wax
+item,minekea:ingredients/wax/orange,Orange Wax
+item,minekea:ingredients/wax/yellow,Yellow Wax
+item,minekea:ingredients/wax/lime,Lime Wax
+item,minekea:ingredients/wax/green,Green Wax
+item,minekea:ingredients/wax/cyan,Cyan Wax
+item,minekea:ingredients/wax/light_blue,Light Blue Wax
+item,minekea:ingredients/wax/blue,Blue Wax
+item,minekea:ingredients/wax/purple,Purple Wax
+item,minekea:ingredients/wax/magenta,Magenta Wax
+item,minekea:ingredients/wax/pink,Pink Wax
+fluid,minecraft:water,Water
+fluid,minecraft:lava,Lava
+fluid,minekea:fluids/milk,Milk
+fluid,minekea:fluids/honey,Honey
+mob,minecraft:allay,Allay
+mob,minecraft:bat,Bat
+mob,minecraft:bee,Bee
+mob,minecraft:endermite,Endermite
+mob,minecraft:silverfish,Silverfish
+mob,minecraft:slime,Slime (tiny only)
+mob,minecraft:vex,Vex

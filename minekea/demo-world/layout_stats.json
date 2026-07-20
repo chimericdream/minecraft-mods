@@ -1,0 +1,425 @@
+{
+  "zones": {
+    "BUILDING": {
+      "z_start": 1,
+      "z_end": 27,
+      "cells": 950,
+      "growth_reserve_rows": 6
+    },
+    "FURNITURE": {
+      "z_start": 27,
+      "z_end": 43,
+      "cells": 254,
+      "growth_reserve_rows": 5
+    },
+    "STORAGE": {
+      "z_start": 43,
+      "z_end": 52,
+      "cells": 45,
+      "growth_reserve_rows": 3
+    },
+    "CONTAINERS": {
+      "z_start": 52,
+      "z_end": 60,
+      "cells": 37,
+      "growth_reserve_rows": 3
+    },
+    "GLASS JARS": {
+      "z_start": 60,
+      "z_end": 69,
+      "cells": 107,
+      "growth_reserve_rows": 3
+    },
+    "DECORATIONS": {
+      "z_start": 69,
+      "z_end": 76,
+      "cells": 23,
+      "growth_reserve_rows": 2
+    }
+  },
+  "families": [
+    {
+      "family": "beams",
+      "cells": 141,
+      "blocks": 141,
+      "grid": "24x6",
+      "w": 24,
+      "d": 7,
+      "x": 1,
+      "z": 3,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "covers",
+      "cells": 141,
+      "blocks": 141,
+      "grid": "24x6",
+      "w": 24,
+      "d": 7,
+      "x": 27,
+      "z": 3,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "dyed",
+      "cells": 192,
+      "blocks": 192,
+      "grid": "48x4",
+      "w": 48,
+      "d": 5,
+      "x": 53,
+      "z": 3,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "general",
+      "cells": 48,
+      "blocks": 48,
+      "grid": "24x2",
+      "w": 24,
+      "d": 3,
+      "x": 1,
+      "z": 12,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "slabs",
+      "cells": 140,
+      "blocks": 140,
+      "grid": "24x6",
+      "w": 24,
+      "d": 7,
+      "x": 27,
+      "z": 12,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "stairs",
+      "cells": 136,
+      "blocks": 136,
+      "grid": "24x6",
+      "w": 24,
+      "d": 7,
+      "x": 53,
+      "z": 12,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "walls",
+      "cells": 6,
+      "blocks": 6,
+      "grid": "6x1",
+      "w": 6,
+      "d": 2,
+      "x": 79,
+      "z": 12,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "compressed",
+      "cells": 146,
+      "blocks": 1314,
+      "grid": "24x7",
+      "w": 24,
+      "d": 8,
+      "x": 87,
+      "z": 12,
+      "zone": "BUILDING"
+    },
+    {
+      "family": "armoires",
+      "cells": 12,
+      "blocks": 12,
+      "grid": "12x1",
+      "w": 12,
+      "d": 2,
+      "x": 1,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "bookshelves",
+      "cells": 34,
+      "blocks": 34,
+      "grid": "24x2",
+      "w": 24,
+      "d": 3,
+      "x": 15,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "display_cases",
+      "cells": 24,
+      "blocks": 24,
+      "grid": "24x1",
+      "w": 24,
+      "d": 2,
+      "x": 41,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "doors",
+      "cells": 12,
+      "blocks": 12,
+      "grid": "12x1",
+      "w": 12,
+      "d": 2,
+      "x": 67,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "pillows",
+      "cells": 16,
+      "blocks": 16,
+      "grid": "16x1",
+      "w": 16,
+      "d": 2,
+      "x": 81,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "seating",
+      "cells": 48,
+      "blocks": 48,
+      "grid": "24x2",
+      "w": 24,
+      "d": 3,
+      "x": 99,
+      "z": 29,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "shelves",
+      "cells": 24,
+      "blocks": 24,
+      "grid": "24x1",
+      "w": 24,
+      "d": 2,
+      "x": 1,
+      "z": 34,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "shutters",
+      "cells": 48,
+      "blocks": 48,
+      "grid": "24x2",
+      "w": 24,
+      "d": 3,
+      "x": 27,
+      "z": 34,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "tables",
+      "cells": 24,
+      "blocks": 24,
+      "grid": "24x1",
+      "w": 24,
+      "d": 2,
+      "x": 53,
+      "z": 34,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "trapdoors",
+      "cells": 12,
+      "blocks": 12,
+      "grid": "12x1",
+      "w": 12,
+      "d": 2,
+      "x": 79,
+      "z": 34,
+      "zone": "FURNITURE"
+    },
+    {
+      "family": "blue_egg_crate",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 1,
+      "z": 45,
+      "zone": "STORAGE"
+    },
+    {
+      "family": "brown_egg_crate",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 4,
+      "z": 45,
+      "zone": "STORAGE"
+    },
+    {
+      "family": "compressed",
+      "cells": 26,
+      "blocks": 26,
+      "grid": "24x2",
+      "w": 24,
+      "d": 3,
+      "x": 7,
+      "z": 45,
+      "zone": "STORAGE"
+    },
+    {
+      "family": "dyes",
+      "cells": 16,
+      "blocks": 16,
+      "grid": "16x1",
+      "w": 16,
+      "d": 2,
+      "x": 33,
+      "z": 45,
+      "zone": "STORAGE"
+    },
+    {
+      "family": "egg_crate",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 51,
+      "z": 45,
+      "zone": "STORAGE"
+    },
+    {
+      "family": "barrels",
+      "cells": 11,
+      "blocks": 11,
+      "grid": "11x1",
+      "w": 11,
+      "d": 2,
+      "x": 1,
+      "z": 54,
+      "zone": "CONTAINERS"
+    },
+    {
+      "family": "cauldrons",
+      "cells": 2,
+      "blocks": 2,
+      "grid": "2x1",
+      "w": 2,
+      "d": 2,
+      "x": 14,
+      "z": 54,
+      "zone": "CONTAINERS"
+    },
+    {
+      "family": "crates",
+      "cells": 24,
+      "blocks": 24,
+      "grid": "24x1",
+      "w": 24,
+      "d": 2,
+      "x": 18,
+      "z": 54,
+      "zone": "CONTAINERS"
+    },
+    {
+      "family": "jars_empty",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 1,
+      "z": 62,
+      "zone": "GLASS JARS"
+    },
+    {
+      "family": "jars_items",
+      "cells": 95,
+      "blocks": 95,
+      "grid": "48x2",
+      "w": 48,
+      "d": 3,
+      "x": 4,
+      "z": 62,
+      "zone": "GLASS JARS"
+    },
+    {
+      "family": "jars_fluids",
+      "cells": 4,
+      "blocks": 4,
+      "grid": "4x1",
+      "w": 4,
+      "d": 2,
+      "x": 54,
+      "z": 62,
+      "zone": "GLASS JARS"
+    },
+    {
+      "family": "jars_mobs",
+      "cells": 7,
+      "blocks": 7,
+      "grid": "7x1",
+      "w": 7,
+      "d": 2,
+      "x": 60,
+      "z": 62,
+      "zone": "GLASS JARS"
+    },
+    {
+      "family": "warped_wart",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 1,
+      "z": 71,
+      "zone": "DECORATIONS"
+    },
+    {
+      "family": "candles",
+      "cells": 17,
+      "blocks": 17,
+      "grid": "17x1",
+      "w": 17,
+      "d": 2,
+      "x": 4,
+      "z": 71,
+      "zone": "DECORATIONS"
+    },
+    {
+      "family": "lighting",
+      "cells": 4,
+      "blocks": 4,
+      "grid": "4x1",
+      "w": 4,
+      "d": 2,
+      "x": 23,
+      "z": 71,
+      "zone": "DECORATIONS"
+    },
+    {
+      "family": "misc",
+      "cells": 1,
+      "blocks": 1,
+      "grid": "1x1",
+      "w": 1,
+      "d": 2,
+      "x": 29,
+      "z": 71,
+      "zone": "DECORATIONS"
+    }
+  ],
+  "summary": {
+    "total_blocks_placed": 2584,
+    "footprint_cells": 1416,
+    "plot_width": 126,
+    "used_depth": 77,
+    "recommended_plot": "126x78",
+    "plot_depth": 78,
+    "compressed_stacked": true
+  }
+}

@@ -1,0 +1,81 @@
+Minekea demo world - 126 x 78  (1 char = 1 block; N=top)
+legend: a=beams  b=covers  c=dyed  d=general  e=slabs  f=stairs  g=walls  h=compressed  i=armoires  j=bookshelves  k=display_cases  l=doors  m=pillows  n=seating  o=shelves  p=shutters  q=tables  r=trapdoors  s=blue_egg_crate  t=brown_egg_crate  v=dyes  w=egg_crate  x=barrels  y=cauldrons  z=crates  A=jars_empty  B=jars_items  C=jars_fluids  D=jars_mobs  E=warped_wart  F=candles  G=lighting  H=misc
+
+..............................................................................................................................
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.aaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbb  cccccccccccccccccccccccccccccccccccccccccccccccc                        .
+.aaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbb  cccccccccccccccccccccccccccccccccccccccccccccccc                        .
+.aaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbb  cccccccccccccccccccccccccccccccccccccccccccccccc                        .
+.aaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbb  cccccccccccccccccccccccccccccccccccccccccccccccc                        .
+.aaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbb                                                                          .
+.aaaaaaaaaaaaaaaaaaaaa     bbbbbbbbbbbbbbbbbbbbb                                                                             .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.dddddddddddddddddddddddd  eeeeeeeeeeeeeeeeeeeeeeee  ffffffffffffffffffffffff  gggggg  hhhhhhhhhhhhhhhhhhhhhhhh              .
+.dddddddddddddddddddddddd  eeeeeeeeeeeeeeeeeeeeeeee  ffffffffffffffffffffffff          hhhhhhhhhhhhhhhhhhhhhhhh              .
+.                          eeeeeeeeeeeeeeeeeeeeeeee  ffffffffffffffffffffffff          hhhhhhhhhhhhhhhhhhhhhhhh              .
+.                          eeeeeeeeeeeeeeeeeeeeeeee  ffffffffffffffffffffffff          hhhhhhhhhhhhhhhhhhhhhhhh              .
+.                          eeeeeeeeeeeeeeeeeeeeeeee  ffffffffffffffffffffffff          hhhhhhhhhhhhhhhhhhhhhhhh              .
+.                          eeeeeeeeeeeeeeeeeeee      ffffffffffffffff                  hhhhhhhhhhhhhhhhhhhhhhhh              .
+.                                                                                      hh                                    .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.iiiiiiiiiiii  jjjjjjjjjjjjjjjjjjjjjjjj  kkkkkkkkkkkkkkkkkkkkkkkk  llllllllllll  mmmmmmmmmmmmmmmm  nnnnnnnnnnnnnnnnnnnnnnnn  .
+.              jjjjjjjjjj                                                                          nnnnnnnnnnnnnnnnnnnnnnnn  .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.oooooooooooooooooooooooo  pppppppppppppppppppppppp  qqqqqqqqqqqqqqqqqqqqqqqq  rrrrrrrrrrrr                                  .
+.                          pppppppppppppppppppppppp                                                                          .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.s  t  hhhhhhhhhhhhhhhhhhhhhhhh  vvvvvvvvvvvvvvvv  w                                                                         .
+.      hh                                                                                                                    .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.xxxxxxxxxxx  yy  zzzzzzzzzzzzzzzzzzzzzzzz                                                                                   .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.A  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB  CCCC  DDDDDDD                                                          .
+.   BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB                                                                          .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.E  FFFFFFFFFFFFFFFFF  GGGG  H                                                                                               .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+.                                                                                                                            .
+..............................................................................................................................
