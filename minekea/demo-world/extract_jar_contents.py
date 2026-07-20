@@ -46,7 +46,10 @@ mobs = [
     ("minecraft:vex",        "Vex"),
 ]
 
-# buckets/bottles the jar round-trips
+# The four fluids the jar renderer explicitly supports (water, lava, milk, honey);
+# any other stored fluid falls back to rendering as water. See the renderer fix in
+# {Fabric,NeoForge}GlassJarBlockEntityRenderer -- getFluidColor/getFluidTexture no
+# longer throw, so no jar fluid can crash the client anymore.
 fluids = [
     ("minecraft:water",       "Water"),
     ("minecraft:lava",        "Lava"),

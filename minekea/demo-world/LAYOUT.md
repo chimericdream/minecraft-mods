@@ -192,6 +192,12 @@ The list is regenerated from the mod source by
 [`extract_jar_contents.py`](./extract_jar_contents.py); the NBT builder lives in
 `generate_layout.py` (`jar_nbt`).
 
+> **Renderer prerequisite:** building this demo surfaced a client-crash bug — the jar
+> renderer only handled honey/milk and threw on any other fluid (so water and lava
+> jars hard-crashed on render). Fixed in `{Fabric,NeoForge}GlassJarBlockEntityRenderer`
+> to render water, lava, milk, honey explicitly and fall back to water for anything
+> else (never throw). This demo assumes that fix is present.
+
 ---
 
 ## 6. Building it — `demo_build.mcfunction`

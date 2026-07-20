@@ -4,7 +4,6 @@ import com.chimericdream.minekea.client.render.block.GlassJarBlockEntityRenderer
 import com.chimericdream.minekea.fluid.HoneyFluid;
 import com.chimericdream.minekea.fluid.MilkFluid;
 import com.chimericdream.minekea.fluid.ModFluids;
-import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -12,6 +11,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 
 /*
  * As of 26.1, NeoForge's IClientFluidTypeExtensions no longer exposes getTintColor()/getStillTexture()
@@ -26,25 +26,42 @@ public class NeoForgeGlassJarBlockEntityRenderer extends GlassJarBlockEntityRend
         super(ctx);
     }
 
+    // Explicitly-supported fluids: water, lava, milk, honey. Any other fluid renders as
+    // water. These methods run in the render path, so they must never throw - an unhandled
+    // fluid here crashes the client (a lava or water jar used to hard-crash on render).
+    private static final Identifier WATER_TEXTURE = Identifier.fromNamespaceAndPath("minecraft", "block/water_still");
+    private static final Identifier LAVA_TEXTURE = Identifier.fromNamespaceAndPath("minecraft", "block/lava_still");
+    private static final int WATER_COLOR = 0x3F76E4; // default water tint (RGB; alpha is ignored)
+    private static final int LAVA_COLOR = 0xFFFFFF;  // no tint - lava_still is already coloured
+
     protected int getFluidColor(Fluid fluid) {
-        return getAttributes(fluid).getColor();
+        if (fluid == ModFluids.HONEY_FLUID.get() || fluid == ModFluids.FLOWING_HONEY.get()) {
+            return HoneyFluid.ATTRIBUTES.getColor();
+        }
+        if (fluid == ModFluids.MILK_FLUID.get() || fluid == ModFluids.FLOWING_MILK.get()) {
+            return MilkFluid.ATTRIBUTES.getColor();
+        }
+        if (fluid == Fluids.LAVA || fluid == Fluids.FLOWING_LAVA) {
+            return LAVA_COLOR;
+        }
+        return WATER_COLOR; // water + anything else
     }
 
     protected TextureAtlasSprite getFluidTexture(Fluid fluid) {
-        Identifier sprite = getAttributes(fluid).getSourceTexture();
-
-        return Minecraft.getInstance().getAtlasManager().get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, sprite));
+        return Minecraft.getInstance().getAtlasManager()
+            .get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, getSourceTexture(fluid)));
     }
 
-    private static ArchitecturyFluidAttributes getAttributes(Fluid fluid) {
+    private static Identifier getSourceTexture(Fluid fluid) {
         if (fluid == ModFluids.HONEY_FLUID.get() || fluid == ModFluids.FLOWING_HONEY.get()) {
-            return HoneyFluid.ATTRIBUTES;
+            return HoneyFluid.ATTRIBUTES.getSourceTexture();
         }
-
         if (fluid == ModFluids.MILK_FLUID.get() || fluid == ModFluids.FLOWING_MILK.get()) {
-            return MilkFluid.ATTRIBUTES;
+            return MilkFluid.ATTRIBUTES.getSourceTexture();
         }
-
-        throw new IllegalArgumentException("Unknown fluid in glass jar: " + fluid);
+        if (fluid == Fluids.LAVA || fluid == Fluids.FLOWING_LAVA) {
+            return LAVA_TEXTURE;
+        }
+        return WATER_TEXTURE; // water + anything else
     }
 }
