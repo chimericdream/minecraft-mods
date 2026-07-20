@@ -77,6 +77,32 @@ ZONE_DISPLAY = {
 def pretty(s):
     return s.replace("_", " ").title()
 
+def block_state(path):
+    """Orient a block's front toward the viewer, who stands at the front (high Z)
+    looking north (-Z), so 'front toward viewer' == facing south.
+    Returns (state, upper_state); state is the blockstate string without brackets
+    ('' = leave default). upper_state != None marks a 2-tall block whose upper half
+    must be placed one block above. Classified per block id, because families are
+    heterogeneous (e.g. slabs mix horizontal `type` slabs with vertical `facing`)."""
+    if path.startswith("building/stairs/"):                 # all stairs have facing
+        return ("facing=south", None)
+    if path.startswith("building/slabs/") and "/vertical/" in path:
+        return ("facing=south", None)                       # vertical slabs only
+    if path.startswith("building/covers/"):
+        return ("facing=south", None)
+    if path.startswith("furniture/seating/chairs/"):        # stools are symmetric
+        return ("facing=south", None)
+    if path.startswith("containers/barrels/") or path == "containers/glass_jar":
+        return ("facing=south", None)
+    if path.startswith("furniture/trapdoors/"):             # stand them up to be seen
+        return ("facing=south,half=bottom,open=true", None)
+    if path.startswith("furniture/armoires/"):              # 2 tall
+        return ("facing=south,half=lower", "facing=south,half=upper")
+    if path.startswith("furniture/doors/"):                 # 2 tall, closed
+        return ("facing=south,half=lower,hinge=left,open=false",
+                "facing=south,half=upper,hinge=left,open=false")
+    return ("", None)
+
 # split compressed (tiered) / glass jar / plain
 comp_by_mat = OrderedDict()
 plain = OrderedDict()          # (zone, family) -> list of cells; cell = [(id,y,contents,clabel)]
@@ -117,13 +143,29 @@ for mat in comp_by_mat:
 
 # ---- glass jars -----------------------------------------------------------
 jar_items, jar_misc = [], []      # cells
+jar_kind_by_id = {}               # contents id -> kind (item/fluid/mob/empty)
 GLASS_JAR = "minekea:containers/glass_jar"
+JAR_FLUID_FILL = 8.0              # MAX_BUCKETS in GlassJarBlockEntity
 jar_csv = os.path.join(HERE, "glass_jar_contents.csv")
 if os.path.exists(jar_csv):
     with open(jar_csv, encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
             cell = [(GLASS_JAR, 0, row["id"], row["label"])]
             (jar_items if row["kind"] == "item" else jar_misc).append(cell)
+            jar_kind_by_id[row["id"]] = row["kind"]     # "" (empty jar) -> "empty"
+
+def jar_nbt(contents_id):
+    """Block-entity SNBT that fills a glass jar with its item / fluid / mob,
+    matching GlassJarBlockEntity's persisted keys. '' = leave empty."""
+    kind = jar_kind_by_id.get(contents_id, "")
+    if kind == "item":
+        return '{StoredItem:"%s",StoredItemQty:1,FullItemStacks:0}' % contents_id
+    if kind == "fluid":
+        return '{StoredFluid:"%s",StoredFluidAmount:%rd}' % (contents_id, JAR_FLUID_FILL)
+    if kind == "mob":
+        extra = ",Size:0" if contents_id == "minecraft:slime" else ""   # jar only holds tiny slimes
+        return '{"minecraft:entity_data":{id:"%s"%s}}' % (contents_id, extra)
+    return ""
 
 # ---- assemble rooms (ordered) --------------------------------------------
 rooms = []      # dict: zone, rid, label, tw, cells
@@ -215,6 +257,7 @@ for rm in rooms:
         wz = base_z - lz
         first = (i == 0)
         for (bid, yoff, contents, clabel) in cell:
+            state, _upper = block_state(bid.split(":", 1)[1])
             placements.append({
                 "block_id": bid,
                 "x": wx, "y": FLOOR_Y + 1 + yoff, "z": wz,
@@ -222,6 +265,7 @@ for rm in rooms:
                 "room": rm["rid"], "zone": rm["zone"],
                 "label": rm["label"] if first else "",
                 "tier": (str(yoff + 1) + "x") if rm["rid"].startswith("compressed") else "",
+                "state": state,
                 "contents": contents, "contents_label": clabel,
             })
 
@@ -233,7 +277,7 @@ def cmd_block_pos(c, r):
 
 # ---- write manifest CSV ---------------------------------------------------
 fields = ["block_id", "x", "y", "z", "tile_col", "tile_row", "room", "zone",
-          "tier", "label", "contents", "contents_label"]
+          "tier", "state", "label", "contents", "contents_label"]
 with open(os.path.join(HERE, "demo_layout_manifest.csv"), "w", newline="", encoding="utf-8") as fh:
     w = csv.DictWriter(fh, fieldnames=fields)
     w.writeheader()
@@ -287,11 +331,23 @@ for rm in rooms:
         bz = ORIGIN_Z - TILE_PITCH * rm["row"]
         lines.append(fill(sx, FLOOR_Y, bz - (TILE_USABLE - 1), sx + 1, FLOOR_Y, bz, FLOOR_BLOCK))
 
-# 3) every display block
+# 3) every display block (oriented to face the viewer; 2-tall blocks get an upper half)
 lines.append("")
-lines.append(f"# display blocks ({len(placements)})")
+upper_halves = 0
+disp_lines = []
+jars_filled = 0
 for p in placements:
-    lines.append(f"setblock {p['x']} {p['y']} {p['z']} {p['block_id']}")
+    state, upper = block_state(p["block_id"].split(":", 1)[1])
+    suffix = f"[{state}]" if state else ""
+    nbt = jar_nbt(p["contents"]) if p["block_id"] == GLASS_JAR else ""
+    if nbt:
+        jars_filled += 1
+    disp_lines.append(f"setblock {p['x']} {p['y']} {p['z']} {p['block_id']}{suffix}{nbt}")
+    if upper:
+        disp_lines.append(f"setblock {p['x']} {p['y'] + 1} {p['z']} {p['block_id']}[{upper}]")
+        upper_halves += 1
+lines.append(f"# display blocks ({len(placements)} + {upper_halves} upper halves)")
+lines.extend(disp_lines)
 
 # 4) a label sign at the front-left of each room
 lines.append("")

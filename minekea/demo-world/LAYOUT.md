@@ -170,20 +170,27 @@ whose display depends on NBT, so it gets two tiles:
 - **(3,4) Fluids & Mobs — 12 jars:** 1 empty + 4 fluids (water, lava, milk, honey)
   + 7 mobs (allay, bat, bee, endermite, silverfish, **tiny** slime, vex).
 
-The intended contents ride on two manifest columns, **`contents`** (the id to store)
-and **`contents_label`** (sign text):
+The contents ride on two manifest columns, **`contents`** (the id stored) and
+**`contents_label`** (a display name):
 
 ```
-block_id,x,y,z,tile_col,tile_row,room,zone,tier,label,contents,contents_label
-minekea:containers/glass_jar,-159,56,125,2,4,jars_items,CONTAINERS,,Glass Jars - Items (95),minecraft:amethyst_shard,Amethyst Shard
-minekea:containers/glass_jar,-142,56,125,3,4,jars_misc,CONTAINERS,,Glass Jars - Fluids & Mobs (12),,Empty Jar
+block_id,x,y,z,tile_col,tile_row,room,zone,tier,state,label,contents,contents_label
+minekea:containers/glass_jar,-159,56,125,2,4,jars_items,CONTAINERS,,facing=south,Glass Jars - Items (95),minecraft:amethyst_shard,Amethyst Shard
+minekea:containers/glass_jar,-142,56,125,3,4,jars_misc,CONTAINERS,,facing=south,Glass Jars - Fluids & Mobs (12),,Empty Jar
 ```
 
-> **Build note:** `demo_build.mcfunction` places the jar block itself (empty). Item
-> contents can be added via the jar's block-entity NBT, fluids via `StoredFluid` /
-> `StoredFluidAmount`, and mobs via the stack's vanilla `ENTITY_DATA` on capture —
-> those are left for a follow-up pass (or fill them in-world). The list is
-> regenerated from the mod source by [`extract_jar_contents.py`](./extract_jar_contents.py).
+**The build fills the jars** via block-entity NBT matching `GlassJarBlockEntity`'s
+persisted keys — so all 106 non-empty jars show their contents on load:
+
+| kind | NBT written by `demo_build.mcfunction` |
+|------|----------------------------------------|
+| item  | `{StoredItem:"<id>",StoredItemQty:1,FullItemStacks:0}` |
+| fluid | `{StoredFluid:"<id>",StoredFluidAmount:8.0d}` (full = `MAX_BUCKETS`) |
+| mob   | `{"minecraft:entity_data":{id:"<entity>"}}` (tiny slime adds `Size:0`) |
+
+The list is regenerated from the mod source by
+[`extract_jar_contents.py`](./extract_jar_contents.py); the NBT builder lives in
+`generate_layout.py` (`jar_nbt`).
 
 ---
 
@@ -195,7 +202,9 @@ One runnable function lays the whole gallery inside the existing arena:
    outer border ring).
 2. **Tile interiors** — `fill` polished andesite for each of the 39 used tiles
    (plus the seams of merged rooms).
-3. **Display blocks** — a `setblock` for all 2,584 blocks (absolute coords).
+3. **Display blocks** — a `setblock` for all 2,584 blocks (absolute coords),
+   oriented to face the viewer (§6a), plus 24 upper halves for doors/armoires and
+   NBT contents for the 106 filled jars — **2,608 setblocks** total.
 4. **Label signs** — an `oak_sign` (facing south, toward the viewer) at each room's
    front-left corner with the family name + count.
 5. **Command blocks + plates** — all 64 teleport pads (§1).
@@ -217,9 +226,23 @@ Or paste the commands directly (they're plain `/fill` and `/setblock`). The aren
 its outer smooth-stone border, and floor level are assumed to exist already at the
 coordinates above; re-running is idempotent.
 
-> Blocks are placed in their **default facing**. Directional blocks (stairs, doors,
-> shutters, trapdoors, tables, seating) will face their default direction — good
-> enough for a catalog; rotate individual hero pieces by hand if a shot needs it.
+### 6a. Block facing
+
+The viewer stands at each tile's front (high Z) looking **north (−Z)**, so directional
+blocks are placed **facing south** (front toward the camera). Because families are
+heterogeneous, facing is applied **per block** (`generate_layout.py` → `block_state`),
+recorded in the manifest's **`state`** column:
+
+| Blocks | State applied |
+|--------|---------------|
+| all stairs (normal + vertical + bookshelf) · **vertical** slabs only · covers · chairs · barrels · glass jars | `facing=south` |
+| armoires, doors (2-tall) | `facing=south,half=lower` **+ an upper half placed above** |
+| trapdoors | `facing=south,half=bottom,open=true` (stood up to be seen) |
+| horizontal slabs, stools, pillows, tables, shelves, shutters, display cases | left default (already face the viewer or are symmetric) |
+
+Horizontal slabs use a `type` property (not `facing`), which is exactly why the rule
+is per-block — a blanket `facing=south` on the `slabs` family would emit invalid
+states and those `setblock`s would silently fail.
 
 ---
 
@@ -244,7 +267,7 @@ coordinates above; re-running is idempotent.
 | File | What it is |
 |------|-----------|
 | `LAYOUT.md` | This plan. |
-| `demo_layout_manifest.csv` | One row per placed block: `block_id, x, y, z, tile_col, tile_row, room, zone, tier, label, contents, contents_label` (absolute world coords). 2,584 rows. |
+| `demo_layout_manifest.csv` | One row per placed block: `block_id, x, y, z, tile_col, tile_row, room, zone, tier, state, label, contents, contents_label` (absolute world coords; `state` = facing applied, §6a). 2,584 rows. |
 | `demo_build.mcfunction` | Full build: floor, borders, all blocks, signs, 64 command blocks. |
 | `layout_tilemap.txt` | 8×8 tile map + room list with command-block coords. |
 | `layout_stats.json` | Machine-readable arena/room/tile summary + compressed groupings. |
