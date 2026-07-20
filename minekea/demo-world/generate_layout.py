@@ -1,308 +1,352 @@
 #!/usr/bin/env python3
 """
-Minekea demo-world layout generator.
+Minekea demo-world layout generator  (tiled 126x126 edition)
 
-Reads the authoritative block-id list (all_blocks.txt = generated blockstate
-paths) plus a few hand-authored specials, groups them into zones -> families,
-and flows them into a fixed-width (126) walkable gallery whose depth grows in
-16-block increments (30, 46, 62, ...).
+Places every Minekea block into an 8x8 grid of 16x16 tiles inside a pre-built
+126x126 arena. Each tile is a 14x14 polished-andesite pad framed by smooth-stone
+borders; the touching borders of neighbouring tiles form the 2-block aisles.
+One family per tile (big families get a merged 2-tile room); the glass jar gets
+its own item/misc tiles; compressed blocks are spread across 6 tiles by material
+type and shown as 9-tall stacks.
 
-Output:
-  demo_layout_manifest.csv   one row per placed block (block_id,x,y,z,zone,family,tier,label)
-  layout_stats.json          computed per-family footprints + chosen plot size
+Arena (absolute world coords, all floor at y=55):
+    front-left  corner  = (-191, 55, 190)      (west, near/front)
+    back-right  corner  = ( -66, 55,  65)      (east, far/back)
+    X: -191 (west) .. -66 (east)   126 wide, +X = east = "right"
+    Z:  190 (front) ..  65 (back)  126 deep,  -Z = back = north
+Tile (col c=0..7 west->east, row r=0..7 front->back):
+    interior X = -191+16c .. -178+16c        (14 wide, lx 0..13)
+    interior Z = 190-16r  .. 177-16r         (14 deep, lz 0..13; lz 0 = front row)
+    the front row (lz 0) is reserved for standing / label sign / command block.
+Command block: front-right corner of every tile = (-178+16c, 55, 190-16r),
+    facing up, command  tp @p ~-6.5 ~1 ~ 180 0  (lands player front-centre,
+    facing north into the tile), with a stone pressure plate on top.
+
+Outputs (all in this folder):
+    demo_layout_manifest.csv   one row per placed block, absolute coords + tile
+    layout_tilemap.txt         8x8 tile map (which family sits where)
+    layout_stats.json          machine-readable room/tile summary
+    demo_build.mcfunction      floor + borders + every block + signs + cmd blocks
+Regenerate with:  python generate_layout.py
+(refresh block_inventory.txt / glass_jar_contents.csv first if the mod changed)
 """
 import csv, json, math, os
 from collections import OrderedDict
 
-SCRATCH = os.path.dirname(os.path.abspath(__file__))
-ALL = os.path.join(SCRATCH, "block_inventory.txt")
+HERE = os.path.dirname(os.path.abspath(__file__))
 
-# ---- tunables -------------------------------------------------------------
-PLOT_W        = 126     # fixed width (X), west->east
-DEPTH_BASE    = 30      # smallest plot depth (Z)
-DEPTH_STEP    = 16      # depth grows by one chunk at a time
-FAMILY_MAXCOL = 24      # max cells wide a single family grid may be
-# a few large families pack better (shallower overall gallery) when allowed to run wider
-FAMILY_MAXCOL_OVERRIDE = {
-    "dyed":       48,   # 192 cells -> 48x4 instead of 24x8
-    "jars_items": 48,   # 95 cells  -> 48x2 instead of 24x4
-}
-FAMILY_AISLE  = 2       # empty columns between two families on the same shelf
-BLOCK_AISLE_EVERY = 0   # (0 = pack family cells solid; walking happens in family/zone aisles)
-LABEL_ROWS    = 1       # depth reserved in front (north) of each family for its sign
-SHELF_AISLE   = 2       # empty rows between shelves (walkable lane running E-W)
-ZONE_HEADER   = 2       # rows at the top of a zone (sign wall + 1 walkable row)
-ZONE_TRAIL    = 1       # walkable row after a zone before the next begins
-MARGIN        = 1       # perimeter walkway on all four sides
-COMPRESS_STACK = True   # render building/compressed materials as 9-tall vertical stacks
+# ---- arena / tile geometry -----------------------------------------------
+ORIGIN_X   = -191     # west edge  (col 0, lx 0)
+ORIGIN_Z   =  190     # front edge (row 0, lz 0)
+FLOOR_Y    =   55     # floor blocks live here; displays sit at FLOOR_Y+1
+TILES      =    8     # 8x8 grid
+TILE_PITCH =   16
+TILE_USABLE=   14     # interior is 14x14
+FRONT_ROWS =    1     # rows of the interior kept clear at the front (standing/sign/cmd)
 
-# reserved empty depth (rows) appended to each zone so new families / new wood
-# types / new compressed materials can slot in without reflowing the gallery
-GROWTH_RESERVE = {
-    "BUILDING":    6,   # grows most: new woods hit slabs/stairs/beams/covers + new compressed mats
-    "FURNITURE":   5,   # new woods hit seating/shutters/tables/etc.
-    "STORAGE":     3,
-    "CONTAINERS":  3,
-    "GLASS JARS":  3,   # new storable items/fluids/mobs
-    "DECORATIONS": 2,
-}
+FLOOR_BLOCK  = "minecraft:polished_andesite"
+BORDER_BLOCK = "minecraft:smooth_stone"
+SIGN_BLOCK   = "minecraft:oak_sign"
+CMD_TP       = "tp @p ~-6.5 ~1 ~ 180 0"
 
-# zone order + display names
-ZONE_ORDER = ["building", "furniture", "storage", "containers", "glass_jars", "decorations", "crops"]
-ZONE_DISPLAY = {
-    "building":   "BUILDING",
-    "furniture":  "FURNITURE",
-    "storage":    "STORAGE",
-    "containers": "CONTAINERS",
-    "glass_jars": "GLASS JARS",
-    "decorations":"DECORATIONS",
-    "crops":      "DECORATIONS",   # fold crops into decorations
-}
-
-# The glass jar is one registered block whose contents vary by NBT, so it gets its
-# own zone: one jar per storable item / fluid / mob. Contents come from
-# glass_jar_contents.csv (regenerate with extract_jar_contents.py).
-GLASS_JAR_BLOCK = "minekea:containers/glass_jar"
-JAR_FAMILY = {"empty": "jars_empty", "item": "jars_items",
-              "fluid": "jars_fluids", "mob": "jars_mobs"}
+# big families get a merged 2-tile room (breathing room + label margin)
+WIDE_FAMILIES = {"beams", "covers", "dyed", "slabs", "stairs"}
 
 # ---- load inventory -------------------------------------------------------
 paths = []
-with open(ALL, encoding="utf-8") as fh:
+with open(os.path.join(HERE, "block_inventory.txt"), encoding="utf-8") as fh:
     for line in fh:
         p = line.strip()
         if p:
             paths.append(p)
 
-# hand-authored blocks that live in src/main/resources (not the generated tree)
 HAND_AUTHORED = [
-    "containers/glass_jar",
-    "containers/cauldrons/honey",
-    "containers/cauldrons/milk",
+    "containers/cauldrons/honey", "containers/cauldrons/milk",
     "decorations/lighting/endless_rod",
-    "storage/egg_crate",
-    "storage/brown_egg_crate",
-    "storage/blue_egg_crate",
+    "storage/egg_crate", "storage/brown_egg_crate", "storage/blue_egg_crate",
 ]
 for p in HAND_AUTHORED:
     if p not in paths:
         paths.append(p)
 
-def zone_of(path):
-    top = path.split("/")[0]
-    return ZONE_DISPLAY.get(top, top.upper())
-
-def family_of(path):
-    parts = path.split("/")
-    # family = 2nd path component when present, else the top
-    return parts[1] if len(parts) > 1 else parts[0]
-
-FAMILY_LABELS = {
-    "jars_empty":  "Empty Jar",
-    "jars_items":  "Jars - Items",
-    "jars_fluids": "Jars - Fluids",
-    "jars_mobs":   "Jars - Mobs",
+ZONE_DISPLAY = {
+    "building": "BUILDING", "furniture": "FURNITURE", "storage": "STORAGE",
+    "containers": "CONTAINERS", "decorations": "DECORATIONS", "crops": "DECORATIONS",
 }
 
-def pretty(name):
-    return FAMILY_LABELS.get(name, name.replace("_", " ").title())
+def pretty(s):
+    return s.replace("_", " ").title()
 
-# ---- build cells ----------------------------------------------------------
-# A "cell" occupies one (x,z) footprint and holds >=1 block (id, y-offset).
-# zones -> families -> list of cells; each cell = list of (block_id, y)
-zones = OrderedDict()
-for top in ZONE_ORDER:
-    zones[ZONE_DISPLAY[top]] = OrderedDict()
-
-# split compressed (tiered) out for stacking
-comp_by_mat = OrderedDict()          # material -> [(path, tier)]
-plain = []                           # everything else
+# split compressed (tiered) / glass jar / plain
+comp_by_mat = OrderedDict()
+plain = OrderedDict()          # (zone, family) -> list of cells; cell = [(id,y,contents,clabel)]
 for p in sorted(paths):
     parts = p.split("/")
     if parts[:2] == ["building", "compressed"] and len(parts) == 4 and parts[3].endswith("x"):
-        mat = parts[2]
-        tier = int(parts[3][:-1])
-        comp_by_mat.setdefault(mat, []).append((p, tier))
+        comp_by_mat.setdefault(parts[2], []).append((p, int(parts[3][:-1])))
     elif p == "containers/glass_jar":
-        continue          # handled by its own zone below
+        continue                                   # its own tiles, built from the jar csv
     else:
-        plain.append(p)
+        zone = ZONE_DISPLAY.get(parts[0], parts[0].upper())
+        fam = parts[1] if len(parts) > 1 else parts[0]
+        plain.setdefault((zone, fam), []).append([("minekea:" + p, 0, "", "")])
 
-def add_cell(zone, family, cell):
-    """cell = list of (block_id, y_offset, contents_id, contents_label)"""
-    zones.setdefault(zone, OrderedDict()).setdefault(family, []).append(cell)
+def stack_cell(mat):
+    tiers = sorted(comp_by_mat[mat], key=lambda t: t[1])
+    return [("minekea:" + path, tier - 1, "", "") for (path, tier) in tiers]  # y 0..8
 
-# plain families: one block per cell
-for p in plain:
-    z = zone_of(p); f = family_of(p)
-    add_cell(z, f, [("minekea:" + p, 0, "", "")])
+# classify the 146 compressed materials into 6 groups
+COMP_ORE = {"amethyst_block", "copper_block", "diamond_block", "gold_block",
+            "iron_block", "lapis_block", "netherite_block", "redstone_block"}
+def comp_group(mat):
+    if mat.endswith("glazed_terracotta"):
+        return "glazed"
+    if mat.endswith("terracotta"):
+        return "terracotta"
+    if mat.endswith("concrete"):
+        return "concrete"
+    if mat.endswith(("_planks", "_log", "_stem")):
+        return "wood"
+    if mat in COMP_ORE:
+        return "ore"
+    return "stone"
 
-# compressed: one cell per material, tiers stacked bottom(1x)->top(9x)
-for mat, tiers in comp_by_mat.items():
-    tiers.sort(key=lambda t: t[1])
-    if COMPRESS_STACK:
-        cell = [("minekea:" + path, tier - 1, "", "") for (path, tier) in tiers]  # y 0..8
-        add_cell("BUILDING", "compressed", cell)
-    else:
-        for (path, tier) in tiers:
-            add_cell("BUILDING", "compressed", [("minekea:" + path, 0, "", "")])
+comp_groups = OrderedDict((g, []) for g in ["stone", "wood", "ore", "terracotta", "concrete", "glazed"])
+for mat in comp_by_mat:
+    comp_groups[comp_group(mat)].append(mat)
 
-# glass jars: one jar per storable item / fluid / mob, grouped by kind
-jar_csv = os.path.join(SCRATCH, "glass_jar_contents.csv")
-jar_counts = OrderedDict()
+# ---- glass jars -----------------------------------------------------------
+jar_items, jar_misc = [], []      # cells
+GLASS_JAR = "minekea:containers/glass_jar"
+jar_csv = os.path.join(HERE, "glass_jar_contents.csv")
 if os.path.exists(jar_csv):
     with open(jar_csv, encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
-            fam = JAR_FAMILY.get(row["kind"])
-            if not fam:
-                continue
-            add_cell("GLASS JARS", fam,
-                     [(GLASS_JAR_BLOCK, 0, row["id"], row["label"])])
-            jar_counts[fam] = jar_counts.get(fam, 0) + 1
-else:
-    # fall back to a single empty jar so the layout still generates
-    add_cell("GLASS JARS", "jars_empty", [(GLASS_JAR_BLOCK, 0, "", "Empty Jar")])
+            cell = [(GLASS_JAR, 0, row["id"], row["label"])]
+            (jar_items if row["kind"] == "item" else jar_misc).append(cell)
 
-# ---- pack into the plot ---------------------------------------------------
-# Flow families shelf by shelf inside each zone. Coordinates:
-#   x in [MARGIN, PLOT_W-1-MARGIN], grows east; wraps to next shelf.
-#   z grows south as shelves/zones stack.
-placements = []   # dict rows for csv
-stats = {"zones": OrderedDict(), "families": []}
+# ---- assemble rooms (ordered) --------------------------------------------
+rooms = []      # dict: zone, rid, label, tw, cells
+def room(zone, rid, label, cells, tw=1):
+    rooms.append({"zone": zone, "rid": rid, "label": label, "tw": tw, "cells": cells})
 
-x0 = MARGIN
-z = MARGIN
-usable_w = PLOT_W - 2 * MARGIN
+def P(zone, fam):
+    return plain.get((zone, fam), [])
 
-def family_grid(n, family=None):
-    cols = min(n, FAMILY_MAXCOL_OVERRIDE.get(family, FAMILY_MAXCOL))
-    rows = math.ceil(n / cols)
-    return cols, rows
+# BUILDING
+for fam in ["beams", "covers", "dyed", "slabs", "stairs"]:
+    room("BUILDING", fam, f"{pretty(fam)} ({len(P('BUILDING', fam))})",
+         P("BUILDING", fam), tw=2)
+room("BUILDING", "general", f"General ({len(P('BUILDING','general'))})", P("BUILDING", "general"))
+room("BUILDING", "walls", f"Walls ({len(P('BUILDING','walls'))})", P("BUILDING", "walls"))
+for g, mats in comp_groups.items():
+    cells = [stack_cell(m) for m in mats]
+    room("BUILDING", f"compressed_{g}", f"Compressed: {g.title()} ({len(mats)})", cells)
 
-for zone, fams in zones.items():
-    if not fams:
-        continue
-    zone_start_z = z
-    zone_cell_count = 0
-    # zone header band
-    z += ZONE_HEADER
-    cx = x0
-    shelf_depth = 0
-    zfam_stats = []
-    for family, cells in fams.items():
-        n = len(cells)
-        cols, rows = family_grid(n, family)
-        fam_w = cols
-        fam_d = rows + LABEL_ROWS
-        # wrap to a new shelf if this family won't fit on the current one
-        if cx + fam_w > x0 + usable_w:
-            z += shelf_depth + SHELF_AISLE
-            cx = x0
-            shelf_depth = 0
-        fx, fz = cx, z
-        # place cells: label row is fz (front/north), grid starts fz+LABEL_ROWS
-        for i, cell in enumerate(cells):
-            col = i % cols
-            row = i // cols
-            bx = fx + col
-            bz = fz + LABEL_ROWS + row
-            label = pretty(family) if i == 0 else ""
-            for (bid, yoff, contents, clabel) in cell:
-                tier = ""
-                if COMPRESS_STACK and family == "compressed":
-                    tier = str(yoff + 1) + "x"
-                placements.append({
-                    "block_id": bid,
-                    "x": bx, "y": yoff, "z": bz,
-                    "zone": zone, "family": family,
-                    "tier": tier, "label": label,
-                    "contents": contents, "contents_label": clabel,
-                })
-        zone_cell_count += n
-        zfam_stats.append({
-            "family": family, "cells": n,
-            "blocks": sum(len(c) for c in cells),
-            "grid": f"{cols}x{rows}", "w": fam_w, "d": fam_d,
-            "x": fx, "z": fz,
-        })
-        cx += fam_w + FAMILY_AISLE
-        shelf_depth = max(shelf_depth, fam_d)
-    reserve = GROWTH_RESERVE.get(zone, 0)
-    z += shelf_depth + reserve + ZONE_TRAIL
-    stats["zones"][zone] = {
-        "z_start": zone_start_z, "z_end": z, "cells": zone_cell_count,
-        "growth_reserve_rows": reserve,
-    }
-    stats["families"].extend([dict(f, zone=zone) for f in zfam_stats])
+# FURNITURE
+for fam in ["armoires", "bookshelves", "display_cases", "doors", "pillows",
+            "seating", "shelves", "shutters", "tables", "trapdoors"]:
+    room("FURNITURE", fam, f"{pretty(fam)} ({len(P('FURNITURE', fam))})", P("FURNITURE", fam))
 
-used_depth = z + MARGIN
-# choose smallest allowed plot depth that fits
-plot_depth = DEPTH_BASE
-while plot_depth < used_depth:
-    plot_depth += DEPTH_STEP
+# STORAGE
+eggs = P("STORAGE", "egg_crate") + P("STORAGE", "brown_egg_crate") + P("STORAGE", "blue_egg_crate")
+room("STORAGE", "egg_crates", f"Egg Crates ({len(eggs)})", eggs)
+room("STORAGE", "compressed_food", f"Compressed Food ({len(P('STORAGE','compressed'))})", P("STORAGE", "compressed"))
+room("STORAGE", "dyes", f"Dye Blocks ({len(P('STORAGE','dyes'))})", P("STORAGE", "dyes"))
 
-stats["summary"] = {
-    "total_blocks_placed": len(placements),
-    "footprint_cells": sum(len(cs) for fams in zones.values() for cs in fams.values()),
-    "plot_width": PLOT_W,
-    "used_depth": used_depth,
-    "recommended_plot": f"{PLOT_W}x{plot_depth}",
-    "plot_depth": plot_depth,
-    "compressed_stacked": COMPRESS_STACK,
-}
+# CONTAINERS
+for fam in ["barrels", "cauldrons", "crates"]:
+    room("CONTAINERS", fam, f"{pretty(fam)} ({len(P('CONTAINERS', fam))})", P("CONTAINERS", fam))
 
-# ---- write outputs --------------------------------------------------------
-csv_path = os.path.join(SCRATCH, "demo_layout_manifest.csv")
-with open(csv_path, "w", newline="", encoding="utf-8") as fh:
-    w = csv.DictWriter(fh, fieldnames=["block_id","x","y","z","zone","family","tier","label",
-                                       "contents","contents_label"])
+# GLASS JARS
+room("CONTAINERS", "jars_items", f"Glass Jars - Items ({len(jar_items)})", jar_items)
+room("CONTAINERS", "jars_misc", f"Glass Jars - Fluids & Mobs ({len(jar_misc)})", jar_misc)
+
+# DECORATIONS
+room("DECORATIONS", "candles", f"Candles ({len(P('DECORATIONS','candles'))})", P("DECORATIONS", "candles"))
+room("DECORATIONS", "lighting", f"Lighting ({len(P('DECORATIONS','lighting'))})", P("DECORATIONS", "lighting"))
+deco_misc = P("DECORATIONS", "warped_wart") + P("DECORATIONS", "misc")
+room("DECORATIONS", "deco_misc", f"Warped Wart & Fake Cake ({len(deco_misc)})", deco_misc)
+
+# tag wide families
+for rm in rooms:
+    if rm["rid"] in WIDE_FAMILIES:
+        rm["tw"] = 2
+
+# ---- flow rooms into the 8x8 tile grid (front rows first) -----------------
+grid = [[None] * TILES for _ in range(TILES)]     # grid[r][c] = rid
+c = r = 0
+for rm in rooms:
+    tw = rm["tw"]
+    if c + tw > TILES:
+        c, r = 0, r + 1
+    if r >= TILES:
+        raise SystemExit("ran out of tiles - too many rooms for an 8x8 grid")
+    rm["col"], rm["row"] = c, r
+    for k in range(tw):
+        grid[r][c + k] = rm["rid"]
+    c += tw
+
+# ---- place blocks within each room ---------------------------------------
+placements = []
+INTERIOR = TILE_USABLE                      # 14
+def room_rect(rm):
+    tw = rm["tw"]
+    width = tw * TILE_PITCH - 2              # 14 (tw1) or 30 (tw2)
+    depth = INTERIOR - FRONT_ROWS           # 13 usable rows behind the front row
+    return width, depth
+
+for rm in rooms:
+    cells = rm["cells"]
+    width, depth = room_rect(rm)
+    n = len(cells)
+    gw = min(n, width) if n else 1
+    rows_needed = math.ceil(n / gw) if n else 0
+    if rows_needed > depth:
+        raise SystemExit(f"room {rm['rid']} overflows its tile ({n} cells, cap {width*depth})")
+    x_off = (width - gw) // 2               # centre the grid horizontally
+    base_x = ORIGIN_X + TILE_PITCH * rm["col"]
+    base_z = ORIGIN_Z - TILE_PITCH * rm["row"]
+    for i, cell in enumerate(cells):
+        gx, gz = i % gw, i // gw
+        lx = x_off + gx
+        lz = FRONT_ROWS + gz                # skip reserved front row(s)
+        wx = base_x + lx
+        wz = base_z - lz
+        first = (i == 0)
+        for (bid, yoff, contents, clabel) in cell:
+            placements.append({
+                "block_id": bid,
+                "x": wx, "y": FLOOR_Y + 1 + yoff, "z": wz,
+                "tile_col": rm["col"], "tile_row": rm["row"],
+                "room": rm["rid"], "zone": rm["zone"],
+                "label": rm["label"] if first else "",
+                "tier": (str(yoff + 1) + "x") if rm["rid"].startswith("compressed") else "",
+                "contents": contents, "contents_label": clabel,
+            })
+
+# ---- command blocks (all 64 tiles) + sign coords --------------------------
+def cmd_block_pos(c, r):
+    return (ORIGIN_X + TILE_PITCH * c + (TILE_USABLE - 1),   # -178+16c  (east/right col)
+            FLOOR_Y,
+            ORIGIN_Z - TILE_PITCH * r)                        # 190-16r   (front row)
+
+# ---- write manifest CSV ---------------------------------------------------
+fields = ["block_id", "x", "y", "z", "tile_col", "tile_row", "room", "zone",
+          "tier", "label", "contents", "contents_label"]
+with open(os.path.join(HERE, "demo_layout_manifest.csv"), "w", newline="", encoding="utf-8") as fh:
+    w = csv.DictWriter(fh, fieldnames=fields)
     w.writeheader()
-    for row in placements:
-        w.writerow(row)
+    w.writerows(placements)
 
-with open(os.path.join(SCRATCH, "layout_stats.json"), "w", encoding="utf-8") as fh:
+# ---- tile map -------------------------------------------------------------
+SHORT = {rm["rid"]: rm["rid"] for rm in rooms}
+with open(os.path.join(HERE, "layout_tilemap.txt"), "w", encoding="utf-8") as fh:
+    fh.write("Minekea demo world - 8x8 tiles (front row = top, west = left)\n")
+    fh.write("each cell = one 14x14 tile; '..' = empty (reserved for growth)\n\n")
+    fh.write("      " + "".join(f"c{c:<11}" for c in range(TILES)) + "\n")
+    for r in range(TILES):
+        cells = []
+        for c in range(TILES):
+            rid = grid[r][c]
+            cells.append(f"{(rid or '..')[:12]:<12}")
+        fh.write(f"r{r}  " + " ".join(cells) + "\n")
+    fh.write("\nrooms:\n")
+    for rm in rooms:
+        cx, _, cz = cmd_block_pos(rm["col"], rm["row"])
+        fh.write(f"  ({rm['col']},{rm['row']}) tw{rm['tw']}  {rm['label']:36}"
+                 f"  cmd@({cx},{FLOOR_Y},{cz})\n")
+
+# ---- build mcfunction -----------------------------------------------------
+def fill(x1, y1, z1, x2, y2, z2, block):
+    return f"fill {x1} {y1} {z1} {x2} {y2} {z2} {block}"
+
+lines = ["# Minekea demo world - generated by generate_layout.py",
+         "# run inside the pre-built 126x126 arena; floor y=55.", ""]
+
+# 1) smooth-stone base over the whole floor + a 1-block outer border ring
+#    (one solid fill of the 128x128 covers the arena aisles/borders AND the
+#     surrounding ring; andesite interiors are painted on top next)
+X0, X1 = ORIGIN_X, ORIGIN_X + 125
+Z1, Z0 = ORIGIN_Z - 125, ORIGIN_Z         # Z1=back(65) Z0=front(190)
+lines.append("# floor base (smooth stone) + outer border ring")
+lines.append(fill(X0 - 1, FLOOR_Y, Z1 - 1, X1 + 1, FLOOR_Y, Z0 + 1, BORDER_BLOCK))
+
+# 2) andesite tile interiors (+ merged seams)
+lines.append("")
+lines.append("# polished andesite tile interiors")
+merged_second = set()   # (c,r) tiles that are the 2nd half of a wide room (seam filled)
+for rm in rooms:
+    for k in range(rm["tw"]):
+        cc = rm["col"] + k
+        bx = ORIGIN_X + TILE_PITCH * cc
+        bz = ORIGIN_Z - TILE_PITCH * rm["row"]
+        lines.append(fill(bx, FLOOR_Y, bz - (TILE_USABLE - 1), bx + (TILE_USABLE - 1), FLOOR_Y, bz, FLOOR_BLOCK))
+    if rm["tw"] == 2:      # fill the 2-block seam between the two tiles
+        sx = ORIGIN_X + TILE_PITCH * rm["col"] + TILE_USABLE
+        bz = ORIGIN_Z - TILE_PITCH * rm["row"]
+        lines.append(fill(sx, FLOOR_Y, bz - (TILE_USABLE - 1), sx + 1, FLOOR_Y, bz, FLOOR_BLOCK))
+
+# 3) every display block
+lines.append("")
+lines.append(f"# display blocks ({len(placements)})")
+for p in placements:
+    lines.append(f"setblock {p['x']} {p['y']} {p['z']} {p['block_id']}")
+
+# 4) a label sign at the front-left of each room
+lines.append("")
+lines.append("# room label signs")
+for rm in rooms:
+    sx = ORIGIN_X + TILE_PITCH * rm["col"]                 # lx 0 (west corner)
+    sz = ORIGIN_Z - TILE_PITCH * rm["row"]                 # lz 0 (front row)
+    msg = rm["label"].replace('"', "'")
+    lines.append(f'setblock {sx} {FLOOR_Y + 1} {sz} {SIGN_BLOCK}[rotation=0]'
+                 f'{{front_text:{{messages:[\'"{msg}"\',\'""\',\'""\',\'""\']}}}}')
+
+# 5) command blocks + pressure plates on all 64 tiles
+lines.append("")
+lines.append("# teleport command blocks + stone pressure plates (all 64 tiles)")
+for r in range(TILES):
+    for c in range(TILES):
+        cx, cy, cz = cmd_block_pos(c, r)
+        lines.append(f'setblock {cx} {cy} {cz} minecraft:command_block[facing=up]'
+                     f'{{Command:"{CMD_TP}",auto:0b}}')
+        lines.append(f"setblock {cx} {cy + 1} {cz} minecraft:stone_pressure_plate")
+
+with open(os.path.join(HERE, "demo_build.mcfunction"), "w", encoding="utf-8") as fh:
+    fh.write("\n".join(lines) + "\n")
+
+# ---- stats ----------------------------------------------------------------
+used_tiles = sum(1 for r in range(TILES) for c in range(TILES) if grid[r][c])
+stats = {
+    "summary": {
+        "arena": f"126x126 @ y={FLOOR_Y}",
+        "front_left": [ORIGIN_X, FLOOR_Y, ORIGIN_Z],
+        "back_right": [ORIGIN_X + 125, FLOOR_Y, ORIGIN_Z - 125],
+        "tiles_total": TILES * TILES,
+        "tiles_used": used_tiles,
+        "tiles_free_for_growth": TILES * TILES - used_tiles,
+        "rooms": len(rooms),
+        "blocks_placed": len(placements),
+        "command_blocks": TILES * TILES,
+    },
+    "rooms": [{
+        "room": rm["rid"], "zone": rm["zone"], "label": rm["label"],
+        "col": rm["col"], "row": rm["row"], "tw": rm["tw"],
+        "cells": len(rm["cells"]),
+        "blocks": sum(len(cell) for cell in rm["cells"]),
+        "cmd_block": list(cmd_block_pos(rm["col"], rm["row"])),
+    } for rm in rooms],
+    "compressed_groups": {g: mats for g, mats in comp_groups.items()},
+}
+with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8") as fh:
     json.dump(stats, fh, indent=2)
 
-# ---- to-scale ASCII map (1 char = 1 block footprint) ----------------------
-# symbol per family (falls back to first letter); aisles blank, border '.'
-SYMBOLS = {}
-_alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-for i, f in enumerate(stats["families"]):
-    SYMBOLS.setdefault(f["family"], _alpha[i % len(_alpha)])
-grid = [[" " for _ in range(PLOT_W)] for _ in range(plot_depth)]
-# perimeter
-for x in range(PLOT_W):
-    grid[0][x] = grid[plot_depth-1][x] = "."
-for zz in range(plot_depth):
-    grid[zz][0] = grid[zz][PLOT_W-1] = "."
-seen = set()
-for row in placements:
-    key = (row["x"], row["z"])
-    if key in seen:
-        continue
-    seen.add(key)
-    if 0 <= row["z"] < plot_depth and 0 <= row["x"] < PLOT_W:
-        grid[row["z"]][row["x"]] = SYMBOLS[row["family"]]
-map_path = os.path.join(SCRATCH, "layout_map.txt")
-with open(map_path, "w", encoding="utf-8") as fh:
-    fh.write(f"Minekea demo world - {PLOT_W} x {plot_depth}  (1 char = 1 block; N=top)\n")
-    fh.write("legend: " + "  ".join(f"{SYMBOLS[f]}={f}" for f in
-             OrderedDict((s['family'], None) for s in stats['families'])) + "\n\n")
-    for zz in range(plot_depth):
-        fh.write("".join(grid[zz]) + "\n")
-print("\nwrote layout_map.txt")
-
 # ---- console summary ------------------------------------------------------
-print(f"blocks placed        : {len(placements)}")
-print(f"footprint cells      : {sum(len(cs) for fams in zones.values() for cs in fams.values())}")
-print(f"used depth (Z)       : {used_depth}")
-print(f"recommended plot     : {PLOT_W} x {plot_depth}")
-print(f"max X used           : {max(p['x'] for p in placements)} (limit {PLOT_W-1})")
-print()
-print(f"{'ZONE':12} {'z0':>4} {'z1':>4} {'cells':>6}")
-for zn, zs in stats["zones"].items():
-    print(f"{zn:12} {zs['z_start']:>4} {zs['z_end']:>4} {zs['cells']:>6}")
-print()
-print(f"{'ZONE':11} {'FAMILY':16} {'cells':>5} {'blocks':>6} {'grid':>7}  at(x,z)")
-for f in stats["families"]:
-    print(f"{f['zone']:11} {f['family']:16} {f['cells']:>5} {f['blocks']:>6} {f['grid']:>7}  ({f['x']},{f['z']})")
+print(f"blocks placed   : {len(placements)}")
+print(f"rooms           : {len(rooms)}")
+print(f"tiles used      : {used_tiles} / {TILES*TILES}  ({TILES*TILES-used_tiles} free for growth)")
+print(f"grid rows used  : {max(rm['row'] for rm in rooms)+1} / {TILES}")
+print(f"compressed groups: " + ", ".join(f"{g}={len(m)}" for g, m in comp_groups.items()))
+print(f"command blocks  : {TILES*TILES}")
+print(f"mcfunction lines: {len(lines)}")
