@@ -20,7 +20,8 @@ Colour order follows Minecraft's current creative order:
   light_blue, blue, purple, magenta, pink.
 
 Regions flow west->east (+X); rows wrap north (-Z) with a 3-block aisle so per-region
-teleport vantages never land inside the next row. Arena front-left corner = (-191,55,191).
+teleport vantages never land inside the next row. Arena front-left corner = (-192,55,191)
+(the smooth-stone west border; the display blocks are framed just inside, from x=-191).
 
 Outputs: demo_layout_manifest.csv, layout_regions.txt, layout_stats.json, demo_build.mcfunction
 Regenerate with:  python generate_layout.py
@@ -494,10 +495,10 @@ for key, rg in regions.items():
                            "state": state or "", "upper": upper or "",
                            "contents": contents, "contents_label": clabel})
 
-# ---- arena bounds (front-left corner = -191,55,191) -----------------------
+# ---- arena bounds (front-left corner = -192,55,191) -----------------------
 all_x = [p["x"] for p in placements] + [b[0] for b in platforms] + [b[3] for b in platforms]
 all_z = [p["z"] for p in placements] + [b[2] for b in platforms]
-X0, X1 = ORIGIN_X - 1, max(all_x) + 1                   # X0 = west border at -191 (blocks framed inside)
+X0, X1 = ORIGIN_X - 1, max(all_x) + 1                   # X0 = west border at -192 (blocks framed inside)
 Z0, Z1 = ORIGIN_Z + 1, min(all_z) - 1                   # Z0 = south/front (191), Z1 = north/back
 
 # ---- manifest CSV ---------------------------------------------------------
