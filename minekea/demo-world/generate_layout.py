@@ -61,10 +61,10 @@ WOOD_BASES = ["dark_oak", "pale_oak", "acacia", "bamboo", "birch", "cherry", "cr
 # ---- consistent block-family layout (bands) -------------------------------
 # Within a wood set (and within the stone-like sets) each block family sits on the same
 # tier/band in every region, so the armoire, stairs, table, ... are always in the same
-# relative spot. Bands are ordered front->back. The short shutters sit in the back band and
-# the 2-tall armoires/doors sit one band forward (in the shutters' old spot), so the tall
-# blocks don't hide the compressed podiums behind the back band. A "slot" is a block's family
-# (path minus material).
+# relative spot. Bands are ordered front->back; the 2-tall families (armoires, doors) get their
+# own dedicated back band, and the staircase steps up a full 2 blocks over any 2-tall tier (see
+# the cumulative-elevation pass in the resolve loop), so a double-height block never hides what's
+# behind it. A "slot" is a block's family (path minus material).
 def slot_of(path):
     return "/".join(path.split("/")[:-1])
 
@@ -76,8 +76,8 @@ WOOD_BANDS = [
     ["furniture/seating/chairs", "furniture/seating/stools", "furniture/tables"],
     ["containers/crates", "containers/crates/trapped", "containers/barrels",
      "furniture/display_cases", "furniture/display_cases/stripped",
-     "furniture/armoires", "furniture/doors/bookshelves", "furniture/trapdoors/bookshelves"],
-    ["furniture/shutters"],                                          # short: back band
+     "furniture/shutters", "furniture/trapdoors/bookshelves", "crops/warped_wart"],
+    ["furniture/armoires", "furniture/doors/bookshelves"],          # 2-tall: dedicated back band
 ]
 STONE_BANDS = [
     ["building/beams", "building/covers", "building/general"],
@@ -444,10 +444,23 @@ placements, supports = [], []
 for key, rg in regions.items():
     ox, oz = rg["ox"], rg["oz"]
     flat = rg["flat"]
+    # Cumulative elevation: each tier rises by the *height* of the tier in front of it (2 if that
+    # tier holds a double-tall block, else 1), so whatever sits behind a 2-tall tier clears it.
+    elev = None
+    if not flat:
+        md = rg["maxdepth"]
+        tallness = [1] * (md + 1)
+        for (_dx, depth, _b, _s, upper, _c, _cl) in rg["items"]:
+            if upper:
+                tallness[depth] = 2
+        elev, acc = [0] * (md + 1), 0
+        for d in range(md + 1):
+            elev[d] = acc
+            acc += tallness[d]
     for (dx, depth, bid, state, upper, contents, clabel) in rg["items"]:
         wx = ox + dx
         wz = oz - (FRONT_ROWS + depth)
-        wy = FLOOR_Y + 1 if flat else FLOOR_Y + 1 + depth
+        wy = FLOOR_Y + 1 if flat else FLOOR_Y + 1 + elev[depth]
         if not flat:
             for yy in range(FLOOR_Y + 1, wy):           # support column beneath the step
                 supports.append((wx, yy, wz))
