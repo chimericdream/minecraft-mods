@@ -250,8 +250,11 @@ recorded in the manifest's **`state`** column:
 
 | Blocks | State applied |
 |--------|---------------|
-| all stairs (normal + vertical + bookshelf) · **vertical** slabs only · covers · chairs · barrels · glass jars | `facing=south` |
-| armoires, doors (2-tall) | `facing=south,half=lower` **+ an upper half placed above** |
+| stairs (normal + bookshelf) | `facing=north` (rotated 180 from the viewer) |
+| **vertical** slabs only | `facing=east` (90 CCW from south) |
+| covers · chairs · barrels · glass jars | `facing=south` |
+| armoires (2-tall) | `facing=north,half=lower` **+ an upper half above** (rotated 180) |
+| doors (2-tall) | `facing=south,half=lower` **+ an upper half placed above** |
 | trapdoors | `facing=south,half=bottom,open=true` (stood up to be seen) |
 | horizontal slabs, stools, pillows, tables, shelves, shutters, display cases | left default (already face the viewer or are symmetric) |
 

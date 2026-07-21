@@ -85,9 +85,9 @@ def block_state(path):
     must be placed one block above. Classified per block id, because families are
     heterogeneous (e.g. slabs mix horizontal `type` slabs with vertical `facing`)."""
     if path.startswith("building/stairs/"):                 # all stairs have facing
-        return ("facing=south", None)
+        return ("facing=north", None)                       # rotated 180 from south
     if path.startswith("building/slabs/") and "/vertical/" in path:
-        return ("facing=south", None)                       # vertical slabs only
+        return ("facing=east", None)                        # vertical slabs, 90 CCW from south
     if path.startswith("building/covers/"):
         return ("facing=south", None)
     if path.startswith("furniture/seating/chairs/"):        # stools are symmetric
@@ -96,8 +96,8 @@ def block_state(path):
         return ("facing=south", None)
     if path.startswith("furniture/trapdoors/"):             # stand them up to be seen
         return ("facing=south,half=bottom,open=true", None)
-    if path.startswith("furniture/armoires/"):              # 2 tall
-        return ("facing=south,half=lower", "facing=south,half=upper")
+    if path.startswith("furniture/armoires/"):              # 2 tall, rotated 180 from south
+        return ("facing=north,half=lower", "facing=north,half=upper")
     if path.startswith("furniture/doors/"):                 # 2 tall, closed
         return ("facing=south,half=lower,hinge=left,open=false",
                 "facing=south,half=upper,hinge=left,open=false")
