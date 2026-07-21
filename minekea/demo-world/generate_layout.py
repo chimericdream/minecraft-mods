@@ -300,12 +300,22 @@ regions = OrderedDict()
 
 # which regions get the consistent-band treatment, + wood per-slot reserved widths
 WOOD_KEYS = set(ORDER_WOODS)
+def _variant_key(bid):
+    """Sort a family's variants so an un-stripped block always precedes its stripped form,
+    keyed by base material. A plain path sort breaks this for 'warped' (stripped_warped < warped),
+    which is why only that set showed stripped-first."""
+    seg = bid.rsplit("/", 1)[-1]
+    if seg.startswith("stripped_"):
+        return (seg[len("stripped_"):], 1, seg)
+    if seg.endswith("_stripped"):
+        return (seg[:-len("_stripped")], 1, seg)
+    return (seg, 0, seg)
 def _slots_of(key):
     d = defaultdict(list)
     for (bid, state, upper) in mat_flats.get(key, []):
         d[slot_of(bid.split(":", 1)[1])].append((bid, state, upper))
     for s in d:
-        d[s].sort(key=lambda t: t[0])
+        d[s].sort(key=lambda t: _variant_key(t[0]))
     return d
 WOOD_RESERVE = defaultdict(int)                     # slot -> max count across the wood sets
 for _k in WOOD_KEYS:
