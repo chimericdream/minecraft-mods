@@ -18,7 +18,7 @@
     "depth": 93,
     "regions": 54,
     "display_blocks": 2560,
-    "supports": 10208,
+    "supports": 4264,
     "jars_filled": 106,
     "command_blocks": 54
   },
@@ -177,7 +177,7 @@
       ],
       "w": 23,
       "d": 17,
-      "tall": 16
+      "tall": 1
     },
     {
       "region": "Colored Building",
@@ -189,7 +189,7 @@
       ],
       "w": 11,
       "d": 17,
-      "tall": 16
+      "tall": 1
     },
     {
       "region": "Colour Accents",
@@ -201,7 +201,7 @@
       ],
       "w": 7,
       "d": 18,
-      "tall": 17
+      "tall": 1
     },
     {
       "region": "Compressed Concrete",
@@ -213,7 +213,7 @@
       ],
       "w": 17,
       "d": 17,
-      "tall": 16
+      "tall": 1
     },
     {
       "region": "Compressed Terracotta",
@@ -225,7 +225,7 @@
       ],
       "w": 17,
       "d": 17,
-      "tall": 16
+      "tall": 1
     },
     {
       "region": "Compressed Glazed Terracotta",
@@ -237,7 +237,7 @@
       ],
       "w": 17,
       "d": 17,
-      "tall": 16
+      "tall": 1
     },
     {
       "region": "stone",

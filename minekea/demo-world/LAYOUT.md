@@ -54,7 +54,9 @@ another. This applies to the whole set, not just compressed:
 - **Compressed blocks** form small **stepped 3×3 podiums** behind the flat rows — `1-3x`
   on their front step, `4-6x` one back+up, `7-9x` again — and each extra podium-row steps
   up 3 more so back podiums clear front ones.
-- **Colour gradients** rise one step per colour (see §4).
+
+The **colour regions are the exception — they stay flat** (all at y=56); their gradients
+recede back without rising (see §4).
 
 ---
 
@@ -73,8 +75,8 @@ colour blocks first (§4).
 ## 4. Colour regions — by block type, full gradient
 
 Colour blocks are organised **by block type**, each type a column showing the **full
-16-colour gradient** receding back (and rising one step per colour). Colour order is
-Minecraft's current creative order:
+16-colour gradient** receding back. Unlike the material regions, **colour regions stay
+flat** (all at y=56 — no tiering). Colour order is Minecraft's current creative order:
 
 > white · light_gray · gray · black · brown · red · orange · yellow · lime · green ·
 > cyan · light_blue · blue · purple · magenta · pink

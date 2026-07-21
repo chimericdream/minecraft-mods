@@ -323,13 +323,13 @@ def jar_items_list(cells):
         items.append((dx, depth, GLASS_JAR, "facing=south", None, cid, clabel))
     return items
 
-def register(key, label, items):
+def register(key, label, items, flat=False):
     if not items:
         return
     w = max(dx for (dx, *_ ) in items) + 1
     maxdepth = max(depth for (_, depth, *_) in items)
     regions[key] = {"label": f"{label} ({len(items)})", "items": items,
-                    "w": w, "maxdepth": maxdepth}
+                    "w": w, "maxdepth": maxdepth, "flat": flat}
 
 # assemble in display order
 for k in ORDER_WOODS:
@@ -337,7 +337,7 @@ for k in ORDER_WOODS:
 for region in ["Dyed Blocks", "Colored Building", "Colour Accents",
                "Compressed Concrete", "Compressed Terracotta", "Compressed Glazed Terracotta"]:
     if region in col_cols:
-        register(region, region, color_items(region))
+        register(region, region, color_items(region), flat=True)   # colours stay flat
 for k in ORDER_STONES + ORDER_METALS + ORDER_TAIL:
     if k in mat_flats or k in mat_comp:
         register(k, label_for(k), material_items(k))
@@ -360,12 +360,14 @@ for rg in regions.values():
 placements, supports = [], []
 for key, rg in regions.items():
     ox, oz = rg["ox"], rg["oz"]
+    flat = rg["flat"]
     for (dx, depth, bid, state, upper, contents, clabel) in rg["items"]:
         wx = ox + dx
         wz = oz - (FRONT_ROWS + depth)
-        wy = FLOOR_Y + 1 + depth
-        for yy in range(FLOOR_Y + 1, wy):               # support column beneath the step
-            supports.append((wx, yy, wz))
+        wy = FLOOR_Y + 1 if flat else FLOOR_Y + 1 + depth
+        if not flat:
+            for yy in range(FLOOR_Y + 1, wy):           # support column beneath the step
+                supports.append((wx, yy, wz))
         placements.append({"block_id": bid, "x": wx, "y": wy, "z": wz,
                            "region": key, "material": rg["label"], "depth": depth,
                            "state": state or "", "upper": upper or "",
@@ -437,7 +439,8 @@ with open(os.path.join(HERE, "layout_regions.txt"), "w", encoding="utf-8") as fh
     fh.write(f"arena X[{X0}..{X1}] Z[{Z1}..{Z0}] floor y={FLOOR_Y}, front-left ({X0},{FLOOR_Y},{Z0})\n\n")
     fh.write(f"{'region':30s} {'w':>3s} {'d':>3s} {'tall':>4s}  front-left\n")
     for key, rg in regions.items():
-        fh.write(f"{rg['label']:30s} {rg['w']:3d} {rg['d']:3d} {rg['maxdepth'] + 1:4d}  ({rg['ox']},{FLOOR_Y},{rg['oz']})\n")
+        tall = 1 if rg["flat"] else rg["maxdepth"] + 1
+        fh.write(f"{rg['label']:30s} {rg['w']:3d} {rg['d']:3d} {tall:4d}  ({rg['ox']},{FLOOR_Y},{rg['oz']})\n")
 
 # ---- stats ----------------------------------------------------------------
 stats = {"summary": {"arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_Y,
@@ -446,7 +449,8 @@ stats = {"summary": {"arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_
                      "display_blocks": len(placements), "supports": len(supports),
                      "jars_filled": jars_filled, "command_blocks": len(regions)},
          "regions": [{"region": k, "label": rg["label"], "front_left": [rg["ox"], FLOOR_Y, rg["oz"]],
-                      "w": rg["w"], "d": rg["d"], "tall": rg["maxdepth"] + 1} for k, rg in regions.items()]}
+                      "w": rg["w"], "d": rg["d"],
+                      "tall": 1 if rg["flat"] else rg["maxdepth"] + 1} for k, rg in regions.items()]}
 with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8") as fh:
     json.dump(stats, fh, indent=2)
 
@@ -454,7 +458,7 @@ print(f"regions         : {len(regions)}")
 print(f"display blocks  : {len(placements)}  (+{upper_halves} upper halves)")
 print(f"supports        : {len(supports)}")
 print(f"jars filled     : {jars_filled}")
-print(f"tallest region  : {max(rg['maxdepth'] + 1 for rg in regions.values())} blocks")
+print(f"tallest region  : {max((1 if rg['flat'] else rg['maxdepth'] + 1) for rg in regions.values())} blocks")
 print(f"arena           : X[{X0}..{X1}] ({X1-X0+1} wide)  Z[{Z1}..{Z0}] ({Z0-Z1+1} deep)")
 print(f"front-left      : ({X0},{FLOOR_Y},{Z0})")
 print(f"mcfunction lines: {len(lines)}")
