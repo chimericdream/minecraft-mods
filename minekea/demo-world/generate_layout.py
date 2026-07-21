@@ -56,6 +56,33 @@ COLOR_SET = set(COLORS)
 WOOD_BASES = ["dark_oak", "pale_oak", "acacia", "bamboo", "birch", "cherry", "crimson",
               "jungle", "mangrove", "oak", "spruce", "warped"]
 
+# ---- consistent block-family layout (bands) -------------------------------
+# Within a wood set (and within the stone-like sets) each block family sits on the same
+# tier/band in every region, so the armoire, stairs, table, ... are always in the same
+# relative spot. Bands are ordered front->back; 2-tall families (armoires, doors) go last
+# so they sit behind the shorter blocks. A "slot" is a block's family (path minus material).
+def slot_of(path):
+    return "/".join(path.split("/")[:-1])
+
+WOOD_BANDS = [
+    ["building/beams", "building/covers", "building/general/framed_planks"],
+    ["building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
+    ["building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
+    ["furniture/bookshelves", "furniture/shelves/floating", "furniture/shelves/supported"],
+    ["furniture/seating/chairs", "furniture/seating/stools", "furniture/tables"],
+    ["containers/crates", "containers/crates/trapped", "containers/barrels",
+     "furniture/display_cases", "furniture/display_cases/stripped",
+     "furniture/shutters", "furniture/trapdoors/bookshelves"],
+    ["furniture/armoires", "furniture/doors/bookshelves"],          # 2-tall: back band
+]
+STONE_BANDS = [
+    ["building/beams", "building/covers", "building/general"],
+    ["building/slabs", "building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
+    ["building/stairs", "building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
+    ["building/walls", "furniture/bookshelves"],
+]
+STONE_BAND_SLOTS = {s for band in STONE_BANDS for s in band}
+
 STONE_RULES = [
     ("red_sandstone", ["red_sandstone"]), ("sandstone", ["sandstone"]),
     ("nether_brick", ["nether_brick"]), ("deepslate", ["deepslate"]),
@@ -267,14 +294,54 @@ if os.path.exists(jar_csv):
 # each region -> list of items: (dx, depth, block_id, state, upper, contents, clabel)
 regions = OrderedDict()
 
+# which regions get the consistent-band treatment, + wood per-slot reserved widths
+WOOD_KEYS = set(ORDER_WOODS)
+def _slots_of(key):
+    d = defaultdict(list)
+    for (bid, state, upper) in mat_flats.get(key, []):
+        d[slot_of(bid.split(":", 1)[1])].append((bid, state, upper))
+    for s in d:
+        d[s].sort(key=lambda t: t[0])
+    return d
+WOOD_RESERVE = defaultdict(int)                     # slot -> max count across the wood sets
+for _k in WOOD_KEYS:
+    for _s, _blk in _slots_of(_k).items():
+        WOOD_RESERVE[_s] = max(WOOD_RESERVE[_s], len(_blk))
+STONE_LIKE = {k for k in ORDER_STONES
+              if _slots_of(k).keys() & STONE_BAND_SLOTS}   # stones w/ stairs/slabs/bookshelves
+
+def banded_flat_items(key, bands, reserve):
+    """Place flats so each family lands on its fixed band/tier (same relative spot in every
+    region of the group). `reserve` (wood) pads each slot to its group max for exact column
+    alignment; None (stone) just packs. Returns (items, tiers_used)."""
+    bs = _slots_of(key)
+    used, items = set(), []
+    for depth, band in enumerate(bands):
+        dx = 0
+        for slot in band:
+            used.add(slot)
+            blocks = bs.get(slot, [])
+            for i, (bid, state, upper) in enumerate(blocks):
+                items.append((dx + i, depth, bid, state, upper, "", ""))
+            dx += reserve[slot] if reserve else len(blocks)
+    depth_used = len(bands)
+    for slot in sorted(s for s in bs if s not in used):      # safety: any unbanded family
+        for i, (bid, state, upper) in enumerate(bs[slot]):
+            items.append((i, depth_used, bid, state, upper, "", ""))
+        depth_used += 1
+    return items, depth_used
+
 def material_items(key):
-    items = []
-    flats = mat_flats.get(key, [])
-    for i, (bid, state, upper) in enumerate(flats):
-        dx = i % FLAT_COLS
-        depth = i // FLAT_COLS
-        items.append((dx, depth, bid, state, upper, "", ""))
-    flat_rows = math.ceil(len(flats) / FLAT_COLS) if flats else 0
+    if key in WOOD_KEYS:
+        items, flat_rows = banded_flat_items(key, WOOD_BANDS, WOOD_RESERVE)
+    elif key in STONE_LIKE:
+        items, flat_rows = banded_flat_items(key, STONE_BANDS, None)
+    else:
+        items = []
+        flats = mat_flats.get(key, [])
+        for i, (bid, state, upper) in enumerate(flats):
+            items.append((i % FLAT_COLS, i // FLAT_COLS, bid, state, upper, "", ""))
+        flat_rows = math.ceil(len(flats) / FLAT_COLS) if flats else 0
     subs = sorted(mat_comp.get(key, {}))
     for pi, sub in enumerate(subs):
         tiers = mat_comp[key][sub]

@@ -58,6 +58,17 @@ another. This applies to the whole set, not just compressed:
 The **colour regions are the exception — they stay flat** (all at y=56); their gradients
 recede back without rising (see §4).
 
+### Consistent block-family positions (wood & stone-like sets)
+Within the wood sets — and within the stone-like sets (those with stairs/slabs/bookshelves)
+— each block family sits on a **fixed band/tier**, so the armoire, stairs, table, bookshelf,
+… are always in the **same relative position**, easy to find and compare across materials.
+Bands run front→back (`generate_layout.py` → `WOOD_BANDS` / `STONE_BANDS`), e.g. woods:
+surfaces → slabs → stairs → shelving → seating/tables → storage/deco → **armoires & doors**.
+The **2-tall families (armoires, doors) are in the back band** so they sit behind the shorter
+blocks. Woods reserve a fixed width per family for exact column alignment (a wood missing a
+family, like oak's bookshelves, just leaves that spot empty); the stone-like sets align by
+tier + order (their brick-variant counts differ too much to column-align without big gaps).
+
 ---
 
 ## 3. Material grouping
