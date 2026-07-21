@@ -440,38 +440,44 @@ for rg in regions.values():
     row_depth = max(row_depth, d)
 
 # ---- resolve to absolute placements ---------------------------------------
-placements, supports = [], []
+placements, platforms = [], []              # platforms = (x1,y1,z1,x2,y2,z2) andesite fill boxes
 for key, rg in regions.items():
     ox, oz = rg["ox"], rg["oz"]
     flat = rg["flat"]
+    W = rg["w"]
     # Cumulative elevation: each tier rises by the *height* of the tier in front of it (2 if that
     # tier holds a double-tall block, else 1), so whatever sits behind a 2-tall tier clears it.
     elev = None
     if not flat:
         md = rg["maxdepth"]
         tallness = [1] * (md + 1)
+        used = set()
         for (_dx, depth, _b, _s, upper, _c, _cl) in rg["items"]:
+            used.add(depth)
             if upper:
                 tallness[depth] = 2
         elev, acc = [0] * (md + 1), 0
         for d in range(md + 1):
             elev[d] = acc
             acc += tallness[d]
+        # Fill each tier's floor to the FULL region width (a solid step), so the empty spots
+        # between the real blocks read as one continuous stairstep instead of ragged columns.
+        for d in sorted(used):
+            if elev[d] > 0:
+                wz = oz - (FRONT_ROWS + d)
+                platforms.append((ox, FLOOR_Y + 1, wz, ox + W - 1, FLOOR_Y + elev[d], wz))
     for (dx, depth, bid, state, upper, contents, clabel) in rg["items"]:
         wx = ox + dx
         wz = oz - (FRONT_ROWS + depth)
         wy = FLOOR_Y + 1 if flat else FLOOR_Y + 1 + elev[depth]
-        if not flat:
-            for yy in range(FLOOR_Y + 1, wy):           # support column beneath the step
-                supports.append((wx, yy, wz))
         placements.append({"block_id": bid, "x": wx, "y": wy, "z": wz,
                            "region": key, "material": rg["label"], "depth": depth,
                            "state": state or "", "upper": upper or "",
                            "contents": contents, "contents_label": clabel})
 
 # ---- arena bounds (front-left corner = -191,55,191) -----------------------
-all_x = [p["x"] for p in placements] + [s[0] for s in supports]
-all_z = [p["z"] for p in placements] + [s[2] for s in supports]
+all_x = [p["x"] for p in placements] + [b[0] for b in platforms] + [b[3] for b in platforms]
+all_z = [p["z"] for p in placements] + [b[2] for b in platforms]
 X0, X1 = ORIGIN_X - 1, max(all_x) + 1                   # X0 = west border at -191 (blocks framed inside)
 Z0, Z1 = ORIGIN_Z + 1, min(all_z) - 1                   # Z0 = south/front (191), Z1 = north/back
 
@@ -508,9 +514,9 @@ for rg in regions.values():
     ox, oz = rg["ox"], rg["oz"]
     lines.append(fill(ox, FLOOR_Y, oz - (rg["d"] - 1), ox + rg["w"] - 1, FLOOR_Y, oz, FLOOR_BLOCK))
 lines.append("")
-lines.append(f"# staircase supports ({len(supports)})")
-for (x, y, z) in supports:
-    lines.append(f"setblock {x} {y} {z} {FLOOR_BLOCK}")
+lines.append(f"# staircase tier platforms ({len(platforms)})")
+for (x1, y1, z1, x2, y2, z2) in platforms:
+    lines.append(fill(x1, y1, z1, x2, y2, z2, FLOOR_BLOCK))
 lines.append("")
 disp, upper_halves, jars_filled = [], 0, 0
 for p in placements:
@@ -553,7 +559,7 @@ with open(os.path.join(HERE, "layout_regions.txt"), "w", encoding="utf-8") as fh
 stats = {"summary": {"arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_Y,
                      "front_left": [X0, FLOOR_Y, Z0],
                      "width": X1 - X0 + 1, "depth": Z0 - Z1 + 1, "regions": len(regions),
-                     "display_blocks": len(placements), "supports": len(supports),
+                     "display_blocks": len(placements), "tier_platforms": len(platforms),
                      "jars_filled": jars_filled, "command_blocks": len(regions)},
          "regions": [{"region": k, "label": rg["label"], "front_left": [rg["ox"], FLOOR_Y, rg["oz"]],
                       "w": rg["w"], "d": rg["d"],
@@ -563,7 +569,7 @@ with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8") as fh:
 
 print(f"regions         : {len(regions)}")
 print(f"display blocks  : {len(placements)}  (+{upper_halves} upper halves)")
-print(f"supports        : {len(supports)}")
+print(f"tier platforms  : {len(platforms)}")
 print(f"jars filled     : {jars_filled}")
 print(f"tallest region  : {max((1 if rg['flat'] else rg['maxdepth'] + 1) for rg in regions.values())} blocks")
 print(f"arena           : X[{X0}..{X1}] ({X1-X0+1} wide)  Z[{Z1}..{Z0}] ({Z0-Z1+1} deep)")
