@@ -184,13 +184,22 @@ persisted keys — so all 106 non-empty jars show their contents on load:
 
 | kind | NBT written by `demo_build.mcfunction` |
 |------|----------------------------------------|
-| item  | `{StoredItem:"<id>",StoredItemQty:1,FullItemStacks:0}` |
+| item  | `{StoredItem:"<id>",StoredItemQty:64,FullItemStacks:7}` (full jar) |
 | fluid | `{StoredFluid:"<id>",StoredFluidAmount:8.0d}` (full = `MAX_BUCKETS`) |
-| mob   | `{"minecraft:entity_data":{id:"<entity>"}}` (tiny slime adds `Size:0`) |
+| mob   | `{"minecraft:entity_data":{id:"<entity>",<real fields>}}` — see below |
 
 The list is regenerated from the mod source by
 [`extract_jar_contents.py`](./extract_jar_contents.py); the NBT builder lives in
-`generate_layout.py` (`jar_nbt`).
+`generate_layout.py` (`jar_nbt`, mob fields in `MOB_NBT`).
+
+> **Mobs need real entity NBT, not just an id.** `GlassJarBlockEntity` wraps the stored
+> mob in a `TypedEntityData` whose constructor strips `id` from the tag, and `hasMob()`
+> only reports the mob present when that id-less tag is **non-empty**. A real in-game
+> capture always carries `Health`/`Brain`/`Motion`/… so it never is — but the earlier
+> bare `{id:"<entity>"}` stripped down to `{}`, so every mob jar rendered empty. Each mob
+> now ships at least one real field (`Health`, `Size:0` for the tiny slime, etc.); the
+> renderer fakes `Pos`, normalises facing and drops equipment, so `UUID`/`Pos`/`Motion`
+> are intentionally omitted. This is a demo-data requirement, **not** a renderer bug.
 
 > **Renderer prerequisite:** building this demo surfaced a client-crash bug — the jar
 > renderer only handled honey/milk and threw on any other fluid (so water and lava

@@ -154,17 +154,36 @@ if os.path.exists(jar_csv):
             (jar_items if row["kind"] == "item" else jar_misc).append(cell)
             jar_kind_by_id[row["id"]] = row["kind"]     # "" (empty jar) -> "empty"
 
+# A captured mob is stored under "minecraft:entity_data" as the mob's FULL entity NBT.
+# GlassJarBlockEntity wraps it in a TypedEntityData whose constructor strips "id" from
+# the tag, and hasMob() reports the mob present only when that id-less tag is NON-empty
+# (a real capture carries Health/Brain/Motion/... so it always is). A bare {id:"..."}
+# strips down to {} -> hasMob() false -> the jar renders empty, which is why the earlier
+# minimal NBT showed nothing. So each mob needs at least one real field here; these are a
+# clean, capture-faithful subset (the renderer fakes Pos, normalises facing, drops
+# equipment, so UUID/Pos/Motion/Rotation are pointless to include).
+MOB_NBT = {
+    "minecraft:allay":      "NoGravity:1b,Health:20.0f",
+    "minecraft:bat":        "BatFlags:0b,Health:6.0f",       # BatFlags:0 = flying, not hanging
+    "minecraft:bee":        "Health:10.0f,Age:0",            # Age:0 = adult
+    "minecraft:endermite":  "Health:8.0f,Lifetime:0",
+    "minecraft:silverfish": "Health:8.0f",
+    "minecraft:slime":      "Size:0,Health:1.0f",            # jar only holds tiny slimes
+    "minecraft:vex":        "NoGravity:1b,Health:14.0f",
+}
+
 def jar_nbt(contents_id):
     """Block-entity SNBT that fills a glass jar with its item / fluid / mob,
     matching GlassJarBlockEntity's persisted keys. '' = leave empty."""
     kind = jar_kind_by_id.get(contents_id, "")
     if kind == "item":
-        return '{StoredItem:"%s",StoredItemQty:1,FullItemStacks:0}' % contents_id
+        # A full jar: 7 stored stacks + a full 64 top slot (getStoredStacks()+1 -> full fill bar)
+        return '{StoredItem:"%s",StoredItemQty:64,FullItemStacks:7}' % contents_id
     if kind == "fluid":
         return '{StoredFluid:"%s",StoredFluidAmount:%rd}' % (contents_id, JAR_FLUID_FILL)
     if kind == "mob":
-        extra = ",Size:0" if contents_id == "minecraft:slime" else ""   # jar only holds tiny slimes
-        return '{"minecraft:entity_data":{id:"%s"%s}}' % (contents_id, extra)
+        fields = MOB_NBT.get(contents_id, "NoGravity:1b")   # any real field -> hasMob() true
+        return '{"minecraft:entity_data":{id:"%s",%s}}' % (contents_id, fields)
     return ""
 
 # ---- assemble rooms (ordered) --------------------------------------------
