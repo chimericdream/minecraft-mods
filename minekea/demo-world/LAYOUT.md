@@ -63,12 +63,14 @@ Within the wood sets — and within the stone-like sets (those with stairs/slabs
 — each block family sits on a **fixed band/tier**, so the armoire, stairs, table, bookshelf,
 … are always in the **same relative position**, easy to find and compare across materials.
 Bands run front→back (`generate_layout.py` → `WOOD_BANDS` / `STONE_BANDS`), e.g. woods:
-surfaces → slabs → stairs → shelving → seating/tables → storage/deco (incl. **armoires &
-doors**) → **shutters**. The short shutters take the back band and the 2-tall armoires/doors
-sit one band forward, so the tall blocks don't hide the compressed podiums behind the back
-band. Woods reserve a fixed width per family for exact column alignment (a wood missing a
-family, like oak's bookshelves, just leaves that spot empty); the stone-like sets align by
-tier + order (their brick-variant counts differ too much to column-align without big gaps).
+surfaces → slabs → stairs → shelving → seating/tables → storage/deco (shutters, warped wart, …)
+→ **armoires & doors**. The 2-tall families get their **own dedicated back band**, and the
+staircase uses **cumulative elevation** — each tier rises by the height of the tier in front
+of it (2 blocks over a double-tall tier, else 1) — so a double-height block never hides what's
+behind it (the podiums behind the armoire band step up to its top). Woods reserve a fixed
+width per family for exact column alignment (a wood missing a family, like oak's bookshelves,
+just leaves that spot empty); the stone-like sets align by tier + order (their brick-variant
+counts differ too much to column-align without big gaps).
 
 ---
 
