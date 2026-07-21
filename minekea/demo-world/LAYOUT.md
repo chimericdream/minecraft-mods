@@ -153,6 +153,9 @@ guarded in the mod now, covered by `OpenShutterHalfBlockGameTest`).
 
 ## 7. Building it — `demo_build.mcfunction`
 
+0. **Clear** — eight `fill … air` commands wipe the 128×128 footprint (from the front-left
+   corner) up ~15 blocks, then `kill @e[type=item]` removes anything knocked loose, so a
+   re-run starts clean. (Each fill is 128×128×2 = 32768 blocks, the `/fill` maximum.)
 1. **Floor base** — one `fill` of smooth stone over the arena + border.
 2. **Region pads** — a `fill` of polished andesite per region footprint.
 3. **Staircase supports** — the andesite columns under every raised block.
