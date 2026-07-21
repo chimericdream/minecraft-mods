@@ -84,6 +84,11 @@ belong to nothing (metals/gems, and soil/sand → **Soil & Sand**) form their ow
 An **unmapped material raises** — nothing silently vanishes. `is_colored(path)` peels off
 colour blocks first (§4).
 
+The **Compressed Food** region (`storage/compressed/*`) shows both forms of each item that
+has a burlap-**bagged** model: the 12 baggable items (in `BAGGABLE_STORAGE`) get an
+`is_bagged=false` **and** `is_bagged=true` block, kept as an adjacent pair, and are grouped
+ahead of the non-baggable items so a pair never straddles two rows.
+
 ---
 
 ## 4. Colour regions — by block type, full gradient

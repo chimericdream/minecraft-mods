@@ -17,8 +17,8 @@
     "width": 126,
     "depth": 75,
     "regions": 54,
-    "display_blocks": 2560,
-    "tier_platforms": 281,
+    "display_blocks": 2572,
+    "tier_platforms": 282,
     "jars_filled": 106,
     "command_blocks": 54
   },
@@ -613,15 +613,15 @@
     },
     {
       "region": "food",
-      "label": "Compressed Food (26)",
+      "label": "Compressed Food (38)",
       "front_left": [
         -144,
         55,
         127
       ],
       "w": 12,
-      "d": 4,
-      "tall": 3
+      "d": 5,
+      "tall": 4
     },
     {
       "region": "lighting",

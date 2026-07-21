@@ -264,6 +264,14 @@ for p in ["containers/cauldrons/honey", "containers/cauldrons/milk",
     if p not in paths:
         paths.append(p)
 
+# Compressed storage items that also have a "bagged" (burlap-sack) model — the demo shows both
+# forms (is_bagged=false + is_bagged=true). Source of truth: the blockstate JSONs carrying an
+# `is_bagged=true` variant (grep 'is_bagged=true' .../blockstates/storage/compressed/*.json).
+BAGGABLE_STORAGE = {
+    "beetroot", "beetroot_seeds", "carrot", "chorus_fruit", "gold_nugget", "iron_nugget",
+    "melon_seeds", "phantom_membrane", "potato", "pumpkin_seeds", "sugar", "wheat_seeds",
+}
+
 # ---- classify -------------------------------------------------------------
 mat_flats = defaultdict(list)                    # region key -> [(path, state, upper)]
 mat_comp  = defaultdict(lambda: defaultdict(dict))   # region -> submaterial -> {tier:path}
@@ -283,9 +291,20 @@ for p in sorted(paths):
     if is_comp(p):
         sub = material_name(p)
         mat_comp[key][sub][int(p.split("/")[-1][:-1])] = "minekea:" + p
+    elif p.split("/")[:2] == ["storage", "compressed"] and p.split("/")[-1] in BAGGABLE_STORAGE:
+        # baggable compressed item: show both its plain block and its burlap-sack (bagged) form
+        mat_flats[key].append(("minekea:" + p, "is_bagged=false", None))
+        mat_flats[key].append(("minekea:" + p, "is_bagged=true", None))
     else:
         state, upper = block_state(p)
         mat_flats[key].append(("minekea:" + p, state, upper))
+
+# In the compressed-food region, group the baggable items (each an unbagged+bagged pair, kept
+# adjacent) first, then the rest. With an even FLAT_COLS this keeps every pair on one row.
+if "food" in mat_flats:
+    bagged = [t for t in mat_flats["food"] if "is_bagged" in t[1]]
+    plain = [t for t in mat_flats["food"] if "is_bagged" not in t[1]]
+    mat_flats["food"] = bagged + plain
 
 # glass jars
 jar_items, jar_misc = [], []

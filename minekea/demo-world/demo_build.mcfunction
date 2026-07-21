@@ -68,13 +68,13 @@ fill -172 55 123 -170 55 127 minecraft:polished_andesite
 fill -167 55 123 -165 55 127 minecraft:polished_andesite
 fill -162 55 123 -160 55 127 minecraft:polished_andesite
 fill -157 55 118 -147 55 127 minecraft:polished_andesite
-fill -144 55 124 -133 55 127 minecraft:polished_andesite
+fill -144 55 123 -133 55 127 minecraft:polished_andesite
 fill -130 55 126 -127 55 127 minecraft:polished_andesite
 fill -124 55 126 -119 55 127 minecraft:polished_andesite
 fill -116 55 119 -105 55 127 minecraft:polished_andesite
 fill -102 55 126 -91 55 127 minecraft:polished_andesite
 
-# staircase tier platforms (281)
+# staircase tier platforms (282)
 fill -191 56 188 -184 56 188 minecraft:polished_andesite
 fill -191 56 187 -184 57 187 minecraft:polished_andesite
 fill -191 56 186 -184 58 186 minecraft:polished_andesite
@@ -349,6 +349,7 @@ fill -157 56 119 -147 62 119 minecraft:polished_andesite
 fill -157 56 118 -147 63 118 minecraft:polished_andesite
 fill -144 56 125 -133 56 125 minecraft:polished_andesite
 fill -144 56 124 -133 57 124 minecraft:polished_andesite
+fill -144 56 123 -133 58 123 minecraft:polished_andesite
 fill -116 56 125 -105 56 125 minecraft:polished_andesite
 fill -116 56 124 -105 57 124 minecraft:polished_andesite
 fill -116 56 123 -105 58 123 minecraft:polished_andesite
@@ -357,7 +358,7 @@ fill -116 56 121 -105 60 121 minecraft:polished_andesite
 fill -116 56 120 -105 61 120 minecraft:polished_andesite
 fill -116 56 119 -105 62 119 minecraft:polished_andesite
 
-# display blocks (2560 + 24 upper halves)
+# display blocks (2572 + 24 upper halves)
 setblock -191 56 189 minekea:building/beams/oak
 setblock -190 56 189 minekea:building/beams/oak_log
 setblock -189 56 189 minekea:building/covers/oak[facing=south]
@@ -2799,32 +2800,44 @@ setblock -151 63 119 minekea:building/compressed/soul_sand/6x
 setblock -153 64 118 minekea:building/compressed/soul_sand/7x
 setblock -152 64 118 minekea:building/compressed/soul_sand/8x
 setblock -151 64 118 minekea:building/compressed/soul_sand/9x
-setblock -144 56 126 minekea:storage/compressed/apple
-setblock -143 56 126 minekea:storage/compressed/beetroot
-setblock -142 56 126 minekea:storage/compressed/beetroot_seeds
-setblock -141 56 126 minekea:storage/compressed/blaze_powder
-setblock -140 56 126 minekea:storage/compressed/blaze_rod
-setblock -139 56 126 minekea:storage/compressed/breeze_rod
-setblock -138 56 126 minekea:storage/compressed/carrot
-setblock -137 56 126 minekea:storage/compressed/charcoal
-setblock -136 56 126 minekea:storage/compressed/chorus_fruit
-setblock -135 56 126 minekea:storage/compressed/ender_pearl
-setblock -134 56 126 minekea:storage/compressed/flint
-setblock -133 56 126 minekea:storage/compressed/gold_nugget
-setblock -144 57 125 minekea:storage/compressed/golden_apple
-setblock -143 57 125 minekea:storage/compressed/iron_nugget
-setblock -142 57 125 minekea:storage/compressed/leather
-setblock -141 57 125 minekea:storage/compressed/melon_seeds
-setblock -140 57 125 minekea:storage/compressed/nether_star
-setblock -139 57 125 minekea:storage/compressed/paper
-setblock -138 57 125 minekea:storage/compressed/phantom_membrane
-setblock -137 57 125 minekea:storage/compressed/potato
-setblock -136 57 125 minekea:storage/compressed/pumpkin_seeds
-setblock -135 57 125 minekea:storage/compressed/stick
-setblock -134 57 125 minekea:storage/compressed/sugar
-setblock -133 57 125 minekea:storage/compressed/sugar_cane
-setblock -144 58 124 minekea:storage/compressed/totem_of_undying
-setblock -143 58 124 minekea:storage/compressed/wheat_seeds
+setblock -144 56 126 minekea:storage/compressed/beetroot[is_bagged=false]
+setblock -143 56 126 minekea:storage/compressed/beetroot[is_bagged=true]
+setblock -142 56 126 minekea:storage/compressed/beetroot_seeds[is_bagged=false]
+setblock -141 56 126 minekea:storage/compressed/beetroot_seeds[is_bagged=true]
+setblock -140 56 126 minekea:storage/compressed/carrot[is_bagged=false]
+setblock -139 56 126 minekea:storage/compressed/carrot[is_bagged=true]
+setblock -138 56 126 minekea:storage/compressed/chorus_fruit[is_bagged=false]
+setblock -137 56 126 minekea:storage/compressed/chorus_fruit[is_bagged=true]
+setblock -136 56 126 minekea:storage/compressed/gold_nugget[is_bagged=false]
+setblock -135 56 126 minekea:storage/compressed/gold_nugget[is_bagged=true]
+setblock -134 56 126 minekea:storage/compressed/iron_nugget[is_bagged=false]
+setblock -133 56 126 minekea:storage/compressed/iron_nugget[is_bagged=true]
+setblock -144 57 125 minekea:storage/compressed/melon_seeds[is_bagged=false]
+setblock -143 57 125 minekea:storage/compressed/melon_seeds[is_bagged=true]
+setblock -142 57 125 minekea:storage/compressed/phantom_membrane[is_bagged=false]
+setblock -141 57 125 minekea:storage/compressed/phantom_membrane[is_bagged=true]
+setblock -140 57 125 minekea:storage/compressed/potato[is_bagged=false]
+setblock -139 57 125 minekea:storage/compressed/potato[is_bagged=true]
+setblock -138 57 125 minekea:storage/compressed/pumpkin_seeds[is_bagged=false]
+setblock -137 57 125 minekea:storage/compressed/pumpkin_seeds[is_bagged=true]
+setblock -136 57 125 minekea:storage/compressed/sugar[is_bagged=false]
+setblock -135 57 125 minekea:storage/compressed/sugar[is_bagged=true]
+setblock -134 57 125 minekea:storage/compressed/wheat_seeds[is_bagged=false]
+setblock -133 57 125 minekea:storage/compressed/wheat_seeds[is_bagged=true]
+setblock -144 58 124 minekea:storage/compressed/apple
+setblock -143 58 124 minekea:storage/compressed/blaze_powder
+setblock -142 58 124 minekea:storage/compressed/blaze_rod
+setblock -141 58 124 minekea:storage/compressed/breeze_rod
+setblock -140 58 124 minekea:storage/compressed/charcoal
+setblock -139 58 124 minekea:storage/compressed/ender_pearl
+setblock -138 58 124 minekea:storage/compressed/flint
+setblock -137 58 124 minekea:storage/compressed/golden_apple
+setblock -136 58 124 minekea:storage/compressed/leather
+setblock -135 58 124 minekea:storage/compressed/nether_star
+setblock -134 58 124 minekea:storage/compressed/paper
+setblock -133 58 124 minekea:storage/compressed/stick
+setblock -144 59 123 minekea:storage/compressed/sugar_cane
+setblock -143 59 123 minekea:storage/compressed/totem_of_undying
 setblock -130 56 126 minekea:decorations/lighting/ancient_lantern
 setblock -129 56 126 minekea:decorations/lighting/doom_lantern
 setblock -128 56 126 minekea:decorations/lighting/end_lantern
@@ -3091,7 +3104,7 @@ setblock -161 56 127 minecraft:stone_pressure_plate
 setblock -157 56 127 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Soil & Sand (72)"','""','""','""']}}
 setblock -156 55 127 minecraft:command_block[facing=up]{Command:"tp @p -151.5 56 129 180 0",auto:0b}
 setblock -156 56 127 minecraft:stone_pressure_plate
-setblock -144 56 127 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Compressed Food (26)"','""','""','""']}}
+setblock -144 56 127 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Compressed Food (38)"','""','""','""']}}
 setblock -143 55 127 minecraft:command_block[facing=up]{Command:"tp @p -138.0 56 129 180 0",auto:0b}
 setblock -143 56 127 minecraft:stone_pressure_plate
 setblock -130 56 127 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Lighting (4)"','""','""','""']}}
