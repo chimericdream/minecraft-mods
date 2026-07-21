@@ -61,8 +61,10 @@ WOOD_BASES = ["dark_oak", "pale_oak", "acacia", "bamboo", "birch", "cherry", "cr
 # ---- consistent block-family layout (bands) -------------------------------
 # Within a wood set (and within the stone-like sets) each block family sits on the same
 # tier/band in every region, so the armoire, stairs, table, ... are always in the same
-# relative spot. Bands are ordered front->back; 2-tall families (armoires, doors) go last
-# so they sit behind the shorter blocks. A "slot" is a block's family (path minus material).
+# relative spot. Bands are ordered front->back. The short shutters sit in the back band and
+# the 2-tall armoires/doors sit one band forward (in the shutters' old spot), so the tall
+# blocks don't hide the compressed podiums behind the back band. A "slot" is a block's family
+# (path minus material).
 def slot_of(path):
     return "/".join(path.split("/")[:-1])
 
@@ -74,8 +76,8 @@ WOOD_BANDS = [
     ["furniture/seating/chairs", "furniture/seating/stools", "furniture/tables"],
     ["containers/crates", "containers/crates/trapped", "containers/barrels",
      "furniture/display_cases", "furniture/display_cases/stripped",
-     "furniture/shutters", "furniture/trapdoors/bookshelves"],
-    ["furniture/armoires", "furniture/doors/bookshelves"],          # 2-tall: back band
+     "furniture/armoires", "furniture/doors/bookshelves", "furniture/trapdoors/bookshelves"],
+    ["furniture/shutters"],                                          # short: back band
 ]
 STONE_BANDS = [
     ["building/beams", "building/covers", "building/general"],
