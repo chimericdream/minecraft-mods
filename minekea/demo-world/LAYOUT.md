@@ -137,7 +137,8 @@ Viewer stands at each region's front looking **north (−Z)**; facing is per-blo
 | Blocks | State |
 |--------|-------|
 | votive candles | `candles=4,lit=false` (4 candles per block) |
-| stairs (normal + bookshelf) | `facing=north` |
+| **vertical** stairs (`.../vertical/...`) | `facing=south` (face the viewer) |
+| other stairs (normal + bookshelf) | `facing=north` |
 | **vertical** slabs only | `facing=east` |
 | covers · chairs · barrels · glass jars | `facing=south` |
 | armoires (2-tall) | `facing=north,half=lower` **+ upper half above** |

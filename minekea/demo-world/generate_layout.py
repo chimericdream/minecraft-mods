@@ -208,8 +208,10 @@ def canonical(p):
 def block_state(path):
     if path.startswith("decorations/candles/"):
         return ("candles=4,lit=false", None)                # show 4 candles per block
+    if path.startswith("building/stairs/") and "/vertical/" in path:
+        return ("facing=south", None)                       # vertical stairs face the viewer
     if path.startswith("building/stairs/"):
-        return ("facing=north", None)
+        return ("facing=north", None)                       # regular stairs rotated 180
     if path.startswith("building/slabs/") and "/vertical/" in path:
         return ("facing=east", None)
     if path.startswith("building/covers/"):
