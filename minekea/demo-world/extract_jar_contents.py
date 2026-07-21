@@ -72,7 +72,7 @@ rows += [("mob", i, l) for (i, l) in mobs]
 
 out = os.path.join(HERE, "glass_jar_contents.csv")
 with open(out, "w", newline="", encoding="utf-8") as fh:
-    w = csv.writer(fh)
+    w = csv.writer(fh, lineterminator="\n")   # force LF line endings
     w.writerow(["kind", "id", "label"])
     w.writerows(rows)
 

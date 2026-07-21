@@ -505,7 +505,7 @@ Z0, Z1 = ORIGIN_Z + 1, min(all_z) - 1                   # Z0 = south/front (191)
 fields = ["block_id", "x", "y", "z", "region", "material", "depth", "state", "upper",
           "contents", "contents_label"]
 with open(os.path.join(HERE, "demo_layout_manifest.csv"), "w", newline="", encoding="utf-8") as fh:
-    w = csv.DictWriter(fh, fieldnames=fields)
+    w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")   # force LF line endings
     w.writeheader()
     w.writerows(placements)
 
@@ -566,11 +566,11 @@ for rg in regions.values():
     lines.append(f'setblock {cx} {FLOOR_Y} {oz} minecraft:command_block[facing=up]'
                  f'{{Command:"tp @p {vx:.1f} {FLOOR_Y + 1} {vz} 180 0",auto:0b}}')
     lines.append(f"setblock {cx} {FLOOR_Y + 1} {oz} minecraft:stone_pressure_plate")
-with open(os.path.join(HERE, "demo_build.mcfunction"), "w", encoding="utf-8") as fh:
+with open(os.path.join(HERE, "demo_build.mcfunction"), "w", encoding="utf-8", newline="\n") as fh:
     fh.write("\n".join(lines) + "\n")
 
 # ---- region list ----------------------------------------------------------
-with open(os.path.join(HERE, "layout_regions.txt"), "w", encoding="utf-8") as fh:
+with open(os.path.join(HERE, "layout_regions.txt"), "w", encoding="utf-8", newline="\n") as fh:
     fh.write("Minekea demo world - by-material tiered regions (walking order)\n")
     fh.write(f"arena X[{X0}..{X1}] Z[{Z1}..{Z0}] floor y={FLOOR_Y}, front-left ({X0},{FLOOR_Y},{Z0})\n\n")
     fh.write(f"{'region':30s} {'w':>3s} {'d':>3s} {'tall':>4s}  front-left\n")
@@ -587,7 +587,7 @@ stats = {"summary": {"arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_
          "regions": [{"region": k, "label": rg["label"], "front_left": [rg["ox"], FLOOR_Y, rg["oz"]],
                       "w": rg["w"], "d": rg["d"],
                       "tall": 1 if rg["flat"] else rg["maxdepth"] + 1} for k, rg in regions.items()]}
-with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8") as fh:
+with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8", newline="\n") as fh:
     json.dump(stats, fh, indent=2)
 
 print(f"regions         : {len(regions)}")
