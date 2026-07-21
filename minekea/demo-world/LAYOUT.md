@@ -158,8 +158,10 @@ guarded in the mod now, covered by `OpenShutterHalfBlockGameTest`).
 ## 7. Building it — `demo_build.mcfunction`
 
 0. **Clear** — eight `fill … air` commands wipe the 128×128 footprint (from the front-left
-   corner) up ~15 blocks, then `kill @e[type=item]` removes anything knocked loose, so a
-   re-run starts clean. (Each fill is 128×128×2 = 32768 blocks, the `/fill` maximum.)
+   corner) up ~15 blocks, then `kill @e[type=item]` removes anything knocked loose, then one
+   `fill` lays the whole cleared floor as **smooth sandstone** (the build sits on top of it, so
+   it shows as ground around the arena). Re-runs start clean. (Each air fill is 128×128×2 =
+   32768 blocks, the `/fill` maximum.)
 1. **Floor base** — one `fill` of smooth stone over the arena + border.
 2. **Region pads** — a `fill` of polished andesite per region footprint.
 3. **Tier platforms** — a full-width `polished_andesite` step per tier (`fill`ed), so every

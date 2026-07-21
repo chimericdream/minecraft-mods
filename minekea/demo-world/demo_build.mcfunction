@@ -12,6 +12,9 @@ fill -192 67 64 -65 68 191 air
 fill -192 69 64 -65 70 191 air
 kill @e[type=item]
 
+# lay the whole cleared floor as smooth sandstone (the build sits on top)
+fill -192 55 64 -65 55 191 minecraft:smooth_sandstone
+
 # floor base (smooth stone) covering arena + border
 fill -192 55 117 -67 55 191 minecraft:smooth_stone
 
