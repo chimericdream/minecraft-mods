@@ -31,7 +31,7 @@ from collections import OrderedDict, defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ---- arena geometry -------------------------------------------------------
-ORIGIN_X = -190           # first region's left (west) edge; the 1-block west border sits at -191
+ORIGIN_X = -191           # first region's left (west) edge; the 1-block west border sits at -192
 ORIGIN_Z =  190           # first region's front row; the +1 front margin makes the front edge 191
 FLOOR_Y  =   55           # floor pads; display blocks start at y=56 (depth 0)
 ROW_WIDTH = 124           # wrap to a new row once a row grows past this many blocks
