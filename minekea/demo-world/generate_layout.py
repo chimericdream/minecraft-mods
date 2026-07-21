@@ -1,56 +1,202 @@
 #!/usr/bin/env python3
 """
-Minekea demo-world layout generator  (tiled 126x126 edition)
+Minekea demo-world layout generator  (by-material edition)
 
-Places every Minekea block into an 8x8 grid of 16x16 tiles inside a pre-built
-126x126 arena. Each tile is a 14x14 polished-andesite pad framed by smooth-stone
-borders; the touching borders of neighbouring tiles form the 2-block aisles.
-One family per tile (big families get a merged 2-tile room); the glass jar gets
-its own item/misc tiles; compressed blocks are spread across 6 tiles by material
-type and shown as 9-tall stacks.
+Groups every Minekea block by MATERIAL rather than by block family: all the acacia
+things sit together, all the granite things together, all the black things together,
+and so on. Each material gets its own flexible-size region (sized to its contents):
 
-Arena (absolute world coords, all floor at y=55):
-    front-left  corner  = (-191, 55, 190)      (west, near/front)
-    back-right  corner  = ( -66, 55,  65)      (east, far/back)
-    X: -191 (west) .. -66 (east)   126 wide, +X = east = "right"
-    Z:  190 (front) ..  65 (back)  126 deep,  -Z = back = north
-Tile (col c=0..7 west->east, row r=0..7 front->back):
-    interior X = -191+16c .. -178+16c        (14 wide, lx 0..13)
-    interior Z = 190-16r  .. 177-16r         (14 deep, lz 0..13; lz 0 = front row)
-    the front row (lz 0) is reserved for standing / label sign / command block.
-Command block: front-right corner of every tile = (-178+16c, 55, 190-16r),
-    facing up, command  tp @p ~-6.5 ~1 ~ 180 0  (lands player front-centre,
-    facing north into the tile), with a stone pressure plate on top.
+    * flat blocks (stairs, slabs, furniture, ...) fill a grid at the front of the region
+    * compressed blocks (1x-9x) are shown as small stepped 3x3 podiums behind them
+      (tier 0 = 1x/2x/3x on the ground, tier +1 = 4x/5x/6x, tier +2 = 7x/8x/9x)
+    * a label sign + a teleport command block (with a stone pressure plate) sit at the
+      region's front so you can jump straight to a screenshot vantage
+
+Materials that only exist in compressed form and don't belong to any real material
+(metals/gems, plus soil-type blocks) get their own small regions too. Glass jars keep
+their own dedicated section (built from glass_jar_contents.csv).
+
+Regions flow left->right (west->east, +X) in the given display order; when a row fills
+past ROW_WIDTH they wrap to a new row further back (north, -Z). The whole arena is sized
+to fit and its bounds are printed / written to layout_stats.json.
 
 Outputs (all in this folder):
-    demo_layout_manifest.csv   one row per placed block, absolute coords + tile
-    layout_tilemap.txt         8x8 tile map (which family sits where)
-    layout_stats.json          machine-readable room/tile summary
-    demo_build.mcfunction      floor + borders + every block + signs + cmd blocks
+    demo_layout_manifest.csv   one row per placed block, absolute coords
+    layout_regions.txt         region list: material -> footprint + command block
+    layout_stats.json          machine-readable arena/region summary
+    demo_build.mcfunction      floor + every block + podium supports + signs + cmd blocks
 Regenerate with:  python generate_layout.py
 (refresh block_inventory.txt / glass_jar_contents.csv first if the mod changed)
 """
 import csv, json, math, os
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# ---- arena / tile geometry -----------------------------------------------
-ORIGIN_X   = -191     # west edge  (col 0, lx 0)
-ORIGIN_Z   =  190     # front edge (row 0, lz 0)
-FLOOR_Y    =   55     # floor blocks live here; displays sit at FLOOR_Y+1
-TILES      =    8     # 8x8 grid
-TILE_PITCH =   16
-TILE_USABLE=   14     # interior is 14x14
-FRONT_ROWS =    1     # rows of the interior kept clear at the front (standing/sign/cmd)
+# ---- arena geometry -------------------------------------------------------
+ORIGIN_X = -191            # west edge (left), region flow starts here
+ORIGIN_Z =  190            # front/south edge; rows march north (-Z) as they wrap
+FLOOR_Y  =   55            # floor blocks; displays sit at FLOOR_Y+1
+ROW_WIDTH = 124            # wrap regions to a new row once a row grows past this many blocks
+AISLE     =    2           # blocks of gap between regions and between rows
+VIEW_APRON =   5           # floored strip in front (south) so front-row teleport vantages land safely
 
-FLOOR_BLOCK  = "minecraft:polished_andesite"
-BORDER_BLOCK = "minecraft:smooth_stone"
-SIGN_BLOCK   = "minecraft:oak_sign"
-CMD_TP       = "tp @p ~-6.5 ~1 ~ 180 0"
+FLOOR_BLOCK   = "minecraft:polished_andesite"   # region floor pads
+BORDER_BLOCK  = "minecraft:smooth_stone"        # aisles + podium step supports
+SIGN_BLOCK    = "minecraft:oak_sign"
 
-# big families get a merged 2-tile room (breathing room + label margin)
-WIDE_FAMILIES = {"beams", "covers", "dyed", "slabs", "stairs"}
+# region interior packing
+FLAT_COLS = 12             # flat display blocks per row inside a region
+POD_COLS  = 3             # stepped podiums per row inside a region
+POD_SIZE  = 3             # podium footprint is POD_SIZE x POD_SIZE (3 for the 3 tiers)
+POD_GAP   = 1             # empty blocks between podiums
+FRONT_ROWS = 1            # region rows kept clear at the front (sign / cmd / standing)
+
+# ---- material grouping ----------------------------------------------------
+COLORS = ["white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+          "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"]
+WOOD_BASES = ["dark_oak", "pale_oak", "acacia", "bamboo", "birch", "cherry", "crimson",
+              "jungle", "mangrove", "oak", "spruce", "warped"]
+
+# ordered stone/mineral/metal base rules (metals BEFORE the generic "stone" catch-all,
+# since e.g. "redstone_block" contains the substring "stone"); first hit wins.
+STONE_RULES = [
+    ("red_sandstone", ["red_sandstone"]), ("sandstone", ["sandstone"]),
+    ("nether_brick", ["nether_brick"]), ("deepslate", ["deepslate"]),
+    ("blackstone", ["blackstone"]), ("basalt", ["basalt"]), ("end_stone", ["end_stone"]),
+    ("prismarine", ["prismarine"]), ("purpur", ["purpur"]), ("quartz", ["quartz"]),
+    ("tuff", ["tuff"]), ("granite", ["granite"]), ("diorite", ["diorite"]),
+    ("andesite", ["andesite"]), ("cobblestone", ["cobblestone"]),
+    ("iron", ["iron_block"]), ("gold", ["gold_block"]), ("copper", ["copper"]),
+    ("diamond", ["diamond"]), ("netherite", ["netherite"]), ("lapis", ["lapis"]),
+    ("redstone", ["redstone"]), ("emerald", ["emerald"]), ("coal", ["coal", "charcoal"]),
+    ("amethyst", ["amethyst"]), ("obsidian", ["obsidian"]), ("calcite", ["calcite"]),
+    ("netherrack", ["netherrack"]), ("bone", ["bone"]),
+    ("stone", ["stone_brick", "smooth_stone"]), ("stone", ["stone"]),
+    ("mud", ["mud"]), ("earth", ["dirt", "sand", "gravel", "clay", "soul_sand"]),
+    ("brick", ["brick"]),
+]
+
+# region display order (walking order); glass jars appended at the end
+ORDER = (["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry",
+          "pale_oak", "bamboo", "crimson", "warped"]
+         + COLORS
+         + ["stone", "cobblestone", "granite", "diorite", "andesite", "deepslate", "tuff",
+            "blackstone", "basalt", "sandstone", "red_sandstone", "prismarine", "quartz",
+            "purpur", "nether_brick", "end_stone", "netherrack", "obsidian", "calcite",
+            "mud", "bone", "brick", "amethyst"]
+         + ["iron", "gold", "copper", "diamond", "netherite", "lapis", "redstone"]
+         + ["earth", "food", "lighting", "misc"])
+
+LABELS = {
+    "dark_oak": "Dark Oak", "pale_oak": "Pale Oak", "light_blue": "Light Blue",
+    "light_gray": "Light Gray", "red_sandstone": "Red Sandstone",
+    "nether_brick": "Nether Brick", "end_stone": "End Stone",
+    "food": "Compressed Food", "earth": "Soil & Sand", "misc": "Misc",
+}
+def label_for(key):
+    return LABELS.get(key, key.replace("_", " ").title())
+
+def is_comp(p):
+    pt = p.split("/")
+    return pt[:2] == ["building", "compressed"] and pt[-1].endswith("x")
+
+def norm(seg):
+    return "stripped_" + seg[:-9] if seg.endswith("_stripped") else seg
+
+def material_name(p):
+    pt = p.split("/")
+    if is_comp(p):
+        return norm(pt[2])
+    if pt[:2] == ["building", "dyed"]:
+        return pt[-1]                       # dyed blocks group by their colour
+    return norm(pt[-1])
+
+def canonical(p):
+    """Bucket a block path into its material region key ('' -> drop)."""
+    mn = material_name(p)
+    pt = p.split("/")
+    if mn.endswith("_open"):
+        return ""                           # shutter open-halves: internal, never placed
+    if pt[:2] == ["storage", "compressed"]:
+        return "food"
+    if pt[:2] == ["decorations", "lighting"]:
+        return "lighting"
+    if pt[:2] == ["decorations", "misc"]:
+        return "misc"
+    if pt[0] == "crops":
+        return "warped"                     # warped wart -> the warped region
+    if len(pt) > 1 and pt[1] == "cauldrons":
+        return "misc"                       # honey/milk cauldrons
+    if "egg_crate" in mn:
+        return "misc"                       # egg crates
+    if pt[-1] == "glass_jar":
+        return "jars"                       # handled separately from block_inventory
+    if mn == "plain":                       # plain (uncoloured) wax / votive candle
+        return "misc"
+    if mn.endswith("_votive_candle"):
+        c = mn[:-len("_votive_candle")]
+        return c if c in COLORS else "misc"
+    if mn in COLORS:
+        return mn
+    for c in sorted(COLORS, key=len, reverse=True):
+        if mn.startswith(c + "_") and mn[len(c) + 1:] in ("concrete", "terracotta", "glazed_terracotta"):
+            return c
+    for w in WOOD_BASES:
+        if mn == w or mn.startswith("stripped_" + w):
+            return w
+        if mn.startswith(w + "_") and mn[len(w) + 1:] in ("log", "planks", "stem", "mosaic", "wood", "hyphae"):
+            return w
+    for bucket, tests in STONE_RULES:
+        if any(t in mn for t in tests):
+            return bucket
+    raise SystemExit(f"unmapped material for {p!r} (material_name={mn!r}); extend canonical()")
+
+# ---- facing / state (unchanged from the tiled generator) ------------------
+def block_state(path):
+    """Orient a block's front toward the viewer (standing at the front looking north)."""
+    if path.startswith("building/stairs/"):
+        return ("facing=north", None)                       # rotated 180 from south
+    if path.startswith("building/slabs/") and "/vertical/" in path:
+        return ("facing=east", None)                        # vertical slabs, 90 CCW
+    if path.startswith("building/covers/"):
+        return ("facing=south", None)
+    if path.startswith("furniture/seating/chairs/"):
+        return ("facing=south", None)
+    if path.startswith("containers/barrels/") or path == "containers/glass_jar":
+        return ("facing=south", None)
+    if path.startswith("furniture/trapdoors/"):
+        return ("facing=south,half=bottom,open=true", None)
+    if path.startswith("furniture/armoires/"):
+        return ("facing=north,half=lower", "facing=north,half=upper")
+    if path.startswith("furniture/doors/"):
+        return ("facing=south,half=lower,hinge=left,open=false",
+                "facing=south,half=upper,hinge=left,open=false")
+    return ("", None)
+
+# ---- glass jar contents (unchanged) ---------------------------------------
+GLASS_JAR = "minekea:containers/glass_jar"
+JAR_FLUID_FILL = 8.0
+MOB_NBT = {
+    "minecraft:allay":      "NoGravity:1b,Health:20.0f",
+    "minecraft:bat":        "BatFlags:0b,Health:6.0f",
+    "minecraft:bee":        "Health:10.0f,Age:0",
+    "minecraft:endermite":  "Health:8.0f,Lifetime:0",
+    "minecraft:silverfish": "Health:8.0f",
+    "minecraft:slime":      "Size:0,Health:1.0f",
+    "minecraft:vex":        "NoGravity:1b,Health:14.0f",
+}
+jar_kind_by_id = {}
+def jar_nbt(contents_id):
+    kind = jar_kind_by_id.get(contents_id, "")
+    if kind == "item":
+        return '{StoredItem:"%s",StoredItemQty:64,FullItemStacks:7}' % contents_id
+    if kind == "fluid":
+        return '{StoredFluid:"%s",StoredFluidAmount:%rd}' % (contents_id, JAR_FLUID_FILL)
+    if kind == "mob":
+        fields = MOB_NBT.get(contents_id, "NoGravity:1b")
+        return '{"minecraft:entity_data":{id:"%s",%s}}' % (contents_id, fields)
+    return ""
 
 # ---- load inventory -------------------------------------------------------
 paths = []
@@ -69,366 +215,265 @@ for p in HAND_AUTHORED:
     if p not in paths:
         paths.append(p)
 
-ZONE_DISPLAY = {
-    "building": "BUILDING", "furniture": "FURNITURE", "storage": "STORAGE",
-    "containers": "CONTAINERS", "decorations": "DECORATIONS", "crops": "DECORATIONS",
-}
+# ---- assemble regions -----------------------------------------------------
+# region -> {"flats":[cell...], "podiums":[(sub, [9 paths 1x..9x])...]}
+flats = defaultdict(list)          # cell = (block_id, state, upper, contents, clabel)
+comp_tiers = defaultdict(lambda: defaultdict(dict))   # region -> sub -> {tier:path}
 
-def pretty(s):
-    return s.replace("_", " ").title()
-
-def block_state(path):
-    """Orient a block's front toward the viewer, who stands at the front (high Z)
-    looking north (-Z), so 'front toward viewer' == facing south.
-    Returns (state, upper_state); state is the blockstate string without brackets
-    ('' = leave default). upper_state != None marks a 2-tall block whose upper half
-    must be placed one block above. Classified per block id, because families are
-    heterogeneous (e.g. slabs mix horizontal `type` slabs with vertical `facing`)."""
-    if path.startswith("building/stairs/"):                 # all stairs have facing
-        return ("facing=north", None)                       # rotated 180 from south
-    if path.startswith("building/slabs/") and "/vertical/" in path:
-        return ("facing=east", None)                        # vertical slabs, 90 CCW from south
-    if path.startswith("building/covers/"):
-        return ("facing=south", None)
-    if path.startswith("furniture/seating/chairs/"):        # stools are symmetric
-        return ("facing=south", None)
-    if path.startswith("containers/barrels/") or path == "containers/glass_jar":
-        return ("facing=south", None)
-    if path.startswith("furniture/trapdoors/"):             # stand them up to be seen
-        return ("facing=south,half=bottom,open=true", None)
-    if path.startswith("furniture/armoires/"):              # 2 tall, rotated 180 from south
-        return ("facing=north,half=lower", "facing=north,half=upper")
-    if path.startswith("furniture/doors/"):                 # 2 tall, closed
-        return ("facing=south,half=lower,hinge=left,open=false",
-                "facing=south,half=upper,hinge=left,open=false")
-    return ("", None)
-
-# split compressed (tiered) / glass jar / plain
-comp_by_mat = OrderedDict()
-plain = OrderedDict()          # (zone, family) -> list of cells; cell = [(id,y,contents,clabel)]
 for p in sorted(paths):
-    parts = p.split("/")
-    if parts[:2] == ["building", "compressed"] and len(parts) == 4 and parts[3].endswith("x"):
-        comp_by_mat.setdefault(parts[2], []).append((p, int(parts[3][:-1])))
-    elif p == "containers/glass_jar":
-        continue                                   # its own tiles, built from the jar csv
-    elif p.startswith("furniture/shutters/") and p.endswith("_open"):
-        continue                                   # OpenShutterHalfBlock: an internal open-state
-                                                   # half that only exists flanking an opened
-                                                   # shutter. Standalone it renders half-width and
-                                                   # crashes on click (its useWithoutItem cycles the
-                                                   # OPEN prop on the non-shutter block beside it).
-                                                   # The real (closed) shutter is placed on its own.
+    key = canonical(p)
+    if key in ("", "jars"):
+        continue
+    if is_comp(p):
+        sub = material_name(p)
+        tier = int(p.split("/")[-1][:-1])
+        comp_tiers[key][sub][tier] = "minekea:" + p
     else:
-        zone = ZONE_DISPLAY.get(parts[0], parts[0].upper())
-        fam = parts[1] if len(parts) > 1 else parts[0]
-        plain.setdefault((zone, fam), []).append([("minekea:" + p, 0, "", "")])
+        state, upper = block_state(p)
+        flats[key].append(("minekea:" + p, state, upper, "", ""))
 
-def stack_cell(mat):
-    tiers = sorted(comp_by_mat[mat], key=lambda t: t[1])
-    return [("minekea:" + path, tier - 1, "", "") for (path, tier) in tiers]  # y 0..8
-
-# classify the 146 compressed materials into 6 groups
-COMP_ORE = {"amethyst_block", "copper_block", "diamond_block", "gold_block",
-            "iron_block", "lapis_block", "netherite_block", "redstone_block"}
-def comp_group(mat):
-    if mat.endswith("glazed_terracotta"):
-        return "glazed"
-    if mat.endswith("terracotta"):
-        return "terracotta"
-    if mat.endswith("concrete"):
-        return "concrete"
-    if mat.endswith(("_planks", "_log", "_stem")):
-        return "wood"
-    if mat in COMP_ORE:
-        return "ore"
-    return "stone"
-
-comp_groups = OrderedDict((g, []) for g in ["stone", "wood", "ore", "terracotta", "concrete", "glazed"])
-for mat in comp_by_mat:
-    comp_groups[comp_group(mat)].append(mat)
-
-# ---- glass jars -----------------------------------------------------------
-jar_items, jar_misc = [], []      # cells
-jar_kind_by_id = {}               # contents id -> kind (item/fluid/mob/empty)
-GLASS_JAR = "minekea:containers/glass_jar"
-JAR_FLUID_FILL = 8.0              # MAX_BUCKETS in GlassJarBlockEntity
+# glass jar contents -> two jar regions
+jar_items, jar_misc = [], []
 jar_csv = os.path.join(HERE, "glass_jar_contents.csv")
 if os.path.exists(jar_csv):
     with open(jar_csv, encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
-            cell = [(GLASS_JAR, 0, row["id"], row["label"])]
+            jar_kind_by_id[row["id"]] = row["kind"]
+            cell = (GLASS_JAR, "facing=south", None, row["id"], row["label"])
             (jar_items if row["kind"] == "item" else jar_misc).append(cell)
-            jar_kind_by_id[row["id"]] = row["kind"]     # "" (empty jar) -> "empty"
 
-# A captured mob is stored under "minecraft:entity_data" as the mob's FULL entity NBT.
-# GlassJarBlockEntity wraps it in a TypedEntityData whose constructor strips "id" from
-# the tag, and hasMob() reports the mob present only when that id-less tag is NON-empty
-# (a real capture carries Health/Brain/Motion/... so it always is). A bare {id:"..."}
-# strips down to {} -> hasMob() false -> the jar renders empty, which is why the earlier
-# minimal NBT showed nothing. So each mob needs at least one real field here; these are a
-# clean, capture-faithful subset (the renderer fakes Pos, normalises facing, drops
-# equipment, so UUID/Pos/Motion/Rotation are pointless to include).
-MOB_NBT = {
-    "minecraft:allay":      "NoGravity:1b,Health:20.0f",
-    "minecraft:bat":        "BatFlags:0b,Health:6.0f",       # BatFlags:0 = flying, not hanging
-    "minecraft:bee":        "Health:10.0f,Age:0",            # Age:0 = adult
-    "minecraft:endermite":  "Health:8.0f,Lifetime:0",
-    "minecraft:silverfish": "Health:8.0f",
-    "minecraft:slime":      "Size:0,Health:1.0f",            # jar only holds tiny slimes
-    "minecraft:vex":        "NoGravity:1b,Health:14.0f",
-}
+regions = OrderedDict()
+def add_region(key, label, flat_cells, podiums):
+    regions[key] = {"label": f"{label} ({len(flat_cells) + sum(9 for _ in podiums)})",
+                    "flats": flat_cells, "podiums": podiums}
 
-def jar_nbt(contents_id):
-    """Block-entity SNBT that fills a glass jar with its item / fluid / mob,
-    matching GlassJarBlockEntity's persisted keys. '' = leave empty."""
-    kind = jar_kind_by_id.get(contents_id, "")
-    if kind == "item":
-        # A full jar: 7 stored stacks + a full 64 top slot (getStoredStacks()+1 -> full fill bar)
-        return '{StoredItem:"%s",StoredItemQty:64,FullItemStacks:7}' % contents_id
-    if kind == "fluid":
-        return '{StoredFluid:"%s",StoredFluidAmount:%rd}' % (contents_id, JAR_FLUID_FILL)
-    if kind == "mob":
-        fields = MOB_NBT.get(contents_id, "NoGravity:1b")   # any real field -> hasMob() true
-        return '{"minecraft:entity_data":{id:"%s",%s}}' % (contents_id, fields)
-    return ""
+for key in ORDER:
+    if key not in flats and key not in comp_tiers:
+        continue
+    pods = []
+    for sub in sorted(comp_tiers.get(key, {})):
+        tiers = comp_tiers[key][sub]
+        pods.append((sub, [tiers[t] for t in range(1, 10)]))
+    add_region(key, label_for(key), flats.get(key, []), pods)
 
-# ---- assemble rooms (ordered) --------------------------------------------
-rooms = []      # dict: zone, rid, label, tw, cells
-def room(zone, rid, label, cells, tw=1):
-    rooms.append({"zone": zone, "rid": rid, "label": label, "tw": tw, "cells": cells})
+if jar_items:
+    add_region("jars_items", "Glass Jars - Items", jar_items, [])
+if jar_misc:
+    add_region("jars_misc", "Glass Jars - Fluids & Mobs", jar_misc, [])
 
-def P(zone, fam):
-    return plain.get((zone, fam), [])
+# ---- lay out each region's interior ---------------------------------------
+# returns (width, depth, placements) with placements relative to the region front-left
+# corner: (block_id, dx, dy, dz, state, upper, contents, clabel, floor_kind)
+# floor_kind: 'andesite' cells get an andesite pad; podium supports handle their own fill.
+def layout_region(rg):
+    flat_cells = rg["flats"]
+    pods = rg["podiums"]
+    placements = []
 
-# BUILDING
-for fam in ["beams", "covers", "dyed", "slabs", "stairs"]:
-    room("BUILDING", fam, f"{pretty(fam)} ({len(P('BUILDING', fam))})",
-         P("BUILDING", fam), tw=2)
-room("BUILDING", "general", f"General ({len(P('BUILDING','general'))})", P("BUILDING", "general"))
-room("BUILDING", "walls", f"Walls ({len(P('BUILDING','walls'))})", P("BUILDING", "walls"))
-for g, mats in comp_groups.items():
-    cells = [stack_cell(m) for m in mats]
-    room("BUILDING", f"compressed_{g}", f"Compressed: {g.title()} ({len(mats)})", cells)
+    nflat = len(flat_cells)
+    flat_cols = min(nflat, FLAT_COLS) if nflat else 0
+    flat_rows = math.ceil(nflat / flat_cols) if nflat else 0
 
-# FURNITURE
-for fam in ["armoires", "bookshelves", "display_cases", "doors", "pillows",
-            "seating", "shelves", "shutters", "tables", "trapdoors"]:
-    room("FURNITURE", fam, f"{pretty(fam)} ({len(P('FURNITURE', fam))})", P("FURNITURE", fam))
+    npod = len(pods)
+    pod_cols = min(npod, POD_COLS) if npod else 0
+    pod_rows = math.ceil(npod / pod_cols) if npod else 0
+    pod_pitch = POD_SIZE + POD_GAP
+    pod_strip_w = pod_cols * pod_pitch - POD_GAP if npod else 0
+    pod_strip_d = pod_rows * pod_pitch - POD_GAP if npod else 0
 
-# STORAGE
-eggs = P("STORAGE", "egg_crate") + P("STORAGE", "brown_egg_crate") + P("STORAGE", "blue_egg_crate")
-room("STORAGE", "egg_crates", f"Egg Crates ({len(eggs)})", eggs)
-room("STORAGE", "compressed_food", f"Compressed Food ({len(P('STORAGE','compressed'))})", P("STORAGE", "compressed"))
-room("STORAGE", "dyes", f"Dye Blocks ({len(P('STORAGE','dyes'))})", P("STORAGE", "dyes"))
+    width = max(flat_cols, pod_strip_w, 3)
+    depth = FRONT_ROWS + flat_rows + (1 if (flat_rows and pod_rows) else 0) + pod_strip_d
 
-# CONTAINERS
-for fam in ["barrels", "cauldrons", "crates"]:
-    room("CONTAINERS", fam, f"{pretty(fam)} ({len(P('CONTAINERS', fam))})", P("CONTAINERS", fam))
+    # flat blocks: grid at the front, centred horizontally
+    x_off = (width - flat_cols) // 2
+    for i, (bid, state, upper, contents, clabel) in enumerate(flat_cells):
+        dx = x_off + (i % flat_cols)
+        dz = FRONT_ROWS + (i // flat_cols)
+        placements.append((bid, dx, 1, dz, state, upper, contents, clabel, "andesite"))
 
-# GLASS JARS
-room("CONTAINERS", "jars_items", f"Glass Jars - Items ({len(jar_items)})", jar_items)
-room("CONTAINERS", "jars_misc", f"Glass Jars - Fluids & Mobs ({len(jar_misc)})", jar_misc)
+    # podiums behind the flats
+    pod_base_dz = FRONT_ROWS + flat_rows + (1 if (flat_rows and pod_rows) else 0)
+    pod_x_off = (width - pod_strip_w) // 2 if npod else 0
+    for pi, (sub, tier_paths) in enumerate(pods):
+        pc, pr = pi % pod_cols, pi // pod_cols
+        base_dx = pod_x_off + pc * pod_pitch
+        base_dz = pod_base_dz + pr * pod_pitch          # front row of this podium
+        for t in range(3):                              # tier 0,1,2 -> steps back + up
+            for i in range(3):
+                path = tier_paths[t * 3 + i]
+                dx = base_dx + i
+                dz = base_dz + t                        # each higher tier steps one back
+                dy = 1 + t
+                # solid support column under the step so it reads as a stepped podium
+                for yy in range(1, dy):
+                    placements.append((BORDER_BLOCK, dx, yy, dz, "", None, "", "", "support"))
+                placements.append((path, dx, dy, dz, "", None, "", "", "andesite"))
 
-# DECORATIONS
-room("DECORATIONS", "candles", f"Candles ({len(P('DECORATIONS','candles'))})", P("DECORATIONS", "candles"))
-room("DECORATIONS", "lighting", f"Lighting ({len(P('DECORATIONS','lighting'))})", P("DECORATIONS", "lighting"))
-deco_misc = P("DECORATIONS", "warped_wart") + P("DECORATIONS", "misc")
-room("DECORATIONS", "deco_misc", f"Warped Wart & Fake Cake ({len(deco_misc)})", deco_misc)
+    return width, depth, placements
 
-# tag wide families
-for rm in rooms:
-    if rm["rid"] in WIDE_FAMILIES:
-        rm["tw"] = 2
+for rg in regions.values():
+    rg["w"], rg["d"], rg["cells"] = layout_region(rg)
 
-# ---- flow rooms into the 8x8 tile grid (front rows first) -----------------
-grid = [[None] * TILES for _ in range(TILES)]     # grid[r][c] = rid
-c = r = 0
-for rm in rooms:
-    tw = rm["tw"]
-    if c + tw > TILES:
-        c, r = 0, r + 1
-    if r >= TILES:
-        raise SystemExit("ran out of tiles - too many rooms for an 8x8 grid")
-    rm["col"], rm["row"] = c, r
-    for k in range(tw):
-        grid[r][c + k] = rm["rid"]
-    c += tw
+# ---- flow regions into rows ----------------------------------------------
+cursor_x = ORIGIN_X
+cursor_z = ORIGIN_Z
+row_depth = 0
+row_start_x = ORIGIN_X
+for key, rg in regions.items():
+    if cursor_x != row_start_x and (cursor_x - row_start_x) + rg["w"] > ROW_WIDTH:
+        # wrap to next row (further north / -Z)
+        cursor_z -= row_depth + AISLE
+        cursor_x = row_start_x
+        row_depth = 0
+    rg["ox"] = cursor_x                         # front-left corner (min X)
+    rg["oz"] = cursor_z                         # front edge (max Z)
+    cursor_x += rg["w"] + AISLE
+    row_depth = max(row_depth, rg["d"])
 
-# ---- place blocks within each room ---------------------------------------
-placements = []
-INTERIOR = TILE_USABLE                      # 14
-def room_rect(rm):
-    tw = rm["tw"]
-    width = tw * TILE_PITCH - 2              # 14 (tw1) or 30 (tw2)
-    depth = INTERIOR - FRONT_ROWS           # 13 usable rows behind the front row
-    return width, depth
+# ---- resolve to absolute placements + command blocks ----------------------
+placements = []           # dicts for CSV / mcfunction
+supports = []             # (x,y,z,block) podium step supports
+signs = []                # (x,y,z,text)
+cmd_blocks = []           # (x,y,z) -> command teleports player to view the region
 
-for rm in rooms:
-    cells = rm["cells"]
-    width, depth = room_rect(rm)
-    n = len(cells)
-    gw = min(n, width) if n else 1
-    rows_needed = math.ceil(n / gw) if n else 0
-    if rows_needed > depth:
-        raise SystemExit(f"room {rm['rid']} overflows its tile ({n} cells, cap {width*depth})")
-    x_off = (width - gw) // 2               # centre the grid horizontally
-    base_x = ORIGIN_X + TILE_PITCH * rm["col"]
-    base_z = ORIGIN_Z - TILE_PITCH * rm["row"]
-    for i, cell in enumerate(cells):
-        gx, gz = i % gw, i // gw
-        lx = x_off + gx
-        lz = FRONT_ROWS + gz                # skip reserved front row(s)
-        wx = base_x + lx
-        wz = base_z - lz
-        first = (i == 0)
-        for (bid, yoff, contents, clabel) in cell:
-            state, _upper = block_state(bid.split(":", 1)[1])
-            placements.append({
-                "block_id": bid,
-                "x": wx, "y": FLOOR_Y + 1 + yoff, "z": wz,
-                "tile_col": rm["col"], "tile_row": rm["row"],
-                "room": rm["rid"], "zone": rm["zone"],
-                "label": rm["label"] if first else "",
-                "tier": (str(yoff + 1) + "x") if rm["rid"].startswith("compressed") else "",
-                "state": state,
-                "contents": contents, "contents_label": clabel,
-            })
+for key, rg in regions.items():
+    ox, oz = rg["ox"], rg["oz"]
+    for (bid, dx, dy, dz, state, upper, contents, clabel, floor_kind) in rg["cells"]:
+        wx = ox + dx
+        wz = oz - dz
+        wy = FLOOR_Y + dy
+        if floor_kind == "support":
+            supports.append((wx, wy, wz, BORDER_BLOCK))
+            continue
+        placements.append({
+            "block_id": bid, "x": wx, "y": wy, "z": wz,
+            "region": key, "material": rg["label"],
+            "state": state, "upper": upper or "",
+            "contents": contents, "contents_label": clabel,
+        })
+    # label sign + command block at the region front-left
+    sx, sz = ox, oz
+    signs.append((sx, FLOOR_Y + 1, sz, rg["label"]))
+    # command block one column right of the sign, teleport to a vantage in front, facing north
+    cx = ox + min(rg["w"] - 1, 1)
+    view_x = ox + rg["w"] / 2.0
+    view_z = oz + 4                       # stand a few blocks in front (south) of the region
+    cmd_blocks.append((cx, FLOOR_Y, sz, view_x, FLOOR_Y + 1, view_z))
 
-# ---- command blocks (all 64 tiles) + sign coords --------------------------
-def cmd_block_pos(c, r):
-    return (ORIGIN_X + TILE_PITCH * c + (TILE_USABLE - 1),   # -178+16c  (east/right col)
-            FLOOR_Y,
-            ORIGIN_Z - TILE_PITCH * r)                        # 190-16r   (front row)
+# ---- arena bounds ---------------------------------------------------------
+all_x = [p["x"] for p in placements] + [s[0] for s in supports]
+all_z = [p["z"] for p in placements] + [s[2] for s in supports]
+min_x, max_x = min(all_x), max(all_x)
+min_z, max_z = min(all_z), max(all_z)
+# pad by 1 for a border ring
+X0, X1 = min_x - 1, max_x + 1
+Z1 = min_z - 1                             # north/back edge
+Z0 = max(max_z, ORIGIN_Z) + VIEW_APRON    # south/front edge, incl. the front viewing apron
 
 # ---- write manifest CSV ---------------------------------------------------
-fields = ["block_id", "x", "y", "z", "tile_col", "tile_row", "room", "zone",
-          "tier", "state", "label", "contents", "contents_label"]
+fields = ["block_id", "x", "y", "z", "region", "material", "state", "upper",
+          "contents", "contents_label"]
 with open(os.path.join(HERE, "demo_layout_manifest.csv"), "w", newline="", encoding="utf-8") as fh:
     w = csv.DictWriter(fh, fieldnames=fields)
     w.writeheader()
     w.writerows(placements)
 
-# ---- tile map -------------------------------------------------------------
-SHORT = {rm["rid"]: rm["rid"] for rm in rooms}
-with open(os.path.join(HERE, "layout_tilemap.txt"), "w", encoding="utf-8") as fh:
-    fh.write("Minekea demo world - 8x8 tiles (front row = top, west = left)\n")
-    fh.write("each cell = one 14x14 tile; '..' = empty (reserved for growth)\n\n")
-    fh.write("      " + "".join(f"c{c:<11}" for c in range(TILES)) + "\n")
-    for r in range(TILES):
-        cells = []
-        for c in range(TILES):
-            rid = grid[r][c]
-            cells.append(f"{(rid or '..')[:12]:<12}")
-        fh.write(f"r{r}  " + " ".join(cells) + "\n")
-    fh.write("\nrooms:\n")
-    for rm in rooms:
-        cx, _, cz = cmd_block_pos(rm["col"], rm["row"])
-        fh.write(f"  ({rm['col']},{rm['row']}) tw{rm['tw']}  {rm['label']:36}"
-                 f"  cmd@({cx},{FLOOR_Y},{cz})\n")
-
 # ---- build mcfunction -----------------------------------------------------
 def fill(x1, y1, z1, x2, y2, z2, block):
     return f"fill {x1} {y1} {z1} {x2} {y2} {z2} {block}"
 
-lines = ["# Minekea demo world - generated by generate_layout.py",
-         "# run inside the pre-built 126x126 arena; floor y=55.", ""]
+lines = ["# Minekea demo world - by-material layout (generated by generate_layout.py)",
+         f"# arena X[{X0}..{X1}] Z[{Z1}..{Z0}] floor y={FLOOR_Y}", ""]
 
-# 1) smooth-stone base over the whole floor + a 1-block outer border ring
-#    (one solid fill of the 128x128 covers the arena aisles/borders AND the
-#     surrounding ring; andesite interiors are painted on top next)
-X0, X1 = ORIGIN_X, ORIGIN_X + 125
-Z1, Z0 = ORIGIN_Z - 125, ORIGIN_Z         # Z1=back(65) Z0=front(190)
-lines.append("# floor base (smooth stone) + outer border ring")
-lines.append(fill(X0 - 1, FLOOR_Y, Z1 - 1, X1 + 1, FLOOR_Y, Z0 + 1, BORDER_BLOCK))
+# 1) smooth-stone base over the whole arena (aisles + border), andesite pads on top
+lines.append("# floor base (smooth stone) covering arena + border ring")
+lines.append(fill(X0, FLOOR_Y, Z1, X1, FLOOR_Y, Z0, BORDER_BLOCK))
 
-# 2) andesite tile interiors (+ merged seams)
+# 2) andesite region pads
 lines.append("")
-lines.append("# polished andesite tile interiors")
-merged_second = set()   # (c,r) tiles that are the 2nd half of a wide room (seam filled)
-for rm in rooms:
-    for k in range(rm["tw"]):
-        cc = rm["col"] + k
-        bx = ORIGIN_X + TILE_PITCH * cc
-        bz = ORIGIN_Z - TILE_PITCH * rm["row"]
-        lines.append(fill(bx, FLOOR_Y, bz - (TILE_USABLE - 1), bx + (TILE_USABLE - 1), FLOOR_Y, bz, FLOOR_BLOCK))
-    if rm["tw"] == 2:      # fill the 2-block seam between the two tiles
-        sx = ORIGIN_X + TILE_PITCH * rm["col"] + TILE_USABLE
-        bz = ORIGIN_Z - TILE_PITCH * rm["row"]
-        lines.append(fill(sx, FLOOR_Y, bz - (TILE_USABLE - 1), sx + 1, FLOOR_Y, bz, FLOOR_BLOCK))
+lines.append("# region floor pads (polished andesite)")
+for rg in regions.values():
+    ox, oz = rg["ox"], rg["oz"]
+    lines.append(fill(ox, FLOOR_Y, oz - (rg["d"] - 1), ox + rg["w"] - 1, FLOOR_Y, oz, FLOOR_BLOCK))
 
-# 3) every display block (oriented to face the viewer; 2-tall blocks get an upper half)
+# 3) podium step supports
 lines.append("")
-upper_halves = 0
-disp_lines = []
-jars_filled = 0
+lines.append(f"# podium step supports ({len(supports)})")
+for (x, y, z, b) in supports:
+    lines.append(f"setblock {x} {y} {z} {b}")
+
+# 4) display blocks (with facing state, jar NBT, and 2-tall upper halves)
+lines.append("")
+disp = []
+jars_filled = upper_halves = 0
 for p in placements:
-    state, upper = block_state(p["block_id"].split(":", 1)[1])
+    state = p["state"]
     suffix = f"[{state}]" if state else ""
     nbt = jar_nbt(p["contents"]) if p["block_id"] == GLASS_JAR else ""
     if nbt:
         jars_filled += 1
-    disp_lines.append(f"setblock {p['x']} {p['y']} {p['z']} {p['block_id']}{suffix}{nbt}")
-    if upper:
-        disp_lines.append(f"setblock {p['x']} {p['y'] + 1} {p['z']} {p['block_id']}[{upper}]")
+    disp.append(f"setblock {p['x']} {p['y']} {p['z']} {p['block_id']}{suffix}{nbt}")
+    if p["upper"]:
+        disp.append(f"setblock {p['x']} {p['y'] + 1} {p['z']} {p['block_id']}[{p['upper']}]")
         upper_halves += 1
 lines.append(f"# display blocks ({len(placements)} + {upper_halves} upper halves)")
-lines.extend(disp_lines)
+lines.extend(disp)
 
-# 4) a label sign at the front-left of each room
+# 5) label signs
 lines.append("")
-lines.append("# room label signs")
-for rm in rooms:
-    sx = ORIGIN_X + TILE_PITCH * rm["col"]                 # lx 0 (west corner)
-    sz = ORIGIN_Z - TILE_PITCH * rm["row"]                 # lz 0 (front row)
-    msg = rm["label"].replace('"', "'")
-    lines.append(f'setblock {sx} {FLOOR_Y + 1} {sz} {SIGN_BLOCK}[rotation=0]'
+lines.append(f"# region label signs ({len(signs)})")
+for (x, y, z, text) in signs:
+    msg = text.replace('"', "'")
+    lines.append(f'setblock {x} {y} {z} {SIGN_BLOCK}[rotation=0]'
                  f'{{front_text:{{messages:[\'"{msg}"\',\'""\',\'""\',\'""\']}}}}')
 
-# 5) command blocks + pressure plates on all 64 tiles
+# 6) teleport command blocks (+ stone pressure plates) per region
 lines.append("")
-lines.append("# teleport command blocks + stone pressure plates (all 64 tiles)")
-for r in range(TILES):
-    for c in range(TILES):
-        cx, cy, cz = cmd_block_pos(c, r)
-        lines.append(f'setblock {cx} {cy} {cz} minecraft:command_block[facing=up]'
-                     f'{{Command:"{CMD_TP}",auto:0b}}')
-        lines.append(f"setblock {cx} {cy + 1} {cz} minecraft:stone_pressure_plate")
+lines.append(f"# teleport command blocks + stone pressure plates ({len(cmd_blocks)})")
+for (cx, cy, cz, vx, vy, vz) in cmd_blocks:
+    cmd = f"tp @p {vx:.1f} {vy} {vz} 180 0"
+    lines.append(f'setblock {cx} {cy} {cz} minecraft:command_block[facing=up]'
+                 f'{{Command:"{cmd}",auto:0b}}')
+    lines.append(f"setblock {cx} {cy + 1} {cz} minecraft:stone_pressure_plate")
 
 with open(os.path.join(HERE, "demo_build.mcfunction"), "w", encoding="utf-8") as fh:
     fh.write("\n".join(lines) + "\n")
 
+# ---- region list ----------------------------------------------------------
+with open(os.path.join(HERE, "layout_regions.txt"), "w", encoding="utf-8") as fh:
+    fh.write("Minekea demo world - by-material regions (display / walking order)\n")
+    fh.write(f"arena X[{X0}..{X1}] Z[{Z1}..{Z0}] floor y={FLOOR_Y}\n\n")
+    fh.write(f"{'material':28s} {'w':>3s} {'d':>3s} {'flat':>4s} {'pod':>3s}  front-left(cmd)\n")
+    for key, rg in regions.items():
+        fh.write(f"{rg['label']:28s} {rg['w']:3d} {rg['d']:3d} "
+                 f"{len(rg['flats']):4d} {len(rg['podiums']):3d}  ({rg['ox']},{FLOOR_Y},{rg['oz']})\n")
+
 # ---- stats ----------------------------------------------------------------
-used_tiles = sum(1 for r in range(TILES) for c in range(TILES) if grid[r][c])
 stats = {
     "summary": {
-        "arena": f"126x126 @ y={FLOOR_Y}",
-        "front_left": [ORIGIN_X, FLOOR_Y, ORIGIN_Z],
-        "back_right": [ORIGIN_X + 125, FLOOR_Y, ORIGIN_Z - 125],
-        "tiles_total": TILES * TILES,
-        "tiles_used": used_tiles,
-        "tiles_free_for_growth": TILES * TILES - used_tiles,
-        "rooms": len(rooms),
-        "blocks_placed": len(placements),
-        "command_blocks": TILES * TILES,
+        "arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_Y,
+        "width": X1 - X0 + 1, "depth": Z0 - Z1 + 1,
+        "regions": len(regions),
+        "display_blocks": len(placements),
+        "podium_supports": len(supports),
+        "command_blocks": len(cmd_blocks),
+        "jars_filled": jars_filled,
     },
-    "rooms": [{
-        "room": rm["rid"], "zone": rm["zone"], "label": rm["label"],
-        "col": rm["col"], "row": rm["row"], "tw": rm["tw"],
-        "cells": len(rm["cells"]),
-        "blocks": sum(len(cell) for cell in rm["cells"]),
-        "cmd_block": list(cmd_block_pos(rm["col"], rm["row"])),
-    } for rm in rooms],
-    "compressed_groups": {g: mats for g, mats in comp_groups.items()},
+    "regions": [{
+        "region": key, "label": rg["label"],
+        "front_left": [rg["ox"], FLOOR_Y, rg["oz"]],
+        "w": rg["w"], "d": rg["d"],
+        "flat": len(rg["flats"]), "podiums": len(rg["podiums"]),
+    } for key, rg in regions.items()],
 }
 with open(os.path.join(HERE, "layout_stats.json"), "w", encoding="utf-8") as fh:
     json.dump(stats, fh, indent=2)
 
 # ---- console summary ------------------------------------------------------
-print(f"blocks placed   : {len(placements)}")
-print(f"rooms           : {len(rooms)}")
-print(f"tiles used      : {used_tiles} / {TILES*TILES}  ({TILES*TILES-used_tiles} free for growth)")
-print(f"grid rows used  : {max(rm['row'] for rm in rooms)+1} / {TILES}")
-print(f"compressed groups: " + ", ".join(f"{g}={len(m)}" for g, m in comp_groups.items()))
-print(f"command blocks  : {TILES*TILES}")
+print(f"regions         : {len(regions)}")
+print(f"display blocks  : {len(placements)}  (+{upper_halves} upper halves)")
+print(f"podium supports : {len(supports)}")
+print(f"jars filled     : {jars_filled}")
+print(f"command blocks  : {len(cmd_blocks)}")
+print(f"arena           : X[{X0}..{X1}] ({X1-X0+1} wide)  Z[{Z1}..{Z0}] ({Z0-Z1+1} deep)")
 print(f"mcfunction lines: {len(lines)}")

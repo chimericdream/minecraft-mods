@@ -1,693 +1,854 @@
 {
   "summary": {
-    "arena": "126x126 @ y=55",
-    "front_left": [
-      -191,
-      55,
-      190
+    "arena_x": [
+      -192,
+      -67
     ],
-    "back_right": [
-      -66,
-      55,
-      65
+    "arena_z": [
+      100,
+      195
     ],
-    "tiles_total": 64,
-    "tiles_used": 39,
-    "tiles_free_for_growth": 25,
-    "rooms": 34,
-    "blocks_placed": 2560,
-    "command_blocks": 64
+    "floor_y": 55,
+    "width": 126,
+    "depth": 96,
+    "regions": 64,
+    "display_blocks": 2560,
+    "podium_supports": 1314,
+    "command_blocks": 64,
+    "jars_filled": 106
   },
-  "rooms": [
+  "regions": [
     {
-      "room": "beams",
-      "zone": "BUILDING",
-      "label": "Beams (141)",
-      "col": 0,
-      "row": 0,
-      "tw": 2,
-      "cells": 141,
-      "blocks": 141,
-      "cmd_block": [
-        -178,
+      "region": "oak",
+      "label": "Oak (43)",
+      "front_left": [
+        -191,
         55,
         190
-      ]
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 25,
+      "podiums": 2
     },
     {
-      "room": "covers",
-      "zone": "BUILDING",
-      "label": "Covers (141)",
-      "col": 2,
-      "row": 0,
-      "tw": 2,
-      "cells": 141,
-      "blocks": 141,
-      "cmd_block": [
-        -146,
+      "region": "spruce",
+      "label": "Spruce (49)",
+      "front_left": [
+        -177,
         55,
         190
-      ]
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "dyed",
-      "zone": "BUILDING",
-      "label": "Dyed (192)",
-      "col": 4,
-      "row": 0,
-      "tw": 2,
-      "cells": 192,
-      "blocks": 192,
-      "cmd_block": [
-        -114,
+      "region": "birch",
+      "label": "Birch (49)",
+      "front_left": [
+        -163,
         55,
         190
-      ]
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "slabs",
-      "zone": "BUILDING",
-      "label": "Slabs (140)",
-      "col": 6,
-      "row": 0,
-      "tw": 2,
-      "cells": 140,
-      "blocks": 140,
-      "cmd_block": [
-        -82,
+      "region": "jungle",
+      "label": "Jungle (49)",
+      "front_left": [
+        -149,
         55,
         190
-      ]
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "stairs",
-      "zone": "BUILDING",
-      "label": "Stairs (136)",
-      "col": 0,
-      "row": 1,
-      "tw": 2,
-      "cells": 136,
-      "blocks": 136,
-      "cmd_block": [
-        -178,
+      "region": "acacia",
+      "label": "Acacia (49)",
+      "front_left": [
+        -135,
         55,
-        174
-      ]
+        190
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "general",
-      "zone": "BUILDING",
-      "label": "General (48)",
-      "col": 2,
-      "row": 1,
-      "tw": 1,
-      "cells": 48,
-      "blocks": 48,
-      "cmd_block": [
-        -146,
+      "region": "dark_oak",
+      "label": "Dark Oak (49)",
+      "front_left": [
+        -121,
         55,
-        174
-      ]
+        190
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "walls",
-      "zone": "BUILDING",
-      "label": "Walls (6)",
-      "col": 3,
-      "row": 1,
-      "tw": 1,
-      "cells": 6,
-      "blocks": 6,
-      "cmd_block": [
-        -130,
+      "region": "mangrove",
+      "label": "Mangrove (49)",
+      "front_left": [
+        -107,
         55,
-        174
-      ]
+        190
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
     },
     {
-      "room": "compressed_stone",
-      "zone": "BUILDING",
-      "label": "Compressed: Stone (68)",
-      "col": 4,
-      "row": 1,
-      "tw": 1,
-      "cells": 68,
-      "blocks": 612,
-      "cmd_block": [
+      "region": "cherry",
+      "label": "Cherry (49)",
+      "front_left": [
+        -93,
+        55,
+        190
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
+    },
+    {
+      "region": "pale_oak",
+      "label": "Pale Oak (49)",
+      "front_left": [
+        -79,
+        55,
+        190
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
+    },
+    {
+      "region": "bamboo",
+      "label": "Bamboo (28)",
+      "front_left": [
+        -191,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 4,
+      "flat": 28,
+      "podiums": 0
+    },
+    {
+      "region": "crimson",
+      "label": "Crimson (49)",
+      "front_left": [
+        -177,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 2
+    },
+    {
+      "region": "warped",
+      "label": "Warped (50)",
+      "front_left": [
+        -163,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 32,
+      "podiums": 2
+    },
+    {
+      "region": "white",
+      "label": "White (49)",
+      "front_left": [
+        -149,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "orange",
+      "label": "Orange (49)",
+      "front_left": [
+        -135,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "magenta",
+      "label": "Magenta (49)",
+      "front_left": [
+        -121,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "light_blue",
+      "label": "Light Blue (49)",
+      "front_left": [
+        -107,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "yellow",
+      "label": "Yellow (49)",
+      "front_left": [
+        -93,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "lime",
+      "label": "Lime (49)",
+      "front_left": [
+        -79,
+        55,
+        180
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "pink",
+      "label": "Pink (49)",
+      "front_left": [
+        -191,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "gray",
+      "label": "Gray (49)",
+      "front_left": [
+        -177,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "light_gray",
+      "label": "Light Gray (49)",
+      "front_left": [
+        -163,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "cyan",
+      "label": "Cyan (49)",
+      "front_left": [
+        -149,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "purple",
+      "label": "Purple (49)",
+      "front_left": [
+        -135,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "blue",
+      "label": "Blue (49)",
+      "front_left": [
+        -121,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "brown",
+      "label": "Brown (49)",
+      "front_left": [
+        -107,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "green",
+      "label": "Green (49)",
+      "front_left": [
+        -93,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "red",
+      "label": "Red (49)",
+      "front_left": [
+        -79,
+        55,
+        170
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "black",
+      "label": "Black (49)",
+      "front_left": [
+        -191,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "stone",
+      "label": "Stone (72)",
+      "front_left": [
+        -177,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 12,
+      "flat": 27,
+      "podiums": 5
+    },
+    {
+      "region": "cobblestone",
+      "label": "Cobblestone (26)",
+      "front_left": [
+        -163,
+        55,
+        161
+      ],
+      "w": 8,
+      "d": 6,
+      "flat": 8,
+      "podiums": 2
+    },
+    {
+      "region": "granite",
+      "label": "Granite (31)",
+      "front_left": [
+        -153,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 13,
+      "podiums": 2
+    },
+    {
+      "region": "diorite",
+      "label": "Diorite (31)",
+      "front_left": [
+        -139,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 13,
+      "podiums": 2
+    },
+    {
+      "region": "andesite",
+      "label": "Andesite (31)",
+      "front_left": [
+        -125,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 13,
+      "podiums": 2
+    },
+    {
+      "region": "deepslate",
+      "label": "Deepslate (95)",
+      "front_left": [
+        -111,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 16,
+      "flat": 32,
+      "podiums": 7
+    },
+    {
+      "region": "tuff",
+      "label": "Tuff (27)",
+      "front_left": [
+        -97,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 18,
+      "podiums": 1
+    },
+    {
+      "region": "blackstone",
+      "label": "Blackstone (49)",
+      "front_left": [
+        -83,
+        55,
+        161
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 22,
+      "podiums": 3
+    },
+    {
+      "region": "basalt",
+      "label": "Basalt (124)",
+      "front_left": [
+        -191,
+        55,
+        143
+      ],
+      "w": 12,
+      "d": 18,
+      "flat": 52,
+      "podiums": 8
+    },
+    {
+      "region": "sandstone",
+      "label": "Sandstone (38)",
+      "front_left": [
+        -177,
+        55,
+        143
+      ],
+      "w": 11,
+      "d": 6,
+      "flat": 11,
+      "podiums": 3
+    },
+    {
+      "region": "red_sandstone",
+      "label": "Red Sandstone (38)",
+      "front_left": [
+        -164,
+        55,
+        143
+      ],
+      "w": 11,
+      "d": 6,
+      "flat": 11,
+      "podiums": 3
+    },
+    {
+      "region": "prismarine",
+      "label": "Prismarine (54)",
+      "front_left": [
+        -151,
+        55,
+        143
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 27,
+      "podiums": 3
+    },
+    {
+      "region": "quartz",
+      "label": "Quartz (47)",
+      "front_left": [
+        -137,
+        55,
+        143
+      ],
+      "w": 12,
+      "d": 7,
+      "flat": 20,
+      "podiums": 3
+    },
+    {
+      "region": "purpur",
+      "label": "Purpur (29)",
+      "front_left": [
+        -123,
+        55,
+        143
+      ],
+      "w": 11,
+      "d": 6,
+      "flat": 11,
+      "podiums": 2
+    },
+    {
+      "region": "nether_brick",
+      "label": "Nether Brick (58)",
+      "front_left": [
+        -110,
+        55,
+        143
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 31,
+      "podiums": 3
+    },
+    {
+      "region": "end_stone",
+      "label": "End Stone (29)",
+      "front_left": [
+        -96,
+        55,
+        143
+      ],
+      "w": 11,
+      "d": 6,
+      "flat": 11,
+      "podiums": 2
+    },
+    {
+      "region": "netherrack",
+      "label": "Netherrack (11)",
+      "front_left": [
+        -83,
+        55,
+        143
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "obsidian",
+      "label": "Obsidian (22)",
+      "front_left": [
+        -78,
+        55,
+        143
+      ],
+      "w": 7,
+      "d": 6,
+      "flat": 4,
+      "podiums": 2
+    },
+    {
+      "region": "calcite",
+      "label": "Calcite (11)",
+      "front_left": [
+        -191,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "mud",
+      "label": "Mud (33)",
+      "front_left": [
+        -186,
+        55,
+        123
+      ],
+      "w": 11,
+      "d": 6,
+      "flat": 6,
+      "podiums": 3
+    },
+    {
+      "region": "bone",
+      "label": "Bone (16)",
+      "front_left": [
+        -173,
+        55,
+        123
+      ],
+      "w": 7,
+      "d": 6,
+      "flat": 7,
+      "podiums": 1
+    },
+    {
+      "region": "brick",
+      "label": "Brick (13)",
+      "front_left": [
+        -164,
+        55,
+        123
+      ],
+      "w": 4,
+      "d": 6,
+      "flat": 4,
+      "podiums": 1
+    },
+    {
+      "region": "amethyst",
+      "label": "Amethyst (11)",
+      "front_left": [
+        -158,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "iron",
+      "label": "Iron (11)",
+      "front_left": [
+        -153,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "gold",
+      "label": "Gold (11)",
+      "front_left": [
+        -148,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "copper",
+      "label": "Copper (35)",
+      "front_left": [
+        -143,
+        55,
+        123
+      ],
+      "w": 12,
+      "d": 8,
+      "flat": 26,
+      "podiums": 1
+    },
+    {
+      "region": "diamond",
+      "label": "Diamond (11)",
+      "front_left": [
+        -129,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "netherite",
+      "label": "Netherite (11)",
+      "front_left": [
+        -124,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "lapis",
+      "label": "Lapis (11)",
+      "front_left": [
+        -119,
+        55,
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
+    },
+    {
+      "region": "redstone",
+      "label": "Redstone (11)",
+      "front_left": [
         -114,
         55,
-        174
-      ]
+        123
+      ],
+      "w": 3,
+      "d": 6,
+      "flat": 2,
+      "podiums": 1
     },
     {
-      "room": "compressed_wood",
-      "zone": "BUILDING",
-      "label": "Compressed: Wood (22)",
-      "col": 5,
-      "row": 1,
-      "tw": 1,
-      "cells": 22,
-      "blocks": 198,
-      "cmd_block": [
-        -98,
+      "region": "earth",
+      "label": "Soil & Sand (72)",
+      "front_left": [
+        -109,
         55,
-        174
-      ]
+        123
+      ],
+      "w": 11,
+      "d": 12,
+      "flat": 0,
+      "podiums": 8
     },
     {
-      "room": "compressed_ore",
-      "zone": "BUILDING",
-      "label": "Compressed: Ore (8)",
-      "col": 6,
-      "row": 1,
-      "tw": 1,
-      "cells": 8,
-      "blocks": 72,
-      "cmd_block": [
-        -82,
-        55,
-        174
-      ]
-    },
-    {
-      "room": "compressed_terracotta",
-      "zone": "BUILDING",
-      "label": "Compressed: Terracotta (16)",
-      "col": 7,
-      "row": 1,
-      "tw": 1,
-      "cells": 16,
-      "blocks": 144,
-      "cmd_block": [
-        -66,
-        55,
-        174
-      ]
-    },
-    {
-      "room": "compressed_concrete",
-      "zone": "BUILDING",
-      "label": "Compressed: Concrete (16)",
-      "col": 0,
-      "row": 2,
-      "tw": 1,
-      "cells": 16,
-      "blocks": 144,
-      "cmd_block": [
-        -178,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "compressed_glazed",
-      "zone": "BUILDING",
-      "label": "Compressed: Glazed (16)",
-      "col": 1,
-      "row": 2,
-      "tw": 1,
-      "cells": 16,
-      "blocks": 144,
-      "cmd_block": [
-        -162,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "armoires",
-      "zone": "FURNITURE",
-      "label": "Armoires (12)",
-      "col": 2,
-      "row": 2,
-      "tw": 1,
-      "cells": 12,
-      "blocks": 12,
-      "cmd_block": [
-        -146,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "bookshelves",
-      "zone": "FURNITURE",
-      "label": "Bookshelves (34)",
-      "col": 3,
-      "row": 2,
-      "tw": 1,
-      "cells": 34,
-      "blocks": 34,
-      "cmd_block": [
-        -130,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "display_cases",
-      "zone": "FURNITURE",
-      "label": "Display Cases (24)",
-      "col": 4,
-      "row": 2,
-      "tw": 1,
-      "cells": 24,
-      "blocks": 24,
-      "cmd_block": [
-        -114,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "doors",
-      "zone": "FURNITURE",
-      "label": "Doors (12)",
-      "col": 5,
-      "row": 2,
-      "tw": 1,
-      "cells": 12,
-      "blocks": 12,
-      "cmd_block": [
-        -98,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "pillows",
-      "zone": "FURNITURE",
-      "label": "Pillows (16)",
-      "col": 6,
-      "row": 2,
-      "tw": 1,
-      "cells": 16,
-      "blocks": 16,
-      "cmd_block": [
-        -82,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "seating",
-      "zone": "FURNITURE",
-      "label": "Seating (48)",
-      "col": 7,
-      "row": 2,
-      "tw": 1,
-      "cells": 48,
-      "blocks": 48,
-      "cmd_block": [
-        -66,
-        55,
-        158
-      ]
-    },
-    {
-      "room": "shelves",
-      "zone": "FURNITURE",
-      "label": "Shelves (24)",
-      "col": 0,
-      "row": 3,
-      "tw": 1,
-      "cells": 24,
-      "blocks": 24,
-      "cmd_block": [
-        -178,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "shutters",
-      "zone": "FURNITURE",
-      "label": "Shutters (24)",
-      "col": 1,
-      "row": 3,
-      "tw": 1,
-      "cells": 24,
-      "blocks": 24,
-      "cmd_block": [
-        -162,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "tables",
-      "zone": "FURNITURE",
-      "label": "Tables (24)",
-      "col": 2,
-      "row": 3,
-      "tw": 1,
-      "cells": 24,
-      "blocks": 24,
-      "cmd_block": [
-        -146,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "trapdoors",
-      "zone": "FURNITURE",
-      "label": "Trapdoors (12)",
-      "col": 3,
-      "row": 3,
-      "tw": 1,
-      "cells": 12,
-      "blocks": 12,
-      "cmd_block": [
-        -130,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "egg_crates",
-      "zone": "STORAGE",
-      "label": "Egg Crates (3)",
-      "col": 4,
-      "row": 3,
-      "tw": 1,
-      "cells": 3,
-      "blocks": 3,
-      "cmd_block": [
-        -114,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "compressed_food",
-      "zone": "STORAGE",
+      "region": "food",
       "label": "Compressed Food (26)",
-      "col": 5,
-      "row": 3,
-      "tw": 1,
-      "cells": 26,
-      "blocks": 26,
-      "cmd_block": [
-        -98,
+      "front_left": [
+        -96,
         55,
-        142
-      ]
+        123
+      ],
+      "w": 12,
+      "d": 4,
+      "flat": 26,
+      "podiums": 0
     },
     {
-      "room": "dyes",
-      "zone": "STORAGE",
-      "label": "Dye Blocks (16)",
-      "col": 6,
-      "row": 3,
-      "tw": 1,
-      "cells": 16,
-      "blocks": 16,
-      "cmd_block": [
-        -82,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "barrels",
-      "zone": "CONTAINERS",
-      "label": "Barrels (11)",
-      "col": 7,
-      "row": 3,
-      "tw": 1,
-      "cells": 11,
-      "blocks": 11,
-      "cmd_block": [
-        -66,
-        55,
-        142
-      ]
-    },
-    {
-      "room": "cauldrons",
-      "zone": "CONTAINERS",
-      "label": "Cauldrons (2)",
-      "col": 0,
-      "row": 4,
-      "tw": 1,
-      "cells": 2,
-      "blocks": 2,
-      "cmd_block": [
-        -178,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "crates",
-      "zone": "CONTAINERS",
-      "label": "Crates (24)",
-      "col": 1,
-      "row": 4,
-      "tw": 1,
-      "cells": 24,
-      "blocks": 24,
-      "cmd_block": [
-        -162,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "jars_items",
-      "zone": "CONTAINERS",
-      "label": "Glass Jars - Items (95)",
-      "col": 2,
-      "row": 4,
-      "tw": 1,
-      "cells": 95,
-      "blocks": 95,
-      "cmd_block": [
-        -146,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "jars_misc",
-      "zone": "CONTAINERS",
-      "label": "Glass Jars - Fluids & Mobs (12)",
-      "col": 3,
-      "row": 4,
-      "tw": 1,
-      "cells": 12,
-      "blocks": 12,
-      "cmd_block": [
-        -130,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "candles",
-      "zone": "DECORATIONS",
-      "label": "Candles (17)",
-      "col": 4,
-      "row": 4,
-      "tw": 1,
-      "cells": 17,
-      "blocks": 17,
-      "cmd_block": [
-        -114,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "lighting",
-      "zone": "DECORATIONS",
+      "region": "lighting",
       "label": "Lighting (4)",
-      "col": 5,
-      "row": 4,
-      "tw": 1,
-      "cells": 4,
-      "blocks": 4,
-      "cmd_block": [
-        -98,
-        55,
-        126
-      ]
-    },
-    {
-      "room": "deco_misc",
-      "zone": "DECORATIONS",
-      "label": "Warped Wart & Fake Cake (2)",
-      "col": 6,
-      "row": 4,
-      "tw": 1,
-      "cells": 2,
-      "blocks": 2,
-      "cmd_block": [
+      "front_left": [
         -82,
         55,
-        126
-      ]
+        123
+      ],
+      "w": 4,
+      "d": 2,
+      "flat": 4,
+      "podiums": 0
+    },
+    {
+      "region": "misc",
+      "label": "Misc (8)",
+      "front_left": [
+        -76,
+        55,
+        123
+      ],
+      "w": 8,
+      "d": 2,
+      "flat": 8,
+      "podiums": 0
+    },
+    {
+      "region": "jars_items",
+      "label": "Glass Jars - Items (95)",
+      "front_left": [
+        -191,
+        55,
+        109
+      ],
+      "w": 12,
+      "d": 9,
+      "flat": 95,
+      "podiums": 0
+    },
+    {
+      "region": "jars_misc",
+      "label": "Glass Jars - Fluids & Mobs (12)",
+      "front_left": [
+        -177,
+        55,
+        109
+      ],
+      "w": 12,
+      "d": 2,
+      "flat": 12,
+      "podiums": 0
     }
-  ],
-  "compressed_groups": {
-    "stone": [
-      "andesite",
-      "basalt",
-      "basalt_brick",
-      "blackstone",
-      "bone_block",
-      "bricks",
-      "calcite",
-      "clay",
-      "coarse_dirt",
-      "cobbled_deepslate",
-      "cobblestone",
-      "cracked_basalt_brick",
-      "cracked_deepslate_bricks",
-      "cracked_deepslate_tiles",
-      "cracked_stone_bricks",
-      "crimson_basalt_brick",
-      "crying_obsidian",
-      "cut_red_sandstone",
-      "cut_sandstone",
-      "dark_prismarine",
-      "deepslate",
-      "deepslate_bricks",
-      "deepslate_tiles",
-      "diorite",
-      "dirt",
-      "end_stone",
-      "end_stone_bricks",
-      "granite",
-      "gravel",
-      "mossy_basalt_brick",
-      "mossy_cobblestone",
-      "mossy_stone_bricks",
-      "mud",
-      "mud_bricks",
-      "nether_bricks",
-      "netherrack",
-      "obsidian",
-      "packed_mud",
-      "polished_andesite",
-      "polished_basalt",
-      "polished_blackstone",
-      "polished_blackstone_bricks",
-      "polished_deepslate",
-      "polished_diorite",
-      "polished_granite",
-      "prismarine",
-      "prismarine_bricks",
-      "purpur_block",
-      "purpur_pillar",
-      "quartz_block",
-      "quartz_block_bottom",
-      "quartz_bricks",
-      "red_nether_bricks",
-      "red_sand",
-      "red_sandstone",
-      "red_sandstone_top",
-      "rooted_dirt",
-      "sand",
-      "sandstone",
-      "sandstone_top",
-      "smooth_basalt",
-      "smooth_stone",
-      "soul_sand",
-      "stone",
-      "stone_bricks",
-      "tuff",
-      "warped_basalt_brick",
-      "warped_nether_brick"
-    ],
-    "wood": [
-      "acacia_log",
-      "acacia_planks",
-      "birch_log",
-      "birch_planks",
-      "cherry_log",
-      "cherry_planks",
-      "crimson_planks",
-      "crimson_stem",
-      "dark_oak_log",
-      "dark_oak_planks",
-      "jungle_log",
-      "jungle_planks",
-      "mangrove_log",
-      "mangrove_planks",
-      "oak_log",
-      "oak_planks",
-      "pale_oak_log",
-      "pale_oak_planks",
-      "spruce_log",
-      "spruce_planks",
-      "warped_planks",
-      "warped_stem"
-    ],
-    "ore": [
-      "amethyst_block",
-      "copper_block",
-      "diamond_block",
-      "gold_block",
-      "iron_block",
-      "lapis_block",
-      "netherite_block",
-      "redstone_block"
-    ],
-    "terracotta": [
-      "black_terracotta",
-      "blue_terracotta",
-      "brown_terracotta",
-      "cyan_terracotta",
-      "gray_terracotta",
-      "green_terracotta",
-      "light_blue_terracotta",
-      "light_gray_terracotta",
-      "lime_terracotta",
-      "magenta_terracotta",
-      "orange_terracotta",
-      "pink_terracotta",
-      "purple_terracotta",
-      "red_terracotta",
-      "white_terracotta",
-      "yellow_terracotta"
-    ],
-    "concrete": [
-      "black_concrete",
-      "blue_concrete",
-      "brown_concrete",
-      "cyan_concrete",
-      "gray_concrete",
-      "green_concrete",
-      "light_blue_concrete",
-      "light_gray_concrete",
-      "lime_concrete",
-      "magenta_concrete",
-      "orange_concrete",
-      "pink_concrete",
-      "purple_concrete",
-      "red_concrete",
-      "white_concrete",
-      "yellow_concrete"
-    ],
-    "glazed": [
-      "black_glazed_terracotta",
-      "blue_glazed_terracotta",
-      "brown_glazed_terracotta",
-      "cyan_glazed_terracotta",
-      "gray_glazed_terracotta",
-      "green_glazed_terracotta",
-      "light_blue_glazed_terracotta",
-      "light_gray_glazed_terracotta",
-      "lime_glazed_terracotta",
-      "magenta_glazed_terracotta",
-      "orange_glazed_terracotta",
-      "pink_glazed_terracotta",
-      "purple_glazed_terracotta",
-      "red_glazed_terracotta",
-      "white_glazed_terracotta",
-      "yellow_glazed_terracotta"
-    ]
-  }
+  ]
 }
