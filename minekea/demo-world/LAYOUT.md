@@ -268,6 +268,11 @@ exist flanking an opened shutter, so placed standalone they render half-width an
 **crash on click** (their `useWithoutItem` cycles `OPEN` on whatever non-shutter block
 sits beside them). That drops the room from 48 to 24 blocks.
 
+The underlying crash is also guarded in the mod now: `OpenShutterHalfBlock`'s
+`useWithoutItem`/`playerWillDestroy` bail out when the centre block isn't a shutter, so
+an orphaned half no-ops instead of crashing. Covered by
+`minekea/fabric/src/gametest/.../OpenShutterHalfBlockGameTest`.
+
 ---
 
 ## 7. Growth — "plenty of room"

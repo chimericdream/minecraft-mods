@@ -1,0 +1,25 @@
+{
+    "schemaVersion": 1,
+    "id": "minekea_test",
+    "version": "1.0.0",
+    "name": "Minekea GameTest",
+    "description": "Test-only GameTests for Minekea. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.minekea.fabric.test.OpenShutterHalfBlockGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "minekea": "*"
+    }
+}
