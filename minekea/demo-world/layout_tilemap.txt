@@ -32,7 +32,7 @@ rooms:
   (6,2) tw1  Pillows (16)                          cmd@(-82,55,158)
   (7,2) tw1  Seating (48)                          cmd@(-66,55,158)
   (0,3) tw1  Shelves (24)                          cmd@(-178,55,142)
-  (1,3) tw1  Shutters (48)                         cmd@(-162,55,142)
+  (1,3) tw1  Shutters (24)                         cmd@(-162,55,142)
   (2,3) tw1  Tables (24)                           cmd@(-146,55,142)
   (3,3) tw1  Trapdoors (12)                        cmd@(-130,55,142)
   (4,3) tw1  Egg Crates (3)                        cmd@(-114,55,142)

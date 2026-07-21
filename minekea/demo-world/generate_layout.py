@@ -112,6 +112,13 @@ for p in sorted(paths):
         comp_by_mat.setdefault(parts[2], []).append((p, int(parts[3][:-1])))
     elif p == "containers/glass_jar":
         continue                                   # its own tiles, built from the jar csv
+    elif p.startswith("furniture/shutters/") and p.endswith("_open"):
+        continue                                   # OpenShutterHalfBlock: an internal open-state
+                                                   # half that only exists flanking an opened
+                                                   # shutter. Standalone it renders half-width and
+                                                   # crashes on click (its useWithoutItem cycles the
+                                                   # OPEN prop on the non-shutter block beside it).
+                                                   # The real (closed) shutter is placed on its own.
     else:
         zone = ZONE_DISPLAY.get(parts[0], parts[0].upper())
         fam = parts[1] if len(parts) > 1 else parts[0]

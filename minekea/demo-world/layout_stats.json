@@ -15,7 +15,7 @@
     "tiles_used": 39,
     "tiles_free_for_growth": 25,
     "rooms": 34,
-    "blocks_placed": 2584,
+    "blocks_placed": 2560,
     "command_blocks": 64
   },
   "rooms": [
@@ -322,12 +322,12 @@
     {
       "room": "shutters",
       "zone": "FURNITURE",
-      "label": "Shutters (48)",
+      "label": "Shutters (24)",
       "col": 1,
       "row": 3,
       "tw": 1,
-      "cells": 48,
-      "blocks": 48,
+      "cells": 24,
+      "blocks": 24,
       "cmd_block": [
         -162,
         55,

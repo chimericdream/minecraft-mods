@@ -50,7 +50,7 @@ fill -127 55 113 -114 55 126 minecraft:polished_andesite
 fill -111 55 113 -98 55 126 minecraft:polished_andesite
 fill -95 55 113 -82 55 126 minecraft:polished_andesite
 
-# display blocks (2584 + 24 upper halves)
+# display blocks (2560 + 24 upper halves)
 setblock -191 56 189 minekea:building/beams/acacia
 setblock -190 56 189 minekea:building/beams/acacia_log
 setblock -189 56 189 minekea:building/beams/amethyst
@@ -2364,53 +2364,29 @@ setblock -184 56 140 minekea:furniture/shelves/supported/pale_oak
 setblock -183 56 140 minekea:furniture/shelves/supported/spruce
 setblock -182 56 140 minekea:furniture/shelves/supported/warped
 setblock -175 56 141 minekea:furniture/shutters/acacia
-setblock -174 56 141 minekea:furniture/shutters/acacia_open
-setblock -173 56 141 minekea:furniture/shutters/bamboo
-setblock -172 56 141 minekea:furniture/shutters/bamboo_open
-setblock -171 56 141 minekea:furniture/shutters/birch
-setblock -170 56 141 minekea:furniture/shutters/birch_open
-setblock -169 56 141 minekea:furniture/shutters/cherry
-setblock -168 56 141 minekea:furniture/shutters/cherry_open
-setblock -167 56 141 minekea:furniture/shutters/crimson
-setblock -166 56 141 minekea:furniture/shutters/crimson_open
-setblock -165 56 141 minekea:furniture/shutters/dark_oak
-setblock -164 56 141 minekea:furniture/shutters/dark_oak_open
-setblock -163 56 141 minekea:furniture/shutters/jungle
-setblock -162 56 141 minekea:furniture/shutters/jungle_open
-setblock -175 56 140 minekea:furniture/shutters/mangrove
-setblock -174 56 140 minekea:furniture/shutters/mangrove_open
-setblock -173 56 140 minekea:furniture/shutters/oak
-setblock -172 56 140 minekea:furniture/shutters/oak_open
-setblock -171 56 140 minekea:furniture/shutters/pale_oak
-setblock -170 56 140 minekea:furniture/shutters/pale_oak_open
-setblock -169 56 140 minekea:furniture/shutters/spruce
-setblock -168 56 140 minekea:furniture/shutters/spruce_open
-setblock -167 56 140 minekea:furniture/shutters/stripped_acacia
-setblock -166 56 140 minekea:furniture/shutters/stripped_acacia_open
-setblock -165 56 140 minekea:furniture/shutters/stripped_bamboo
-setblock -164 56 140 minekea:furniture/shutters/stripped_bamboo_open
-setblock -163 56 140 minekea:furniture/shutters/stripped_birch
-setblock -162 56 140 minekea:furniture/shutters/stripped_birch_open
-setblock -175 56 139 minekea:furniture/shutters/stripped_cherry
-setblock -174 56 139 minekea:furniture/shutters/stripped_cherry_open
-setblock -173 56 139 minekea:furniture/shutters/stripped_crimson
-setblock -172 56 139 minekea:furniture/shutters/stripped_crimson_open
-setblock -171 56 139 minekea:furniture/shutters/stripped_dark_oak
-setblock -170 56 139 minekea:furniture/shutters/stripped_dark_oak_open
-setblock -169 56 139 minekea:furniture/shutters/stripped_jungle
-setblock -168 56 139 minekea:furniture/shutters/stripped_jungle_open
-setblock -167 56 139 minekea:furniture/shutters/stripped_mangrove
-setblock -166 56 139 minekea:furniture/shutters/stripped_mangrove_open
-setblock -165 56 139 minekea:furniture/shutters/stripped_oak
-setblock -164 56 139 minekea:furniture/shutters/stripped_oak_open
-setblock -163 56 139 minekea:furniture/shutters/stripped_pale_oak
-setblock -162 56 139 minekea:furniture/shutters/stripped_pale_oak_open
-setblock -175 56 138 minekea:furniture/shutters/stripped_spruce
-setblock -174 56 138 minekea:furniture/shutters/stripped_spruce_open
-setblock -173 56 138 minekea:furniture/shutters/stripped_warped
-setblock -172 56 138 minekea:furniture/shutters/stripped_warped_open
-setblock -171 56 138 minekea:furniture/shutters/warped
-setblock -170 56 138 minekea:furniture/shutters/warped_open
+setblock -174 56 141 minekea:furniture/shutters/bamboo
+setblock -173 56 141 minekea:furniture/shutters/birch
+setblock -172 56 141 minekea:furniture/shutters/cherry
+setblock -171 56 141 minekea:furniture/shutters/crimson
+setblock -170 56 141 minekea:furniture/shutters/dark_oak
+setblock -169 56 141 minekea:furniture/shutters/jungle
+setblock -168 56 141 minekea:furniture/shutters/mangrove
+setblock -167 56 141 minekea:furniture/shutters/oak
+setblock -166 56 141 minekea:furniture/shutters/pale_oak
+setblock -165 56 141 minekea:furniture/shutters/spruce
+setblock -164 56 141 minekea:furniture/shutters/stripped_acacia
+setblock -163 56 141 minekea:furniture/shutters/stripped_bamboo
+setblock -162 56 141 minekea:furniture/shutters/stripped_birch
+setblock -175 56 140 minekea:furniture/shutters/stripped_cherry
+setblock -174 56 140 minekea:furniture/shutters/stripped_crimson
+setblock -173 56 140 minekea:furniture/shutters/stripped_dark_oak
+setblock -172 56 140 minekea:furniture/shutters/stripped_jungle
+setblock -171 56 140 minekea:furniture/shutters/stripped_mangrove
+setblock -170 56 140 minekea:furniture/shutters/stripped_oak
+setblock -169 56 140 minekea:furniture/shutters/stripped_pale_oak
+setblock -168 56 140 minekea:furniture/shutters/stripped_spruce
+setblock -167 56 140 minekea:furniture/shutters/stripped_warped
+setblock -166 56 140 minekea:furniture/shutters/warped
 setblock -159 56 141 minekea:furniture/tables/acacia
 setblock -158 56 141 minekea:furniture/tables/bamboo
 setblock -157 56 141 minekea:furniture/tables/birch
@@ -2681,7 +2657,7 @@ setblock -111 56 158 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Door
 setblock -95 56 158 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Pillows (16)"','""','""','""']}}
 setblock -79 56 158 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Seating (48)"','""','""','""']}}
 setblock -191 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Shelves (24)"','""','""','""']}}
-setblock -175 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Shutters (48)"','""','""','""']}}
+setblock -175 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Shutters (24)"','""','""','""']}}
 setblock -159 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Tables (24)"','""','""','""']}}
 setblock -143 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Trapdoors (12)"','""','""','""']}}
 setblock -127 56 142 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Egg Crates (3)"','""','""','""']}}

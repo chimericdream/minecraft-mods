@@ -262,6 +262,12 @@ Horizontal slabs use a `type` property (not `facing`), which is exactly why the 
 is per-block — a blanket `facing=south` on the `slabs` family would emit invalid
 states and those `setblock`s would silently fail.
 
+**Shutters** show only the real (closed, default-state) block. The `*_open`
+`OpenShutterHalfBlock`s are skipped: they're internal open-state halves that only
+exist flanking an opened shutter, so placed standalone they render half-width and
+**crash on click** (their `useWithoutItem` cycles `OPEN` on whatever non-shutter block
+sits beside them). That drops the room from 48 to 24 blocks.
+
 ---
 
 ## 7. Growth — "plenty of room"
