@@ -31,7 +31,7 @@ from collections import OrderedDict, defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ---- arena geometry -------------------------------------------------------
-ORIGIN_X = -191           # first region's left (west) edge = the arena's west/front-left corner
+ORIGIN_X = -190           # first region's left (west) edge; the 1-block west border sits at -191
 ORIGIN_Z =  190           # first region's front row; the +1 front margin makes the front edge 191
 FLOOR_Y  =   55           # floor pads; display blocks start at y=56 (depth 0)
 ROW_WIDTH = 124           # wrap to a new row once a row grows past this many blocks
@@ -445,7 +445,7 @@ for key, rg in regions.items():
 # ---- arena bounds (front-left corner = -191,55,191) -----------------------
 all_x = [p["x"] for p in placements] + [s[0] for s in supports]
 all_z = [p["z"] for p in placements] + [s[2] for s in supports]
-X0, X1 = ORIGIN_X, max(all_x) + 1                       # X0 = west = content's left edge (-191), flush
+X0, X1 = ORIGIN_X - 1, max(all_x) + 1                   # X0 = west border at -191 (blocks framed inside)
 Z0, Z1 = ORIGIN_Z + 1, min(all_z) - 1                   # Z0 = south/front (191), Z1 = north/back
 
 # ---- manifest CSV ---------------------------------------------------------
