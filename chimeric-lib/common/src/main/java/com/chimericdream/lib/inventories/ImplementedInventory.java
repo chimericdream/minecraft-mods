@@ -108,7 +108,10 @@ public interface ImplementedInventory extends Container {
             return false;
         }
 
-        if (!ItemStack.matches(incomingStack, existingStack)) {
+        // Use isSameItemSameComponents, NOT ItemStack.matches: matches also compares counts, so two
+        // otherwise-identical partial stacks would only be considered mergeable when their counts
+        // happened to be equal. Merging must depend only on item + components.
+        if (!ItemStack.isSameItemSameComponents(incomingStack, existingStack)) {
             return false;
         }
 
