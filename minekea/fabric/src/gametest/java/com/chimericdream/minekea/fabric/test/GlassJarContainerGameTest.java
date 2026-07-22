@@ -206,6 +206,16 @@ public class GlassJarContainerGameTest {
             "the jar should be completely full");
         context.assertTrue(!jar.canPlaceItem(OVERFLOW, redstone(1)), "a full jar must reject overflow");
 
+        // When completely full, the overflow slot reports a full phantom stack so a pushing hopper trips
+        // isInventoryFull's cheap early-out instead of re-probing every cooldown; it must not be extractable.
+        ItemStack overflowView = jar.getItem(OVERFLOW);
+        context.assertTrue(overflowView.is(Items.REDSTONE) && overflowView.getCount() == overflowView.getMaxStackSize(),
+            "a completely full jar should report a full phantom stack in the overflow slot");
+        context.assertTrue(!jar.canTakeItem(jar, OVERFLOW, overflowView), "the phantom overflow slot must never be extractable");
+        context.assertTrue(jar.removeItem(OVERFLOW, 1).isEmpty(), "removing from the overflow slot must yield nothing");
+        context.assertTrue(jar.getStoredStacks() == GlassJarBlockEntity.MAX_ITEM_STACKS && jar.getItem(0).getCount() == 64,
+            "probing the overflow slot must not change the jar's contents");
+
         context.succeed();
     }
 }

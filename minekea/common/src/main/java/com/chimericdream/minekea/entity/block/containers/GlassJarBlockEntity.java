@@ -35,6 +35,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -63,11 +64,12 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     public static final int MAX_ITEM_STACKS = 7;
 
     // The jar presents itself to automation as a two-slot Container. Slot 0 is the real, single-stack
-    // "active" slot (what renders and what a hopper drains). Slot 1 is a virtual, always-empty overflow
-    // *input*: it lets a hopper keep pushing once the active slot is full (a one-slot container reads as
-    // "full" the moment its only slot hits a full stack, so the hopper gives up before touching the reserve),
-    // and setItem routes whatever lands there down into the compressed reserve. It never holds anything, so it
-    // is invisible to extraction and rendering.
+    // "active" slot (what renders and what a hopper drains). Slot 1 is a virtual overflow *input*: it lets a
+    // hopper keep pushing once the active slot is full (a one-slot container reads as "full" the moment its
+    // only slot hits a full stack, so the hopper gives up before touching the reserve), and setItem routes
+    // whatever lands there down into the compressed reserve. It reads empty while the jar has capacity, and a
+    // phantom full stack once the jar is completely full (so a pushing hopper trips isInventoryFull's cheap
+    // early-out); it is never extractable and never rendered.
     public static final int STORAGE_SLOT = 0;
     public static final int OVERFLOW_SLOT = 1;
     private static final int CONTAINER_SIZE = 2;
@@ -601,8 +603,15 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
     @Override
     public @NonNull ItemStack getItem(int slot) {
-        // The overflow slot is a write-only input; it never holds anything.
-        return slot == STORAGE_SLOT ? activeStack() : ItemStack.EMPTY;
+        if (slot == STORAGE_SLOT) {
+            return activeStack();
+        }
+
+        // The overflow slot is a write-only input that normally reads empty. When the jar is completely full,
+        // report a full stack so a pushing hopper stops at vanilla's cheap isInventoryFull() early-out instead
+        // of re-probing canPlaceItem every cooldown. It's blocked from extraction (see canTakeItem) and, being
+        // a full stack, is never a valid merge target, so nothing can pull from it or duplicate through it.
+        return isItemStorageFull() ? activeStack().copyWithCount(activeStack().getMaxStackSize()) : ItemStack.EMPTY;
     }
 
     @Override
@@ -630,6 +639,13 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         return canAcceptItem(stack);
+    }
+
+    @Override
+    public boolean canTakeItem(Container target, int slot, @NonNull ItemStack stack) {
+        // Only the real active slot yields items. The overflow slot is input-only, and may momentarily read as
+        // a phantom full stack (see getItem) purely to trip isInventoryFull — it must never be extracted.
+        return slot == STORAGE_SLOT;
     }
 
     /**
@@ -732,6 +748,13 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         int used = activeStack().getCount() + (fullItemStacks * perStack);
 
         return ((MAX_ITEM_STACKS + 1) * perStack) - used;
+    }
+
+    /** Whether the jar's item storage is at capacity: the active stack is full and every reserve stack is used. */
+    private boolean isItemStorageFull() {
+        return !activeStack().isEmpty()
+            && fullItemStacks == MAX_ITEM_STACKS
+            && activeStack().getCount() >= activeStack().getMaxStackSize();
     }
 
     public void playEmptyBottleSound() {
