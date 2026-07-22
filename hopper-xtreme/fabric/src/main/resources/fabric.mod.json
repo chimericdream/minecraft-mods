@@ -23,6 +23,7 @@
         ],
         "fabric-gametest": [
             "com.chimericdream.hopperxtreme.fabric.test.DeprecatedBlockConversionTest",
+            "com.chimericdream.hopperxtreme.fabric.test.FilterSlotGeometryTest",
             "com.chimericdream.hopperxtreme.fabric.test.PreventFilterExtractionTest",
             "com.chimericdream.hopperxtreme.fabric.test.SixSlotTransferTest",
             "com.chimericdream.hopperxtreme.fabric.test.TransferSpeedTest"
