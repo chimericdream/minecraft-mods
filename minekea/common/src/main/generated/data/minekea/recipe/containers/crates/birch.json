@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "#": "#minecraft:birch_logs",
     "X": "minecraft:birch_planks"
@@ -11,7 +10,6 @@
     "#X#"
   ],
   "result": {
-    "count": 1,
     "id": "minekea:containers/crates/birch"
   }
 }
