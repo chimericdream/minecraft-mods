@@ -5,7 +5,17 @@ by priority; each lists the evidence, the proposed fix, and a confidence level. 
 verified by reading the code path end-to-end; **Verify first** = strong suspicion, but runtime
 behavior should be confirmed (e.g., with a gametest) before fixing.
 
-Nothing in this plan has been executed yet.
+Status: **Phase 1 is complete.** Each fix is on its own branch off `main` (not yet merged); Phase 2+
+has not been started.
+
+| Item | Status | Branch |
+|------|--------|--------|
+| 1.1 | ✅ Done (2026-07-21) | `fix/glass-jar-container-contract` |
+| 1.2 | ✅ Done (2026-07-22) | `fix/hopper-filter-geometry` |
+| 1.3 | ✅ Done (2026-07-22) | `fix/hopper-filter-geometry` |
+| 1.4 | ✅ Done (2026-07-22) | `fix/glass-jar-item-cache` |
+| 1.5 | ✅ No fix needed — already resolved | — |
+| 1.6 | ✅ Done (2026-07-22) | `fix/implemented-inventory-partial-merge` |
 
 ---
 
@@ -25,8 +35,13 @@ server.
 `tryInsert`/`removeStack` API as plain methods), or implement the container contract for real over
 a 1-slot backing list. Add a gametest: hopper feeding into/out of a jar must not crash.
 
-### 1.2 `NonFilterSlot` reads the wrong slot as the "filter" on the server — **Confirmed**
+### 1.2 `NonFilterSlot` reads the wrong slot as the "filter" on the server — **✅ Done (2026-07-22, `fix/hopper-filter-geometry`)**
 `hopper-xtreme/.../client/screen/NonFilterSlot.java:16`
+
+**Resolution:** `NonFilterSlot` now takes an explicit `filterSlotIndex` instead of deriving it from
+`getContainerSize()`; the filtered handlers pass the fixed index (5 / 1). Covered by
+`FilterSlotGeometryTest` (fabric gametest): a real filtered-hopper BE with an ordinary item in the
+last storage slot still accepts inserts into the storage slots.
 
 ```java
 this.container.getItem(this.container.getContainerSize() - 1)
@@ -46,9 +61,14 @@ slot is `getContainerSize()`, not `getContainerSize() - 1`. On the server (real 
 instead of deriving it from `getContainerSize()`. Extend `PreventFilterExtractionTest` (or add a
 menu-level test) to cover GUI insertion with a full last storage slot.
 
-### 1.3 Filtered screen-handler `quickMoveStack` boundary is wrong on the client — **Confirmed**
+### 1.3 Filtered screen-handler `quickMoveStack` boundary is wrong on the client — **✅ Done (2026-07-22, `fix/hopper-filter-geometry`)**
 `hopper-xtreme/.../client/screen/FilteredHopperScreenHandler.java:76`,
 `FilteredGlazedHopperScreenHandler.java:72`
+
+**Resolution:** Both handlers now use a fixed `HOPPER_SLOT_COUNT` constant (6 / 2) for the
+hopper/player shift-click boundary instead of `getContainerSize() + 1`. Covered by
+`FilterSlotGeometryTest`, which exercises the client-geometry dummy container and asserts the first
+player slot shift-clicks into the hopper.
 
 `int hopperSize = this.hopper.getContainerSize() + 1;` gives 6 on the server (BE hides the filter
 slot) but **7 on the client** (dummy `SimpleContainer(6)` doesn't) — the client thinks the first
@@ -58,8 +78,13 @@ client dummy container and the server BE disagree about `getContainerSize()` sem
 **Fix:** Make the handler hold the explicit slot count (it knows it added 6 or 2 slots) instead of
 asking the container. Fixing 1.2 and 1.3 together with one "filter geometry" object would be ideal.
 
-### 1.4 `GlassJarItemEntityCache` — unbounded client memory leak + very hot registry rebuild — **Confirmed**
+### 1.4 `GlassJarItemEntityCache` — unbounded client memory leak + very hot registry rebuild — **✅ Done (2026-07-22, `fix/glass-jar-item-cache`)**
 `minekea/.../client/render/item/GlassJarItemEntityCache.java:21`
+
+**Resolution:** The cache is now keyed on a record of the render-relevant components
+(`CUSTOM_DATA` / `ENTITY_DATA` / `CUSTOM_NAME`, all value-equal) inside a `LinkedHashMap` with LRU
+eviction (256 entries). `VanillaRegistries.createLookup()` in the jar's item-stack deserialization
+paths was replaced with the level's `registryAccess()`.
 
 `HashMap<ItemStack, RenderState>` — `ItemStack` does not implement `equals`/`hashCode`, so the map
 is identity-keyed. Item stacks are recreated constantly (sync, GUI copies), so nearly every lookup
@@ -73,8 +98,19 @@ registry contents.
 component values) with a bounded/weak cache, and replace `VanillaRegistries.createLookup()` with
 `world.registryAccess()` (a `Level` is already passed in).
 
-### 1.5 Armoire armor stands likely duplicate on every chunk reload — **Verify first**
+### 1.5 Armoire armor stands likely duplicate on every chunk reload — **✅ No fix needed — already resolved (verified 2026-07-22)**
 `minekea/.../entity/block/furniture/ArmoireBlockEntity.java:57–128`
+
+**Resolution:** The current `ArmoireBlockEntity` no longer spawns real armor stands — armor is
+rendered directly in `ArmoireBlockEntityRenderer` (via `ArmorStandRenderState`/`ArmorStandArmorModel`,
+render-only). The `setLevel`/`clearRemoved`/`destroyArmorStands` spawning code described below no
+longer exists; the only stand code left is `cleanUpLegacyArmorStands`, a load-time ticker that
+*discards* leftover marker stands from pre-refactor world saves (matching them by
+marker/small/invisible/no-gravity + `disabledSlots == 16191`) so they can't accumulate. This is
+exactly the plan's suggested "render in the BER" fix, applied in an earlier refactor. No code change
+made.
+
+<details><summary>Original report (stale)</summary>
 
 The BE spawns four real (invisible, marker) `ArmorStand` entities and re-creates them in
 `setLevel`/`clearRemoved`. Armor stands persist with the chunk, and `destroyArmorStands()` only
@@ -88,8 +124,15 @@ repeated reloads.
 them with the BE position and sweep matching stands in `initializeArmorStands`, or render the
 armor in the BER instead of using real entities.
 
-### 1.6 `ImplementedInventory.isMatchingPartialStack` uses `ItemStack.matches` — **Confirmed**
+</details>
+
+### 1.6 `ImplementedInventory.isMatchingPartialStack` uses `ItemStack.matches` — **✅ Done (2026-07-22, `fix/implemented-inventory-partial-merge`)**
 `chimeric-lib/.../inventories/ImplementedInventory.java:111`
+
+**Resolution:** `isMatchingPartialStack` now uses `ItemStack.isSameItemSameComponents` (count-
+independent). `ShelfBlockEntity.tryInsert` detects insertion by snapshotting the incoming count and
+checking whether the returned remainder is smaller, rather than the unreliable `ItemStack.matches`
+self-comparison. Covered by `ImplementedInventoryTest` (chimeric-lib fabric JUnit).
 
 `ItemStack.matches` compares **counts** as well as item+components, so two partial stacks merge
 only when their counts happen to be equal. Everything built on `tryInsert` (minekea shelves,
