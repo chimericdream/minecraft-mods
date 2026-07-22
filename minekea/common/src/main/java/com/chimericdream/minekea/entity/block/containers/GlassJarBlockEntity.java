@@ -19,7 +19,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -103,7 +102,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         CompoundTag nbt = customData.copyTag();
-        this.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, VanillaRegistries.createLookup(), nbt));
+        this.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, this.level.registryAccess(), nbt));
     }
 
     public static GlassJarBlockEntity fromItemStack(ItemStack stack, Level world) {
@@ -119,7 +118,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         }
 
         CompoundTag nbt = customData.copyTag();
-        entity.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, VanillaRegistries.createLookup(), nbt));
+        entity.loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, world.registryAccess(), nbt));
 
         return entity;
     }
