@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 @SuppressWarnings("unused")
 public class GlassJarContainerGameTest {
     private static final BlockPos JAR = new BlockPos(2, 2, 2);
+    private static final int OVERFLOW = GlassJarBlockEntity.OVERFLOW_SLOT;
 
     private static ItemStack redstone(int count) {
         return new ItemStack(Items.REDSTONE, count);
@@ -45,7 +46,7 @@ public class GlassJarContainerGameTest {
     public void containerApiDoesNotCrash(GameTestHelper context) {
         GlassJarBlockEntity jar = placeJar(context, JAR);
 
-        context.assertTrue(jar.getContainerSize() == 1, "the jar should expose a single slot");
+        context.assertTrue(jar.getContainerSize() == 2, "the jar should expose a storage slot + an overflow input slot");
         context.assertTrue(jar.getItem(0).isEmpty(), "a fresh jar's slot should be empty");
         context.assertTrue(jar.isEmpty(), "a fresh jar should be empty");
 
@@ -145,5 +146,66 @@ public class GlassJarContainerGameTest {
         context.succeedWhen(() -> context.assertTrue(
             jar.getItem(0).is(Items.REDSTONE) && jar.getItem(0).getCount() == 3,
             "the hopper should have fed all 3 redstone into the jar"));
+    }
+
+    /**
+     * A hopper must be able to fill the jar past its top stack. A vanilla hopper only merges into slot 0 up
+     * to a full stack, so with a partially-full active slot on top of reserve stacks it would stall once the
+     * active slot hit 64 — even though the jar still had reserve capacity. The jar now rolls a filled active
+     * stack down into the reserve so the hopper keeps feeding: starting from one full reserve stack + 60 in
+     * the active slot, feeding 5 more must bump the reserve to 2 and leave the 1-item remainder active.
+     */
+    @GameTest(maxTicks = 120)
+    public void hopperOverflowsIntoReserve(GameTestHelper context) {
+        BlockPos hopperPos = JAR.above();
+        GlassJarBlockEntity jar = placeJar(context, JAR);
+
+        // One full reserve stack + 60 in the active slot (124 items total).
+        jar.tryInsert(redstone(64));
+        jar.tryInsert(redstone(60));
+        context.assertTrue(jar.getItem(0).getCount() == 60 && jar.getStoredStacks() == 1,
+            "setup should leave active=60 + reserve=1");
+
+        context.setBlock(hopperPos, Blocks.HOPPER); // default facing DOWN, into the jar below it
+        HopperBlockEntity hopper = context.getBlockEntity(hopperPos, HopperBlockEntity.class);
+        hopper.setItem(0, redstone(5));
+
+        // 60 + 5 = 65 → one full stack rolls into the reserve (1 → 2) and the remaining 1 becomes active.
+        context.succeedWhen(() -> context.assertTrue(
+            jar.getStoredStacks() == 2 && jar.getItem(0).is(Items.REDSTONE) && jar.getItem(0).getCount() == 1,
+            "the reserve should grow by 1 and the remainder (1) should be the active stack; found active="
+                + jar.getItem(0).getCount() + " reserve=" + jar.getStoredStacks()));
+    }
+
+    /**
+     * Pins the overflow-slot mechanism deterministically. Slot 1 is a virtual, always-empty input; once the
+     * active slot is full, a hopper drops overflow there and {@code setItem} routes it into the reserve. It
+     * only accepts an item that fits in full (it can't report a leftover), so a full jar rejects it.
+     */
+    @GameTest
+    public void overflowSlotRoutesIntoReserve(GameTestHelper context) {
+        GlassJarBlockEntity jar = placeJar(context, JAR);
+        jar.tryInsert(redstone(64));
+        jar.tryInsert(redstone(64)); // active=64, reserve=1
+
+        context.assertTrue(jar.getItem(OVERFLOW).isEmpty(), "the overflow slot never holds anything");
+        context.assertTrue(jar.canPlaceItem(OVERFLOW, redstone(1)),
+            "the overflow slot should accept an item while the jar has capacity");
+
+        jar.setItem(OVERFLOW, redstone(1)); // the input a hopper uses once the active slot is full
+        context.assertTrue(jar.getItem(0).is(Items.REDSTONE) && jar.getItem(0).getCount() == 1 && jar.getStoredStacks() == 2,
+            "routing overflow should roll a full stack into the reserve and leave the remainder (1) active");
+        context.assertTrue(jar.getItem(OVERFLOW).isEmpty(), "the overflow slot stays empty after routing");
+
+        // Fill the jar to the brim (8 full stacks), then it must refuse further overflow rather than eat it.
+        jar.clearContent();
+        for (int i = 0; i < GlassJarBlockEntity.MAX_ITEM_STACKS + 1; i++) {
+            jar.tryInsert(redstone(64));
+        }
+        context.assertTrue(jar.getItem(0).getCount() == 64 && jar.getStoredStacks() == GlassJarBlockEntity.MAX_ITEM_STACKS,
+            "the jar should be completely full");
+        context.assertTrue(!jar.canPlaceItem(OVERFLOW, redstone(1)), "a full jar must reject overflow");
+
+        context.succeed();
     }
 }

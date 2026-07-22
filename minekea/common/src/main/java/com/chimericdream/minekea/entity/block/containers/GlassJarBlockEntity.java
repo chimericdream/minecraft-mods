@@ -62,6 +62,16 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     // Since the `items` stores a single stack, the actual total is one higher than this
     public static final int MAX_ITEM_STACKS = 7;
 
+    // The jar presents itself to automation as a two-slot Container. Slot 0 is the real, single-stack
+    // "active" slot (what renders and what a hopper drains). Slot 1 is a virtual, always-empty overflow
+    // *input*: it lets a hopper keep pushing once the active slot is full (a one-slot container reads as
+    // "full" the moment its only slot hits a full stack, so the hopper gives up before touching the reserve),
+    // and setItem routes whatever lands there down into the compressed reserve. It never holds anything, so it
+    // is invisible to extraction and rendering.
+    public static final int STORAGE_SLOT = 0;
+    public static final int OVERFLOW_SLOT = 1;
+    private static final int CONTAINER_SIZE = 2;
+
     // The jar exposes itself to automation as a genuine single-slot Container (see the Container overrides
     // near the bottom of the class). Slot 0 holds the "active" stack; fullItemStacks is a count of extra
     // *compressed* full stacks of that same item, giving the jar a total capacity of MAX_ITEM_STACKS + 1
@@ -585,6 +595,17 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
+    public int getContainerSize() {
+        return CONTAINER_SIZE;
+    }
+
+    @Override
+    public @NonNull ItemStack getItem(int slot) {
+        // The overflow slot is a write-only input; it never holds anything.
+        return slot == STORAGE_SLOT ? activeStack() : ItemStack.EMPTY;
+    }
+
+    @Override
     public boolean isEmpty() {
         if (hasFluid() || hasMob()) {
             return false;
@@ -594,12 +615,20 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     /**
-     * A hopper (or any automation) sees the jar as a single-slot Container. Gate insertion through the jar's
-     * own rules so automation can't stuff in a disallowed item, a second item type, or an item while the jar
-     * is holding a fluid or a captured mob.
+     * Gate insertion through the jar's own rules so automation can't stuff in a disallowed item, a second item
+     * type, or an item while the jar is holding a fluid or a captured mob.
+     *
+     * <p>The two slots accept differently. The active slot (0) is filled by a normal hopper merge, so a
+     * partial fit is fine. The overflow slot (1) is reached only via {@link #setItem}, which can't report a
+     * leftover, so it accepts an incoming stack only when the whole thing fits — otherwise the caller would
+     * assume it was placed and delete the excess.
      */
     @Override
     public boolean canPlaceItem(int slot, @NonNull ItemStack stack) {
+        if (slot == OVERFLOW_SLOT) {
+            return canAcceptItem(stack) && stack.getCount() <= remainingItemCapacity(stack);
+        }
+
         return canAcceptItem(stack);
     }
 
@@ -607,12 +636,17 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
      * Remove up to {@code count} items from the active slot. When that empties the active slot while
      * compressed reserve stacks remain, refill the active slot from the reserve so automation can drain the
      * whole jar, not just the top stack. See {@link #pendingCascadePutback} for why setItem has to cooperate.
+     * The overflow slot is input-only and never yields anything.
      */
     @Override
     public @NonNull ItemStack removeItem(int slot, int count) {
         pendingCascadePutback = ItemStack.EMPTY;
 
-        ItemStack removed = ContainerHelper.removeItem(items, slot, count);
+        if (slot != STORAGE_SLOT) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack removed = ContainerHelper.removeItem(items, STORAGE_SLOT, count);
         if (removed.isEmpty()) {
             return removed;
         }
@@ -632,7 +666,11 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     public @NonNull ItemStack removeItemNoUpdate(int slot) {
         pendingCascadePutback = ItemStack.EMPTY;
 
-        ItemStack removed = ContainerHelper.takeItem(items, slot);
+        if (slot != STORAGE_SLOT) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack removed = ContainerHelper.takeItem(items, STORAGE_SLOT);
 
         if (!removed.isEmpty() && activeStack().isEmpty() && fullItemStacks > 0) {
             setActiveStack(removed.copyWithCount(removed.getMaxStackSize()));
@@ -645,14 +683,21 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     /**
-     * Replace the active slot. If this is vanilla's post-extraction putback of a stack we just cascaded a
-     * reserve stack into (see {@link #pendingCascadePutback}), hand the borrowed reserve stack back instead
-     * of overwriting the slot — otherwise the putback would delete a whole compressed stack.
+     * Slot 0 replaces the active stack (honouring the post-extraction putback described on
+     * {@link #pendingCascadePutback}). Slot 1 is the overflow input: route whatever a hopper drops there down
+     * into the reserve via {@link #tryInsert}. {@link #canPlaceItem} guarantees the whole stack fits before we
+     * get here, so nothing is dropped.
      */
     @Override
     public void setItem(int slot, @NonNull ItemStack stack) {
-        if (slot == 0
-            && !pendingCascadePutback.isEmpty()
+        if (slot == OVERFLOW_SLOT) {
+            tryInsert(stack);
+            setChanged();
+
+            return;
+        }
+
+        if (!pendingCascadePutback.isEmpty()
             && ItemStack.isSameItemSameComponents(stack, pendingCascadePutback)
             && stack.getCount() == pendingCascadePutback.getCount()) {
             fullItemStacks += 1;
@@ -660,7 +705,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
 
         pendingCascadePutback = ItemStack.EMPTY;
 
-        items.set(slot, stack);
+        items.set(STORAGE_SLOT, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
@@ -675,6 +720,18 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         pendingCascadePutback = ItemStack.EMPTY;
 
         setChanged();
+    }
+
+    /**
+     * How many more of {@code stack} the jar can still hold across the active slot and the compressed reserve,
+     * assuming {@code stack} matches what's stored (or the jar is empty). Used to reject overflow inserts that
+     * wouldn't fit in full.
+     */
+    private int remainingItemCapacity(ItemStack stack) {
+        int perStack = activeStack().isEmpty() ? stack.getMaxStackSize() : activeStack().getMaxStackSize();
+        int used = activeStack().getCount() + (fullItemStacks * perStack);
+
+        return ((MAX_ITEM_STACKS + 1) * perStack) - used;
     }
 
     public void playEmptyBottleSound() {
