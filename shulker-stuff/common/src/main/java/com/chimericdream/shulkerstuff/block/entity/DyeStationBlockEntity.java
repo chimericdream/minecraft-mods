@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -53,12 +52,11 @@ public class DyeStationBlockEntity extends BaseContainerBlockEntity implements M
             }
 
             public boolean isOwnContainer(Player player) {
-                if (player.containerMenu instanceof ChestMenu) {
-                    Container inventory = ((ChestMenu) player.containerMenu).getContainer();
-                    return inventory == DyeStationBlockEntity.this;
-                } else {
-                    return false;
-                }
+                // The dye station opens a DyeStationScreenHandler, never a ChestMenu — testing for
+                // the latter (copy-paste from the barrel) meant recheckOpeners never saw a single
+                // legitimate viewer.
+                return player.containerMenu instanceof DyeStationScreenHandler handler
+                    && handler.getInventory() == DyeStationBlockEntity.this;
             }
         };
     }

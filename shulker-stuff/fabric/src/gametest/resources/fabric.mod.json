@@ -1,0 +1,25 @@
+{
+    "schemaVersion": 1,
+    "id": "shulkerstuff_test",
+    "version": "1.0.0",
+    "name": "Shulker Stuff GameTest",
+    "description": "Test-only GameTests for Shulker Stuff. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.shulkerstuff.fabric.test.DyeStationGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "shulkerstuff": "*"
+    }
+}
