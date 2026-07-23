@@ -53,7 +53,7 @@ public class SponjBlock extends Block {
     }
 
     private boolean absorbWater(Level world, BlockPos pos) {
-        List<BlockPos> sponjes = BlockUtils.getConnectedBlocksByType(world, pos, ModBlocks.getSponjBlocks(), 32);
+        List<BlockPos> sponjes = BlockUtils.getConnectedBlocksByType(world, pos, ModBlocks.getSponjBlocks(), ModBlocks.MAX_CONNECTED_SPONJES);
         int sponjCount = sponjes.size();
 
         int absorptionRadius = 6 + (3 * (sponjCount - 1));
@@ -95,7 +95,7 @@ public class SponjBlock extends Block {
                         dropResources(blockState, world, blockPos2, blockEntity);
                         world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
                         ++i;
-                        if (j < 6) {
+                        if (j < absorptionRadius) {
                             queue.add(Pair.of(blockPos2, j + 1));
                         }
                     }
