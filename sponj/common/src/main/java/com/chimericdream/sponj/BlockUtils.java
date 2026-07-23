@@ -1,7 +1,11 @@
 package com.chimericdream.sponj;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -23,36 +27,43 @@ public class BlockUtils {
 		return around;
 	}
 
+	/**
+	 * Flood-fills outward from {@code start}, collecting every connected block whose type is in
+	 * {@code blockTypes}. A matching block more than {@code maxDistance} away is still collected, but
+	 * the search does not continue through it.
+	 *
+	 * <p>The fill is iterative on purpose: {@code maxDistance} is measured in blocks, so a large
+	 * sponge structure can hold tens of thousands of connected blocks — deep enough to overflow the
+	 * stack if this recursed per block.
+	 */
 	public static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, List<Block> blockTypes, int maxDistance) {
-		List<BlockPos> checkedBlocks = new ArrayList<>();
+		Set<BlockPos> checkedBlocks = new HashSet<>();
 		List<BlockPos> blocks = new ArrayList<>();
+		Deque<BlockPos> frontier = new ArrayDeque<>();
+
+		checkedBlocks.add(start);
+		frontier.add(start);
 
 		if (blockTypes.contains(world.getBlockState(start).getBlock())) {
 			blocks.add(start);
-			checkedBlocks.add(start);
 		}
 
-		return getConnectedBlocksByType(world, start, start, blockTypes, blocks, checkedBlocks, maxDistance);
-	}
+		while (!frontier.isEmpty()) {
+			BlockPos pos = frontier.poll();
 
-	private static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, BlockPos pos, List<Block> blockTypes, List<BlockPos> startingBlocks, List<BlockPos> checkedBlocks, int maxDistance) {
-		List<BlockPos> adjacentBlocks = getAdjacentBlockPositions(pos, true);
-		List<BlockPos> blocks = new ArrayList<>(startingBlocks);
+			for (BlockPos blockPos : getAdjacentBlockPositions(pos, true)) {
+				if (!checkedBlocks.add(blockPos)) {
+					continue;
+				}
 
-		for (BlockPos blockPos : adjacentBlocks) {
-			if (checkedBlocks.contains(blockPos)) {
-				continue;
-			}
+				if (!blockTypes.contains(world.getBlockState(blockPos).getBlock())) {
+					continue;
+				}
 
-			checkedBlocks.add(blockPos);
+				blocks.add(blockPos);
 
-			if (blockTypes.contains(world.getBlockState(blockPos).getBlock())) {
-				if (!blocks.contains(blockPos)) {
-					blocks.add(blockPos);
-
-					if (isWithinDistance(start, blockPos, maxDistance)) {
-						blocks = getConnectedBlocksByType(world, start, blockPos, blockTypes, blocks, checkedBlocks, maxDistance);
-					}
+				if (isWithinDistance(start, blockPos, maxDistance)) {
+					frontier.add(blockPos);
 				}
 			}
 		}
@@ -60,11 +71,11 @@ public class BlockUtils {
 		return blocks;
 	}
 
-	public static Boolean isWithinDistance(BlockPos start, BlockPos end, int distance) {
-		return isWithinDistance(start, end, (double) distance);
+	public static Boolean isWithinDistance(BlockPos start, BlockPos end, int maxDistance) {
+		return isWithinDistance(start, end, (double) maxDistance);
 	}
 
-	public static Boolean isWithinDistance(BlockPos start, BlockPos end, double distance) {
-		return start.distSqr(end) <= distance;
+	public static Boolean isWithinDistance(BlockPos start, BlockPos end, double maxDistance) {
+		return start.distSqr(end) <= maxDistance * maxDistance;
 	}
 }

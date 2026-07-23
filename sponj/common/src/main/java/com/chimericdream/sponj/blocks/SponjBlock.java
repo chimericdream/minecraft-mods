@@ -95,7 +95,7 @@ public class SponjBlock extends Block {
                         dropResources(blockState, world, blockPos2, blockEntity);
                         world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
                         ++i;
-                        if (j < 6) {
+                        if (j < absorptionRadius) {
                             queue.add(Pair.of(blockPos2, j + 1));
                         }
                     }

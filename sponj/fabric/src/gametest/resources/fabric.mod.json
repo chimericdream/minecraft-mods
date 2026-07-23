@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "sponj_test",
+    "version": "1.0.0",
+    "name": "Sponj GameTest",
+    "description": "Test-only GameTests for Sponj. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.sponj.fabric.test.SponjAbsorptionRangeGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "sponj": "*"
+    }
+}
