@@ -282,27 +282,32 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
         return true;
     }
 
+    /**
+     * Draws one bottle's worth of fluid out of the jar.
+     *
+     * @return the filled bottle, or {@code null} when the jar is empty or holds a fluid with no
+     * bottled form (milk, lava). Nothing is drawn from the jar in the {@code null} cases.
+     */
     @Nullable
     public ItemStack getBottle() {
         if (!this.hasFluid()) {
             return null;
         }
 
-        if (!this.hasFluid()) {
-            return Items.GLASS_BOTTLE.getDefaultInstance();
-        }
-
-        ItemStack retStack = null;
+        ItemStack retStack;
 
         if (this.getStoredFluid() == Fluids.WATER) {
-            fluidAmountInBuckets -= BOTTLE_SIZE;
             retStack = Items.POTION.getDefaultInstance();
+        } else if (this.getStoredFluid() == ModFluids.HONEY_FLUID.get()) {
+            // Was `== ModFluids.HONEY_FLUID`, comparing a Fluid against the RegistrySupplier that
+            // holds it. That compiles (Fluid vs. an unrelated interface) but is never true, so a jar
+            // of honey could not be bottled at all.
+            retStack = Items.HONEY_BOTTLE.getDefaultInstance();
+        } else {
+            return null;
         }
 
-        if (this.getStoredFluid() == ModFluids.HONEY_FLUID) {
-            fluidAmountInBuckets -= BOTTLE_SIZE;
-            retStack = Items.HONEY_BOTTLE.getDefaultInstance();
-        }
+        fluidAmountInBuckets -= BOTTLE_SIZE;
 
         if (fluidAmountInBuckets < BOTTLE_SIZE) {
             storedFluid = Fluids.EMPTY;
@@ -765,7 +770,9 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void playEmptyBucketSound(Fluid fluid) {
-        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
+        // .get(): comparing against the RegistrySupplier itself is always false, so honey used to
+        // fall through to the thin-fluid sound.
+        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID.get()) {
             playSound(SoundEvents.BUCKET_EMPTY_LAVA);
         } else {
             playSound(SoundEvents.BUCKET_EMPTY);
@@ -773,7 +780,7 @@ public class GlassJarBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void playFillBucketSound(Fluid fluid) {
-        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID) {
+        if (fluid == Fluids.LAVA || fluid == ModFluids.HONEY_FLUID.get()) {
             playSound(SoundEvents.BUCKET_FILL_LAVA);
         } else {
             playSound(SoundEvents.BUCKET_FILL);
