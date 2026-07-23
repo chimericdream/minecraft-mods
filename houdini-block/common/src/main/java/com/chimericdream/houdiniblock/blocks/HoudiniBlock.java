@@ -92,13 +92,18 @@ public class HoudiniBlock extends Block implements SimpleWaterloggedBlock {
             if (stack.getItem() instanceof BlockItem blockItem) {
                 Block block = blockItem.getBlock();
 
+                // Particles are a level event, so vanilla fires them on both sides; the block swap
+                // and the dropped item are server-authoritative.
                 this.spawnDestroyParticles(world, player, pos, state);
-                this.spawnHoudiniBlockItem(world, player, pos);
 
-                BlockPlaceContext placementContext = new BlockPlaceContext(player, hand, stack, hit);
-                placementContext.relativePos = pos;
+                if (!world.isClientSide()) {
+                    this.spawnHoudiniBlockItem(world, player, pos);
 
-                world.setBlockAndUpdate(pos, block.getStateForPlacement(placementContext));
+                    BlockPlaceContext placementContext = new BlockPlaceContext(player, hand, stack, hit);
+                    placementContext.relativePos = pos;
+
+                    world.setBlockAndUpdate(pos, block.getStateForPlacement(placementContext));
+                }
 
                 if (!player.isCreative()) {
                     stack.shrink(1);
@@ -116,16 +121,25 @@ public class HoudiniBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         this.spawnDestroyParticles(world, player, pos, state);
-        this.spawnHoudiniBlockItem(world, player, pos);
 
-        if (state.getValue(WATERLOGGED)) {
-            world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+        if (!world.isClientSide()) {
+            this.spawnHoudiniBlockItem(world, player, pos);
+
+            if (state.getValue(WATERLOGGED)) {
+                world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+            }
         }
 
         return state;
     }
 
     private void spawnHoudiniBlockItem(Level world, Player player, BlockPos pos) {
+        // Spawning an entity client-side produces a ghost item that pops the moment the server
+        // syncs, so this stays server-only even though both callers already guard.
+        if (world.isClientSide()) {
+            return;
+        }
+
         if (!player.isCreative()) {
             ItemEntity itemEntity = new ItemEntity(
                 world,
