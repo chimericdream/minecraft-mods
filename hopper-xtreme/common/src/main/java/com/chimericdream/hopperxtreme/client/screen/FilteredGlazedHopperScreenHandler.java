@@ -16,6 +16,13 @@ import org.jetbrains.annotations.NotNull;
 public class FilteredGlazedHopperScreenHandler extends AbstractContainerMenu {
     public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/filtered_glazed_hopper");
 
+    // 1 storage slot + 1 filter slot. The filter is the last container slot; deriving these from
+    // getContainerSize() is unsafe because the server BE hides the filter slot but the client's dummy
+    // SimpleContainer does not, so the two sides disagree (see CODE-REVIEW-PLAN 1.2/1.3).
+    private static final int STORAGE_SLOT_COUNT = 1;
+    private static final int FILTER_SLOT_INDEX = STORAGE_SLOT_COUNT;
+    private static final int HOPPER_SLOT_COUNT = STORAGE_SLOT_COUNT + 1;
+
     private final Container hopper;
 
     public FilteredGlazedHopperScreenHandler(int syncId, Inventory playerInventory) {
@@ -29,8 +36,8 @@ public class FilteredGlazedHopperScreenHandler extends AbstractContainerMenu {
 
         hopper.startOpen(playerInventory.player);
 
-        this.addSlot(new NonFilterSlot(this.hopper, 0, 80, 20));
-        this.addSlot(new FilterSlot(this.hopper, 1, 152, 20));
+        this.addSlot(new NonFilterSlot(this.hopper, 0, 80, 20, FILTER_SLOT_INDEX));
+        this.addSlot(new FilterSlot(this.hopper, FILTER_SLOT_INDEX, 152, 20));
 
         for (int j = 0; j < 3; ++j) {
             for (int k = 0; k < 9; ++k) {
@@ -66,7 +73,7 @@ public class FilteredGlazedHopperScreenHandler extends AbstractContainerMenu {
     public @NotNull ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
 
-        int hopperSize = this.hopper.getContainerSize() + 1;
+        int hopperSize = HOPPER_SLOT_COUNT;
 
         Slot slot = this.slots.get(invSlot);
         if (slot.hasItem()) {
