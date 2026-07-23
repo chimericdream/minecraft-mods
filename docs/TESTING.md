@@ -6,9 +6,20 @@ same patterns.
 
 ## The chimeric-lib publish loop (read first)
 
-chimeric-lib's **own** tests (its `fabric`/`neoforge` `test` and `gametest` source sets) build against
-the in-repo Gradle **project** dependency (`project(':chimeric-lib:common')`), so they compile your
-latest source directly from `build/classes` — no republish needed to test your own edits.
+chimeric-lib's **own** `gametest` source sets build against the in-repo Gradle **project** dependency
+(`project(':chimeric-lib:common')`), so they run your latest source directly — no republish needed.
+
+**Its own JUnit `test` source set is not so lucky.** Under `fabric-loader-junit` the library classes
+are loaded by the Fabric `knot` classloader off the *runtime* classpath, which resolves
+`chimericlib-fabric` from **maven-local**. Editing chimeric-lib source and running
+`./gradlew :chimeric-lib:fabric:test` therefore tests the **last published jar**, not your edit — the
+test compiles fine and then asserts stale behaviour (stack traces point at line numbers that no longer
+match the source, which is the giveaway). Run `bun run publish:lib` first. Confirm what actually
+loaded with:
+
+```java
+System.out.println(SomeClass.class.getProtectionDomain().getCodeSource());
+```
 
 **Consumer mods are the exception:** they load chimeric-lib from **maven-local (`~/.m2`)**, not from a
 project dependency. So after editing chimeric-lib source you **must** republish before a consumer's
