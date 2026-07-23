@@ -263,7 +263,12 @@ public class GlazedMultiHopperBlockEntity extends RandomizableContainerBlockEnti
     }
 
     private boolean isFull() {
-        for (ItemStack itemStack : this.inventory) {
+        // Storage slots only. The backing list also holds the filter slot, which getContainerSize()
+        // hides, so iterating the list made a filtered hopper with an empty filter never report full
+        // and attempt an extraction on every tick.
+        for (int i = 0; i < this.getContainerSize(); i++) {
+            ItemStack itemStack = this.inventory.get(i);
+
             if (itemStack.isEmpty() || itemStack.getCount() != itemStack.getMaxStackSize()) {
                 return false;
             }
@@ -507,8 +512,10 @@ public class GlazedMultiHopperBlockEntity extends RandomizableContainerBlockEnti
             }
         }
 
-        if (((GlazedMultiHopperBlockEntity) hopper).withFilter) {
-            return HopperItemFilterItem.matchesFilter(hopper.getItem(1), stack);
+        // canExtract's public entry point accepts any Hopper, so this can't assume the
+        // container is our own block entity.
+        if (hopper instanceof GlazedMultiHopperBlockEntity filtered && filtered.withFilter) {
+            return HopperItemFilterItem.matchesFilter(filtered.getItem(1), stack);
         }
 
         return true;
