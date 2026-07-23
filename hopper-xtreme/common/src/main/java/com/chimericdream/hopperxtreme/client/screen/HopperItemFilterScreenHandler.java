@@ -65,6 +65,16 @@ public class HopperItemFilterScreenHandler extends AbstractContainerMenu {
         return true;
     }
 
+    /**
+     * Balances the {@code startOpen} the constructor issues, the way vanilla's {@code ChestMenu}
+     * does — without it the backing container never sees the viewer leave.
+     */
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.filter.stopOpen(player);
+    }
+
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int invSlot) {
         return ItemStack.EMPTY;

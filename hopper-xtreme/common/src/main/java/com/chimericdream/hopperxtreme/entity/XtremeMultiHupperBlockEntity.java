@@ -268,7 +268,12 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
     }
 
     private boolean isFull() {
-        for (ItemStack itemStack : this.inventory) {
+        // Storage slots only. The backing list also holds the filter slot, which getContainerSize()
+        // hides, so iterating the list made a filtered hopper with an empty filter never report full
+        // and attempt an extraction on every tick.
+        for (int i = 0; i < this.getContainerSize(); i++) {
+            ItemStack itemStack = this.inventory.get(i);
+
             if (itemStack.isEmpty() || itemStack.getCount() != itemStack.getMaxStackSize()) {
                 return false;
             }
@@ -487,8 +492,10 @@ public class XtremeMultiHupperBlockEntity extends RandomizableContainerBlockEnti
             }
         }
 
-        if (((XtremeMultiHupperBlockEntity) hupper).withFilter) {
-            return HopperItemFilterItem.matchesFilter(hupper.getItem(5), stack);
+        // canExtract's public entry point accepts any Hopper, so this can't assume the
+        // container is our own block entity.
+        if (hupper instanceof XtremeMultiHupperBlockEntity filtered && filtered.withFilter) {
+            return HopperItemFilterItem.matchesFilter(filtered.getItem(5), stack);
         }
 
         boolean isFilter = ItemStack.isSameItem(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
