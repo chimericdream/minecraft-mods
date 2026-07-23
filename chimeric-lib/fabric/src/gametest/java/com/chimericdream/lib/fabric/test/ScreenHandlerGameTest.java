@@ -10,6 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -63,5 +64,71 @@ public class ScreenHandlerGameTest {
         GameTestContainers.assertSlotEmpty(context, container, 0);
 
         context.succeed();
+    }
+
+    /**
+     * Both handlers call {@code startOpen} in their constructor but used to never call
+     * {@code stopOpen}, so a container backed by a {@code ContainerOpenersCounter} kept counting a
+     * viewer that had already closed the screen.
+     */
+    @GameTest
+    public void simpleHandlerBalancesOpenAndClose(GameTestHelper context) {
+        ServerPlayer player = context.makeMockServerPlayerInLevel();
+        OpenCountingContainer container = new OpenCountingContainer(TestFixtures.SIMPLE_ROWS * 9);
+
+        SimpleInventoryScreenHandler menu = new SimpleInventoryScreenHandler(
+            TestFixtures.SIMPLE_MENU.get(), 1, player.getInventory(), container, TestFixtures.SIMPLE_ROWS
+        );
+
+        container.assertOpenCount(context, 1, "opening the menu");
+        menu.removed(player);
+        container.assertOpenCount(context, 0, "closing the menu");
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void doubleWideHandlerBalancesOpenAndClose(GameTestHelper context) {
+        ServerPlayer player = context.makeMockServerPlayerInLevel();
+        OpenCountingContainer container = new OpenCountingContainer(TestFixtures.DOUBLE_ROWS * 18);
+
+        DoubleWideInventoryScreenHandler menu = new DoubleWideInventoryScreenHandler(
+            TestFixtures.DOUBLE_MENU.get(), 1, player.getInventory(), container, TestFixtures.DOUBLE_ROWS
+        );
+
+        container.assertOpenCount(context, 1, "opening the menu");
+        menu.removed(player);
+        container.assertOpenCount(context, 0, "closing the menu");
+
+        context.succeed();
+    }
+
+    /**
+     * {@code SimpleContainer}'s own {@code startOpen}/{@code stopOpen} are no-ops, so this stands in
+     * for the real block entities (which delegate to a {@code ContainerOpenersCounter}) and just
+     * tallies the calls.
+     */
+    private static class OpenCountingContainer extends SimpleContainer {
+        private int openCount = 0;
+
+        OpenCountingContainer(int size) {
+            super(size);
+        }
+
+        @Override
+        public void startOpen(ContainerUser user) {
+            openCount++;
+        }
+
+        @Override
+        public void stopOpen(ContainerUser user) {
+            openCount--;
+        }
+
+        void assertOpenCount(GameTestHelper context, int expected, String what) {
+            if (openCount != expected) {
+                context.fail("Expected an open count of " + expected + " after " + what + ", got " + openCount);
+            }
+        }
     }
 }

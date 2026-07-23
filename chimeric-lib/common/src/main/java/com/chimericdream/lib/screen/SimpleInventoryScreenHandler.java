@@ -68,6 +68,17 @@ public class SimpleInventoryScreenHandler extends AbstractContainerMenu {
         return this.inventory.stillValid(player);
     }
 
+    /**
+     * Balances the {@code startOpen} the constructor issues. Vanilla's {@code ChestMenu} does the
+     * same; without it a container backed by a {@code ContainerOpenersCounter} never sees its viewer
+     * leave (so lids stay open and open/close side effects never fire).
+     */
+    @Override
+    public void removed(@NonNull Player player) {
+        super.removed(player);
+        this.inventory.stopOpen(player);
+    }
+
     @Override
     public @NonNull ItemStack quickMoveStack(@NonNull Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
