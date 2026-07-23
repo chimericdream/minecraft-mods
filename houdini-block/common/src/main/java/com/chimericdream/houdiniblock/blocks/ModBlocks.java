@@ -18,6 +18,10 @@ public class ModBlocks {
                 .ofFullCopy(Blocks.STONE)
                 .sound(SoundType.STONE)
                 .instabreak()
+                // The block hands itself back manually in playerWillDestroy/replaceWithBlockInHand,
+                // so it must NOT also drop via a loot table — with a tool, the two stacked and gave
+                // two blocks. ofFullCopy inherits stone's derived-name drops, hence the explicit off.
+                .noLootTable()
                 .setId(ResourceKey.create(Registries.BLOCK, REGISTRY_HELPER.makeId("houdini_block")))
         )
     );

@@ -11,6 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Server-side coverage for {@code HoudiniBlock}'s two item-spawning paths.
@@ -53,9 +59,7 @@ public class HoudiniBlockDropGameTest {
     }
 
     /**
-     * Breaking the block by hand also hands it back exactly once. Bare-handed on purpose: the block
-     * copies stone's properties, so its loot table needs a pickaxe and contributes nothing here,
-     * leaving only {@code playerWillDestroy}'s spawn under test.
+     * Breaking the block by hand hands it back exactly once via {@code playerWillDestroy}.
      */
     @GameTest
     public void breakingYieldsExactlyOneHoudiniBlock(GameTestHelper context) {
@@ -66,6 +70,33 @@ public class HoudiniBlockDropGameTest {
 
         context.assertBlockPresent(Blocks.AIR, BLOCK_POS);
         context.assertItemEntityCountIs(ModItems.HOUDINI_BLOCK_ITEM.get(), BLOCK_POS, SEARCH_RANGE, 1);
+        context.succeed();
+    }
+
+    /**
+     * The block hands itself back manually, so it must carry no loot table — otherwise a real player
+     * breaking it with a correct tool gets the loot drop <em>on top of</em> the manual spawn (two
+     * blocks for one). The mock player used elsewhere can't reproduce that through {@code destroyBlock}
+     * (its {@code hasCorrectToolForDrops} is always false, so the vanilla break path never reaches the
+     * loot roll), so this asserts on the loot table directly: {@code noLootTable()} makes
+     * {@code getDrops} empty, where the inherited stone-derived table used to yield one Houdini Block.
+     */
+    @GameTest
+    public void theBlockHasNoLootTable(GameTestHelper context) {
+        BlockPos absolute = context.absolutePos(BLOCK_POS);
+        context.setBlock(BLOCK_POS, ModBlocks.HOUDINI_BLOCK.get().defaultBlockState());
+
+        BlockState state = context.getLevel().getBlockState(absolute);
+        LootParams.Builder params = new LootParams.Builder(context.getLevel())
+            .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(absolute))
+            .withParameter(LootContextParams.TOOL, new ItemStack(Items.DIAMOND_PICKAXE))
+            .withOptionalParameter(LootContextParams.BLOCK_ENTITY, null);
+
+        List<ItemStack> drops = state.getDrops(params);
+        if (!drops.isEmpty()) {
+            context.fail("The Houdini Block should have no loot table (it drops itself manually), but getDrops returned " + drops);
+        }
+
         context.succeed();
     }
 
