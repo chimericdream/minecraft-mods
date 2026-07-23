@@ -21,8 +21,17 @@ has not been started.
 
 ## Phase 1 — Critical bugs (crash, data loss, client/server desync)
 
-### 1.1 `GlassJarBlockEntity.getItems()` returns `null` → NPE via the Container API — **Confirmed**
+### 1.1 `GlassJarBlockEntity.getItems()` returns `null` → NPE via the Container API — **✅ Done (2026-07-21)**
 `minekea/.../entity/block/containers/GlassJarBlockEntity.java:605`
+
+**Resolution:** Backed the jar with a real single-slot `NonNullList` and implemented the container
+contract for real (`getItems`, `canPlaceItem`, `removeItem`, `removeItemNoUpdate`, `setItem`,
+`clearContent`). `removeItem` cascades a compressed reserve stack down into the active slot so
+automation can drain the whole jar; a `pendingCascadePutback` guard makes vanilla's "put the last
+item back" extraction path (`setItem` after a one-item `removeItem`) lossless. `canPlaceItem` routes
+hopper insertion through `canAcceptItem` so automation can't bypass the jar's rules. Covered by
+`GlassJarContainerGameTest` (minekea fabric gametests): direct container-API smoke test, reserve
+cascade + putback conservation, and live vanilla hoppers draining/feeding the jar.
 
 The jar implements `ImplementedInventory` (and therefore `Container`) but returns `null` from
 `getItems()`. Its own overrides (`isEmpty`, `tryInsert`, `removeStack`) avoid the list, but every
