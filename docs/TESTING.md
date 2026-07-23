@@ -6,18 +6,22 @@ same patterns.
 
 ## The chimeric-lib publish loop (read first)
 
-Consumer mods — and chimeric-lib's *own* tests — load chimeric-lib from **maven-local (`~/.m2`)**, not
-from `build/classes`. So after editing chimeric-lib source you **must** republish before testing or the
-old bytecode is used:
+chimeric-lib's **own** tests (its `fabric`/`neoforge` `test` and `gametest` source sets) build against
+the in-repo Gradle **project** dependency (`project(':chimeric-lib:common')`), so they compile your
+latest source directly from `build/classes` — no republish needed to test your own edits.
+
+**Consumer mods are the exception:** they load chimeric-lib from **maven-local (`~/.m2`)**, not from a
+project dependency. So after editing chimeric-lib source you **must** republish before a consumer's
+build sees the change, or the old bytecode is used:
 
 ```bash
 bun run publish:lib
 # ./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal
 ```
 
-Symptom of forgetting: a fix compiles but tests still assert the old behavior; the class actually loads
-from `~/.m2/repository/com/chimericdream/lib/.../*.jar`. A `clean` / `--rerun-tasks` does **not** fix it
-(the stale copy is in `.m2`, not the build dir). You can confirm the source with
+Symptom of forgetting: a consumer's build compiles but still asserts the old behavior; the class
+actually loads from `~/.m2/repository/com/chimericdream/lib/.../*.jar`. A `clean` / `--rerun-tasks` does
+**not** fix it (the stale copy is in `.m2`, not the build dir). You can confirm the source with
 `SomeClass.class.getProtectionDomain().getCodeSource().getLocation()`.
 
 ## Unit tests (JUnit + fabric-loader-junit)

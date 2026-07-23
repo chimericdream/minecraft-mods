@@ -43,8 +43,13 @@ To work on an inactive mod, uncomment it in `settings.gradle` (and run `bun run 
 
 ## The chimeric-lib publish loop (read this before editing chimeric-lib)
 
-chimeric-lib is resolved from maven-local, so **editing its source is not enough** — the change is
-invisible to its own tests *and* to every consumer mod until you republish:
+chimeric-lib's own subprojects (its `fabric`/`neoforge` `test` and `gametest` source sets) build
+against the in-repo Gradle **project** dependency (`project(':chimeric-lib:common')`), so a normal
+rebuild picks up your source edits — **no republish needed for chimeric-lib's own tests**.
+
+**Consumer mods are different.** They resolve chimeric-lib as an *external Maven coordinate from
+maven-local (`~/.m2`)*, not as a project dependency — so editing chimeric-lib source is invisible to
+every consumer until you republish:
 
 ```bash
 bun run publish:lib
@@ -52,8 +57,8 @@ bun run publish:lib
 # ./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal
 ```
 
-Symptom when you forget: your fix compiles but tests/consumers still see the *old* behavior (the class
-loads from `~/.m2/repository/com/chimericdream/lib/...`, not `build/classes`). A `clean` /
+Symptom when you forget: a consumer's build compiles but still sees the *old* behavior (the class loads
+from `~/.m2/repository/com/chimericdream/lib/...`, not chimeric-lib's `build/classes`). A `clean` /
 `--rerun-tasks` does **not** help — the stale copy is in `.m2`. If the version isn't in `.m2` at all,
 consumer builds fail to resolve the dependency. See `docs/TESTING.md`.
 
