@@ -27,7 +27,7 @@ keeps the BE.
 To migrate a block-with-inventory in place, losing nothing and duplicating nothing:
 
 1. **Snapshot** the full inventory into a `List<ItemStack>` of copies. Include any hidden trailing
-   slots — e.g. hopper-xtreme's hidden filter slot at `getContainerSize() + 1`.
+   slots — e.g. hopper-xtreme's hidden filter slot at index `getContainerSize()`.
 2. **Clear** the container first, so the block removal has nothing to drop (prevents duplication).
 3. `level.setBlock(pos, newState, UPDATE_ALL)`.
 4. **Re-attach the original BE object**: `clearRemoved()`, `setBlockState(newState)`,
