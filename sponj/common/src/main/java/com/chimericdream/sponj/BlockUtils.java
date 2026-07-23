@@ -28,54 +28,56 @@ public class BlockUtils {
 	}
 
 	/**
-	 * Flood-fills outward from {@code start}, collecting every connected block whose type is in
-	 * {@code blockTypes}. A matching block more than {@code maxDistance} away is still collected, but
-	 * the search does not continue through it.
+	 * Collects up to {@code maxCount} connected blocks whose type is in {@code blockTypes}, searching
+	 * outward from {@code start} breadth-first so the ones nearest {@code start} (by step count) are
+	 * the ones kept.
 	 *
-	 * <p>The fill is iterative on purpose: {@code maxDistance} is measured in blocks, so a large
-	 * sponge structure can hold tens of thousands of connected blocks — deep enough to overflow the
-	 * stack if this recursed per block.
+	 * <p>{@code maxCount} is a deliberate gameplay/performance ceiling, not an incidental limit. A
+	 * sponj's absorption reach and its budget of blocks to clear both scale with how many connected
+	 * sponjes this returns (see {@code SponjBlock#absorbWater}), so an unbounded count would let a
+	 * large sponj wall schedule tens of thousands of liquid-clearing operations in a single tick and
+	 * lag the server. Capping the count caps that work; stopping the search at the cap also means we
+	 * never walk the whole structure just to count it. See {@code ModBlocks#MAX_CONNECTED_SPONJES}.
 	 */
-	public static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, List<Block> blockTypes, int maxDistance) {
-		Set<BlockPos> checkedBlocks = new HashSet<>();
-		List<BlockPos> blocks = new ArrayList<>();
+	public static List<BlockPos> getConnectedBlocksByType(Level world, BlockPos start, List<Block> blockTypes, int maxCount) {
+		List<BlockPos> connected = new ArrayList<>();
+
+		if (maxCount <= 0) {
+			return connected;
+		}
+
+		Set<BlockPos> visited = new HashSet<>();
 		Deque<BlockPos> frontier = new ArrayDeque<>();
 
-		checkedBlocks.add(start);
+		visited.add(start);
 		frontier.add(start);
 
 		if (blockTypes.contains(world.getBlockState(start).getBlock())) {
-			blocks.add(start);
+			connected.add(start);
 		}
 
-		while (!frontier.isEmpty()) {
+		while (!frontier.isEmpty() && connected.size() < maxCount) {
 			BlockPos pos = frontier.poll();
 
-			for (BlockPos blockPos : getAdjacentBlockPositions(pos, true)) {
-				if (!checkedBlocks.add(blockPos)) {
+			for (BlockPos neighbor : getAdjacentBlockPositions(pos, true)) {
+				if (!visited.add(neighbor)) {
 					continue;
 				}
 
-				if (!blockTypes.contains(world.getBlockState(blockPos).getBlock())) {
+				if (!blockTypes.contains(world.getBlockState(neighbor).getBlock())) {
 					continue;
 				}
 
-				blocks.add(blockPos);
+				connected.add(neighbor);
 
-				if (isWithinDistance(start, blockPos, maxDistance)) {
-					frontier.add(blockPos);
+				if (connected.size() >= maxCount) {
+					break;
 				}
+
+				frontier.add(neighbor);
 			}
 		}
 
-		return blocks;
-	}
-
-	public static Boolean isWithinDistance(BlockPos start, BlockPos end, int maxDistance) {
-		return isWithinDistance(start, end, (double) maxDistance);
-	}
-
-	public static Boolean isWithinDistance(BlockPos start, BlockPos end, double maxDistance) {
-		return start.distSqr(end) <= maxDistance * maxDistance;
+		return connected;
 	}
 }
