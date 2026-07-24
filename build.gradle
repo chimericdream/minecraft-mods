@@ -52,11 +52,12 @@ subprojects {
 
         maven {
             name = "Terraformers"
-            // Must include the /releases/ path: the maven is a Reposilite instance and artifacts
-            // (e.g. modmenu) are served under /releases/, not the root. The bare host 404s. This only
-            // surfaced once mavenLocal() was removed from resolution — before, modmenu resolved from
-            // a local cache / ~/.m2 and masked the wrong URL.
-            url = "https://maven.terraformersmc.com/releases/"
+            // Serve artifacts from the host root, NOT /releases/. Terraformers moved their Maven off
+            // Reposilite to a plain Apache server on 2026-07-24; the /releases/ path now 404s, while
+            // e.g. modmenu resolves at https://maven.terraformersmc.com/com/terraformersmc/modmenu/.
+            // (Since CI has no dependency cache, a wrong URL here fails every clean build the moment
+            // no other repo can supply modmenu.)
+            url = "https://maven.terraformersmc.com/"
         }
 
         maven { url = 'https://maven.blamejared.com' }
