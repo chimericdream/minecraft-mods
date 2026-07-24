@@ -2,84 +2,44 @@ package com.chimericdream.sponj.blocks;
 
 import com.chimericdream.sponj.ModInfo;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import org.jspecify.annotations.NonNull;
 
-public class WetSponjBlock extends Block {
+public class WetSponjBlock extends AbstractWetSponjBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "wet_sponj");
     public static final ResourceKey<Block> BLOCK_REGISTRY_KEY = ResourceKey.create(Registries.BLOCK, BLOCK_ID);
     public static final ResourceKey<Item> ITEM_REGISTRY_KEY = ResourceKey.create(Registries.ITEM, BLOCK_ID);
 
     public WetSponjBlock() {
-        super(Properties.ofFullCopy(Blocks.SPONGE).setId(BLOCK_REGISTRY_KEY));
+        super(BLOCK_REGISTRY_KEY);
     }
 
-    public void onPlace(@NonNull BlockState state, Level world, @NonNull BlockPos pos, @NonNull BlockState oldState, boolean notify) {
+    @Override
+    protected Block getDryBlock() {
+        return ModBlocks.SPONJ_BLOCK.get();
+    }
+
+    @Override
+    protected ParticleOptions getDripParticle() {
+        return ParticleTypes.DRIPPING_WATER;
+    }
+
+    @Override
+    protected boolean shouldDryOut(Level world, BlockPos pos) {
         EnvironmentAttributeMap attributes = world.dimensionType().attributes();
         try {
-            if (
-                attributes.contains(EnvironmentAttributes.WATER_EVAPORATES)
-                && (Boolean) attributes.get(EnvironmentAttributes.WATER_EVAPORATES).argument()
-            ) {
-                world.setBlock(pos, ModBlocks.SPONJ_BLOCK.get().defaultBlockState(), 3);
-                world.levelEvent(2009, pos, 0);
-                world.playSound((Player) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
-            }
-        }
-        catch (RuntimeException e) {
-            // no-op
-        }
-    }
-
-    public void animateTick(@NonNull BlockState state, @NonNull Level world, @NonNull BlockPos pos, @NonNull RandomSource random) {
-        Direction direction = Direction.getRandom(random);
-        if (direction != Direction.UP) {
-            BlockPos blockPos = pos.relative(direction);
-            BlockState blockState = world.getBlockState(blockPos);
-            if (!state.canOcclude() || !blockState.isFaceSturdy(world, blockPos, direction.getOpposite())) {
-                double d = (double) pos.getX();
-                double e = (double) pos.getY();
-                double f = (double) pos.getZ();
-                if (direction == Direction.DOWN) {
-                    e -= 0.05;
-                    d += random.nextDouble();
-                    f += random.nextDouble();
-                } else {
-                    e += random.nextDouble() * 0.8;
-                    if (direction.getAxis() == Direction.Axis.X) {
-                        f += random.nextDouble();
-                        if (direction == Direction.EAST) {
-                            ++d;
-                        } else {
-                            d += 0.05;
-                        }
-                    } else {
-                        d += random.nextDouble();
-                        if (direction == Direction.SOUTH) {
-                            ++f;
-                        } else {
-                            f += 0.05;
-                        }
-                    }
-                }
-
-                world.addAlwaysVisibleParticle(ParticleTypes.DRIPPING_WATER, d, e, f, 0.0, 0.0, 0.0);
-            }
+            return attributes.contains(EnvironmentAttributes.WATER_EVAPORATES)
+                && (Boolean) attributes.get(EnvironmentAttributes.WATER_EVAPORATES).argument();
+        } catch (RuntimeException e) {
+            return false;
         }
     }
 }
