@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.entity.block.containers;
 
+import com.chimericdream.lib.inventories.ContainerOpenersCounters;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.containers.barrels.BarrelBlock;
 import com.chimericdream.minekea.block.containers.barrels.Barrels;
@@ -11,11 +12,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
@@ -39,31 +38,20 @@ public class MinekeaBarrelBlockEntity extends RandomizableContainerBlockEntity {
 
         this.inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 
-        MinekeaBarrelBlockEntity self = this;
-        this.stateManager = new ContainerOpenersCounter() {
-            protected void onOpen(Level world, BlockPos pos, BlockState state) {
-                self.playSound(state, SoundEvents.BARREL_OPEN);
-                self.setOpen(state, true);
-            }
-
-            protected void onClose(Level world, BlockPos pos, BlockState state) {
-                self.playSound(state, SoundEvents.BARREL_CLOSE);
-                self.setOpen(state, false);
-            }
-
-            protected void openerCountChanged(Level world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
-                self.onViewerCountUpdate(world, pos, state, oldViewerCount, newViewerCount);
-            }
-
-            public boolean isOwnContainer(Player player) {
-                if (player.containerMenu instanceof ChestMenu) {
-                    Container inventory = ((ChestMenu) player.containerMenu).getContainer();
-                    return inventory == self;
-                } else {
-                    return false;
-                }
-            }
-        };
+        this.stateManager = ContainerOpenersCounters.create(
+            this,
+            ChestMenu.class,
+            menu -> ((ChestMenu) menu).getContainer(),
+            (w, p, s) -> {
+                this.playSound(s, SoundEvents.BARREL_OPEN);
+                this.setOpen(s, true);
+            },
+            (w, p, s) -> {
+                this.playSound(s, SoundEvents.BARREL_CLOSE);
+                this.setOpen(s, false);
+            },
+            this::onViewerCountUpdate
+        );
     }
 
     @Override
