@@ -302,6 +302,30 @@ Loom issue closes.
 
 ---
 
+## 5b. Status of the additional improvements (branch `refactor/build-structure-cleanup`)
+
+- **5.2 Convention plugins — DONE**, as a shared `apply from:` script
+  (`gradle/mod-conventions.gradle`) rather than `build-logic` precompiled plugins. For a Loom +
+  Architectury build the `apply from:` form is materially lower-risk (no separate plugin classpath
+  that must itself carry Loom), and it achieved the goal: each active consumer mod's `build.gradle`
+  is now one line, chimeric-lib's is ~30 lines, and ~940 lines of duplicated boilerplate are gone.
+  The `processResources` expand map is derived from each mod's own `*_compat`/metadata properties, so
+  one script covers guide and non-guide mods. Verified byte-identical generated mod metadata.
+- **5.4 Derive `*_compat` from root — DONE.** The five identical shared floors live in the root
+  `gradle.properties` and are inherited; `minecraft_compat` stayed per-mod (the modpack script reads
+  it from each mod's file).
+- **5.6 Parallel build — DONE.** `org.gradle.parallel = true`, verified with a forced multi-mod build.
+- **5.5 Inactive mods — intentionally left as-is.** Both plan options are bad: including them breaks
+  the build (they are on the pre-26.2 structure / chimericlib 4.x and will not compile), and moving
+  directories is an invasive layout change. They need a real port to reactivate; until then the safest
+  state is untouched. The `settings.gradle` ordering logic was mirrored into `scripts/settings.gradle.tpl`
+  so regeneration keeps it.
+- **5.3 Version catalog — intentionally deferred.** Unlike 5.4, this fixes no drift: dependency
+  versions are already single-sourced in the root `gradle.properties`. Converting to
+  `libs.versions.toml` is cosmetic here and would add churn/risk (rewriting ~15 dependency
+  declarations, plus the Loom/Architectury/Minecraft special cases) to a now-clean, verified build.
+  Easy to add later if the type-safe accessors are wanted.
+
 ## 6. Suggested sequencing
 
 | Phase | Contents | Risk |
