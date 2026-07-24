@@ -5,17 +5,31 @@ by priority; each lists the evidence, the proposed fix, and a confidence level. 
 verified by reading the code path end-to-end; **Verify first** = strong suspicion, but runtime
 behavior should be confirmed (e.g., with a gametest) before fixing.
 
-Status: **Phase 1 is complete.** Each fix is on its own branch off `main` (not yet merged); Phase 2+
-has not been started.
+Status: **Phases 1 and 2 are complete and merged to `main`.** Phase 3 (duplication-reduction
+refactors) and Phase 4 (consistency/hygiene) have not been started. Every mod touched in Phase 2
+gained regression tests — five mods (sponj, villager-tweaks, houdini-block, shulker-stuff, and the
+dye-station coverage) got their first test source set in the process.
 
-| Item | Status | Branch |
-|------|--------|--------|
-| 1.1 | ✅ Done (2026-07-21) | `fix/glass-jar-container-contract` |
-| 1.2 | ✅ Done (2026-07-22) | `fix/hopper-filter-geometry` |
-| 1.3 | ✅ Done (2026-07-22) | `fix/hopper-filter-geometry` |
-| 1.4 | ✅ Done (2026-07-22) | `fix/glass-jar-item-cache` |
+| Item | Status | PR |
+|------|--------|----|
+| 1.1 | ✅ Done (2026-07-21), merged | [#55](https://github.com/chimericdream/minecraft-mods/pull/55) |
+| 1.2 | ✅ Done (2026-07-22), merged | [#56](https://github.com/chimericdream/minecraft-mods/pull/56) |
+| 1.3 | ✅ Done (2026-07-22), merged | [#56](https://github.com/chimericdream/minecraft-mods/pull/56) |
+| 1.4 | ✅ Done (2026-07-22), merged | [#57](https://github.com/chimericdream/minecraft-mods/pull/57) |
 | 1.5 | ✅ No fix needed — already resolved | — |
-| 1.6 | ✅ Done (2026-07-22) | `fix/implemented-inventory-partial-merge` |
+| 1.6 | ✅ Done (2026-07-22), merged | [#58](https://github.com/chimericdream/minecraft-mods/pull/58) |
+| 2.1 | ✅ Done (2026-07-23), merged | [#59](https://github.com/chimericdream/minecraft-mods/pull/59) |
+| 2.2 | ✅ Done (2026-07-23), merged | [#65](https://github.com/chimericdream/minecraft-mods/pull/65) |
+| 2.3 | ✅ Done (2026-07-23), merged | [#60](https://github.com/chimericdream/minecraft-mods/pull/60) |
+| 2.4 | ✅ Done (2026-07-23), merged | [#62](https://github.com/chimericdream/minecraft-mods/pull/62) |
+| 2.5 | ✅ Done (2026-07-23), merged | [#63](https://github.com/chimericdream/minecraft-mods/pull/63) |
+| 2.6 | ✅ Done (2026-07-23), merged | [#62](https://github.com/chimericdream/minecraft-mods/pull/62), [#63](https://github.com/chimericdream/minecraft-mods/pull/63), [#64](https://github.com/chimericdream/minecraft-mods/pull/64) |
+| 2.7 | ✅ Done (2026-07-23), merged | [#63](https://github.com/chimericdream/minecraft-mods/pull/63) |
+| 2.8 | ✅ Done (2026-07-23), merged | [#61](https://github.com/chimericdream/minecraft-mods/pull/61) |
+| 2.9 | ✅ Done in part (2026-07-23), merged — glass jar fixed; shelf/armoire was a false positive | [#65](https://github.com/chimericdream/minecraft-mods/pull/65) |
+| 2.10 | ✅ Done (2026-07-23), merged | [#65](https://github.com/chimericdream/minecraft-mods/pull/65) |
+| 2.11 | ✅ Done (2026-07-23), merged | [#64](https://github.com/chimericdream/minecraft-mods/pull/64) |
+| 2.12 | ✅ Done (2026-07-23), merged | [#64](https://github.com/chimericdream/minecraft-mods/pull/64) |
 
 ---
 
@@ -157,8 +171,23 @@ return a distinct remainder (or a result record) so callers can detect partial s
 
 ## Phase 2 — Logic bugs (wrong behavior, no crash)
 
-### 2.1 Sponj connected-sponge search compares squared distance to unsquared limit — **Confirmed**
+### 2.1 Sponj connected-sponge search compares squared distance to unsquared limit — **✅ Done (2026-07-23, #59)**
 `sponj/.../BlockUtils.java:66–70`
+
+**Resolution:** The `distSqr`-vs-`32` comparison turned out to be *deliberate* load-bounding, not a
+units bug: a sponj's clear radius (`6 + 3*(n-1)`) and block budget (`64 * n`) both scale with the
+connected count `n`, so the small effective reach kept a large sponj wall from clearing tens of
+thousands of blocks in one tick. Rather than "correct" the distance to the full 32 (which would
+remove that ceiling), the bound is now explicit: `getConnectedBlocksByType` takes a `maxCount` and
+stops once that many connected blocks are found (breadth-first, nearest kept), the distance helpers
+are gone, and the cap lives in `ModBlocks.MAX_CONNECTED_SPONJES` (16) with the worst-case work
+documented. The washable-block inconsistency is also fixed (`j < absorptionRadius`, still bounded by
+`maxAbsorption`). Covered by `SponjAbsorptionRangeGameTest` (sponj's first gametests): cap enforced
+on an oversized structure, full count under the cap, and the multi-sponj washable radius.
+
+The original units-only read (below) was superseded during review.
+
+<details><summary>Original report (superseded)</summary>
 
 `start.distSqr(end) <= distance` with `distance = 32` limits the flood fill to √32 ≈ 5.7 blocks,
 not 32. Fix: `distSqr(end) <= distance * distance` (and rename the param to make units explicit).
@@ -167,16 +196,33 @@ Also in `SponjBlock.absorbWater` (SponjBlock.java:100): the `canBeReplaced` bran
 hardcoded `j < 6` while the other branches use `j < absorptionRadius` — the multi-sponge radius
 bonus doesn't apply to washable blocks (kelp, seagrass). Align them.
 
-### 2.2 `GlassJarBlockEntity.getBottle()` — unreachable branch, silent no-op for other fluids — **Confirmed**
+</details>
+
+### 2.2 `GlassJarBlockEntity.getBottle()` — unreachable branch, silent no-op for other fluids — **✅ Done (2026-07-23, #65)**
 `GlassJarBlockEntity.java:252–279`
+
+**Resolution:** Removed the unreachable second `!hasFluid()` check and rewrote the method as an
+explicit if/else that returns `null` **without draining the jar** for fluids with no bottled form
+(milk, lava), documenting that contract. Review turned up a worse latent bug in the same block: the
+honey branch compared the stored `Fluid` against `ModFluids.HONEY_FLUID` — the `RegistrySupplier`,
+not the fluid — which compiles (class vs. unrelated interface) but is always false, so **a jar of
+honey could never be bottled**. Fixed with `.get()`, along with the same mistake in the two bucket
+sound helpers. Covered by `GlassJarInteractionGameTest` (bottling honey / water / lava).
 
 Two consecutive `if (!this.hasFluid())` checks; the second (returning an empty glass bottle) is
 unreachable. Milk has no bottle path (by design?), but if the jar holds milk/lava the method
 returns `null` after doing nothing — the caller guards on water/honey today, so this is latent;
 simplify and make the contract explicit.
 
-### 2.3 Villager global reputation is ignored when bad reputation is enabled — **Confirmed**
+### 2.3 Villager global reputation is ignored when bad reputation is enabled — **✅ Done (2026-07-23, #60)**
 `villager-tweaks/.../mixin/VTVillagerEntityMixin.java:48–58`
+
+**Resolution:** `injected()` now only falls through to vanilla when neither tweak applies
+(`!global && bad`); otherwise it picks the UUID from `enableGlobalReputation` and the gossip-type
+filter from `enableBadReputation` independently (all types when on, matching vanilla's predicate;
+negatives dropped when off). Covered by `GlobalReputationGameTest` (villager-tweaks' first
+gametests): reputation shared across players, negatives still counted globally, and the bad-rep-off
+filter preserved.
 
 `injected()` computes `playerId = enableGlobalReputation ? GLOBAL_UUID : player.getUUID()` but
 then returns early when `config.enableBadReputation` is true — so with both options on, the
@@ -184,8 +230,15 @@ GLOBAL_UUID substitution never applies to reputation reads (writes still go to G
 `onReputationEventFrom`, making reads/writes inconsistent). Fix: when global rep is enabled and
 bad rep is also enabled, still return `gossips.getReputation(GLOBAL_UUID, all types)`.
 
-### 2.4 `BlockConfig.getTexture()` eagerly evaluates its fallback — **Confirmed**
+### 2.4 `BlockConfig.getTexture()` eagerly evaluates its fallback — **✅ Done (2026-07-23, #62)**
 `chimeric-lib/.../blocks/BlockConfig.java` (`getTexture()`)
+
+**Resolution:** Consults the map first and only derives the ingredient texture when there's no
+explicit default (a config with neither still throws, correctly). Covered by `BlockConfigTest` (a
+new chimeric-lib JUnit class, 5 cases). Diagnosing this also surfaced a `docs/TESTING.md` error —
+chimeric-lib's own JUnit tests load the library from maven-local, so `bun run publish:lib` **is**
+required before running them (the opposite of what the doc claimed); the doc was corrected in the
+same PR.
 
 `textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()).sprite())`
 — `getOrDefault` evaluates the default argument unconditionally, so a config with an explicit
@@ -193,27 +246,46 @@ default texture but **no ingredient** throws `IllegalStateException` (or NPEs in
 `getBlockTexture`) even though the texture exists. Fix: check `textures.containsKey("default")`
 first / compute the fallback lazily.
 
-### 2.5 `DyeStationBlockEntity` opener-counter checks the wrong menu class — **Confirmed**
+### 2.5 `DyeStationBlockEntity` opener-counter checks the wrong menu class — **✅ Done (2026-07-23, #63)**
 `shulker-stuff/.../block/entity/DyeStationBlockEntity.java:57–64`
+
+**Resolution:** `isOwnContainer` now tests `player.containerMenu instanceof DyeStationScreenHandler`
+and compares its inventory to this block entity. Covered by `DyeStationGameTest` (shulker-stuff's
+first gametests): the opener recheck counts a player actually using the station.
 
 `isOwnContainer` tests `player.containerMenu instanceof ChestMenu`, but the dye station opens a
 `DyeStationScreenHandler` — copy-paste from the barrel implementation. `recheckOpeners` therefore
 always sees zero legitimate viewers. Currently masked because `onOpen`/`onClose` are no-ops; fix
 before anyone adds open/close behavior.
 
-### 2.6 Menus call `startOpen` but never `stopOpen` — **Confirmed, repo-wide pattern**
+### 2.6 Menus call `startOpen` but never `stopOpen` — **✅ Done (2026-07-23, #62/#63/#64)**
 - `chimeric-lib/.../screen/SimpleInventoryScreenHandler.java:27`
 - `chimeric-lib/.../screen/DoubleWideInventoryScreenHandler.java:27`
 - `hopper-xtreme` FilteredHopper/FilteredGlazedHopper/GlazedHopper/HopperItemFilter handlers (line 30 each)
 - `shulker-stuff/.../DyeStationScreenHandler.java:43`
+
+**Resolution:** Every listed handler now overrides `removed(Player)` to call
+`container.stopOpen(player)`, matching vanilla `ChestMenu`. Fixed per mod alongside the other
+same-mod items — the two chimeric-lib handlers in #62, the dye station in #63, the four
+hopper-xtreme handlers in #64. Open/close balance is covered by gametests backed by a counting
+container in chimeric-lib (`ScreenHandlerGameTest`), shulker-stuff (`DyeStationGameTest`), and
+hopper-xtreme (`ExtractGuardTest`). Consolidating these into a shared base class remains Phase 3
+item 3.2; this is the minimal per-handler fix.
 
 None of these override `removed(Player)` to call `container.stopOpen(player)` (vanilla `ChestMenu`
 does). For BEs using `ContainerOpenersCounter` this leaves the open-counter unbalanced until the
 recheck kicks in; for anything relying on `stopOpen` side effects it never fires. Fix once in the
 shared base class (see 3.2).
 
-### 2.7 Dye station output-slot bookkeeping — **Confirmed (UX), verify the edge cases**
+### 2.7 Dye station output-slot bookkeeping — **✅ Done (2026-07-23, #63)**
 `shulker-stuff/.../client/screen/DyeStationScreenHandler.java` (`OutputSlot`, `quickMoveStack`)
+
+**Resolution:** The result slot gets its own `quickMoveStack` branch (named slot constants
+`STATION_SLOT_COUNT` / `OUTPUT_SLOT_INDEX` / `FIRST_PLAYER_SLOT` replace the size-derived
+boundaries), input consumption moved from `Slot#remove` to `onTake` (so every handover path —
+pick-up, shift-click, swap, drag — pays exactly once, via `Container#removeItem`), and the result is
+recomputed after consumption. Covered by `DyeStationGameTest`: shift-clicking the result moves it to
+the player, and taking the result consumes inputs once and refreshes.
 
 - Shift-clicking the output slot does nothing: `invSlot < getContainerSize()` (7) is false for slot
   index 7, so it's treated as a player slot and `moveItemStackTo(0..7)` finds no legal target.
@@ -226,40 +298,77 @@ shared base class (see 3.2).
 **Fix:** move consumption to `onTake`, call `updateOutput()` after consumption, and special-case
 the output slot in `quickMoveStack`.
 
-### 2.8 Houdini block spawns ghost item entities on the client — **Confirmed**
+### 2.8 Houdini block spawns ghost item entities on the client — **✅ Done (2026-07-23, #61)**
 `houdini-block/.../blocks/HoudiniBlock.java` (`replaceWithBlockInHand`, `playerWillDestroy`,
 `spawnHoudiniBlockItem`)
+
+**Resolution:** Entity spawns and block mutations in both paths are now gated to the server;
+`spawnHoudiniBlockItem` also returns early client-side on its own. Destroy particles stay on both
+sides (they're a level event, as vanilla fires them). Testing this surfaced a separate **double-drop**
+bug fixed in the same PR: the block hands itself back manually *and* carried a loot table
+(`ofFullCopy(Blocks.STONE)` inherits stone's derived-name drops), so a real player breaking it with
+a correct tool got two blocks — fixed with `.noLootTable()` and deleting the JSON, per direction to
+keep the manual spawn. Covered by houdini-block's first gametests (spawn-path outcomes +
+`theBlockHasNoLootTable`, which asserts `getDrops` is empty).
 
 `world.addFreshEntity(itemEntity)` runs on both sides (no `isClientSide` guard), producing
 client-only ghost items that pop when the server syncs. `playerWillDestroy` has the same issue.
 Fix: gate entity spawning (and `setBlockAndUpdate` in the replace path) to the server.
 
-### 2.9 Off-hand interactions use the wrong hand — **Confirmed pattern**
+### 2.9 Off-hand interactions use the wrong hand — **✅ Done in part (2026-07-23, #65)**
 - `minekea/.../ShelfBlock.java:236` — `player.getMainHandItem()` / `setItemInHand(MAIN_HAND, …)`
 - `minekea/.../ArmoireBlock.java:439` — same
 - `minekea/.../GlassJarBlock.java:469` area — inserts `stack` (the hand param) but writes the
   result back to `MAIN_HAND`
 
-`useItemOn` receives `hand`; when it fires for the off-hand these write the remainder into the
-main hand (potentially deleting/duplicating the main-hand item). Fix: thread `hand` through.
+**Resolution:** Only the **glass jar** was a real bug — it overrides `useItemOn` (which receives
+`hand`) and wrote every result to `MAIN_HAND`. `hand` is now threaded through, with a gametest
+(`usingTheJarOffHandLeavesTheMainHandAlone`) that pins the old behavior of destroying the main-hand
+stack.
 
-### 2.10 `GlassJarBlock.useItemOn` — duplicated condition + client-side state mutation — **Confirmed**
+The **shelf and armoire entries were a false positive.** Neither overrides `useItemOn`; both override
+`useWithoutItem`, which has no `hand` parameter, and the 26.2 `ServerPlayerGameMode` only dispatches
+`useWithoutItem` when `hand == MAIN_HAND` (verified in the binary). Reading/writing `MAIN_HAND` there
+is correct, so they were left unchanged. There *is* a separate, real gap — because they only handle
+the main hand, shelves and armoires **ignore off-hand items entirely** — but fixing that means adding
+a `useItemOn` override, a feature change rather than a bug fix, so it's out of scope here and worth
+its own item.
+
+### 2.10 `GlassJarBlock.useItemOn` — duplicated condition + client-side state mutation — **✅ Done (2026-07-23, #65)**
 `GlassJarBlock.java:464–466` has the identical `!stack.isEmpty() && entity.canAcceptItem(stack)`
 check nested inside itself (copy-paste). More broadly the whole method mutates BE state on both
 sides; the sounds are client-gated but the inventory math isn't. Consider gating mutations to the
 server and returning `SUCCESS`/`CONSUME` appropriately.
 
-### 2.11 `XtremeHopperBlockEntity.canExtract` casts unconditionally — **Confirmed, latent**
+**Resolution:** Dropped the self-nested condition and made the method server-authoritative — the
+client returns `SUCCESS` immediately (arm swing intact) instead of mutating state, and the sounds
+moved to the server (`playSound(null, ...)`), so nearby players hear them rather than only the
+interacting client. The method's unconditional `SUCCESS` return was **left as-is**: changing it to a
+context-sensitive `SUCCESS`/`CONSUME`/`PASS` alters interaction dispatch (it's part of what makes the
+off-hand path reachable) and deserves its own change rather than riding along with these fixes.
+
+### 2.11 `XtremeHopperBlockEntity.canExtract` casts unconditionally — **✅ Done (2026-07-23, #64)**
 `XtremeHopperBlockEntity.java:403` — `((XtremeHopperBlockEntity) hopper).withFilter` inside a
 static helper whose public entry point (`extract(Level, Hopper)`) accepts any `Hopper`. Safe today
 because only the own BE calls it; one future caller (e.g., a hopper minecart integration) away
 from a `ClassCastException`. Same pattern in all six BE copies. Fold into the Phase 3 base class
 with an `instanceof` check.
 
-### 2.12 `isFull()` counts the hidden filter slot — **Confirmed, minor**
+**Resolution:** Replaced the unconditional cast with an `instanceof` pattern in all six BE copies,
+matching what the sibling `canInsert` already did. Covered by `ExtractGuardTest`
+(`extractAcceptsAForeignHopper`), which drives the public entry point with a real vanilla hopper
+minecart and reproduces the exact `ClassCastException` on the pre-fix code. Still worth folding into
+the Phase 3 base class (item 3.1); this is the minimal fix across the six copies.
+
+### 2.12 `isFull()` counts the hidden filter slot — **✅ Done (2026-07-23, #64)**
 `XtremeHopperBlockEntity.java:189–197` iterates the full backing list including the filter slot,
 so a filtered hopper with an empty filter never reports full and always attempts extraction.
 Cosmetic/perf only; fix in the base-class refactor (iterate `getContainerSize()` slots).
+
+**Resolution:** All six copies now iterate `getContainerSize()` slots instead of the full backing
+list. No test: as the item notes, this is unobservable — the only case where old and new differ is a
+hopper whose storage is already full, where the extra extraction attempt can't insert anything and
+restores the source stack.
 
 ---
 
@@ -396,15 +505,17 @@ fixed-size `NonNullList` (size can drift; other BEs assign the list reference).
 
 | Step | Items | Risk | Notes |
 |------|-------|------|-------|
-| 1 | 1.1, 1.2, 1.3 | Low | Small, surgical; add/extend gametests first |
-| 2 | 1.4, 1.6 | Low-Med | Lib change (1.6) affects several mods — run full build + minekea manual smoke test |
-| 3 | 1.5 verification, then fix | Med | Needs in-game verification before choosing a fix |
-| 4 | Phase 2 items | Low each | Independent; batch by mod |
-| 5 | 3.1 (hopper BE base class) | Med-High | Biggest payoff; gametests are the gate |
+| 1 | 1.1, 1.2, 1.3 | Low | ✅ Done — small, surgical; add/extend gametests first |
+| 2 | 1.4, 1.6 | Low-Med | ✅ Done — lib change (1.6) affects several mods |
+| 3 | 1.5 verification, then fix | Med | ✅ Done — verified already resolved, no fix needed |
+| 4 | Phase 2 items | Low each | ✅ Done — batched by mod, one PR each |
+| 5 | 3.1 (hopper BE base class) | Med-High | **Next.** Biggest payoff; gametests are the gate |
 | 6 | 3.2–3.8 | Low-Med | Each is self-contained |
 | 7 | Phase 4 | Low | Opportunistic / alongside the above |
 
-**Verification baseline for every step:** `./gradlew build`, plus the hopper-xtreme fabric
-gametests for anything touching chimeric-lib inventories or hopper-xtreme. There are currently no
-tests outside hopper-xtreme — items 1.1, 1.6, and 2.7 are good candidates for the first gametests
-in minekea and shulker-stuff respectively.
+**Verification baseline for every step:** `./gradlew build`, plus each touched mod's fabric
+gametests. As of the Phase 2 work every active mod that was changed has a test source set: JUnit +
+gametests in chimeric-lib, and isolated `gametest` source sets in hopper-xtreme (still in `main`,
+see `docs/TESTING.md`), minekea, sponj, villager-tweaks, houdini-block, and shulker-stuff. The
+Phase 3 hopper base-class refactor (3.1) is gated by the hopper-xtreme gametests — run them before
+and after.
