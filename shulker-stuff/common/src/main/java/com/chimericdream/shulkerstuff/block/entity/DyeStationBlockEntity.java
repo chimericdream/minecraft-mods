@@ -1,5 +1,6 @@
 package com.chimericdream.shulkerstuff.block.entity;
 
+import com.chimericdream.lib.inventories.ContainerOpenersCounters;
 import com.chimericdream.lib.inventories.ImplementedInventory;
 import com.chimericdream.shulkerstuff.ModInfo;
 import com.chimericdream.shulkerstuff.block.ModBlocks;
@@ -11,12 +12,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
@@ -40,25 +39,17 @@ public class DyeStationBlockEntity extends BaseContainerBlockEntity implements M
 
         this.inventory = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
 
-        this.stateManager = new ContainerOpenersCounter() {
-            protected void onOpen(Level world, BlockPos pos, BlockState state) {
-            }
-
-            protected void onClose(Level world, BlockPos pos, BlockState state) {
-            }
-
-            protected void openerCountChanged(Level world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
-                DyeStationBlockEntity.this.onViewerCountUpdate(world, pos, state, oldViewerCount, newViewerCount);
-            }
-
-            public boolean isOwnContainer(Player player) {
-                // The dye station opens a DyeStationScreenHandler, never a ChestMenu — testing for
-                // the latter (copy-paste from the barrel) meant recheckOpeners never saw a single
-                // legitimate viewer.
-                return player.containerMenu instanceof DyeStationScreenHandler handler
-                    && handler.getInventory() == DyeStationBlockEntity.this;
-            }
-        };
+        // The dye station opens a DyeStationScreenHandler, never a ChestMenu — the helper confirms
+        // ownership by menu class + inventory identity, so the copy-paste bug that had this testing
+        // for ChestMenu (and never seeing a legitimate viewer) can't recur. No open/close side
+        // effects (no lid, no sound); the default handler fires the comparator block event.
+        this.stateManager = ContainerOpenersCounters.create(
+            this,
+            DyeStationScreenHandler.class,
+            menu -> ((DyeStationScreenHandler) menu).getInventory(),
+            null,
+            null
+        );
     }
 
     public static int getPlayersLookingInStationCount(BlockGetter world, BlockPos pos) {
@@ -128,8 +119,4 @@ public class DyeStationBlockEntity extends BaseContainerBlockEntity implements M
         }
     }
 
-    protected void onViewerCountUpdate(Level world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
-        Block block = state.getBlock();
-        world.blockEvent(pos, block, 1, newViewerCount);
-    }
 }
