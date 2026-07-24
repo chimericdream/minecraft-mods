@@ -84,23 +84,56 @@ subprojects {
         minecraft "net.minecraft:minecraft:${rootProject.minecraft_version}"
     }
 
-    if (project.parent != null && project.parent.name !== 'chimeric-lib') {
+    // Consumer mods depend on chimeric-lib. When chimeric-lib is part of this build (the normal
+    // case — it is in settings.gradle's projectList), wire it as a project() dependency so source
+    // edits are picked up immediately, with no publish-to-maven-local step. When it is not in the
+    // build (e.g. someone trimmed settings.gradle to a single mod), fall back to the published
+    // Maven coordinate resolved from a remote/local repository.
+    //
+    // Why depend on both :common and the platform project: the platform subprojects reclassify their
+    // `jar` as "raw" and put the bundled output (with common's classes shaded in) in `shadowJar`, so
+    // a project() dep on the platform alone resolves the raw jar and is missing common's classes.
+    // Depending on :common directly supplies them. Both go through the `common` configuration (which
+    // feeds compileClasspath/runtimeClasspath AND developmentFabric/NeoForge) so Loom registers
+    // chimeric-lib as a dev-runtime mod — the same mechanism each mod uses for its own :common. Using
+    // `common` (not `shadowBundle`) keeps chimeric-lib OUT of the consumer's jar: it ships separately.
+    if (project.parent != null && project.parent.name != 'chimeric-lib') {
+        def libInBuild = rootProject.findProject(':chimeric-lib') != null
+
         if (project.name == 'common') {
             dependencies {
-                implementation "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
+                // The common subproject never runs and is not bundled with chimeric-lib (it ships
+                // separately as its own mod), so it only needs chimeric-lib to compile against.
+                // compileOnly keeps it off the runtime classpath, which also keeps it out of Loom's
+                // eagerly-resolved mainRuntimeDependencyResolve for this non-runnable subproject.
+                if (libInBuild) {
+                    compileOnly(project(path: ':chimeric-lib:common')) { transitive = false }
+                } else {
+                    compileOnly "com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"
+                }
             }
         }
 
         if (project.name == 'fabric') {
             dependencies {
-                implementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
+                if (libInBuild) {
+                    common(project(path: ':chimeric-lib:common')) { transitive = false }
+                    common(project(path: ':chimeric-lib:fabric')) { transitive = false }
+                } else {
+                    implementation "com.chimericdream.lib:chimericlib-fabric:${rootProject.chimericlib_version}"
+                }
             }
         }
 
         if (project.name == 'neoforge') {
             dependencies {
-                implementation("com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}") {
-                    exclude(group: "net.neoforged.fancymodloader", module: "loader")
+                if (libInBuild) {
+                    common(project(path: ':chimeric-lib:common')) { transitive = false }
+                    common(project(path: ':chimeric-lib:neoforge')) { transitive = false }
+                } else {
+                    implementation("com.chimericdream.lib:chimericlib-neoforge:${rootProject.chimericlib_version}") {
+                        exclude(group: "net.neoforged.fancymodloader", module: "loader")
+                    }
                 }
             }
         }
@@ -137,11 +170,14 @@ subprojects {
 
             testImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
 
-            // chimeric-lib's own tests reuse its shared test fixtures (BootstrapMinecraft, ...) via
-            // the local project. A downstream mod instead consumes the published variant with:
-            //   testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<ver>"))
-            if (project.parent.name == 'chimeric-lib') {
+            // Shared unit-test helpers (BootstrapMinecraft, ...) live in chimeric-lib common's
+            // published `testFixtures` variant. Every mod consumes them the same way: as a project
+            // dependency when chimeric-lib is in the build, or the published variant otherwise. The
+            // published artifactId is `chimericlib-common` (no MC suffix — that is in the version).
+            if (rootProject.findProject(':chimeric-lib') != null) {
                 testImplementation(testFixtures(project(":chimeric-lib:common")))
+            } else {
+                testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common:${rootProject.chimericlib_version}"))
             }
         }
 
