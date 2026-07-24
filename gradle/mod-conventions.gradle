@@ -1,0 +1,81 @@
+// Shared build conventions for every mod in this monorepo. Applied from each mod's build.gradle via
+//   apply from: "${rootDir}/gradle/mod-conventions.gradle"
+// It runs in the mod project's context, so here `project` is the mod (e.g. :minekea) and its
+// subprojects are common/fabric/neoforge. Per-mod values (mod_id, mod_version, maven_group,
+// archives_name, the *_compat versions) come from the mod's own gradle.properties, which its
+// common/fabric/neoforge subprojects inherit.
+//
+// The root build.gradle owns everything that is identical across every subproject regardless of mod
+// (loom, java, repositories, the chimeric-lib dependency, publishing). This file owns the parts that
+// are per-mod but structurally identical: coordinates, archive naming, mod-metadata token expansion,
+// and the shadow "raw jar -> shadowJar" reclassification.
+
+allprojects {
+    group = project.maven_group
+    version = "${rootProject.minecraft_compatibility}-${project.mod_version}"
+}
+
+subprojects {
+    base {
+        archivesName = "${project.archives_name}-${project.name}"
+    }
+
+    architectury {
+        platformSetupLoomIde()
+    }
+
+    processResources {
+        inputs.property 'version', project.version
+
+        // Build the fabric.mod.json / neoforge.mods.toml token map from the mod's own properties, so
+        // this one script works for every mod no matter which *_compat keys it declares (e.g. only
+        // guide mods have patchouli_compat). `version` is the computed project version, not a raw
+        // property. Extra keys are harmless; expand only fails on tokens it cannot resolve.
+        def tokens = [version: project.version]
+        project.properties.each { k, v ->
+            if (k.endsWith('_compat') || k in ['mod_id', 'mod_name', 'mod_description']) {
+                tokens[k] = v
+            }
+        }
+
+        filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
+            expand(tokens)
+        }
+    }
+
+    // The platform subprojects (fabric/neoforge) bundle their common code with the Shadow plugin.
+    // Reclassify the plain `jar` as "raw" and let `shadowJar` produce the real, unclassified artifact
+    // (mixin resources + shaded common classes). common is never shadowed.
+    if (project.name != 'common') {
+        apply plugin: 'com.gradleup.shadow'
+
+        configurations {
+            common {
+                canBeResolved = true
+                canBeConsumed = false
+            }
+            compileClasspath.extendsFrom common
+            runtimeClasspath.extendsFrom common
+
+            // Files in this configuration will be bundled into your mod using the Shadow plugin.
+            // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+            shadowBundle {
+                canBeResolved = true
+                canBeConsumed = false
+            }
+        }
+
+        jar {
+            archiveClassifier = "raw"
+        }
+
+        shadowJar {
+            dependsOn(jar)
+            mainSpec.sourcePaths.clear()
+            from(zipTree(jar.archiveFile))
+
+            configurations = [project.configurations.shadowBundle]
+            archiveClassifier = null
+        }
+    }
+}
