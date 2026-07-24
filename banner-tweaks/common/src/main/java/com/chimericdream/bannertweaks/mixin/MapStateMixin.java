@@ -57,8 +57,20 @@ abstract public class MapStateMixin {
     private @Final Map<String, MapBanner> bannerMarkers;
 
     /**
+     * Fixes <a href="https://bugs.mojang.com/browse/MC-144406">MC-144406</a> (banner markers off the
+     * edge of a map are dropped instead of clamped to the border).
+     *
+     * <p><b>Why {@code @Overwrite} rather than {@code @Inject}/{@code @ModifyArg}:</b> the fix is not
+     * a single localized call — it changes vanilla's out-of-bounds branch (the
+     * {@code f/g < -64 .. >= 64} clamping, the {@code removeDecoration}-vs-keep decisions, and the
+     * {@code PLAYER_OFF_MAP}/{@code PLAYER_OFF_LIMITS} substitution) which is interleaved with the
+     * shared decoration-tracking bookkeeping. There is no stable injection point that expresses the
+     * corrected behavior, so the method is reimplemented wholesale. Consequence: this conflicts with
+     * any other mod that also overwrites {@code MapItemSavedData#addDecoration} — accepted as the
+     * cost of the fix. Kept verbatim vs. vanilla except the MC-144406 corrections.
+     *
      * @author chimericdream (with additional credit to @jason-green-io)
-     * @reason fixes MC-144406
+     * @reason fixes MC-144406; corrections are distributed through the method with no clean inject point
      */
     @Overwrite
     public void addDecoration(Holder<MapDecorationType> type, @Nullable LevelAccessor world, String key, double x, double z, double rotation, @Nullable Component text) {
@@ -129,8 +141,16 @@ abstract public class MapStateMixin {
     }
 
     /**
+     * Fixes <a href="https://bugs.mojang.com/browse/MC-144406">MC-144406</a>: pairs with
+     * {@link #addDecoration} so a banned/re-toggled banner near the map edge is tracked with the
+     * corrected bounds ({@code f/g < 64.0}, matching addDecoration's clamping).
+     *
+     * <p><b>Why {@code @Overwrite}:</b> same as {@link #addDecoration} — the bounds check and the
+     * add/remove flow are the whole method, so there is no localized call to redirect. Reimplemented
+     * wholesale; conflicts with other mods overwriting {@code toggleBanner}.
+     *
      * @author chimericdream (with additional credit to @jason-green-io)
-     * @reason fixes MC-144406
+     * @reason fixes MC-144406; the corrected bounds check is the method body itself, no clean inject point
      */
     @Overwrite
     public boolean toggleBanner(LevelAccessor world, BlockPos pos) {
