@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":flat-bedrock").maven_group
-    version = project(":flat-bedrock").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":flat-bedrock").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":flat-bedrock").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":flat-bedrock").archives_name + "-" + project.name
     }
 
     architectury {

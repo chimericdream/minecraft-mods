@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":shulker-stuff").maven_group
-    version = project(":shulker-stuff").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":shulker-stuff").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":shulker-stuff").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":shulker-stuff").archives_name + "-" + project.name
     }
 
     architectury {

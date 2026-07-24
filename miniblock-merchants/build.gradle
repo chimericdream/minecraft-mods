@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":miniblock-merchants").maven_group
-    version = project(":miniblock-merchants").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":miniblock-merchants").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":miniblock-merchants").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":miniblock-merchants").archives_name + "-" + project.name
     }
 
     architectury {

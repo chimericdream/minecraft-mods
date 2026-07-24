@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":athenaeum").maven_group
-    version = project(":athenaeum").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":athenaeum").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":athenaeum").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":athenaeum").archives_name + "-" + project.name
     }
 
     architectury {

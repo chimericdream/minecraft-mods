@@ -4,14 +4,14 @@ plugins {
 
 allprojects {
     group = project(":hang-from-slabs").maven_group
-    version = project(":hang-from-slabs").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":hang-from-slabs").mod_version
 }
 
 subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     base {
-        archivesName = project(":hang-from-slabs").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":hang-from-slabs").archives_name + "-" + project.name
     }
 
     architectury {
