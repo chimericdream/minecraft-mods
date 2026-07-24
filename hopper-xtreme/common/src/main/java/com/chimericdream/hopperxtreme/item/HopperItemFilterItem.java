@@ -57,7 +57,10 @@ public class HopperItemFilterItem extends Item {
 
     @Override
     public @NotNull InteractionResult use(Level world, Player player, InteractionHand hand) {
-        if (player.level() != null && !player.level().isClientSide()) {
+        // Everything below is server-authoritative; the client just reports the (unchanged) held item.
+        // `world` is the player's level, so a single client-side check covers what used to be a nested
+        // `player.level() != null && !player.level().isClientSide()` plus an inner `!world.isClientSide()`.
+        if (!world.isClientSide()) {
             if (player.isShiftKeyDown()) {
                 try {
                     ItemStack itemStack = player.getItemInHand(hand);
@@ -69,9 +72,7 @@ public class HopperItemFilterItem extends Item {
                     HopperXtremeFilterModeComponent newComponent = new HopperXtremeFilterModeComponent(newMode.toString());
                     itemStack.set(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), newComponent);
 
-                    if (!world.isClientSide()) {
-                        player.sendOverlayMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)));
-                    }
+                    player.sendOverlayMessage(Component.translatable(TOOLTIP_KEYS.get(newMode)));
 
                     return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
                 } catch (IllegalArgumentException e) {
