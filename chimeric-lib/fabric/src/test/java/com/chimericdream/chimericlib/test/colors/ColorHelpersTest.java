@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -56,8 +57,25 @@ public class ColorHelpersTest extends BootstrapMinecraft {
     void getTintFallsBackToFirstVariantWhenOutOfRange() {
         int[] variants = {0xaaaaaa, 0xbbbbbb};
 
+        assertEquals(0xaaaaaa, ColorHelpers.getTint(-1, variants));
         assertEquals(0xaaaaaa, ColorHelpers.getTint(2, variants));
         assertEquals(0xaaaaaa, ColorHelpers.getTint(99, variants));
+    }
+
+    @Test
+    void getTintsReturnsDefensiveCopy() {
+        int[] first = ColorHelpers.getTints("white");
+        int[] second = ColorHelpers.getTints("white");
+
+        // Same values every call, but a fresh array so a caller can't corrupt the shared palette.
+        assertArrayEquals(first, second);
+        first[0] = 0;
+        assertNotEquals(0, ColorHelpers.getTints("white")[0]);
+    }
+
+    @Test
+    void getTintsRejectsUnknownColor() {
+        assertThrows(RuntimeException.class, () -> ColorHelpers.getTints("chartreuse"));
     }
 
     @Test

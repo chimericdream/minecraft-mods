@@ -17,6 +17,11 @@ import org.jspecify.annotations.NonNull;
  * {@link DoubleWideInventoryScreenHandler} (18 columns) are thin subclasses that pass their width.
  */
 public abstract class InventoryScreenHandler extends AbstractContainerMenu {
+    // Fixed padding (px) between the storage grid and the player inventory, and between the player
+    // inventory and the hotbar — mirrors vanilla ChestMenu's spacing.
+    private static final int PLAYER_INVENTORY_GAP = 14;
+    private static final int HOTBAR_GAP = 4;
+
     private final Container inventory;
 
     protected InventoryScreenHandler(MenuType<?> type, int syncId, Inventory playerInventory, Container inventory, int rowCount, int columns) {
@@ -30,7 +35,13 @@ public abstract class InventoryScreenHandler extends AbstractContainerMenu {
 
         // The player inventory is always 9 wide; center it under a grid wider than 9.
         int playerX = 8 + (columns - 9) * ScreenHelpers.ROW_HEIGHT / 2;
-        int i = (rowCount - 4) * 18, j, k;
+
+        // The player inventory + hotbar hang below the storage grid, whose bottom edge sits at
+        // ROW_HEIGHT * (rowCount + 1). Everything derives from ROW_HEIGHT so the layout scales with
+        // the grid height.
+        int playerInventoryY = ScreenHelpers.ROW_HEIGHT * (rowCount + 1) + PLAYER_INVENTORY_GAP;
+        int hotbarY = playerInventoryY + (3 * ScreenHelpers.ROW_HEIGHT) + HOTBAR_GAP;
+        int j, k;
 
         for (j = 0; j < rowCount; ++j) {
             for (k = 0; k < columns; ++k) {
@@ -49,7 +60,7 @@ public abstract class InventoryScreenHandler extends AbstractContainerMenu {
                     playerInventory,
                     k + j * 9 + 9,
                     playerX + k * ScreenHelpers.ROW_HEIGHT,
-                    104 + j * ScreenHelpers.ROW_HEIGHT + i
+                    playerInventoryY + j * ScreenHelpers.ROW_HEIGHT
                 ));
             }
         }
@@ -59,7 +70,7 @@ public abstract class InventoryScreenHandler extends AbstractContainerMenu {
                 playerInventory,
                 j,
                 playerX + j * ScreenHelpers.ROW_HEIGHT,
-                162 + i
+                hotbarY
             ));
         }
     }

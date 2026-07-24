@@ -29,22 +29,24 @@ public class ColorHelpers {
         }
     }
 
-    public static final int[] WHITE = {0xf9fffe, 0xe4e4e4};
-    public static final int[] LIGHT_GRAY = {0x9d9d97, 0xa0a7a7};
-    public static final int[] GRAY = {0x474f52, 0x414141};
-    public static final int[] BLACK = {0x1d1d21, 0x181414};
-    public static final int[] BROWN = {0x835432, 0x56331c};
-    public static final int[] RED = {0xb02e26, 0x9e2b27};
-    public static final int[] ORANGE = {0xf9801d, 0xea7e35};
-    public static final int[] YELLOW = {0xfed83d, 0xc2b51c};
-    public static final int[] LIME = {0x80c71f, 0x39ba2e};
-    public static final int[] GREEN = {0x5e7c16, 0x364b18};
-    public static final int[] CYAN = {0x169c9c, 0x267191};
-    public static final int[] LIGHT_BLUE = {0x3ab3da, 0x6387d2};
-    public static final int[] BLUE = {0x3c44aa, 0x253193};
-    public static final int[] PURPLE = {0x8932b8, 0x7e34bf};
-    public static final int[] MAGENTA = {0xc74ebd, 0xbe49c9};
-    public static final int[] PINK = {0xf38baa, 0xd98199};
+    // Tint variants (base color + darker edge) per dye color. Kept private and handed out only as
+    // defensive copies via getTint/getTints so callers cannot mutate the shared palette.
+    private static final int[] WHITE = {0xf9fffe, 0xe4e4e4};
+    private static final int[] LIGHT_GRAY = {0x9d9d97, 0xa0a7a7};
+    private static final int[] GRAY = {0x474f52, 0x414141};
+    private static final int[] BLACK = {0x1d1d21, 0x181414};
+    private static final int[] BROWN = {0x835432, 0x56331c};
+    private static final int[] RED = {0xb02e26, 0x9e2b27};
+    private static final int[] ORANGE = {0xf9801d, 0xea7e35};
+    private static final int[] YELLOW = {0xfed83d, 0xc2b51c};
+    private static final int[] LIME = {0x80c71f, 0x39ba2e};
+    private static final int[] GREEN = {0x5e7c16, 0x364b18};
+    private static final int[] CYAN = {0x169c9c, 0x267191};
+    private static final int[] LIGHT_BLUE = {0x3ab3da, 0x6387d2};
+    private static final int[] BLUE = {0x3c44aa, 0x253193};
+    private static final int[] PURPLE = {0x8932b8, 0x7e34bf};
+    private static final int[] MAGENTA = {0xc74ebd, 0xbe49c9};
+    private static final int[] PINK = {0xf38baa, 0xd98199};
 
     public static String[] getColors() {
         return List.of(
@@ -145,6 +147,32 @@ public class ColorHelpers {
             case "purple" -> Blocks.WOOL.purple();
             case "magenta" -> Blocks.WOOL.magenta();
             case "pink" -> Blocks.WOOL.pink();
+            default -> throw new RuntimeException(String.format("Invalid color %s", color));
+        };
+    }
+
+    /**
+     * Returns the tint variants for a dye color as a fresh array, so mutating the result never
+     * corrupts the shared palette. Pair with {@link #getTint(int, int[])} to pick a variant.
+     */
+    public static int[] getTints(String color) {
+        return switch (color) {
+            case "white" -> WHITE.clone();
+            case "light_gray" -> LIGHT_GRAY.clone();
+            case "gray" -> GRAY.clone();
+            case "black" -> BLACK.clone();
+            case "brown" -> BROWN.clone();
+            case "red" -> RED.clone();
+            case "orange" -> ORANGE.clone();
+            case "yellow" -> YELLOW.clone();
+            case "lime" -> LIME.clone();
+            case "green" -> GREEN.clone();
+            case "cyan" -> CYAN.clone();
+            case "light_blue" -> LIGHT_BLUE.clone();
+            case "blue" -> BLUE.clone();
+            case "purple" -> PURPLE.clone();
+            case "magenta" -> MAGENTA.clone();
+            case "pink" -> PINK.clone();
             default -> throw new RuntimeException(String.format("Invalid color %s", color));
         };
     }
