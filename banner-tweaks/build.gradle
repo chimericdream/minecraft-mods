@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":banner-tweaks").maven_group
-    version = project(":banner-tweaks").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":banner-tweaks").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":banner-tweaks").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":banner-tweaks").archives_name + "-" + project.name
     }
 
     architectury {

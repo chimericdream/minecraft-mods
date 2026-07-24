@@ -2,14 +2,23 @@ plugins {
     id 'com.gradleup.shadow' version '9.2.2' apply false
 }
 
+// Other mods in this build depend on chimeric-lib as project() dependencies. Loom resolves each mod's
+// compile/runtime classpath during that mod's afterEvaluate, and resolving a project() dependency on
+// a subproject that has not finished configuring fails with "project components has not been
+// calculated yet". settings.gradle hoists :chimeric-lib so it is the first mod evaluated; this makes
+// its evaluation also pull in its common/fabric/neoforge children, so their components exist before
+// any consumer's afterEvaluate runs. (evaluationDependsOnChildren from the parent avoids the
+// re-entrant evaluation that calling evaluationDependsOn from a consumer would trigger.)
+evaluationDependsOnChildren()
+
 allprojects {
     group = project(":chimeric-lib").maven_group
-    version = project(":chimeric-lib").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":chimeric-lib").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":chimeric-lib").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":chimeric-lib").archives_name + "-" + project.name
     }
 
     architectury {

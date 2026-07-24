@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":archaeology-tweaks").maven_group
-    version = project(":archaeology-tweaks").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":archaeology-tweaks").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":archaeology-tweaks").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":archaeology-tweaks").archives_name + "-" + project.name
     }
 
     architectury {

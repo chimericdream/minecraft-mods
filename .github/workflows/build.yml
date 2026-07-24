@@ -10,11 +10,11 @@ jobs:
   build:
     strategy:
       matrix:
-        # Use these Java versions
+        # Must be >= the `options.release` in build.gradle (currently 25).
         java: [
-          21,    # Current Java LTS & minimum supported by Minecraft
+          25,
         ]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
@@ -35,11 +35,11 @@ jobs:
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # No GITHUB_TOKEN needed: chimeric-lib is an in-build project() dependency, so the build no
+        # longer resolves anything from GitHub Packages. This lets fork PRs build without secrets.
         run: bun run build
       - name: capture build artifacts
-        if: ${{ matrix.java == '21' }} # Only upload artifacts built from latest java on one OS
+        if: ${{ matrix.java == '25' }} # Only upload artifacts from one JDK
         uses: actions/upload-artifact@v4
         with:
           name: Artifacts

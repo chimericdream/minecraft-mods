@@ -4,12 +4,12 @@ plugins {
 
 allprojects {
     group = project(":artificial-heart").maven_group
-    version = project(":artificial-heart").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":artificial-heart").mod_version
 }
 
 subprojects {
     base {
-        archivesName = project(":artificial-heart").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":artificial-heart").archives_name + "-" + project.name
     }
 
     architectury {
