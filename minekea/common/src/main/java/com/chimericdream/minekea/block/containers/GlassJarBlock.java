@@ -396,15 +396,21 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
             return InteractionResult.FAIL;
         }
 
+        // Everything below mutates block-entity state and the player's inventory, so it is
+        // server-authoritative. The client returns SUCCESS so the arm still swings; the sounds are
+        // broadcast from the server (playSound(null, ...)) instead of being played locally, which
+        // also means players other than the one interacting finally hear them.
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
         if (isFilledBucket(stack)) {
             Identifier stackId = BuiltInRegistries.ITEM.getKey(stack.getItem());
             Fluid bucketFluid = getFluidType(stackId);
 
             if (!bucketFluid.isSame(Fluids.EMPTY) && entity.tryInsert(bucketFluid)) {
-                replaceHeldItemOrDont(world, player, stack, Items.BUCKET.getDefaultInstance());
-                if (world.isClientSide()) {
-                    entity.playEmptyBucketSound(bucketFluid);
-                }
+                replaceHeldItemOrDont(world, player, hand, stack, Items.BUCKET.getDefaultInstance());
+                entity.playEmptyBucketSound(bucketFluid);
                 entity.setChanged();
             }
         } else if (isFilledBottle(stack)) {
@@ -412,10 +418,8 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
                 stack.is(Items.HONEY_BOTTLE)
                     && entity.tryInsert(ModFluids.HONEY_FLUID.get(), GlassJarBlockEntity.BOTTLE_SIZE)
             ) {
-                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultInstance());
-                if (world.isClientSide()) {
-                    entity.playEmptyBottleSound();
-                }
+                replaceHeldItemOrDont(world, player, hand, stack, Items.GLASS_BOTTLE.getDefaultInstance());
+                entity.playEmptyBottleSound();
                 entity.setChanged();
             } else if (
                 stack.is(Items.POTION)
@@ -423,10 +427,8 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
                     && stack.getComponents().get(DataComponents.POTION_CONTENTS).is(Potions.WATER)
                     && entity.tryInsert(Fluids.WATER, GlassJarBlockEntity.BOTTLE_SIZE)
             ) {
-                replaceHeldItemOrDont(world, player, stack, Items.GLASS_BOTTLE.getDefaultInstance());
-                if (world.isClientSide()) {
-                    entity.playEmptyBottleSound();
-                }
+                replaceHeldItemOrDont(world, player, hand, stack, Items.GLASS_BOTTLE.getDefaultInstance());
+                entity.playEmptyBottleSound();
                 entity.setChanged();
             }
         } else if (
@@ -437,44 +439,36 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
             ItemStack bottle = entity.getBottle();
 
             if (bottle != null && !bottle.is(Items.GLASS_BOTTLE)) {
-                replaceHeldItemOrDont(world, player, stack, bottle);
-                if (world.isClientSide()) {
-                    entity.playFillBottleSound();
-                }
+                replaceHeldItemOrDont(world, player, hand, stack, bottle);
+                entity.playFillBottleSound();
             }
         } else if (isEmptyBucket(stack) && entity.hasFluid()) {
             Fluid fluid = entity.getBucket();
 
             if (!fluid.isSame(Fluids.EMPTY)) {
                 if (fluid.isSame(Fluids.WATER)) {
-                    replaceHeldItemOrDont(world, player, stack, Items.WATER_BUCKET.getDefaultInstance());
+                    replaceHeldItemOrDont(world, player, hand, stack, Items.WATER_BUCKET.getDefaultInstance());
                 } else if (fluid.isSame(Fluids.LAVA)) {
-                    replaceHeldItemOrDont(world, player, stack, Items.LAVA_BUCKET.getDefaultInstance());
+                    replaceHeldItemOrDont(world, player, hand, stack, Items.LAVA_BUCKET.getDefaultInstance());
                 } else if (fluid.isSame(ModFluids.MILK_FLUID.get())) {
-                    replaceHeldItemOrDont(world, player, stack, Items.MILK_BUCKET.getDefaultInstance());
+                    replaceHeldItemOrDont(world, player, hand, stack, Items.MILK_BUCKET.getDefaultInstance());
                 } else if (fluid.isSame(ModFluids.HONEY_FLUID.get())) {
-                    replaceHeldItemOrDont(world, player, stack, ModFluids.HONEY_BUCKET.get().getDefaultInstance());
+                    replaceHeldItemOrDont(world, player, hand, stack, ModFluids.HONEY_BUCKET.get().getDefaultInstance());
                 }
 
-                if (world.isClientSide()) {
-                    entity.playFillBucketSound(fluid);
-                }
+                entity.playFillBucketSound(fluid);
                 entity.setChanged();
             }
         } else if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
-            if (!stack.isEmpty() && entity.canAcceptItem(stack)) {
-                ItemStack originalStack = stack.copy();
+            ItemStack originalStack = stack.copy();
 
-                // Try to insert the item in the player's hand into the jar
-                ItemStack remainingStack = entity.tryInsert(stack);
+            // Try to insert the item in the player's hand into the jar
+            ItemStack remainingStack = entity.tryInsert(stack);
 
-                if (remainingStack.isEmpty() || originalStack.getCount() > remainingStack.getCount()) {
-                    player.setItemInHand(InteractionHand.MAIN_HAND, remainingStack);
-                    if (world.isClientSide()) {
-                        entity.playAddItemSound();
-                    }
-                    entity.setChanged();
-                }
+            if (remainingStack.isEmpty() || originalStack.getCount() > remainingStack.getCount()) {
+                player.setItemInHand(hand, remainingStack);
+                entity.playAddItemSound();
+                entity.setChanged();
             }
         } else if (player.isShiftKeyDown() && stack.isEmpty()) {
             if (entity.hasItem()) {
@@ -485,9 +479,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
                     player.getZ(),
                     entity.removeStack()
                 );
-                if (world.isClientSide()) {
-                    entity.playRemoveItemSound();
-                }
+                entity.playRemoveItemSound();
                 entity.setChanged();
             }
         }
@@ -557,14 +549,16 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         return state;
     }
 
-    private void replaceHeldItemOrDont(Level world, Player player, ItemStack heldItem, ItemStack item) {
+    private void replaceHeldItemOrDont(Level world, Player player, InteractionHand hand, ItemStack heldItem, ItemStack item) {
         ItemStack remaining = heldItem.copy();
         remaining.shrink(1);
 
+        // useItemOn is told which hand it fired for; writing to MAIN_HAND regardless would clobber
+        // the main-hand item when the jar is used with the off hand.
         if (remaining.getCount() == 0) {
-            player.setItemInHand(InteractionHand.MAIN_HAND, item);
+            player.setItemInHand(hand, item);
         } else {
-            player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
+            player.setItemInHand(hand, remaining);
             Containers.dropItemStack(
                 world,
                 player.getX(),
