@@ -173,10 +173,19 @@ public interface ImplementedInventory extends Container {
 
     /**
      * Clears the inventory.
+     * <p>
+     * Fills every slot with {@link ItemStack#EMPTY} rather than calling {@code getItems().clear()}:
+     * the common backing list is {@code NonNullList.withSize(...)}, whose fixed-size backing makes a
+     * structural {@code clear()} either throw or collapse the list to size 0 (breaking the fixed-slot
+     * invariant every other method here relies on). Emptying in place keeps the slot count stable.
      */
     @Override
     default void clearContent() {
-        getItems().clear();
+        NonNullList<ItemStack> items = getItems();
+        for (int i = 0; i < items.size(); i++) {
+            items.set(i, ItemStack.EMPTY);
+        }
+        setChanged();
     }
 
     /**
