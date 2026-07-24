@@ -1,6 +1,6 @@
 package com.chimericdream.sponj.fabric.test;
 
-import com.chimericdream.sponj.BlockUtils;
+import com.chimericdream.lib.blocks.BlockUtils;
 import com.chimericdream.sponj.blocks.ModBlocks;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
