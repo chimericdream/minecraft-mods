@@ -4,10 +4,6 @@ plugins {
     id 'com.gradleup.shadow' version '9.2.2' apply false
 }
 
-ext {
-    GITHUB_TOKEN = System.getenv("GITHUB_TOKEN")
-}
-
 architectury {
     minecraft = project.minecraft_version
 }
@@ -43,14 +39,12 @@ subprojects {
     }
 
     repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/chimericdream/*")
-            credentials {
-                username = "chimericdream"
-                password = GITHUB_TOKEN
-            }
-        }
-
+        // NOTE: no maven.pkg.github.com repo here anymore. It only ever served the published
+        // chimeric-lib, which is now an in-build project() dependency. Dropping it means builds no
+        // longer need a GITHUB_TOKEN to resolve dependencies, so fork PRs (which cannot read the
+        // package registry) build cleanly. Publishing chimeric-lib to GitHub Packages still works —
+        // that is configured in chimeric-lib/build.gradle's publishing block, used by the release
+        // workflow.
         maven {
             name = 'Xander Maven'
             url = 'https://maven.isxander.dev/releases'
