@@ -156,7 +156,6 @@ public class ATBrushableBlockEntity extends BlockEntity {
                 world.setBlock(this.getBlockPos(), this.getBlockState().setValue(BlockStateProperties.DUSTED, j), 3);
             }
 
-            int k = 4;
             this.nextDustTime = world.getGameTime() + 4L;
         }
 
