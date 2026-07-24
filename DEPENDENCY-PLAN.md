@@ -7,8 +7,10 @@ publish step, no `~/.m2` involvement, and no possibility of stale bytecode.
 Secondary goals: remove the structural traps that made the current setup hard to document correctly,
 and cut the copy-paste in the Gradle configuration.
 
-Status: **not started.** Nothing in this document has been implemented or verified by running Gradle;
-the findings below come from reading the build files and `~/.m2`.
+Status: **Phases 1–3 done and verified** on branch `refactor/dependency-resolution` (2026-07-23). The
+publish loop is eliminated: chimeric-lib is an in-build `project()` dependency and `mavenLocal()` is
+gone from resolution. Phases 4–6 (the "additional improvements") are **not started**. Implementation
+notes and deviations from the original plan are called out inline below and summarized in §7.
 
 ---
 
@@ -313,3 +315,50 @@ Loom issue closes.
 
 Phases 1–3 achieve the stated goal. Everything after is cleanup that becomes much cheaper once 5.2
 lands.
+
+---
+
+## 7. What actually happened in Phases 1–3 (deviations from the plan above)
+
+Phases 1–3 landed as three commits on `refactor/dependency-resolution`. The end state matches the
+plan's intent, but several things the plan under-specified or got wrong surfaced during
+implementation:
+
+1. **The root publishing block was left as-is (§2 said to drop the `artifactId`/`version` lines).**
+   Dropping `artifactId = base.archivesName.get()` would have defaulted the artifactId to the Gradle
+   project name (`common`/`fabric`/`neoforge`), not `chimericlib-common`. Step 1 instead just made
+   `archivesName` consistent between the root and each mod (dropping the `-<mc>` suffix, moving `<mc>`
+   into the version), which defuses the eager-`.get()` ordering trap without touching the publishing
+   block. Verified: `publishToMavenLocal` POMs and jar filenames are byte-identical to before.
+
+2. **The `common` subproject uses `compileOnly`, not `implementation` (§3 showed `implementation`).**
+   The common subproject never runs and is not bundled with chimericlib, so it only needs it to
+   compile; `compileOnly` also keeps it out of Loom's eagerly-resolved runtime classpath.
+
+3. **A latent `!==` (Groovy identity) bug in the consumer guard had to be fixed to `!=`.** With the old
+   external-coordinate dependency it was benign, but with `project()` deps it let the block run for
+   chimeric-lib's *own* subprojects, producing a `:chimeric-lib:common:compileJava` self-cycle — and it
+   was almost certainly the real cause of the *second* documented "publish loop" symptom (chimeric-lib's
+   own JUnit tests loading a stale `chimericlib-fabric` from `~/.m2` via `knot`). Fixing it removes that
+   symptom entirely.
+
+4. **The configuration-ordering problem the plan did not anticipate.** Loom resolves each mod's compile
+   classpath in its `afterEvaluate`, and Gradle throws `IllegalStateException: project components has
+   not been calculated yet` when a consumer resolves a `project()` dependency on a chimeric-lib
+   subproject that has not finished configuring. Neither the include-order hoist alone nor
+   `evaluationDependsOn` from the consumer worked (the latter triggers a re-entrant evaluation that runs
+   chimeric-lib's `platformSetupLoomIde()` before Loom is applied). The working fix is two cooperating
+   pieces, **both required**: `settings.gradle` hoists `chimeric-lib` so its parent project evaluates
+   first, and `chimeric-lib/build.gradle` calls `evaluationDependsOnChildren()` so its
+   common/fabric/neoforge subprojects are fully configured at that point — before any consumer's
+   `afterEvaluate` runs.
+
+5. **The `apiElements`/`runtimeElements` → `shadowJar` hardening in §3.1 was not needed** and was left
+   undone. Depending on `:chimeric-lib:common` directly alongside the platform project supplies the
+   shaded classes; consumer jars contain zero `com/chimericdream/lib/` entries (verified).
+
+Verification performed (with `~/.m2/repository/com/chimericdream/lib` moved aside): minekea
+fabric+neoforge assemble; chimeric-lib fabric unit tests; minekea gametest compile — all pass. An
+injected compile error in chimeric-lib common source fails a consumer build at
+`:chimeric-lib:common:compileJava`, proving inline source propagation. After the change,
+hopper-xtreme (fabric) and sponj (neoforge) also assemble with `mavenLocal()` removed.

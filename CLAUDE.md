@@ -23,9 +23,10 @@ both Fabric and NeoForge.
 - **Multi-project Gradle build**: root `build.gradle` defines common config applied to every mod's
   `common`/`fabric`/`neoforge` subprojects.
 - **Architectury pattern**: each mod has `common/` (shared), `fabric/`, and `neoforge/` subprojects.
-- **ChimericLib dependency**: most mods depend on `chimeric-lib`. **Important:** consumers depend on it
-  as an *external Maven coordinate resolved from `~/.m2` (mavenLocal)*, not as a Gradle project
-  dependency. See "The chimeric-lib publish loop" below — this is the #1 footgun in the repo.
+- **ChimericLib dependency**: most mods depend on `chimeric-lib`. It is wired as an in-build
+  **`project()` dependency** (see `build.gradle`), so editing chimeric-lib source recompiles straight
+  into every consumer — no publish step, no `~/.m2`. A published-coordinate fallback is used only when
+  chimeric-lib is not part of the build.
 - **Project list**: active projects are controlled by `settings.gradle` `projectList` and mirrored in
   `project-list.json` (kept in sync by the `update:*` scripts).
 
@@ -41,26 +42,17 @@ both Fabric and NeoForge.
 
 To work on an inactive mod, uncomment it in `settings.gradle` (and run `bun run update:projectlist`).
 
-## The chimeric-lib publish loop (read this before editing chimeric-lib)
+## chimeric-lib is an in-build project dependency (no publish loop)
 
-chimeric-lib's own subprojects (its `fabric`/`neoforge` `test` and `gametest` source sets) build
-against the in-repo Gradle **project** dependency (`project(':chimeric-lib:common')`), so a normal
-rebuild picks up your source edits — **no republish needed for chimeric-lib's own tests**.
+Consumer mods and chimeric-lib's own `test`/`gametest` source sets all resolve chimeric-lib as an
+in-build **`project()` dependency**, so editing chimeric-lib source recompiles directly into whatever
+you build or test — **no `bun run publish:lib` needed** during development. `mavenLocal()` has been
+removed from the resolution repositories, so a stale published jar cannot shadow your source. The
+wiring (why it depends on both `:common` and the platform project, the settings.gradle hoist +
+`evaluationDependsOnChildren()` that orders configuration) is documented in `DEPENDENCY-PLAN.md`.
 
-**Consumer mods are different.** They resolve chimeric-lib as an *external Maven coordinate from
-maven-local (`~/.m2`)*, not as a project dependency — so editing chimeric-lib source is invisible to
-every consumer until you republish:
-
-```bash
-bun run publish:lib
-# equivalent to:
-# ./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal
-```
-
-Symptom when you forget: a consumer's build compiles but still sees the *old* behavior (the class loads
-from `~/.m2/repository/com/chimericdream/lib/...`, not chimeric-lib's `build/classes`). A `clean` /
-`--rerun-tasks` does **not** help — the stale copy is in `.m2`. If the version isn't in `.m2` at all,
-consumer builds fail to resolve the dependency. See `docs/TESTING.md`.
+`bun run publish:lib` is now **release-only**: it publishes chimeric-lib for *external* consumers, not
+for the edit→build loop in this repo.
 
 ## Commands
 
@@ -73,7 +65,8 @@ consumer builds fail to resolve the dependency. See `docs/TESTING.md`.
 - `./gradlew build` / `./gradlew clean` — Gradle directly (skips the Bun lifecycle).
 
 ### chimeric-lib
-- `bun run publish:lib` — publish chimeric-lib to maven-local (see loop above).
+- `bun run publish:lib` — publish chimeric-lib to maven-local / GitHub Packages for **external**
+  consumers (release-only; not needed to develop mods in this repo — see above).
 
 ### Project management
 - `bun run update:settingsgradle` — regenerate `settings.gradle` from the project list.
@@ -122,8 +115,9 @@ Reference: `minekea/fabric/.../data/ModDataGenerator.java`. Full write-up: `docs
 
 ## Planning & reference docs
 
-- `docs/TESTING.md` — how tests are wired and run (JUnit bootstrap, GameTest harness, testFixtures,
-  the maven-local publish loop).
+- `docs/TESTING.md` — how tests are wired and run (JUnit bootstrap, GameTest harness, testFixtures).
+- `DEPENDENCY-PLAN.md` — how chimeric-lib is wired as an in-build project dependency (no publish loop)
+  and the remaining monorepo build-structure improvements.
 - `docs/MC-26.2-NOTES.md` — MC 26.2 port gotchas: datagen component binding, API renames, reading
   decompiled vanilla source, the shutdown-watchdog false crash.
 - `docs/BLOCK-MIGRATION.md` — non-breaking block/item deprecation & rename across both loaders (no DataFixerUpper).

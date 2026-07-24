@@ -4,36 +4,17 @@ How automated tests are wired and run in this monorepo. Test infrastructure is c
 `build.gradle` and pioneered in **chimeric-lib** (the reference implementation); other mods adopt the
 same patterns.
 
-## The chimeric-lib publish loop (read first)
+## chimeric-lib source edits are picked up with no publish step
 
-chimeric-lib's **own** `gametest` source sets build against the in-repo Gradle **project** dependency
-(`project(':chimeric-lib:common')`), so they run your latest source directly — no republish needed.
+There is **no publish loop**. chimeric-lib is resolved as an in-build **`project()` dependency** by
+every consumer mod *and* by chimeric-lib's own `test`/`gametest` source sets, so editing chimeric-lib
+source recompiles straight into whatever you build or test — no `bun run publish:lib`, no `~/.m2`.
+`mavenLocal()` has been removed from the resolution repositories, so a stale published jar can no
+longer shadow your source (it structurally cannot happen). See `DEPENDENCY-PLAN.md` for the wiring
+(`build.gradle` chimeric-lib block, the settings.gradle hoist + `evaluationDependsOnChildren()`).
 
-**Its own JUnit `test` source set is not so lucky.** Under `fabric-loader-junit` the library classes
-are loaded by the Fabric `knot` classloader off the *runtime* classpath, which resolves
-`chimericlib-fabric` from **maven-local**. Editing chimeric-lib source and running
-`./gradlew :chimeric-lib:fabric:test` therefore tests the **last published jar**, not your edit — the
-test compiles fine and then asserts stale behaviour (stack traces point at line numbers that no longer
-match the source, which is the giveaway). Run `bun run publish:lib` first. Confirm what actually
-loaded with:
-
-```java
-System.out.println(SomeClass.class.getProtectionDomain().getCodeSource());
-```
-
-**Consumer mods are the exception:** they load chimeric-lib from **maven-local (`~/.m2`)**, not from a
-project dependency. So after editing chimeric-lib source you **must** republish before a consumer's
-build sees the change, or the old bytecode is used:
-
-```bash
-bun run publish:lib
-# ./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal
-```
-
-Symptom of forgetting: a consumer's build compiles but still asserts the old behavior; the class
-actually loads from `~/.m2/repository/com/chimericdream/lib/.../*.jar`. A `clean` / `--rerun-tasks` does
-**not** fix it (the stale copy is in `.m2`, not the build dir). You can confirm the source with
-`SomeClass.class.getProtectionDomain().getCodeSource().getLocation()`.
+`bun run publish:lib` still exists, but only for **releasing** chimeric-lib to maven-local / GitHub
+Packages for *external* consumers — it is not part of the edit→test loop.
 
 ## Unit tests (JUnit + fabric-loader-junit)
 
@@ -93,10 +74,12 @@ helpers live in `chimeric-lib/common/src/testFixtures/java/com/chimericdream/lib
   `GameTestMenus` — they touch only vanilla `GameTestHelper`/`Container`/`AbstractContainerMenu`, so
   they compile in `common` and never leak into a production jar.
 
-Consuming them:
-- In-repo (chimeric-lib itself): `testFixtures(project(":chimeric-lib:common"))`.
-- Downstream unit tests: `testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<ver>"))`.
-- Downstream gametests: `gametestImplementation(testFixtures("com.chimericdream.lib:chimericlib-common-<mc>:<ver>"))`.
+Consuming them (the root `build.gradle` already wires `test`; a mod's `gametest` opts in per project):
+- In-build (the normal case, every mod): `testFixtures(project(":chimeric-lib:common"))` /
+  `gametestImplementation(testFixtures(project(":chimeric-lib:common")))`.
+- External consumers only (published variant): `testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common:<ver>"))`.
+  The artifactId is `chimericlib-common` — the Minecraft version is part of `<ver>`
+  (e.g. `26.2-6.0.0-alpha.0`), **not** a suffix on the artifactId.
 
 **Loom wart:** a custom `testFixtures` source set does not inherit Loom's Minecraft classpath, so
 `common/build.gradle` needs `sourceSets.testFixtures.compileClasspath += sourceSets.main.compileClasspath`.
