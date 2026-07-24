@@ -448,6 +448,10 @@ Pick a rule (suggested: `RandomizableContainerBlockEntity` for anything loot-tab
 CLAUDE.md. Also normalize `setItems`: `DyeStationBlockEntity.setItems` does `clear()+addAll` on a
 fixed-size `NonNullList` (size can drift; other BEs assign the list reference).
 
+### 3.9 sponj: move BlockUtils to chimeric-lib
+The `BlockUtils` class in `sponj` is an ideal candidate for moving to the central
+`chimeric-lib` library. Nothing about it is specific to the `sponj` mod.
+
 ---
 
 ## Phase 4 — Consistency, hygiene, docs
