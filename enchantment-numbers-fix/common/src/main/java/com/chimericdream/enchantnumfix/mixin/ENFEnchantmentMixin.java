@@ -1,38 +1,35 @@
 package com.chimericdream.enchantnumfix.mixin;
 
 import com.chimericdream.enchantnumfix.RomanNumeralUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
+/**
+ * Renders enchantment levels as Roman numerals.
+ *
+ * <p>Vanilla {@code Enchantment.getFullname} builds the level suffix with
+ * {@code Component.translatable("enchantment.level." + level)}. Rather than {@code @Overwrite} the
+ * whole method (which would clash with any other mod that also touches {@code getFullname}), we
+ * redirect only that single {@code Component.translatable(String)} call and substitute a literal
+ * Roman-numeral component. Everything else — the description copy, curse/gray styling, and the
+ * {@code level != 1 || maxLevel != 1} guard that decides whether a suffix is appended at all — is
+ * left to vanilla, so this stays compatible with other enchantment-tooltip mods.
+ */
 @Mixin(Enchantment.class)
 public abstract class ENFEnchantmentMixin {
-    /**
-     * @author chimericdream
-     * @reason Replace numbers with Roman numerals
-     */
-    @Overwrite
-    public static Component getFullname(Holder<Enchantment> enchantment, int level) {
-        MutableComponent mutableText = enchantment.value().description().copy();
-
-        if (enchantment.is(EnchantmentTags.CURSE)) {
-            ComponentUtils.mergeStyles(mutableText, Style.EMPTY.withColor(ChatFormatting.RED));
-        } else {
-            ComponentUtils.mergeStyles(mutableText, Style.EMPTY.withColor(ChatFormatting.GRAY));
-        }
-
-        if (level != 1 || enchantment.value().getMaxLevel() != 1) {
-            mutableText.append(CommonComponents.SPACE).append(RomanNumeralUtil.toRoman(level));
-        }
-
-        return mutableText;
+    @Redirect(
+        method = "getFullname",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"
+        )
+    )
+    private static MutableComponent enchantnumfix$romanLevel(String translationKey, Holder<Enchantment> enchantment, int level) {
+        return Component.literal(RomanNumeralUtil.toRoman(level));
     }
 }
