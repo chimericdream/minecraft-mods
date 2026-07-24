@@ -12,6 +12,8 @@ public class FilterSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return ItemStack.isSameItem(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
+        // stack.is(item) avoids allocating a throwaway ItemStack on every call, and matches how the
+        // same "is this a filter item" test is written elsewhere in the mod.
+        return stack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get());
     }
 }
