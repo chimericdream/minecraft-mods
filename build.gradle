@@ -77,7 +77,12 @@ subprojects {
             filter { includeGroup("thedarkcolour") }
         }
 
-        mavenLocal()
+        // No mavenLocal() here on purpose. chimeric-lib is resolved as an in-build project()
+        // dependency (see the chimeric-lib block below), so nothing this build compiles against
+        // should come from ~/.m2. Leaving mavenLocal() in the resolution path is what previously let
+        // a stale published chimeric-lib silently shadow in-repo source edits; keeping it out makes
+        // that class of bug impossible. (publishToMavenLocal still works — that is a separate
+        // publishing repository, configured in the publishing block, not a resolution repository.)
     }
 
     dependencies {
