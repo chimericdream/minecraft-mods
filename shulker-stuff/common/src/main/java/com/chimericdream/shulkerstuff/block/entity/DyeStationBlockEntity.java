@@ -79,9 +79,12 @@ public class DyeStationBlockEntity extends BaseContainerBlockEntity implements M
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> inventory) {
-        this.inventory.clear();
-        this.inventory.addAll(inventory);
+    protected void setItems(NonNullList<ItemStack> items) {
+        // `this.inventory` is a fixed-size NonNullList.withSize; clear()+addAll would either throw or
+        // let its size drift away from INVENTORY_SIZE. Copy in place, padding/truncating to our size.
+        for (int i = 0; i < this.inventory.size(); i++) {
+            this.inventory.set(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
+        }
     }
 
     @Override
