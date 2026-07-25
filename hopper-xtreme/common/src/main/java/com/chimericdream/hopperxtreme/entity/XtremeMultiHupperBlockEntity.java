@@ -2,8 +2,6 @@ package com.chimericdream.hopperxtreme.entity;
 
 import com.chimericdream.hopperxtreme.block.XtremeMultiHupperBlock;
 import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreenHandler;
-import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.BlockPos;
@@ -11,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.HopperMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -98,20 +95,6 @@ public class XtremeMultiHupperBlockEntity extends AbstractMultiXtremeHopperBlock
     @Override
     protected boolean pushOutput(Level world, BlockPos pos) {
         return this.insertOutput(world, pos);
-    }
-
-    // Multi-hupper carries an extra source-slot gate that the other five variants don't: a
-    // non-filtered multi-hupper only pulls the filter item out of source slot 5 (and everything
-    // else out of the other slots). Preserved verbatim from the pre-extraction copy.
-    @Override
-    protected boolean passesExtractFilter(ItemStack stack, int slot) {
-        if (this.withFilter) {
-            return HopperItemFilterItem.matchesFilter(this.getItem(this.getContainerSize()), stack);
-        }
-
-        boolean isFilter = ItemStack.isSameItem(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
-
-        return isFilter == (slot == 5);
     }
 
     protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {

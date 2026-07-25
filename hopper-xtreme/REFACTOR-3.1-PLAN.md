@@ -12,12 +12,12 @@ thin subclasses (~3,700 → ~1,430 lines). Gametests are green before and after.
 "diff-identical modulo names" (the hupper/multi-hupper blocks extend `BaseEntityBlock` directly with
 their own inverted geometry and `FACING` predicate), so that collapse is a separate, meatier pass.
 
-One latent quirk was surfaced and **preserved verbatim** (not fixed): `XtremeMultiHupperBlockEntity`
-is the only variant whose `canExtract` gates on `isFilter == (slot == 5)`, so a *non-filtered*
-multi-hupper refuses to pull anything but the filter item out of a source's slot 5 (and refuses the
-filter item from every other slot). It now lives in an overridable `passesExtractFilter` hook. This
-looks like dead code from an older filter implementation and is a candidate to delete — decide
-separately, behind its own gametest.
+One latent quirk was surfaced and **removed** for consistency: `XtremeMultiHupperBlockEntity` used to
+be the only variant whose `canExtract` gated on `isFilter == (slot == 5)`, so a *non-filtered*
+multi-hupper refused to pull anything but the filter item out of a source's slot 5 (and refused the
+filter item from every other slot) — dead code from an older filter design. Since the non-filtered
+hoppers/huppers are deprecated, the multi-hupper now inherits the standard `passesExtractFilter`
+(unfiltered → extract everything), matching the other five variants. Gametests stay green.
 
 ## The six variants and how they differ
 
