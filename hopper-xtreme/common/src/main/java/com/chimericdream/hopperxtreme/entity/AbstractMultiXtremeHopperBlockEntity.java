@@ -8,15 +8,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A hopper that round-robins its output across whichever of its four horizontal sides plus one
  * vertical side ({@code DOWN} for a multi-hopper, {@code UP} for a multi-hupper) are toggled
- * connected. {@link #getNextDirection()} advances a persistent-within-session cursor; the concrete
- * variant supplies the connection {@link BooleanProperty properties} and the vertical direction.
+ * connected. {@link #getNextDirection()} advances a round-robin cursor that is persisted to NBT
+ * (so it survives unload/reload); the concrete variant supplies the connection
+ * {@link BooleanProperty properties} and the vertical direction.
  */
 public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtremeHopperBlockEntity {
+    private static final String LAST_DIRECTION_KEY = "LastDirection";
+
     private Direction lastDirection;
     private boolean northConnected;
     private boolean southConnected;
@@ -60,6 +65,18 @@ public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtrem
         this.eastConnected = state.getValue(eastConnectedProperty());
         this.westConnected = state.getValue(westConnectedProperty());
         this.verticalConnected = state.getValue(verticalConnectedProperty());
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        this.lastDirection = view.read(LAST_DIRECTION_KEY, Direction.CODEC).orElse(verticalDirection());
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        view.store(LAST_DIRECTION_KEY, Direction.CODEC, this.lastDirection);
     }
 
     /**
