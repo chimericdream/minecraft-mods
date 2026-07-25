@@ -50,6 +50,11 @@ import net.minecraft.world.phys.AABB;
  *       front, supplied by {@link AbstractSingleFacingXtremeHopperBlockEntity} /
  *       {@link AbstractMultiXtremeHopperBlockEntity}.</li>
  * </ul>
+ *
+ * <p>The parallel collapse of the six <em>block</em> classes and the screen handlers/screens is a
+ * deferred follow-up (they don't share geometry, so it's a block-entity-plumbing dedup, not one base
+ * class) — see the "Step 4 (deferred)" section of {@code hopper-xtreme/REFACTOR-3.1-PLAN.md} for the
+ * concrete approach.
  */
 public abstract class AbstractXtremeHopperBlockEntity extends RandomizableContainerBlockEntity implements Hopper {
     private static final int[][] AVAILABLE_SLOTS_CACHE = new int[54][];
