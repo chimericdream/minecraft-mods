@@ -12,6 +12,10 @@ public class FilterSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return ItemStack.isSameItem(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
+        // stack.is(item) avoids allocating a throwaway ItemStack on every call, like the sibling
+        // FilterSlot.mayPlace in HopperItemFilterScreenHandler. (A couple of older call sites --
+        // NonFilterSlot and XtremeMultiHupperBlockEntity -- still test via ItemStack.isSameItem
+        // against a freshly built stack; this is the cheaper equivalent.)
+        return stack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get());
     }
 }
