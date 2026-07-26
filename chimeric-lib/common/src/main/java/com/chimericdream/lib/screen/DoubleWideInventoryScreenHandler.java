@@ -3,94 +3,20 @@ package com.chimericdream.lib.screen;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 
-public class DoubleWideInventoryScreenHandler extends AbstractContainerMenu {
-    private final Container inventory;
+/**
+ * A double-width (18-column) fixed-grid container menu. All behavior lives in
+ * {@link InventoryScreenHandler}; this class only pins the column count.
+ */
+public class DoubleWideInventoryScreenHandler extends InventoryScreenHandler {
+    private static final int COLUMNS = 18;
 
     public DoubleWideInventoryScreenHandler(MenuType<?> type, int syncId, Inventory playerInventory, int rowCount) {
         this(type, syncId, playerInventory, new SimpleContainer(ScreenHelpers.getDoubleWideInventorySize(rowCount)), rowCount);
     }
 
     public DoubleWideInventoryScreenHandler(MenuType<?> type, int syncId, Inventory playerInventory, Container inventory, int rowCount) {
-        super(type, syncId);
-
-        checkContainerSize(inventory, ScreenHelpers.getDoubleWideInventorySize(rowCount));
-
-        this.inventory = inventory;
-
-        inventory.startOpen(playerInventory.player);
-
-        int i = (rowCount - 4) * 18, j, k;
-        for (j = 0; j < rowCount; ++j) {
-            for (k = 0; k < 18; ++k) {
-                this.addSlot(new Slot(
-                    inventory,
-                    k + j * 18,
-                    8 + k * ScreenHelpers.ROW_HEIGHT,
-                    ScreenHelpers.ROW_HEIGHT + j * ScreenHelpers.ROW_HEIGHT
-                ));
-            }
-        }
-
-        for (j = 0; j < 3; ++j) {
-            for (k = 0; k < 9; ++k) {
-                this.addSlot(new Slot(
-                    playerInventory,
-                    k + j * 9 + 9,
-                    89 + k * ScreenHelpers.ROW_HEIGHT,
-                    104 + j * ScreenHelpers.ROW_HEIGHT + i
-                ));
-            }
-        }
-
-        for (j = 0; j < 9; ++j) {
-            this.addSlot(new Slot(
-                playerInventory,
-                j,
-                89 + j * ScreenHelpers.ROW_HEIGHT,
-                162 + i
-            ));
-        }
-    }
-
-    public Container getInventory() {
-        return inventory;
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return this.inventory.stillValid(player);
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player player, int invSlot) {
-        ItemStack newStack = ItemStack.EMPTY;
-
-        Slot slot = this.slots.get(invSlot);
-
-        if (slot != null && slot.hasItem()) {
-            ItemStack originalStack = slot.getItem();
-            newStack = originalStack.copy();
-            if (invSlot < this.inventory.getContainerSize()) {
-                if (!this.moveItemStackTo(originalStack, this.inventory.getContainerSize(), this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(originalStack, 0, this.inventory.getContainerSize(), false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (originalStack.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-        }
-
-        return newStack;
+        super(type, syncId, playerInventory, inventory, rowCount, COLUMNS);
     }
 }

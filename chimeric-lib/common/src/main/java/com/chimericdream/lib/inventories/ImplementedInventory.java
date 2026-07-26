@@ -107,7 +107,10 @@ public interface ImplementedInventory extends Container {
             return false;
         }
 
-        if (!ItemStack.matches(incomingStack, existingStack)) {
+        // Use isSameItemSameComponents, NOT ItemStack.matches: matches also compares counts, so two
+        // otherwise-identical partial stacks would only be considered mergeable when their counts
+        // happened to be equal. Merging must depend only on item + components.
+        if (!ItemStack.isSameItemSameComponents(incomingStack, existingStack)) {
             return false;
         }
 
@@ -169,10 +172,19 @@ public interface ImplementedInventory extends Container {
 
     /**
      * Clears the inventory.
+     * <p>
+     * Fills every slot with {@link ItemStack#EMPTY} rather than calling {@code getItems().clear()}:
+     * the common backing list is {@code NonNullList.withSize(...)}, whose fixed-size backing makes a
+     * structural {@code clear()} either throw or collapse the list to size 0 (breaking the fixed-slot
+     * invariant every other method here relies on). Emptying in place keeps the slot count stable.
      */
     @Override
     default void clearContent() {
-        getItems().clear();
+        NonNullList<ItemStack> items = getItems();
+        for (int i = 0; i < items.size(); i++) {
+            items.set(i, ItemStack.EMPTY);
+        }
+        setChanged();
     }
 
     /**
