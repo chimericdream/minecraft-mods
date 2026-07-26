@@ -21,11 +21,22 @@ public class ArmoireBlockEntityRenderState extends BlockEntityRenderState {
         new ItemStackRenderState()
     );
 
+    public final List<StandArmorData> standArmor = new ArrayList<>();
+
     public record ArmorItemData(
         double xOffset,
         double yOffset,
         double zOffset,
         ItemStack stack
+    ) {
+
+    }
+
+    public record StandArmorData(
+        double xOffset,
+        double zOffset,
+        ItemStack chestplate,
+        ItemStack leggings
     ) {
 
     }

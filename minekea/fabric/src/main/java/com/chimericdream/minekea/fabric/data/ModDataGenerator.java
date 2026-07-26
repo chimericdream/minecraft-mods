@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import org.jetbrains.annotations.NotNull;
@@ -49,6 +50,13 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             return new RecipeProvider(registryLookup, exporter) {
                 @Override
                 public void buildRecipes() {
+                    // MC 26.2 binds item data components lazily during a ReloadableServerResources reload rather
+                    // than at bootstrap, so during datagen Item.components() (e.g. getDefaultMaxStackSize) throws
+                    // "Components not bound yet". Bind them here the same way the server reload does, before any
+                    // recipe reads them.
+                    BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup)
+                        .forEach(pending -> pending.apply());
+
                     for (BlockDataGeneratorGroup group : ModBlockDataGenerators.BLOCK_GROUPS) {
                         group.configureRecipes(registryLookup, exporter, this);
                     }

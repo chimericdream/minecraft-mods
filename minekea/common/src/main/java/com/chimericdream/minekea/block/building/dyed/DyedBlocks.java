@@ -5,8 +5,7 @@ import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.registry.ModItemGroups;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
-import oshi.util.tuples.Pair;
-import oshi.util.tuples.Triplet;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,22 +27,25 @@ public class DyedBlocks implements ModThingGroup {
 
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
 
-    protected static final List<Triplet<Pair<String, String>, Block, Tool>> BLOCKS_TO_DYE = List.of(
-        new Triplet<>(new Pair<>("Bricks", "bricks"), Blocks.BRICKS, null),
-        new Triplet<>(new Pair<>("Calcite", "calcite"), Blocks.CALCITE, null),
-        new Triplet<>(new Pair<>("Cobblestone", "cobblestone"), Blocks.COBBLESTONE, null),
-        new Triplet<>(new Pair<>("Dark Prismarine", "dark_prismarine"), Blocks.DARK_PRISMARINE, null),
-        new Triplet<>(new Pair<>("Mud Bricks", "mud_bricks"), Blocks.MUD_BRICKS, null),
-        new Triplet<>(new Pair<>("Oak Planks", "oak_planks"), Blocks.OAK_PLANKS, Tool.AXE),
-        new Triplet<>(new Pair<>("Prismarine", "prismarine"), Blocks.PRISMARINE, null),
-        new Triplet<>(new Pair<>("Prismarine Bricks", "prismarine_bricks"), Blocks.PRISMARINE_BRICKS, null),
-        new Triplet<>(new Pair<>("Smooth Stone", "smooth_stone"), Blocks.SMOOTH_STONE, null),
-        new Triplet<>(new Pair<>("Stone", "stone"), Blocks.STONE, null),
-        new Triplet<>(new Pair<>("Stone Bricks", "stone_bricks"), Blocks.STONE_BRICKS, null)
+    /** A vanilla block that can be dyed: display name, texture/id base, the block, and the tool. */
+    public record DyedEntry(String name, String id, Block block, @Nullable Tool tool) {}
+
+    protected static final List<DyedEntry> BLOCKS_TO_DYE = List.of(
+        new DyedEntry("Bricks", "bricks", Blocks.BRICKS, null),
+        new DyedEntry("Calcite", "calcite", Blocks.CALCITE, null),
+        new DyedEntry("Cobblestone", "cobblestone", Blocks.COBBLESTONE, null),
+        new DyedEntry("Dark Prismarine", "dark_prismarine", Blocks.DARK_PRISMARINE, null),
+        new DyedEntry("Mud Bricks", "mud_bricks", Blocks.MUD_BRICKS, null),
+        new DyedEntry("Oak Planks", "oak_planks", Blocks.OAK_PLANKS, Tool.AXE),
+        new DyedEntry("Prismarine", "prismarine", Blocks.PRISMARINE, null),
+        new DyedEntry("Prismarine Bricks", "prismarine_bricks", Blocks.PRISMARINE_BRICKS, null),
+        new DyedEntry("Smooth Stone", "smooth_stone", Blocks.SMOOTH_STONE, null),
+        new DyedEntry("Stone", "stone", Blocks.STONE, null),
+        new DyedEntry("Stone Bricks", "stone_bricks", Blocks.STONE_BRICKS, null)
     );
 
-    protected static final List<Triplet<Pair<String, String>, Block, Tool>> PILLAR_BLOCKS_TO_DYE = List.of(
-        new Triplet<>(new Pair<>("Bone Block", "bone_block"), Blocks.BONE_BLOCK, null)
+    protected static final List<DyedEntry> PILLAR_BLOCKS_TO_DYE = List.of(
+        new DyedEntry("Bone Block", "bone_block", Blocks.BONE_BLOCK, null)
     );
 
     protected static final List<RegistrySupplier<Block>> WHITE_BLOCKS = new ArrayList<>();
@@ -65,10 +67,10 @@ public class DyedBlocks implements ModThingGroup {
 
     static {
         BLOCKS_TO_DYE.forEach(data -> {
-            String materialName = data.getA().getA();
-            String material = data.getA().getB();
-            Block baseBlock = data.getB();
-            Tool tool = data.getC();
+            String materialName = data.name();
+            String material = data.id();
+            Block baseBlock = data.block();
+            Tool tool = data.tool();
 
             BlockConfig config = new BlockConfig()
                 .material(material)
@@ -129,10 +131,10 @@ public class DyedBlocks implements ModThingGroup {
         });
 
         PILLAR_BLOCKS_TO_DYE.forEach(data -> {
-            String materialName = data.getA().getA();
-            String material = data.getA().getB();
-            Block ingredient = data.getB();
-            Tool tool = data.getC();
+            String materialName = data.name();
+            String material = data.id();
+            Block ingredient = data.block();
+            Tool tool = data.tool();
 
             BlockConfig config = new BlockConfig()
                 .materialName(materialName)

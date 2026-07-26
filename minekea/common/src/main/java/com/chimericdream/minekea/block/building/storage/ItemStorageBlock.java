@@ -60,6 +60,7 @@ public class ItemStorageBlock extends Block {
             getStateDefinition()
                 .any()
                 .setValue(AXIS, Direction.Axis.Y)
+                .setValue(FACING, Direction.NORTH)
                 .setValue(IS_BAGGED, false)
         );
 
@@ -92,6 +93,7 @@ public class ItemStorageBlock extends Block {
         builder.add(AXIS, FACING, IS_BAGGED);
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         BlockState state = this.defaultBlockState()
             .setValue(AXIS, ctx.getClickedFace().getAxis())
@@ -111,7 +113,6 @@ public class ItemStorageBlock extends Block {
                 world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0f, 1.0f);
             } else {
                 world.setBlockAndUpdate(pos, state.setValue(IS_BAGGED, false));
-                world.blockEntityChanged(pos);
             }
 
             return InteractionResult.SUCCESS;
@@ -121,8 +122,10 @@ public class ItemStorageBlock extends Block {
             if (world.isClientSide()) {
                 world.playSound(player, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUNDLE_INSERT, SoundSource.BLOCKS, 1.0f, 1.0f);
             } else {
+                // NOTE (code-review 4.8): the leather is not consumed and the shears (unbag path
+                // above) take no durability. Left as-is pending a gameplay decision on whether these
+                // conversions should cost the item / durability.
                 world.setBlockAndUpdate(pos, state.setValue(IS_BAGGED, true));
-                world.blockEntityChanged(pos);
             }
 
             return InteractionResult.SUCCESS;
