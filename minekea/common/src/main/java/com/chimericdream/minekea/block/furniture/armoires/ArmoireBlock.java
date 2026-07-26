@@ -27,6 +27,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -228,6 +230,15 @@ public class ArmoireBlock extends BaseEntityBlock {
         }
 
         return new ArmoireBlockEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+        if (world.isClientSide()) {
+            return null;
+        }
+
+        return createTickerHelper(type, Armoires.ARMOIRE_BLOCK_ENTITY.get(), ArmoireBlockEntity::cleanUpLegacyArmorStands);
     }
 
     @Override

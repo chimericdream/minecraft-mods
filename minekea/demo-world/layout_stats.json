@@ -1,0 +1,685 @@
+{
+  "summary": {
+    "arena_x": [
+      -192,
+      -68
+    ],
+    "arena_z": [
+      117,
+      191
+    ],
+    "floor_y": 55,
+    "front_left": [
+      -192,
+      55,
+      191
+    ],
+    "width": 125,
+    "depth": 75,
+    "regions": 54,
+    "display_blocks": 2572,
+    "tier_platforms": 282,
+    "jars_filled": 106,
+    "command_blocks": 54,
+    "tool_showcase": {
+      "items": 8,
+      "front_left": [
+        -191,
+        55,
+        190
+      ],
+      "w": 18,
+      "d": 2
+    }
+  },
+  "regions": [
+    {
+      "region": "oak",
+      "label": "Oak (43)",
+      "front_left": [
+        -171,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "spruce",
+      "label": "Spruce (49)",
+      "front_left": [
+        -161,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "birch",
+      "label": "Birch (49)",
+      "front_left": [
+        -151,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "jungle",
+      "label": "Jungle (49)",
+      "front_left": [
+        -141,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "acacia",
+      "label": "Acacia (49)",
+      "front_left": [
+        -131,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "dark_oak",
+      "label": "Dark Oak (49)",
+      "front_left": [
+        -121,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "mangrove",
+      "label": "Mangrove (49)",
+      "front_left": [
+        -111,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "cherry",
+      "label": "Cherry (49)",
+      "front_left": [
+        -101,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "pale_oak",
+      "label": "Pale Oak (49)",
+      "front_left": [
+        -91,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "bamboo",
+      "label": "Bamboo (28)",
+      "front_left": [
+        -81,
+        55,
+        190
+      ],
+      "w": 8,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "crimson",
+      "label": "Crimson (49)",
+      "front_left": [
+        -191,
+        55,
+        176
+      ],
+      "w": 8,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "warped",
+      "label": "Warped (50)",
+      "front_left": [
+        -181,
+        55,
+        176
+      ],
+      "w": 9,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "Dyed Blocks",
+      "label": "Dyed Blocks (192)",
+      "front_left": [
+        -170,
+        55,
+        176
+      ],
+      "w": 23,
+      "d": 17,
+      "tall": 1
+    },
+    {
+      "region": "Colored Building",
+      "label": "Colored Building (96)",
+      "front_left": [
+        -145,
+        55,
+        176
+      ],
+      "w": 11,
+      "d": 17,
+      "tall": 1
+    },
+    {
+      "region": "Colour Accents",
+      "label": "Colour Accents (66)",
+      "front_left": [
+        -132,
+        55,
+        176
+      ],
+      "w": 7,
+      "d": 18,
+      "tall": 1
+    },
+    {
+      "region": "Compressed Concrete",
+      "label": "Compressed Concrete (144)",
+      "front_left": [
+        -123,
+        55,
+        176
+      ],
+      "w": 17,
+      "d": 17,
+      "tall": 1
+    },
+    {
+      "region": "Compressed Terracotta",
+      "label": "Compressed Terracotta (144)",
+      "front_left": [
+        -104,
+        55,
+        176
+      ],
+      "w": 17,
+      "d": 17,
+      "tall": 1
+    },
+    {
+      "region": "Compressed Glazed Terracotta",
+      "label": "Compressed Glazed Terracotta (144)",
+      "front_left": [
+        -85,
+        55,
+        176
+      ],
+      "w": 17,
+      "d": 17,
+      "tall": 1
+    },
+    {
+      "region": "stone",
+      "label": "Stone (72)",
+      "front_left": [
+        -191,
+        55,
+        155
+      ],
+      "w": 11,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "cobblestone",
+      "label": "Cobblestone (26)",
+      "front_left": [
+        -178,
+        55,
+        155
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "granite",
+      "label": "Granite (31)",
+      "front_left": [
+        -169,
+        55,
+        155
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "diorite",
+      "label": "Diorite (31)",
+      "front_left": [
+        -160,
+        55,
+        155
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "andesite",
+      "label": "Andesite (31)",
+      "front_left": [
+        -151,
+        55,
+        155
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "deepslate",
+      "label": "Deepslate (95)",
+      "front_left": [
+        -142,
+        55,
+        155
+      ],
+      "w": 14,
+      "d": 14,
+      "tall": 13
+    },
+    {
+      "region": "tuff",
+      "label": "Tuff (27)",
+      "front_left": [
+        -126,
+        55,
+        155
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "blackstone",
+      "label": "Blackstone (49)",
+      "front_left": [
+        -117,
+        55,
+        155
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "basalt",
+      "label": "Basalt (124)",
+      "front_left": [
+        -104,
+        55,
+        155
+      ],
+      "w": 22,
+      "d": 14,
+      "tall": 13
+    },
+    {
+      "region": "sandstone",
+      "label": "Sandstone (38)",
+      "front_left": [
+        -80,
+        55,
+        155
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "red_sandstone",
+      "label": "Red Sandstone (38)",
+      "front_left": [
+        -191,
+        55,
+        138
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "prismarine",
+      "label": "Prismarine (54)",
+      "front_left": [
+        -178,
+        55,
+        138
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "quartz",
+      "label": "Quartz (47)",
+      "front_left": [
+        -165,
+        55,
+        138
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "purpur",
+      "label": "Purpur (29)",
+      "front_left": [
+        -152,
+        55,
+        138
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "nether_brick",
+      "label": "Nether Brick (58)",
+      "front_left": [
+        -143,
+        55,
+        138
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "end_stone",
+      "label": "End Stone (29)",
+      "front_left": [
+        -130,
+        55,
+        138
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "netherrack",
+      "label": "Netherrack (11)",
+      "front_left": [
+        -121,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "obsidian",
+      "label": "Obsidian (22)",
+      "front_left": [
+        -116,
+        55,
+        138
+      ],
+      "w": 7,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "calcite",
+      "label": "Calcite (11)",
+      "front_left": [
+        -107,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "mud",
+      "label": "Mud (33)",
+      "front_left": [
+        -102,
+        55,
+        138
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "bone",
+      "label": "Bone (16)",
+      "front_left": [
+        -89,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "brick",
+      "label": "Brick (13)",
+      "front_left": [
+        -84,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "amethyst",
+      "label": "Amethyst (11)",
+      "front_left": [
+        -79,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "iron",
+      "label": "Iron (11)",
+      "front_left": [
+        -74,
+        55,
+        138
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "gold",
+      "label": "Gold (11)",
+      "front_left": [
+        -191,
+        55,
+        127
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "copper",
+      "label": "Copper (35)",
+      "front_left": [
+        -186,
+        55,
+        127
+      ],
+      "w": 12,
+      "d": 7,
+      "tall": 6
+    },
+    {
+      "region": "diamond",
+      "label": "Diamond (11)",
+      "front_left": [
+        -172,
+        55,
+        127
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "netherite",
+      "label": "Netherite (11)",
+      "front_left": [
+        -167,
+        55,
+        127
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "lapis",
+      "label": "Lapis (11)",
+      "front_left": [
+        -162,
+        55,
+        127
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "redstone",
+      "label": "Redstone (11)",
+      "front_left": [
+        -157,
+        55,
+        127
+      ],
+      "w": 3,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "earth",
+      "label": "Soil & Sand (72)",
+      "front_left": [
+        -152,
+        55,
+        127
+      ],
+      "w": 11,
+      "d": 10,
+      "tall": 9
+    },
+    {
+      "region": "food",
+      "label": "Compressed Food (38)",
+      "front_left": [
+        -139,
+        55,
+        127
+      ],
+      "w": 12,
+      "d": 5,
+      "tall": 4
+    },
+    {
+      "region": "lighting",
+      "label": "Lighting (4)",
+      "front_left": [
+        -125,
+        55,
+        127
+      ],
+      "w": 4,
+      "d": 2,
+      "tall": 1
+    },
+    {
+      "region": "misc",
+      "label": "Misc (6)",
+      "front_left": [
+        -119,
+        55,
+        127
+      ],
+      "w": 6,
+      "d": 2,
+      "tall": 1
+    },
+    {
+      "region": "jars_items",
+      "label": "Glass Jars - Items (95)",
+      "front_left": [
+        -111,
+        55,
+        127
+      ],
+      "w": 12,
+      "d": 9,
+      "tall": 8
+    },
+    {
+      "region": "jars_misc",
+      "label": "Glass Jars - Fluids & Mobs (12)",
+      "front_left": [
+        -97,
+        55,
+        127
+      ],
+      "w": 12,
+      "d": 2,
+      "tall": 1
+    }
+  ]
+}

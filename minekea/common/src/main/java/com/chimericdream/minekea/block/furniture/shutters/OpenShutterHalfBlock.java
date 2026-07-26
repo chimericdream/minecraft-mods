@@ -161,6 +161,14 @@ public class OpenShutterHalfBlock extends Block implements SimpleWaterloggedBloc
         }
 
         BlockState centerState = world.getBlockState(centerPos);
+
+        // Orphaned half with no parent shutter: skip the paired cleanup/drop (and the
+        // shutter-only WATERLOGGED reads below, which would otherwise throw) and just let this
+        // half break on its own.
+        if (!centerState.getProperties().contains(ShutterBlock.OPEN)) {
+            return super.playerWillDestroy(world, pos, state, player);
+        }
+
         if (centerState.getProperties().contains(BlockStateProperties.WATERLOGGED) && centerState.getValue(WATERLOGGED)) {
             world.setBlockAndUpdate(centerPos, Blocks.WATER.defaultBlockState());
         } else {
@@ -228,6 +236,14 @@ public class OpenShutterHalfBlock extends Block implements SimpleWaterloggedBloc
         }
 
         BlockState centerState = world.getBlockState(centerPos);
+
+        // The center block is meant to be this half's parent shutter. If it isn't (e.g. an
+        // orphaned half left behind by /setblock, world edits, or a partially-broken shutter),
+        // cycling OPEN on it would throw. Bail out instead of crashing.
+        if (!centerState.getProperties().contains(ShutterBlock.OPEN)) {
+            return InteractionResult.PASS;
+        }
+
         centerState = centerState.cycle(ShutterBlock.OPEN);
         world.setBlock(centerPos, centerState, 2);
 

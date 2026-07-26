@@ -92,9 +92,15 @@ public class ShelfBlockEntity extends BlockEntity implements ImplementedInventor
 
     @Override
     public ItemStack tryInsert(int slot, ItemStack stack) {
+        // Snapshot the incoming count first: the default tryInsert can mutate and return the same stack
+        // instance on a partial merge, so comparing the returned remainder against `stack` with
+        // ItemStack.matches always reads them as equal and the insert sound never plays. Anything
+        // inserted (full or partial) leaves a remainder smaller than what we started with.
+        int countBefore = stack.getCount();
+
         ItemStack ret = ImplementedInventory.super.tryInsert(slot, stack);
 
-        if (!ItemStack.matches(ret, stack)) {
+        if (ret.getCount() < countBefore) {
             this.playAddItemSound();
         }
 
