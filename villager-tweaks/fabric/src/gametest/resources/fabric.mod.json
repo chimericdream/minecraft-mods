@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "villagertweaks_test",
+    "version": "1.0.0",
+    "name": "Villager Tweaks GameTest",
+    "description": "Test-only GameTests for Villager Tweaks. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.villagertweaks.fabric.test.GlobalReputationGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "villagertweaks": "*"
+    }
+}

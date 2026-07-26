@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
@@ -47,13 +48,22 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
     @Inject(method = "getPlayerReputation", at = @At("HEAD"), cancellable = true)
     private void injected(Player player, CallbackInfoReturnable<Integer> cir) {
         VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
-        UUID playerId = config.enableGlobalReputation ? GLOBAL_UUID : player.getUUID();
 
-        if (config.enableBadReputation) {
+        // Neither tweak is on: let vanilla read the player's own gossip, all types included.
+        if (!config.enableGlobalReputation && config.enableBadReputation) {
             return;
         }
 
-        cir.setReturnValue(this.gossips.getReputation(playerId, (t) -> t != GossipType.MINOR_NEGATIVE && t != GossipType.MAJOR_NEGATIVE));
+        // vt_overrideSettingGossip files every reputation event under GLOBAL_UUID, so reads have to
+        // look there too — otherwise global reputation is written but never read back.
+        UUID playerId = config.enableGlobalReputation ? GLOBAL_UUID : player.getUUID();
+
+        // Vanilla counts every gossip type; disabling bad reputation just drops the negative ones.
+        Predicate<GossipType> gossipTypes = config.enableBadReputation
+            ? (t) -> true
+            : (t) -> t != GossipType.MINOR_NEGATIVE && t != GossipType.MAJOR_NEGATIVE;
+
+        cir.setReturnValue(this.gossips.getReputation(playerId, gossipTypes));
     }
 
     // This used to be a TemptGoal, and the better way to do it is probably a task, but I couldn't get that to work
