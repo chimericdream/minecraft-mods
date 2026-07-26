@@ -239,9 +239,17 @@ way), so `create-modpacks.ts` needs no change. Verify this by name after the fir
 Note the new `version` uses `rootProject.minecraft_compatibility` (root property), not the per-mod
 `minecraft_compat`. On `26.1.2` that root property is already `26.1.2`.
 
-Also drop the four inactive mods' `build.gradle` stubs to the same one-liner (`blacklight`,
-`cobblicious`, `hang-from-slabs`, `jdcrafte`, `pannotia-companion`, `playgrounds` — 4 lines each on
-`main`). They are not in `settings.gradle` but keeping them consistent costs nothing.
+> **Correction.** An earlier draft said to collapse the six inactive mods' `build.gradle` to the same
+> one-liner. `main` did **not** do that — it left their old structure (they still use the retired
+> `com.github.johnrengelman.shadow` plugin) and applied only the two coordinate lines:
+> `version = "${rootProject.minecraft_compatibility}-" + …` and dropping `+ "-" + project.minecraft_compat`
+> from `archivesName`. Match `main`: apply those two lines to `blacklight`, `cobblicious`,
+> `hang-from-slabs`, `jdcrafte`, `pannotia-companion`, `playgrounds` and change nothing else. They are
+> not in `settings.gradle`, so they never configure; converting them would be unverifiable churn.
+
+**Configuration gate for this step:** `./gradlew projects` must succeed before you commit. It is the
+cheapest check that the `settings.gradle` hoist + `evaluationDependsOnChildren()` pairing works and
+that no mod lost a property its `processResources` token map needs.
 
 ### 0.6 — CI, docs, and repo config
 

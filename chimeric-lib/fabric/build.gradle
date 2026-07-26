@@ -17,4 +17,12 @@ configurations {
 dependencies {
     common(project(path: ':chimeric-lib:common')) { transitive false }
     shadowBundle project(path: ':chimeric-lib:common', configuration: 'transformProductionFabric')
+
+    // The `gametest` source set (created by fabricApi.configureTests, see root build.gradle) is a
+    // separate, never-shipped source set: its classpath is extended from `main` (so it sees
+    // Minecraft, fabric-api's gametest module, and chimeric-lib common), and its output goes only to
+    // the `runGameTest` run config — never into the published/shaded jar. The reusable GameTest
+    // harness helpers live in common's published `testFixtures` variant (alongside BootstrapMinecraft);
+    // consume them here the same way a downstream mod would consume the published variant.
+    gametestImplementation(testFixtures(project(":chimeric-lib:common")))
 }
