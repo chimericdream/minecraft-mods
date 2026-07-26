@@ -8,4 +8,6 @@ public interface HopperVariantBlock {
     String getBaseKey();
 
     boolean isWithFilter();
+
+    int getCooldownInTicks();
 }
