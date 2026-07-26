@@ -8,6 +8,14 @@ public class RomanNumeralUtil {
     public RomanNumeralUtil() {}
 
     public static String toRoman(int number) {
+        // Classic Roman numerals only represent 1..3999. Anything outside that — including 0 or
+        // negatives, which other mods' /enchant commands can produce — has no numeral, and for
+        // number < 1 map.floorKey(number) returns null and NPEs on unboxing. Fall back to the
+        // Arabic value in those cases.
+        if (number < 1 || number > 3999) {
+            return String.valueOf(number);
+        }
+
         int l = map.floorKey(number);
 
         return number == l
