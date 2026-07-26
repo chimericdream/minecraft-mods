@@ -10,6 +10,7 @@
         "postbuild": "bun run teardown:build",
         "prebuild": "bun run clean && bun run prepare:build",
         "prepare:build": "bun run copy:accesswideners && bun run update:patchoulibooks",
+        "publish:lib": "./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal",
         "teardown:build": "bun ./scripts/revert-fabricmodjson.ts",
         "update:patchoulibooks": "bun ./scripts/update-patchouli-books.ts",
         "update:projectlist": "bun ./scripts/update-projectlist.ts",

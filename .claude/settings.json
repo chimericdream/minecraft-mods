@@ -1,0 +1,19 @@
+{
+  "$comment": "Checked-in, shared project settings. Allowlists safe, read-only / routine dev-loop commands so they don't prompt. Personal, machine-specific, or broader permissions belong in the git-ignored .claude/settings.local.json. Refine this list with the /fewer-permission-prompts skill.",
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew:*)",
+      "Bash(bun run:*)",
+      "Bash(bun install)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git config --local --list)",
+      "Bash(python generate_layout.py)",
+      "Bash(python extract_jar_contents.py)"
+    ]
+  }
+}
