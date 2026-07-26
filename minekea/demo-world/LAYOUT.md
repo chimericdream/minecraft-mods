@@ -42,6 +42,17 @@ front** of the region, centred, facing north (`tp @p <centre-x> 56 <front+2> 180
 vantage is clamped to the arena floor and lands in the row aisle, so it never drops you
 into the void or inside the next row's blocks.
 
+### Tool showcase (front-left)
+The very first thing in the front row is a **2-block-high wall** — one column per Minekea
+tool item (wrench, block painter, the six hammers). Each column shows the item in an
+**item frame** on the wall's front (south) face with an **oak wall sign** beneath it; the
+sign text is authored per-item in the `TOOL_SHOWCASE` table at the top of the generator
+(up to 4 lines each). It gets its own title sign + teleport pad like any region, and the
+by-material layout starts just east of it. Because item frames are entities, the reset step
+also `kill`s any item frames in the build volume before summoning fresh ones (so re-running
+never stacks duplicates), and the wall is placed before its frames so each has a support
+block. Editing knobs live in [`README.md`](./README.md) §4–§5.
+
 ---
 
 ## 2. Everything is tiered

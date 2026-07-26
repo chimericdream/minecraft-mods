@@ -116,6 +116,9 @@ All geometry/appearance knobs are constants at the top:
 | `FLAT_COLS` | display blocks per staircase row (keep **even** — see §6 bagged pairs) |
 | `POD_COLS`, `POD_SIZE`, `POD_GAP` | compressed-podium grid (3×3 podiums, 3 per row) |
 | `FRONT_ROWS` | rows kept clear at a region's front (sign/command block/standing) |
+| `TOOL_SHOWCASE` | the item-frame tool wall (see §5 *Edit the tool showcase*); `[]` disables it |
+| `TOOL_WALL_BLOCK` / `TOOL_SHOWCASE_LABEL` | the 2-tall wall block / its standing title sign |
+| `TOOL_COL_STRIDE` / `TOOL_PAD_CELLS` | x-blocks per tool column / front-left cells for title+tp pad |
 
 Data lists just below the constants: `COLORS` (creative order), `WOOD_BASES`, `WOOD_BANDS` /
 `STONE_BANDS` (family→tier), `STONE_RULES` (material bucketing), `ORDER_WOODS` / `ORDER_STONES`
@@ -174,6 +177,17 @@ The reset + floor are emitted in the "mcfunction" section: clear fills (`CLEAR_S
 andesite region pads → tier platforms → display blocks → signs+command blocks. Edit those
 `lines.append(...)` blocks.
 
+### Edit the tool showcase (item-frame wall)
+The front-left of the arena is a 2-block-high wall — one column per tool item — with each item
+shown in an **item frame** on the wall's front (south) face and an **oak wall sign** directly
+beneath it. It flows as the first region of the front row, so the by-material layout starts just
+to its east. To change the sign text, edit the **`TOOL_SHOWCASE`** list at the top of the script:
+each entry is `("<item id>", ["line 1", "line 2", "line 3", "line 4"])`. Up to 4 lines show on the
+sign; extra lines are ignored, missing lines render blank, and quotes/apostrophes are escaped for
+you. Add/remove entries to add/remove columns; set `TOOL_SHOWCASE = []` to drop the wall entirely
+(the rest of the layout then reclaims the front-left). Appearance knobs: `TOOL_WALL_BLOCK`,
+`TOOL_SHOWCASE_LABEL`, `TOOL_COL_STRIDE`, `TOOL_PAD_CELLS`.
+
 ### Change per-region teleport / signs
 Emitted in the "region label signs + teleport command blocks" block. Each region gets an
 `oak_sign` and a `command_block` running `tp @p <centre> 56 <front+VANTAGE> 180 0` (yaw 180 =
@@ -210,6 +224,11 @@ facing north) on a stone pressure plate.
   ordering.
 - **Shutter `*_open` blocks are skipped** (internal open-halves; standalone they crash on
   click). Handled in the classify step by the `_open` check.
+- **Item frames are entities, not blocks** — `fill … air` can't clear them, so re-running the
+  function would stack duplicate frames on the tool-showcase wall. The reset therefore also runs a
+  coordinate-bounded `kill @e[type=item_frame,…]` over the build volume (right after the
+  dropped-item `kill`). The walls are laid **before** the frames are summoned so each frame has a
+  support block (a frame summoned into empty air pops off as an item).
 - **Never edit the generated files** (`demo_build.mcfunction`, the CSVs, `layout_*`) — rerun the
   generator instead.
 

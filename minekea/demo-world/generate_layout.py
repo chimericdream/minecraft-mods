@@ -52,6 +52,32 @@ POD_SIZE  = 3
 POD_GAP   = 1
 FRONT_ROWS = 1            # region rows kept clear at the front (sign / cmd / standing)
 
+# ---- tool showcase (item-frame wall) --------------------------------------
+# A short 2-block-high wall at the FRONT-LEFT of the arena, one column per tool item. Each
+# column shows the item in an item frame on the wall's front (south) face, with an oak wall
+# sign directly beneath the frame. Flows as the first "region" of the front row, so the rest
+# of the by-material layout starts just to its east.
+#
+# >>> EDIT HERE <<<  Fill in up to 4 lines of sign text for each item (the text on the oak
+# sign under that item's frame). Keep each line short (~15 chars) so it fits an oak sign;
+# lines past the 4th are ignored and missing lines render blank. Text may contain quotes or
+# apostrophes (they're escaped for you). Set TOOL_SHOWCASE = [] to drop the whole wall.
+TOOL_WALL_BLOCK     = "minecraft:polished_andesite"   # the 2-tall wall the frames + signs attach to
+TOOL_SHOWCASE_LABEL = "Minekea Tools"                 # standing title sign at the wall's front-left
+TOOL_COL_STRIDE     = 2       # x-blocks per tool column (1 wall + 1 gap between columns)
+TOOL_PAD_CELLS      = 3       # front-left cells reserved for the title sign + teleport pad
+TOOL_SHOWCASE = [
+    # (item id,                          [line 1,            line 2, line 3, line 4])
+    ("minekea:tools/wrench",             ["Wrench",             "", "", ""]),
+    ("minekea:tools/painter",            ["Block Painter",      "", "", ""]),
+    ("minekea:tools/hammers/stone",      ["Stone Hammer",       "", "", ""]),
+    ("minekea:tools/hammers/copper",     ["Copper Hammer",      "", "", ""]),
+    ("minekea:tools/hammers/iron",       ["Iron Hammer",        "", "", ""]),
+    ("minekea:tools/hammers/gold",       ["Gold Hammer",        "", "", ""]),
+    ("minekea:tools/hammers/diamond",    ["Diamond Hammer",     "", "", ""]),
+    ("minekea:tools/hammers/netherite",  ["Netherite Hammer",   "", "", ""]),
+]
+
 # ---- material grouping ----------------------------------------------------
 COLORS = ["white", "light_gray", "gray", "black", "brown", "red", "orange", "yellow",
           "lime", "green", "cyan", "light_blue", "blue", "purple", "magenta", "pink"]
@@ -447,8 +473,30 @@ for k in ORDER_STONES + ORDER_METALS + ORDER_TAIL:
 register("jars_items", "Glass Jars - Items", jar_items_list(jar_items))
 register("jars_misc", "Glass Jars - Fluids & Mobs", jar_items_list(jar_misc))
 
+# ---- tool showcase geometry (front-left corner) --------------------------
+def sign_line(line):
+    """Render one sign line as an SNBT list element: a JSON text component (double-quotes
+    escaped) wrapped in a single-quoted SNBT string (single-quotes/backslashes escaped)."""
+    j = '"' + str(line).replace("\\", "\\\\").replace('"', '\\"') + '"'   # JSON text component
+    s = j.replace("\\", "\\\\").replace("'", "\\'")                       # embed in single-quoted SNBT
+    return "'" + s + "'"
+
+tool_cols = []                       # (x, item_id, [4 sign lines]) per tool column
+tool_ox, tool_oz = ORIGIN_X, ORIGIN_Z
+tool_w = tool_d = 0
+if TOOL_SHOWCASE:
+    x0 = tool_ox + TOOL_PAD_CELLS    # first wall column (front-left cells hold title + tp pad)
+    for i, (item_id, text) in enumerate(TOOL_SHOWCASE):
+        text = (list(text) + ["", "", "", ""])[:4]        # normalise to exactly 4 lines
+        tool_cols.append((x0 + i * TOOL_COL_STRIDE, item_id, text))
+    tool_w = (tool_cols[-1][0] - tool_ox) + 1
+    tool_d = 2                        # wall row (oz-1) + front row for the frame/sign (oz)
+
 # ---- flow regions into rows ----------------------------------------------
 cursor_x, cursor_z, row_depth = ORIGIN_X, ORIGIN_Z, 0
+if TOOL_SHOWCASE:                                          # reserve the front-left for the wall
+    cursor_x = ORIGIN_X + tool_w + AISLE
+    row_depth = tool_d
 for rg in regions.values():
     d = FRONT_ROWS + rg["maxdepth"] + 1
     if cursor_x != ORIGIN_X and (cursor_x - ORIGIN_X) + rg["w"] > ROW_WIDTH:
@@ -498,6 +546,9 @@ for key, rg in regions.items():
 # ---- arena bounds (front-left corner = -192,55,191) -----------------------
 all_x = [p["x"] for p in placements] + [b[0] for b in platforms] + [b[3] for b in platforms]
 all_z = [p["z"] for p in placements] + [b[2] for b in platforms]
+if TOOL_SHOWCASE:
+    all_x += [tool_ox, tool_ox + tool_w - 1]
+    all_z += [tool_oz, tool_oz - (tool_d - 1)]
 X0, X1 = ORIGIN_X - 1, max(all_x) + 1                   # X0 = west border at -192 (blocks framed inside)
 Z0, Z1 = ORIGIN_Z + 1, min(all_z) - 1                   # Z0 = south/front (191), Z1 = north/back
 
@@ -525,6 +576,10 @@ lines.append(f"# clear {CLEAR_SIZE}x{CLEAR_SIZE} area to air (y {FLOOR_Y}..{top}
 for y in range(FLOOR_Y, top + 1, 2):
     lines.append(fill(cx0, y, cz1, cx1, min(y + 1, top), cz0, "air"))
 lines.append("kill @e[type=item]")
+# item frames are entities (setblock/fill can't clear them) - kill any inside the build volume
+# so re-running the function doesn't stack duplicate frames on the tool showcase wall.
+lines.append(f"kill @e[type=item_frame,x={cx0},y={FLOOR_Y},z={cz1},"
+             f"dx={CLEAR_SIZE - 1},dy={CLEAR_HEIGHT},dz={CLEAR_SIZE - 1}]")
 lines.append("")
 lines.append(f"# lay the whole cleared floor as smooth stone (the build sits on top)")
 lines.append(fill(cx0, FLOOR_Y, cz1, cx1, FLOOR_Y, cz0, "minecraft:smooth_stone"))
@@ -536,6 +591,9 @@ lines.append("# region floor pads (polished andesite)")
 for rg in regions.values():
     ox, oz = rg["ox"], rg["oz"]
     lines.append(fill(ox, FLOOR_Y, oz - (rg["d"] - 1), ox + rg["w"] - 1, FLOOR_Y, oz, FLOOR_BLOCK))
+if TOOL_SHOWCASE:
+    lines.append(fill(tool_ox, FLOOR_Y, tool_oz - (tool_d - 1),
+                      tool_ox + tool_w - 1, FLOOR_Y, tool_oz, FLOOR_BLOCK))
 lines.append("")
 lines.append(f"# staircase tier platforms ({len(platforms)})")
 for (x1, y1, z1, x2, y2, z2) in platforms:
@@ -554,6 +612,24 @@ for p in placements:
 lines.append(f"# display blocks ({len(placements)} + {upper_halves} upper halves)")
 lines.extend(disp)
 lines.append("")
+if TOOL_SHOWCASE:
+    zf = tool_oz            # frame + sign row (front / south)
+    zw = tool_oz - 1        # wall row (one back)
+    yb, yt = FLOOR_Y + 1, FLOOR_Y + 2       # wall bottom + top
+    lines.append(f"# tool showcase: {len(tool_cols)} item frames on a 2-high wall, oak signs beneath")
+    # 1) the walls (frames need their support block present *before* they're summoned)
+    for (x, _item_id, _txt) in tool_cols:
+        lines.append(fill(x, yb, zw, x, yt, zw, TOOL_WALL_BLOCK))
+    # 2) an oak wall sign under each frame (front/south face of the lower wall block)
+    for (x, _item_id, txt) in tool_cols:
+        msgs = ",".join(sign_line(ln) for ln in txt)
+        lines.append(f"setblock {x} {yb} {zf} minecraft:oak_wall_sign[facing=south]"
+                     f"{{front_text:{{messages:[{msgs}]}}}}")
+    # 3) the item frames on the front/south face of the upper wall block
+    for (x, item_id, _txt) in tool_cols:
+        lines.append(f'summon minecraft:item_frame {x} {yt} {zf} '
+                     f'{{Facing:3b,Fixed:1b,Invisible:0b,Item:{{id:"{item_id}",count:1}}}}')
+    lines.append("")
 lines.append(f"# region label signs + teleport command blocks + plates ({len(regions)})")
 for rg in regions.values():
     ox, oz = rg["ox"], rg["oz"]
@@ -566,6 +642,18 @@ for rg in regions.values():
     lines.append(f'setblock {cx} {FLOOR_Y} {oz} minecraft:command_block[facing=up]'
                  f'{{Command:"tp @p {vx:.1f} {FLOOR_Y + 1} {vz} 180 0",auto:0b}}')
     lines.append(f"setblock {cx} {FLOOR_Y + 1} {oz} minecraft:stone_pressure_plate")
+if TOOL_SHOWCASE:
+    lines.append("")
+    lines.append("# tool showcase title sign + teleport pad (front-left cells)")
+    lbl = sign_line(TOOL_SHOWCASE_LABEL)
+    lines.append(f'setblock {tool_ox} {FLOOR_Y + 1} {tool_oz} {SIGN_BLOCK}[rotation=0]'
+                 f"{{front_text:{{messages:[{lbl},'\"\"','\"\"','\"\"']}}}}")
+    px = tool_ox + 1
+    vx = tool_ox + tool_w / 2.0
+    vz = min(tool_oz + VANTAGE, Z0)
+    lines.append(f'setblock {px} {FLOOR_Y} {tool_oz} minecraft:command_block[facing=up]'
+                 f'{{Command:"tp @p {vx:.1f} {FLOOR_Y + 1} {vz} 180 0",auto:0b}}')
+    lines.append(f"setblock {px} {FLOOR_Y + 1} {tool_oz} minecraft:stone_pressure_plate")
 with open(os.path.join(HERE, "demo_build.mcfunction"), "w", encoding="utf-8", newline="\n") as fh:
     fh.write("\n".join(lines) + "\n")
 
@@ -583,7 +671,9 @@ stats = {"summary": {"arena_x": [X0, X1], "arena_z": [Z1, Z0], "floor_y": FLOOR_
                      "front_left": [X0, FLOOR_Y, Z0],
                      "width": X1 - X0 + 1, "depth": Z0 - Z1 + 1, "regions": len(regions),
                      "display_blocks": len(placements), "tier_platforms": len(platforms),
-                     "jars_filled": jars_filled, "command_blocks": len(regions)},
+                     "jars_filled": jars_filled, "command_blocks": len(regions),
+                     "tool_showcase": {"items": len(tool_cols), "front_left": [tool_ox, FLOOR_Y, tool_oz],
+                                       "w": tool_w, "d": tool_d} if TOOL_SHOWCASE else None},
          "regions": [{"region": k, "label": rg["label"], "front_left": [rg["ox"], FLOOR_Y, rg["oz"]],
                       "w": rg["w"], "d": rg["d"],
                       "tall": 1 if rg["flat"] else rg["maxdepth"] + 1} for k, rg in regions.items()]}
@@ -594,6 +684,8 @@ print(f"regions         : {len(regions)}")
 print(f"display blocks  : {len(placements)}  (+{upper_halves} upper halves)")
 print(f"tier platforms  : {len(platforms)}")
 print(f"jars filled     : {jars_filled}")
+if TOOL_SHOWCASE:
+    print(f"tool showcase   : {len(tool_cols)} item frames at ({tool_ox},{FLOOR_Y},{tool_oz}), {tool_w} wide")
 print(f"tallest region  : {max((1 if rg['flat'] else rg['maxdepth'] + 1) for rg in regions.values())} blocks")
 print(f"arena           : X[{X0}..{X1}] ({X1-X0+1} wide)  Z[{Z1}..{Z0}] ({Z0-Z1+1} deep)")
 print(f"front-left      : ({X0},{FLOOR_Y},{Z0})")
