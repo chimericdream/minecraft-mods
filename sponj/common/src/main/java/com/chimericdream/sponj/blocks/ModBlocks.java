@@ -9,6 +9,23 @@ import net.minecraft.world.level.block.Block;
 import static com.chimericdream.sponj.SponjMod.REGISTRY_HELPER;
 
 public class ModBlocks {
+    /**
+     * How many connected sponjes may contribute to a single absorption.
+     *
+     * <p>This is the knob that keeps sponj from lagging the server, and it is intentionally small.
+     * A sponj clears liquid outward with a radius of {@code 6 + 3*(n-1)} and a hard budget of
+     * {@code 64 * n} cleared blocks, where {@code n} is the number of connected sponjes. Both grow
+     * with {@code n}, so the worst-case work per absorption is roughly {@code 64 * n} block updates
+     * in one tick. Left uncapped, a large sponj wall (potentially thousands of blocks) would try to
+     * clear tens of thousands of liquid/washable blocks at once.
+     *
+     * <p>Capping {@code n} here bounds that worst case at about {@code 64 * MAX_CONNECTED_SPONJES}
+     * block updates. Raising this makes bigger sponj arrays reach further and drain faster at the
+     * cost of a higher per-tick spike; lowering it is safer but limits how much a multi-sponj build
+     * helps. A single sponj ({@code n = 1}) still behaves like vanilla (radius 6, 64 blocks).
+     */
+    public static final int MAX_CONNECTED_SPONJES = 16;
+
     public static final RegistrySupplier<Block> SPONJ_BLOCK = REGISTRY_HELPER.registerWithItem(
         SponjBlock.BLOCK_ID,
         SponjBlock::new,
