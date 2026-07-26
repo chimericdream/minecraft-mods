@@ -27,6 +27,13 @@ import java.util.List;
 public class DyeStationScreenHandler extends AbstractContainerMenu {
     public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/block/dye_station");
 
+    /** The station's own slots, 0-6. */
+    public static final int STATION_SLOT_COUNT = DyeStationBlockEntity.INVENTORY_SIZE;
+    /** The result slot, which is backed by {@link #output} rather than by the station. */
+    public static final int OUTPUT_SLOT_INDEX = STATION_SLOT_COUNT;
+    /** Everything from here on belongs to the player's inventory. */
+    public static final int FIRST_PLAYER_SLOT = OUTPUT_SLOT_INDEX + 1;
+
     private final Container inventory;
     private final Container output;
 
@@ -56,9 +63,9 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
         this.addSlot(new DyeSlot(inventory, output, 6, 66, 53));
 
         // output slot
-        this.addSlot(new OutputSlot(this.inventory, this.output, 124, 35));
+        this.addSlot(new OutputSlot(this.inventory, this.output, 124, 35, this::refreshOutput));
 
-        ((ShulkerDyeingSlot) this.slots.get(6)).updateOutput();
+        refreshOutput();
 
         for (int j = 0; j < 3; ++j) {
             for (int k = 0; k < 9; ++k) {
@@ -90,6 +97,21 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
         return this.inventory.stillValid(player);
     }
 
+    /** Recomputes the result from the current inputs. */
+    private void refreshOutput() {
+        ((ShulkerDyeingSlot) this.slots.get(OUTPUT_SLOT_INDEX - 1)).updateOutput();
+    }
+
+    /**
+     * Balances the {@code startOpen} the constructor issues, the way vanilla's {@code ChestMenu}
+     * does — without it the station's opener counter never sees the viewer leave.
+     */
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.inventory.stopOpen(player);
+    }
+
     @Override
     public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -98,11 +120,19 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            if (invSlot < this.inventory.getContainerSize()) {
-                if (!this.moveItemStackTo(originalStack, this.inventory.getContainerSize(), this.slots.size(), true)) {
+
+            if (invSlot == OUTPUT_SLOT_INDEX) {
+                // The result slot sits *after* the station's slots, so the old
+                // `invSlot < inventory.getContainerSize()` test treated it as a player slot and
+                // then found no legal target — shift-clicking the result did nothing at all.
+                if (!this.moveItemStackTo(originalStack, FIRST_PLAYER_SLOT, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(originalStack, 0, this.inventory.getContainerSize(), false)) {
+            } else if (invSlot < STATION_SLOT_COUNT) {
+                if (!this.moveItemStackTo(originalStack, FIRST_PLAYER_SLOT, this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(originalStack, 0, STATION_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -110,7 +140,22 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
+
+                // A partial move leaves the slot non-empty, so ShulkerDyeingSlot#set never runs and
+                // the result would go stale.
+                if (invSlot < STATION_SLOT_COUNT) {
+                    refreshOutput();
+                }
             }
+
+            int moved = newStack.getCount() - originalStack.getCount();
+            if (moved <= 0) {
+                return ItemStack.EMPTY;
+            }
+
+            // Consuming the inputs lives in onTake, so every path that hands the result to the
+            // player — pick up, shift-click, swap, drag — pays for it exactly once.
+            slot.onTake(player, newStack.copyWithCount(moved));
         }
 
         return newStack;
@@ -238,10 +283,12 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
 
     private static class OutputSlot extends Slot {
         private final Container input;
+        private final Runnable refreshOutput;
 
-        public OutputSlot(Container input, Container inventory, int x, int y) {
+        public OutputSlot(Container input, Container inventory, int x, int y, Runnable refreshOutput) {
             super(inventory, 0, x, y);
             this.input = input;
+            this.refreshOutput = refreshOutput;
         }
 
         @Override
@@ -249,13 +296,31 @@ public class DyeStationScreenHandler extends AbstractContainerMenu {
             return false;
         }
 
+        /**
+         * Charging for the result belongs here rather than in {@code remove(int)}: {@code remove} is
+         * only one of several ways a slot's contents leave (drag, swap, number keys, shift-click),
+         * and it ran before anything had committed. {@code onTake} runs once per handover, on every
+         * path, with the amount that actually left.
+         */
         @Override
-        public @NotNull ItemStack remove(int amount) {
-            for (int i = 0; i < 7; i++) {
-                this.input.getItem(i).shrink(amount);
+        public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+            int taken = stack.getCount();
+
+            if (taken > 0) {
+                for (int i = 0; i < DyeStationBlockEntity.INVENTORY_SIZE; i++) {
+                    // removeItem, not ItemStack#shrink: it empties the slot properly instead of
+                    // leaving a zero-count stack behind.
+                    this.input.removeItem(i, taken);
+                }
+
+                this.input.setChanged();
+
+                // The old code never did this, so with stacked dyes the result stayed stale until
+                // some other slot happened to be touched.
+                this.refreshOutput.run();
             }
 
-            return super.remove(amount);
+            super.onTake(player, stack);
         }
     }
 }
