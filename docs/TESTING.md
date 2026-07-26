@@ -25,28 +25,30 @@ Packages for *external* consumers — it is not part of the edit→test loop.
 - Run: `./gradlew :chimeric-lib:fabric:test` (chimeric-lib is currently the only mod with unit tests;
   ~30 tests across colors/text/inventory/items/resource/tool/math).
 
-### Bootstrapping Minecraft
+### Bootstrapping Minecraft (the components gotcha)
 
 Pure-logic tests (Direction tables, string/bit math, `Component` building) need **no** bootstrap.
-Tests that touch registries/items/blocks/tags must bootstrap first: outside a live game the static
-registries (`Items`, `Blocks`, `BuiltInRegistries`, …) are unpopulated until Minecraft's bootstrap
-runs. `fabric-loader-junit` puts the loader and the named Minecraft jar on the test classpath; the
-bootstrap then makes registry lookups resolve.
+Tests that touch registries/items/blocks/tags must bootstrap first — and `Bootstrap.bootStrap()`
+alone is **not enough**: item data components are data-driven and stay *unbound*, so constructing an
+`ItemStack` throws `NullPointerException: Components not bound yet` from `Holder$Reference.components`.
+Bake them once, the way a loading server does:
 
 ```java
 SharedConstants.tryDetectVersion();
-Bootstrap.bootStrap();   // guard with a static flag; fabric-loader-junit shares one classloader
+Bootstrap.bootStrap();
+HolderLookup.Provider provider = VanillaRegistries.createLookup();
+BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(provider).forEach(p -> p.apply()); // guard with a static flag
 ```
 
 Canonical helper: **`BootstrapMinecraft`** (`chimeric-lib/common/src/testFixtures/java/com/chimericdream/lib/testkit/`).
-Subclass it for registry-touching tests.
+Subclass it for registry-touching tests. The bake is guarded by a static boolean because
+fabric-loader-junit runs all tests in one classloader and `apply()` is not idempotent.
 
-> **On MC 26.2 this is not sufficient** — item data components become data-driven and stay *unbound*
-> after `Bootstrap.bootStrap()`, so constructing an `ItemStack` throws
-> `NullPointerException: Components not bound yet`, and the helper has to bake them via
-> `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS`. **That API does not exist on 26.1.2 and is not
-> needed here**; components are bound at construction. If you forward-port this branch, restore the
-> bake — see `docs/MC-26.2-NOTES.md` on the 26.2 line.
+> This behavior is **the same on 26.1.2 and 26.2** — verified by running the suite without the bake on
+> 26.1.2 (8 of 43 tests fail with "Components not bound yet") and by `javap` on the 26.1.2 jar
+> (`BuiltInRegistries.DATA_COMPONENT_INITIALIZERS` and `DataComponentInitializers.build(Provider)
+> → List<PendingComponents>` with `apply()` are present and identically shaped). The same bake is
+> required at the top of minekea's datagen `buildRecipes()`.
 
 ## GameTests (isolated `gametest` source set)
 

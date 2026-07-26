@@ -173,7 +173,17 @@ The port touched both, but the payload guts them (−82 lines each) down to thin
 payload version wholesale**, then compile — any 26.2 symbol that survives will surface immediately
 and is covered by §5's reverse map.
 
-### `testkit/BootstrapMinecraft.java` — **new file, requires a deletion**
+### `testkit/BootstrapMinecraft.java` — ⚠ **the instruction below was wrong; keep the bake**
+
+> **Outcome when this was executed:** 26.1.2 binds data components lazily exactly like 26.2, and
+> `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS` exists there with an identical shape. Removing the
+> bake made 8 of 43 unit tests fail with `NullPointerException: Components not bound yet`. The file
+> was restored to `main`'s version (only the published-coordinate example in its javadoc was fixed:
+> `chimericlib-common:<mc>-<version>`, not `chimericlib-common-<mc>:<version>`). The section below is
+> kept for the record — **do not follow it**. See [README.md](README.md) §5's correction.
+
+<details>
+<summary>Superseded instruction (do not follow)</summary>
 
 The `main` version bakes data components, which is a **26.2-only** requirement:
 
@@ -197,6 +207,27 @@ registries so headless `ItemStack` construction works.
 If `:chimeric-lib:fabric:test` then fails with *"Components not bound yet"*, that would mean 26.1.2
 shares the lazy-binding behavior after all — in that case restore the bake and find the 26.1.2
 equivalent. Expected outcome: it passes without it.
+
+</details>
+
+### `fixture/TestFixtures.java` — an adaptation the plan did not anticipate
+
+`new BlockEntityType<>(factory, blocks)` compiles on 26.2 but **not on 26.1.2**, where that constructor
+is `private`. Every mod in this repo that calls it directly (minekea, shulker-stuff, hopper-xtreme)
+widens it in its own access widener — and minekea's carries the comment *"This should be in
+chimericlib, but I need to figure out how to get transitive accesswideners working"*. chimeric-lib has
+**no** access widener enabled (commented out in `common/build.gradle` and `fabric/build.gradle`, on
+both branches).
+
+Rather than give chimeric-lib a shipping access widener purely to serve a test fixture, the gametest
+uses fabric-api's public builder — the `gametest` source set is fabric-only and never ships:
+
+```java
+FabricBlockEntityTypeBuilder.create(TestContainerBlockEntity::new, TEST_CONTAINER_BLOCK.get()).build()
+```
+
+Verified present in the fabric-api resolved for 26.1.2. 26.1.2 has no public `BlockEntityType.Builder`
+and no public constructor, so this is the only widener-free path.
 
 ---
 
