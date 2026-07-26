@@ -1,0 +1,31 @@
+{
+    "schemaVersion": 1,
+    "id": "chimericlib_test",
+    "version": "1.0.0",
+    "name": "ChimericLib GameTest Fixtures",
+    "description": "Test-only fixture content and GameTests for ChimericLib. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.lib.fabric.test.fixture.ChimericLibTestEntrypoint"
+        ],
+        "fabric-gametest": [
+            "com.chimericdream.lib.fabric.test.RegisterableBlockGameTest",
+            "com.chimericdream.lib.fabric.test.ImplementedInventoryGameTest",
+            "com.chimericdream.lib.fabric.test.ScreenHandlerGameTest",
+            "com.chimericdream.lib.fabric.test.SimpleSeatEntityGameTest",
+            "com.chimericdream.lib.fabric.test.LootTableModifierGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*"
+    }
+}

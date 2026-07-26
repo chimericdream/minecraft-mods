@@ -107,9 +107,14 @@ for the edit→build loop in this repo.
 Generated output lives in `<mod>/common/src/main/generated/` and is committed; **regenerate, never
 hand-edit**.
 
-> On MC 26.2, datagen additionally needs item data components bound at the top of `buildRecipes()`
-> (`BuiltInRegistries.DATA_COMPONENT_INITIALIZERS`). **That is not needed on 26.1.2** and the API does
-> not exist here — components are bound at construction. Restore it if you forward-port.
+> ⚠ Datagen needs item data components bound at the top of `buildRecipes()`, because components are
+> data-driven and datagen never performs the server reload that binds them:
+> ```java
+> BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup).forEach(pending -> pending.apply());
+> ```
+> Without it, anything reading components at datagen time (e.g. `Item.getDefaultMaxStackSize()`) throws
+> `NullPointerException: Components not bound yet`. Same on 26.1.2 and 26.2 — see `docs/TESTING.md`
+> for the unit-test equivalent.
 
 ## Scaffolding
 

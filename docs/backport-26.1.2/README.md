@@ -306,7 +306,7 @@ Sub-agents apply this when a patch hunk rejects or the build fails. Derived from
 | `Blocks.WOOL.white()`, `Items.DYE.red()`, … (`ColorCollection`) | `Blocks.WHITE_WOOL`, `Items.RED_DYE`, … |
 | `Blocks.CUT_COPPER.weathering().exposed()` | `Blocks.EXPOSED_CUT_COPPER` |
 | `Blocks.COPPER_BLOCK.weathering().unaffected()` | `Blocks.COPPER_BLOCK` |
-| `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(p).forEach(...)` | **Delete.** Components are not lazily bound on 26.1.2. |
+| ~~`BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(p).forEach(...)`~~ | ⚠ **KEEP — this row was wrong, see the correction below.** |
 | `TagAppender<T>` | `TagAppender<T, T>` |
 | `TagAppender.add(X.builtInRegistryHolder().key())` | `TagAppender.add(X)` |
 | `FabricTagProvider.builder(TagKey<T>)` | `FabricTagProvider.valueLookupBuilder(TagKey<T>)` |
@@ -324,6 +324,32 @@ Sub-agents apply this when a patch hunk rejects or the build fails. Derived from
 > **different changes**. The records refactor is version-independent — backport it as-is. Confirmed:
 > `oshi.util.tuples` is still imported on `26.1.2` in `CompressedBlocks`, `DyedBlocks`, and
 > `ArmoireBlockEntity`, so the refactor is just as applicable there.
+
+### ⚠ Correction: data components ARE lazily bound on 26.1.2
+
+An earlier draft of this plan claimed the "Components not bound yet" problem and
+`BuiltInRegistries.DATA_COMPONENT_INITIALIZERS` were 26.2-only. **Both claims are wrong**, found while
+executing Wave 1. The original inference came from `git grep DATA_COMPONENT_INITIALIZERS 26.1.2`
+returning nothing — which only proves no file in the repo used it, not that the API is absent.
+
+Verified two ways on 26.1.2:
+
+- Running chimeric-lib's unit suite **without** the bake: 8 of 43 tests fail with
+  `NullPointerException: Components not bound yet` at `Holder$Reference.components` /
+  `ItemStack.<init>`.
+- `javap` on the 26.1.2 jar: `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS` exists, and
+  `DataComponentInitializers.build(HolderLookup$Provider)` returns `List<PendingComponents<?>>` with a
+  public `apply()` — identical shape to 26.2. `VanillaRegistries.createLookup()` also exists.
+
+**Consequences for the rest of the backport:**
+
+1. `BootstrapMinecraft` keeps the bake exactly as `main` has it. (Done in Wave 1.)
+2. **minekea's `ModDataGenerator` keeps its component-binding hunk** — `minekea.md` §4 said to delete
+   it; that instruction is superseded, and the file now says so.
+3. `docs/TESTING.md` and `CLAUDE.md` are corrected on the shared-build branch.
+
+The lesson generalizes: **`git grep <symbol> 26.1.2` proves a symbol is *used*, never that it is
+*absent*.** For absence, use the jar — see the next section.
 
 ### How to verify an API against 26.1.2 rather than guessing
 

@@ -188,7 +188,16 @@ public class BlockConfig {
     }
 
     public @Nullable Identifier getTexture() {
-        return textures.getOrDefault("default", TextureMapping.getBlockTexture(this.getIngredient()).sprite());
+        Identifier texture = textures.get("default");
+
+        // Not getOrDefault: it evaluates the fallback even when a default texture is set, and
+        // getIngredient() throws when the config has no ingredient — which is exactly the case where
+        // an explicit texture is most likely to be the only thing configured.
+        if (texture != null) {
+            return texture;
+        }
+
+        return TextureMapping.getBlockTexture(this.getIngredient()).sprite();
     }
 
     public @Nullable Identifier getTexture(String name) {

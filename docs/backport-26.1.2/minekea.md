@@ -184,10 +184,22 @@ Eight files were touched by both the 26.2 port and the payload.
 | `entity/block/containers/GlassJarBlockEntity.java` | **one line**: `EntityType.byString(id)` → `Optional.ofNullable(Identifier.tryParse(id)).flatMap(BuiltInRegistries.ENTITY_TYPE::getOptional)` | Reverse it back to `EntityType.byString(id)`. Everything else in this file is payload. `getStringOr`/`getIntOr` **exist on 26.1.2** — verified, this file already uses them there. |
 | `client/render/block/GlassJarBlockEntityRenderer.java` | renames only | Take payload (+3 lines). |
 | `common/src/main/resources/minekea.accesswidener` | added a `TextureSlot create` entry | Payload edits a *different* region (ArmorStand → `equipmentAssets`). Apply the payload hunk; **do not** add the `TextureSlot` entry — it is 26.2-only and `TextureSlot.create` is public on 26.1.2. |
-| `fabric/.../data/ModDataGenerator.java` | `this::valueLookupBuilder` → `this::builder` (×3) | ⚠ **Keep 26.1.2's `valueLookupBuilder`.** And the payload's only change to this file is the 8-line `DATA_COMPONENT_INITIALIZERS` bind at the top of `buildRecipes()` — that is a **26.2-only workaround**. `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS` does not exist on 26.1.2. **Drop the entire hunk, including the `BuiltInRegistries` import.** |
+| `fabric/.../data/ModDataGenerator.java` | `this::valueLookupBuilder` → `this::builder` (×3) | ⚠ **Keep 26.1.2's `valueLookupBuilder`.** The payload's only change here is the `DATA_COMPONENT_INITIALIZERS` bind at the top of `buildRecipes()` — **keep it**, see the correction below. |
 
 Also expect `TagAppender<T>` → `TagAppender<T, T>` and `.add(X.builtInRegistryHolder().key())` →
 `.add(X)` anywhere the payload touches datagen tag code.
+
+> **⚠ Correction — keep the datagen component bind.** This file originally said to delete the
+> `BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup).forEach(pending -> pending.apply())`
+> hunk as a 26.2-only workaround. That was wrong, and it was caught in Wave 1: 26.1.2 binds data
+> components lazily too, and the API exists there with an identical shape (verified by `javap` on the
+> 26.1.2 jar, and by 8 of chimeric-lib's 43 unit tests failing with "Components not bound yet" without
+> the equivalent bake). **Apply the hunk as-is, including the `BuiltInRegistries` import.**
+> [README.md](README.md) §5 has the full correction.
+>
+> Practical consequence: if `:minekea:fabric:runDatagen` throws
+> `NullPointerException: Components not bound yet`, the bind is missing or is below something that
+> reads components — hoist it.
 
 ---
 
