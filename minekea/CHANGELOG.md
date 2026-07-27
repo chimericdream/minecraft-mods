@@ -1,3 +1,77 @@
+### 26.2 - 10.0.0
+
+#### BREAKING CHANGES
+
+* This release targets Minecraft 26.2 and requires Java 25. It is not compatible with 26.1.x or
+  1.21.x.
+
+#### Changes
+
+* Updated to Minecraft 26.2, Architectury 21.0.4, Fabric API 0.154.2+26.2 and NeoForge
+  26.2.0.15-beta.
+* No gameplay changes of its own. Everything listed under the 26.1.2 release below is included —
+  the two are the same mod built for different Minecraft versions.
+
+
+### 26.1.2 - 9.0.0
+
+#### BREAKING CHANGES
+
+* This release targets Minecraft 26.1.2 and requires Java 25. It is not compatible with 1.21.x.
+
+#### New Features
+
+* Armoires now render the chestplates and leggings you put in them directly. Previously each armoire
+  spawned four invisible marker armor stands inside itself to display the armor; those entities are gone,
+  and any left over from an earlier version are discarded when the block loads. The armor appears in
+  exactly the same place as before.
+* The demo world showcase was redesigned: blocks are grouped by material along a rising staircase, with
+  flat color-gradient regions, fixed block-family bands per wood and stone set, filled glass jars, and a
+  tool showcase wall.
+
+#### Bug Fixes
+
+* **Glass jars no longer crash the client.** The renderer only knew how to draw honey and milk and threw
+  for anything else — but a jar accepts any fluid, so a jar of water or lava hard-crashed on render.
+  Water, lava, milk and honey are now drawn explicitly, and anything else falls back to water.
+* **Glass jars work with hoppers.** The block entity claimed to be a container but had no backing
+  storage, so a vanilla hopper finding a jar threw immediately. The container contract is now implemented
+  properly.
+* **Hoppers can fill a glass jar past its first stack.** A one-slot container reads as "full" at 64 items,
+  and a pushing hopper gives up before it ever asks whether the jar would accept more — so automation
+  could never reach the jar's compressed reserve. The jar now presents a second, virtual input slot that
+  routes into the reserve. It yields nothing on extraction, so it is invisible to pulling hoppers, and a
+  jar at capacity reports as full so neighboring hoppers stop probing it.
+* **A jar of honey can be bottled again.** The check compared the stored fluid against the wrong object
+  entirely, so it was always false, and a second, unreachable branch sat behind it. Fluids with no bottled
+  form now return nothing without draining the jar.
+* Fixed a client memory leak from the glass jar's item-entity cache. It was keyed on item stacks, which
+  have no value-based equality, so nearly every lookup missed and inserted a new entry that was never
+  evicted — growing every frame. It is now keyed on the components that actually drive the jar's
+  appearance and bounded to 256 entries.
+* Mobs in glass jars now all face the same direction.
+* Fixed crashes on orphaned shutter halves and armoire halves. An open shutter half only exists next to
+  its parent shutter; if the parent was missing — from a `/setblock`, a world edit, or a half-broken
+  shutter — using or breaking the orphan operated on whatever block sat where the parent should be and
+  threw. Both now no-op instead.
+* Shelves play their insert sound again when an item partially merges into an existing stack.
+* Glass jar interactions are now correctly threaded to the hand that was used, and jar state is mutated
+  server-side only.
+
+#### Changes
+
+* Updated to Minecraft 26.1.2 / Architectury 20.0.7, built against official Mojang mappings.
+* Crates and Minekea barrels now use ChimericLib's shared viewer-count helper, and the Wrench is a thin
+  subclass of ChimericLib's shared wrench. No behavior change to either.
+* `CompressedBlocks` and `DyedBlocks` modeled their block tables with tuple classes borrowed from a
+  hardware-info library, read through opaque accessor chains; they now use named records. A 1:1
+  transform — every value and ordering is preserved.
+* Fixed the purpur pillar beam and cover textures, which used the pillar's single texture instead of its
+  separate top and side textures.
+* Added 3 GameTests covering the glass jar container contract, glass jar interactions, and the orphaned
+  shutter half.
+
+
 ### 1.21.x - 7.0.0
 
 #### BREAKING CHANGES

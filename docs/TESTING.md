@@ -79,7 +79,7 @@ Consuming them (the root `build.gradle` already wires `test`; a mod's `gametest`
   `gametestImplementation(testFixtures(project(":chimeric-lib:common")))`.
 - External consumers only (published variant): `testImplementation(testFixtures("com.chimericdream.lib:chimericlib-common:<ver>"))`.
   The artifactId is `chimericlib-common` — the Minecraft version is part of `<ver>`
-  (e.g. `26.2-6.0.0-alpha.0`), **not** a suffix on the artifactId.
+  (e.g. `26.2-6.0.0`), **not** a suffix on the artifactId.
 
 **Loom wart:** a custom `testFixtures` source set does not inherit Loom's Minecraft classpath, so
 `common/build.gradle` needs `sourceSets.testFixtures.compileClasspath += sourceSets.main.compileClasspath`.

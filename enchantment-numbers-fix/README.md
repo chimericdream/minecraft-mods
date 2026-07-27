@@ -1,6 +1,6 @@
 # Enchantment Numbers Fix (Fabric/NeoForge)
 
-![Version: 4.0.0-alpha.0](https://img.shields.io/badge/version-4.0.0--alpha.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: not needed](https://img.shields.io/badge/server-not%20needed-9e9e9e?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/version-4.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: not needed](https://img.shields.io/badge/server-not%20needed-9e9e9e?style=flat-square)
 
 _Simple mod that converts enchantment levels above 10 to Roman numerals instead of their decimal version._
 
