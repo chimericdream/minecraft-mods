@@ -1,3 +1,13 @@
+### 26.1.2 - 3.0.1
+
+#### Bug Fixes
+
+* Fixed an item duplication exploit in the Hopper Item Filter's editor: setting a filter entry could,
+  through a specific sequence of clicks, be swapped back out for a full, spendable copy of the item at
+  no cost. The filter's slots now only ever hold "ghost" copies of an item to represent the filter
+  entry — setting one never consumes the item you clicked in, and clearing one never hands anything
+  back, so there's no longer any way to net-gain real items through the filter editor.
+
 ### 26.1.2 - 3.0.0
 
 #### BREAKING CHANGES
