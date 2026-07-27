@@ -77,7 +77,7 @@ Keep this short list:
 (`fabric/src/test/java/com/chimericdream/chimericlib/test/`), 30 tests across 7 classes, run with
 `./gradlew :chimeric-lib:fabric:test`. Registry-touching tests extend the shared `BootstrapMinecraft`
 helper (published from common's `testFixtures` — see "Test conventions"), which runs the vanilla
-bootstrap and bakes data components so headless `ItemStack` construction works on MC 26.2 (plain
+bootstrap and bakes data components so headless `ItemStack` construction works on MC 26.1.2 (plain
 `Bootstrap.bootStrap()` leaves them unbound — see that class's javadoc). This is the canonical JUnit
 wiring the other mods copy (enchantment-numbers-fix next).
 

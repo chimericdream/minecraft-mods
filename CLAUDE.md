@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   root `build.gradle`) — *not* 21.
 - **Loaders / libs** (from `gradle.properties`): Fabric Loader `0.19.3`, Fabric API `0.154.2+26.1.2`,
   NeoForge `26.1.2.71`, Architectury API `20.0.7`, YACL `3.9.4+26.1`, Mod Menu `18.0.0`,
-  Kotlin-for-Forge `6.3.0`, Loom `1.17-SNAPSHOT`, chimeric-lib `26.1.2-5.0.0-alpha.2`.
+  Kotlin-for-Forge `6.3.0`, Loom `1.17-SNAPSHOT`, chimeric-lib `26.1.2-5.0.0`.
 - **Loom plugin**: `dev.architectury.loom-no-remap`; shadow via `com.gradleup.shadow`.
 
 ## Architecture

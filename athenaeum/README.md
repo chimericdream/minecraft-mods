@@ -1,6 +1,6 @@
 # Athenaeum (Fabric/NeoForge)
 
-![Fabric: 4.0.0-alpha.0](https://img.shields.io/badge/Fabric-4.0.0--alpha.0-1976d2?style=flat-square) ![NeoForge: 4.0.0-alpha.0](https://img.shields.io/badge/NeoForge-4.0.0--alpha.0-1976d2?style=flat-square)
+![Fabric: 3.0.0](https://img.shields.io/badge/Fabric-3.0.0-1976d2?style=flat-square) ![NeoForge: 3.0.0](https://img.shields.io/badge/NeoForge-3.0.0-1976d2?style=flat-square)
 
 ![client: optional](https://img.shields.io/badge/client-optional-4caf50?style=flat-square) ![server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 

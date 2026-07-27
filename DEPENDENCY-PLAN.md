@@ -2,8 +2,8 @@
 
 > **Backport note.** This plan was authored on the MC 26.2 line and backported to `26.1.2` verbatim.
 > Its worked examples spell out concrete coordinates (`26.2-6.0.0-alpha.0`,
-> `chimericlib-common-26.2-…jar`); on this branch read those as `26.1.2-5.0.0-alpha.2` and
-> `chimericlib-common-26.1.2-5.0.0-alpha.2.jar`. The wiring being described — the `project()`
+> `chimericlib-common-26.2-…jar`); on this branch read those as `26.1.2-5.0.0` and
+> `chimericlib-common-26.1.2-5.0.0.jar`. The wiring being described — the `project()`
 > dependency, the settings.gradle hoist, `evaluationDependsOnChildren()`, and the archivesName/version
 > split — is identical on both lines and is implemented on this branch.
 
