@@ -255,6 +255,25 @@ git apply --3way /tmp/mk.patch
 git checkout backport/26.1.2/chimeric-lib -- minekea/build.gradle minekea/gradle.properties
 ```
 
+**Expect three files to reject on line endings.** `Beams.java`, `CompressedBlocks.java`, and
+`Covers.java` are CRLF in the `c5f2cc4d` blob but LF on both `main` and this branch, so the patch's
+context lines will not match. They are the same three files §4 already calls out for hand-merging.
+Handle them by taking `main`'s version and reversing the 26.2 copper accessors, rather than fighting
+the patch:
+
+```bash
+for f in block/building/beams/Beams.java \
+         block/building/covers/Covers.java \
+         block/building/compressed/CompressedBlocks.java; do
+  git show main:minekea/common/src/main/java/com/chimericdream/minekea/$f \
+    > minekea/common/src/main/java/com/chimericdream/minekea/$f
+done
+# now reverse .weathering().X() -> the flat 26.1.2 Blocks constants in all three
+```
+
+`Beams.java` and `Covers.java` each differ from this branch by **one real line** once the copper
+accessors are reversed — diff them against `26.1.2` to confirm before committing.
+
 Then work §4's eight files, then:
 
 ```bash

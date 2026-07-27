@@ -29,8 +29,10 @@ bin/
 *.DS_Store
 
 # fabric
+.fabric
 
 run/
+logs/
 
 
 .cache

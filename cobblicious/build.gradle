@@ -4,14 +4,14 @@ plugins {
 
 allprojects {
     group = project(":cobblicious").maven_group
-    version = project(":cobblicious").mod_version
+    version = "${rootProject.minecraft_compatibility}-" + project(":cobblicious").mod_version
 }
 
 subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     base {
-        archivesName = project(":cobblicious").archives_name + "-" + project.name + "-" + project.minecraft_compat
+        archivesName = project(":cobblicious").archives_name + "-" + project.name
     }
 
     architectury {
