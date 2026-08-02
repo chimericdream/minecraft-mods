@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "com.chimericdream.sneakytweaks.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "SneakyTweaks$SweetBerryBushBlockMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

@@ -29,6 +29,7 @@ def projectList = [
 //    'pannotia-companion',
 //    'playgrounds',
         'shulker-stuff',
+        'sneaky-tweaks',
         'sponj',
         'villager-tweaks'
 ]
