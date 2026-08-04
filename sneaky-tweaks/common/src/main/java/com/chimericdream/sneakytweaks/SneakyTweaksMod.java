@@ -1,6 +1,7 @@
 package com.chimericdream.sneakytweaks;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
+import com.chimericdream.sneakytweaks.config.SneakyTweaksConfig;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -18,5 +19,7 @@ public final class SneakyTweaksMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
+
+        SneakyTweaksConfig.load();
     }
 }

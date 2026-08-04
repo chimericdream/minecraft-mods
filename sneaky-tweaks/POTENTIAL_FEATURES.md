@@ -9,7 +9,6 @@ The mod's identity: any vanilla behavior that could plausibly be gated on `Playe
 The sweet berry bush precedent, applied everywhere else something spiky, hot, or slippery lives.
 
 * **Tip-toe through cacti** — moving into a cactus while sneaking (and only while sneaking — no free walking through spike fields) skips the damage tick, same cancellation as the berry bush.
-* **Campfires you can step over** — sneak-walking across a lit campfire's hitbox no longer burns you.
 * **No slipping on ice** — crouching on blue/packed/frost ice removes the sliding acceleration, trading speed for control (frost walker already lets you make ice; this lets you actually stand on it).
 * **A gentler landing** — sneak in the tick before you hit the ground and shave a couple points off fall damage, as a nod to "tucking and rolling" rather than full physics.
 

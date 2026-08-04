@@ -4,9 +4,13 @@
     "compatibilityLevel": "JAVA_25",
     "minVersion": "0.8",
     "client": [
+        "SneakyTweaks$HudMixin"
     ],
     "mixins": [
-        "SneakyTweaks$SweetBerryBushBlockMixin"
+        "SneakyTweaks$SweetBerryBushBlockMixin",
+        "SneakyTweaks$PlayerMixin",
+        "SneakyTweaks$LivingEntityMixin",
+        "SneakyTweaks$CampfireBlockMixin"
     ],
     "injectors": {
         "defaultRequire": 1

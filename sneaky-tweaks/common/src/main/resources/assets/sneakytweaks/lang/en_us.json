@@ -1,0 +1,5 @@
+{
+    "text.config.sneakytweaks.title": "Sneaky Tweaks Config",
+    "text.config.sneakytweaks.option.enableCampfireSneaking": "Enable Timed Campfire Immunity",
+    "text.config.sneakytweaks.option.campfireGraceTicks": "Campfire Grace Duration (ticks)"
+}
