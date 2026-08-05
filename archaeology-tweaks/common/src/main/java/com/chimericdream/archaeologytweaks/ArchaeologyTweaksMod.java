@@ -1,6 +1,7 @@
 package com.chimericdream.archaeologytweaks;
 
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
+import com.chimericdream.archaeologytweaks.enchantment.ModEnchantments;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -19,6 +20,7 @@ public final class ArchaeologyTweaksMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
+        ModEnchantments.init();
         ModBlocks.init();
     }
 }

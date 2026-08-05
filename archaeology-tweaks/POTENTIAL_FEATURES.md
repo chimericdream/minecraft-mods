@@ -20,7 +20,6 @@ starting points for future planning.
   faster and/or have more durability. Gold could trade durability for a luck bonus.
 * **"Keen Eye" enchantment** — suspicious blocks within a few chunks shimmer faintly while a brush with
   this enchantment is held, solving the "they're invisible in terrain" discoverability problem.
-* **"Careful Hands" enchantment** — a chance to pull a *second* roll from the loot table on completion.
 * **Brush handle customization** — combine a brush with dye or a banner pattern purely for looks.
 
 ## Dig sites & world generation
@@ -40,8 +39,8 @@ starting points for future planning.
   mycelium, a soul-flame sherd from soul sand, etc.), usable on vanilla decorated pots.
 * **Field Journal item** — records every unique artifact you've brushed up; doubles as a collection
   checklist with advancement hooks.
-* **Advancements** — "First Dig," "Gentle Touch" (complete a dig without breaking the block), "Museum
-  Quality" (collect every sherd), "Interdimensional Archaeology."
+* **Advancements** — "First Dig," "Museum Quality" (collect every sherd), "Interdimensional
+  Archaeology."
 
 ## Integration & configurability
 

@@ -39,7 +39,16 @@ pass.
 6. **Non-brush interactions** — mining with a shovel drops nothing special (or per loot table);
    pistons: vanilla suspicious blocks are destroyed when pushed — verify parity.
 7. **Brush durability & enchantments** — brushing consumes durability; Unbreaking/Mending behave.
-8. **Client rendering** — `ATBrushableBlockEntityRenderer`: the partially-revealed item renders
+8. **Gentle Touch enchantment** — enchant a brush with Gentle Touch (levels 1–3) via anvil (it's not
+   book-tradeable at low villager levels, so an enchanted book + anvil is the reliable path in
+   survival). Brush a suspicious block repeatedly with a high level and a fixed loot-table seed until
+   a reroll triggers: the block should stay suspicious (dusted level resets to 0) instead of
+   converting to its base terrain block, and a second item should eventually pop. Verify this on both
+   the mod's own suspicious blocks (`ATBrushableBlockEntity`) and vanilla suspicious sand/gravel
+   (`BrushableBlockEntity`, via `BrushableBlockEntityMixin`). Also verify a block whose item was
+   hidden via the offhand-brush trick (`AbstractBlockMixin`) never rerolls, since it has no loot
+   table to draw from.
+9. **Client rendering** — `ATBrushableBlockEntityRenderer`: the partially-revealed item renders
    inside the block at the correct dusting stages; check on Fabric and NeoForge (renderer
    registration is per-loader).
 
