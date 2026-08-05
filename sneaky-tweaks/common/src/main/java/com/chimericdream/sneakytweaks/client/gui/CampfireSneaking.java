@@ -9,15 +9,12 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 
 public class CampfireSneaking {
     private static final Identifier CAMPFIRE_SPRITE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "hud/campfire_full");
     private static final Identifier CAMPFIRE_BURSTING_SPRITE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "hud/campfire_bursting");
 
-    private final RandomSource random = RandomSource.create();
-    private int tickCount;
     private int lastEmberPopSoundPlayed;
 
     public void extractFlameTendrils(final GuiGraphicsExtractor graphics, final Player player, final int vehicleHearts, int yLineAir, final int xRight) {
@@ -26,10 +23,8 @@ public class CampfireSneaking {
             return;
         }
 
-        this.tickCount++;
-
         int maxGraceTicks = config.campfireGraceTicks;
-        int currentGraceTicks = Math.clamp((long) ((CampfireGraceHolder) player).st$getCampfireGraceTicks(), 0, maxGraceTicks);
+        int currentGraceTicks = Math.clamp((long) CampfireGraceHolder.getCampfireGraceTicks(player), 0, maxGraceTicks);
         boolean isDraining = player.isCrouching() && CampfireSneakingLogic.isOnLitCampfire(player);
 
         if (isDraining || currentGraceTicks < maxGraceTicks) {

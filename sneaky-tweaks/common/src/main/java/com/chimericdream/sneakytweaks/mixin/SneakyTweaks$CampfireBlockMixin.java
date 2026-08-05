@@ -23,7 +23,7 @@ public class SneakyTweaks$CampfireBlockMixin {
             && entity instanceof Player player
             && player.isCrouching()
             && SneakyTweaksConfig.HANDLER.instance().enableCampfireSneaking
-            && ((CampfireGraceHolder) player).st$getCampfireGraceTicks() > 0
+            && CampfireGraceHolder.getCampfireGraceTicks(player) > 0
         ) {
             ci.cancel();
         }

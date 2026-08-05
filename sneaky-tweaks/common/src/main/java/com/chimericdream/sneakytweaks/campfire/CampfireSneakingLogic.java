@@ -65,15 +65,14 @@ public final class CampfireSneakingLogic {
 
     public static void tick(Player player) {
         SneakyTweaksConfig config = SneakyTweaksConfig.HANDLER.instance();
-        CampfireGraceHolder holder = (CampfireGraceHolder) player;
-        int graceTicks = holder.st$getCampfireGraceTicks();
+        int graceTicks = CampfireGraceHolder.getCampfireGraceTicks(player);
 
         int drainPerTick = config.enableCampfireSneaking && player.isCrouching() ? getCampfireDrainPerTick(player) : 0;
 
         if (drainPerTick > 0) {
-            holder.st$setCampfireGraceTicks(Math.max(0, graceTicks - drainPerTick));
+            CampfireGraceHolder.setCampfireGraceTicks(player, Math.max(0, graceTicks - drainPerTick));
         } else if (graceTicks < config.campfireGraceTicks) {
-            holder.st$setCampfireGraceTicks(Math.min(config.campfireGraceTicks, graceTicks + REGEN_PER_TICK));
+            CampfireGraceHolder.setCampfireGraceTicks(player, Math.min(config.campfireGraceTicks, graceTicks + REGEN_PER_TICK));
         }
     }
 }
