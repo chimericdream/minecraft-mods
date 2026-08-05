@@ -1,6 +1,8 @@
 package com.chimericdream.sneakytweaks.mixin;
 
+import com.chimericdream.sneakytweaks.advancement.SneakyTweaksAdvancements;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.player.Player;
@@ -18,6 +20,10 @@ public class SneakyTweaks$SweetBerryBushBlockMixin {
     protected void st$entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise, CallbackInfo ci) {
         if (entity instanceof Player player && player.isCrouching()) {
             ci.cancel();
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                SneakyTweaksAdvancements.award(serverPlayer, SneakyTweaksAdvancements.SNEAK_THROUGH_BERRIES);
+            }
         }
     }
 }

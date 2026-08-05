@@ -1,7 +1,9 @@
 package com.chimericdream.sneakytweaks.campfire;
 
+import com.chimericdream.sneakytweaks.advancement.SneakyTweaksAdvancements;
 import com.chimericdream.sneakytweaks.config.SneakyTweaksConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -70,6 +72,14 @@ public final class CampfireSneakingLogic {
         int drainPerTick = config.enableCampfireSneaking && player.isCrouching() ? getCampfireDrainPerTick(player) : 0;
 
         if (drainPerTick > 0) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (graceTicks > 0) {
+                    SneakyTweaksAdvancements.award(serverPlayer, SneakyTweaksAdvancements.SNEAK_ON_CAMPFIRE);
+                } else {
+                    SneakyTweaksAdvancements.award(serverPlayer, SneakyTweaksAdvancements.OVERSTAY_YOUR_WELCOME);
+                }
+            }
+
             CampfireGraceHolder.setCampfireGraceTicks(player, Math.max(0, graceTicks - drainPerTick));
         } else if (graceTicks < config.campfireGraceTicks) {
             CampfireGraceHolder.setCampfireGraceTicks(player, Math.min(config.campfireGraceTicks, graceTicks + REGEN_PER_TICK));

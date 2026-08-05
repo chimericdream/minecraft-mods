@@ -1,5 +1,14 @@
 {
     "text.config.sneakytweaks.title": "Sneaky Tweaks Config",
     "text.config.sneakytweaks.option.enableCampfireSneaking": "Enable Timed Campfire Immunity",
-    "text.config.sneakytweaks.option.campfireGraceTicks": "Campfire Grace Duration (ticks)"
+    "text.config.sneakytweaks.option.campfireGraceTicks": "Campfire Grace Duration (ticks)",
+
+    "advancements.sneakytweaks.root.title": "Sneaky Tweaks",
+    "advancements.sneakytweaks.root.desc": "A few careful adjustments for cautious feet",
+    "advancements.sneakytweaks.sneak_through_berries.title": "Watch Your Step",
+    "advancements.sneakytweaks.sneak_through_berries.desc": "Sneak through a sweet berry bush without taking damage",
+    "advancements.sneakytweaks.sneak_on_campfire.title": "Cold Feet",
+    "advancements.sneakytweaks.sneak_on_campfire.desc": "Sneak on a lit campfire without taking damage",
+    "advancements.sneakytweaks.overstay_your_welcome.title": "Overstayed Your Welcome",
+    "advancements.sneakytweaks.overstay_your_welcome.desc": "Sneak on a campfire long enough that it starts hurting you again"
 }
