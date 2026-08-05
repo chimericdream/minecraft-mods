@@ -29,6 +29,16 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 
 Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
 
+### Textures
+
+The following textures and icons were downloaded from
+the [Unused Textures](https://github.com/malcolmriley/unused-textures)
+repository on GitHub and were created by user malcomriley. They are licensed under the
+[Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) and are used
+according to the permissions outlined by the artist and the license.
+
+* Flame "Bubbles" ([hud_icons_infernal.png]([https://github.com/malcolmriley/unused-textures/blob/master/items/tool_spanner_iron.png](https://github.com/malcolmriley/unused-textures/blob/master/gui/hud_icons_infernal.png)); added in 1.1.0)
+
 ## License
 
 This mod is released under the MIT license. [The full text of the license can be found here.](./LICENSE)
