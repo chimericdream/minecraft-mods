@@ -2,8 +2,12 @@ package com.chimericdream.bctweaks.mixin;
 
 import com.chimericdream.bctweaks.BeaconAccessor;
 import com.chimericdream.bctweaks.config.BCTweaksConfig;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.entity.BeaconBeamOwner;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -35,6 +40,16 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
 
     public BCTweaksBeaconMixin(BlockPos pos, BlockState state) {
         super(BlockEntityTypes.BEACON, pos, state);
+    }
+
+    @Inject(method = "getBeamSections", at = @At(value = "HEAD"), cancellable = true)
+    private void bct$getBeamSections(CallbackInfoReturnable<List<BeaconBeamOwner.Section>> cir) {
+        if (this.getLevel() instanceof Level bct$level) {
+            BlockState blockAbove = bct$level.getBlockState(this.getBlockPos().above());
+            if (blockAbove.is(BlockTags.WOOL_CARPETS)) {
+                cir.setReturnValue(ImmutableList.of());
+            }
+        }
     }
 
     @Inject(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "HEAD"))
