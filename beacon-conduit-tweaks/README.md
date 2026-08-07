@@ -19,11 +19,19 @@ screen is available on the client for convenience.
 
 ### Current Features
 
-* **Configurable beacon range**
+#### Beacons
+
+* **Configurable range**
   * Set the flat base range every active beacon provides (default: 10 blocks).
   * Set how much range each pyramid level adds on top of the base (default: 10 blocks per level).
   * Optionally add extra range per individual block in the pyramid.
-* **Configurable conduit range**
+* Place a carpet on top of a beacon to completely stop the beam rendering
+* Show and hide the beacon beam with tinted glass
+  * Credit to [Discontinuous Beacon Beams by supersaiyansubtlety](https://www.curseforge.com/minecraft/mc-mods/discontinuous-beacon-beams) for the original idea
+
+#### Conduits
+
+* **Configurable range**
   * Optionally keep the vanilla conduit range and add to it, or replace it entirely.
   * Set how much range each conduit frame block contributes.
 

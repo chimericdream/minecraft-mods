@@ -4,9 +4,12 @@
     "compatibilityLevel": "JAVA_25",
     "minVersion": "0.8",
     "client": [
+        "BCTweaksBeaconRendererMixin",
+        "BCTweaksBeaconRenderStateMixin"
     ],
     "mixins": [
         "BCTweaksBeaconMixin",
+        "BCTweaksBeaconSectionMixin",
         "BCTweaksConduitMixin"
     ],
     "injectors": {
