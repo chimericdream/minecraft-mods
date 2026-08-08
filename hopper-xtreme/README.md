@@ -77,7 +77,7 @@ many sides), **huppers** (push up), and **filtering** (include/exclude with the 
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/hopper-extreme/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find.
 
 ## Credits

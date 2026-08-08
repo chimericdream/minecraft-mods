@@ -39,7 +39,7 @@ block, equip a brush, and hold right-click to excavate it._
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/archaeology-tweaks/issues) to report any
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any
 bugs you find.
 
 ## Credits

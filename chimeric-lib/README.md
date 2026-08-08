@@ -34,7 +34,7 @@ For developers, ChimericLib provides shared code across the Architectury `common
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/chimericlib-mc/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find.
 
 ## Credits

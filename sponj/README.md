@@ -44,7 +44,7 @@ This simple mod adds two new blocks: a sponj and lava sponj.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/sponj-fabric/issues) to report any bugs you find.
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you find.
 
 ## Credits
 

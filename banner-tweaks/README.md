@@ -33,7 +33,7 @@ Mod Menu on Fabric). Settings are stored in `config/bannertweaks.json5`.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/banner-tweaks/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

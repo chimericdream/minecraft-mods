@@ -29,7 +29,7 @@ Because this mod only affects text rendering and adds no items or blocks, in-gam
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/enchantment-numbers-fix/issues) to report
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report
 any bugs you find.
 
 ## Credits

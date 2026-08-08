@@ -176,14 +176,14 @@ First release for 1.19.1-2!
 * When cobbled end stone is disabled, Minekea will no longer spam a bunch of invalid JSON warnings and other junk in the logs
 
 #### New Features
-* Variant barrels now function as a workstation for Fisherman villagers ([#64](https://github.com/chimericdream/minekea-fabric/issues/64))
+* Variant barrels now function as a workstation for Fisherman villagers ([#64](https://github.com/chimericdream/minecraft-mods/issues/64))
 
 
 ### 1.19 - 3.3.3
 
 #### Bug Fixes
-* Fix recipes for bookshelf stairs and vertical stairs for BetterEnd / BetterNether ([#62](https://github.com/chimericdream/minekea-fabric/issues/62))
-* Fix conflicting recipe for wool pressure plates ([#62](https://github.com/chimericdream/minekea-fabric/issues/62))
+* Fix recipes for bookshelf stairs and vertical stairs for BetterEnd / BetterNether ([#62](https://github.com/chimericdream/minecraft-mods/issues/62))
+* Fix conflicting recipe for wool pressure plates ([#62](https://github.com/chimericdream/minecraft-mods/issues/62))
 
 
 ### 1.19 - 3.3.2
@@ -196,7 +196,7 @@ First release for 1.19.1-2!
 ### 1.19 - 3.3.1
 
 #### Bug Fixes
-* Chair placement: fix issue with placement not behaving as expected when you weren't looking perfectly straight ([#60](https://github.com/chimericdream/minekea-fabric/issues/60))
+* Chair placement: fix issue with placement not behaving as expected when you weren't looking perfectly straight ([#60](https://github.com/chimericdream/minecraft-mods/issues/60))
 
 
 ### 1.19 - 3.3.0
