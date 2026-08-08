@@ -43,6 +43,12 @@ minecarts.
   timer. *(Default: off; default fixed time 3600 ticks when enabled.)*
 * **Display cure time** — show the remaining time until a zombie villager is cured. *(Default: off.)*
 
+### Villager growth tweaks
+
+* **Override grow up time** — set a fixed grow-up time (in ticks) for baby villagers instead of the vanilla timer.
+  *(Default: off; default fixed time 24000 ticks when enabled — same as vanilla.)*
+* **Display grow up time** — show the remaining time until a baby villager grows up. *(Default: off.)*
+
 ### Misc.
 
 * **Lure villagers** — villagers will follow you while you hold an emerald block, emerald ore, or deepslate emerald
@@ -51,7 +57,7 @@ minecarts.
 ### Configuration
 
 Villager Tweaks uses [YACL](https://github.com/isXander/YetAnotherConfigLib) for its config screen (accessible via
-Mod Menu on Fabric), grouped into **Trading**, **Zombie Conversion**, and **Misc.** sections.
+Mod Menu on Fabric), grouped into **Trading**, **Zombie Conversion**, **Villager Growth**, and **Misc.** sections.
 
 ## Notes for Documentation
 

@@ -38,6 +38,13 @@ public class VillagerTweaksConfig {
     public boolean displayConversionTime = Defaults.DISPLAY_CONVERSION_TIME;
 
     @SerialEntry
+    public boolean enableGrowUpTimeOverride = Defaults.ENABLE_GROW_UP_TIME_OVERRIDE;
+    @SerialEntry
+    public int growUpTime = Defaults.GROW_UP_TIME;
+    @SerialEntry
+    public boolean displayGrowUpTime = Defaults.DISPLAY_GROW_UP_TIME;
+
+    @SerialEntry
     public boolean enableEmeraldTemptation = Defaults.ENABLE_EMERALD_TEMPTATION;
 
     public static ConfigClassHandler<VillagerTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(VillagerTweaksConfig.class)
@@ -117,6 +124,27 @@ public class VillagerTweaksConfig {
                     .build())
                 .build())
             .category(ConfigCategory.createBuilder()
+                .name(Component.translatable("text.config.section.growth"))
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableGrowUpTimeOverride"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableGrowUpTimeOverride.desc")))
+                    .binding(Defaults.ENABLE_GROW_UP_TIME_OVERRIDE, () -> config.enableGrowUpTimeOverride, newVal -> config.enableGrowUpTimeOverride = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.option.growUpTime"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.growUpTime.desc")))
+                    .binding(Defaults.GROW_UP_TIME, () -> config.growUpTime, newVal -> config.growUpTime = newVal)
+                    .controller(IntegerFieldControllerBuilder::create)
+                    .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.displayGrowUpTime"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.displayGrowUpTime.desc")))
+                    .binding(Defaults.DISPLAY_GROW_UP_TIME, () -> config.displayGrowUpTime, newVal -> config.displayGrowUpTime = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .build())
+            .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.section.misc"))
                 .option(Option.<Boolean>createBuilder()
                     .name(Component.translatable("text.config.option.enableEmeraldTemptation"))
@@ -139,6 +167,10 @@ public class VillagerTweaksConfig {
         public static boolean ENABLE_CONVERSION_TIME_OVERRIDE = false;
         public static int CONVERSION_TIME = 3600;
         public static boolean DISPLAY_CONVERSION_TIME = false;
+
+        public static boolean ENABLE_GROW_UP_TIME_OVERRIDE = false;
+        public static int GROW_UP_TIME = 24000;
+        public static boolean DISPLAY_GROW_UP_TIME = false;
 
         public static boolean ENABLE_EMERALD_TEMPTATION = false;
     }

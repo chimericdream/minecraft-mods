@@ -39,8 +39,6 @@ curing, and moving villagers around. Every idea below should stay a toggle, not 
 
 ## Breeder & population QoL
 
-* **Growth time config** — adjustable baby villager grow-up time (the breeder-adjacent sibling of the
-  existing cure-time override).
 * **Breeding requirements config** — toggle the bed requirement, adjust food thresholds — the two
   fiddly halves of every breeder design.
 * **Panic toggle** — option so villagers don't panic-sprint from zombies *when safely behind glass*, or

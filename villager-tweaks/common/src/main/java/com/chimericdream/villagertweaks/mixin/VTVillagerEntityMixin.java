@@ -3,6 +3,9 @@ package com.chimericdream.villagertweaks.mixin;
 import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.chimericdream.villagertweaks.item.ModItems;
 import com.chimericdream.villagertweaks.tag.ModTags;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.UUID;
 import java.util.function.Predicate;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
@@ -32,11 +37,25 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 @Mixin(Villager.class)
 public abstract class VTVillagerEntityMixin extends AbstractVillager {
     @Unique
     private final UUID GLOBAL_UUID = UUID.fromString("00000001-0000-0001-0000-000100000001");
+
+    @Unique
+    private final Gson vt$gson = new Gson();
+
+    @Unique
+    private Component vt$prevName = null;
+
+    @Unique
+    private boolean vt$wasPrevNameVisible = false;
+
+    @Unique
+    private boolean vt$isGrowthTimerShowing = false;
 
     @Shadow
     public @Final GossipContainer gossips;
@@ -142,5 +161,80 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
             ci.cancel();
         }
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void vt$onGrowthTick(CallbackInfo ci) {
+        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+
+        if (this.level().isClientSide() || !this.isBaby() || !config.displayGrowUpTime || this.getAge() >= 0) {
+            return;
+        }
+
+        int secondsLeft = -this.getAge() / 20;
+        if (vt$isGrowthTimerShowing) {
+            this.setCustomName(vt$getFormattedTime(secondsLeft));
+        } else {
+            if (this.hasCustomName()) {
+                this.vt$prevName = this.getCustomName();
+                this.vt$wasPrevNameVisible = this.isCustomNameVisible();
+            }
+
+            this.setCustomName(vt$getFormattedTime(secondsLeft));
+
+            this.setCustomNameVisible(true);
+            this.vt$isGrowthTimerShowing = true;
+        }
+    }
+
+    @Inject(method = "ageBoundaryReached", at = @At("TAIL"))
+    private void vt$onAgeBoundaryReached(CallbackInfo ci) {
+        if (this.isBaby() || !this.vt$isGrowthTimerShowing) {
+            return;
+        }
+
+        if (this.vt$prevName != null) {
+            this.setCustomName(this.vt$prevName);
+            this.setCustomNameVisible(this.vt$wasPrevNameVisible);
+        } else {
+            this.setCustomName(null);
+            this.setCustomNameVisible(false);
+        }
+
+        this.vt$isGrowthTimerShowing = false;
+        this.vt$prevName = null;
+    }
+
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+    private void vt$writePreviousGrowthNameData(ValueOutput view, CallbackInfo ci) {
+        if (this.vt$prevName != null) {
+            String json = this.vt$gson.toJson(ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, this.vt$prevName).getOrThrow());
+            view.putString("VTPrevGrowthName", json);
+            view.putBoolean("VTWasPrevGrowthNameVisible", this.vt$wasPrevNameVisible);
+        }
+    }
+
+    @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
+    private void vt$readPreviousGrowthNameData(ValueInput view, CallbackInfo ci) {
+        if (view.getString("VTPrevGrowthName").isPresent()) {
+            String jsonString = view.getStringOr("VTPrevGrowthName", "Uh oh!");
+
+            this.vt$prevName = ComponentSerialization.CODEC
+                .decode(JsonOps.INSTANCE, this.vt$gson.fromJson(jsonString, JsonElement.class))
+                .getOrThrow()
+                .getFirst();
+
+            this.vt$wasPrevNameVisible = view.getBooleanOr("VTWasPrevGrowthNameVisible", false);
+            this.vt$isGrowthTimerShowing = true;
+        }
+    }
+
+    // @TODO: candidate for extracting into chimeric-lib
+    @Unique
+    private Component vt$getFormattedTime(int totalSeconds) {
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds - (minutes * 60);
+
+        return Component.nullToEmpty(minutes + ":" + (seconds < 10 ? "0" + seconds : seconds));
     }
 }

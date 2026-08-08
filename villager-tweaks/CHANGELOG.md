@@ -1,3 +1,13 @@
+### Unreleased
+
+#### Changes
+
+* Added a **Villager Growth** config section: an override for how long (in ticks) baby villagers take
+  to grow up, and an option to display the remaining grow-up time — the breeder-adjacent sibling of
+  the existing zombie-conversion cure-time override/display options. The override applies to babies
+  from both spawn eggs/natural spawns and villager breeding (bred babies use a separate vanilla code
+  path that doesn't go through the same age-setting hook).
+
 ### 26.2 - 6.0.0
 
 #### BREAKING CHANGES

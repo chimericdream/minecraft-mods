@@ -5,8 +5,13 @@ Villager Tweaks bundles configurable villager QoL changes: the **Bagged Villager
 re-spawns the villager and returns a plain bundle), trading tweaks (`VTTradeOfferMixin`: max-trade
 override, demand modifier toggle), reputation tweaks (`VTVillagerEntityMixin`: global reputation,
 negative-reputation toggle), zombie-conversion tweaks (`VTZombieEntityMixin`,
-`VTZombieVillagerEntityMixin`: always-convert, fixed cure time, cure-time display), and the lure
-feature (follow players holding emerald blocks/ore — see `ModTags`). Everything is driven by
+`VTZombieVillagerEntityMixin`: always-convert, fixed cure time, cure-time display), villager-growth
+tweaks (`VTAgeableMobMixin`: fixed grow-up time for naturally/egg-spawned babies via
+`getBabyStartAge()`; `VTVillagerMakeLoveMixin`: fixed grow-up time for bred babies, which vanilla
+sets with a hardcoded `-24000` in `VillagerMakeLove#breed` instead of going through
+`getBabyStartAge()`; `VTVillagerEntityMixin`: grow-up-time display — the baby-villager sibling of
+the cure-time override), and the lure feature (follow players holding emerald blocks/ore — see
+`ModTags`). Everything is driven by
 `VillagerTweaksConfig` (YACL). There is also a `WorkstationCheckerItem` in the code that the README
 doesn't mention — verify its status and either document or exclude it.
 
@@ -53,8 +58,16 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
 10. **Lure** — enable; hold an emerald block: nearby villagers path toward you (like animals to
     food); swap to emerald ore and deepslate emerald ore; confirm villagers stop following when you
     swap away.
-11. **Config screen** — all options appear in the Trading / Zombie Conversion / Misc sections and
-    persist.
+11. **Villager growth** — fixed grow-up time: test **both** spawn paths, since vanilla sets a baby's
+    age two different ways. (a) A villager spawn egg's baby (or any naturally-spawned baby): confirm
+    it grows up around the configured time. (b) A baby produced by **breeding** two villagers (bed +
+    surplus food): confirm it *also* grows up around the configured time, not vanilla's ~20 minutes —
+    this path bypasses the egg-spawn code entirely, so a config change that only fixes (a) is a
+    regression. Grow-up-time display: verify the countdown renders as the villager's name and that
+    the villager's original name (if any) is restored once it grows up. With the override off,
+    confirm baby villagers grow up at the normal vanilla rate on both paths.
+12. **Config screen** — all options appear in the Trading / Zombie Conversion / Villager Growth /
+    Misc sections and persist.
 
 ## Recommended automated tests
 
@@ -95,6 +108,14 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
 * **`fixedCureTime`** — override cure time to 100 ticks; start a cure (apply weakness + golden apple
   via code or set the converting state directly); assert conversion completes within 100+slack
   ticks and NOT before ~100.
+* **`fixedGrowUpTime`** — override grow-up time to 100 ticks; spawn/set a villager as a baby
+  (`setBaby(true)` picks up the overridden `getBabyStartAge()`); assert it grows up (age reaches 0,
+  `isBaby()` false) within 100+slack ticks and NOT before ~100. Run with the override off as a
+  negative control (age should be the vanilla `-24000`).
+* **`fixedGrowUpTimeAppliesToBredBabies`** — override grow-up time; drive (or directly invoke) the
+  breeding path so a child villager is produced, and assert its age is `-growUpTime`, not the vanilla
+  `-24000`. This is the regression test for the bug where `VillagerMakeLove#breed`'s hardcoded
+  `-24000` bypassed the `getBabyStartAge()` override.
 
 ### GameTests — lure
 
