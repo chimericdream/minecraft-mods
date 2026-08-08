@@ -1,7 +1,5 @@
 package com.chimericdream.butwhatabout;
 
-import com.chimericdream.butwhatabout.block.ModBlocks;
-import com.chimericdream.butwhatabout.enchantment.ModEnchantments;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -20,7 +18,5 @@ public final class ButWhatAboutMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
-        ModEnchantments.init();
-        ModBlocks.init();
     }
 }

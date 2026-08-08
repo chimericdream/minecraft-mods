@@ -6,9 +6,6 @@
     "client": [
     ],
     "mixins": [
-        "AbstractBlockMixin",
-        "BrushableBlockEntityMixin",
-        "BrushItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1
