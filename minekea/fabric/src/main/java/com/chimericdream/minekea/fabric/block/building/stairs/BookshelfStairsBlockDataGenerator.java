@@ -1,7 +1,9 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
+import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.BookshelfStairsBlock;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -11,21 +13,27 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
+import java.util.function.Function;
 
-public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator {
+public class BookshelfStairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate INNER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/inner");
     protected static final ModelTemplate MAIN_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/main");
     protected static final ModelTemplate OUTER_BOOKSHELF_STAIRS_MODEL = makeModel("block/building/stairs/bookshelves/outer");
 
+    private final BookshelfStairsBlock BLOCK;
+
     public BookshelfStairsBlockDataGenerator(Block block) {
-        super(block);
+        BLOCK = (BookshelfStairsBlock) block;
     }
 
     protected static ModelTemplate makeModel(String path) {
@@ -38,9 +46,16 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
     }
 
     @Override
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
+        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
+        getBuilder.apply(tool.getMineableTag())
+            .setReplace(false)
+            .add(BLOCK.builtInRegistryHolder().key());
+    }
+
+    @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
-        Identifier ingredientId = ((BookshelfStairsBlock) BLOCK).BASE_BLOCK_ID;
-        Block ingredient = BuiltInRegistries.BLOCK.getValue(ingredientId);
+        Block ingredient = BuiltInRegistries.BLOCK.getValue(BLOCK.BASE_BLOCK_ID);
 
         generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 8)
             .pattern("#  ")
@@ -50,6 +65,11 @@ public class BookshelfStairsBlockDataGenerator extends StairsBlockDataGenerator 
             .unlockedBy(RecipeProvider.getHasName(ingredient),
                 generator.has(ingredient))
             .save(exporter);
+    }
+
+    @Override
+    public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
+        generator.dropSelf(BLOCK);
     }
 
     @Override

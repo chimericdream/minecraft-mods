@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
 
 import java.util.Optional;
@@ -158,29 +157,6 @@ public class ModelUtils {
                         )
                     )
             );
-    }
-
-    public static void registerWallBlock(
-        BlockModelGenerators blockStateModelGenerator,
-        WallBlock block,
-        TextureMapping textures,
-        ModelTemplate inventoryModel,
-        ModelTemplate postModel,
-        ModelTemplate sideModel,
-        ModelTemplate sideTallModel
-    ) {
-        Identifier inventoryModelId = blockStateModelGenerator.createSuffixedVariant(block, "", inventoryModel, unused -> textures);
-        Identifier postModelId = blockStateModelGenerator.createSuffixedVariant(block, "", postModel, unused -> textures);
-        Identifier sideModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideModel, unused -> textures);
-        Identifier sideTallModelId = blockStateModelGenerator.createSuffixedVariant(block, "", sideTallModel, unused -> textures);
-
-        MultiVariant postVariant = BlockModelGenerators.plainVariant(postModelId);
-        MultiVariant sideVariant = BlockModelGenerators.plainVariant(sideModelId);
-        MultiVariant sideTallVariant = BlockModelGenerators.plainVariant(sideTallModelId);
-
-        blockStateModelGenerator.blockStateOutput
-            .accept(BlockModelGenerators.createWall(block, postVariant, sideVariant, sideTallVariant));
-        blockStateModelGenerator.registerSimpleItemModel(block, inventoryModelId);
     }
 
     public static void registerLanternBlock(
