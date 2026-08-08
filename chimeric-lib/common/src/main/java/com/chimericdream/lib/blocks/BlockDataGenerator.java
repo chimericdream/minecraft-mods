@@ -6,13 +6,14 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public interface BlockDataGenerator {
-    default void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+    default void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
     }
 
     default void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
@@ -21,7 +22,7 @@ public interface BlockDataGenerator {
     default void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
     }
 
-    default void configureBlockLootTables(BlockLootSubProvider generator) {
+    default void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
     }
 
     default void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {

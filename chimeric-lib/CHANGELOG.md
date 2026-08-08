@@ -1,3 +1,23 @@
+### 26.2 - 6.1.0-beta.0
+
+#### New Features
+
+* `blocks/family/BlockFamily` — declare a base block's `BlockConfig` once and register whichever of
+  its stairs/slab/wall variants you need, each with a derived `BlockConfig` (ingredient set to the
+  base block; materialName/texture/tool/flammable/translucent/renderType inherited unless overridden).
+  Vanilla `StairBlock`/`SlabBlock`/`WallBlock` are used by default; a per-variant factory override
+  lets a mod substitute its own subclass.
+* `fabric/blocks/family/StairsBlockDataGenerator`, `SlabBlockDataGenerator`, `WallBlockDataGenerator` —
+  recipes, mineable/`#walls` tags, loot tables, blockstate/item models, and translations for each
+  family variant. `BlockFamilyDataGenerators.of(family)` wraps whichever variants a `BlockFamily`
+  registered into the matching generators, ready to fold into a mod's own datagen aggregator.
+
+#### Changes
+
+* `blocks/BlockDataGenerator#configureRecipes` now takes a `RecipeProvider` parameter, and
+  `#configureBlockLootTables` now takes a `HolderLookup.Provider` parameter. Not breaking in practice —
+  nothing in this suite implemented the old signature.
+
 ### 26.2 - 6.0.0
 
 #### BREAKING CHANGES
