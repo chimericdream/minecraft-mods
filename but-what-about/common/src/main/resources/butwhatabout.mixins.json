@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "package": "com.chimericdream.butwhatabout.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "AbstractBlockMixin",
+        "BrushableBlockEntityMixin",
+        "BrushItemMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

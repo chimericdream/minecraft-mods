@@ -16,6 +16,7 @@ def projectList = [
         'banner-tweaks',
         'beacon-conduit-tweaks',
 //    'blacklight',
+        'but-what-about',
         'chimeric-lib',
 //    'cobblicious',
         'enchantment-numbers-fix',

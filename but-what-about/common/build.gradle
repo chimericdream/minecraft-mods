@@ -1,0 +1,7 @@
+architectury {
+    common project(":but-what-about").enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/butwhatabout.accesswidener")
+}
