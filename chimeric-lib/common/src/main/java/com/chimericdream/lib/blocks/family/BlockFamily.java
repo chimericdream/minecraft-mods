@@ -25,11 +25,17 @@ import net.minecraft.world.level.block.WallBlock;
  */
 public class BlockFamily {
     private final Map<BlockFamilyVariant, RegistrySupplier<Block>> blocks;
-    private final Map<BlockFamilyVariant, BlockConfig> configs;
+    private final Map<BlockFamilyVariant, Identifier> ids;
+    private final Function<Identifier, BlockConfig> configFactory;
 
-    private BlockFamily(Map<BlockFamilyVariant, RegistrySupplier<Block>> blocks, Map<BlockFamilyVariant, BlockConfig> configs) {
+    private BlockFamily(
+        Map<BlockFamilyVariant, RegistrySupplier<Block>> blocks,
+        Map<BlockFamilyVariant, Identifier> ids,
+        Function<Identifier, BlockConfig> configFactory
+    ) {
         this.blocks = blocks;
-        this.configs = configs;
+        this.ids = ids;
+        this.configFactory = configFactory;
     }
 
     public Optional<RegistrySupplier<Block>> getBlock(BlockFamilyVariant variant) {
@@ -37,7 +43,8 @@ public class BlockFamily {
     }
 
     public Optional<BlockConfig> getConfig(BlockFamilyVariant variant) {
-        return Optional.ofNullable(configs.get(variant));
+        Identifier id = ids.get(variant);
+        return id == null ? Optional.empty() : Optional.of(configFactory.apply(id));
     }
 
     public Optional<RegistrySupplier<Block>> getStairs() {
@@ -124,30 +131,27 @@ public class BlockFamily {
 
         public BlockFamily build() {
             Map<BlockFamilyVariant, RegistrySupplier<Block>> blocks = new EnumMap<>(BlockFamilyVariant.class);
-            Map<BlockFamilyVariant, BlockConfig> configs = new EnumMap<>(BlockFamilyVariant.class);
+            Map<BlockFamilyVariant, Identifier> ids = new EnumMap<>(BlockFamilyVariant.class);
 
             if (variants.contains(BlockFamilyVariant.STAIRS)) {
                 Identifier id = idFor(BlockFamilyVariant.STAIRS, "_stairs");
-                BlockConfig config = deriveVariantConfig(id);
-                configs.put(BlockFamilyVariant.STAIRS, config);
-                blocks.put(BlockFamilyVariant.STAIRS, helper.registerWithItem(id, () -> stairsFactory.apply(config), itemSettings));
+                ids.put(BlockFamilyVariant.STAIRS, id);
+                blocks.put(BlockFamilyVariant.STAIRS, helper.registerWithItem(id, () -> stairsFactory.apply(deriveVariantConfig(id)), itemSettings));
             }
 
             if (variants.contains(BlockFamilyVariant.SLAB)) {
                 Identifier id = idFor(BlockFamilyVariant.SLAB, "_slab");
-                BlockConfig config = deriveVariantConfig(id);
-                configs.put(BlockFamilyVariant.SLAB, config);
-                blocks.put(BlockFamilyVariant.SLAB, helper.registerWithItem(id, () -> slabFactory.apply(config), itemSettings));
+                ids.put(BlockFamilyVariant.SLAB, id);
+                blocks.put(BlockFamilyVariant.SLAB, helper.registerWithItem(id, () -> slabFactory.apply(deriveVariantConfig(id)), itemSettings));
             }
 
             if (variants.contains(BlockFamilyVariant.WALL)) {
                 Identifier id = idFor(BlockFamilyVariant.WALL, "_wall");
-                BlockConfig config = deriveVariantConfig(id);
-                configs.put(BlockFamilyVariant.WALL, config);
-                blocks.put(BlockFamilyVariant.WALL, helper.registerWithItem(id, () -> wallFactory.apply(config), itemSettings));
+                ids.put(BlockFamilyVariant.WALL, id);
+                blocks.put(BlockFamilyVariant.WALL, helper.registerWithItem(id, () -> wallFactory.apply(deriveVariantConfig(id)), itemSettings));
             }
 
-            return new BlockFamily(blocks, configs);
+            return new BlockFamily(blocks, ids, this::deriveVariantConfig);
         }
 
         private Identifier idFor(BlockFamilyVariant variant, String suffix) {
@@ -155,11 +159,17 @@ public class BlockFamily {
         }
 
         /**
-         * The base settings are stamped with {@code id} up front so the default factories (plain
-         * vanilla {@code StairBlock}/{@code SlabBlock}/{@code WallBlock}) construct a block whose
-         * registry key is already set — {@code DeferredRegister.register} does not inject it, and
-         * vanilla block construction requires it. A custom factory that builds its own subclass with
-         * its own id convention (e.g. a mod's pre-existing block class) simply ignores this.
+         * Deliberately NOT called eagerly in {@link #build()} — {@code template.getIngredient()} may
+         * point at another not-yet-constructed mod block (a {@code RegistrySupplier} queued earlier on
+         * the same {@code DeferredRegister}), which only resolves once that supplier has actually run.
+         * Deferring this whole derivation into each variant's own registration supplier (and
+         * recomputing it on demand from {@link BlockFamily#getConfig}) keeps resolution ordering
+         * correct instead of resolving it once at {@code build()} time. The base settings are also
+         * stamped with {@code id} here so the default factories (plain vanilla
+         * {@code StairBlock}/{@code SlabBlock}/{@code WallBlock}) construct a block whose registry key
+         * is already set — {@code DeferredRegister.register} does not inject it, and vanilla block
+         * construction requires it. A custom factory that builds its own subclass with its own id
+         * convention (e.g. a mod's pre-existing block class) simply ignores this.
          */
         private BlockConfig deriveVariantConfig(Identifier id) {
             BlockConfig config = new BlockConfig()
