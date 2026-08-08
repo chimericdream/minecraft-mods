@@ -109,6 +109,12 @@ Reference: `minekea/fabric/.../data/ModDataGenerator.java`. Full write-up: `docs
 ## Conventions
 
 - **Line endings**: LF everywhere, enforced by the root `.gitattributes` (`* text=auto eol=lf`).
+- **Changelog/README tone**: player-facing docs (changelogs, READMEs) must be concise and
+  non-technical — the audience is Minecraft players, not programmers. Editing test: for each
+  sentence, if removing it still conveys the information accurately, delete it. **Exception:
+  chimeric-lib** — it's a shared library consumed by other mods, so its changelog/README audience
+  is developers; stay concise but technical detail (API names, method signatures, behavior) is
+  appropriate there.
 - **demo-world (minekea)**: `minekea/demo-world/` is a deterministic showcase generator. Generated
   files (`demo_build.mcfunction`, manifests) are produced by `generate_layout.py` /
   `extract_jar_contents.py` — **never hand-edit them**; regenerate. See `minekea/demo-world/README.md`.
