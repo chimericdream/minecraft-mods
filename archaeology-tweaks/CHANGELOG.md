@@ -1,3 +1,14 @@
+### Unreleased
+
+#### Changes
+
+* Added a **Gentle Touch** enchantment for brushes (levels 1–3, applied via anvil — it's not
+  villager-tradeable at low levels). Each level gives a 2% chance per completed brush action to reroll
+  instead of finishing: the block resets to unbrushed and drops its item without converting to the
+  base terrain block, letting a second (or more) loot roll come from the same suspicious block. Works
+  on both the mod's own suspicious blocks and vanilla suspicious sand/gravel.
+
+
 ### 26.2 - 4.0.0
 
 #### BREAKING CHANGES
