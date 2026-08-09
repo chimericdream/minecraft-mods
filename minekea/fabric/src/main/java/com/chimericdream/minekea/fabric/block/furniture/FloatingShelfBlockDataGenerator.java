@@ -1,7 +1,8 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.minekea.block.furniture.shelves.ShelfBlock;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -38,8 +39,7 @@ public class FloatingShelfBlockDataGenerator extends ShelfBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Floating Shelf", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Floating Shelf", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Floating Shelf", BLOCK.config.getMaterialName()));
     }
 
     @Override

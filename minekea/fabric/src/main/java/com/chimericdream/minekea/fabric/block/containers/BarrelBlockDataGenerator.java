@@ -1,10 +1,12 @@
 package com.chimericdream.minekea.fabric.block.containers;
 
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.containers.barrels.BarrelBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -43,10 +45,7 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), Tool.AXE, BLOCK);
     }
 
     @Override
@@ -69,8 +68,7 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Barrel", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Barrel", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Barrel", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -136,11 +134,11 @@ public class BarrelBlockDataGenerator extends ChimericLibBlockDataGenerator {
                 BufferedImage faceImage = faceTexture.get();
                 BufferedImage sideImage = sideTexture.get();
 
-                BufferedImage bandsImage = instance.getMinekeaImage("block/barrels/barrel_bands").orElse(null);
-                BufferedImage bottomOverlayImage = instance.getMinekeaImage("block/barrels/barrel_bottom_overlay").orElse(null);
-                BufferedImage sideOverlayImage = instance.getMinekeaImage("block/barrels/barrel_side_overlay").orElse(null);
-                BufferedImage topOverlayImage = instance.getMinekeaImage("block/barrels/barrel_top_overlay").orElse(null);
-                BufferedImage topOpenOverlayImage = instance.getMinekeaImage("block/barrels/barrel_top_open_overlay").orElse(null);
+                BufferedImage bandsImage = instance.getModImage("block/barrels/barrel_bands").orElse(null);
+                BufferedImage bottomOverlayImage = instance.getModImage("block/barrels/barrel_bottom_overlay").orElse(null);
+                BufferedImage sideOverlayImage = instance.getModImage("block/barrels/barrel_side_overlay").orElse(null);
+                BufferedImage topOverlayImage = instance.getModImage("block/barrels/barrel_top_overlay").orElse(null);
+                BufferedImage topOpenOverlayImage = instance.getModImage("block/barrels/barrel_top_open_overlay").orElse(null);
 
                 int fw = faceImage.getWidth();
                 int fh = faceImage.getHeight();

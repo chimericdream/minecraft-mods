@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.VerticalBookshelfStairsBlock;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
@@ -52,8 +54,7 @@ public class VerticalBookshelfStairsBlockDataGenerator extends VerticalStairsBlo
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Vertical %s Bookshelf Stairs", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("Vertical %s Bookshelf Stairs", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Vertical %s Bookshelf Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.VerticalStairsBlock;
@@ -39,10 +41,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -61,8 +60,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override

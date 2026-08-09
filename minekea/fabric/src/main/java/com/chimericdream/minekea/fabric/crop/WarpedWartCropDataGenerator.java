@@ -1,9 +1,9 @@
 package com.chimericdream.minekea.fabric.crop;
 
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.crop.WarpedWartPlantBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -68,6 +68,6 @@ public class WarpedWartCropDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        CustomBlockStateModelSupplier.registerCrop(blockStateModelGenerator, BLOCK, BlockStateProperties.AGE_3, 0, 1, 1, 2);
+        ModelUtils.registerCrop(blockStateModelGenerator, BLOCK, BlockStateProperties.AGE_3, 0, 1, 1, 2);
     }
 }

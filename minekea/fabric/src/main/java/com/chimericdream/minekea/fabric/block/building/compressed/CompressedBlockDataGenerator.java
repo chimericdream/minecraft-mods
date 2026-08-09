@@ -1,9 +1,10 @@
 package com.chimericdream.minekea.fabric.block.building.compressed;
 
-import com.chimericdream.lib.util.Tool;
+import com.chimericdream.lib.fabric.blocks.RecipeUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.block.building.compressed.CompressedBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.core.HolderLookup;
@@ -31,23 +32,21 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         Block parentBlock = BuiltInRegistries.BLOCK.getValue(BLOCK.PARENT_BLOCK_ID);
 
-        generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
-            .pattern("###")
-            .pattern("###")
-            .pattern("###")
-            .define('#', parentBlock)
-            .unlockedBy(RecipeProvider.getHasName(parentBlock), generator.has(parentBlock))
-            .save(exporter);
+        RecipeUtils.unlockedByHas(
+            generator.shaped(RecipeCategory.BUILDING_BLOCKS, BLOCK, 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', parentBlock),
+            generator, parentBlock
+        ).save(exporter);
 
         generator.shapeless(RecipeCategory.BUILDING_BLOCKS, parentBlock, 9)
             .requires(BLOCK)
@@ -82,7 +81,7 @@ public class CompressedBlockDataGenerator extends ChimericLibBlockDataGenerator 
     protected void addTextureOverlay(TextureGenerator.Instance<Block> instance, Optional<BufferedImage> source, Identifier blockId) {
         if (source.isPresent()) {
             BufferedImage sourceImage = source.get();
-            BufferedImage overlayImage = instance.getMinekeaImage(String.format("block/building/compressed/level-%d", BLOCK.compressionLevel)).orElse(null);
+            BufferedImage overlayImage = instance.getModImage(String.format("block/building/compressed/level-%d", BLOCK.compressionLevel)).orElse(null);
 
             BufferedImage combined = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 

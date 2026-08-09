@@ -2,10 +2,11 @@ package com.chimericdream.minekea.fabric.block.building.storage;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.colors.ColorHelpers;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.storage.DyeBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
@@ -27,7 +28,7 @@ import java.util.Optional;
 public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
     public final DyeBlock BLOCK;
 
-    private static final ModelTemplate DYE_BLOCK_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
+    private static final ModelTemplate DYE_BLOCK_MODEL = new CustomBlockModel(
         BlockConfig.RenderType.TRANSLUCENT,
         Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/dye_block")),
         Optional.empty(),
@@ -62,8 +63,7 @@ public class DyeBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Compressed %s Dye", ColorHelpers.getName(BLOCK.color)));
-        translationBuilder.add(BLOCK.asItem(), String.format("Compressed %s Dye", ColorHelpers.getName(BLOCK.color)));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Compressed %s Dye", ColorHelpers.getName(BLOCK.color)));
     }
 
     @Override

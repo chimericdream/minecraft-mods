@@ -1,5 +1,8 @@
 package com.chimericdream.minekea.fabric.data;
 
+import com.chimericdream.lib.fabric.data.JarAccess;
+import com.chimericdream.lib.fabric.data.TextureGenerator;
+import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.fabric.block.ModBlockDataGenerators;
 import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
 import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
@@ -33,7 +36,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(MinekeaItemTagGenerator::new);
 
         if (JarAccess.canLoad()) {
-            new TextureGenerator(pack);
+            new TextureGenerator(pack, ModInfo.MOD_ID);
 
             ModBlockDataGenerators.BLOCK_GROUPS.forEach(BlockDataGeneratorGroup::generateTextures);
             ModItemDataGenerators.ITEM_GROUPS.forEach(ItemDataGeneratorGroup::generateTextures);

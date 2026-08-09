@@ -1,11 +1,12 @@
 package com.chimericdream.minekea.fabric.block.building;
 
 import com.chimericdream.lib.colors.ColorHelpers;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.lib.resource.TextureUtils;
-import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.dyed.DyedPillarBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -23,7 +24,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator {
@@ -35,10 +35,7 @@ public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -61,8 +58,7 @@ public class DyedPillarBlockDataGenerator extends ChimericLibBlockDataGenerator 
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Dyed %s", ColorHelpers.getName(BLOCK.color), BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Dyed %s", ColorHelpers.getName(BLOCK.color), BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Dyed %s", ColorHelpers.getName(BLOCK.color), BLOCK.config.getMaterialName()));
     }
 
     @Override

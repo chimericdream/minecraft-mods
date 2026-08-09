@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.fabric.blocks.family.FamilyBlockModels;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
@@ -47,10 +49,7 @@ public class BookshelfStairsBlockDataGenerator extends ChimericLibBlockDataGener
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -74,8 +73,7 @@ public class BookshelfStairsBlockDataGenerator extends ChimericLibBlockDataGener
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Bookshelf Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override

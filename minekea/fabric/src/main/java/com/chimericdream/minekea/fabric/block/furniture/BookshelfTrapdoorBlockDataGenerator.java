@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.trapdoors.BookshelfTrapdoorBlock;
@@ -63,15 +65,11 @@ public class BookshelfTrapdoorBlockDataGenerator extends ChimericLibBlockDataGen
     }
 
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), Tool.AXE, BLOCK);
     }
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Bookshelf Trapdoor", BLOCK.config.getMaterialName()));
     }
 
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {

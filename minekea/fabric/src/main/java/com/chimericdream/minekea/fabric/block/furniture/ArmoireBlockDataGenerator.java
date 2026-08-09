@@ -1,11 +1,13 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
 import com.chimericdream.lib.blocks.BlockConfig;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.armoires.ArmoireBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import com.mojang.math.Quadrant;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -47,7 +49,7 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     protected static ModelTemplate makeModel(String id) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             BlockConfig.RenderType.CUTOUT,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, id)),
             Optional.empty(),
@@ -59,10 +61,7 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), Tool.AXE, BLOCK);
     }
 
     @Override
@@ -96,8 +95,7 @@ public class ArmoireBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Armor-oire", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Armor-oire", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Armor-oire", BLOCK.config.getMaterialName()));
     }
 
     @Override

@@ -1,0 +1,37 @@
+accessWidener v2 official
+#accessible field net/minecraft/block/AbstractBlock settings Lnet/minecraft/block/AbstractBlock$Settings;
+accessible method net/minecraft/world/level/block/state/BlockBehaviour getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+
+#accessible method net/minecraft/block/AbstractBlock$Settings <init> ()V
+
+#mutable field net/minecraft/block/Block translationKey Ljava/lang/String;
+
+#accessible field net/minecraft/world/poi/PointOfInterestType blockStates Ljava/util/Set;
+#mutable field net/minecraft/world/poi/PointOfInterestType blockStates Ljava/util/Set;
+
+# Used to identify (and clean up) the invisible armor stands that old armoires used to display armor
+accessible field net/minecraft/world/entity/decoration/ArmorStand disabledSlots I
+
+# Used to build an EquipmentLayerRenderer for the armoire block entity renderer
+accessible field net/minecraft/client/renderer/entity/EntityRenderDispatcher equipmentAssets Lnet/minecraft/client/resources/model/EquipmentAssetManager;
+
+#accessible method net/minecraft/data/client/BlockStateVariantMap getProperties ()Ljava/util/List;
+#accessible method net/minecraft/data/client/BlockStateVariantMap getVariants ()Ljava/util/Map;
+
+#accessible method net/minecraft/data/client/TextureKey of (Ljava/lang/String;)Lnet/minecraft/data/client/TextureKey;
+#accessible method net/minecraft/data/client/TextureKey of (Ljava/lang/String;Lnet/minecraft/data/client/TextureKey;)Lnet/minecraft/data/client/TextureKey;
+
+accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+
+accessible field net/minecraft/client/renderer/special/SpecialModelRenderers ID_MAPPER Lnet/minecraft/util/ExtraCodecs$LateBoundIdMapper;
+
+# This should be in chimericlib, but I need to figure out how to get transitive accesswideners working with Fabric, NeoForge, and Architectury
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
+
+accessible method net/minecraft/client/data/models/model/TextureSlot create (Ljava/lang/String;)Lnet/minecraft/client/data/models/model/TextureSlot;
+
+accessible method net/minecraft/client/data/models/model/ModelTemplate createMap (Lnet/minecraft/client/data/models/model/TextureMapping;)Ljava/util/Map;
+accessible field net/minecraft/client/data/models/model/ModelTemplate model Ljava/util/Optional;
+accessible field net/minecraft/client/data/models/model/ModelTemplate requiredSlots Ljava/util/Set;
+accessible field net/minecraft/client/data/models/model/ModelTemplate suffix Ljava/util/Optional;

@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.beams.BeamBlock;
@@ -74,10 +76,7 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .setReplace(false)
             .add(BLOCK.builtInRegistryHolder().key());
 
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -96,8 +95,7 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Beam", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.chimericdream.minekea.fabric.block.building.compressed;
 
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
+import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.compressed.CompressedColumnBlock;
-import com.chimericdream.minekea.fabric.data.TextureGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;

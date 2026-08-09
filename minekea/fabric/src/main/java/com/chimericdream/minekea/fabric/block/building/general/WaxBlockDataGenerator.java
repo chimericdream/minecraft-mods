@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.fabric.block.building.general;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
 import com.chimericdream.lib.colors.ColorHelpers;
 import com.chimericdream.minekea.block.building.general.WaxBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
@@ -60,14 +61,12 @@ public class WaxBlockDataGenerator extends ChimericLibBlockDataGenerator {
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.color.equals("plain")) {
-            translationBuilder.add(BLOCK, "Wax Block");
-            translationBuilder.add(BLOCK.asItem(), "Wax Block");
+            TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, "Wax Block");
 
             return;
         }
 
-        translationBuilder.add(BLOCK, String.format("%s Wax Block", ColorHelpers.getName(BLOCK.color)));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Wax Block", ColorHelpers.getName(BLOCK.color)));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Wax Block", ColorHelpers.getName(BLOCK.color)));
     }
 
     @Override

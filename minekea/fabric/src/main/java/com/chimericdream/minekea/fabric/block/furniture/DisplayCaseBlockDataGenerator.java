@@ -1,11 +1,13 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
 import com.chimericdream.lib.blocks.BlockConfig;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.furniture.displaycases.DisplayCaseBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -27,7 +29,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    private static final ModelTemplate DISPLAY_CASE_MODEL = new CustomBlockStateModelSupplier.CustomBlockModel(
+    private static final ModelTemplate DISPLAY_CASE_MODEL = new CustomBlockModel(
         BlockConfig.RenderType.CUTOUT,
         Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/display_case")),
         Optional.empty(),
@@ -42,10 +44,7 @@ public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), Tool.AXE, BLOCK);
     }
 
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
@@ -69,8 +68,7 @@ public class DisplayCaseBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Display Case", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Display Case", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Display Case", BLOCK.config.getMaterialName()));
     }
 
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {

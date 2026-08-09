@@ -1,8 +1,9 @@
 package com.chimericdream.minekea.fabric.block.containers;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.minekea.block.containers.crates.TrappedCrateBlock;
-import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -39,8 +40,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Trapped %s Crate", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TrappedCrateBlockDataGenerator extends CrateBlockDataGenerator {
 
             if (source.isPresent()) {
                 BufferedImage sourceImage = source.get();
-                BufferedImage overlayImage = instance.getMinekeaImage("block/crates/trapped_overlay").orElse(null);
+                BufferedImage overlayImage = instance.getModImage("block/crates/trapped_overlay").orElse(null);
 
                 int w = sourceImage.getWidth();
                 int h = sourceImage.getHeight();

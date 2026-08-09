@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.general;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
@@ -48,8 +50,7 @@ public class WarpedNetherBricksDataGenerator extends ChimericLibBlockDataGenerat
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, "Warped Nether Bricks");
-        translationBuilder.add(BLOCK.asItem(), "Warped Nether Bricks");
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, "Warped Nether Bricks");
     }
 
     @Override

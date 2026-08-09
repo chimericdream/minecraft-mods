@@ -1,5 +1,8 @@
 package com.chimericdream.minekea.fabric.block.building;
 
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
@@ -62,10 +65,7 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
             .setReplace(false)
             .add(BLOCK.builtInRegistryHolder().key());
 
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.AXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), Tool.AXE, BLOCK);
     }
 
     @Override
@@ -88,8 +88,7 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Framed %s Planks", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -116,7 +115,7 @@ public class FramedPlanksBlockDataGenerator extends ChimericLibBlockDataGenerato
         MultiVariant bConnectedVariant = BlockModelGenerators.plainVariant(bConnectedModelId);
         MultiVariant abConnectedVariant = BlockModelGenerators.plainVariant(abConnectedModelId);
 
-        MultiVariant invalidVariant = makeInvalidVariant(blockStateModelGenerator, BLOCK);
+        MultiVariant invalidVariant = ModelUtils.makeInvalidVariant(blockStateModelGenerator, BLOCK);
 
         blockStateModelGenerator.registerSimpleItemModel(BLOCK, modelId);
 

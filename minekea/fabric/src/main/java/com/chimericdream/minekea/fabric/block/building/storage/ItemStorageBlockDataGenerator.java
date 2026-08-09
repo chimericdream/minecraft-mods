@@ -1,13 +1,14 @@
 package com.chimericdream.minekea.fabric.block.building.storage;
 
 import com.chimericdream.lib.blocks.BlockConfig;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.lib.resource.TextureUtils;
-import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.storage.ItemStorageBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import com.google.gson.JsonArray;
@@ -44,7 +45,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected static ModelTemplate makeCubeModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.withDefaultNamespace("block/cube_all")),
             Optional.empty(),
@@ -53,7 +54,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected static ModelTemplate makeColumnModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_column")),
             Optional.empty(),
@@ -64,7 +65,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected static ModelTemplate makeBaggedModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/bagged_block")),
             Optional.empty(),
@@ -74,10 +75,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -114,11 +112,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.config.getName() != null) {
-            translationBuilder.add(BLOCK, BLOCK.config.getName());
-            translationBuilder.add(BLOCK.asItem(), BLOCK.config.getName());
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, BLOCK.config.getName());
         } else {
-            translationBuilder.add(BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
-            translationBuilder.add(BLOCK.asItem(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
         }
     }
 
