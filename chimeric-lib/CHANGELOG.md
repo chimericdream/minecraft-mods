@@ -1,3 +1,28 @@
+### 26.2 - 6.1.0-beta.1
+
+#### New Features
+
+* `blocks/model/ModelUtils` — vanilla-block-shaped datagen helpers generalized out of Minekea:
+  `registerBlockWithAxis`/`registerBlockWithWallSide`/`registerBlockWithHorizontalFacing`/
+  `registerBlockWithFacing` (rotation dispatch for pillar/wall-mounted/facing block shapes),
+  `registerLanternBlock`, `registerCrop` (vanilla age-property crop dispatch), `registerGeneratedItem`,
+  and `makeInvalidVariant` (bedrock-textured placeholder for illegal blockstate combinations).
+* `blocks/model/CustomBlockModel` — a `ModelTemplate` that also emits a `render_type` field (vanilla's
+  own template has no render-type support); `CustomCropModel` is the cutout-rendered crop preset built
+  on it.
+* `blocks/RecipeUtils#unlockedByHas` — the `.unlockedBy(RecipeProvider.getHasName(x), generator.has(x))`
+  idiom as a one-line wrapper around any `RecipeBuilder`.
+* `fabric/blocks/TranslationUtils#addBlockAndItem` — the block+item translation-pair idiom in one call.
+* `fabric/blocks/TagUtils#applyMineableTag` — the tool-tag-application idiom (with a `Tool`/default-tool
+  overload), now also used by the family generators from 6.1.0-beta.0 to remove their own copy of it.
+* `fabric/data/TextureGenerator`, `fabric/data/JarAccess` — programmatic PNG datagen and safe vanilla-jar
+  asset reading, generalized out of Minekea. `TextureGenerator` now takes the consuming mod's ID so its
+  `<modId>.datagen.resource-path` environment variable and `assets/<modId>/textures` base path are
+  mod-specific rather than hardcoded.
+* chimeric-lib now ships its own access widener (`chimericlib.accesswidener`) — needed for
+  `CustomBlockModel`'s use of `ModelTemplate`'s internals. Previously commented-out scaffolding in both
+  `common/build.gradle` and `fabric/build.gradle` is now active.
+
 ### 26.2 - 6.1.0-beta.0
 
 #### New Features

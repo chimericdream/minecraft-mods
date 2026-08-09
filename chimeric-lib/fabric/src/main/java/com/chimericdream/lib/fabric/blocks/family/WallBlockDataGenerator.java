@@ -2,7 +2,8 @@ package com.chimericdream.lib.fabric.blocks.family;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
-import com.chimericdream.lib.util.Tool;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -20,7 +21,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBlock;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class WallBlockDataGenerator implements FabricBlockDataGenerator {
@@ -38,10 +38,7 @@ public class WallBlockDataGenerator implements FabricBlockDataGenerator {
             .setReplace(false)
             .add(block.builtInRegistryHolder().key());
 
-        Tool tool = Optional.ofNullable(config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(block.builtInRegistryHolder().key());
+        TagUtils.applyMineableTag(getBuilder, config.getTool(), block);
     }
 
     @Override
@@ -63,8 +60,7 @@ public class WallBlockDataGenerator implements FabricBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(block, String.format("%s Wall", config.getMaterialName()));
-        translationBuilder.add(block.asItem(), String.format("%s Wall", config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, block, String.format("%s Wall", config.getMaterialName()));
     }
 
     @Override
