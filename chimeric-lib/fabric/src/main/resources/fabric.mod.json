@@ -25,7 +25,6 @@
     "mixins": [
         "chimericlib.mixins.json"
     ],
-    "accessWidener": "chimericlib.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",
