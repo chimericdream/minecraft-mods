@@ -1,10 +1,10 @@
 package com.chimericdream.minekea.fabric.block.building.slabs;
 
+import com.chimericdream.lib.fabric.blocks.family.FamilyBlockModels;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.slabs.BookshelfSlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -83,7 +83,7 @@ public class BookshelfSlabBlockDataGenerator extends ChimericLibBlockDataGenerat
             .put(MinekeaTextures.SHELF, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")))
             .put(MinekeaTextures.MATERIAL, new Material(textureId));
 
-        ModelUtils.registerSlabBlock(
+        FamilyBlockModels.registerSlabBlock(
             blockStateModelGenerator,
             BLOCK,
             textures,

@@ -46,32 +46,6 @@ public class ModelUtils {
         itemModelGenerator.generateFlatItem(block.asItem(), ModelTemplates.FLAT_ITEM);
     }
 
-    public static void registerSlabBlock(
-        BlockModelGenerators blockStateModelGenerator,
-        SlabBlock block,
-        TextureMapping textures,
-        ModelTemplate bottomModel,
-        ModelTemplate topModel,
-        ModelTemplate doubleModel
-    ) {
-        Identifier bottomModelId = blockStateModelGenerator.createSuffixedVariant(block, "", bottomModel, unused -> textures);
-        Identifier topModelId = blockStateModelGenerator.createSuffixedVariant(block, "_top", topModel, unused -> textures);
-        Identifier doubleModelId = blockStateModelGenerator.createSuffixedVariant(block, "_double", doubleModel, unused -> textures);
-
-        MultiVariant bottomVariant = BlockModelGenerators.plainVariant(bottomModelId);
-        MultiVariant topVariant = BlockModelGenerators.plainVariant(topModelId);
-        MultiVariant doubleVariant = BlockModelGenerators.plainVariant(doubleModelId);
-
-        blockStateModelGenerator.blockStateOutput
-            .accept(
-                MultiVariantGenerator.dispatch(block)
-                    .with(PropertyDispatch.initial(SlabBlock.TYPE)
-                        .select(SlabType.BOTTOM, bottomVariant)
-                        .select(SlabType.TOP, topVariant)
-                        .select(SlabType.DOUBLE, doubleVariant))
-            );
-    }
-
     public static void registerVerticalSlabBlock(
         BlockModelGenerators blockStateModelGenerator,
         VerticalSlabBlock block,
@@ -104,26 +78,6 @@ public class ModelUtils {
                         )
                     )
             );
-    }
-
-    public static void registerStairsBlock(
-        BlockModelGenerators blockStateModelGenerator,
-        StairBlock block,
-        TextureMapping textures,
-        ModelTemplate innerModel,
-        ModelTemplate straightModel,
-        ModelTemplate outerModel
-    ) {
-        Identifier innerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_inner", innerModel, unused -> textures);
-        Identifier straightModelId = blockStateModelGenerator.createSuffixedVariant(block, "", straightModel, unused -> textures);
-        Identifier outerModelId = blockStateModelGenerator.createSuffixedVariant(block, "_outer", outerModel, unused -> textures);
-
-        MultiVariant innerVariant = BlockModelGenerators.plainVariant(innerModelId);
-        MultiVariant straightVariant = BlockModelGenerators.plainVariant(straightModelId);
-        MultiVariant outerVariant = BlockModelGenerators.plainVariant(outerModelId);
-
-        blockStateModelGenerator.blockStateOutput
-            .accept(BlockModelGenerators.createStairs(block, innerVariant, straightVariant, outerVariant));
     }
 
     public static void registerVerticalStairsBlock(
