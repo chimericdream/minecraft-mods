@@ -37,7 +37,8 @@ import java.util.function.Function;
 
 public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
     protected static final ModelTemplate CRATE_MODEL = makeModel("block/containers/crate");
-    protected static final ModelTemplate HALF_DOUBLE_CRATE_MODEL = makeModel("block/containers/double_crate_half");
+    protected static final ModelTemplate RIGHT_HALF_DOUBLE_CRATE_MODEL = makeModel("block/containers/double_crate_right_half");
+    protected static final ModelTemplate LEFT_HALF_DOUBLE_CRATE_MODEL = makeModel("block/containers/double_crate_left_half");
 
     protected final CrateBlock BLOCK;
 
@@ -87,10 +88,12 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     protected void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator, TextureMapping textures) {
         Identifier baseModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", CRATE_MODEL, unused -> textures);
-        Identifier halfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_double_half", HALF_DOUBLE_CRATE_MODEL, unused -> textures);
+        Identifier rightHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_double_right_half", RIGHT_HALF_DOUBLE_CRATE_MODEL, unused -> textures);
+        Identifier leftHalfModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_double_left_half", LEFT_HALF_DOUBLE_CRATE_MODEL, unused -> textures);
 
         MultiVariant baseModel = BlockModelGenerators.plainVariant(baseModelId);
-        MultiVariant halfModel = BlockModelGenerators.plainVariant(halfModelId);
+        MultiVariant rightHalfModel = BlockModelGenerators.plainVariant(rightHalfModelId);
+        MultiVariant leftHalfModel = BlockModelGenerators.plainVariant(leftHalfModelId);
 
         MultiVariant brokenModel = BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.createWithSuffix(BLOCK, "_broken", TextureMapping.singleSlot(TextureSlot.ALL, new Material(Identifier.withDefaultNamespace(""))), blockStateModelGenerator.modelOutput));
 
@@ -102,10 +105,10 @@ public class CrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
                             .initial(CrateBlock.CONNECTED_NORTH, CrateBlock.CONNECTED_EAST, CrateBlock.CONNECTED_SOUTH, CrateBlock.CONNECTED_WEST)
 
                             .select(false, false, false, false, baseModel)
-                            .select(true, false, false, false, halfModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
-                            .select(false, true, false, false, halfModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R180)))
-                            .select(false, false, true, false, halfModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R270)))
-                            .select(false, false, false, true, halfModel)
+                            .select(true, false, false, false, leftHalfModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                            .select(false, true, false, false, rightHalfModel)
+                            .select(false, false, true, false, rightHalfModel.with(VariantMutator.Y_ROT.withValue(Quadrant.R90)))
+                            .select(false, false, false, true, leftHalfModel)
 
                             .select(true, true, false, false, brokenModel)
                             .select(true, false, true, false, brokenModel)
