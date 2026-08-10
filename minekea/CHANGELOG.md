@@ -1,3 +1,13 @@
+### Unreleased changes
+
+#### Bug Fixes
+
+* Fixed misaligned textures where two crates connect to form a double-wide crate.
+
+#### Changes
+
+* Most of Minekea's block datagen now shares more code with ChimericLib. No visible change.
+
 ### 26.2 - 10.0.0
 
 #### BREAKING CHANGES

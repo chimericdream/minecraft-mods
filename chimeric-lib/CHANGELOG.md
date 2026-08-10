@@ -1,7 +1,23 @@
-### 26.2 - 6.1.0-beta.1
+### Unreleased changes
 
 #### New Features
 
+* `commands/ChimericCommand`, `commands/ChimericCommands` — a small per-mod command-registration
+  framework: implement `ChimericCommand#build` to return a command tree, then call
+  `ChimericCommands.register(...)` during your mod's init. Wraps Architectury's
+  `CommandRegistrationEvent` so consuming mods don't need to touch it directly, and multiple commands
+  that share a root literal (e.g. several features all registering under `chimericlib`) merge together
+  automatically via Brigadier's own node-merging.
+* `commands/blockstate/BlockStateCommand` — `/chimericlib blockstate get|set|modify <pos>` (requires
+  permission level 2). `get` mirrors vanilla's `/data get block`; `set` mirrors `/setblock`, replacing
+  the block via `BlockStateArgument`/`BlockInput`; `modify` is new — it merges only the given
+  properties (e.g. `[facing=east]`) onto whatever block is already there, via the new
+  `commands/blockstate/BlockPropertiesArgument`.
+* `commands/PlatformCommandArgumentTypes` — the platform hook a custom Brigadier `ArgumentType` needs
+  to sync to the client (vanilla's own reverse class-to-info lookup used for that sync is private and
+  only self-populated for its built-ins). Fabric and NeoForge each get their own `Provider`
+  implementation; register a custom argument type through
+  `PlatformCommandArgumentTypes.registerByClass(...)`.
 * `blocks/model/ModelUtils` — vanilla-block-shaped datagen helpers generalized out of Minekea:
   `registerBlockWithAxis`/`registerBlockWithWallSide`/`registerBlockWithHorizontalFacing`/
   `registerBlockWithFacing` (rotation dispatch for pillar/wall-mounted/facing block shapes),
@@ -14,7 +30,7 @@
   idiom as a one-line wrapper around any `RecipeBuilder`.
 * `fabric/blocks/TranslationUtils#addBlockAndItem` — the block+item translation-pair idiom in one call.
 * `fabric/blocks/TagUtils#applyMineableTag` — the tool-tag-application idiom (with a `Tool`/default-tool
-  overload), now also used by the family generators from 6.1.0-beta.0 to remove their own copy of it.
+  overload), now also used by the family generators below to remove their own copy of it.
 * `fabric/data/TextureGenerator`, `fabric/data/JarAccess` — programmatic PNG datagen and safe vanilla-jar
   asset reading, generalized out of Minekea. `TextureGenerator` now takes the consuming mod's ID so its
   `<modId>.datagen.resource-path` environment variable and `assets/<modId>/textures` base path are
@@ -22,11 +38,6 @@
 * chimeric-lib now ships its own access widener (`chimericlib.accesswidener`) — needed for
   `CustomBlockModel`'s use of `ModelTemplate`'s internals. Previously commented-out scaffolding in both
   `common/build.gradle` and `fabric/build.gradle` is now active.
-
-### 26.2 - 6.1.0-beta.0
-
-#### New Features
-
 * `blocks/family/BlockFamily` — declare a base block's `BlockConfig` once and register whichever of
   its stairs/slab/wall variants you need, each with a derived `BlockConfig` (ingredient set to the
   base block; materialName/texture/tool/flammable/translucent/renderType inherited unless overridden).

@@ -131,15 +131,42 @@ Reference: `minekea/fabric/.../data/ModDataGenerator.java`. Full write-up: `docs
   (`minekea/fabric/.../block/**DataGenerator.java`) wired into the category aggregator, then run
   datagen. minekea has ~55 such datagen classes as references (e.g. `ArmoireBlockDataGenerator`).
 
-## Conventions
+## Versioning & releases
 
-- **Line endings**: LF everywhere, enforced by the root `.gitattributes` (`* text=auto eol=lf`).
+- **Only bump `mod_version` (in each mod's `gradle.properties`) when actually cutting a release.**
+  Day-to-day commits between releases do not get their own version number or dated changelog entry,
+  even if they'd otherwise look changelog-worthy (new feature, bug fix, etc.) — none of this is
+  published anywhere until a release is explicitly cut, so there's no reader for an intermediate
+  version.
+- **Official releases are tagged in git** (e.g. `chimericlib/26.2-6.0.0`, `minekea/26.2-10.0.0`,
+  `chimericlib/3.1.0-beta.1` — see `git tag --list`). A pre-release (`-beta.x`) tag counts as a real
+  release just as much as a final one — the distinction that matters is tagged vs. untagged, not
+  beta vs. final. A mod's current `mod_version` therefore reflects one of two states:
+  - **At the tagged commit itself**: the exact released version, matching the tag (e.g. `6.0.0`, or
+    `3.1.0-beta.1`).
+  - **Any commit after that tag, until the next release is cut**: the next anticipated version,
+    suffixed `-beta.0` if the prior release was final, or `-beta.<x+1>` if the prior release was
+    itself `-beta.x` (e.g. after tagging `6.0.0`, `mod_version` becomes `6.1.0-beta.0`; after tagging
+    `3.1.0-beta.1`, it becomes `3.1.0-beta.2`). Either way it *stays* there through every commit —
+    features, fixes, refactors — until it's actually time to cut the next release, at which point it's
+    renamed to whatever that release's real version is and tagged. Don't increment the beta number
+    per-commit or per-session; it only moves when a release actually ships.
+- **Changelog structure follows the same split.** Each mod's `CHANGELOG.md` accumulates all untagged
+  work under a single `### Unreleased changes` heading at the top (with the usual `#### New
+  Features`/`#### Bug Fixes`/`#### Changes` subheadings) — not a new dated/versioned heading per
+  commit or session. When a release is cut (beta or final), `### Unreleased changes` is renamed to a
+  dated `### <mc_version> - <version>` heading (matching the git tag) and a fresh, empty `###
+  Unreleased changes` starts collecting the next round.
 - **Changelog/README tone**: player-facing docs (changelogs, READMEs) must be concise and
   non-technical — the audience is Minecraft players, not programmers. Editing test: for each
   sentence, if removing it still conveys the information accurately, delete it. **Exception:
   chimeric-lib** — it's a shared library consumed by other mods, so its changelog/README audience
   is developers; stay concise but technical detail (API names, method signatures, behavior) is
   appropriate there.
+
+## Conventions
+
+- **Line endings**: LF everywhere, enforced by the root `.gitattributes` (`* text=auto eol=lf`).
 - **demo-world (minekea)**: `minekea/demo-world/` is a deterministic showcase generator. Generated
   files (`demo_build.mcfunction`, manifests) are produced by `generate_layout.py` /
   `extract_jar_contents.py` — **never hand-edit them**; regenerate. See `minekea/demo-world/README.md`.
