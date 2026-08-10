@@ -1,0 +1,13 @@
+{
+  "commands.chimericlib.blockstate.get.success": "Block at %s %s %s is %s",
+  "commands.chimericlib.blockstate.set.success": "Set block at %s %s %s to %s",
+  "commands.chimericlib.blockstate.set.failed": "Could not set the block",
+  "commands.chimericlib.blockstate.modify.success": "Updated block at %s %s %s to %s",
+  "commands.chimericlib.blockstate.modify.failed": "Could not update the block",
+  "commands.chimericlib.blockstate.modify.unknown_property": "Block %s has no property called '%s'",
+  "commands.chimericlib.blockstate.modify.invalid_value": "On block %s, '%s' is not a valid value for property '%s'",
+  "argument.chimericlib.block_properties.expected": "Expected block properties like [property=value]",
+  "argument.chimericlib.block_properties.duplicate": "Property '%s' was already set",
+  "argument.chimericlib.block_properties.novalue": "Expected value for property '%s'",
+  "argument.chimericlib.block_properties.unclosed": "Expected closing ']' for block properties"
+}
