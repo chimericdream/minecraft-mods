@@ -1,4 +1,4 @@
-### Unreleased
+### 26.2 - 6.1.0
 
 #### Changes
 
