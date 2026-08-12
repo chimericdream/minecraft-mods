@@ -1,3 +1,11 @@
+### Unreleased changes
+
+#### Bug Fixes
+
+* Breaking a filtered hopper or multi-hopper that had a filter installed no longer deletes the filter.
+  It now drops along with the rest of the hopper's contents, like it should.
+
+
 ### 26.2 - 4.0.1
 
 #### Bug Fixes

@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.Entity;
@@ -159,6 +160,24 @@ public abstract class AbstractXtremeHopperBlockEntity extends RandomizableContai
 
     protected void setItems(NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
+    }
+
+    /**
+     * Vanilla's default {@code BlockEntity.preRemoveSideEffects} drops contents via
+     * {@code Containers.dropContents(level, pos, (Container) this)}, which walks
+     * {@code 0..getContainerSize()-1}. {@link #getContainerSize()} deliberately hides the filter slot
+     * (index {@code storageSlotCount()}) from that count so insertion/extraction/fullness checks don't
+     * see it — but that means the filter item was silently deleted on block break instead of dropping.
+     * Drop the whole backing list, filter slot included.
+     */
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        this.unpackLootTable(null);
+
+        Level world = this.getLevel();
+        if (world != null) {
+            Containers.dropContents(world, pos, this.inventory);
+        }
     }
 
     // --- ticking -------------------------------------------------------------------------------
