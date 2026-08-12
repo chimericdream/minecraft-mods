@@ -1,0 +1,7 @@
+architectury {
+    common project(':stack-it-up').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/stackitup.accesswidener")
+}
