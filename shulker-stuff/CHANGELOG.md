@@ -1,3 +1,9 @@
+### Unreleased
+
+#### Bug Fixes
+
+* Fix duplication bug that can happen when shulker boxes are stackable (e.g. using Carpet Mod) 
+
 ### 26.2 - 4.0.0
 
 #### BREAKING CHANGES
