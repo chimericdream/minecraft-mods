@@ -1,5 +1,6 @@
 package com.chimericdream.butwhatabout;
 
+import com.chimericdream.butwhatabout.block.BlockFamilies;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -16,6 +17,8 @@ public final class ButWhatAboutMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+
+        BlockFamilies.init();
 
         REGISTRY_HELPER.init();
     }

@@ -12,6 +12,17 @@ _When Mojang adds new blocks to the game, but leaves some out, this mod fills in
 
 ### Current Features
 
+* Stairs, slabs, and walls for:
+  * Calcite
+  * Cracked Deepslate Bricks
+  * Cracked Deepslate Tiles
+  * Cracked Nether Bricks
+  * Cracked Polished Blackstone Bricks
+  * Cracked Stone Bricks
+  * End Stone
+  * Netherrack
+  * Smooth Basalt
+
 ## Notes for Documentation
 
 ## Issues & Suggestions

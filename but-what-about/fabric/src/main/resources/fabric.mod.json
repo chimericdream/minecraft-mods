@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.butwhatabout.fabric.client.ButWhatAboutFabricClient"
+        ],
+        "fabric-datagen": [
+            "com.chimericdream.butwhatabout.fabric.data.ModDataGenerator"
         ]
     },
     "mixins": [

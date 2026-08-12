@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "butwhatabout:block/netherrack_slab"
+    },
+    "type=double": {
+      "model": "butwhatabout:block/netherrack_slab_double"
+    },
+    "type=top": {
+      "model": "butwhatabout:block/netherrack_slab_top_top"
+    }
+  }
+}
