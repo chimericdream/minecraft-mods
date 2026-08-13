@@ -1,2 +1,18 @@
 {
+  "stackitup.command.help": "\t/stackitup show all : list all modified items.\n\t/stackitup show [item] : show information of a specified item.\n\t/stackitup show hand [player] : show information about an item on a player's hand.\n\t/stackitup reset all : revert all changes.\n\t/stackitup reset [item] : reset a specified item.\n\t/stackitup reset hand [player] : reset an item on a player's hand.\n\t/stackitup set [itemID] [count] : set the max stackable count of a specified item.\n\t/stackitup set hand [player] : set the max stackable count of an item on a player's hand.\n\t/stackitup set vanilla [default value] [new value] : Apply new value to the stackable size of items whose default size is default value. (Only works for items that haven't been modified.)\n\t/stackitup set modified [current value] [new value] : Apply new value to the stackable size of items whose current size is current value. (Only works for items that have been modified.)\n\t/stackitup set all [current value] [new value] : Apply new value to the stackable size of items whose current size is current value. (Applies to all items.)\n\t/stackitup config reload : Reload config from file.\n\t/stackitup config loadFromGlobal : load the global config (stored in minecraft's config folder) to your game.\n\t/stackitup config saveToGlobal : Let your current config to be the global config.\n\t/stackitup config globalConfigAutoApply [true/false] : whether the global config will be automatically applied to every new game.\n\t/stackitup config restore : restore to last change \n\tAlso, if you want to use this mod without OP/cheat, you can manually change \"permissionLevel\" from 4 to 0 in the config file (in your save folder).\n\tIf you want only stack empty shulkerbox, change the setting manually in the config files (0 -> 1)\n\t",
+  "stackitup.command.set_item": "Set the stack size of %s to %s (Default: %s)",
+  "stackitup.command.show_item": "The stack size of %s is %s (Default: %s)",
+  "stackitup.command.show_none": "No item has been modified",
+  "stackitup.command.reset_item": "The stack size of %s has been reset",
+  "stackitup.command.reset_all": "All items' stack size has been reset",
+  "stackitup.command.error_empty_hand": "%s has nothing on the main hand!",
+  "stackitup.command.you": "You",
+  "stackitup.command.reloaded": "Configuration reloaded",
+  "stackitup.command.restored": "Configuration restored",
+  "stackitup.command.nobk": "No backup file founded",
+  "stackitup.command.set_matched": "Set the stack size of %s item(s) to %s (%s: %s)",
+  "stackitup.command.default": "Default",
+  "stackitup.command.previous": "Previous",
+  "stackitup.command.updated_glob_conf": "Global config has been updated",
+  "stackitup.command.from_global": "Global Config has been applied to this game, enter '/stackitup show all' to view the change"
 }

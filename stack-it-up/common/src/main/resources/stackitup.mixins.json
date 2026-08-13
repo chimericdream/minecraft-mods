@@ -6,6 +6,21 @@
     "client": [
     ],
     "mixins": [
+        "AccessorFurnaceInventory",
+        "MixinAbstractFurnaceBlockEntity",
+        "MixinAnvilScreenHandler",
+        "MixinAxolotlEntity",
+        "MixinCauldronBlock",
+        "MixinDispenserBehavior9",
+        "MixinDispenserBlockEntity",
+        "MixinHorseScreenHandler",
+        "MixinItem",
+        "MixinItemStack",
+        "MixinJukeboxBlockEntity",
+        "MixinMinecraftClient",
+        "MixinPowderSnowBucketItem",
+        "MixinServerPlayNetworkHandler",
+        "MixinLevelStorage"
     ],
     "injectors": {
         "defaultRequire": 1

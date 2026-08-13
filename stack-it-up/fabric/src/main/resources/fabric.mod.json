@@ -11,7 +11,7 @@
         "homepage": "https://fabricmc.net/",
         "sources": "https://github.com/FabricMC/fabric-example-mod"
     },
-    "license": "MIT",
+    "license": "LGPL-3.0",
     "icon": "assets/stackitup/icon.png",
     "environment": "*",
     "entrypoints": {
@@ -20,12 +20,11 @@
         ],
         "client": [
             "com.chimericdream.stackitup.fabric.client.StackItUpFabricClient"
-        ],
-        "modmenu": [
         ]
     },
     "mixins": [
-        "stackitup.mixins.json"
+        "stackitup.mixins.json",
+        "stackitup.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_compat}",
@@ -33,8 +32,7 @@
         "java": ">=21",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
-        "chimericlib": ">=${chimericlib_compat}",
-        "yet_another_config_lib_v3": ">=${yacl_compat}"
+        "chimericlib": ">=${chimericlib_compat}"
     },
     "recommends": {
         "modmenu": ">=${modmenu_compat}"
