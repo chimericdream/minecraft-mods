@@ -176,9 +176,41 @@ public final class ConfigManager {
     }
 
     private void handleMissingConfig() {
+        if (tryMigrateOldConfig(this.configFile, false)) {
+            return;
+        }
+
         if (!tryApplyGlobalToLocalConfig(false)) {
             createDefaultConfig();
         }
+    }
+
+    private boolean tryMigrateOldConfig(File newFile, boolean global) {
+        ConfigMigration.Outcome outcome = ConfigMigration.migrate(newFile, gson);
+
+        if (outcome.result == ConfigMigration.Result.CORRUPTED) {
+            LOGGER.error("[StackItUp] Legacy AllStackable config was corrupted, skipped migration");
+            return false;
+        }
+
+        if (outcome.result != ConfigMigration.Result.MIGRATED) {
+            return false;
+        }
+
+        LinkedHashMap<String, Integer> rulesMap = makeRulesUpdated(outcome.data.get(1), global);
+        ArrayList<LinkedHashMap<String, Integer>> migrated = new ArrayList<>();
+        migrated.add(outcome.data.get(0));
+        migrated.add(rulesMap);
+
+        if (global) {
+            this.globalConfigList = migrated;
+        } else {
+            this.configList = migrated;
+        }
+
+        writeConfig(newFile, migrated);
+        LOGGER.info("[StackItUp] Migrated legacy AllStackable config to {}", newFile.getAbsolutePath());
+        return true;
     }
 
     private void createDefaultConfig() {
@@ -279,7 +311,7 @@ public final class ConfigManager {
             } catch (IOException e) {
                 LOGGER.error("[StackItUp] Failed to parse global config", e);
             }
-        } else {
+        } else if (!tryMigrateOldConfig(this.globalConfigFile, true)) {
             createDefaultGlobalConfig();
         }
     }

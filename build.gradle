@@ -174,6 +174,17 @@ subprojects {
 
             testImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
 
+            // `compileClasspath.extendsFrom common` (mod-conventions.gradle) is what lets this mod's
+            // own :common classes compile into `fabric/src/main`, but `testCompileClasspath` never
+            // extends `compileClasspath`, so without this, a mod's own :common classes are invisible
+            // to its `fabric/src/test`. (chimeric-lib's own tests didn't expose this gap: the
+            // testFixtures dependency below happens to transitively pull in chimeric-lib:common's main
+            // artifact too, since it's the one testFixtures(...) points at chimeric-lib:common
+            // specifically, not "this mod's own common".)
+            if (project.parent.name != 'chimeric-lib') {
+                testImplementation(project(path: ":${project.parent.name}:common")) { transitive = false }
+            }
+
             // Shared unit-test helpers (BootstrapMinecraft, ...) live in chimeric-lib common's
             // published `testFixtures` variant. Every mod consumes them the same way: as a project
             // dependency when chimeric-lib is in the build, or the published variant otherwise. The
