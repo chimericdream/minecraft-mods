@@ -16,12 +16,10 @@ import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
@@ -38,76 +36,6 @@ public class Slabs implements ModThingGroup {
 
     static {
         // basalt-brick-family plain slabs now come from BasaltBrickFamilies (chimeric-lib BlockFamily)
-
-        SLAB_BLOCKS.add(
-            REGISTRY_HELPER.registerWithItem(
-                SlabBlock.makeId("acacia_log"),
-                () -> new SlabBlock(
-                    new BlockConfig()
-                        .material("acacia_log")
-                        .materialName("Acacia Log")
-                        .ingredient(Blocks.ACACIA_LOG)
-                        .flammable()
-                        .settings(BlockBehaviour.Properties.ofFullCopy(Blocks.ACACIA_PLANKS))
-                        .tool(Tool.AXE)
-                        .texture(TextureUtils.block(Identifier.withDefaultNamespace("acacia_log")))
-                        .texture("top", TextureUtils.block(Identifier.withDefaultNamespace("acacia_log_top")))
-                        .texture("bottom", TextureUtils.block(Identifier.withDefaultNamespace("acacia_log_top")))
-                ),
-                DEFAULT_SLAB_SETTINGS
-            )
-        );
-        SLAB_BLOCKS.add(
-            REGISTRY_HELPER.registerWithItem(
-                SlabBlock.makeId("acacia_wood"),
-                () -> new SlabBlock(
-                    new BlockConfig()
-                        .material("acacia_wood")
-                        .materialName("Acacia Wood")
-                        .ingredient(Blocks.ACACIA_WOOD)
-                        .flammable()
-                        .settings(BlockBehaviour.Properties.ofFullCopy(Blocks.ACACIA_PLANKS))
-                        .tool(Tool.AXE)
-                        .texture(TextureUtils.block(Identifier.withDefaultNamespace("acacia_log")))
-                ),
-                DEFAULT_SLAB_SETTINGS
-            )
-        );
-
-        VERTICAL_SLAB_BLOCKS.add(
-            REGISTRY_HELPER.registerWithItem(
-                VerticalSlabBlock.makeId("acacia_log"),
-                () -> new VerticalSlabBlock(
-                    new BlockConfig()
-                        .material("acacia_log")
-                        .materialName("Acacia Log")
-                        .ingredient(Blocks.ACACIA_LOG)
-                        .flammable()
-                        .settings(BlockBehaviour.Properties.ofFullCopy(Blocks.ACACIA_PLANKS))
-                        .tool(Tool.AXE)
-                        .texture(TextureUtils.block(Identifier.withDefaultNamespace("acacia_log")))
-                        .texture("top", TextureUtils.block(Identifier.withDefaultNamespace("acacia_log_top")))
-                        .texture("bottom", TextureUtils.block(Identifier.withDefaultNamespace("acacia_log_top")))
-                ),
-                DEFAULT_VERTICAL_SLAB_SETTINGS
-            )
-        );
-        VERTICAL_SLAB_BLOCKS.add(
-            REGISTRY_HELPER.registerWithItem(
-                VerticalSlabBlock.makeId("acacia_wood"),
-                () -> new VerticalSlabBlock(
-                    new BlockConfig()
-                        .material("acacia_wood")
-                        .materialName("Acacia Wood")
-                        .ingredient(Blocks.ACACIA_WOOD)
-                        .flammable()
-                        .settings(BlockBehaviour.Properties.ofFullCopy(Blocks.ACACIA_PLANKS))
-                        .tool(Tool.AXE)
-                        .texture(TextureUtils.block(Identifier.withDefaultNamespace("acacia_log")))
-                ),
-                DEFAULT_VERTICAL_SLAB_SETTINGS
-            )
-        );
 
         VERTICAL_SLAB_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalSlabBlock.makeId("acacia"), () -> new VerticalSlabBlock(new BlockConfig().material("acacia").materialName("Acacia").ingredient(Blocks.ACACIA_PLANKS).tool(Tool.AXE)), DEFAULT_VERTICAL_SLAB_SETTINGS));
         VERTICAL_SLAB_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalSlabBlock.makeId("bamboo_planks"), () -> new VerticalSlabBlock(new BlockConfig().material("bamboo_planks").materialName("Bamboo").ingredient(Blocks.BAMBOO_PLANKS).tool(Tool.AXE)), DEFAULT_VERTICAL_SLAB_SETTINGS));
