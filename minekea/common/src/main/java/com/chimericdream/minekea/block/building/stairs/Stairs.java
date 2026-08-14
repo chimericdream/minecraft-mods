@@ -4,6 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
+import com.chimericdream.minekea.block.building.LogWoodFamilies;
 import com.chimericdream.minekea.block.building.general.BasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrackedBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock;
@@ -174,6 +175,24 @@ public class Stairs implements ModThingGroup {
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("mossy_basalt_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("mossy_basalt_bricks").materialName("Mossy Basalt Brick").ingredient(BuildingBlocks.MOSSY_BASALT_BRICKS.get()).texture(TextureUtils.block(MossyBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("warped_basalt_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("warped_basalt_bricks").materialName("Warped Basalt Brick").ingredient(BuildingBlocks.WARPED_BASALT_BRICKS.get()).texture(TextureUtils.block(WarpedBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("warped_nether_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("warped_nether_bricks").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS.get()).texture(TextureUtils.block(WarpedNetherBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
+
+        LogWoodFamilies.ALL.forEach(entry -> {
+            STAIRS_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    StairsBlock.makeId(entry.material()),
+                    () -> new StairsBlock(entry.newConfig()),
+                    DEFAULT_STAIRS_SETTINGS
+                )
+            );
+
+            VERTICAL_STAIRS_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    VerticalStairsBlock.makeId(entry.material()),
+                    () -> new VerticalStairsBlock(entry.newConfig()),
+                    DEFAULT_VERTICAL_STAIRS_SETTINGS
+                )
+            );
+        });
 
         Bookshelves.BOOKSHELF_CONFIGS.forEach((material, config) -> {
             BOOKSHELF_STAIRS_BLOCKS.add(

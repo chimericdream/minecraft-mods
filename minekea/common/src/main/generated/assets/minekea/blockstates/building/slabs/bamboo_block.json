@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bamboo_block"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bamboo_block_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bamboo_block_top_top"
+    }
+  }
+}

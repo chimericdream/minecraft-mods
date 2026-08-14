@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/stripped_crimson_hyphae"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/stripped_crimson_hyphae_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/stripped_crimson_hyphae_top_top"
+    }
+  }
+}

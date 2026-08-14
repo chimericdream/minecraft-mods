@@ -4,6 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
+import com.chimericdream.minekea.block.building.LogWoodFamilies;
 import com.chimericdream.minekea.block.building.general.BasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrackedBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock;
@@ -177,6 +178,24 @@ public class Slabs implements ModThingGroup {
         VERTICAL_SLAB_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalSlabBlock.makeId("mossy_basalt_bricks"), () -> new VerticalSlabBlock(new BlockConfig().material("mossy_basalt_bricks").materialName("Mossy Basalt Brick").ingredient(BuildingBlocks.MOSSY_BASALT_BRICKS.get()).texture(TextureUtils.block(MossyBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_SLAB_SETTINGS));
         VERTICAL_SLAB_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalSlabBlock.makeId("warped_basalt_bricks"), () -> new VerticalSlabBlock(new BlockConfig().material("warped_basalt_bricks").materialName("Warped Basalt Brick").ingredient(BuildingBlocks.WARPED_BASALT_BRICKS.get()).texture(TextureUtils.block(WarpedBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_SLAB_SETTINGS));
         VERTICAL_SLAB_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalSlabBlock.makeId("warped_nether_bricks"), () -> new VerticalSlabBlock(new BlockConfig().material("warped_nether_bricks").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS.get()).texture(TextureUtils.block(WarpedNetherBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_SLAB_SETTINGS));
+
+        LogWoodFamilies.ALL.forEach(entry -> {
+            SLAB_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    SlabBlock.makeId(entry.material()),
+                    () -> new SlabBlock(entry.newConfig()),
+                    DEFAULT_SLAB_SETTINGS
+                )
+            );
+
+            VERTICAL_SLAB_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    VerticalSlabBlock.makeId(entry.material()),
+                    () -> new VerticalSlabBlock(entry.newConfig()),
+                    DEFAULT_VERTICAL_SLAB_SETTINGS
+                )
+            );
+        });
 
         Bookshelves.BOOKSHELF_CONFIGS.forEach((material, config) -> {
             BOOKSHELF_SLAB_BLOCKS.add(

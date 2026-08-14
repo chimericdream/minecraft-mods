@@ -2,7 +2,9 @@
 
 #### New Features
 
-* Added acacia log and acacia wood stairs, vertical stairs, slabs, and vertical slabs.
+* Added stairs, vertical stairs, slabs, and vertical slabs for logs, wood, and their stripped
+  versions, for every wood type (acacia, oak, spruce, birch, jungle, dark oak, mangrove, cherry, pale
+  oak, crimson, warped) plus bamboo block.
 
 
 ### 26.2 - 10.0.1
