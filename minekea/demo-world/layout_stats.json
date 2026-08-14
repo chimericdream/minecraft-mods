@@ -2,10 +2,10 @@
   "summary": {
     "arena_x": [
       -192,
-      -68
+      -67
     ],
     "arena_z": [
-      117,
+      96,
       191
     ],
     "floor_y": 55,
@@ -14,10 +14,10 @@
       55,
       191
     ],
-    "width": 125,
-    "depth": 75,
+    "width": 126,
+    "depth": 96,
     "regions": 54,
-    "display_blocks": 2572,
+    "display_blocks": 2756,
     "tier_platforms": 282,
     "jars_filled": 106,
     "command_blocks": 54,
@@ -35,145 +35,145 @@
   "regions": [
     {
       "region": "oak",
-      "label": "Oak (43)",
+      "label": "Oak (59)",
       "front_left": [
         -171,
         55,
         190
       ],
-      "w": 8,
+      "w": 9,
       "d": 11,
       "tall": 10
     },
     {
       "region": "spruce",
-      "label": "Spruce (49)",
+      "label": "Spruce (65)",
       "front_left": [
-        -161,
+        -160,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "birch",
-      "label": "Birch (49)",
+      "label": "Birch (65)",
       "front_left": [
-        -151,
+        -147,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "jungle",
-      "label": "Jungle (49)",
+      "label": "Jungle (65)",
       "front_left": [
-        -141,
+        -134,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "acacia",
-      "label": "Acacia (49)",
-      "front_left": [
-        -131,
-        55,
-        190
-      ],
-      "w": 8,
-      "d": 11,
-      "tall": 10
-    },
-    {
-      "region": "dark_oak",
-      "label": "Dark Oak (49)",
+      "label": "Acacia (65)",
       "front_left": [
         -121,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "dark_oak",
+      "label": "Dark Oak (65)",
+      "front_left": [
+        -108,
+        55,
+        190
+      ],
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "mangrove",
-      "label": "Mangrove (49)",
+      "label": "Mangrove (65)",
       "front_left": [
-        -111,
+        -95,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "cherry",
-      "label": "Cherry (49)",
+      "label": "Cherry (65)",
       "front_left": [
-        -101,
+        -82,
         55,
         190
       ],
-      "w": 8,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "pale_oak",
-      "label": "Pale Oak (49)",
-      "front_left": [
-        -91,
-        55,
-        190
-      ],
-      "w": 8,
-      "d": 11,
-      "tall": 10
-    },
-    {
-      "region": "bamboo",
-      "label": "Bamboo (28)",
-      "front_left": [
-        -81,
-        55,
-        190
-      ],
-      "w": 8,
-      "d": 8,
-      "tall": 7
-    },
-    {
-      "region": "crimson",
-      "label": "Crimson (49)",
+      "label": "Pale Oak (65)",
       "front_left": [
         -191,
         55,
         176
       ],
-      "w": 8,
+      "w": 11,
+      "d": 11,
+      "tall": 10
+    },
+    {
+      "region": "bamboo",
+      "label": "Bamboo (36)",
+      "front_left": [
+        -178,
+        55,
+        176
+      ],
+      "w": 11,
+      "d": 8,
+      "tall": 7
+    },
+    {
+      "region": "crimson",
+      "label": "Crimson (65)",
+      "front_left": [
+        -165,
+        55,
+        176
+      ],
+      "w": 11,
       "d": 11,
       "tall": 10
     },
     {
       "region": "warped",
-      "label": "Warped (50)",
+      "label": "Warped (66)",
       "front_left": [
-        -181,
+        -152,
         55,
         176
       ],
-      "w": 9,
+      "w": 11,
       "d": 11,
       "tall": 10
     },
@@ -181,7 +181,7 @@
       "region": "Dyed Blocks",
       "label": "Dyed Blocks (192)",
       "front_left": [
-        -170,
+        -139,
         55,
         176
       ],
@@ -193,7 +193,7 @@
       "region": "Colored Building",
       "label": "Colored Building (96)",
       "front_left": [
-        -145,
+        -114,
         55,
         176
       ],
@@ -205,7 +205,7 @@
       "region": "Colour Accents",
       "label": "Colour Accents (66)",
       "front_left": [
-        -132,
+        -101,
         55,
         176
       ],
@@ -217,7 +217,7 @@
       "region": "Compressed Concrete",
       "label": "Compressed Concrete (144)",
       "front_left": [
-        -123,
+        -92,
         55,
         176
       ],
@@ -229,9 +229,9 @@
       "region": "Compressed Terracotta",
       "label": "Compressed Terracotta (144)",
       "front_left": [
-        -104,
+        -191,
         55,
-        176
+        155
       ],
       "w": 17,
       "d": 17,
@@ -241,9 +241,9 @@
       "region": "Compressed Glazed Terracotta",
       "label": "Compressed Glazed Terracotta (144)",
       "front_left": [
-        -85,
+        -172,
         55,
-        176
+        155
       ],
       "w": 17,
       "d": 17,
@@ -253,7 +253,7 @@
       "region": "stone",
       "label": "Stone (72)",
       "front_left": [
-        -191,
+        -153,
         55,
         155
       ],
@@ -265,7 +265,7 @@
       "region": "cobblestone",
       "label": "Cobblestone (26)",
       "front_left": [
-        -178,
+        -140,
         55,
         155
       ],
@@ -277,7 +277,7 @@
       "region": "granite",
       "label": "Granite (31)",
       "front_left": [
-        -169,
+        -131,
         55,
         155
       ],
@@ -289,7 +289,7 @@
       "region": "diorite",
       "label": "Diorite (31)",
       "front_left": [
-        -160,
+        -122,
         55,
         155
       ],
@@ -301,7 +301,7 @@
       "region": "andesite",
       "label": "Andesite (31)",
       "front_left": [
-        -151,
+        -113,
         55,
         155
       ],
@@ -313,7 +313,7 @@
       "region": "deepslate",
       "label": "Deepslate (95)",
       "front_left": [
-        -142,
+        -104,
         55,
         155
       ],
@@ -325,7 +325,7 @@
       "region": "tuff",
       "label": "Tuff (27)",
       "front_left": [
-        -126,
+        -88,
         55,
         155
       ],
@@ -337,7 +337,7 @@
       "region": "blackstone",
       "label": "Blackstone (49)",
       "front_left": [
-        -117,
+        -79,
         55,
         155
       ],
@@ -349,9 +349,9 @@
       "region": "basalt",
       "label": "Basalt (124)",
       "front_left": [
-        -104,
+        -191,
         55,
-        155
+        135
       ],
       "w": 22,
       "d": 14,
@@ -361,9 +361,9 @@
       "region": "sandstone",
       "label": "Sandstone (38)",
       "front_left": [
-        -80,
+        -167,
         55,
-        155
+        135
       ],
       "w": 11,
       "d": 8,
@@ -373,9 +373,9 @@
       "region": "red_sandstone",
       "label": "Red Sandstone (38)",
       "front_left": [
-        -191,
+        -154,
         55,
-        138
+        135
       ],
       "w": 11,
       "d": 8,
@@ -385,9 +385,9 @@
       "region": "prismarine",
       "label": "Prismarine (54)",
       "front_left": [
-        -178,
+        -141,
         55,
-        138
+        135
       ],
       "w": 11,
       "d": 8,
@@ -397,9 +397,9 @@
       "region": "quartz",
       "label": "Quartz (47)",
       "front_left": [
-        -165,
+        -128,
         55,
-        138
+        135
       ],
       "w": 11,
       "d": 8,
@@ -409,9 +409,9 @@
       "region": "purpur",
       "label": "Purpur (29)",
       "front_left": [
-        -152,
+        -115,
         55,
-        138
+        135
       ],
       "w": 7,
       "d": 8,
@@ -421,9 +421,9 @@
       "region": "nether_brick",
       "label": "Nether Brick (58)",
       "front_left": [
-        -143,
+        -106,
         55,
-        138
+        135
       ],
       "w": 11,
       "d": 8,
@@ -433,9 +433,9 @@
       "region": "end_stone",
       "label": "End Stone (29)",
       "front_left": [
-        -130,
+        -93,
         55,
-        138
+        135
       ],
       "w": 7,
       "d": 8,
@@ -445,9 +445,9 @@
       "region": "netherrack",
       "label": "Netherrack (11)",
       "front_left": [
-        -121,
+        -84,
         55,
-        138
+        135
       ],
       "w": 3,
       "d": 8,
@@ -457,9 +457,9 @@
       "region": "obsidian",
       "label": "Obsidian (22)",
       "front_left": [
-        -116,
+        -79,
         55,
-        138
+        135
       ],
       "w": 7,
       "d": 8,
@@ -469,9 +469,9 @@
       "region": "calcite",
       "label": "Calcite (11)",
       "front_left": [
-        -107,
+        -70,
         55,
-        138
+        135
       ],
       "w": 3,
       "d": 8,
@@ -481,9 +481,9 @@
       "region": "mud",
       "label": "Mud (33)",
       "front_left": [
-        -102,
+        -191,
         55,
-        138
+        118
       ],
       "w": 11,
       "d": 8,
@@ -493,9 +493,9 @@
       "region": "bone",
       "label": "Bone (16)",
       "front_left": [
-        -89,
+        -178,
         55,
-        138
+        118
       ],
       "w": 3,
       "d": 8,
@@ -505,9 +505,9 @@
       "region": "brick",
       "label": "Brick (13)",
       "front_left": [
-        -84,
+        -173,
         55,
-        138
+        118
       ],
       "w": 3,
       "d": 8,
@@ -517,9 +517,9 @@
       "region": "amethyst",
       "label": "Amethyst (11)",
       "front_left": [
-        -79,
+        -168,
         55,
-        138
+        118
       ],
       "w": 3,
       "d": 8,
@@ -529,9 +529,9 @@
       "region": "iron",
       "label": "Iron (11)",
       "front_left": [
-        -74,
+        -163,
         55,
-        138
+        118
       ],
       "w": 3,
       "d": 5,
@@ -541,9 +541,9 @@
       "region": "gold",
       "label": "Gold (11)",
       "front_left": [
-        -191,
+        -158,
         55,
-        127
+        118
       ],
       "w": 3,
       "d": 5,
@@ -553,9 +553,9 @@
       "region": "copper",
       "label": "Copper (35)",
       "front_left": [
-        -186,
+        -153,
         55,
-        127
+        118
       ],
       "w": 12,
       "d": 7,
@@ -565,9 +565,9 @@
       "region": "diamond",
       "label": "Diamond (11)",
       "front_left": [
-        -172,
+        -139,
         55,
-        127
+        118
       ],
       "w": 3,
       "d": 5,
@@ -577,9 +577,9 @@
       "region": "netherite",
       "label": "Netherite (11)",
       "front_left": [
-        -167,
+        -134,
         55,
-        127
+        118
       ],
       "w": 3,
       "d": 5,
@@ -589,9 +589,9 @@
       "region": "lapis",
       "label": "Lapis (11)",
       "front_left": [
-        -162,
+        -129,
         55,
-        127
+        118
       ],
       "w": 3,
       "d": 5,
@@ -601,9 +601,9 @@
       "region": "redstone",
       "label": "Redstone (11)",
       "front_left": [
-        -157,
+        -124,
         55,
-        127
+        118
       ],
       "w": 3,
       "d": 5,
@@ -613,9 +613,9 @@
       "region": "earth",
       "label": "Soil & Sand (72)",
       "front_left": [
-        -152,
+        -119,
         55,
-        127
+        118
       ],
       "w": 11,
       "d": 10,
@@ -625,9 +625,9 @@
       "region": "food",
       "label": "Compressed Food (38)",
       "front_left": [
-        -139,
+        -106,
         55,
-        127
+        118
       ],
       "w": 12,
       "d": 5,
@@ -637,9 +637,9 @@
       "region": "lighting",
       "label": "Lighting (4)",
       "front_left": [
-        -125,
+        -92,
         55,
-        127
+        118
       ],
       "w": 4,
       "d": 2,
@@ -649,9 +649,9 @@
       "region": "misc",
       "label": "Misc (6)",
       "front_left": [
-        -119,
+        -86,
         55,
-        127
+        118
       ],
       "w": 6,
       "d": 2,
@@ -661,9 +661,9 @@
       "region": "jars_items",
       "label": "Glass Jars - Items (95)",
       "front_left": [
-        -111,
+        -191,
         55,
-        127
+        105
       ],
       "w": 12,
       "d": 9,
@@ -673,9 +673,9 @@
       "region": "jars_misc",
       "label": "Glass Jars - Fluids & Mobs (12)",
       "front_left": [
-        -97,
+        -177,
         55,
-        127
+        105
       ],
       "w": 12,
       "d": 2,

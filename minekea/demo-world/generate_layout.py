@@ -97,8 +97,8 @@ def slot_of(path):
 
 WOOD_BANDS = [
     ["building/beams", "building/covers", "building/general/framed_planks"],
-    ["building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
-    ["building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
+    ["building/slabs", "building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
+    ["building/stairs", "building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
     ["furniture/bookshelves", "furniture/shelves/floating", "furniture/shelves/supported"],
     ["furniture/seating/chairs", "furniture/seating/stools", "furniture/tables"],
     ["containers/crates", "containers/crates/trapped", "containers/barrels",
@@ -226,7 +226,7 @@ def canonical(p):
     for w in WOOD_BASES:
         if mn == w or mn.startswith("stripped_" + w):
             return w
-        if mn.startswith(w + "_") and mn[len(w) + 1:] in ("log", "planks", "stem", "mosaic", "wood", "hyphae"):
+        if mn.startswith(w + "_") and mn[len(w) + 1:] in ("log", "planks", "stem", "mosaic", "wood", "hyphae", "block"):
             return w
     for bucket, tests in STONE_RULES:
         if any(t in mn for t in tests):
