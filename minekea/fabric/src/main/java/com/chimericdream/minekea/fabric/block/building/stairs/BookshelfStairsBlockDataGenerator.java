@@ -79,6 +79,7 @@ public class BookshelfStairsBlockDataGenerator extends ChimericLibBlockDataGener
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Identifier textureId = BLOCK.config.getTexture();
+        assert textureId != null;
 
         TextureMapping textures = new TextureMapping()
             .put(MinekeaTextures.SHELF, new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/furniture/bookshelves/shelf0")))

@@ -3,10 +3,11 @@ package com.chimericdream.minekea.block.building.stairs;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.StairBlock;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class StairsBlock extends net.minecraft.world.level.block.StairBlock {
+public class StairsBlock extends StairBlock {
     public Identifier BLOCK_ID;
     public final BlockConfig config;
 

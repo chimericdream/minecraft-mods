@@ -30,7 +30,7 @@ public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerato
     public static final ModelTemplate VERTICAL_SLAB_MODEL = new ModelTemplate(
         Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/slabs/vertical")),
         Optional.empty(),
-        TextureSlot.ALL
+        TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
     );
 
     private final VerticalSlabBlock BLOCK;
@@ -70,9 +70,17 @@ public class VerticalSlabBlockDataGenerator extends ChimericLibBlockDataGenerato
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+        Identifier defaultTextureId = BLOCK.config.getTexture();
+        Identifier bottomTextureId = BLOCK.config.getTextureOrDefault("bottom", defaultTextureId);
+        Identifier topTextureId = BLOCK.config.getTextureOrDefault("top", defaultTextureId);
+        Identifier sideTextureId = BLOCK.config.getTextureOrDefault("side", defaultTextureId);
 
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(textureId));
+        assert bottomTextureId != null && topTextureId != null && sideTextureId != null;
+
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.BOTTOM, new Material(bottomTextureId))
+            .put(TextureSlot.TOP, new Material(topTextureId))
+            .put(TextureSlot.SIDE, new Material(sideTextureId));
 
         ModelUtils.registerVerticalSlabBlock(
             blockStateModelGenerator,

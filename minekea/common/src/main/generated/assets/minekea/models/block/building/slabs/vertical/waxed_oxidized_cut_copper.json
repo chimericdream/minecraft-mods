@@ -1,6 +1,8 @@
 {
   "parent": "minekea:block/building/slabs/vertical",
   "textures": {
-    "all": "minecraft:block/oxidized_cut_copper"
+    "bottom": "minecraft:block/oxidized_cut_copper",
+    "side": "minecraft:block/oxidized_cut_copper",
+    "top": "minecraft:block/oxidized_cut_copper"
   }
 }

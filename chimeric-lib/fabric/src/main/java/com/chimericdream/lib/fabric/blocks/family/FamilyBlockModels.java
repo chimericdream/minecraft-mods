@@ -5,6 +5,7 @@ import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.SlabBlock;
@@ -17,6 +18,21 @@ import net.minecraft.world.level.block.state.properties.SlabType;
  * {@code ModelUtils}, which was already generic — nothing here is Minekea-specific.
  */
 public class FamilyBlockModels {
+    public static void registerStairsBlock(
+        BlockModelGenerators blockStateModelGenerator,
+        StairBlock block,
+        TextureMapping textures
+    ) {
+        registerStairsBlock(
+            blockStateModelGenerator,
+            block,
+            textures,
+            ModelTemplates.STAIRS_INNER,
+            ModelTemplates.STAIRS_STRAIGHT,
+            ModelTemplates.STAIRS_OUTER
+        );
+    }
+
     public static void registerStairsBlock(
         BlockModelGenerators blockStateModelGenerator,
         StairBlock block,

@@ -1,3 +1,10 @@
+### Unreleased changes
+
+#### New Features
+
+* Added acacia log and acacia wood stairs, vertical stairs, slabs, and vertical slabs.
+
+
 ### 26.2 - 10.0.1
 
 #### Bug Fixes

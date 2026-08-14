@@ -1,3 +1,10 @@
+### Unreleased changes
+
+* Added `BlockConfig.getTextureOrDefault()`
+* Added `FamilyBlockModels.registerStairsBlock(BlockModelGenerators, StairBlock, TextureMapping)` — a
+  convenience overload that uses the default inner/straight/outer stair model templates.
+
+
 ### 26.2 - 6.1.0
 
 #### New Features

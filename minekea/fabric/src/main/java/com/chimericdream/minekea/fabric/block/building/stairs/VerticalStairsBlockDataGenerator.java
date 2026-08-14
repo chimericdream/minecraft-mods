@@ -30,7 +30,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
     public static final ModelTemplate VERTICAL_STAIRS_MODEL = new ModelTemplate(
         Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/stairs/vertical")),
         Optional.empty(),
-        TextureSlot.ALL
+        TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
     );
 
     public final VerticalStairsBlock BLOCK;
@@ -70,7 +70,17 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(BLOCK.config.getTexture()));
+        Identifier defaultTextureId = BLOCK.config.getTexture();
+        Identifier bottomTextureId = BLOCK.config.getTextureOrDefault("bottom", defaultTextureId);
+        Identifier topTextureId = BLOCK.config.getTextureOrDefault("top", defaultTextureId);
+        Identifier sideTextureId = BLOCK.config.getTextureOrDefault("side", defaultTextureId);
+
+        assert bottomTextureId != null && topTextureId != null && sideTextureId != null;
+
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.BOTTOM, new Material(bottomTextureId))
+            .put(TextureSlot.TOP, new Material(topTextureId))
+            .put(TextureSlot.SIDE, new Material(sideTextureId));
 
         ModelUtils.registerVerticalStairsBlock(
             blockStateModelGenerator,
