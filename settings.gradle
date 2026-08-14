@@ -17,6 +17,7 @@ def projectList = [
     'beacon-conduit-tweaks',
     'but-what-about',
     'chimeric-lib',
+    'effective-gear',
     'enchantment-numbers-fix',
     'flat-bedrock',
     'hopper-xtreme',
