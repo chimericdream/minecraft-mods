@@ -50,3 +50,8 @@ starting points for future planning.
   blocks, giving survival players a renewable (if pricey) way to seed their own dig sites.
 * **Config: brushing speed & loot rolls** — global multipliers so pack makers can make archaeology
   faster/slower or more/less generous.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
+* Add small features to world generation with the new suspicious blocks.

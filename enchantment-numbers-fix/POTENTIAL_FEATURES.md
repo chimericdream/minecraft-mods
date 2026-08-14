@@ -42,3 +42,7 @@ display-layer only, safe to add or remove at any time.
 
 * No gameplay changes, no server requirement, no data components — the moment an idea needs the server,
   it belongs in a different mod.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

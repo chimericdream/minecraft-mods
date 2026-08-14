@@ -64,3 +64,10 @@ profession theme → discovery method → miniblock catalog.
 * **Per-profession enable toggles** — let packs run a curated subset of professions.
 * **Trade rebalancing hooks** — data-driven trade tables so servers can adjust emerald costs without
   code.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
+* Custom houses for the merchants in various biomes.
+* Custom structures for merchants who might not normally live in a village (e.g. Enderologist,
+  Netherologist, etc.).

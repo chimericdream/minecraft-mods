@@ -47,3 +47,8 @@ Because this mod is a grab bag by design, the config needs to pull its weight mo
 * **Per-feature toggles** — every tweak above gets its own on/off switch in the YACL screen; nobody should have to accept the whole bit to get the one fix they wanted.
 * **"Bit tolerance" preset levels** — a top-level dropdown (Vanilla+ / Full Bit / Chaos) that bulk-enables features by how straight-faced they are, rather than making players hunt through categories.
 * **Per-feature keybind override** — for anything gated on "sneaking + something else" (e.g. the lava tick), let it optionally bind to a dedicated key instead of overloading crouch further.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
+* **"Wile E. Coyote" style sneaking** — when sneaking, if you don't look down, you can cross a 2-3 block air gap as though you're on solid ground.

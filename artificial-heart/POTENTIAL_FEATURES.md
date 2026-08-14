@@ -50,3 +50,7 @@ blocks whose vanilla behavior gets in the way of building. Every idea below foll
 * **Potted clipped eyeblossoms in more pots** — support for decorated-pot planting if vanilla ever allows.
 * **Advancement: "Change of Heart"** — detach your first creaking heart.
 * **Advancement: "Garden Variety"** — collect every decorative variant the mod adds.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

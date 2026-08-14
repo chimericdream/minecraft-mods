@@ -59,3 +59,7 @@ QoL, all recognizably shulker-flavored.
   Soulbound box), "Interior Decorator" (dye boxes in all 16 colors + two-tone).
 * **Ender Chest bridge (stretch)** — an enchantment or upgrade letting a specific placed box be remotely
   viewed (not accessed) through a spyglass… flavor-rich but scope-heavy; parking-lot material.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

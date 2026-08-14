@@ -49,3 +49,8 @@ The mod's identity: **configurable reach** for beacons and conduits. The natural
   screen, since range/level/block interactions are easy to mis-tune.
 * **Per-dimension overrides** — different range math in the nether (where distances are compressed 8:1)
   than the overworld.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
+* Redirect a beacon beam (visuals only?) using amethyst crystals placed on the side of a block.

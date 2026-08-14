@@ -45,3 +45,7 @@ elaborate banners**. Everything below stays inside that lane — no new banner "
   servers balance the raised cap.
 * **Layer count in tooltip** — show "Patterns: 9/12" on banner tooltips so players know how much room a
   design has left.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

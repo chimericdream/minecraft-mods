@@ -60,3 +60,7 @@ curing, and moving villagers around. Every idea below should stay a toggle, not 
   suggestion only.
 * **Advancements** — "Bag and Tag" (bag a max-level villager), "Fresh Start" (cure and re-employ the
   same villager), "Pied Piper" (lure 10 villagers at once).
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
