@@ -1,0 +1,7 @@
+architectury {
+    common project(':camel-nostrils').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/camelnostrils.accesswidener")
+}
