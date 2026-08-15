@@ -92,6 +92,8 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Red Nether Bricks", "red_nether_bricks", Blocks.RED_NETHER_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Red Sandstone", "red_sandstone", Blocks.RED_SANDSTONE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Red Sand", "red_sand", Blocks.RED_SAND, Tool.SHOVEL));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Resin", "resin_block", Blocks.RESIN_BLOCK, Tool.AXE));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Resin Bricks", "resin_bricks", Blocks.RESIN_BRICKS, Tool.AXE));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Rooted Dirt", "rooted_dirt", Blocks.ROOTED_DIRT, Tool.SHOVEL));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Sand", "sand", Blocks.SAND, Tool.SHOVEL));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Sandstone", "sandstone", Blocks.SANDSTONE, null));
