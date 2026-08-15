@@ -56,6 +56,7 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> CARROT_BLOCK;
     public static final RegistrySupplier<Block> CHARCOAL_BLOCK;
     public static final RegistrySupplier<Block> CHORUS_FRUIT_BLOCK;
+    public static final RegistrySupplier<Block> COPPER_NUGGET_SACK;
     public static final RegistrySupplier<Block> EGG_CRATE_BLOCK;
     public static final RegistrySupplier<Block> ENDER_PEARL_BLOCK;
     public static final RegistrySupplier<Block> FLINT_BLOCK;
@@ -130,6 +131,7 @@ public class StorageBlocks implements ModThingGroup {
         CARROT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("carrot"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.CROP)).item(Items.CARROT).material("carrot").materialName("Carrot").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         CHARCOAL_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("charcoal"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.COAL_BLOCK).sound(SoundType.TUFF)).item(Items.CHARCOAL).material("charcoal").name("Charcoal Block").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         CHORUS_FRUIT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("chorus_fruit"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.PURPUR_BLOCK).sound(SoundType.WOOD)).item(Items.CHORUS_FRUIT).material("chorus_fruit").materialName("Chorus Fruit").tool(Tool.AXE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        COPPER_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("copper_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK.weathering().unaffected()).sound(SoundType.METAL)).item(NuggetBags.COPPER_NUGGET_BAG).material("copper_nugget").name("Copper Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/copper_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/copper_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
         ENDER_PEARL_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("ender_pearl"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.PURPUR_BLOCK).sound(SoundType.SHROOMLIGHT)).item(Items.ENDER_PEARL).material("ender_pearl").materialName("Ender Pearl").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         FLINT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("flint"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE).sound(SoundType.STONE)).material("flint").item(Items.FLINT).materialName("Flint").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         GOLD_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("gold_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.METAL)).item(NuggetBags.GOLD_NUGGET_BAG).material("gold_nugget").name("Gold Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -166,6 +168,7 @@ public class StorageBlocks implements ModThingGroup {
             CARROT_BLOCK,
             CHARCOAL_BLOCK,
             CHORUS_FRUIT_BLOCK,
+            COPPER_NUGGET_SACK,
             ENDER_PEARL_BLOCK,
             FLINT_BLOCK,
             GOLD_NUGGET_SACK,
@@ -193,6 +196,7 @@ public class StorageBlocks implements ModThingGroup {
             BEETROOT_SEEDS_BLOCK,
             CARROT_BLOCK,
             CHORUS_FRUIT_BLOCK,
+            COPPER_NUGGET_SACK,
             GOLD_NUGGET_SACK,
             IRON_NUGGET_SACK,
             LEAF_LITTER_BLOCK,
@@ -211,54 +215,4 @@ public class StorageBlocks implements ModThingGroup {
         BLOCKS.add(BROWN_EGG_CRATE_BLOCK);
         BLOCKS.add(EGG_CRATE_BLOCK);
     }
-
-//    @Environment(EnvType.CLIENT)
-//    @Override
-//    public void initializeClient() {
-//        DYE_BLOCKS.forEach(block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent()));
-//        BAGGED_BLOCKS.forEach(block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout()));
-//
-//        BlockRenderLayerMap.INSTANCE.putBlock(SET_OF_EGGS_BLOCK, RenderLayer.getCutout());
-//        BlockRenderLayerMap.INSTANCE.putBlock(SUGAR_CANE_BLOCK, RenderLayer.getTranslucent());
-//    }
-
-//    @Override
-//    public void registerBlocks() {
-//        MinekeaBlockCategory.super.registerBlocks();
-//
-//        GOLD_NUGGET_BAG.register();
-//        IRON_NUGGET_BAG.register();
-//    }
-//
-//    @Override
-//    public void configureItemTags(RegistryWrapper.WrapperLookup registryLookup, Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> getBuilder) {
-//        MinekeaBlockCategory.super.configureItemTags(registryLookup, getBuilder);
-//
-//        GOLD_NUGGET_BAG.configureItemTags(registryLookup, getBuilder);
-//        IRON_NUGGET_BAG.configureItemTags(registryLookup, getBuilder);
-//    }
-//
-//    @Override
-//    public void configureRecipes(RecipeExporter exporter) {
-//        MinekeaBlockCategory.super.configureRecipes(exporter);
-//
-//        GOLD_NUGGET_BAG.configureRecipes(exporter);
-//        IRON_NUGGET_BAG.configureRecipes(exporter);
-//    }
-//
-//    @Override
-//    public void configureTranslations(RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-//        MinekeaBlockCategory.super.configureTranslations(registryLookup, translationBuilder);
-//
-//        GOLD_NUGGET_BAG.configureTranslations(registryLookup, translationBuilder);
-//        IRON_NUGGET_BAG.configureTranslations(registryLookup, translationBuilder);
-//    }
-//
-//    @Override
-//    public void configureItemModels(ItemModelGenerator itemModelGenerator) {
-//        MinekeaBlockCategory.super.configureItemModels(itemModelGenerator);
-//
-//        GOLD_NUGGET_BAG.configureItemModels(itemModelGenerator);
-//        IRON_NUGGET_BAG.configureItemModels(itemModelGenerator);
-//    }
 }

@@ -11,6 +11,7 @@
   plus a compressed wind charge block that can be stored in a glass jar.
 * Added beams and covers for polished tuff, tuff bricks, chiseled tuff, and chiseled tuff bricks.
 * Added compressed leaf litter and wildflower blocks, including support for storing them in a glass jar.
+* Added copper nugget bag and copper nugget sack
 
 ### 26.2 - 10.0.1
 
