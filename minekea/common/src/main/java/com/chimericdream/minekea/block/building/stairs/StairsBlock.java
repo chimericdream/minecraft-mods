@@ -12,9 +12,13 @@ public class StairsBlock extends StairBlock {
     public final BlockConfig config;
 
     public StairsBlock(BlockConfig config) {
-        super(config.getIngredient().defaultBlockState(), config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(makeId(config.getMaterial()))));
+        this(config, makeId(config.getMaterial()));
+    }
 
-        BLOCK_ID = makeId(config.getMaterial());
+    public StairsBlock(BlockConfig config, Identifier id) {
+        super(config.getIngredient().defaultBlockState(), config.getBaseSettings().setId(REGISTRY_HELPER.makeBlockRegistryKey(id)));
+
+        BLOCK_ID = id;
         this.config = config;
     }
 

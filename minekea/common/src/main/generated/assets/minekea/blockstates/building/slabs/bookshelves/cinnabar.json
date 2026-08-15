@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/bookshelves/cinnabar"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/bookshelves/cinnabar_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/bookshelves/cinnabar_top"
+    }
+  }
+}

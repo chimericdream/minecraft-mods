@@ -12,6 +12,20 @@
 * Added beams and covers for polished tuff, tuff bricks, chiseled tuff, and chiseled tuff bricks.
 * Added compressed leaf litter and wildflower blocks, including support for storing them in a glass jar.
 * Added copper nugget bag and copper nugget sack
+* Added a bunch of block variations from the Chaos Cubed drop
+  * Cinnabar: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Chiseled Cinnabar: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Chiseled Sulfur: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Cinnabar Bricks: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Polished Cinnabar: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Polished Sulfur: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Potent Sulfur: slab/stairs, beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Sulfur: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+  * Sulfur Bricks: beam, compressed, cover, bookshelf, vertical slab/stairs, bookshelf slab/stairs, vertical bookshelf slab/stairs
+
+#### Bug Fixes
+
+* Fixed bookshelf stairs (all materials) not dropping anything when broken.
 
 ### 26.2 - 10.0.1
 

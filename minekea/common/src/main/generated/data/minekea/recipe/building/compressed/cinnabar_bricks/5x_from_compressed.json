@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/cinnabar_bricks/6x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/cinnabar_bricks/5x"
+  }
+}

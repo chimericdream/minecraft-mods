@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/polished_sulfur/8x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/polished_sulfur/7x"
+  }
+}

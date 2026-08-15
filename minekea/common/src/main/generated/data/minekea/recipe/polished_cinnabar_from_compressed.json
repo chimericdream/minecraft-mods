@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/polished_cinnabar/1x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:polished_cinnabar"
+  }
+}

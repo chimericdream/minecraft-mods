@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/sulfur_bricks/5x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/sulfur_bricks/4x"
+  }
+}

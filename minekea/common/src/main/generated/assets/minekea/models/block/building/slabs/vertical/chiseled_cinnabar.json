@@ -1,0 +1,8 @@
+{
+  "parent": "minekea:block/building/slabs/vertical",
+  "textures": {
+    "bottom": "minecraft:block/chiseled_cinnabar",
+    "side": "minecraft:block/chiseled_cinnabar",
+    "top": "minecraft:block/chiseled_cinnabar"
+  }
+}

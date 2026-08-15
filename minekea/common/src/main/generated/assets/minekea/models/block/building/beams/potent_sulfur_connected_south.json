@@ -1,0 +1,7 @@
+{
+  "parent": "minekea:block/building/beams/connected_south",
+  "textures": {
+    "end": "minecraft:block/potent_sulfur",
+    "side": "minecraft:block/potent_sulfur"
+  }
+}

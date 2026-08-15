@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/chiseled_cinnabar/8x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/chiseled_cinnabar/7x"
+  }
+}

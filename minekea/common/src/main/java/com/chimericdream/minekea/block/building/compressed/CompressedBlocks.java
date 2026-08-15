@@ -51,6 +51,10 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Andesite", "andesite", Blocks.ANDESITE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Bricks", "bricks", Blocks.BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Calcite", "calcite", Blocks.CALCITE, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Chiseled Cinnabar", "chiseled_cinnabar", Blocks.CHISELED_CINNABAR, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Chiseled Sulfur", "chiseled_sulfur", Blocks.CHISELED_SULFUR, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Cinnabar", "cinnabar", Blocks.CINNABAR, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Cinnabar Bricks", "cinnabar_bricks", Blocks.CINNABAR_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Clay", "clay", Blocks.CLAY, Tool.SHOVEL));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Coarse Dirt", "coarse_dirt", Blocks.COARSE_DIRT, Tool.SHOVEL));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Cobbled Deepslate", "cobbled_deepslate", Blocks.COBBLED_DEEPSLATE, null));
@@ -81,10 +85,13 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Andesite", "polished_andesite", Blocks.POLISHED_ANDESITE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Blackstone", "polished_blackstone", Blocks.POLISHED_BLACKSTONE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Blackstone Bricks", "polished_blackstone_bricks", Blocks.POLISHED_BLACKSTONE_BRICKS, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Cinnabar", "polished_cinnabar", Blocks.POLISHED_CINNABAR, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Deepslate", "polished_deepslate", Blocks.POLISHED_DEEPSLATE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Diorite", "polished_diorite", Blocks.POLISHED_DIORITE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Granite", "polished_granite", Blocks.POLISHED_GRANITE, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Sulfur", "polished_sulfur", Blocks.POLISHED_SULFUR, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Tuff", "polished_tuff", Blocks.POLISHED_TUFF, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Potent Sulfur", "potent_sulfur", Blocks.POTENT_SULFUR, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Prismarine", "prismarine", Blocks.PRISMARINE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Prismarine Bricks", "prismarine_bricks", Blocks.PRISMARINE_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Purpur", "purpur_block", Blocks.PURPUR_BLOCK, null));
@@ -105,6 +112,7 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Soul Sand", "soul_sand", Blocks.SOUL_SAND, Tool.SHOVEL));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Stone", "stone", Blocks.STONE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Stone Bricks", "stone_bricks", Blocks.STONE_BRICKS, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Sulfur Bricks", "sulfur_bricks", Blocks.SULFUR_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Tuff", "tuff", Blocks.TUFF, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Tuff Bricks", "tuff_bricks", Blocks.TUFF_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Copper Block", "copper_block", Blocks.COPPER_BLOCK.weathering().unaffected(), null));

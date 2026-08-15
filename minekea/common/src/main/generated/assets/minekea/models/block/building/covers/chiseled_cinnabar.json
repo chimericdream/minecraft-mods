@@ -1,0 +1,7 @@
+{
+  "parent": "minekea:block/building/cover",
+  "textures": {
+    "end": "minecraft:block/chiseled_cinnabar",
+    "side": "minecraft:block/chiseled_cinnabar"
+  }
+}
