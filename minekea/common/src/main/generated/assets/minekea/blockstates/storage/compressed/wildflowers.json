@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/wildflowers"
+    },
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/wildflowers_bagged"
+    }
+  }
+}

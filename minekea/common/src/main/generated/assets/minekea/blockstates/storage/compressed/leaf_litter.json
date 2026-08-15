@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/leaf_litter"
+    },
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/leaf_litter_bagged"
+    }
+  }
+}

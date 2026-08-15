@@ -115,6 +115,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEMS.add(Items.GOLDEN_APPLE);
         ALLOWED_ITEMS.add(Items.GRAVEL);
         ALLOWED_ITEMS.add(Items.HONEYCOMB);
+        ALLOWED_ITEMS.add(Items.LEAF_LITTER);
         ALLOWED_ITEMS.add(Items.LEATHER);
         ALLOWED_ITEMS.add(Items.MELON_SEEDS);
         ALLOWED_ITEMS.add(Items.MELON_SLICE);
@@ -139,6 +140,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         // ALLOWED_ITEMS.add(ModCrops.WARPED_WART_ITEM.get());
         ALLOWED_ITEMS.add(Items.WHEAT);
         ALLOWED_ITEMS.add(Items.WHEAT_SEEDS);
+        ALLOWED_ITEMS.add(Items.WILDFLOWERS);
         ALLOWED_ITEMS.add(Items.WIND_CHARGE);
 
         ALLOWED_ITEMS.add(Items.DYE.white());
@@ -209,6 +211,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put("minecraft:golden_apple", StorageBlocks.GOLDEN_APPLE_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:gravel", "minecraft:gravel");
         ALLOWED_ITEM_IDS.put("minecraft:honeycomb", "minecraft:honeycomb_block");
+        ALLOWED_ITEM_IDS.put("minecraft:leaf_litter", StorageBlocks.LEAF_LITTER_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:leather", StorageBlocks.LEATHER_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:melon_seeds", StorageBlocks.MELON_SEEDS_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:melon_slice", "minecraft:melon");
@@ -232,6 +235,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put(WarpedWartItem.ITEM_ID.toString(), "minecraft:warped_wart_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat", "minecraft:hay_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:wildflowers", StorageBlocks.WILDFLOWER_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:wind_charge", StorageBlocks.WIND_CHARGE_BLOCK.getId().toString());
 
         ALLOWED_ITEM_IDS.put("minecraft:white_dye", DyeBlock.makeId("white").toString());

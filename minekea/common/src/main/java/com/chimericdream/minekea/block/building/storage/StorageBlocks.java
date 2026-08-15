@@ -62,6 +62,7 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> GOLD_NUGGET_SACK;
     public static final RegistrySupplier<Block> GOLDEN_APPLE_BLOCK;
     public static final RegistrySupplier<Block> IRON_NUGGET_SACK;
+    public static final RegistrySupplier<Block> LEAF_LITTER_BLOCK;
     public static final RegistrySupplier<Block> LEATHER_BLOCK;
     public static final RegistrySupplier<Block> MELON_SEEDS_BLOCK;
     public static final RegistrySupplier<Block> NETHER_STAR_BLOCK;
@@ -74,6 +75,7 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> TOTEM_BLOCK;
     public static final RegistrySupplier<Block> WALLPAPER_BLOCK;
     public static final RegistrySupplier<Block> WHEAT_SEEDS_BLOCK;
+    public static final RegistrySupplier<Block> WILDFLOWER_BLOCK;
     public static final RegistrySupplier<Block> WIND_CHARGE_BLOCK;
 
     public static final List<RegistrySupplier<Block>> STORAGE_BLOCKS;
@@ -133,6 +135,7 @@ public class StorageBlocks implements ModThingGroup {
         GOLD_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("gold_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.METAL)).item(NuggetBags.GOLD_NUGGET_BAG).material("gold_nugget").name("Gold Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
         GOLDEN_APPLE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("golden_apple"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.MELON).sound(SoundType.WOOD)).item(Items.GOLDEN_APPLE).material("golden_apple").materialName("Golden Apple").tool(Tool.HOE), false, ItemStorageBlock.StorageModel.FACING), DEFAULT_STORAGE_BLOCK_SETTINGS);
         IRON_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("iron_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.METAL)).item(NuggetBags.IRON_NUGGET_BAG).material("iron_nugget").name("Iron Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/iron_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/iron_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        LEAF_LITTER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("leaf_litter"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).sound(SoundType.LEAF_LITTER)).item(Items.LEAF_LITTER).material("leaf_litter").materialName("Leaf Litter").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         LEATHER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("leather"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()).sound(SoundType.WOOL)).item(Items.LEATHER).material("leather").materialName("Leather").tool(Tool.SHEARS)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         MELON_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("melon_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.MELON_SEEDS).material("melon_seeds").materialName("Melon Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         NETHER_STAR_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("nether_star"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.METAL)).item(Items.NETHER_STAR).material("nether_star").materialName("Nether Star").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -145,6 +148,7 @@ public class StorageBlocks implements ModThingGroup {
         TOTEM_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("totem_of_undying"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.METAL)).item(Items.TOTEM_OF_UNDYING).material("totem_of_undying").materialName("Totem of Undying").tool(Tool.PICKAXE), false, ItemStorageBlock.StorageModel.AXIS), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WALLPAPER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("paper"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.STEM)).item(Items.PAPER).material("paper").name("Wallpaper").tool(Tool.AXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WHEAT_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wheat_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.WHEAT_SEEDS).material("wheat_seeds").materialName("Wheat Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        WILDFLOWER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wildflowers"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion().sound(SoundType.LEAF_LITTER)).item(Items.WILDFLOWERS).material("wildflowers").materialName("Wildflowers").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WIND_CHARGE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wind_charge"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.WOOL)).item(Items.WIND_CHARGE).material("wind_charge").materialName("Wind Charge").tool(Tool.SHEARS), false), DEFAULT_STORAGE_BLOCK_SETTINGS);
 
         BLUE_EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(BlueEggCrateBlock.BLOCK_ID, BlueEggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -167,6 +171,7 @@ public class StorageBlocks implements ModThingGroup {
             GOLD_NUGGET_SACK,
             GOLDEN_APPLE_BLOCK,
             IRON_NUGGET_SACK,
+            LEAF_LITTER_BLOCK,
             LEATHER_BLOCK,
             MELON_SEEDS_BLOCK,
             NETHER_STAR_BLOCK,
@@ -179,6 +184,7 @@ public class StorageBlocks implements ModThingGroup {
             TOTEM_BLOCK,
             WALLPAPER_BLOCK,
             WHEAT_SEEDS_BLOCK,
+            WILDFLOWER_BLOCK,
             WIND_CHARGE_BLOCK
         );
 
@@ -189,12 +195,14 @@ public class StorageBlocks implements ModThingGroup {
             CHORUS_FRUIT_BLOCK,
             GOLD_NUGGET_SACK,
             IRON_NUGGET_SACK,
+            LEAF_LITTER_BLOCK,
             MELON_SEEDS_BLOCK,
             PHANTOM_MEMBRANE_BLOCK,
             POTATO_BLOCK,
             PUMPKIN_SEEDS_BLOCK,
             SUGAR_BLOCK,
-            WHEAT_SEEDS_BLOCK
+            WHEAT_SEEDS_BLOCK,
+            WILDFLOWER_BLOCK
         );
 
         BLOCKS.addAll(DYE_BLOCKS);

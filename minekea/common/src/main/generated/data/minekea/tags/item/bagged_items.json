@@ -6,11 +6,13 @@
     "minekea:storage/compressed/chorus_fruit",
     "minekea:storage/compressed/gold_nugget",
     "minekea:storage/compressed/iron_nugget",
+    "minekea:storage/compressed/leaf_litter",
     "minekea:storage/compressed/melon_seeds",
     "minekea:storage/compressed/phantom_membrane",
     "minekea:storage/compressed/potato",
     "minekea:storage/compressed/pumpkin_seeds",
     "minekea:storage/compressed/sugar",
-    "minekea:storage/compressed/wheat_seeds"
+    "minekea:storage/compressed/wheat_seeds",
+    "minekea:storage/compressed/wildflowers"
   ]
 }
