@@ -24,8 +24,10 @@ import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.Silverfish;
+import net.minecraft.world.entity.monster.cubemob.AbstractCubeMob;
 import net.minecraft.world.entity.monster.cubemob.Slime;
 import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.monster.cubemob.SulfurCube;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -268,8 +270,8 @@ public class GlassJarItem extends BlockItem {
             return false;
         }
 
-        if (entity instanceof Slime) {
-            return ((Slime) entity).isTiny();
+        if (entity instanceof AbstractCubeMob cubeMob) {
+            return cubeMob.isTiny();
         }
 
         return entity instanceof Bee

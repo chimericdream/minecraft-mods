@@ -6,7 +6,7 @@
   versions, for every wood type (acacia, oak, spruce, birch, jungle, dark oak, mangrove, cherry, pale
   oak, crimson, warped) plus bamboo block.
 * Added compressed armadillo scute block, including support for storing scutes in a glass jar
-
+* Allow capturing small sulfur cubes in a glass jar (will support any mobs that extend the vanilla `AbstractCubeMob` class)
 
 ### 26.2 - 10.0.1
 

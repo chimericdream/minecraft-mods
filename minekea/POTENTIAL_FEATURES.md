@@ -79,7 +79,6 @@ furniture you can use, and finishing touches for every room. Ideas are grouped b
 ## From the idea backlog (2026-08-13)
 
 * Add thematic/fun advancements.
-* Support capturing small sulfur cubes in jars.
 * Add blocks/block sets that were previously in the mod but haven't been ported yet (e.g. stairs made
   from logs).
 * Add vertical stairs, slabs, etc. for new blocks added in 1.21.x and 26.x.
