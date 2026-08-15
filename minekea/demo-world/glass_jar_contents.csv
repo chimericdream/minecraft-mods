@@ -24,6 +24,7 @@ item,minecraft:glowstone_dust,Glowstone Dust
 item,minecraft:golden_apple,Golden Apple
 item,minecraft:gravel,Gravel
 item,minecraft:honeycomb,Honeycomb
+item,minecraft:leaf_litter,Leaf Litter
 item,minecraft:leather,Leather
 item,minecraft:melon_seeds,Melon Seeds
 item,minecraft:melon_slice,Melon Slice
@@ -47,6 +48,7 @@ item,minecraft:totem_of_undying,Totem Of Undying
 item,minekea:crops/warped_wart,Warped Wart
 item,minecraft:wheat,Wheat
 item,minecraft:wheat_seeds,Wheat Seeds
+item,minecraft:wildflowers,Wildflowers
 item,minecraft:wind_charge,Wind Charge
 item,minecraft:white_dye,White Dye
 item,minecraft:light_gray_dye,Light Gray Dye

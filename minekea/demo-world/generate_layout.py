@@ -128,6 +128,7 @@ STONE_RULES = [
     ("netherrack", ["netherrack"]), ("bone", ["bone"]),
     ("stone", ["stone_brick", "smooth_stone"]), ("stone", ["stone"]),
     ("mud", ["mud"]), ("earth", ["dirt", "sand", "gravel", "clay", "soul_sand"]),
+    ("cinnabar", ["cinnabar"]), ("sulfur", ["sulfur"]), ("resin", ["resin"]),
     ("brick", ["brick"]),
 ]
 
@@ -137,7 +138,7 @@ ORDER_WOODS = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangro
 ORDER_STONES = ["stone", "cobblestone", "granite", "diorite", "andesite", "deepslate",
                 "tuff", "blackstone", "basalt", "sandstone", "red_sandstone", "prismarine",
                 "quartz", "purpur", "nether_brick", "end_stone", "netherrack", "obsidian",
-                "calcite", "mud", "bone", "brick", "amethyst"]
+                "calcite", "mud", "bone", "brick", "amethyst", "cinnabar", "sulfur", "resin"]
 ORDER_METALS = ["iron", "gold", "copper", "diamond", "netherite", "lapis", "redstone"]
 ORDER_TAIL = ["earth", "food", "lighting", "misc"]
 
@@ -296,8 +297,9 @@ for p in ["containers/cauldrons/honey", "containers/cauldrons/milk",
 # forms (is_bagged=false + is_bagged=true). Source of truth: the blockstate JSONs carrying an
 # `is_bagged=true` variant (grep 'is_bagged=true' .../blockstates/storage/compressed/*.json).
 BAGGABLE_STORAGE = {
-    "beetroot", "beetroot_seeds", "carrot", "chorus_fruit", "gold_nugget", "iron_nugget",
-    "melon_seeds", "phantom_membrane", "potato", "pumpkin_seeds", "sugar", "wheat_seeds",
+    "beetroot", "beetroot_seeds", "carrot", "chorus_fruit", "copper_nugget", "gold_nugget",
+    "iron_nugget", "leaf_litter", "melon_seeds", "phantom_membrane", "potato", "pumpkin_seeds",
+    "sugar", "wheat_seeds", "wildflowers",
 }
 
 # ---- classify -------------------------------------------------------------

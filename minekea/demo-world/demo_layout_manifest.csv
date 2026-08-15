@@ -2471,337 +2471,519 @@ minekea:building/compressed/amethyst_block/6x,-152,61,112,amethyst,Amethyst (11)
 minekea:building/compressed/amethyst_block/7x,-154,62,111,amethyst,Amethyst (11),6,,,,
 minekea:building/compressed/amethyst_block/8x,-153,62,111,amethyst,Amethyst (11),6,,,,
 minekea:building/compressed/amethyst_block/9x,-152,62,111,amethyst,Amethyst (11),6,,,,
-minekea:building/beams/iron_block,-149,56,117,iron,Iron (11),0,,,,
-minekea:building/covers/iron_block,-148,56,117,iron,Iron (11),0,facing=south,,,
-minekea:building/compressed/iron_block/1x,-149,57,116,iron,Iron (11),1,,,,
-minekea:building/compressed/iron_block/2x,-148,57,116,iron,Iron (11),1,,,,
-minekea:building/compressed/iron_block/3x,-147,57,116,iron,Iron (11),1,,,,
-minekea:building/compressed/iron_block/4x,-149,58,115,iron,Iron (11),2,,,,
-minekea:building/compressed/iron_block/5x,-148,58,115,iron,Iron (11),2,,,,
-minekea:building/compressed/iron_block/6x,-147,58,115,iron,Iron (11),2,,,,
-minekea:building/compressed/iron_block/7x,-149,59,114,iron,Iron (11),3,,,,
-minekea:building/compressed/iron_block/8x,-148,59,114,iron,Iron (11),3,,,,
-minekea:building/compressed/iron_block/9x,-147,59,114,iron,Iron (11),3,,,,
-minekea:building/beams/gold_block,-144,56,117,gold,Gold (11),0,,,,
-minekea:building/covers/gold_block,-143,56,117,gold,Gold (11),0,facing=south,,,
-minekea:building/compressed/gold_block/1x,-144,57,116,gold,Gold (11),1,,,,
-minekea:building/compressed/gold_block/2x,-143,57,116,gold,Gold (11),1,,,,
-minekea:building/compressed/gold_block/3x,-142,57,116,gold,Gold (11),1,,,,
-minekea:building/compressed/gold_block/4x,-144,58,115,gold,Gold (11),2,,,,
-minekea:building/compressed/gold_block/5x,-143,58,115,gold,Gold (11),2,,,,
-minekea:building/compressed/gold_block/6x,-142,58,115,gold,Gold (11),2,,,,
-minekea:building/compressed/gold_block/7x,-144,59,114,gold,Gold (11),3,,,,
-minekea:building/compressed/gold_block/8x,-143,59,114,gold,Gold (11),3,,,,
-minekea:building/compressed/gold_block/9x,-142,59,114,gold,Gold (11),3,,,,
-minekea:building/beams/copper_block,-139,56,117,copper,Copper (35),0,,,,
-minekea:building/beams/cut_copper,-138,56,117,copper,Copper (35),0,,,,
-minekea:building/beams/exposed_cut_copper,-137,56,117,copper,Copper (35),0,,,,
-minekea:building/beams/oxidized_cut_copper,-136,56,117,copper,Copper (35),0,,,,
-minekea:building/beams/weathered_cut_copper,-135,56,117,copper,Copper (35),0,,,,
-minekea:building/covers/copper_block,-134,56,117,copper,Copper (35),0,facing=south,,,
-minekea:building/covers/cut_copper,-133,56,117,copper,Copper (35),0,facing=south,,,
-minekea:building/covers/exposed_cut_copper,-132,56,117,copper,Copper (35),0,facing=south,,,
-minekea:building/covers/oxidized_cut_copper,-131,56,117,copper,Copper (35),0,facing=south,,,
-minekea:building/covers/weathered_cut_copper,-130,56,117,copper,Copper (35),0,facing=south,,,
-minekea:building/slabs/vertical/cut_copper,-129,56,117,copper,Copper (35),0,facing=east,,,
-minekea:building/slabs/vertical/exposed_cut_copper,-128,56,117,copper,Copper (35),0,facing=east,,,
-minekea:building/slabs/vertical/oxidized_cut_copper,-139,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/slabs/vertical/waxed_cut_copper,-138,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/slabs/vertical/waxed_exposed_cut_copper,-137,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/slabs/vertical/waxed_oxidized_cut_copper,-136,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/slabs/vertical/waxed_weathered_cut_copper,-135,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/slabs/vertical/weathered_cut_copper,-134,57,116,copper,Copper (35),1,facing=east,,,
-minekea:building/stairs/vertical/cut_copper,-133,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/exposed_cut_copper,-132,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/oxidized_cut_copper,-131,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/waxed_cut_copper,-130,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/waxed_exposed_cut_copper,-129,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/waxed_oxidized_cut_copper,-128,57,116,copper,Copper (35),1,facing=south,,,
-minekea:building/stairs/vertical/waxed_weathered_cut_copper,-139,58,115,copper,Copper (35),2,facing=south,,,
-minekea:building/stairs/vertical/weathered_cut_copper,-138,58,115,copper,Copper (35),2,facing=south,,,
-minekea:building/compressed/copper_block/1x,-139,59,114,copper,Copper (35),3,,,,
-minekea:building/compressed/copper_block/2x,-138,59,114,copper,Copper (35),3,,,,
-minekea:building/compressed/copper_block/3x,-137,59,114,copper,Copper (35),3,,,,
-minekea:building/compressed/copper_block/4x,-139,60,113,copper,Copper (35),4,,,,
-minekea:building/compressed/copper_block/5x,-138,60,113,copper,Copper (35),4,,,,
-minekea:building/compressed/copper_block/6x,-137,60,113,copper,Copper (35),4,,,,
-minekea:building/compressed/copper_block/7x,-139,61,112,copper,Copper (35),5,,,,
-minekea:building/compressed/copper_block/8x,-138,61,112,copper,Copper (35),5,,,,
-minekea:building/compressed/copper_block/9x,-137,61,112,copper,Copper (35),5,,,,
-minekea:building/beams/diamond_block,-125,56,117,diamond,Diamond (11),0,,,,
-minekea:building/covers/diamond_block,-124,56,117,diamond,Diamond (11),0,facing=south,,,
-minekea:building/compressed/diamond_block/1x,-125,57,116,diamond,Diamond (11),1,,,,
-minekea:building/compressed/diamond_block/2x,-124,57,116,diamond,Diamond (11),1,,,,
-minekea:building/compressed/diamond_block/3x,-123,57,116,diamond,Diamond (11),1,,,,
-minekea:building/compressed/diamond_block/4x,-125,58,115,diamond,Diamond (11),2,,,,
-minekea:building/compressed/diamond_block/5x,-124,58,115,diamond,Diamond (11),2,,,,
-minekea:building/compressed/diamond_block/6x,-123,58,115,diamond,Diamond (11),2,,,,
-minekea:building/compressed/diamond_block/7x,-125,59,114,diamond,Diamond (11),3,,,,
-minekea:building/compressed/diamond_block/8x,-124,59,114,diamond,Diamond (11),3,,,,
-minekea:building/compressed/diamond_block/9x,-123,59,114,diamond,Diamond (11),3,,,,
-minekea:building/beams/netherite_block,-120,56,117,netherite,Netherite (11),0,,,,
-minekea:building/covers/netherite_block,-119,56,117,netherite,Netherite (11),0,facing=south,,,
-minekea:building/compressed/netherite_block/1x,-120,57,116,netherite,Netherite (11),1,,,,
-minekea:building/compressed/netherite_block/2x,-119,57,116,netherite,Netherite (11),1,,,,
-minekea:building/compressed/netherite_block/3x,-118,57,116,netherite,Netherite (11),1,,,,
-minekea:building/compressed/netherite_block/4x,-120,58,115,netherite,Netherite (11),2,,,,
-minekea:building/compressed/netherite_block/5x,-119,58,115,netherite,Netherite (11),2,,,,
-minekea:building/compressed/netherite_block/6x,-118,58,115,netherite,Netherite (11),2,,,,
-minekea:building/compressed/netherite_block/7x,-120,59,114,netherite,Netherite (11),3,,,,
-minekea:building/compressed/netherite_block/8x,-119,59,114,netherite,Netherite (11),3,,,,
-minekea:building/compressed/netherite_block/9x,-118,59,114,netherite,Netherite (11),3,,,,
-minekea:building/beams/lapis_block,-115,56,117,lapis,Lapis (11),0,,,,
-minekea:building/covers/lapis_block,-114,56,117,lapis,Lapis (11),0,facing=south,,,
-minekea:building/compressed/lapis_block/1x,-115,57,116,lapis,Lapis (11),1,,,,
-minekea:building/compressed/lapis_block/2x,-114,57,116,lapis,Lapis (11),1,,,,
-minekea:building/compressed/lapis_block/3x,-113,57,116,lapis,Lapis (11),1,,,,
-minekea:building/compressed/lapis_block/4x,-115,58,115,lapis,Lapis (11),2,,,,
-minekea:building/compressed/lapis_block/5x,-114,58,115,lapis,Lapis (11),2,,,,
-minekea:building/compressed/lapis_block/6x,-113,58,115,lapis,Lapis (11),2,,,,
-minekea:building/compressed/lapis_block/7x,-115,59,114,lapis,Lapis (11),3,,,,
-minekea:building/compressed/lapis_block/8x,-114,59,114,lapis,Lapis (11),3,,,,
-minekea:building/compressed/lapis_block/9x,-113,59,114,lapis,Lapis (11),3,,,,
-minekea:building/beams/redstone_block,-110,56,117,redstone,Redstone (11),0,,,,
-minekea:building/covers/redstone_block,-109,56,117,redstone,Redstone (11),0,facing=south,,,
-minekea:building/compressed/redstone_block/1x,-110,57,116,redstone,Redstone (11),1,,,,
-minekea:building/compressed/redstone_block/2x,-109,57,116,redstone,Redstone (11),1,,,,
-minekea:building/compressed/redstone_block/3x,-108,57,116,redstone,Redstone (11),1,,,,
-minekea:building/compressed/redstone_block/4x,-110,58,115,redstone,Redstone (11),2,,,,
-minekea:building/compressed/redstone_block/5x,-109,58,115,redstone,Redstone (11),2,,,,
-minekea:building/compressed/redstone_block/6x,-108,58,115,redstone,Redstone (11),2,,,,
-minekea:building/compressed/redstone_block/7x,-110,59,114,redstone,Redstone (11),3,,,,
-minekea:building/compressed/redstone_block/8x,-109,59,114,redstone,Redstone (11),3,,,,
-minekea:building/compressed/redstone_block/9x,-108,59,114,redstone,Redstone (11),3,,,,
-minekea:building/compressed/clay/1x,-105,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/clay/2x,-104,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/clay/3x,-103,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/clay/4x,-105,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/clay/5x,-104,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/clay/6x,-103,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/clay/7x,-105,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/clay/8x,-104,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/clay/9x,-103,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/coarse_dirt/1x,-101,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/coarse_dirt/2x,-100,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/coarse_dirt/3x,-99,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/coarse_dirt/4x,-101,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/coarse_dirt/5x,-100,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/coarse_dirt/6x,-99,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/coarse_dirt/7x,-101,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/coarse_dirt/8x,-100,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/coarse_dirt/9x,-99,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/dirt/1x,-97,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/dirt/2x,-96,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/dirt/3x,-95,56,117,earth,Soil & Sand (72),0,,,,
-minekea:building/compressed/dirt/4x,-97,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/dirt/5x,-96,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/dirt/6x,-95,57,116,earth,Soil & Sand (72),1,,,,
-minekea:building/compressed/dirt/7x,-97,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/dirt/8x,-96,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/dirt/9x,-95,58,115,earth,Soil & Sand (72),2,,,,
-minekea:building/compressed/gravel/1x,-105,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/gravel/2x,-104,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/gravel/3x,-103,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/gravel/4x,-105,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/gravel/5x,-104,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/gravel/6x,-103,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/gravel/7x,-105,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/gravel/8x,-104,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/gravel/9x,-103,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/red_sand/1x,-101,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/red_sand/2x,-100,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/red_sand/3x,-99,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/red_sand/4x,-101,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/red_sand/5x,-100,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/red_sand/6x,-99,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/red_sand/7x,-101,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/red_sand/8x,-100,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/red_sand/9x,-99,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/rooted_dirt/1x,-97,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/rooted_dirt/2x,-96,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/rooted_dirt/3x,-95,59,114,earth,Soil & Sand (72),3,,,,
-minekea:building/compressed/rooted_dirt/4x,-97,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/rooted_dirt/5x,-96,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/rooted_dirt/6x,-95,60,113,earth,Soil & Sand (72),4,,,,
-minekea:building/compressed/rooted_dirt/7x,-97,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/rooted_dirt/8x,-96,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/rooted_dirt/9x,-95,61,112,earth,Soil & Sand (72),5,,,,
-minekea:building/compressed/sand/1x,-105,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/sand/2x,-104,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/sand/3x,-103,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/sand/4x,-105,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/sand/5x,-104,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/sand/6x,-103,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/sand/7x,-105,64,109,earth,Soil & Sand (72),8,,,,
-minekea:building/compressed/sand/8x,-104,64,109,earth,Soil & Sand (72),8,,,,
-minekea:building/compressed/sand/9x,-103,64,109,earth,Soil & Sand (72),8,,,,
-minekea:building/compressed/soul_sand/1x,-101,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/soul_sand/2x,-100,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/soul_sand/3x,-99,62,111,earth,Soil & Sand (72),6,,,,
-minekea:building/compressed/soul_sand/4x,-101,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/soul_sand/5x,-100,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/soul_sand/6x,-99,63,110,earth,Soil & Sand (72),7,,,,
-minekea:building/compressed/soul_sand/7x,-101,64,109,earth,Soil & Sand (72),8,,,,
-minekea:building/compressed/soul_sand/8x,-100,64,109,earth,Soil & Sand (72),8,,,,
-minekea:building/compressed/soul_sand/9x,-99,64,109,earth,Soil & Sand (72),8,,,,
-minekea:storage/compressed/beetroot,-92,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/beetroot,-91,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/beetroot_seeds,-90,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/beetroot_seeds,-89,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/carrot,-88,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/carrot,-87,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/chorus_fruit,-86,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/chorus_fruit,-85,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/gold_nugget,-84,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/gold_nugget,-83,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/iron_nugget,-82,56,117,food,Compressed Food (40),0,is_bagged=false,,,
-minekea:storage/compressed/iron_nugget,-81,56,117,food,Compressed Food (40),0,is_bagged=true,,,
-minekea:storage/compressed/melon_seeds,-92,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/melon_seeds,-91,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/phantom_membrane,-90,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/phantom_membrane,-89,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/potato,-88,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/potato,-87,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/pumpkin_seeds,-86,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/pumpkin_seeds,-85,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/sugar,-84,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/sugar,-83,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/wheat_seeds,-82,57,116,food,Compressed Food (40),1,is_bagged=false,,,
-minekea:storage/compressed/wheat_seeds,-81,57,116,food,Compressed Food (40),1,is_bagged=true,,,
-minekea:storage/compressed/apple,-92,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/armadillo_scute,-91,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/blaze_powder,-90,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/blaze_rod,-89,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/breeze_rod,-88,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/charcoal,-87,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/ender_pearl,-86,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/flint,-85,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/golden_apple,-84,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/leather,-83,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/nether_star,-82,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/paper,-81,58,115,food,Compressed Food (40),2,,,,
-minekea:storage/compressed/stick,-92,59,114,food,Compressed Food (40),3,,,,
-minekea:storage/compressed/sugar_cane,-91,59,114,food,Compressed Food (40),3,,,,
-minekea:storage/compressed/totem_of_undying,-90,59,114,food,Compressed Food (40),3,,,,
-minekea:storage/compressed/wind_charge,-89,59,114,food,Compressed Food (40),3,,,,
-minekea:decorations/lighting/ancient_lantern,-78,56,117,lighting,Lighting (4),0,,,,
-minekea:decorations/lighting/doom_lantern,-77,56,117,lighting,Lighting (4),0,,,,
-minekea:decorations/lighting/end_lantern,-76,56,117,lighting,Lighting (4),0,,,,
-minekea:decorations/lighting/endless_rod,-75,56,117,lighting,Lighting (4),0,,,,
-minekea:containers/cauldrons/honey,-191,56,104,misc,Misc (6),0,,,,
-minekea:containers/cauldrons/milk,-190,56,104,misc,Misc (6),0,,,,
-minekea:decorations/misc/fake_cake,-189,56,104,misc,Misc (6),0,,,,
-minekea:storage/blue_egg_crate,-188,56,104,misc,Misc (6),0,,,,
-minekea:storage/brown_egg_crate,-187,56,104,misc,Misc (6),0,,,,
-minekea:storage/egg_crate,-186,56,104,misc,Misc (6),0,,,,
-minekea:containers/glass_jar,-183,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:amethyst_shard,Amethyst Shard
-minekea:containers/glass_jar,-182,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:apple,Apple
-minekea:containers/glass_jar,-181,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:armadillo_scute,Armadillo Scute
-minekea:containers/glass_jar,-180,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:bamboo,Bamboo
-minekea:containers/glass_jar,-179,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:beetroot,Beetroot
-minekea:containers/glass_jar,-178,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:beetroot_seeds,Beetroot Seeds
-minekea:containers/glass_jar,-177,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:blaze_powder,Blaze Powder
-minekea:containers/glass_jar,-176,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:blaze_rod,Blaze Rod
-minekea:containers/glass_jar,-175,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:blue_egg,Blue Egg
-minekea:containers/glass_jar,-174,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:breeze_rod,Breeze Rod
-minekea:containers/glass_jar,-173,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:brown_egg,Brown Egg
-minekea:containers/glass_jar,-172,56,104,jars_items,Glass Jars - Items (97),0,facing=south,,minecraft:brown_mushroom,Brown Mushroom
-minekea:containers/glass_jar,-183,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:carrot,Carrot
-minekea:containers/glass_jar,-182,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:charcoal,Charcoal
-minekea:containers/glass_jar,-181,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:chorus_fruit,Chorus Fruit
-minekea:containers/glass_jar,-180,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:coal,Coal
-minekea:containers/glass_jar,-179,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:dried_kelp,Dried Kelp
-minekea:containers/glass_jar,-178,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:egg,Egg
-minekea:containers/glass_jar,-177,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:ender_pearl,Ender Pearl
-minekea:containers/glass_jar,-176,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:flint,Flint
-minekea:containers/glass_jar,-175,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:glowstone_dust,Glowstone Dust
-minekea:containers/glass_jar,-174,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:golden_apple,Golden Apple
-minekea:containers/glass_jar,-173,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:gravel,Gravel
-minekea:containers/glass_jar,-172,57,103,jars_items,Glass Jars - Items (97),1,facing=south,,minecraft:honeycomb,Honeycomb
-minekea:containers/glass_jar,-183,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:leather,Leather
-minekea:containers/glass_jar,-182,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:melon_seeds,Melon Seeds
-minekea:containers/glass_jar,-181,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:melon_slice,Melon Slice
-minekea:containers/glass_jar,-180,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:nether_star,Nether Star
-minekea:containers/glass_jar,-179,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:nether_wart,Nether Wart
-minekea:containers/glass_jar,-178,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:paper,Paper
-minekea:containers/glass_jar,-177,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:phantom_membrane,Phantom Membrane
-minekea:containers/glass_jar,-176,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:potato,Potato
-minekea:containers/glass_jar,-175,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:pumpkin_seeds,Pumpkin Seeds
-minekea:containers/glass_jar,-174,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:red_mushroom,Red Mushroom
-minekea:containers/glass_jar,-173,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:red_sand,Red Sand
-minekea:containers/glass_jar,-172,58,102,jars_items,Glass Jars - Items (97),2,facing=south,,minecraft:redstone,Redstone
-minekea:containers/glass_jar,-183,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:resin_clump,Resin Clump
-minekea:containers/glass_jar,-182,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:sand,Sand
-minekea:containers/glass_jar,-181,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:sculk_vein,Sculk Vein
-minekea:containers/glass_jar,-180,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:slime_ball,Slime Ball
-minekea:containers/glass_jar,-179,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:stick,Stick
-minekea:containers/glass_jar,-178,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:sugar,Sugar
-minekea:containers/glass_jar,-177,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:sugar_cane,Sugar Cane
-minekea:containers/glass_jar,-176,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:totem_of_undying,Totem Of Undying
-minekea:containers/glass_jar,-175,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minekea:crops/warped_wart,Warped Wart
-minekea:containers/glass_jar,-174,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:wheat,Wheat
-minekea:containers/glass_jar,-173,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:wheat_seeds,Wheat Seeds
-minekea:containers/glass_jar,-172,59,101,jars_items,Glass Jars - Items (97),3,facing=south,,minecraft:wind_charge,Wind Charge
-minekea:containers/glass_jar,-183,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:white_dye,White Dye
-minekea:containers/glass_jar,-182,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:light_gray_dye,Light Gray Dye
-minekea:containers/glass_jar,-181,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:gray_dye,Gray Dye
-minekea:containers/glass_jar,-180,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:black_dye,Black Dye
-minekea:containers/glass_jar,-179,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:brown_dye,Brown Dye
-minekea:containers/glass_jar,-178,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:red_dye,Red Dye
-minekea:containers/glass_jar,-177,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:orange_dye,Orange Dye
-minekea:containers/glass_jar,-176,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:yellow_dye,Yellow Dye
-minekea:containers/glass_jar,-175,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:lime_dye,Lime Dye
-minekea:containers/glass_jar,-174,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:green_dye,Green Dye
-minekea:containers/glass_jar,-173,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:cyan_dye,Cyan Dye
-minekea:containers/glass_jar,-172,60,100,jars_items,Glass Jars - Items (97),4,facing=south,,minecraft:light_blue_dye,Light Blue Dye
-minekea:containers/glass_jar,-183,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:blue_dye,Blue Dye
-minekea:containers/glass_jar,-182,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:purple_dye,Purple Dye
-minekea:containers/glass_jar,-181,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:magenta_dye,Magenta Dye
-minekea:containers/glass_jar,-180,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:pink_dye,Pink Dye
-minekea:containers/glass_jar,-179,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:white_concrete_powder,White Concrete Powder
-minekea:containers/glass_jar,-178,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:light_gray_concrete_powder,Light Gray Concrete Powder
-minekea:containers/glass_jar,-177,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:gray_concrete_powder,Gray Concrete Powder
-minekea:containers/glass_jar,-176,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:black_concrete_powder,Black Concrete Powder
-minekea:containers/glass_jar,-175,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:brown_concrete_powder,Brown Concrete Powder
-minekea:containers/glass_jar,-174,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:red_concrete_powder,Red Concrete Powder
-minekea:containers/glass_jar,-173,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:orange_concrete_powder,Orange Concrete Powder
-minekea:containers/glass_jar,-172,61,99,jars_items,Glass Jars - Items (97),5,facing=south,,minecraft:yellow_concrete_powder,Yellow Concrete Powder
-minekea:containers/glass_jar,-183,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:lime_concrete_powder,Lime Concrete Powder
-minekea:containers/glass_jar,-182,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:green_concrete_powder,Green Concrete Powder
-minekea:containers/glass_jar,-181,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:cyan_concrete_powder,Cyan Concrete Powder
-minekea:containers/glass_jar,-180,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:light_blue_concrete_powder,Light Blue Concrete Powder
-minekea:containers/glass_jar,-179,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:blue_concrete_powder,Blue Concrete Powder
-minekea:containers/glass_jar,-178,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:purple_concrete_powder,Purple Concrete Powder
-minekea:containers/glass_jar,-177,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:magenta_concrete_powder,Magenta Concrete Powder
-minekea:containers/glass_jar,-176,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minecraft:pink_concrete_powder,Pink Concrete Powder
-minekea:containers/glass_jar,-175,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minekea:ingredients/wax/plain,Plain Wax
-minekea:containers/glass_jar,-174,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minekea:ingredients/wax/white,White Wax
-minekea:containers/glass_jar,-173,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minekea:ingredients/wax/light_gray,Light Gray Wax
-minekea:containers/glass_jar,-172,62,98,jars_items,Glass Jars - Items (97),6,facing=south,,minekea:ingredients/wax/gray,Gray Wax
-minekea:containers/glass_jar,-183,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/black,Black Wax
-minekea:containers/glass_jar,-182,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/brown,Brown Wax
-minekea:containers/glass_jar,-181,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/red,Red Wax
-minekea:containers/glass_jar,-180,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/orange,Orange Wax
-minekea:containers/glass_jar,-179,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/yellow,Yellow Wax
-minekea:containers/glass_jar,-178,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/lime,Lime Wax
-minekea:containers/glass_jar,-177,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/green,Green Wax
-minekea:containers/glass_jar,-176,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/cyan,Cyan Wax
-minekea:containers/glass_jar,-175,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/light_blue,Light Blue Wax
-minekea:containers/glass_jar,-174,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/blue,Blue Wax
-minekea:containers/glass_jar,-173,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/purple,Purple Wax
-minekea:containers/glass_jar,-172,63,97,jars_items,Glass Jars - Items (97),7,facing=south,,minekea:ingredients/wax/magenta,Magenta Wax
-minekea:containers/glass_jar,-183,64,96,jars_items,Glass Jars - Items (97),8,facing=south,,minekea:ingredients/wax/pink,Pink Wax
-minekea:containers/glass_jar,-169,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,,Empty Jar
-minekea:containers/glass_jar,-168,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:water,Water
-minekea:containers/glass_jar,-167,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:lava,Lava
-minekea:containers/glass_jar,-166,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/milk,Milk
-minekea:containers/glass_jar,-165,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/honey,Honey
-minekea:containers/glass_jar,-164,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:allay,Allay
-minekea:containers/glass_jar,-163,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bat,Bat
-minekea:containers/glass_jar,-162,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bee,Bee
-minekea:containers/glass_jar,-161,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:endermite,Endermite
-minekea:containers/glass_jar,-160,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:magma_cube,Magma Cube (tiny only)
-minekea:containers/glass_jar,-159,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:silverfish,Silverfish
-minekea:containers/glass_jar,-158,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:slime,Slime (tiny only)
-minekea:containers/glass_jar,-169,57,103,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:sulfur_cube,Sulfur Cube (tiny only)
-minekea:containers/glass_jar,-168,57,103,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:vex,Vex
+minekea:building/beams/chiseled_cinnabar,-149,56,117,cinnabar,Cinnabar (71),0,,,,
+minekea:building/beams/cinnabar,-148,56,117,cinnabar,Cinnabar (71),0,,,,
+minekea:building/beams/polished_cinnabar,-147,56,117,cinnabar,Cinnabar (71),0,,,,
+minekea:building/covers/chiseled_cinnabar,-146,56,117,cinnabar,Cinnabar (71),0,facing=south,,,
+minekea:building/covers/cinnabar,-145,56,117,cinnabar,Cinnabar (71),0,facing=south,,,
+minekea:building/covers/cinnabar_brick,-144,56,117,cinnabar,Cinnabar (71),0,facing=south,,,
+minekea:building/covers/polished_cinnabar,-143,56,117,cinnabar,Cinnabar (71),0,facing=south,,,
+minekea:building/slabs/vertical/chiseled_cinnabar,-149,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/vertical/cinnabar,-148,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/vertical/cinnabar_bricks,-147,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/vertical/polished_cinnabar,-146,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/bookshelves/chiseled_cinnabar,-145,57,116,cinnabar,Cinnabar (71),1,,,,
+minekea:building/slabs/bookshelves/cinnabar,-144,57,116,cinnabar,Cinnabar (71),1,,,,
+minekea:building/slabs/bookshelves/cinnabar_brick,-143,57,116,cinnabar,Cinnabar (71),1,,,,
+minekea:building/slabs/bookshelves/polished_cinnabar,-142,57,116,cinnabar,Cinnabar (71),1,,,,
+minekea:building/slabs/bookshelves/vertical/chiseled_cinnabar,-141,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/cinnabar,-140,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/cinnabar_brick,-139,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/polished_cinnabar,-138,57,116,cinnabar,Cinnabar (71),1,facing=east,,,
+minekea:building/stairs/vertical/chiseled_cinnabar,-149,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/vertical/cinnabar,-148,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/vertical/cinnabar_bricks,-147,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/vertical/polished_cinnabar,-146,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/bookshelves/chiseled_cinnabar,-145,58,115,cinnabar,Cinnabar (71),2,facing=north,,,
+minekea:building/stairs/bookshelves/cinnabar,-144,58,115,cinnabar,Cinnabar (71),2,facing=north,,,
+minekea:building/stairs/bookshelves/cinnabar_brick,-143,58,115,cinnabar,Cinnabar (71),2,facing=north,,,
+minekea:building/stairs/bookshelves/polished_cinnabar,-142,58,115,cinnabar,Cinnabar (71),2,facing=north,,,
+minekea:building/stairs/bookshelves/vertical/chiseled_cinnabar,-141,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/cinnabar,-140,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/cinnabar_brick,-139,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/polished_cinnabar,-138,58,115,cinnabar,Cinnabar (71),2,facing=south,,,
+minekea:furniture/bookshelves/chiseled_cinnabar,-149,59,114,cinnabar,Cinnabar (71),3,,,,
+minekea:furniture/bookshelves/cinnabar,-148,59,114,cinnabar,Cinnabar (71),3,,,,
+minekea:furniture/bookshelves/cinnabar_brick,-147,59,114,cinnabar,Cinnabar (71),3,,,,
+minekea:furniture/bookshelves/polished_cinnabar,-146,59,114,cinnabar,Cinnabar (71),3,,,,
+minekea:building/compressed/chiseled_cinnabar/1x,-149,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/chiseled_cinnabar/2x,-148,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/chiseled_cinnabar/3x,-147,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/chiseled_cinnabar/4x,-149,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/chiseled_cinnabar/5x,-148,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/chiseled_cinnabar/6x,-147,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/chiseled_cinnabar/7x,-149,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/chiseled_cinnabar/8x,-148,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/chiseled_cinnabar/9x,-147,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar/1x,-145,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar/2x,-144,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar/3x,-143,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar/4x,-145,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar/5x,-144,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar/6x,-143,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar/7x,-145,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar/8x,-144,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar/9x,-143,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar_bricks/1x,-141,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar_bricks/2x,-140,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar_bricks/3x,-139,60,113,cinnabar,Cinnabar (71),4,,,,
+minekea:building/compressed/cinnabar_bricks/4x,-141,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar_bricks/5x,-140,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar_bricks/6x,-139,61,112,cinnabar,Cinnabar (71),5,,,,
+minekea:building/compressed/cinnabar_bricks/7x,-141,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar_bricks/8x,-140,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/cinnabar_bricks/9x,-139,62,111,cinnabar,Cinnabar (71),6,,,,
+minekea:building/compressed/polished_cinnabar/1x,-149,63,110,cinnabar,Cinnabar (71),7,,,,
+minekea:building/compressed/polished_cinnabar/2x,-148,63,110,cinnabar,Cinnabar (71),7,,,,
+minekea:building/compressed/polished_cinnabar/3x,-147,63,110,cinnabar,Cinnabar (71),7,,,,
+minekea:building/compressed/polished_cinnabar/4x,-149,64,109,cinnabar,Cinnabar (71),8,,,,
+minekea:building/compressed/polished_cinnabar/5x,-148,64,109,cinnabar,Cinnabar (71),8,,,,
+minekea:building/compressed/polished_cinnabar/6x,-147,64,109,cinnabar,Cinnabar (71),8,,,,
+minekea:building/compressed/polished_cinnabar/7x,-149,65,108,cinnabar,Cinnabar (71),9,,,,
+minekea:building/compressed/polished_cinnabar/8x,-148,65,108,cinnabar,Cinnabar (71),9,,,,
+minekea:building/compressed/polished_cinnabar/9x,-147,65,108,cinnabar,Cinnabar (71),9,,,,
+minekea:building/beams/chiseled_sulfur,-135,56,117,sulfur,Sulfur (83),0,,,,
+minekea:building/beams/polished_sulfur,-134,56,117,sulfur,Sulfur (83),0,,,,
+minekea:building/beams/potent_sulfur,-133,56,117,sulfur,Sulfur (83),0,,,,
+minekea:building/beams/sulfur,-132,56,117,sulfur,Sulfur (83),0,,,,
+minekea:building/beams/sulfur_brick,-131,56,117,sulfur,Sulfur (83),0,,,,
+minekea:building/covers/chiseled_sulfur,-130,56,117,sulfur,Sulfur (83),0,facing=south,,,
+minekea:building/covers/polished_sulfur,-129,56,117,sulfur,Sulfur (83),0,facing=south,,,
+minekea:building/covers/potent_sulfur,-128,56,117,sulfur,Sulfur (83),0,facing=south,,,
+minekea:building/covers/sulfur,-127,56,117,sulfur,Sulfur (83),0,facing=south,,,
+minekea:building/covers/sulfur_brick,-126,56,117,sulfur,Sulfur (83),0,facing=south,,,
+minekea:building/slabs/potent_sulfur,-135,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/vertical/chiseled_sulfur,-134,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/vertical/polished_sulfur,-133,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/vertical/potent_sulfur,-132,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/vertical/sulfur,-131,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/vertical/sulfur_bricks,-130,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/bookshelves/chiseled_sulfur,-129,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/bookshelves/polished_sulfur,-128,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/bookshelves/potent_sulfur,-127,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/bookshelves/sulfur,-126,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/bookshelves/sulfur_brick,-125,57,116,sulfur,Sulfur (83),1,,,,
+minekea:building/slabs/bookshelves/vertical/chiseled_sulfur,-124,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/polished_sulfur,-123,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/potent_sulfur,-122,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/sulfur,-121,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/slabs/bookshelves/vertical/sulfur_brick,-120,57,116,sulfur,Sulfur (83),1,facing=east,,,
+minekea:building/stairs/potent_sulfur,-135,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/vertical/chiseled_sulfur,-134,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/vertical/polished_sulfur,-133,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/vertical/potent_sulfur,-132,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/vertical/sulfur,-131,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/vertical/sulfur_bricks,-130,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/bookshelves/chiseled_sulfur,-129,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/bookshelves/polished_sulfur,-128,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/bookshelves/potent_sulfur,-127,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/bookshelves/sulfur,-126,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/bookshelves/sulfur_brick,-125,58,115,sulfur,Sulfur (83),2,facing=north,,,
+minekea:building/stairs/bookshelves/vertical/chiseled_sulfur,-124,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/polished_sulfur,-123,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/potent_sulfur,-122,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/sulfur,-121,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:building/stairs/bookshelves/vertical/sulfur_brick,-120,58,115,sulfur,Sulfur (83),2,facing=south,,,
+minekea:furniture/bookshelves/chiseled_sulfur,-135,59,114,sulfur,Sulfur (83),3,,,,
+minekea:furniture/bookshelves/polished_sulfur,-134,59,114,sulfur,Sulfur (83),3,,,,
+minekea:furniture/bookshelves/potent_sulfur,-133,59,114,sulfur,Sulfur (83),3,,,,
+minekea:furniture/bookshelves/sulfur,-132,59,114,sulfur,Sulfur (83),3,,,,
+minekea:furniture/bookshelves/sulfur_brick,-131,59,114,sulfur,Sulfur (83),3,,,,
+minekea:building/compressed/chiseled_sulfur/1x,-135,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/chiseled_sulfur/2x,-134,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/chiseled_sulfur/3x,-133,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/chiseled_sulfur/4x,-135,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/chiseled_sulfur/5x,-134,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/chiseled_sulfur/6x,-133,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/chiseled_sulfur/7x,-135,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/chiseled_sulfur/8x,-134,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/chiseled_sulfur/9x,-133,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/polished_sulfur/1x,-131,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/polished_sulfur/2x,-130,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/polished_sulfur/3x,-129,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/polished_sulfur/4x,-131,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/polished_sulfur/5x,-130,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/polished_sulfur/6x,-129,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/polished_sulfur/7x,-131,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/polished_sulfur/8x,-130,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/polished_sulfur/9x,-129,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/potent_sulfur/1x,-127,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/potent_sulfur/2x,-126,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/potent_sulfur/3x,-125,60,113,sulfur,Sulfur (83),4,,,,
+minekea:building/compressed/potent_sulfur/4x,-127,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/potent_sulfur/5x,-126,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/potent_sulfur/6x,-125,61,112,sulfur,Sulfur (83),5,,,,
+minekea:building/compressed/potent_sulfur/7x,-127,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/potent_sulfur/8x,-126,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/potent_sulfur/9x,-125,62,111,sulfur,Sulfur (83),6,,,,
+minekea:building/compressed/sulfur_bricks/1x,-135,63,110,sulfur,Sulfur (83),7,,,,
+minekea:building/compressed/sulfur_bricks/2x,-134,63,110,sulfur,Sulfur (83),7,,,,
+minekea:building/compressed/sulfur_bricks/3x,-133,63,110,sulfur,Sulfur (83),7,,,,
+minekea:building/compressed/sulfur_bricks/4x,-135,64,109,sulfur,Sulfur (83),8,,,,
+minekea:building/compressed/sulfur_bricks/5x,-134,64,109,sulfur,Sulfur (83),8,,,,
+minekea:building/compressed/sulfur_bricks/6x,-133,64,109,sulfur,Sulfur (83),8,,,,
+minekea:building/compressed/sulfur_bricks/7x,-135,65,108,sulfur,Sulfur (83),9,,,,
+minekea:building/compressed/sulfur_bricks/8x,-134,65,108,sulfur,Sulfur (83),9,,,,
+minekea:building/compressed/sulfur_bricks/9x,-133,65,108,sulfur,Sulfur (83),9,,,,
+minekea:building/beams/resin_bricks,-117,56,117,resin,Resin (20),0,,,,
+minekea:building/covers/resin_bricks,-116,56,117,resin,Resin (20),0,facing=south,,,
+minekea:building/compressed/resin_block/1x,-117,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_block/2x,-116,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_block/3x,-115,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_block/4x,-117,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_block/5x,-116,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_block/6x,-115,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_block/7x,-117,62,111,resin,Resin (20),6,,,,
+minekea:building/compressed/resin_block/8x,-116,62,111,resin,Resin (20),6,,,,
+minekea:building/compressed/resin_block/9x,-115,62,111,resin,Resin (20),6,,,,
+minekea:building/compressed/resin_bricks/1x,-113,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_bricks/2x,-112,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_bricks/3x,-111,60,113,resin,Resin (20),4,,,,
+minekea:building/compressed/resin_bricks/4x,-113,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_bricks/5x,-112,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_bricks/6x,-111,61,112,resin,Resin (20),5,,,,
+minekea:building/compressed/resin_bricks/7x,-113,62,111,resin,Resin (20),6,,,,
+minekea:building/compressed/resin_bricks/8x,-112,62,111,resin,Resin (20),6,,,,
+minekea:building/compressed/resin_bricks/9x,-111,62,111,resin,Resin (20),6,,,,
+minekea:building/beams/iron_block,-108,56,117,iron,Iron (11),0,,,,
+minekea:building/covers/iron_block,-107,56,117,iron,Iron (11),0,facing=south,,,
+minekea:building/compressed/iron_block/1x,-108,57,116,iron,Iron (11),1,,,,
+minekea:building/compressed/iron_block/2x,-107,57,116,iron,Iron (11),1,,,,
+minekea:building/compressed/iron_block/3x,-106,57,116,iron,Iron (11),1,,,,
+minekea:building/compressed/iron_block/4x,-108,58,115,iron,Iron (11),2,,,,
+minekea:building/compressed/iron_block/5x,-107,58,115,iron,Iron (11),2,,,,
+minekea:building/compressed/iron_block/6x,-106,58,115,iron,Iron (11),2,,,,
+minekea:building/compressed/iron_block/7x,-108,59,114,iron,Iron (11),3,,,,
+minekea:building/compressed/iron_block/8x,-107,59,114,iron,Iron (11),3,,,,
+minekea:building/compressed/iron_block/9x,-106,59,114,iron,Iron (11),3,,,,
+minekea:building/beams/gold_block,-103,56,117,gold,Gold (11),0,,,,
+minekea:building/covers/gold_block,-102,56,117,gold,Gold (11),0,facing=south,,,
+minekea:building/compressed/gold_block/1x,-103,57,116,gold,Gold (11),1,,,,
+minekea:building/compressed/gold_block/2x,-102,57,116,gold,Gold (11),1,,,,
+minekea:building/compressed/gold_block/3x,-101,57,116,gold,Gold (11),1,,,,
+minekea:building/compressed/gold_block/4x,-103,58,115,gold,Gold (11),2,,,,
+minekea:building/compressed/gold_block/5x,-102,58,115,gold,Gold (11),2,,,,
+minekea:building/compressed/gold_block/6x,-101,58,115,gold,Gold (11),2,,,,
+minekea:building/compressed/gold_block/7x,-103,59,114,gold,Gold (11),3,,,,
+minekea:building/compressed/gold_block/8x,-102,59,114,gold,Gold (11),3,,,,
+minekea:building/compressed/gold_block/9x,-101,59,114,gold,Gold (11),3,,,,
+minekea:building/beams/copper_block,-98,56,117,copper,Copper (35),0,,,,
+minekea:building/beams/cut_copper,-97,56,117,copper,Copper (35),0,,,,
+minekea:building/beams/exposed_cut_copper,-96,56,117,copper,Copper (35),0,,,,
+minekea:building/beams/oxidized_cut_copper,-95,56,117,copper,Copper (35),0,,,,
+minekea:building/beams/weathered_cut_copper,-94,56,117,copper,Copper (35),0,,,,
+minekea:building/covers/copper_block,-93,56,117,copper,Copper (35),0,facing=south,,,
+minekea:building/covers/cut_copper,-92,56,117,copper,Copper (35),0,facing=south,,,
+minekea:building/covers/exposed_cut_copper,-91,56,117,copper,Copper (35),0,facing=south,,,
+minekea:building/covers/oxidized_cut_copper,-90,56,117,copper,Copper (35),0,facing=south,,,
+minekea:building/covers/weathered_cut_copper,-89,56,117,copper,Copper (35),0,facing=south,,,
+minekea:building/slabs/vertical/cut_copper,-88,56,117,copper,Copper (35),0,facing=east,,,
+minekea:building/slabs/vertical/exposed_cut_copper,-87,56,117,copper,Copper (35),0,facing=east,,,
+minekea:building/slabs/vertical/oxidized_cut_copper,-98,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/slabs/vertical/waxed_cut_copper,-97,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/slabs/vertical/waxed_exposed_cut_copper,-96,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/slabs/vertical/waxed_oxidized_cut_copper,-95,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/slabs/vertical/waxed_weathered_cut_copper,-94,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/slabs/vertical/weathered_cut_copper,-93,57,116,copper,Copper (35),1,facing=east,,,
+minekea:building/stairs/vertical/cut_copper,-92,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/exposed_cut_copper,-91,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/oxidized_cut_copper,-90,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/waxed_cut_copper,-89,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/waxed_exposed_cut_copper,-88,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/waxed_oxidized_cut_copper,-87,57,116,copper,Copper (35),1,facing=south,,,
+minekea:building/stairs/vertical/waxed_weathered_cut_copper,-98,58,115,copper,Copper (35),2,facing=south,,,
+minekea:building/stairs/vertical/weathered_cut_copper,-97,58,115,copper,Copper (35),2,facing=south,,,
+minekea:building/compressed/copper_block/1x,-98,59,114,copper,Copper (35),3,,,,
+minekea:building/compressed/copper_block/2x,-97,59,114,copper,Copper (35),3,,,,
+minekea:building/compressed/copper_block/3x,-96,59,114,copper,Copper (35),3,,,,
+minekea:building/compressed/copper_block/4x,-98,60,113,copper,Copper (35),4,,,,
+minekea:building/compressed/copper_block/5x,-97,60,113,copper,Copper (35),4,,,,
+minekea:building/compressed/copper_block/6x,-96,60,113,copper,Copper (35),4,,,,
+minekea:building/compressed/copper_block/7x,-98,61,112,copper,Copper (35),5,,,,
+minekea:building/compressed/copper_block/8x,-97,61,112,copper,Copper (35),5,,,,
+minekea:building/compressed/copper_block/9x,-96,61,112,copper,Copper (35),5,,,,
+minekea:building/beams/diamond_block,-84,56,117,diamond,Diamond (11),0,,,,
+minekea:building/covers/diamond_block,-83,56,117,diamond,Diamond (11),0,facing=south,,,
+minekea:building/compressed/diamond_block/1x,-84,57,116,diamond,Diamond (11),1,,,,
+minekea:building/compressed/diamond_block/2x,-83,57,116,diamond,Diamond (11),1,,,,
+minekea:building/compressed/diamond_block/3x,-82,57,116,diamond,Diamond (11),1,,,,
+minekea:building/compressed/diamond_block/4x,-84,58,115,diamond,Diamond (11),2,,,,
+minekea:building/compressed/diamond_block/5x,-83,58,115,diamond,Diamond (11),2,,,,
+minekea:building/compressed/diamond_block/6x,-82,58,115,diamond,Diamond (11),2,,,,
+minekea:building/compressed/diamond_block/7x,-84,59,114,diamond,Diamond (11),3,,,,
+minekea:building/compressed/diamond_block/8x,-83,59,114,diamond,Diamond (11),3,,,,
+minekea:building/compressed/diamond_block/9x,-82,59,114,diamond,Diamond (11),3,,,,
+minekea:building/beams/netherite_block,-79,56,117,netherite,Netherite (11),0,,,,
+minekea:building/covers/netherite_block,-78,56,117,netherite,Netherite (11),0,facing=south,,,
+minekea:building/compressed/netherite_block/1x,-79,57,116,netherite,Netherite (11),1,,,,
+minekea:building/compressed/netherite_block/2x,-78,57,116,netherite,Netherite (11),1,,,,
+minekea:building/compressed/netherite_block/3x,-77,57,116,netherite,Netherite (11),1,,,,
+minekea:building/compressed/netherite_block/4x,-79,58,115,netherite,Netherite (11),2,,,,
+minekea:building/compressed/netherite_block/5x,-78,58,115,netherite,Netherite (11),2,,,,
+minekea:building/compressed/netherite_block/6x,-77,58,115,netherite,Netherite (11),2,,,,
+minekea:building/compressed/netherite_block/7x,-79,59,114,netherite,Netherite (11),3,,,,
+minekea:building/compressed/netherite_block/8x,-78,59,114,netherite,Netherite (11),3,,,,
+minekea:building/compressed/netherite_block/9x,-77,59,114,netherite,Netherite (11),3,,,,
+minekea:building/beams/lapis_block,-74,56,117,lapis,Lapis (11),0,,,,
+minekea:building/covers/lapis_block,-73,56,117,lapis,Lapis (11),0,facing=south,,,
+minekea:building/compressed/lapis_block/1x,-74,57,116,lapis,Lapis (11),1,,,,
+minekea:building/compressed/lapis_block/2x,-73,57,116,lapis,Lapis (11),1,,,,
+minekea:building/compressed/lapis_block/3x,-72,57,116,lapis,Lapis (11),1,,,,
+minekea:building/compressed/lapis_block/4x,-74,58,115,lapis,Lapis (11),2,,,,
+minekea:building/compressed/lapis_block/5x,-73,58,115,lapis,Lapis (11),2,,,,
+minekea:building/compressed/lapis_block/6x,-72,58,115,lapis,Lapis (11),2,,,,
+minekea:building/compressed/lapis_block/7x,-74,59,114,lapis,Lapis (11),3,,,,
+minekea:building/compressed/lapis_block/8x,-73,59,114,lapis,Lapis (11),3,,,,
+minekea:building/compressed/lapis_block/9x,-72,59,114,lapis,Lapis (11),3,,,,
+minekea:building/beams/redstone_block,-191,56,103,redstone,Redstone (11),0,,,,
+minekea:building/covers/redstone_block,-190,56,103,redstone,Redstone (11),0,facing=south,,,
+minekea:building/compressed/redstone_block/1x,-191,57,102,redstone,Redstone (11),1,,,,
+minekea:building/compressed/redstone_block/2x,-190,57,102,redstone,Redstone (11),1,,,,
+minekea:building/compressed/redstone_block/3x,-189,57,102,redstone,Redstone (11),1,,,,
+minekea:building/compressed/redstone_block/4x,-191,58,101,redstone,Redstone (11),2,,,,
+minekea:building/compressed/redstone_block/5x,-190,58,101,redstone,Redstone (11),2,,,,
+minekea:building/compressed/redstone_block/6x,-189,58,101,redstone,Redstone (11),2,,,,
+minekea:building/compressed/redstone_block/7x,-191,59,100,redstone,Redstone (11),3,,,,
+minekea:building/compressed/redstone_block/8x,-190,59,100,redstone,Redstone (11),3,,,,
+minekea:building/compressed/redstone_block/9x,-189,59,100,redstone,Redstone (11),3,,,,
+minekea:building/compressed/clay/1x,-186,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/clay/2x,-185,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/clay/3x,-184,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/clay/4x,-186,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/clay/5x,-185,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/clay/6x,-184,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/clay/7x,-186,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/clay/8x,-185,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/clay/9x,-184,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/coarse_dirt/1x,-182,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/coarse_dirt/2x,-181,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/coarse_dirt/3x,-180,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/coarse_dirt/4x,-182,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/coarse_dirt/5x,-181,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/coarse_dirt/6x,-180,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/coarse_dirt/7x,-182,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/coarse_dirt/8x,-181,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/coarse_dirt/9x,-180,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/dirt/1x,-178,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/dirt/2x,-177,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/dirt/3x,-176,56,103,earth,Soil & Sand (72),0,,,,
+minekea:building/compressed/dirt/4x,-178,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/dirt/5x,-177,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/dirt/6x,-176,57,102,earth,Soil & Sand (72),1,,,,
+minekea:building/compressed/dirt/7x,-178,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/dirt/8x,-177,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/dirt/9x,-176,58,101,earth,Soil & Sand (72),2,,,,
+minekea:building/compressed/gravel/1x,-186,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/gravel/2x,-185,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/gravel/3x,-184,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/gravel/4x,-186,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/gravel/5x,-185,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/gravel/6x,-184,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/gravel/7x,-186,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/gravel/8x,-185,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/gravel/9x,-184,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/red_sand/1x,-182,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/red_sand/2x,-181,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/red_sand/3x,-180,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/red_sand/4x,-182,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/red_sand/5x,-181,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/red_sand/6x,-180,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/red_sand/7x,-182,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/red_sand/8x,-181,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/red_sand/9x,-180,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/rooted_dirt/1x,-178,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/rooted_dirt/2x,-177,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/rooted_dirt/3x,-176,59,100,earth,Soil & Sand (72),3,,,,
+minekea:building/compressed/rooted_dirt/4x,-178,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/rooted_dirt/5x,-177,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/rooted_dirt/6x,-176,60,99,earth,Soil & Sand (72),4,,,,
+minekea:building/compressed/rooted_dirt/7x,-178,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/rooted_dirt/8x,-177,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/rooted_dirt/9x,-176,61,98,earth,Soil & Sand (72),5,,,,
+minekea:building/compressed/sand/1x,-186,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/sand/2x,-185,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/sand/3x,-184,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/sand/4x,-186,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/sand/5x,-185,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/sand/6x,-184,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/sand/7x,-186,64,95,earth,Soil & Sand (72),8,,,,
+minekea:building/compressed/sand/8x,-185,64,95,earth,Soil & Sand (72),8,,,,
+minekea:building/compressed/sand/9x,-184,64,95,earth,Soil & Sand (72),8,,,,
+minekea:building/compressed/soul_sand/1x,-182,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/soul_sand/2x,-181,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/soul_sand/3x,-180,62,97,earth,Soil & Sand (72),6,,,,
+minekea:building/compressed/soul_sand/4x,-182,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/soul_sand/5x,-181,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/soul_sand/6x,-180,63,96,earth,Soil & Sand (72),7,,,,
+minekea:building/compressed/soul_sand/7x,-182,64,95,earth,Soil & Sand (72),8,,,,
+minekea:building/compressed/soul_sand/8x,-181,64,95,earth,Soil & Sand (72),8,,,,
+minekea:building/compressed/soul_sand/9x,-180,64,95,earth,Soil & Sand (72),8,,,,
+minekea:storage/compressed/beetroot,-173,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/beetroot,-172,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/beetroot_seeds,-171,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/beetroot_seeds,-170,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/carrot,-169,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/carrot,-168,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/chorus_fruit,-167,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/chorus_fruit,-166,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/copper_nugget,-165,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/copper_nugget,-164,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/gold_nugget,-163,56,103,food,Compressed Food (46),0,is_bagged=false,,,
+minekea:storage/compressed/gold_nugget,-162,56,103,food,Compressed Food (46),0,is_bagged=true,,,
+minekea:storage/compressed/iron_nugget,-173,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/iron_nugget,-172,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/leaf_litter,-171,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/leaf_litter,-170,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/melon_seeds,-169,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/melon_seeds,-168,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/phantom_membrane,-167,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/phantom_membrane,-166,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/potato,-165,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/potato,-164,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/pumpkin_seeds,-163,57,102,food,Compressed Food (46),1,is_bagged=false,,,
+minekea:storage/compressed/pumpkin_seeds,-162,57,102,food,Compressed Food (46),1,is_bagged=true,,,
+minekea:storage/compressed/sugar,-173,58,101,food,Compressed Food (46),2,is_bagged=false,,,
+minekea:storage/compressed/sugar,-172,58,101,food,Compressed Food (46),2,is_bagged=true,,,
+minekea:storage/compressed/wheat_seeds,-171,58,101,food,Compressed Food (46),2,is_bagged=false,,,
+minekea:storage/compressed/wheat_seeds,-170,58,101,food,Compressed Food (46),2,is_bagged=true,,,
+minekea:storage/compressed/wildflowers,-169,58,101,food,Compressed Food (46),2,is_bagged=false,,,
+minekea:storage/compressed/wildflowers,-168,58,101,food,Compressed Food (46),2,is_bagged=true,,,
+minekea:storage/compressed/apple,-167,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/armadillo_scute,-166,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/blaze_powder,-165,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/blaze_rod,-164,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/breeze_rod,-163,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/charcoal,-162,58,101,food,Compressed Food (46),2,,,,
+minekea:storage/compressed/ender_pearl,-173,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/flint,-172,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/golden_apple,-171,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/leather,-170,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/nether_star,-169,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/paper,-168,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/stick,-167,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/sugar_cane,-166,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/totem_of_undying,-165,59,100,food,Compressed Food (46),3,,,,
+minekea:storage/compressed/wind_charge,-164,59,100,food,Compressed Food (46),3,,,,
+minekea:decorations/lighting/ancient_lantern,-159,56,103,lighting,Lighting (4),0,,,,
+minekea:decorations/lighting/doom_lantern,-158,56,103,lighting,Lighting (4),0,,,,
+minekea:decorations/lighting/end_lantern,-157,56,103,lighting,Lighting (4),0,,,,
+minekea:decorations/lighting/endless_rod,-156,56,103,lighting,Lighting (4),0,,,,
+minekea:containers/cauldrons/honey,-153,56,103,misc,Misc (6),0,,,,
+minekea:containers/cauldrons/milk,-152,56,103,misc,Misc (6),0,,,,
+minekea:decorations/misc/fake_cake,-151,56,103,misc,Misc (6),0,,,,
+minekea:storage/blue_egg_crate,-150,56,103,misc,Misc (6),0,,,,
+minekea:storage/brown_egg_crate,-149,56,103,misc,Misc (6),0,,,,
+minekea:storage/egg_crate,-148,56,103,misc,Misc (6),0,,,,
+minekea:containers/glass_jar,-145,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:amethyst_shard,Amethyst Shard
+minekea:containers/glass_jar,-144,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:apple,Apple
+minekea:containers/glass_jar,-143,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:armadillo_scute,Armadillo Scute
+minekea:containers/glass_jar,-142,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:bamboo,Bamboo
+minekea:containers/glass_jar,-141,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:beetroot,Beetroot
+minekea:containers/glass_jar,-140,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:beetroot_seeds,Beetroot Seeds
+minekea:containers/glass_jar,-139,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:blaze_powder,Blaze Powder
+minekea:containers/glass_jar,-138,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:blaze_rod,Blaze Rod
+minekea:containers/glass_jar,-137,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:blue_egg,Blue Egg
+minekea:containers/glass_jar,-136,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:breeze_rod,Breeze Rod
+minekea:containers/glass_jar,-135,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:brown_egg,Brown Egg
+minekea:containers/glass_jar,-134,56,103,jars_items,Glass Jars - Items (99),0,facing=south,,minecraft:brown_mushroom,Brown Mushroom
+minekea:containers/glass_jar,-145,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:carrot,Carrot
+minekea:containers/glass_jar,-144,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:charcoal,Charcoal
+minekea:containers/glass_jar,-143,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:chorus_fruit,Chorus Fruit
+minekea:containers/glass_jar,-142,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:coal,Coal
+minekea:containers/glass_jar,-141,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:dried_kelp,Dried Kelp
+minekea:containers/glass_jar,-140,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:egg,Egg
+minekea:containers/glass_jar,-139,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:ender_pearl,Ender Pearl
+minekea:containers/glass_jar,-138,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:flint,Flint
+minekea:containers/glass_jar,-137,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:glowstone_dust,Glowstone Dust
+minekea:containers/glass_jar,-136,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:golden_apple,Golden Apple
+minekea:containers/glass_jar,-135,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:gravel,Gravel
+minekea:containers/glass_jar,-134,57,102,jars_items,Glass Jars - Items (99),1,facing=south,,minecraft:honeycomb,Honeycomb
+minekea:containers/glass_jar,-145,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:leaf_litter,Leaf Litter
+minekea:containers/glass_jar,-144,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:leather,Leather
+minekea:containers/glass_jar,-143,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:melon_seeds,Melon Seeds
+minekea:containers/glass_jar,-142,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:melon_slice,Melon Slice
+minekea:containers/glass_jar,-141,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:nether_star,Nether Star
+minekea:containers/glass_jar,-140,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:nether_wart,Nether Wart
+minekea:containers/glass_jar,-139,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:paper,Paper
+minekea:containers/glass_jar,-138,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:phantom_membrane,Phantom Membrane
+minekea:containers/glass_jar,-137,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:potato,Potato
+minekea:containers/glass_jar,-136,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:pumpkin_seeds,Pumpkin Seeds
+minekea:containers/glass_jar,-135,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:red_mushroom,Red Mushroom
+minekea:containers/glass_jar,-134,58,101,jars_items,Glass Jars - Items (99),2,facing=south,,minecraft:red_sand,Red Sand
+minekea:containers/glass_jar,-145,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:redstone,Redstone
+minekea:containers/glass_jar,-144,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:resin_clump,Resin Clump
+minekea:containers/glass_jar,-143,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:sand,Sand
+minekea:containers/glass_jar,-142,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:sculk_vein,Sculk Vein
+minekea:containers/glass_jar,-141,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:slime_ball,Slime Ball
+minekea:containers/glass_jar,-140,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:stick,Stick
+minekea:containers/glass_jar,-139,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:sugar,Sugar
+minekea:containers/glass_jar,-138,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:sugar_cane,Sugar Cane
+minekea:containers/glass_jar,-137,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:totem_of_undying,Totem Of Undying
+minekea:containers/glass_jar,-136,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minekea:crops/warped_wart,Warped Wart
+minekea:containers/glass_jar,-135,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:wheat,Wheat
+minekea:containers/glass_jar,-134,59,100,jars_items,Glass Jars - Items (99),3,facing=south,,minecraft:wheat_seeds,Wheat Seeds
+minekea:containers/glass_jar,-145,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:wildflowers,Wildflowers
+minekea:containers/glass_jar,-144,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:wind_charge,Wind Charge
+minekea:containers/glass_jar,-143,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:white_dye,White Dye
+minekea:containers/glass_jar,-142,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:light_gray_dye,Light Gray Dye
+minekea:containers/glass_jar,-141,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:gray_dye,Gray Dye
+minekea:containers/glass_jar,-140,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:black_dye,Black Dye
+minekea:containers/glass_jar,-139,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:brown_dye,Brown Dye
+minekea:containers/glass_jar,-138,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:red_dye,Red Dye
+minekea:containers/glass_jar,-137,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:orange_dye,Orange Dye
+minekea:containers/glass_jar,-136,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:yellow_dye,Yellow Dye
+minekea:containers/glass_jar,-135,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:lime_dye,Lime Dye
+minekea:containers/glass_jar,-134,60,99,jars_items,Glass Jars - Items (99),4,facing=south,,minecraft:green_dye,Green Dye
+minekea:containers/glass_jar,-145,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:cyan_dye,Cyan Dye
+minekea:containers/glass_jar,-144,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:light_blue_dye,Light Blue Dye
+minekea:containers/glass_jar,-143,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:blue_dye,Blue Dye
+minekea:containers/glass_jar,-142,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:purple_dye,Purple Dye
+minekea:containers/glass_jar,-141,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:magenta_dye,Magenta Dye
+minekea:containers/glass_jar,-140,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:pink_dye,Pink Dye
+minekea:containers/glass_jar,-139,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:white_concrete_powder,White Concrete Powder
+minekea:containers/glass_jar,-138,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:light_gray_concrete_powder,Light Gray Concrete Powder
+minekea:containers/glass_jar,-137,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:gray_concrete_powder,Gray Concrete Powder
+minekea:containers/glass_jar,-136,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:black_concrete_powder,Black Concrete Powder
+minekea:containers/glass_jar,-135,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:brown_concrete_powder,Brown Concrete Powder
+minekea:containers/glass_jar,-134,61,98,jars_items,Glass Jars - Items (99),5,facing=south,,minecraft:red_concrete_powder,Red Concrete Powder
+minekea:containers/glass_jar,-145,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:orange_concrete_powder,Orange Concrete Powder
+minekea:containers/glass_jar,-144,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:yellow_concrete_powder,Yellow Concrete Powder
+minekea:containers/glass_jar,-143,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:lime_concrete_powder,Lime Concrete Powder
+minekea:containers/glass_jar,-142,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:green_concrete_powder,Green Concrete Powder
+minekea:containers/glass_jar,-141,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:cyan_concrete_powder,Cyan Concrete Powder
+minekea:containers/glass_jar,-140,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:light_blue_concrete_powder,Light Blue Concrete Powder
+minekea:containers/glass_jar,-139,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:blue_concrete_powder,Blue Concrete Powder
+minekea:containers/glass_jar,-138,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:purple_concrete_powder,Purple Concrete Powder
+minekea:containers/glass_jar,-137,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:magenta_concrete_powder,Magenta Concrete Powder
+minekea:containers/glass_jar,-136,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minecraft:pink_concrete_powder,Pink Concrete Powder
+minekea:containers/glass_jar,-135,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minekea:ingredients/wax/plain,Plain Wax
+minekea:containers/glass_jar,-134,62,97,jars_items,Glass Jars - Items (99),6,facing=south,,minekea:ingredients/wax/white,White Wax
+minekea:containers/glass_jar,-145,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/light_gray,Light Gray Wax
+minekea:containers/glass_jar,-144,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/gray,Gray Wax
+minekea:containers/glass_jar,-143,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/black,Black Wax
+minekea:containers/glass_jar,-142,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/brown,Brown Wax
+minekea:containers/glass_jar,-141,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/red,Red Wax
+minekea:containers/glass_jar,-140,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/orange,Orange Wax
+minekea:containers/glass_jar,-139,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/yellow,Yellow Wax
+minekea:containers/glass_jar,-138,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/lime,Lime Wax
+minekea:containers/glass_jar,-137,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/green,Green Wax
+minekea:containers/glass_jar,-136,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/cyan,Cyan Wax
+minekea:containers/glass_jar,-135,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/light_blue,Light Blue Wax
+minekea:containers/glass_jar,-134,63,96,jars_items,Glass Jars - Items (99),7,facing=south,,minekea:ingredients/wax/blue,Blue Wax
+minekea:containers/glass_jar,-145,64,95,jars_items,Glass Jars - Items (99),8,facing=south,,minekea:ingredients/wax/purple,Purple Wax
+minekea:containers/glass_jar,-144,64,95,jars_items,Glass Jars - Items (99),8,facing=south,,minekea:ingredients/wax/magenta,Magenta Wax
+minekea:containers/glass_jar,-143,64,95,jars_items,Glass Jars - Items (99),8,facing=south,,minekea:ingredients/wax/pink,Pink Wax
+minekea:containers/glass_jar,-131,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,,Empty Jar
+minekea:containers/glass_jar,-130,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:water,Water
+minekea:containers/glass_jar,-129,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:lava,Lava
+minekea:containers/glass_jar,-128,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/milk,Milk
+minekea:containers/glass_jar,-127,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/honey,Honey
+minekea:containers/glass_jar,-126,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:allay,Allay
+minekea:containers/glass_jar,-125,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bat,Bat
+minekea:containers/glass_jar,-124,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bee,Bee
+minekea:containers/glass_jar,-123,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:endermite,Endermite
+minekea:containers/glass_jar,-122,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:magma_cube,Magma Cube (tiny only)
+minekea:containers/glass_jar,-121,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:silverfish,Silverfish
+minekea:containers/glass_jar,-120,56,103,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:slime,Slime (tiny only)
+minekea:containers/glass_jar,-131,57,102,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:sulfur_cube,Sulfur Cube (tiny only)
+minekea:containers/glass_jar,-130,57,102,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:vex,Vex
