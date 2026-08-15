@@ -17,9 +17,9 @@
     "width": 126,
     "depth": 96,
     "regions": 54,
-    "display_blocks": 2756,
-    "tier_platforms": 282,
-    "jars_filled": 106,
+    "display_blocks": 2760,
+    "tier_platforms": 283,
+    "jars_filled": 109,
     "command_blocks": 54,
     "tool_showcase": {
       "items": 8,
@@ -623,7 +623,7 @@
     },
     {
       "region": "food",
-      "label": "Compressed Food (38)",
+      "label": "Compressed Food (39)",
       "front_left": [
         -106,
         55,
@@ -659,7 +659,7 @@
     },
     {
       "region": "jars_items",
-      "label": "Glass Jars - Items (95)",
+      "label": "Glass Jars - Items (96)",
       "front_left": [
         -191,
         55,
@@ -671,15 +671,15 @@
     },
     {
       "region": "jars_misc",
-      "label": "Glass Jars - Fluids & Mobs (12)",
+      "label": "Glass Jars - Fluids & Mobs (14)",
       "front_left": [
         -177,
         55,
         105
       ],
       "w": 12,
-      "d": 2,
-      "tall": 1
+      "d": 3,
+      "tall": 2
     }
   ]
 }

@@ -2600,44 +2600,45 @@ minekea:building/compressed/soul_sand/6x,-113,63,110,earth,Soil & Sand (72),7,,,
 minekea:building/compressed/soul_sand/7x,-115,64,109,earth,Soil & Sand (72),8,,,,
 minekea:building/compressed/soul_sand/8x,-114,64,109,earth,Soil & Sand (72),8,,,,
 minekea:building/compressed/soul_sand/9x,-113,64,109,earth,Soil & Sand (72),8,,,,
-minekea:storage/compressed/beetroot,-106,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/beetroot,-105,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/beetroot_seeds,-104,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/beetroot_seeds,-103,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/carrot,-102,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/carrot,-101,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/chorus_fruit,-100,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/chorus_fruit,-99,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/gold_nugget,-98,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/gold_nugget,-97,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/iron_nugget,-96,56,117,food,Compressed Food (38),0,is_bagged=false,,,
-minekea:storage/compressed/iron_nugget,-95,56,117,food,Compressed Food (38),0,is_bagged=true,,,
-minekea:storage/compressed/melon_seeds,-106,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/melon_seeds,-105,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/phantom_membrane,-104,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/phantom_membrane,-103,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/potato,-102,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/potato,-101,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/pumpkin_seeds,-100,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/pumpkin_seeds,-99,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/sugar,-98,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/sugar,-97,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/wheat_seeds,-96,57,116,food,Compressed Food (38),1,is_bagged=false,,,
-minekea:storage/compressed/wheat_seeds,-95,57,116,food,Compressed Food (38),1,is_bagged=true,,,
-minekea:storage/compressed/apple,-106,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/blaze_powder,-105,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/blaze_rod,-104,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/breeze_rod,-103,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/charcoal,-102,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/ender_pearl,-101,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/flint,-100,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/golden_apple,-99,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/leather,-98,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/nether_star,-97,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/paper,-96,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/stick,-95,58,115,food,Compressed Food (38),2,,,,
-minekea:storage/compressed/sugar_cane,-106,59,114,food,Compressed Food (38),3,,,,
-minekea:storage/compressed/totem_of_undying,-105,59,114,food,Compressed Food (38),3,,,,
+minekea:storage/compressed/beetroot,-106,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/beetroot,-105,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/beetroot_seeds,-104,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/beetroot_seeds,-103,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/carrot,-102,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/carrot,-101,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/chorus_fruit,-100,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/chorus_fruit,-99,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/gold_nugget,-98,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/gold_nugget,-97,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/iron_nugget,-96,56,117,food,Compressed Food (39),0,is_bagged=false,,,
+minekea:storage/compressed/iron_nugget,-95,56,117,food,Compressed Food (39),0,is_bagged=true,,,
+minekea:storage/compressed/melon_seeds,-106,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/melon_seeds,-105,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/phantom_membrane,-104,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/phantom_membrane,-103,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/potato,-102,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/potato,-101,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/pumpkin_seeds,-100,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/pumpkin_seeds,-99,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/sugar,-98,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/sugar,-97,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/wheat_seeds,-96,57,116,food,Compressed Food (39),1,is_bagged=false,,,
+minekea:storage/compressed/wheat_seeds,-95,57,116,food,Compressed Food (39),1,is_bagged=true,,,
+minekea:storage/compressed/apple,-106,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/armadillo_scute,-105,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/blaze_powder,-104,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/blaze_rod,-103,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/breeze_rod,-102,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/charcoal,-101,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/ender_pearl,-100,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/flint,-99,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/golden_apple,-98,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/leather,-97,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/nether_star,-96,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/paper,-95,58,115,food,Compressed Food (39),2,,,,
+minekea:storage/compressed/stick,-106,59,114,food,Compressed Food (39),3,,,,
+minekea:storage/compressed/sugar_cane,-105,59,114,food,Compressed Food (39),3,,,,
+minekea:storage/compressed/totem_of_undying,-104,59,114,food,Compressed Food (39),3,,,,
 minekea:decorations/lighting/ancient_lantern,-92,56,117,lighting,Lighting (4),0,,,,
 minekea:decorations/lighting/doom_lantern,-91,56,117,lighting,Lighting (4),0,,,,
 minekea:decorations/lighting/end_lantern,-90,56,117,lighting,Lighting (4),0,,,,
@@ -2648,110 +2649,113 @@ minekea:decorations/misc/fake_cake,-84,56,117,misc,Misc (6),0,,,,
 minekea:storage/blue_egg_crate,-83,56,117,misc,Misc (6),0,,,,
 minekea:storage/brown_egg_crate,-82,56,117,misc,Misc (6),0,,,,
 minekea:storage/egg_crate,-81,56,117,misc,Misc (6),0,,,,
-minekea:containers/glass_jar,-191,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:amethyst_shard,Amethyst Shard
-minekea:containers/glass_jar,-190,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:apple,Apple
-minekea:containers/glass_jar,-189,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:bamboo,Bamboo
-minekea:containers/glass_jar,-188,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:beetroot,Beetroot
-minekea:containers/glass_jar,-187,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:beetroot_seeds,Beetroot Seeds
-minekea:containers/glass_jar,-186,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:blaze_powder,Blaze Powder
-minekea:containers/glass_jar,-185,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:blaze_rod,Blaze Rod
-minekea:containers/glass_jar,-184,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:blue_egg,Blue Egg
-minekea:containers/glass_jar,-183,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:breeze_rod,Breeze Rod
-minekea:containers/glass_jar,-182,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:brown_egg,Brown Egg
-minekea:containers/glass_jar,-181,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:brown_mushroom,Brown Mushroom
-minekea:containers/glass_jar,-180,56,104,jars_items,Glass Jars - Items (95),0,facing=south,,minecraft:carrot,Carrot
-minekea:containers/glass_jar,-191,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:charcoal,Charcoal
-minekea:containers/glass_jar,-190,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:chorus_fruit,Chorus Fruit
-minekea:containers/glass_jar,-189,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:coal,Coal
-minekea:containers/glass_jar,-188,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:dried_kelp,Dried Kelp
-minekea:containers/glass_jar,-187,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:egg,Egg
-minekea:containers/glass_jar,-186,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:ender_pearl,Ender Pearl
-minekea:containers/glass_jar,-185,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:flint,Flint
-minekea:containers/glass_jar,-184,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:glowstone_dust,Glowstone Dust
-minekea:containers/glass_jar,-183,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:golden_apple,Golden Apple
-minekea:containers/glass_jar,-182,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:gravel,Gravel
-minekea:containers/glass_jar,-181,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:honeycomb,Honeycomb
-minekea:containers/glass_jar,-180,57,103,jars_items,Glass Jars - Items (95),1,facing=south,,minecraft:leather,Leather
-minekea:containers/glass_jar,-191,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:melon_seeds,Melon Seeds
-minekea:containers/glass_jar,-190,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:melon_slice,Melon Slice
-minekea:containers/glass_jar,-189,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:nether_star,Nether Star
-minekea:containers/glass_jar,-188,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:nether_wart,Nether Wart
-minekea:containers/glass_jar,-187,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:paper,Paper
-minekea:containers/glass_jar,-186,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:phantom_membrane,Phantom Membrane
-minekea:containers/glass_jar,-185,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:potato,Potato
-minekea:containers/glass_jar,-184,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:pumpkin_seeds,Pumpkin Seeds
-minekea:containers/glass_jar,-183,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:red_mushroom,Red Mushroom
-minekea:containers/glass_jar,-182,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:red_sand,Red Sand
-minekea:containers/glass_jar,-181,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:redstone,Redstone
-minekea:containers/glass_jar,-180,58,102,jars_items,Glass Jars - Items (95),2,facing=south,,minecraft:resin_clump,Resin Clump
-minekea:containers/glass_jar,-191,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:sand,Sand
-minekea:containers/glass_jar,-190,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:sculk_vein,Sculk Vein
-minekea:containers/glass_jar,-189,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:slime_ball,Slime Ball
-minekea:containers/glass_jar,-188,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:stick,Stick
-minekea:containers/glass_jar,-187,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:sugar,Sugar
-minekea:containers/glass_jar,-186,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:sugar_cane,Sugar Cane
-minekea:containers/glass_jar,-185,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:totem_of_undying,Totem Of Undying
-minekea:containers/glass_jar,-184,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minekea:crops/warped_wart,Warped Wart
-minekea:containers/glass_jar,-183,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:wheat,Wheat
-minekea:containers/glass_jar,-182,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:wheat_seeds,Wheat Seeds
-minekea:containers/glass_jar,-181,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:white_dye,White Dye
-minekea:containers/glass_jar,-180,59,101,jars_items,Glass Jars - Items (95),3,facing=south,,minecraft:light_gray_dye,Light Gray Dye
-minekea:containers/glass_jar,-191,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:gray_dye,Gray Dye
-minekea:containers/glass_jar,-190,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:black_dye,Black Dye
-minekea:containers/glass_jar,-189,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:brown_dye,Brown Dye
-minekea:containers/glass_jar,-188,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:red_dye,Red Dye
-minekea:containers/glass_jar,-187,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:orange_dye,Orange Dye
-minekea:containers/glass_jar,-186,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:yellow_dye,Yellow Dye
-minekea:containers/glass_jar,-185,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:lime_dye,Lime Dye
-minekea:containers/glass_jar,-184,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:green_dye,Green Dye
-minekea:containers/glass_jar,-183,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:cyan_dye,Cyan Dye
-minekea:containers/glass_jar,-182,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:light_blue_dye,Light Blue Dye
-minekea:containers/glass_jar,-181,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:blue_dye,Blue Dye
-minekea:containers/glass_jar,-180,60,100,jars_items,Glass Jars - Items (95),4,facing=south,,minecraft:purple_dye,Purple Dye
-minekea:containers/glass_jar,-191,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:magenta_dye,Magenta Dye
-minekea:containers/glass_jar,-190,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:pink_dye,Pink Dye
-minekea:containers/glass_jar,-189,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:white_concrete_powder,White Concrete Powder
-minekea:containers/glass_jar,-188,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:light_gray_concrete_powder,Light Gray Concrete Powder
-minekea:containers/glass_jar,-187,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:gray_concrete_powder,Gray Concrete Powder
-minekea:containers/glass_jar,-186,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:black_concrete_powder,Black Concrete Powder
-minekea:containers/glass_jar,-185,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:brown_concrete_powder,Brown Concrete Powder
-minekea:containers/glass_jar,-184,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:red_concrete_powder,Red Concrete Powder
-minekea:containers/glass_jar,-183,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:orange_concrete_powder,Orange Concrete Powder
-minekea:containers/glass_jar,-182,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:yellow_concrete_powder,Yellow Concrete Powder
-minekea:containers/glass_jar,-181,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:lime_concrete_powder,Lime Concrete Powder
-minekea:containers/glass_jar,-180,61,99,jars_items,Glass Jars - Items (95),5,facing=south,,minecraft:green_concrete_powder,Green Concrete Powder
-minekea:containers/glass_jar,-191,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:cyan_concrete_powder,Cyan Concrete Powder
-minekea:containers/glass_jar,-190,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:light_blue_concrete_powder,Light Blue Concrete Powder
-minekea:containers/glass_jar,-189,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:blue_concrete_powder,Blue Concrete Powder
-minekea:containers/glass_jar,-188,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:purple_concrete_powder,Purple Concrete Powder
-minekea:containers/glass_jar,-187,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:magenta_concrete_powder,Magenta Concrete Powder
-minekea:containers/glass_jar,-186,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minecraft:pink_concrete_powder,Pink Concrete Powder
-minekea:containers/glass_jar,-185,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/plain,Plain Wax
-minekea:containers/glass_jar,-184,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/white,White Wax
-minekea:containers/glass_jar,-183,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/light_gray,Light Gray Wax
-minekea:containers/glass_jar,-182,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/gray,Gray Wax
-minekea:containers/glass_jar,-181,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/black,Black Wax
-minekea:containers/glass_jar,-180,62,98,jars_items,Glass Jars - Items (95),6,facing=south,,minekea:ingredients/wax/brown,Brown Wax
-minekea:containers/glass_jar,-191,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/red,Red Wax
-minekea:containers/glass_jar,-190,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/orange,Orange Wax
-minekea:containers/glass_jar,-189,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/yellow,Yellow Wax
-minekea:containers/glass_jar,-188,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/lime,Lime Wax
-minekea:containers/glass_jar,-187,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/green,Green Wax
-minekea:containers/glass_jar,-186,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/cyan,Cyan Wax
-minekea:containers/glass_jar,-185,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/light_blue,Light Blue Wax
-minekea:containers/glass_jar,-184,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/blue,Blue Wax
-minekea:containers/glass_jar,-183,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/purple,Purple Wax
-minekea:containers/glass_jar,-182,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/magenta,Magenta Wax
-minekea:containers/glass_jar,-181,63,97,jars_items,Glass Jars - Items (95),7,facing=south,,minekea:ingredients/wax/pink,Pink Wax
-minekea:containers/glass_jar,-177,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,,Empty Jar
-minekea:containers/glass_jar,-176,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:water,Water
-minekea:containers/glass_jar,-175,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:lava,Lava
-minekea:containers/glass_jar,-174,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minekea:fluids/milk,Milk
-minekea:containers/glass_jar,-173,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minekea:fluids/honey,Honey
-minekea:containers/glass_jar,-172,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:allay,Allay
-minekea:containers/glass_jar,-171,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:bat,Bat
-minekea:containers/glass_jar,-170,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:bee,Bee
-minekea:containers/glass_jar,-169,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:endermite,Endermite
-minekea:containers/glass_jar,-168,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:silverfish,Silverfish
-minekea:containers/glass_jar,-167,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:slime,Slime (tiny only)
-minekea:containers/glass_jar,-166,56,104,jars_misc,Glass Jars - Fluids & Mobs (12),0,facing=south,,minecraft:vex,Vex
+minekea:containers/glass_jar,-191,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:amethyst_shard,Amethyst Shard
+minekea:containers/glass_jar,-190,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:apple,Apple
+minekea:containers/glass_jar,-189,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:armadillo_scute,Armadillo Scute
+minekea:containers/glass_jar,-188,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:bamboo,Bamboo
+minekea:containers/glass_jar,-187,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:beetroot,Beetroot
+minekea:containers/glass_jar,-186,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:beetroot_seeds,Beetroot Seeds
+minekea:containers/glass_jar,-185,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:blaze_powder,Blaze Powder
+minekea:containers/glass_jar,-184,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:blaze_rod,Blaze Rod
+minekea:containers/glass_jar,-183,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:blue_egg,Blue Egg
+minekea:containers/glass_jar,-182,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:breeze_rod,Breeze Rod
+minekea:containers/glass_jar,-181,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:brown_egg,Brown Egg
+minekea:containers/glass_jar,-180,56,104,jars_items,Glass Jars - Items (96),0,facing=south,,minecraft:brown_mushroom,Brown Mushroom
+minekea:containers/glass_jar,-191,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:carrot,Carrot
+minekea:containers/glass_jar,-190,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:charcoal,Charcoal
+minekea:containers/glass_jar,-189,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:chorus_fruit,Chorus Fruit
+minekea:containers/glass_jar,-188,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:coal,Coal
+minekea:containers/glass_jar,-187,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:dried_kelp,Dried Kelp
+minekea:containers/glass_jar,-186,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:egg,Egg
+minekea:containers/glass_jar,-185,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:ender_pearl,Ender Pearl
+minekea:containers/glass_jar,-184,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:flint,Flint
+minekea:containers/glass_jar,-183,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:glowstone_dust,Glowstone Dust
+minekea:containers/glass_jar,-182,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:golden_apple,Golden Apple
+minekea:containers/glass_jar,-181,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:gravel,Gravel
+minekea:containers/glass_jar,-180,57,103,jars_items,Glass Jars - Items (96),1,facing=south,,minecraft:honeycomb,Honeycomb
+minekea:containers/glass_jar,-191,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:leather,Leather
+minekea:containers/glass_jar,-190,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:melon_seeds,Melon Seeds
+minekea:containers/glass_jar,-189,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:melon_slice,Melon Slice
+minekea:containers/glass_jar,-188,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:nether_star,Nether Star
+minekea:containers/glass_jar,-187,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:nether_wart,Nether Wart
+minekea:containers/glass_jar,-186,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:paper,Paper
+minekea:containers/glass_jar,-185,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:phantom_membrane,Phantom Membrane
+minekea:containers/glass_jar,-184,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:potato,Potato
+minekea:containers/glass_jar,-183,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:pumpkin_seeds,Pumpkin Seeds
+minekea:containers/glass_jar,-182,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:red_mushroom,Red Mushroom
+minekea:containers/glass_jar,-181,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:red_sand,Red Sand
+minekea:containers/glass_jar,-180,58,102,jars_items,Glass Jars - Items (96),2,facing=south,,minecraft:redstone,Redstone
+minekea:containers/glass_jar,-191,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:resin_clump,Resin Clump
+minekea:containers/glass_jar,-190,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:sand,Sand
+minekea:containers/glass_jar,-189,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:sculk_vein,Sculk Vein
+minekea:containers/glass_jar,-188,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:slime_ball,Slime Ball
+minekea:containers/glass_jar,-187,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:stick,Stick
+minekea:containers/glass_jar,-186,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:sugar,Sugar
+minekea:containers/glass_jar,-185,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:sugar_cane,Sugar Cane
+minekea:containers/glass_jar,-184,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:totem_of_undying,Totem Of Undying
+minekea:containers/glass_jar,-183,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minekea:crops/warped_wart,Warped Wart
+minekea:containers/glass_jar,-182,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:wheat,Wheat
+minekea:containers/glass_jar,-181,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:wheat_seeds,Wheat Seeds
+minekea:containers/glass_jar,-180,59,101,jars_items,Glass Jars - Items (96),3,facing=south,,minecraft:white_dye,White Dye
+minekea:containers/glass_jar,-191,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:light_gray_dye,Light Gray Dye
+minekea:containers/glass_jar,-190,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:gray_dye,Gray Dye
+minekea:containers/glass_jar,-189,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:black_dye,Black Dye
+minekea:containers/glass_jar,-188,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:brown_dye,Brown Dye
+minekea:containers/glass_jar,-187,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:red_dye,Red Dye
+minekea:containers/glass_jar,-186,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:orange_dye,Orange Dye
+minekea:containers/glass_jar,-185,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:yellow_dye,Yellow Dye
+minekea:containers/glass_jar,-184,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:lime_dye,Lime Dye
+minekea:containers/glass_jar,-183,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:green_dye,Green Dye
+minekea:containers/glass_jar,-182,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:cyan_dye,Cyan Dye
+minekea:containers/glass_jar,-181,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:light_blue_dye,Light Blue Dye
+minekea:containers/glass_jar,-180,60,100,jars_items,Glass Jars - Items (96),4,facing=south,,minecraft:blue_dye,Blue Dye
+minekea:containers/glass_jar,-191,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:purple_dye,Purple Dye
+minekea:containers/glass_jar,-190,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:magenta_dye,Magenta Dye
+minekea:containers/glass_jar,-189,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:pink_dye,Pink Dye
+minekea:containers/glass_jar,-188,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:white_concrete_powder,White Concrete Powder
+minekea:containers/glass_jar,-187,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:light_gray_concrete_powder,Light Gray Concrete Powder
+minekea:containers/glass_jar,-186,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:gray_concrete_powder,Gray Concrete Powder
+minekea:containers/glass_jar,-185,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:black_concrete_powder,Black Concrete Powder
+minekea:containers/glass_jar,-184,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:brown_concrete_powder,Brown Concrete Powder
+minekea:containers/glass_jar,-183,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:red_concrete_powder,Red Concrete Powder
+minekea:containers/glass_jar,-182,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:orange_concrete_powder,Orange Concrete Powder
+minekea:containers/glass_jar,-181,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:yellow_concrete_powder,Yellow Concrete Powder
+minekea:containers/glass_jar,-180,61,99,jars_items,Glass Jars - Items (96),5,facing=south,,minecraft:lime_concrete_powder,Lime Concrete Powder
+minekea:containers/glass_jar,-191,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:green_concrete_powder,Green Concrete Powder
+minekea:containers/glass_jar,-190,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:cyan_concrete_powder,Cyan Concrete Powder
+minekea:containers/glass_jar,-189,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:light_blue_concrete_powder,Light Blue Concrete Powder
+minekea:containers/glass_jar,-188,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:blue_concrete_powder,Blue Concrete Powder
+minekea:containers/glass_jar,-187,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:purple_concrete_powder,Purple Concrete Powder
+minekea:containers/glass_jar,-186,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:magenta_concrete_powder,Magenta Concrete Powder
+minekea:containers/glass_jar,-185,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minecraft:pink_concrete_powder,Pink Concrete Powder
+minekea:containers/glass_jar,-184,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minekea:ingredients/wax/plain,Plain Wax
+minekea:containers/glass_jar,-183,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minekea:ingredients/wax/white,White Wax
+minekea:containers/glass_jar,-182,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minekea:ingredients/wax/light_gray,Light Gray Wax
+minekea:containers/glass_jar,-181,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minekea:ingredients/wax/gray,Gray Wax
+minekea:containers/glass_jar,-180,62,98,jars_items,Glass Jars - Items (96),6,facing=south,,minekea:ingredients/wax/black,Black Wax
+minekea:containers/glass_jar,-191,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/brown,Brown Wax
+minekea:containers/glass_jar,-190,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/red,Red Wax
+minekea:containers/glass_jar,-189,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/orange,Orange Wax
+minekea:containers/glass_jar,-188,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/yellow,Yellow Wax
+minekea:containers/glass_jar,-187,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/lime,Lime Wax
+minekea:containers/glass_jar,-186,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/green,Green Wax
+minekea:containers/glass_jar,-185,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/cyan,Cyan Wax
+minekea:containers/glass_jar,-184,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/light_blue,Light Blue Wax
+minekea:containers/glass_jar,-183,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/blue,Blue Wax
+minekea:containers/glass_jar,-182,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/purple,Purple Wax
+minekea:containers/glass_jar,-181,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/magenta,Magenta Wax
+minekea:containers/glass_jar,-180,63,97,jars_items,Glass Jars - Items (96),7,facing=south,,minekea:ingredients/wax/pink,Pink Wax
+minekea:containers/glass_jar,-177,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,,Empty Jar
+minekea:containers/glass_jar,-176,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:water,Water
+minekea:containers/glass_jar,-175,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:lava,Lava
+minekea:containers/glass_jar,-174,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/milk,Milk
+minekea:containers/glass_jar,-173,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minekea:fluids/honey,Honey
+minekea:containers/glass_jar,-172,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:allay,Allay
+minekea:containers/glass_jar,-171,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bat,Bat
+minekea:containers/glass_jar,-170,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:bee,Bee
+minekea:containers/glass_jar,-169,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:endermite,Endermite
+minekea:containers/glass_jar,-168,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:magma_cube,Magma Cube (tiny only)
+minekea:containers/glass_jar,-167,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:silverfish,Silverfish
+minekea:containers/glass_jar,-166,56,104,jars_misc,Glass Jars - Fluids & Mobs (14),0,facing=south,,minecraft:slime,Slime (tiny only)
+minekea:containers/glass_jar,-177,57,103,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:sulfur_cube,Sulfur Cube (tiny only)
+minekea:containers/glass_jar,-176,57,103,jars_misc,Glass Jars - Fluids & Mobs (14),1,facing=south,,minecraft:vex,Vex

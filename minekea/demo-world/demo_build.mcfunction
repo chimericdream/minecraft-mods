@@ -73,10 +73,10 @@ fill -106 55 114 -95 55 118 minecraft:polished_andesite
 fill -92 55 117 -89 55 118 minecraft:polished_andesite
 fill -86 55 117 -81 55 118 minecraft:polished_andesite
 fill -191 55 97 -180 55 105 minecraft:polished_andesite
-fill -177 55 104 -166 55 105 minecraft:polished_andesite
+fill -177 55 103 -166 55 105 minecraft:polished_andesite
 fill -191 55 189 -174 55 190 minecraft:polished_andesite
 
-# staircase tier platforms (282)
+# staircase tier platforms (283)
 fill -171 56 188 -163 56 188 minecraft:polished_andesite
 fill -171 56 187 -163 57 187 minecraft:polished_andesite
 fill -171 56 186 -163 58 186 minecraft:polished_andesite
@@ -359,8 +359,9 @@ fill -191 56 100 -180 59 100 minecraft:polished_andesite
 fill -191 56 99 -180 60 99 minecraft:polished_andesite
 fill -191 56 98 -180 61 98 minecraft:polished_andesite
 fill -191 56 97 -180 62 97 minecraft:polished_andesite
+fill -177 56 103 -166 56 103 minecraft:polished_andesite
 
-# display blocks (2756 + 24 upper halves)
+# display blocks (2760 + 24 upper halves)
 setblock -171 56 189 minekea:building/beams/oak
 setblock -170 56 189 minekea:building/beams/oak_log
 setblock -169 56 189 minekea:building/covers/oak[facing=south]
@@ -3011,19 +3012,20 @@ setblock -97 57 116 minekea:storage/compressed/sugar[is_bagged=true]
 setblock -96 57 116 minekea:storage/compressed/wheat_seeds[is_bagged=false]
 setblock -95 57 116 minekea:storage/compressed/wheat_seeds[is_bagged=true]
 setblock -106 58 115 minekea:storage/compressed/apple
-setblock -105 58 115 minekea:storage/compressed/blaze_powder
-setblock -104 58 115 minekea:storage/compressed/blaze_rod
-setblock -103 58 115 minekea:storage/compressed/breeze_rod
-setblock -102 58 115 minekea:storage/compressed/charcoal
-setblock -101 58 115 minekea:storage/compressed/ender_pearl
-setblock -100 58 115 minekea:storage/compressed/flint
-setblock -99 58 115 minekea:storage/compressed/golden_apple
-setblock -98 58 115 minekea:storage/compressed/leather
-setblock -97 58 115 minekea:storage/compressed/nether_star
-setblock -96 58 115 minekea:storage/compressed/paper
-setblock -95 58 115 minekea:storage/compressed/stick
-setblock -106 59 114 minekea:storage/compressed/sugar_cane
-setblock -105 59 114 minekea:storage/compressed/totem_of_undying
+setblock -105 58 115 minekea:storage/compressed/armadillo_scute
+setblock -104 58 115 minekea:storage/compressed/blaze_powder
+setblock -103 58 115 minekea:storage/compressed/blaze_rod
+setblock -102 58 115 minekea:storage/compressed/breeze_rod
+setblock -101 58 115 minekea:storage/compressed/charcoal
+setblock -100 58 115 minekea:storage/compressed/ender_pearl
+setblock -99 58 115 minekea:storage/compressed/flint
+setblock -98 58 115 minekea:storage/compressed/golden_apple
+setblock -97 58 115 minekea:storage/compressed/leather
+setblock -96 58 115 minekea:storage/compressed/nether_star
+setblock -95 58 115 minekea:storage/compressed/paper
+setblock -106 59 114 minekea:storage/compressed/stick
+setblock -105 59 114 minekea:storage/compressed/sugar_cane
+setblock -104 59 114 minekea:storage/compressed/totem_of_undying
 setblock -92 56 117 minekea:decorations/lighting/ancient_lantern
 setblock -91 56 117 minekea:decorations/lighting/doom_lantern
 setblock -90 56 117 minekea:decorations/lighting/end_lantern
@@ -3036,99 +3038,100 @@ setblock -82 56 117 minekea:storage/brown_egg_crate
 setblock -81 56 117 minekea:storage/egg_crate
 setblock -191 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:amethyst_shard",StoredItemQty:64,FullItemStacks:7}
 setblock -190 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:apple",StoredItemQty:64,FullItemStacks:7}
-setblock -189 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:bamboo",StoredItemQty:64,FullItemStacks:7}
-setblock -188 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:beetroot",StoredItemQty:64,FullItemStacks:7}
-setblock -187 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:beetroot_seeds",StoredItemQty:64,FullItemStacks:7}
-setblock -186 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blaze_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -185 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blaze_rod",StoredItemQty:64,FullItemStacks:7}
-setblock -184 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_egg",StoredItemQty:64,FullItemStacks:7}
-setblock -183 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:breeze_rod",StoredItemQty:64,FullItemStacks:7}
-setblock -182 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_egg",StoredItemQty:64,FullItemStacks:7}
-setblock -181 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_mushroom",StoredItemQty:64,FullItemStacks:7}
-setblock -180 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:carrot",StoredItemQty:64,FullItemStacks:7}
-setblock -191 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:charcoal",StoredItemQty:64,FullItemStacks:7}
-setblock -190 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:chorus_fruit",StoredItemQty:64,FullItemStacks:7}
-setblock -189 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:coal",StoredItemQty:64,FullItemStacks:7}
-setblock -188 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:dried_kelp",StoredItemQty:64,FullItemStacks:7}
-setblock -187 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:egg",StoredItemQty:64,FullItemStacks:7}
-setblock -186 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:ender_pearl",StoredItemQty:64,FullItemStacks:7}
-setblock -185 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:flint",StoredItemQty:64,FullItemStacks:7}
-setblock -184 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:glowstone_dust",StoredItemQty:64,FullItemStacks:7}
-setblock -183 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:golden_apple",StoredItemQty:64,FullItemStacks:7}
-setblock -182 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gravel",StoredItemQty:64,FullItemStacks:7}
-setblock -181 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:honeycomb",StoredItemQty:64,FullItemStacks:7}
-setblock -180 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:leather",StoredItemQty:64,FullItemStacks:7}
-setblock -191 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:melon_seeds",StoredItemQty:64,FullItemStacks:7}
-setblock -190 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:melon_slice",StoredItemQty:64,FullItemStacks:7}
-setblock -189 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:nether_star",StoredItemQty:64,FullItemStacks:7}
-setblock -188 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:nether_wart",StoredItemQty:64,FullItemStacks:7}
-setblock -187 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:paper",StoredItemQty:64,FullItemStacks:7}
-setblock -186 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:phantom_membrane",StoredItemQty:64,FullItemStacks:7}
-setblock -185 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:potato",StoredItemQty:64,FullItemStacks:7}
-setblock -184 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pumpkin_seeds",StoredItemQty:64,FullItemStacks:7}
-setblock -183 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_mushroom",StoredItemQty:64,FullItemStacks:7}
-setblock -182 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_sand",StoredItemQty:64,FullItemStacks:7}
-setblock -181 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:redstone",StoredItemQty:64,FullItemStacks:7}
-setblock -180 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:resin_clump",StoredItemQty:64,FullItemStacks:7}
-setblock -191 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sand",StoredItemQty:64,FullItemStacks:7}
-setblock -190 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sculk_vein",StoredItemQty:64,FullItemStacks:7}
-setblock -189 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:slime_ball",StoredItemQty:64,FullItemStacks:7}
-setblock -188 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:stick",StoredItemQty:64,FullItemStacks:7}
-setblock -187 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sugar",StoredItemQty:64,FullItemStacks:7}
-setblock -186 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sugar_cane",StoredItemQty:64,FullItemStacks:7}
-setblock -185 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:totem_of_undying",StoredItemQty:64,FullItemStacks:7}
-setblock -184 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:crops/warped_wart",StoredItemQty:64,FullItemStacks:7}
-setblock -183 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:wheat",StoredItemQty:64,FullItemStacks:7}
-setblock -182 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:wheat_seeds",StoredItemQty:64,FullItemStacks:7}
-setblock -181 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:white_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -180 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_gray_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -191 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gray_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -190 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:black_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -189 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -188 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -187 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:orange_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -186 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:yellow_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -185 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:lime_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -184 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:green_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -183 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:cyan_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -182 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_blue_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -181 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -180 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:purple_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -191 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:magenta_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -190 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pink_dye",StoredItemQty:64,FullItemStacks:7}
-setblock -189 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:white_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -188 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_gray_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -187 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gray_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -186 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:black_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -185 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -184 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -183 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:orange_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -182 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:yellow_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -181 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:lime_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -180 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:green_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -191 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:cyan_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -190 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_blue_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -189 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -188 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:purple_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -187 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:magenta_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -186 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pink_concrete_powder",StoredItemQty:64,FullItemStacks:7}
-setblock -185 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/plain",StoredItemQty:64,FullItemStacks:7}
-setblock -184 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/white",StoredItemQty:64,FullItemStacks:7}
-setblock -183 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/light_gray",StoredItemQty:64,FullItemStacks:7}
-setblock -182 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/gray",StoredItemQty:64,FullItemStacks:7}
-setblock -181 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/black",StoredItemQty:64,FullItemStacks:7}
-setblock -180 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/brown",StoredItemQty:64,FullItemStacks:7}
-setblock -191 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/red",StoredItemQty:64,FullItemStacks:7}
-setblock -190 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/orange",StoredItemQty:64,FullItemStacks:7}
-setblock -189 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/yellow",StoredItemQty:64,FullItemStacks:7}
-setblock -188 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/lime",StoredItemQty:64,FullItemStacks:7}
-setblock -187 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/green",StoredItemQty:64,FullItemStacks:7}
-setblock -186 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/cyan",StoredItemQty:64,FullItemStacks:7}
-setblock -185 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/light_blue",StoredItemQty:64,FullItemStacks:7}
-setblock -184 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/blue",StoredItemQty:64,FullItemStacks:7}
-setblock -183 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/purple",StoredItemQty:64,FullItemStacks:7}
-setblock -182 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/magenta",StoredItemQty:64,FullItemStacks:7}
-setblock -181 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/pink",StoredItemQty:64,FullItemStacks:7}
+setblock -189 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:armadillo_scute",StoredItemQty:64,FullItemStacks:7}
+setblock -188 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:bamboo",StoredItemQty:64,FullItemStacks:7}
+setblock -187 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:beetroot",StoredItemQty:64,FullItemStacks:7}
+setblock -186 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:beetroot_seeds",StoredItemQty:64,FullItemStacks:7}
+setblock -185 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blaze_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -184 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blaze_rod",StoredItemQty:64,FullItemStacks:7}
+setblock -183 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_egg",StoredItemQty:64,FullItemStacks:7}
+setblock -182 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:breeze_rod",StoredItemQty:64,FullItemStacks:7}
+setblock -181 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_egg",StoredItemQty:64,FullItemStacks:7}
+setblock -180 56 104 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_mushroom",StoredItemQty:64,FullItemStacks:7}
+setblock -191 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:carrot",StoredItemQty:64,FullItemStacks:7}
+setblock -190 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:charcoal",StoredItemQty:64,FullItemStacks:7}
+setblock -189 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:chorus_fruit",StoredItemQty:64,FullItemStacks:7}
+setblock -188 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:coal",StoredItemQty:64,FullItemStacks:7}
+setblock -187 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:dried_kelp",StoredItemQty:64,FullItemStacks:7}
+setblock -186 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:egg",StoredItemQty:64,FullItemStacks:7}
+setblock -185 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:ender_pearl",StoredItemQty:64,FullItemStacks:7}
+setblock -184 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:flint",StoredItemQty:64,FullItemStacks:7}
+setblock -183 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:glowstone_dust",StoredItemQty:64,FullItemStacks:7}
+setblock -182 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:golden_apple",StoredItemQty:64,FullItemStacks:7}
+setblock -181 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gravel",StoredItemQty:64,FullItemStacks:7}
+setblock -180 57 103 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:honeycomb",StoredItemQty:64,FullItemStacks:7}
+setblock -191 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:leather",StoredItemQty:64,FullItemStacks:7}
+setblock -190 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:melon_seeds",StoredItemQty:64,FullItemStacks:7}
+setblock -189 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:melon_slice",StoredItemQty:64,FullItemStacks:7}
+setblock -188 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:nether_star",StoredItemQty:64,FullItemStacks:7}
+setblock -187 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:nether_wart",StoredItemQty:64,FullItemStacks:7}
+setblock -186 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:paper",StoredItemQty:64,FullItemStacks:7}
+setblock -185 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:phantom_membrane",StoredItemQty:64,FullItemStacks:7}
+setblock -184 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:potato",StoredItemQty:64,FullItemStacks:7}
+setblock -183 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pumpkin_seeds",StoredItemQty:64,FullItemStacks:7}
+setblock -182 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_mushroom",StoredItemQty:64,FullItemStacks:7}
+setblock -181 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_sand",StoredItemQty:64,FullItemStacks:7}
+setblock -180 58 102 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:redstone",StoredItemQty:64,FullItemStacks:7}
+setblock -191 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:resin_clump",StoredItemQty:64,FullItemStacks:7}
+setblock -190 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sand",StoredItemQty:64,FullItemStacks:7}
+setblock -189 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sculk_vein",StoredItemQty:64,FullItemStacks:7}
+setblock -188 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:slime_ball",StoredItemQty:64,FullItemStacks:7}
+setblock -187 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:stick",StoredItemQty:64,FullItemStacks:7}
+setblock -186 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sugar",StoredItemQty:64,FullItemStacks:7}
+setblock -185 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:sugar_cane",StoredItemQty:64,FullItemStacks:7}
+setblock -184 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:totem_of_undying",StoredItemQty:64,FullItemStacks:7}
+setblock -183 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:crops/warped_wart",StoredItemQty:64,FullItemStacks:7}
+setblock -182 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:wheat",StoredItemQty:64,FullItemStacks:7}
+setblock -181 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:wheat_seeds",StoredItemQty:64,FullItemStacks:7}
+setblock -180 59 101 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:white_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -191 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_gray_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -190 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gray_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -189 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:black_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -188 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -187 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -186 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:orange_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -185 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:yellow_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -184 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:lime_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -183 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:green_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -182 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:cyan_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -181 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_blue_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -180 60 100 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -191 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:purple_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -190 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:magenta_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -189 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pink_dye",StoredItemQty:64,FullItemStacks:7}
+setblock -188 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:white_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -187 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_gray_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -186 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:gray_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -185 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:black_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -184 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:brown_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -183 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:red_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -182 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:orange_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -181 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:yellow_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -180 61 99 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:lime_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -191 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:green_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -190 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:cyan_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -189 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:light_blue_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -188 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:blue_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -187 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:purple_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -186 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:magenta_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -185 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minecraft:pink_concrete_powder",StoredItemQty:64,FullItemStacks:7}
+setblock -184 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/plain",StoredItemQty:64,FullItemStacks:7}
+setblock -183 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/white",StoredItemQty:64,FullItemStacks:7}
+setblock -182 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/light_gray",StoredItemQty:64,FullItemStacks:7}
+setblock -181 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/gray",StoredItemQty:64,FullItemStacks:7}
+setblock -180 62 98 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/black",StoredItemQty:64,FullItemStacks:7}
+setblock -191 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/brown",StoredItemQty:64,FullItemStacks:7}
+setblock -190 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/red",StoredItemQty:64,FullItemStacks:7}
+setblock -189 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/orange",StoredItemQty:64,FullItemStacks:7}
+setblock -188 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/yellow",StoredItemQty:64,FullItemStacks:7}
+setblock -187 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/lime",StoredItemQty:64,FullItemStacks:7}
+setblock -186 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/green",StoredItemQty:64,FullItemStacks:7}
+setblock -185 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/cyan",StoredItemQty:64,FullItemStacks:7}
+setblock -184 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/light_blue",StoredItemQty:64,FullItemStacks:7}
+setblock -183 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/blue",StoredItemQty:64,FullItemStacks:7}
+setblock -182 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/purple",StoredItemQty:64,FullItemStacks:7}
+setblock -181 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/magenta",StoredItemQty:64,FullItemStacks:7}
+setblock -180 63 97 minekea:containers/glass_jar[facing=south]{StoredItem:"minekea:ingredients/wax/pink",StoredItemQty:64,FullItemStacks:7}
 setblock -177 56 104 minekea:containers/glass_jar[facing=south]
 setblock -176 56 104 minekea:containers/glass_jar[facing=south]{StoredFluid:"minecraft:water",StoredFluidAmount:8.0d}
 setblock -175 56 104 minekea:containers/glass_jar[facing=south]{StoredFluid:"minecraft:lava",StoredFluidAmount:8.0d}
@@ -3138,9 +3141,11 @@ setblock -172 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entit
 setblock -171 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:bat",BatFlags:0b,Health:6.0f}}
 setblock -170 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:bee",Health:10.0f,Age:0}}
 setblock -169 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:endermite",Health:8.0f,Lifetime:0}}
-setblock -168 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:silverfish",Health:8.0f}}
-setblock -167 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:slime",Size:0,Health:1.0f}}
-setblock -166 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:vex",NoGravity:1b,Health:14.0f}}
+setblock -168 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:magma_cube",Size:0,Health:1.0f}}
+setblock -167 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:silverfish",Health:8.0f}}
+setblock -166 56 104 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:slime",Size:0,Health:1.0f}}
+setblock -177 57 103 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:sulfur_cube",Size:0,Health:1.0f}}
+setblock -176 57 103 minekea:containers/glass_jar[facing=south]{"minecraft:entity_data":{id:"minecraft:vex",NoGravity:1b,Health:14.0f}}
 
 # tool showcase: 8 item frames on a 2-high wall, oak signs beneath
 fill -188 56 189 -188 57 189 minecraft:polished_andesite
@@ -3159,14 +3164,14 @@ setblock -180 56 190 minecraft:oak_wall_sign[facing=south]{front_text:{messages:
 setblock -178 56 190 minecraft:oak_wall_sign[facing=south]{front_text:{messages:['"Gold Hammer"','""','""','""']}}
 setblock -176 56 190 minecraft:oak_wall_sign[facing=south]{front_text:{messages:['"Diamond Hammer"','""','""','""']}}
 setblock -174 56 190 minecraft:oak_wall_sign[facing=south]{front_text:{messages:['"Netherite Hammer"','""','""','""']}}
-summon minecraft:item_frame -188 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/wrench",count:1}}
-summon minecraft:item_frame -186 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/painter",count:1}}
-summon minecraft:item_frame -184 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/stone",count:1}}
-summon minecraft:item_frame -182 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/copper",count:1}}
-summon minecraft:item_frame -180 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/iron",count:1}}
-summon minecraft:item_frame -178 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/gold",count:1}}
-summon minecraft:item_frame -176 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/diamond",count:1}}
-summon minecraft:item_frame -174 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/netherite",count:1}}
+summon minecraft:item_frame -188 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/wrench",count:1},Pos:[-188.0d,57.0d,190.0d],block_pos:[I;-188,57,190]}
+summon minecraft:item_frame -186 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/painter",count:1},Pos:[-186.0d,57.0d,190.0d],block_pos:[I;-186,57,190]}
+summon minecraft:item_frame -184 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/stone",count:1},Pos:[-184.0d,57.0d,190.0d],block_pos:[I;-184,57,190]}
+summon minecraft:item_frame -182 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/copper",count:1},Pos:[-182.0d,57.0d,190.0d],block_pos:[I;-182,57,190]}
+summon minecraft:item_frame -180 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/iron",count:1},Pos:[-180.0d,57.0d,190.0d],block_pos:[I;-180,57,190]}
+summon minecraft:item_frame -178 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/gold",count:1},Pos:[-178.0d,57.0d,190.0d],block_pos:[I;-178,57,190]}
+summon minecraft:item_frame -176 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/diamond",count:1},Pos:[-176.0d,57.0d,190.0d],block_pos:[I;-176,57,190]}
+summon minecraft:item_frame -174 57 190 {Facing:3b,Fixed:1b,Invisible:0b,Item:{id:"minekea:tools/hammers/netherite",count:1},Pos:[-174.0d,57.0d,190.0d],block_pos:[I;-174,57,190]}
 
 # region label signs + teleport command blocks + plates (54)
 setblock -171 56 190 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Oak (59)"','""','""','""']}}
@@ -3316,7 +3321,7 @@ setblock -123 56 118 minecraft:stone_pressure_plate
 setblock -119 56 118 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Soil & Sand (72)"','""','""','""']}}
 setblock -118 55 118 minecraft:command_block[facing=up]{Command:"tp @p -113.5 56 120 180 0",auto:0b}
 setblock -118 56 118 minecraft:stone_pressure_plate
-setblock -106 56 118 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Compressed Food (38)"','""','""','""']}}
+setblock -106 56 118 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Compressed Food (39)"','""','""','""']}}
 setblock -105 55 118 minecraft:command_block[facing=up]{Command:"tp @p -100.0 56 120 180 0",auto:0b}
 setblock -105 56 118 minecraft:stone_pressure_plate
 setblock -92 56 118 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Lighting (4)"','""','""','""']}}
@@ -3325,10 +3330,10 @@ setblock -91 56 118 minecraft:stone_pressure_plate
 setblock -86 56 118 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Misc (6)"','""','""','""']}}
 setblock -85 55 118 minecraft:command_block[facing=up]{Command:"tp @p -83.0 56 120 180 0",auto:0b}
 setblock -85 56 118 minecraft:stone_pressure_plate
-setblock -191 56 105 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Glass Jars - Items (95)"','""','""','""']}}
+setblock -191 56 105 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Glass Jars - Items (96)"','""','""','""']}}
 setblock -190 55 105 minecraft:command_block[facing=up]{Command:"tp @p -185.0 56 107 180 0",auto:0b}
 setblock -190 56 105 minecraft:stone_pressure_plate
-setblock -177 56 105 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Glass Jars - Fluids & Mobs (12)"','""','""','""']}}
+setblock -177 56 105 minecraft:oak_sign[rotation=0]{front_text:{messages:['"Glass Jars - Fluids & Mobs (14)"','""','""','""']}}
 setblock -176 55 105 minecraft:command_block[facing=up]{Command:"tp @p -171.0 56 107 180 0",auto:0b}
 setblock -176 56 105 minecraft:stone_pressure_plate
 

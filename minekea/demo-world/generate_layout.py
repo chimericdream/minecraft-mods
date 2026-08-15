@@ -264,7 +264,8 @@ JAR_FLUID_FILL = 8.0
 MOB_NBT = {
     "minecraft:allay": "NoGravity:1b,Health:20.0f", "minecraft:bat": "BatFlags:0b,Health:6.0f",
     "minecraft:bee": "Health:10.0f,Age:0", "minecraft:endermite": "Health:8.0f,Lifetime:0",
-    "minecraft:silverfish": "Health:8.0f", "minecraft:slime": "Size:0,Health:1.0f",
+    "minecraft:magma_cube": "Size:0,Health:1.0f", "minecraft:silverfish": "Health:8.0f",
+    "minecraft:slime": "Size:0,Health:1.0f", "minecraft:sulfur_cube": "Size:0,Health:1.0f",
     "minecraft:vex": "NoGravity:1b,Health:14.0f",
 }
 jar_kind_by_id = {}
@@ -625,10 +626,18 @@ if TOOL_SHOWCASE:
         msgs = ",".join(sign_line(ln) for ln in txt)
         lines.append(f"setblock {x} {yb} {zf} minecraft:oak_wall_sign[facing=south]"
                      f"{{front_text:{{messages:[{msgs}]}}}}")
-    # 3) the item frames on the front/south face of the upper wall block
+    # 3) the item frames on the front/south face of the upper wall block. MC 26.2's
+    # BlockAttachedEntity reads its attachment point from `block_pos` (an [I;x,y,z] via
+    # BlockPos.CODEC), checked against the entity's own blockPosition() at load time — but
+    # Entity.load() only applies the summon command's positional x/y/z *after* readAdditionalSaveData
+    # runs, so blockPosition() still reads (0,0,0) at that moment unless the NBT also carries a
+    # `Pos` (Vec3.CODEC list) to seed it early. Without `Pos`, block_pos parses fine but always
+    # fails the closerThan(16) check, logging "Block-attached entity at invalid position: <pos>"
+    # once per frame on every load even though the frame ends up rendering in the right place.
     for (x, item_id, _txt) in tool_cols:
         lines.append(f'summon minecraft:item_frame {x} {yt} {zf} '
-                     f'{{Facing:3b,Fixed:1b,Invisible:0b,Item:{{id:"{item_id}",count:1}}}}')
+                     f'{{Facing:3b,Fixed:1b,Invisible:0b,Item:{{id:"{item_id}",count:1}},'
+                     f'Pos:[{x}.0d,{yt}.0d,{zf}.0d],block_pos:[I;{x},{yt},{zf}]}}')
     lines.append("")
 lines.append(f"# region label signs + teleport command blocks + plates ({len(regions)})")
 for rg in regions.values():

@@ -2,6 +2,7 @@ kind,id,label
 empty,,Empty Jar
 item,minecraft:amethyst_shard,Amethyst Shard
 item,minecraft:apple,Apple
+item,minecraft:armadillo_scute,Armadillo Scute
 item,minecraft:bamboo,Bamboo
 item,minecraft:beetroot,Beetroot
 item,minecraft:beetroot_seeds,Beetroot Seeds
@@ -103,6 +104,8 @@ mob,minecraft:allay,Allay
 mob,minecraft:bat,Bat
 mob,minecraft:bee,Bee
 mob,minecraft:endermite,Endermite
+mob,minecraft:magma_cube,Magma Cube (tiny only)
 mob,minecraft:silverfish,Silverfish
 mob,minecraft:slime,Slime (tiny only)
+mob,minecraft:sulfur_cube,Sulfur Cube (tiny only)
 mob,minecraft:vex,Vex

@@ -35,15 +35,18 @@ for m in re.finditer(r'ALLOWED_ITEM_IDS\.put\(\s*(.+?)\s*,', src):
         continue
     raise SystemExit(f"unrecognised ALLOWED_ITEM_IDS key, update the extractor: {key}")
 
-# canCaptureMob(): bee / vex / allay / silverfish / endermite / bat, plus tiny slime
+# canCaptureMob(): bee / vex / allay / silverfish / endermite / bat, plus any tiny AbstractCubeMob
+# (slime, magma cube, sulfur cube)
 mobs = [
-    ("minecraft:allay",      "Allay"),
-    ("minecraft:bat",        "Bat"),
-    ("minecraft:bee",        "Bee"),
-    ("minecraft:endermite",  "Endermite"),
-    ("minecraft:silverfish", "Silverfish"),
-    ("minecraft:slime",      "Slime (tiny only)"),
-    ("minecraft:vex",        "Vex"),
+    ("minecraft:allay",       "Allay"),
+    ("minecraft:bat",         "Bat"),
+    ("minecraft:bee",         "Bee"),
+    ("minecraft:endermite",   "Endermite"),
+    ("minecraft:magma_cube",  "Magma Cube (tiny only)"),
+    ("minecraft:silverfish",  "Silverfish"),
+    ("minecraft:slime",       "Slime (tiny only)"),
+    ("minecraft:sulfur_cube", "Sulfur Cube (tiny only)"),
+    ("minecraft:vex",         "Vex"),
 ]
 
 # The four fluids the jar renderer explicitly supports (water, lava, milk, honey);

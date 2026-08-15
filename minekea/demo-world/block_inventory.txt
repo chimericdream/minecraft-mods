@@ -2612,6 +2612,7 @@ furniture/trapdoors/bookshelves/pale_oak
 furniture/trapdoors/bookshelves/spruce
 furniture/trapdoors/bookshelves/warped
 storage/compressed/apple
+storage/compressed/armadillo_scute
 storage/compressed/beetroot
 storage/compressed/beetroot_seeds
 storage/compressed/blaze_powder
