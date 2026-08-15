@@ -7,6 +7,9 @@
   oak, crimson, warped) plus bamboo block.
 * Added compressed armadillo scute block, including support for storing scutes in a glass jar
 * Allow capturing small sulfur cubes in a glass jar (will support any mobs that extend the vanilla `AbstractCubeMob` class)
+* Added compressed blocks for polished tuff, tuff bricks, chiseled tuff, and chiseled tuff bricks,
+  plus a compressed wind charge block that can be stored in a glass jar.
+* Added beams and covers for polished tuff, tuff bricks, chiseled tuff, and chiseled tuff bricks.
 
 ### 26.2 - 10.0.1
 

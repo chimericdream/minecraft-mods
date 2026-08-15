@@ -95,7 +95,8 @@ python extract_jar_contents.py     # reads GlassJarBlock.java, writes glass_jar_
 ```
 `extract_jar_contents.py` parses `GlassJarBlock.ALLOWED_ITEM_IDS` for items and has hard-coded
 lists for the supported **fluids** (water, lava, milk, honey) and **mobs** (allay, bat, bee,
-endermite, silverfish, tiny slime, vex) — edit those lists in that file if the mod changes.
+endermite, silverfish, tiny slime, tiny magma cube, tiny sulfur cube, vex) — edit those lists in
+that file if the mod changes.
 
 Then rerun `generate_layout.py`.
 

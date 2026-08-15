@@ -2,10 +2,10 @@
   "summary": {
     "arena_x": [
       -192,
-      -67
+      -68
     ],
     "arena_z": [
-      96,
+      95,
       191
     ],
     "floor_y": 55,
@@ -14,12 +14,12 @@
       55,
       191
     ],
-    "width": 126,
-    "depth": 96,
+    "width": 125,
+    "depth": 97,
     "regions": 54,
-    "display_blocks": 2760,
-    "tier_platforms": 283,
-    "jars_filled": 109,
+    "display_blocks": 2806,
+    "tier_platforms": 287,
+    "jars_filled": 110,
     "command_blocks": 54,
     "tool_showcase": {
       "items": 8,
@@ -323,23 +323,23 @@
     },
     {
       "region": "tuff",
-      "label": "Tuff (27)",
+      "label": "Tuff (71)",
       "front_left": [
         -88,
         55,
         155
       ],
-      "w": 7,
-      "d": 8,
-      "tall": 7
+      "w": 11,
+      "d": 11,
+      "tall": 10
     },
     {
       "region": "blackstone",
       "label": "Blackstone (49)",
       "front_left": [
-        -79,
+        -191,
         55,
-        155
+        135
       ],
       "w": 11,
       "d": 8,
@@ -349,7 +349,7 @@
       "region": "basalt",
       "label": "Basalt (124)",
       "front_left": [
-        -191,
+        -178,
         55,
         135
       ],
@@ -361,7 +361,7 @@
       "region": "sandstone",
       "label": "Sandstone (38)",
       "front_left": [
-        -167,
+        -154,
         55,
         135
       ],
@@ -373,7 +373,7 @@
       "region": "red_sandstone",
       "label": "Red Sandstone (38)",
       "front_left": [
-        -154,
+        -141,
         55,
         135
       ],
@@ -385,7 +385,7 @@
       "region": "prismarine",
       "label": "Prismarine (54)",
       "front_left": [
-        -141,
+        -128,
         55,
         135
       ],
@@ -397,7 +397,7 @@
       "region": "quartz",
       "label": "Quartz (47)",
       "front_left": [
-        -128,
+        -115,
         55,
         135
       ],
@@ -409,7 +409,7 @@
       "region": "purpur",
       "label": "Purpur (29)",
       "front_left": [
-        -115,
+        -102,
         55,
         135
       ],
@@ -421,7 +421,7 @@
       "region": "nether_brick",
       "label": "Nether Brick (58)",
       "front_left": [
-        -106,
+        -93,
         55,
         135
       ],
@@ -433,7 +433,7 @@
       "region": "end_stone",
       "label": "End Stone (29)",
       "front_left": [
-        -93,
+        -80,
         55,
         135
       ],
@@ -445,7 +445,7 @@
       "region": "netherrack",
       "label": "Netherrack (11)",
       "front_left": [
-        -84,
+        -71,
         55,
         135
       ],
@@ -457,9 +457,9 @@
       "region": "obsidian",
       "label": "Obsidian (22)",
       "front_left": [
-        -79,
+        -191,
         55,
-        135
+        118
       ],
       "w": 7,
       "d": 8,
@@ -469,9 +469,9 @@
       "region": "calcite",
       "label": "Calcite (11)",
       "front_left": [
-        -70,
+        -182,
         55,
-        135
+        118
       ],
       "w": 3,
       "d": 8,
@@ -481,7 +481,7 @@
       "region": "mud",
       "label": "Mud (33)",
       "front_left": [
-        -191,
+        -177,
         55,
         118
       ],
@@ -493,7 +493,7 @@
       "region": "bone",
       "label": "Bone (16)",
       "front_left": [
-        -178,
+        -164,
         55,
         118
       ],
@@ -505,7 +505,7 @@
       "region": "brick",
       "label": "Brick (13)",
       "front_left": [
-        -173,
+        -159,
         55,
         118
       ],
@@ -517,7 +517,7 @@
       "region": "amethyst",
       "label": "Amethyst (11)",
       "front_left": [
-        -168,
+        -154,
         55,
         118
       ],
@@ -529,7 +529,7 @@
       "region": "iron",
       "label": "Iron (11)",
       "front_left": [
-        -163,
+        -149,
         55,
         118
       ],
@@ -541,7 +541,7 @@
       "region": "gold",
       "label": "Gold (11)",
       "front_left": [
-        -158,
+        -144,
         55,
         118
       ],
@@ -553,7 +553,7 @@
       "region": "copper",
       "label": "Copper (35)",
       "front_left": [
-        -153,
+        -139,
         55,
         118
       ],
@@ -565,7 +565,7 @@
       "region": "diamond",
       "label": "Diamond (11)",
       "front_left": [
-        -139,
+        -125,
         55,
         118
       ],
@@ -577,7 +577,7 @@
       "region": "netherite",
       "label": "Netherite (11)",
       "front_left": [
-        -134,
+        -120,
         55,
         118
       ],
@@ -589,7 +589,7 @@
       "region": "lapis",
       "label": "Lapis (11)",
       "front_left": [
-        -129,
+        -115,
         55,
         118
       ],
@@ -601,7 +601,7 @@
       "region": "redstone",
       "label": "Redstone (11)",
       "front_left": [
-        -124,
+        -110,
         55,
         118
       ],
@@ -613,7 +613,7 @@
       "region": "earth",
       "label": "Soil & Sand (72)",
       "front_left": [
-        -119,
+        -105,
         55,
         118
       ],
@@ -623,9 +623,9 @@
     },
     {
       "region": "food",
-      "label": "Compressed Food (39)",
+      "label": "Compressed Food (40)",
       "front_left": [
-        -106,
+        -92,
         55,
         118
       ],
@@ -637,7 +637,7 @@
       "region": "lighting",
       "label": "Lighting (4)",
       "front_left": [
-        -92,
+        -78,
         55,
         118
       ],
@@ -649,9 +649,9 @@
       "region": "misc",
       "label": "Misc (6)",
       "front_left": [
-        -86,
+        -191,
         55,
-        118
+        105
       ],
       "w": 6,
       "d": 2,
@@ -659,21 +659,21 @@
     },
     {
       "region": "jars_items",
-      "label": "Glass Jars - Items (96)",
+      "label": "Glass Jars - Items (97)",
       "front_left": [
-        -191,
+        -183,
         55,
         105
       ],
       "w": 12,
-      "d": 9,
-      "tall": 8
+      "d": 10,
+      "tall": 9
     },
     {
       "region": "jars_misc",
       "label": "Glass Jars - Fluids & Mobs (14)",
       "front_left": [
-        -177,
+        -169,
         55,
         105
       ],
