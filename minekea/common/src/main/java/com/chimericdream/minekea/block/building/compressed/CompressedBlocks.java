@@ -217,7 +217,7 @@ public class CompressedBlocks implements ModThingGroup {
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Chiseled Tuff Bricks", "chiseled_tuff_bricks", Blocks.CHISELED_TUFF_BRICKS, "", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Deepslate", "deepslate", Blocks.DEEPSLATE, "", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Polished Basalt", "polished_basalt", Blocks.POLISHED_BASALT, "_side", "_top", null));
-        COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Purpur Pillar", "purpur_pillar", Blocks.PURPUR_PILLAR, "", "_top", null));
+        COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Purpur Pillar", "purpur_pillar", Blocks.PURPUR_PILLAR, "_side", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Quartz", "quartz_block", Blocks.QUARTZ_BLOCK, "_side", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Acacia Log", "acacia_log", Blocks.ACACIA_LOG, "", "_top", Tool.AXE));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Birch Log", "birch_log", Blocks.BIRCH_LOG, "", "_top", Tool.AXE));
