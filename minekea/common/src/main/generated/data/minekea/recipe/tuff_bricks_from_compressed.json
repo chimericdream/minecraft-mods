@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/tuff_bricks/1x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:tuff_bricks"
+  }
+}

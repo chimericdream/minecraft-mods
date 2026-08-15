@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/building/compressed/chiseled_tuff/5x",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "minekea:block/building/compressed/chiseled_tuff/5x"
+    },
+    "axis=z": {
+      "model": "minekea:block/building/compressed/chiseled_tuff/5x",
+      "x": 90
+    }
+  }
+}

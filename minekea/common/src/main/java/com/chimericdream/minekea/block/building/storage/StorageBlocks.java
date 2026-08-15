@@ -74,6 +74,7 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> TOTEM_BLOCK;
     public static final RegistrySupplier<Block> WALLPAPER_BLOCK;
     public static final RegistrySupplier<Block> WHEAT_SEEDS_BLOCK;
+    public static final RegistrySupplier<Block> WIND_CHARGE_BLOCK;
 
     public static final List<RegistrySupplier<Block>> STORAGE_BLOCKS;
     public static final List<RegistrySupplier<Block>> BAGGED_BLOCKS;
@@ -144,6 +145,7 @@ public class StorageBlocks implements ModThingGroup {
         TOTEM_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("totem_of_undying"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.METAL)).item(Items.TOTEM_OF_UNDYING).material("totem_of_undying").materialName("Totem of Undying").tool(Tool.PICKAXE), false, ItemStorageBlock.StorageModel.AXIS), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WALLPAPER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("paper"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.STEM)).item(Items.PAPER).material("paper").name("Wallpaper").tool(Tool.AXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         WHEAT_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wheat_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.WHEAT_SEEDS).material("wheat_seeds").materialName("Wheat Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        WIND_CHARGE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("wind_charge"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.WOOL)).item(Items.WIND_CHARGE).material("wind_charge").materialName("Wind Charge").tool(Tool.SHEARS), false), DEFAULT_STORAGE_BLOCK_SETTINGS);
 
         BLUE_EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(BlueEggCrateBlock.BLOCK_ID, BlueEggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
         BROWN_EGG_CRATE_BLOCK = REGISTRY_HELPER.registerWithItem(BrownEggCrateBlock.BLOCK_ID, BrownEggCrateBlock::new, DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -176,7 +178,8 @@ public class StorageBlocks implements ModThingGroup {
             SUGAR_CANE_BLOCK,
             TOTEM_BLOCK,
             WALLPAPER_BLOCK,
-            WHEAT_SEEDS_BLOCK
+            WHEAT_SEEDS_BLOCK,
+            WIND_CHARGE_BLOCK
         );
 
         BAGGED_BLOCKS = List.of(

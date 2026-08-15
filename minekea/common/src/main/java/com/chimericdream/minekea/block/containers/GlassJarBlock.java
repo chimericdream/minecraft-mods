@@ -139,6 +139,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         // ALLOWED_ITEMS.add(ModCrops.WARPED_WART_ITEM.get());
         ALLOWED_ITEMS.add(Items.WHEAT);
         ALLOWED_ITEMS.add(Items.WHEAT_SEEDS);
+        ALLOWED_ITEMS.add(Items.WIND_CHARGE);
 
         ALLOWED_ITEMS.add(Items.DYE.white());
         ALLOWED_ITEMS.add(Items.DYE.lightGray());
@@ -231,6 +232,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put(WarpedWartItem.ITEM_ID.toString(), "minecraft:warped_wart_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat", "minecraft:hay_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:wind_charge", StorageBlocks.WIND_CHARGE_BLOCK.getId().toString());
 
         ALLOWED_ITEM_IDS.put("minecraft:white_dye", DyeBlock.makeId("white").toString());
         ALLOWED_ITEM_IDS.put("minecraft:light_gray_dye", DyeBlock.makeId("light_gray").toString());

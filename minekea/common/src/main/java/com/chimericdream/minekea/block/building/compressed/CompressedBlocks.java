@@ -84,6 +84,7 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Deepslate", "polished_deepslate", Blocks.POLISHED_DEEPSLATE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Diorite", "polished_diorite", Blocks.POLISHED_DIORITE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Granite", "polished_granite", Blocks.POLISHED_GRANITE, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Polished Tuff", "polished_tuff", Blocks.POLISHED_TUFF, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Prismarine", "prismarine", Blocks.PRISMARINE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Prismarine Bricks", "prismarine_bricks", Blocks.PRISMARINE_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Purpur", "purpur_block", Blocks.PURPUR_BLOCK, null));
@@ -103,6 +104,7 @@ public class CompressedBlocks implements ModThingGroup {
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Stone", "stone", Blocks.STONE, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Stone Bricks", "stone_bricks", Blocks.STONE_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Tuff", "tuff", Blocks.TUFF, null));
+        BLOCKS_TO_COMPRESS.add(new CompressedEntry("Tuff Bricks", "tuff_bricks", Blocks.TUFF_BRICKS, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Copper Block", "copper_block", Blocks.COPPER_BLOCK.weathering().unaffected(), null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Diamond Block", "diamond_block", Blocks.DIAMOND_BLOCK, null));
         BLOCKS_TO_COMPRESS.add(new CompressedEntry("Gold Block", "gold_block", Blocks.GOLD_BLOCK, null));
@@ -209,6 +211,8 @@ public class CompressedBlocks implements ModThingGroup {
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Basalt", "basalt", Blocks.BASALT, "_side", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Blackstone", "blackstone", Blocks.BLACKSTONE, "", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Bone", "bone_block", Blocks.BONE_BLOCK, "_side", "_top", null));
+        COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Chiseled Tuff", "chiseled_tuff", Blocks.CHISELED_TUFF, "", "_top", null));
+        COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Chiseled Tuff Bricks", "chiseled_tuff_bricks", Blocks.CHISELED_TUFF_BRICKS, "", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Deepslate", "deepslate", Blocks.DEEPSLATE, "", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Polished Basalt", "polished_basalt", Blocks.POLISHED_BASALT, "_side", "_top", null));
         COLUMN_BLOCKS_TO_COMPRESS.add(new ColumnEntry("Purpur Pillar", "purpur_pillar", Blocks.PURPUR_PILLAR, "", "_top", null));
