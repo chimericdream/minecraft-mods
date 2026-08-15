@@ -14,5 +14,7 @@ public class MinekeaTextures {
     public static final TextureSlot PANEL = TextureSlot.create("panel");
     public static final TextureSlot PLANKS = TextureSlot.create("planks");
     public static final TextureSlot SHELF = TextureSlot.create("shelf");
+    public static final TextureSlot SIDE_A = TextureSlot.create("side_a");
+    public static final TextureSlot SIDE_B = TextureSlot.create("side_b");
     public static final TextureSlot STRIPPED_MATERIAL = TextureSlot.create("stripped_material");
 }

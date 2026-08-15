@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/storage/compressed/armadillo_scute",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "minekea:block/storage/compressed/armadillo_scute"
+    },
+    "axis=z": {
+      "model": "minekea:block/storage/compressed/armadillo_scute",
+      "x": 90
+    }
+  }
+}

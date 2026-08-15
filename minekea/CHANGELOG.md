@@ -5,6 +5,7 @@
 * Added stairs, vertical stairs, slabs, and vertical slabs for logs, wood, and their stripped
   versions, for every wood type (acacia, oak, spruce, birch, jungle, dark oak, mangrove, cherry, pale
   oak, crimson, warped) plus bamboo block.
+* Added compressed armadillo scute block, including support for storing scutes in a glass jar
 
 
 ### 26.2 - 10.0.1

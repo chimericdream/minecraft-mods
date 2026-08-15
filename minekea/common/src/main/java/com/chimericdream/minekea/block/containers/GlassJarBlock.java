@@ -93,6 +93,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         ALLOWED_ITEMS.add(Items.AMETHYST_SHARD);
         ALLOWED_ITEMS.add(Items.APPLE);
+        ALLOWED_ITEMS.add(Items.ARMADILLO_SCUTE);
         ALLOWED_ITEMS.add(Items.BAMBOO);
         ALLOWED_ITEMS.add(Items.BEETROOT);
         ALLOWED_ITEMS.add(Items.BEETROOT_SEEDS);
@@ -185,6 +186,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
          */
         ALLOWED_ITEM_IDS.put("minecraft:amethyst_shard", "minecraft:amethyst_block");
         ALLOWED_ITEM_IDS.put("minecraft:apple", StorageBlocks.APPLE_STORAGE_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:armadillo_scute", StorageBlocks.ARMADILLO_SCUTE_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:bamboo", "minecraft:bamboo_block");
         ALLOWED_ITEM_IDS.put("minecraft:beetroot", StorageBlocks.BEETROOT_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:beetroot_seeds", StorageBlocks.BEETROOT_SEEDS_BLOCK.getId().toString());

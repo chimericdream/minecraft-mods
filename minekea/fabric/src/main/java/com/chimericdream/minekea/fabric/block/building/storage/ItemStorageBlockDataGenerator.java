@@ -64,6 +64,17 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         );
     }
 
+    protected static ModelTemplate makeAltColumnModel(BlockConfig.RenderType renderType) {
+        return new CustomBlockModel(
+            renderType,
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_alt_column")),
+            Optional.empty(),
+            TextureSlot.END,
+            MinekeaTextures.SIDE_A,
+            MinekeaTextures.SIDE_B
+        );
+    }
+
     protected static ModelTemplate makeBaggedModel(BlockConfig.RenderType renderType) {
         return new CustomBlockModel(
             renderType,
@@ -219,6 +230,21 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, ItemStorageBlock.AXIS, BLOCK, subModelId);
     }
 
+    protected void configureBlockStateModelsWithAltAxis(BlockModelGenerators blockStateModelGenerator) {
+        Identifier endTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideATexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side_a", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideBTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side_b", BLOCK.BLOCK_ID.getPath()));
+
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.END, new Material(endTexture))
+            .put(MinekeaTextures.SIDE_A, new Material(sideATexture))
+            .put(MinekeaTextures.SIDE_B, new Material(sideBTexture));
+
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeAltColumnModel(BLOCK.config.getRenderType()), unused -> textures);
+
+        ModelUtils.registerBlockWithAxis(blockStateModelGenerator, ItemStorageBlock.AXIS, BLOCK, subModelId);
+    }
+
     protected void configureDefaultBlockStateModel(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(TextureUtils.block(BLOCK)));
         blockStateModelGenerator.createTrivialBlock(
@@ -237,6 +263,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
                 break;
             case AXIS:
                 configureBlockStateModelsWithAxis(blockStateModelGenerator);
+                break;
+            case ALT_AXIS:
+                configureBlockStateModelsWithAltAxis(blockStateModelGenerator);
                 break;
             case BAGGED:
                 configureBaggedBlockModels(blockStateModelGenerator);

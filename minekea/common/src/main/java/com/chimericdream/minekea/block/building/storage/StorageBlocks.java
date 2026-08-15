@@ -45,6 +45,7 @@ public class StorageBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> DYE_BLOCKS;
 
     public static final RegistrySupplier<Block> APPLE_STORAGE_BLOCK;
+    public static final RegistrySupplier<Block> ARMADILLO_SCUTE_BLOCK;
     public static final RegistrySupplier<Block> BEETROOT_BLOCK;
     public static final RegistrySupplier<Block> BEETROOT_SEEDS_BLOCK;
     public static final RegistrySupplier<Block> BLAZE_POWDER_BLOCK;
@@ -117,6 +118,7 @@ public class StorageBlocks implements ModThingGroup {
         );
 
         APPLE_STORAGE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("apple"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.MELON).sound(SoundType.WOOD)).item(Items.APPLE).material("apple").materialName("Apple").tool(Tool.HOE), false, ItemStorageBlock.StorageModel.FACING), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        ARMADILLO_SCUTE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("armadillo_scute"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.MELON).sound(SoundType.WOOD)).item(Items.ARMADILLO_SCUTE).material("armadillo_scute").materialName("Armadillo Scute").tool(Tool.PICKAXE).texture("side_a", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/armadillo_scute_side_a")).texture("end", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/armadillo_scute_end")).texture("side_b", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/armadillo_scute_side_b")), false, ItemStorageBlock.StorageModel.ALT_AXIS), DEFAULT_STORAGE_BLOCK_SETTINGS);
         BEETROOT_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("beetroot_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.BEETROOT_SEEDS).material("beetroot_seeds").materialName("Beetroot Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         BEETROOT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("beetroot"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.BEETROOT).material("beetroot").materialName("Beetroot").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         BLAZE_POWDER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("blaze_powder"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.STEM)).item(Items.BLAZE_POWDER).material("blaze_powder").materialName("Blaze Powder").tool(Tool.SHOVEL)), DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -149,6 +151,7 @@ public class StorageBlocks implements ModThingGroup {
 
         STORAGE_BLOCKS = List.of(
             APPLE_STORAGE_BLOCK,
+            ARMADILLO_SCUTE_BLOCK,
             BEETROOT_BLOCK,
             BEETROOT_SEEDS_BLOCK,
             BLAZE_POWDER_BLOCK,

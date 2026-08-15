@@ -1,0 +1,9 @@
+{
+  "parent": "minekea:block/storage/compressed_alt_column",
+  "render_type": "minecraft:solid",
+  "textures": {
+    "end": "minekea:block/storage/compressed/armadillo_scute_end",
+    "side_a": "minekea:block/storage/compressed/armadillo_scute_side_a",
+    "side_b": "minekea:block/storage/compressed/armadillo_scute_side_b"
+  }
+}
