@@ -24,6 +24,8 @@ without their behavior.
 * **Potted** variants of both clipped eyeblossoms for use in flower pots.
 * Obtained by "clipping" or "detaching" the vanilla blocks with the appropriate tool (shears for eyeblossoms, an
   axe for the creaking heart), keeping the workflow intuitive and vanilla-friendly.
+* **Pale Pumpkin** — a pale garden-themed pumpkin, with matching carved and jack o'lantern variants. Pale
+  pumpkin patches also grow naturally in Pale Garden biomes.
 
 ## Notes for Documentation
 

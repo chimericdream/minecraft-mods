@@ -4,6 +4,8 @@
 
 * Added pale pumpkin, carved pale pumpkin, and pale jack o'lantern
 * Added pale pumpkin seeds
+* Pale pumpkins now grow naturally in patches in Pale Garden biomes, just like regular pumpkins do
+  elsewhere
 
 ### 26.2 - 3.0.0
 
