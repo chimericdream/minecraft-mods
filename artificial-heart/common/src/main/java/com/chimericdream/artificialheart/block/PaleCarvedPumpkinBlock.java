@@ -109,7 +109,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         golem.snapTo((double)spawnPos.getX() + (double)0.5F, (double)spawnPos.getY() + 0.05, (double)spawnPos.getZ() + (double)0.5F, 0.0F, 0.0F);
         level.addFreshEntity(golem);
 
-        for(ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate((double)5.0F))) {
+        for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate((double)5.0F))) {
             CriteriaTriggers.SUMMONED_ENTITY.trigger(player, golem);
         }
 
