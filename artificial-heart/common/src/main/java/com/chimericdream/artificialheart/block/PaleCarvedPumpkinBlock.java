@@ -1,6 +1,7 @@
 package com.chimericdream.artificialheart.block;
 
 import com.chimericdream.artificialheart.ModInfo;
+import com.chimericdream.artificialheart.PassiveCreakingAccessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.monster.creaking.Creaking;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -44,7 +48,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<CarvedPumpkinBlock> CODEC = simpleCodec(CarvedPumpkinBlock::new);
     public static final EnumProperty<Direction> FACING;
     private @Nullable BlockPattern creakingGolemBase;
-    private @Nullable BlockPattern ironGolemFull;
+    private @Nullable BlockPattern creakingGolemFull;
     private static final Predicate<BlockState> PALE_LOGS_PREDICATE;
     private static final Predicate<BlockState> PALE_PUMPKINS_PREDICATE;
 
@@ -79,16 +83,22 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
     }
 
     public boolean canSpawnGolem(final LevelReader level, final BlockPos topPos) {
-        return this.getOrCreateIronGolemBase().find(level, topPos) != null;
+        return this.getOrCreateCreakingGolemBase().find(level, topPos) != null;
     }
 
     private void trySpawnGolem(final Level level, final BlockPos topPos) {
-        BlockPattern.BlockPatternMatch ironGolemMatch = this.getOrCreateIronGolemFull().find(level, topPos);
-        if (ironGolemMatch != null) {
-            IronGolem ironGolem = (IronGolem) EntityTypes.IRON_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
-            if (ironGolem != null) {
-                ironGolem.setPlayerCreated(true);
-                spawnGolemInWorld(level, ironGolemMatch, ironGolem, ironGolemMatch.getBlock(1, 2, 0).getPos());
+        BlockPattern.BlockPatternMatch creakingGolemMatch = this.getOrCreateCreakingGolemFull().find(level, topPos);
+        if (creakingGolemMatch != null) {
+            Creaking creaking = (Creaking) EntityTypes.CREAKING.create(level, EntitySpawnReason.TRIGGERED);
+            if (creaking != null) {
+                AttributeInstance maxHealth = creaking.getAttribute(Attributes.MAX_HEALTH);
+                if (maxHealth != null) {
+                    maxHealth.setBaseValue(DefaultAttributes.getSupplier(EntityTypes.ENDERMAN).getBaseValue(Attributes.MAX_HEALTH));
+                }
+                creaking.setHealth(creaking.getMaxHealth());
+                creaking.setPersistenceRequired();
+                ((PassiveCreakingAccessor) creaking).ah$setPassive(true);
+                spawnGolemInWorld(level, creakingGolemMatch, creaking, creakingGolemMatch.getBlock(1, 2, 0).getPos());
                 return;
             }
         }
@@ -133,10 +143,11 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         builder.add(FACING);
     }
 
-    private BlockPattern getOrCreateIronGolemBase() {
+    private BlockPattern getOrCreateCreakingGolemBase() {
         if (this.creakingGolemBase == null) {
             this.creakingGolemBase = BlockPatternBuilder.start()
-                .aisle(new String[]{"~ ~", "f#f", "~#~"})
+                .aisle(new String[]{"~ ~", "fhf", "~#~"})
+                .where('h', BlockInWorld.hasState(BlockStatePredicate.forBlock(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get())))
                 .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
                 .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
                 .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
@@ -146,18 +157,19 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         return this.creakingGolemBase;
     }
 
-    private BlockPattern getOrCreateIronGolemFull() {
-        if (this.ironGolemFull == null) {
-            this.ironGolemFull = BlockPatternBuilder.start()
-                .aisle(new String[]{"~^~", "f#f", "~#~"})
+    private BlockPattern getOrCreateCreakingGolemFull() {
+        if (this.creakingGolemFull == null) {
+            this.creakingGolemFull = BlockPatternBuilder.start()
+                .aisle(new String[]{"~^~", "fhf", "~#~"})
                 .where('^', BlockInWorld.hasState(PALE_PUMPKINS_PREDICATE))
+                .where('h', BlockInWorld.hasState(BlockStatePredicate.forBlock(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get())))
                 .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
                 .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
                 .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
                 .build();
         }
 
-        return this.ironGolemFull;
+        return this.creakingGolemFull;
     }
 
     static {

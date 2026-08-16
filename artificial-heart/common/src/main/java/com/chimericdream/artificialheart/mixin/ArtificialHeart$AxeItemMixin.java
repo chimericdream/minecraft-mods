@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AxeItem.class)
-public class ArtificialHeartAxeItemMixin {
+public class ArtificialHeart$AxeItemMixin {
     @Inject(method = "useOn", at = @At("RETURN"), cancellable = true)
     private void artificialHeartUseOnBlockMixin(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         Level world = context.getLevel();

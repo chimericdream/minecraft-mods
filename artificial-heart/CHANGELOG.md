@@ -6,6 +6,10 @@
 * Added pale pumpkin seeds
 * Pale pumpkins now grow naturally in patches in Pale Garden biomes, just like regular pumpkins do
   elsewhere
+* Completing a golem shape out of pale oak fence and logs around a Detached Creaking Heart, then
+  topping it with a carved pale pumpkin or jack o'lantern, now summons a Creaking Golem — a sturdy,
+  friendly creaking that will never attack you
+* Wearing a Pale Carved Pumpkin as a helmet keeps any creaking, tame or wild, from noticing you
 
 ### 26.2 - 3.0.0
 
