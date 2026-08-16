@@ -16,3 +16,17 @@ non-Minecraft-playing spouses.
   * When dropped, has a chance of containing camel snout, bag o' clams, or other items from this mod, because reasons.
   * Rare drop from witches
   * When you get one for the first time, advancement: "Maybe don't look inside..."
+* **Upside-down blocks** - Like normal blocks, but upside-down
+  * Bed: when sleeping, it turns day to night
+    * Achievement: "Nap time"
+  * Anvil: called "Livna"; literally just an anvil, but the UI is mirrored
+    * Flies upward when placed, despawns at build height
+* **Golden egg** - feed a chicken golden wheat seeds to lay a golden egg
+  * Achievement: "It could be full of chocolate, okay"
+* **Feed cows random stuff for random milks**
+  * Apple: apple milk
+  * Cocoa beans: chocolate milk
+  * Carrots: carrot milk
+  * Potatoes: potato milk
+  * Nether wart: wart milk
+  * etc.
