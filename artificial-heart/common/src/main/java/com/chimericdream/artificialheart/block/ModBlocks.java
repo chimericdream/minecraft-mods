@@ -1,10 +1,16 @@
 package com.chimericdream.artificialheart.block;
 
+import com.chimericdream.artificialheart.ModInfo;
 import com.chimericdream.artificialheart.item.PalePumpkinSeedsItem;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.waypoints.Waypoint;
 
 import static com.chimericdream.artificialheart.ArtificialHeartMod.REGISTRY_HELPER;
 
@@ -27,7 +33,12 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> PALE_CARVED_PUMPKIN_BLOCK = REGISTRY_HELPER.registerWithItem(
         PaleCarvedPumpkinBlock.BLOCK_ID,
         PaleCarvedPumpkinBlock::new,
-        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(PaleCarvedPumpkinBlock.ITEM_REGISTRY_KEY)
+        Waypoint.addHideAttribute(
+            new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(PaleCarvedPumpkinBlock.ITEM_REGISTRY_KEY)
+        ).component(
+            DataComponents.EQUIPPABLE,
+            Equippable.builder(EquipmentSlot.HEAD).setSwappable(false).setCameraOverlay(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "misc/palepumpkinblur")).build()
+        )
     );
 
     @SuppressWarnings("UnstableApiUsage")

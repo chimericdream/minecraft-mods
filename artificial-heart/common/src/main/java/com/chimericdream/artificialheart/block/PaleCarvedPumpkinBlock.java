@@ -2,12 +2,18 @@ package com.chimericdream.artificialheart.block;
 
 import com.chimericdream.artificialheart.ModInfo;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -16,7 +22,10 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
+import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
+import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -34,13 +43,10 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
 
     public static final MapCodec<CarvedPumpkinBlock> CODEC = simpleCodec(CarvedPumpkinBlock::new);
     public static final EnumProperty<Direction> FACING;
-    private @Nullable BlockPattern snowGolemBase;
-    private @Nullable BlockPattern snowGolemFull;
-    private @Nullable BlockPattern ironGolemBase;
+    private @Nullable BlockPattern creakingGolemBase;
     private @Nullable BlockPattern ironGolemFull;
-    private @Nullable BlockPattern copperGolemBase;
-    private @Nullable BlockPattern copperGolemFull;
-    private static final Predicate<BlockState> PUMPKINS_PREDICATE;
+    private static final Predicate<BlockState> PALE_LOGS_PREDICATE;
+    private static final Predicate<BlockState> PALE_PUMPKINS_PREDICATE;
 
     public @NonNull MapCodec<? extends CarvedPumpkinBlock> codec() {
         return CODEC;
@@ -60,77 +66,63 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         return new PaleCarvedPumpkinBlock(Properties.ofFullCopy(Blocks.JACK_O_LANTERN).setId(JOL_BLOCK_REGISTRY_KEY));
     }
 
-    protected void onPlace(final BlockState state, final Level level, final BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
-//        if (!oldState.is(state.getBlock())) {
-//            this.trySpawnGolem(level, pos);
-//        }
+    protected void onPlace(
+        final BlockState state,
+        final @NonNull Level level,
+        final @NonNull BlockPos pos,
+        final BlockState oldState,
+        final boolean movedByPiston
+    ) {
+        if (!oldState.is(state.getBlock())) {
+            this.trySpawnGolem(level, pos);
+        }
     }
 
     public boolean canSpawnGolem(final LevelReader level, final BlockPos topPos) {
-        return false;
-//        return this.getOrCreateSnowGolemBase().find(level, topPos) != null || this.getOrCreateIronGolemBase().find(level, topPos) != null || this.getOrCreateCopperGolemBase().find(level, topPos) != null;
+        return this.getOrCreateIronGolemBase().find(level, topPos) != null;
     }
 
     private void trySpawnGolem(final Level level, final BlockPos topPos) {
-//        BlockPattern.BlockPatternMatch snowGolemMatch = this.getOrCreateSnowGolemFull().find(level, topPos);
-//        if (snowGolemMatch != null) {
-//            SnowGolem snowGolem = (SnowGolem) EntityTypes.SNOW_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
-//            if (snowGolem != null) {
-//                spawnGolemInWorld(level, snowGolemMatch, snowGolem, snowGolemMatch.getBlock(0, 2, 0).getPos());
-//                return;
-//            }
-//        }
-//
-//        BlockPattern.BlockPatternMatch ironGolemMatch = this.getOrCreateIronGolemFull().find(level, topPos);
-//        if (ironGolemMatch != null) {
-//            IronGolem ironGolem = (IronGolem)EntityTypes.IRON_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
-//            if (ironGolem != null) {
-//                ironGolem.setPlayerCreated(true);
-//                spawnGolemInWorld(level, ironGolemMatch, ironGolem, ironGolemMatch.getBlock(1, 2, 0).getPos());
-//                return;
-//            }
-//        }
-//
-//        BlockPattern.BlockPatternMatch copperGolemMatch = this.getOrCreateCopperGolemFull().find(level, topPos);
-//        if (copperGolemMatch != null) {
-//            CopperGolem copperGolem = (CopperGolem)EntityTypes.COPPER_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
-//            if (copperGolem != null) {
-//                spawnGolemInWorld(level, copperGolemMatch, copperGolem, copperGolemMatch.getBlock(0, 0, 0).getPos());
-//                this.replaceCopperBlockWithChest(level, copperGolemMatch);
-//                copperGolem.spawn(this.getWeatherStateFromPattern(copperGolemMatch));
-//            }
-//        }
+        BlockPattern.BlockPatternMatch ironGolemMatch = this.getOrCreateIronGolemFull().find(level, topPos);
+        if (ironGolemMatch != null) {
+            IronGolem ironGolem = (IronGolem) EntityTypes.IRON_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
+            if (ironGolem != null) {
+                ironGolem.setPlayerCreated(true);
+                spawnGolemInWorld(level, ironGolemMatch, ironGolem, ironGolemMatch.getBlock(1, 2, 0).getPos());
+                return;
+            }
+        }
     }
 
     private static void spawnGolemInWorld(final Level level, final BlockPattern.BlockPatternMatch match, final Entity golem, final BlockPos spawnPos) {
-//        clearPatternBlocks(level, match);
-//        golem.snapTo((double)spawnPos.getX() + (double)0.5F, (double)spawnPos.getY() + 0.05, (double)spawnPos.getZ() + (double)0.5F, 0.0F, 0.0F);
-//        level.addFreshEntity(golem);
-//
-//        for(ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate((double)5.0F))) {
-//            CriteriaTriggers.SUMMONED_ENTITY.trigger(player, golem);
-//        }
-//
-//        updatePatternBlocks(level, match);
+        clearPatternBlocks(level, match);
+        golem.snapTo((double)spawnPos.getX() + (double)0.5F, (double)spawnPos.getY() + 0.05, (double)spawnPos.getZ() + (double)0.5F, 0.0F, 0.0F);
+        level.addFreshEntity(golem);
+
+        for(ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate((double)5.0F))) {
+            CriteriaTriggers.SUMMONED_ENTITY.trigger(player, golem);
+        }
+
+        updatePatternBlocks(level, match);
     }
 
     public static void clearPatternBlocks(final Level level, final BlockPattern.BlockPatternMatch match) {
-//        for(int x = 0; x < match.getWidth(); ++x) {
-//            for(int y = 0; y < match.getHeight(); ++y) {
-//                BlockInWorld block = match.getBlock(x, y, 0);
-//                level.setBlock(block.getPos(), Blocks.AIR.defaultBlockState(), 2);
-//                level.levelEvent(2001, block.getPos(), Block.getId(block.getState()));
-//            }
-//        }
+        for(int x = 0; x < match.getWidth(); ++x) {
+            for(int y = 0; y < match.getHeight(); ++y) {
+                BlockInWorld block = match.getBlock(x, y, 0);
+                level.setBlock(block.getPos(), Blocks.AIR.defaultBlockState(), 2);
+                level.levelEvent(2001, block.getPos(), Block.getId(block.getState()));
+            }
+        }
     }
 
     public static void updatePatternBlocks(final Level level, final BlockPattern.BlockPatternMatch match) {
-//        for(int x = 0; x < match.getWidth(); ++x) {
-//            for(int y = 0; y < match.getHeight(); ++y) {
-//                BlockInWorld block = match.getBlock(x, y, 0);
-//                level.updateNeighborsAt(block.getPos(), Blocks.AIR);
-//            }
-//        }
+        for(int x = 0; x < match.getWidth(); ++x) {
+            for(int y = 0; y < match.getHeight(); ++y) {
+                BlockInWorld block = match.getBlock(x, y, 0);
+                level.updateNeighborsAt(block.getPos(), Blocks.AIR);
+            }
+        }
     }
 
     public BlockState getStateForPlacement(final BlockPlaceContext context) {
@@ -141,40 +133,36 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         builder.add(FACING);
     }
 
-//    private BlockPattern getOrCreateSnowGolemBase() {
-//        if (this.snowGolemBase == null) {
-//            this.snowGolemBase = BlockPatternBuilder.start().aisle(new String[]{" ", "#", "#"}).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.SNOW_BLOCK))).build();
-//        }
-//
-//        return this.snowGolemBase;
-//    }
-//
-//    private BlockPattern getOrCreateSnowGolemFull() {
-//        if (this.snowGolemFull == null) {
-//            this.snowGolemFull = BlockPatternBuilder.start().aisle(new String[]{"^", "#", "#"}).where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.SNOW_BLOCK))).build();
-//        }
-//
-//        return this.snowGolemFull;
-//    }
-//
-//    private BlockPattern getOrCreateIronGolemBase() {
-//        if (this.ironGolemBase == null) {
-//            this.ironGolemBase = BlockPatternBuilder.start().aisle(new String[]{"~ ~", "###", "~#~"}).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.IRON_BLOCK))).where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir)).build();
-//        }
-//
-//        return this.ironGolemBase;
-//    }
-//
-//    private BlockPattern getOrCreateIronGolemFull() {
-//        if (this.ironGolemFull == null) {
-//            this.ironGolemFull = BlockPatternBuilder.start().aisle(new String[]{"~^~", "###", "~#~"}).where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.IRON_BLOCK))).where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir)).build();
-//        }
-//
-//        return this.ironGolemFull;
-//    }
+    private BlockPattern getOrCreateIronGolemBase() {
+        if (this.creakingGolemBase == null) {
+            this.creakingGolemBase = BlockPatternBuilder.start()
+                .aisle(new String[]{"~ ~", "f#f", "~#~"})
+                .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
+                .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
+                .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
+                .build();
+        }
+
+        return this.creakingGolemBase;
+    }
+
+    private BlockPattern getOrCreateIronGolemFull() {
+        if (this.ironGolemFull == null) {
+            this.ironGolemFull = BlockPatternBuilder.start()
+                .aisle(new String[]{"~^~", "f#f", "~#~"})
+                .where('^', BlockInWorld.hasState(PALE_PUMPKINS_PREDICATE))
+                .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
+                .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
+                .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
+                .build();
+        }
+
+        return this.ironGolemFull;
+    }
 
     static {
         FACING = HorizontalDirectionalBlock.FACING;
-        PUMPKINS_PREDICATE = (input) -> input.is(Blocks.CARVED_PUMPKIN) || input.is(Blocks.JACK_O_LANTERN);
+        PALE_LOGS_PREDICATE = (input) -> input.is(BlockTags.PALE_OAK_LOGS);
+        PALE_PUMPKINS_PREDICATE = (input) -> input.is(ModBlocks.PALE_CARVED_PUMPKIN_BLOCK.get()) || input.is(ModBlocks.PALE_JACK_O_LANTERN_BLOCK.get());
     }
 }

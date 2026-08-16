@@ -8,5 +8,6 @@ public final class ArtificialHeartFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         ArtificialHeartMod.init();
+        ArtificialHeartMod.postInit();
     }
 }
