@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 10.1.0
+
 #### New Features
 
 * Added stairs, vertical stairs, slabs, and vertical slabs for logs, wood, and their stripped
