@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/cinnabar"
+    "model": "minekea:item/building/beams/cinnabar"
   }
 }

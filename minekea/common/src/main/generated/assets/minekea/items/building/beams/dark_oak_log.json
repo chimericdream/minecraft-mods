@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/dark_oak_log"
+    "model": "minekea:item/building/beams/dark_oak_log"
   }
 }

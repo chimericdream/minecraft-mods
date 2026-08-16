@@ -26,6 +26,7 @@
 #### Bug Fixes
 
 * Fixed bookshelf stairs (all materials) not dropping anything when broken.
+* Fixed item models for beam blocks and "bagged" storage blocks
 
 ### 26.2 - 10.0.1
 

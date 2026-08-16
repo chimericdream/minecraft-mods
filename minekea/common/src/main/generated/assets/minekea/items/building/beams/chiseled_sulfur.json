@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/chiseled_sulfur"
+    "model": "minekea:item/building/beams/chiseled_sulfur"
   }
 }

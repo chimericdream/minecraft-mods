@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/chorus_fruit"
+    "model": "minekea:block/storage/compressed/chorus_fruit_bagged"
   }
 }

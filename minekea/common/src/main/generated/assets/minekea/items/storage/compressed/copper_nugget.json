@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/copper_nugget"
+    "model": "minekea:block/storage/compressed/copper_nugget_bagged"
   }
 }

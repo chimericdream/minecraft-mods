@@ -156,6 +156,10 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
                         .select(false, baseModel))
             );
 
+        if (BLOCK.isBaggedItem) {
+            blockStateModelGenerator.registerSimpleItemModel(BLOCK, baggedModelId);
+        }
+
 //        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLOCK);
     }
 

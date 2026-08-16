@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/netherite_block"
+    "model": "minekea:item/building/beams/netherite_block"
   }
 }

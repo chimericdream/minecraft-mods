@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/weathered_cut_copper"
+    "model": "minekea:item/building/beams/weathered_cut_copper"
   }
 }

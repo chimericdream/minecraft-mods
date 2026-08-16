@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/basalt_brick"
+    "model": "minekea:item/building/beams/basalt_brick"
   }
 }

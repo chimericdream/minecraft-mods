@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/gold_nugget"
+    "model": "minekea:block/storage/compressed/gold_nugget_bagged"
   }
 }

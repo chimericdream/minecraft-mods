@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/purpur"
+    "model": "minekea:item/building/beams/purpur"
   }
 }

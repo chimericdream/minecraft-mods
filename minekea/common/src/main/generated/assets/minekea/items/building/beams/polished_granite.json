@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/polished_granite"
+    "model": "minekea:item/building/beams/polished_granite"
   }
 }

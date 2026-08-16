@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/oxidized_cut_copper"
+    "model": "minekea:item/building/beams/oxidized_cut_copper"
   }
 }

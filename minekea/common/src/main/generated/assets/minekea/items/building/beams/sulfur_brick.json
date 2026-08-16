@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/sulfur_brick"
+    "model": "minekea:item/building/beams/sulfur_brick"
   }
 }

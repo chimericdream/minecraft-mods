@@ -115,6 +115,8 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier upModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
         Identifier downModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
 
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, BLOCK.BLOCK_ID.withPrefix("item/"));
+
         MultiVariant coreVariant = BlockModelGenerators.plainVariant(coreModelId);
         MultiVariant northVariant = BlockModelGenerators.plainVariant(northModelId);
         MultiVariant southVariant = BlockModelGenerators.plainVariant(southModelId);

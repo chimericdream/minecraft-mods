@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/spruce"
+    "model": "minekea:item/building/beams/spruce"
   }
 }

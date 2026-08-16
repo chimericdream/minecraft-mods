@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/wheat_seeds"
+    "model": "minekea:block/storage/compressed/wheat_seeds_bagged"
   }
 }

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/light_blue_concrete"
+    "model": "minekea:item/building/beams/light_blue_concrete"
   }
 }

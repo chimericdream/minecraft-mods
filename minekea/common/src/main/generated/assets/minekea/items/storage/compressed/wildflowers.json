@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/wildflowers"
+    "model": "minekea:block/storage/compressed/wildflowers_bagged"
   }
 }
