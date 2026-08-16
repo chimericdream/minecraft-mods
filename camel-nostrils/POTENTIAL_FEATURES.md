@@ -10,3 +10,4 @@ non-Minecraft-playing spouses.
 * **Snout drop** — trying to pull a camel that's laying down has a chance to drop its snout (hence the
   mod name).
 * **Bag o' Clams** — a new food item, sometimes dropped by... something still to be decided.
+* **Leads on fish** - you can attach leads to fish. Why? Why not! This doesn't make them live outside water, though.
