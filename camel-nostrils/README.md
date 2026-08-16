@@ -2,17 +2,30 @@
 
 ![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
-_Absurd, spouse-suggested nonsense, starting with a camel's nose._
+_This mod is weird. Really weird. Absurdity of the highest order, sourced from random suggestions by our non-Minecraft-playing spouses._
 
 ## Introduction
 
 ### Minecraft Versions
 
 * 26.2: supported
+* <26.2: not planned
 
 ### Current Features
 
-## Notes for Documentation
+## FAQ
+
+**What the hell?**
+
+Yeah... I don't know. The features in this mod have come from a number of conversations with my spouse (and spouses of friends).
+
+**This mod is dumb and not useful at all**
+
+True. That's also not a question. This mod exists purely for the sheer silly enjoyment of implementing random (and sometimes horrifying) ideas suggested by people who don't play Minecraft.
+
+**No, really... what the hell?!**
+
+I got nothin'.
 
 ## Issues & Suggestions
 
