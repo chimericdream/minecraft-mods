@@ -6,6 +6,7 @@
     "client": [
     ],
     "mixins": [
+        "EG$EnderpearlItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1
