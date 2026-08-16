@@ -1,0 +1,26 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":toy-box:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "toybox.accesswidener")
+    }
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':toy-box:common')) { transitive false }
+    shadowBundle project(path: ':toy-box:common', configuration: 'transformProductionNeoForge')
+}
