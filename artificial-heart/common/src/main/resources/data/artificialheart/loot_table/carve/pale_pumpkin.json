@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:block_interact",
+    "pools": [
+        {
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "count": 4.0,
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "artificialheart:pale_pumpkin_seeds"
+                }
+            ],
+            "rolls": 1.0
+        }
+    ],
+    "random_sequence": "artificialheart:carve/pale_pumpkin"
+}

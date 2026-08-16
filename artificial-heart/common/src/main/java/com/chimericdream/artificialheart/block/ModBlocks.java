@@ -1,5 +1,6 @@
 package com.chimericdream.artificialheart.block;
 
+import com.chimericdream.artificialheart.item.PalePumpkinSeedsItem;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -20,6 +21,42 @@ public class ModBlocks {
         ClippedEyeblossomBlock.BLOCK_ID,
         ClippedEyeblossomBlock::new,
         new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(ClippedEyeblossomBlock.ITEM_REGISTRY_KEY)
+    );
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> PALE_CARVED_PUMPKIN_BLOCK = REGISTRY_HELPER.registerWithItem(
+        PaleCarvedPumpkinBlock.BLOCK_ID,
+        PaleCarvedPumpkinBlock::new,
+        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(PaleCarvedPumpkinBlock.ITEM_REGISTRY_KEY)
+    );
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> PALE_JACK_O_LANTERN_BLOCK = REGISTRY_HELPER.registerWithItem(
+        PaleCarvedPumpkinBlock.JOL_BLOCK_ID,
+        PaleCarvedPumpkinBlock::createJackOLantern,
+        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(PaleCarvedPumpkinBlock.JOL_ITEM_REGISTRY_KEY)
+    );
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> PALE_PUMPKIN_BLOCK = REGISTRY_HELPER.registerWithItem(
+        PalePumpkinBlock.BLOCK_ID,
+        PalePumpkinBlock::new,
+        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(PalePumpkinBlock.ITEM_REGISTRY_KEY)
+    );
+
+    public static final RegistrySupplier<Block> PALE_PUMPKIN_STEM_BLOCK = REGISTRY_HELPER.registerBlock(
+        PalePumpkinStemBlock.BLOCK_ID,
+        PalePumpkinStemBlock::new
+    );
+
+    public static final RegistrySupplier<Block> ATTACHED_PALE_PUMPKIN_STEM_BLOCK = REGISTRY_HELPER.registerBlock(
+        AttachedPalePumpkinStemBlock.BLOCK_ID,
+        AttachedPalePumpkinStemBlock::new
+    );
+
+    public static final RegistrySupplier<Item> PALE_PUMPKIN_SEEDS_ITEM = REGISTRY_HELPER.registerItem(
+        PalePumpkinSeedsItem.ITEM_ID,
+        PalePumpkinSeedsItem::new
     );
 
     public static final RegistrySupplier<Block> POTTED_CLIPPED_EYEBLOSSOM_BLOCK = REGISTRY_HELPER.registerWithItem(

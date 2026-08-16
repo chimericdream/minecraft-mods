@@ -1,3 +1,10 @@
+### Unreleased changes
+
+#### New Features
+
+* Added pale pumpkin, carved pale pumpkin, and pale jack o'lantern
+* Added pale pumpkin seeds
+
 ### 26.2 - 3.0.0
 
 #### BREAKING CHANGES

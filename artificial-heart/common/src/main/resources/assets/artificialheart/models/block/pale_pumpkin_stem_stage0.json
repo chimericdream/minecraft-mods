@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/stem_growth0",
+    "textures": {
+        "stem": "artificialheart:block/pale_pumpkin_stem"
+    }
+}
