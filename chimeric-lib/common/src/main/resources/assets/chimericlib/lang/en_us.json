@@ -9,5 +9,6 @@
   "argument.chimericlib.block_properties.expected": "Expected block properties like [property=value]",
   "argument.chimericlib.block_properties.duplicate": "Property '%s' was already set",
   "argument.chimericlib.block_properties.novalue": "Expected value for property '%s'",
-  "argument.chimericlib.block_properties.unclosed": "Expected closing ']' for block properties"
+  "argument.chimericlib.block_properties.unclosed": "Expected closing ']' for block properties",
+  "entity.chimericlib.falling_upward_block_type": "Rising %s"
 }

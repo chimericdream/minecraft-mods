@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added `FallingUpwardBlock` type; it's falling blocks, but they go up instead of down
+
 
 ### 26.2 - 6.2.0
 
