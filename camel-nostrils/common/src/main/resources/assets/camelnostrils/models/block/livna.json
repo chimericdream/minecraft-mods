@@ -1,0 +1,6 @@
+{
+    "parent": "camelnostrils:block/template_livna",
+    "textures": {
+        "top": "minecraft:block/anvil_top"
+    }
+}

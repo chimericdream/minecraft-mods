@@ -1,5 +1,7 @@
 package com.chimericdream.camelnostrils;
 
+import com.chimericdream.camelnostrils.block.ModBlocks;
+import com.chimericdream.camelnostrils.entity.ModEntities;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -16,6 +18,9 @@ public final class CamelNostrilsMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+
+        ModEntities.init();
+        ModBlocks.init();
 
         REGISTRY_HELPER.init();
     }

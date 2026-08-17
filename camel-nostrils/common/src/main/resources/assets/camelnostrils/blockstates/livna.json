@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "camelnostrils:block/livna",
+            "y": 270
+        },
+        "facing=north": {
+            "model": "camelnostrils:block/livna",
+            "y": 180
+        },
+        "facing=south": {
+            "model": "camelnostrils:block/livna"
+        },
+        "facing=west": {
+            "model": "camelnostrils:block/livna",
+            "y": 90
+        }
+    }
+}
