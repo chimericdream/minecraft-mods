@@ -36,36 +36,38 @@ export const loadProperties = async (project: string): Promise<ModProperties> =>
     }, {} as ModProperties);
 }
 
-/**
- * Resolves the list of project folder names to operate on, based on a `--mods=<id,id,...>` (or
- * `--mods <id,id,...>`) CLI argument. Values are matched against each project's `mod_id` (from
- * gradle.properties) or its folder name, case-insensitively. With no `--mods` argument, returns
- * every project in project-list.json (i.e. a full build), preserving that file's ordering.
- */
-export const resolveSelectedProjects = async (argv: string[] = process.argv): Promise<string[]> => {
-    let modsValue: string | undefined;
-
+const extractFlagValue = (argv: string[], flag: string): string | undefined => {
     for (let i = 0; i < argv.length; i++) {
         const arg = argv[i];
 
-        if (arg.startsWith('--mods=')) {
-            modsValue = arg.slice('--mods='.length);
-            break;
+        if (arg.startsWith(`${flag}=`)) {
+            return arg.slice(flag.length + 1);
         }
 
-        if (arg === '--mods') {
-            modsValue = argv[i + 1];
-            break;
+        if (arg === flag) {
+            return argv[i + 1];
         }
     }
 
-    if (!modsValue) {
-        return projectList;
-    }
+    return undefined;
+};
 
-    const requestedIds = modsValue.split(',').map(id => id.trim().toLowerCase()).filter(Boolean);
+const parseIds = (value: string | undefined): string[] =>
+    (value ?? '').split(',').map(id => id.trim().toLowerCase()).filter(Boolean);
 
-    if (requestedIds.length === 0) {
+/**
+ * Resolves the list of project folder names to operate on, based on `--mods=<id,id,...>` (or
+ * `--mods <id,id,...>`) and `--exclude=<id,id,...>` (or `--exclude <id,id,...>`) CLI arguments.
+ * Values are matched against each project's `mod_id` (from gradle.properties) or its folder name,
+ * case-insensitively. With no `--mods` argument, the base set is every project in
+ * project-list.json; `--exclude` then removes matching projects from that base set (whether it
+ * came from `--mods` or the full list), preserving project-list.json's ordering.
+ */
+export const resolveSelectedProjects = async (argv: string[] = process.argv): Promise<string[]> => {
+    const requestedIds = parseIds(extractFlagValue(argv, '--mods'));
+    const excludedIds = parseIds(extractFlagValue(argv, '--exclude'));
+
+    if (requestedIds.length === 0 && excludedIds.length === 0) {
         return projectList;
     }
 
@@ -76,29 +78,36 @@ export const resolveSelectedProjects = async (argv: string[] = process.argv): Pr
         aliasesByProject.set(project, [properties.mod_id.toLowerCase(), project.toLowerCase()]);
     }
 
-    const selected: string[] = [];
-    const unknown: string[] = [];
+    const resolveIds = (ids: string[], flagName: string): string[] => {
+        const resolved: string[] = [];
+        const unknown: string[] = [];
 
-    for (const id of requestedIds) {
-        const project = projectList.find(candidate => aliasesByProject.get(candidate)!.includes(id));
+        for (const id of ids) {
+            const project = projectList.find(candidate => aliasesByProject.get(candidate)!.includes(id));
 
-        if (!project) {
-            unknown.push(id);
-        } else if (!selected.includes(project)) {
-            selected.push(project);
+            if (!project) {
+                unknown.push(id);
+            } else if (!resolved.includes(project)) {
+                resolved.push(project);
+            }
         }
-    }
 
-    if (unknown.length > 0) {
-        const available = projectList
-            .map(project => aliasesByProject.get(project)![0])
-            .sort()
-            .join(', ');
+        if (unknown.length > 0) {
+            const available = projectList
+                .map(project => aliasesByProject.get(project)![0])
+                .sort()
+                .join(', ');
 
-        throw new Error(`Unknown --mods value(s): ${unknown.join(', ')}. Available mod ids: ${available}`);
-    }
+            throw new Error(`Unknown ${flagName} value(s): ${unknown.join(', ')}. Available mod ids: ${available}`);
+        }
 
-    return selected;
+        return resolved;
+    };
+
+    const base = requestedIds.length > 0 ? resolveIds(requestedIds, '--mods') : projectList;
+    const excluded = new Set(resolveIds(excludedIds, '--exclude'));
+
+    return base.filter(project => !excluded.has(project));
 };
 
 export const isFullProjectSet = (projects: string[]): boolean =>
