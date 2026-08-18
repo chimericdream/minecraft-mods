@@ -9,7 +9,7 @@
     ],
     "contact": {
         "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "sources": "https://github.com/chimericdream/minecraft-mods"
     },
     "license": "MIT",
     "icon": "assets/betterportallinking/icon.png",
@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.betterportallinking.fabric.client.BetterPortalLinkingFabricClient"
+        ],
+        "modmenu": [
+            "com.chimericdream.betterportallinking.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

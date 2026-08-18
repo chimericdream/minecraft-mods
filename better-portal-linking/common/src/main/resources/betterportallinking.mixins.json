@@ -6,6 +6,8 @@
     "client": [
     ],
     "mixins": [
+        "BPL$NetherPortalBlockMixin",
+        "BPL$PortalForcerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -1,5 +1,6 @@
 package com.chimericdream.betterportallinking;
 
+import com.chimericdream.betterportallinking.config.BetterPortalLinkingConfig;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -15,6 +16,8 @@ public final class BetterPortalLinkingMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
+        BetterPortalLinkingConfig.load();
+
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
