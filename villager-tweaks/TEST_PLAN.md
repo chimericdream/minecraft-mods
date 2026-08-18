@@ -3,7 +3,7 @@
 Villager Tweaks bundles configurable villager QoL changes: the **Bagged Villager** item
 (`BaggedVillagerItem` — bundle + shift-right-click stores a villager with full NBT; using the item
 re-spawns the villager and returns a plain bundle), trading tweaks (`VTTradeOfferMixin`: max-trade
-override, demand modifier toggle), reputation tweaks (`VTVillagerEntityMixin`: global reputation,
+override, demand modifier toggle, max-discount cap), reputation tweaks (`VTVillagerEntityMixin`: global reputation,
 negative-reputation toggle), zombie-conversion tweaks (`VTZombieEntityMixin`,
 `VTZombieVillagerEntityMixin`: always-convert, fixed cure time, cure-time display), villager-growth
 tweaks (`VTAgeableMobMixin`: fixed grow-up time for naturally/egg-spawned babies via
@@ -47,6 +47,10 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
    trade an offer 30+ times without lockout, and confirm restocking still works for other offers.
 6. **Demand modifier** — with the toggle off, spam-trade one offer and verify prices do NOT inflate;
    with it on (default), vanilla inflation returns.
+6a. **Cap max discount** — enable with a low cap (e.g. 20%); cure several zombie villagers to build up
+   reputation, then check a villager's trades: no offer should drop below 80% of its original price.
+   With the toggle off (default), confirm heavily-discounted trades can still reach the vanilla
+   1-item floor.
 7. **Global reputation** — enable; player A heals reputation (cure a zombie villager), player B
    checks prices on the same villager: B should see A's discount. Requires two accounts/LAN.
 8. **Negative reputation off** — hit a villager; verify no gossip penalty (prices/iron golem
@@ -93,6 +97,10 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
 * **`maxTradesMinusOneNeverLocks`** — override = −1; 50 uses; assert never out of stock.
 * **`demandModifierOff`** — trade repeatedly, then restock; assert `demand` stays 0 / price
   unchanged (compare `offer.getCostA()` before/after).
+* **`maxDiscountCapClampsPrice`** — set a low cap (e.g. 20%); drive an offer's `specialPriceDiff`
+  deeply negative (simulate accumulated reputation directly, or via repeated gossip adds); assert
+  `offer.getCostA().getCount()` never drops below the capped floor. Negative control with the toggle
+  off: assert the price can reach the vanilla 1-item floor.
 
 ### GameTests — reputation & zombies
 

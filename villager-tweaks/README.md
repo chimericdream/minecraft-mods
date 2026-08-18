@@ -28,6 +28,8 @@ minecarts.
 * **Override max trades** — optionally change how many times a villager will trade a given offer before it needs to
   restock. Set to `-1` for effectively infinite trades. *(Default: off, unlimited when enabled.)*
 * **Demand modifier** — toggle vanilla's price-increase-on-heavy-trading behavior. *(Default: on.)*
+* **Cap max discount** — limit how far reputation (mainly from curing zombie villagers) can discount a trade's
+  price, as a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
 
 ### Reputation tweaks
 

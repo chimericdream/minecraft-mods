@@ -27,6 +27,10 @@ public class VillagerTweaksConfig {
     public boolean enableGlobalReputation = Defaults.ENABLE_GLOBAL_REPUTATION;
     @SerialEntry
     public boolean enableBadReputation = Defaults.ENABLE_BAD_REPUTATION;
+    @SerialEntry
+    public boolean enableMaxDiscountCap = Defaults.ENABLE_MAX_DISCOUNT_CAP;
+    @SerialEntry
+    public int maxDiscountPercent = Defaults.MAX_DISCOUNT_PERCENT;
 
     @SerialEntry
     public boolean enableConversionTimeOverride = Defaults.ENABLE_CONVERSION_TIME_OVERRIDE;
@@ -95,6 +99,18 @@ public class VillagerTweaksConfig {
                     .binding(Defaults.ENABLE_BAD_REPUTATION, () -> config.enableBadReputation, newVal -> config.enableBadReputation = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableMaxDiscountCap"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableMaxDiscountCap.desc")))
+                    .binding(Defaults.ENABLE_MAX_DISCOUNT_CAP, () -> config.enableMaxDiscountCap, newVal -> config.enableMaxDiscountCap = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.option.maxDiscountPercent"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.maxDiscountPercent.desc")))
+                    .binding(Defaults.MAX_DISCOUNT_PERCENT, () -> config.maxDiscountPercent, newVal -> config.maxDiscountPercent = newVal)
+                    .controller(IntegerFieldControllerBuilder::create)
+                    .build())
                 .build())
             .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.section.conversion"))
@@ -162,6 +178,8 @@ public class VillagerTweaksConfig {
         public static boolean ENABLE_DEMAND_BONUS = true;
         public static boolean ENABLE_GLOBAL_REPUTATION = false;
         public static boolean ENABLE_BAD_REPUTATION = true;
+        public static boolean ENABLE_MAX_DISCOUNT_CAP = false;
+        public static int MAX_DISCOUNT_PERCENT = 99;
 
         public static boolean FORCE_VILLAGER_CONVERSION = false;
         public static boolean ENABLE_CONVERSION_TIME_OVERRIDE = false;

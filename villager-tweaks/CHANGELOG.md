@@ -1,3 +1,11 @@
+### Unreleased changes
+
+#### New Features
+
+* Added a **Cap max discount** trading tweak: an optional cap on how far reputation-driven trade
+  discounts (mainly from curing zombie villagers repeatedly) can reduce a trade's price, expressed as
+  a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
+
 ### 26.2 - 6.1.0
 
 #### Changes
