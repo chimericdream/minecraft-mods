@@ -34,6 +34,8 @@
     "text.config.option.displayGrowUpTime.desc": "Display the time until a baby villager grows up. (Default: false)",
     "text.config.option.enableEmeraldTemptation": "Lure villagers",
     "text.config.option.enableEmeraldTemptation.desc": "Villagers will follow you if you hold an emerald ore block, deepslate emerald ore block, or emerald block. (Default: false)",
+    "text.config.option.enableNitwitLeashing": "Leash nitwits",
+    "text.config.option.enableNitwitLeashing.desc": "When enabled, leads can be attached to nitwit villagers. (Default: false)",
     "item.villagertweaks.bagged_villager": "Bagged Villager",
     "advancements.villagertweaks.root.title": "Villager Tweaks",
     "advancements.villagertweaks.root.desc": "Tricks for managing your local trade population.",

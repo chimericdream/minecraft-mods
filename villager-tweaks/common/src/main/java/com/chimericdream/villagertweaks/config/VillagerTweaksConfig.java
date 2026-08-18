@@ -50,6 +50,8 @@ public class VillagerTweaksConfig {
 
     @SerialEntry
     public boolean enableEmeraldTemptation = Defaults.ENABLE_EMERALD_TEMPTATION;
+    @SerialEntry
+    public boolean enableNitwitLeashing = Defaults.ENABLE_NITWIT_LEASHING;
 
     public static ConfigClassHandler<VillagerTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(VillagerTweaksConfig.class)
         .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
@@ -168,6 +170,12 @@ public class VillagerTweaksConfig {
                     .binding(Defaults.ENABLE_EMERALD_TEMPTATION, () -> config.enableEmeraldTemptation, newVal -> config.enableEmeraldTemptation = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableNitwitLeashing"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableNitwitLeashing.desc")))
+                    .binding(Defaults.ENABLE_NITWIT_LEASHING, () -> config.enableNitwitLeashing, newVal -> config.enableNitwitLeashing = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
                 .build())
         )).generateScreen(parent);
     }
@@ -191,5 +199,7 @@ public class VillagerTweaksConfig {
         public static boolean DISPLAY_GROW_UP_TIME = false;
 
         public static boolean ENABLE_EMERALD_TEMPTATION = false;
+
+        public static boolean ENABLE_NITWIT_LEASHING = false;
     }
 }

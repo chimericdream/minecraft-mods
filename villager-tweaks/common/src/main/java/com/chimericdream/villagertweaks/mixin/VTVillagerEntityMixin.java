@@ -7,6 +7,7 @@ import com.chimericdream.villagertweaks.tag.ModTags;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,6 +67,9 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Shadow
     public abstract VillagerData getVillagerData();
+
+    @Shadow
+    public abstract boolean getVillagerDataFinalized();
 
     public VTVillagerEntityMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
         super(entityType, world);
@@ -154,12 +158,17 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void vt_bagTheVillager(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+
         if (!this.level().isClientSide()) {
             ItemStack itemStack = player.getItemInHand(hand);
 
-            if (itemStack.getItem() == Items.BUNDLE && player.isShiftKeyDown()) {
-                VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+            if (itemStack.getItem() == Items.LEAD && config.enableNitwitLeashing && this.getVillagerData().profession().is(VillagerProfession.NITWIT)) {
+                cir.setReturnValue(InteractionResult.PASS);
+                return;
+            }
 
+            if (itemStack.getItem() == Items.BUNDLE && player.isShiftKeyDown()) {
                 this.gossips.add(
                     config.enableGlobalReputation ? GLOBAL_UUID : player.getUUID(),
                     GossipType.MINOR_NEGATIVE,

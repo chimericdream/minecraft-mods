@@ -55,6 +55,7 @@ minecarts.
 
 * **Lure villagers** — villagers will follow you while you hold an emerald block, emerald ore, or deepslate emerald
   ore. *(Default: off.)*
+* **Leash nitwits** — allows leads to be attached to nitwit villagers. *(Default: off.)*
 
 ### Configuration
 

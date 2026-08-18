@@ -7,6 +7,7 @@
   a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
 * Added two advancements: **Bag and Tag**, for bagging a villager who's reached max trading level, and
   **Pied Piper**, for luring 8 villagers to you at the same time.
+* Added a **Leash nitwits** toggle: leads can be attached to nitwit villagers. *(Default: off.)*
 
 ### 26.2 - 6.1.0
 
