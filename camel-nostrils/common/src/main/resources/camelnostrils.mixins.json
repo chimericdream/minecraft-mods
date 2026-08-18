@@ -6,6 +6,7 @@
     "client": [
     ],
     "mixins": [
+        "CamelNostrils$WaterAnimalMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -13,6 +13,8 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 
 ### Current Features
 
+* Leads can be attached to fish. This doesn't make them live outside water, though.
+
 ## FAQ
 
 **What the hell?**
