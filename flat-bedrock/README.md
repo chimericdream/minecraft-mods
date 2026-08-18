@@ -18,13 +18,19 @@ This is a world-generation tweak, so it only needs to be installed on the server
 
 ### Current Features
 
-* Collapses the randomized bedrock **floor** into a single flat layer at the very bottom of the world.
-* Collapses the randomized bedrock **roof** (e.g. the top of the Nether) into a single flat layer.
+* Collapses the randomized bedrock **floor** into a flat layer at the bottom of the world, with a configurable
+  thickness (1 by default, same as vanilla's thinnest spot).
+* Collapses the randomized bedrock **roof** in the Nether into a flat layer, also with a configurable thickness,
+  or removes it entirely with the "No roof" option.
+* Lets you swap bedrock for a different block, separately for the Overworld and the Nether.
+* All of the above can be set independently for the Overworld and the Nether via an in-game config screen
+  (requires Mod Menu).
 * Works by adjusting the surface rules that place bedrock, so it stays compatible with normal terrain generation.
 
 ### Notes
 
 * This affects **newly generated** chunks. Terrain that has already generated keeps its original bedrock.
+* The End doesn't generate bedrock in vanilla, so there's nothing for this mod to configure there.
 
 ## Notes for Documentation
 

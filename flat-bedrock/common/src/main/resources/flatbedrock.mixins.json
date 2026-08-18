@@ -6,7 +6,9 @@
     "client": [
     ],
     "mixins": [
-        "FlatBedrockMixin"
+        "BedrockStateRuleMixin",
+        "FlatBedrockMixin",
+        "NoiseBasedChunkGeneratorMixin"
     ],
     "injectors": {
         "defaultRequire": 1

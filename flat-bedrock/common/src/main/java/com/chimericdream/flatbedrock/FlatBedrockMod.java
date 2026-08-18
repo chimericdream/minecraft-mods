@@ -1,5 +1,6 @@
 package com.chimericdream.flatbedrock;
 
+import com.chimericdream.flatbedrock.config.FlatBedrockConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,5 +10,7 @@ public final class FlatBedrockMod {
 
     public static void init() {
         LOGGER.info("Let's flatten some bedrock!");
+
+        FlatBedrockConfig.load();
     }
 }

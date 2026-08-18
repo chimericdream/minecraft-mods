@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.flatbedrock.fabric.client.FlatBedrockFabricClient"
+        ],
+        "modmenu": [
+            "com.chimericdream.flatbedrock.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [
@@ -30,7 +33,8 @@
         "minecraft": "~${minecraft_compat}",
         "java": ">=25",
         "fabric-api": "*",
-        "architectury": ">=${architectury_compat}"
+        "architectury": ">=${architectury_compat}",
+        "yet_another_config_lib_v3": ">=${yacl_compat}"
     },
     "recommends": {
         "modmenu": ">=${modmenu_compat}"
