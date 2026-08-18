@@ -1,0 +1,24 @@
+{
+    "parent": "villagertweaks:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:emerald_block"
+        },
+        "title": {
+            "translate": "advancements.villagertweaks.pied_piper.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.villagertweaks.pied_piper.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

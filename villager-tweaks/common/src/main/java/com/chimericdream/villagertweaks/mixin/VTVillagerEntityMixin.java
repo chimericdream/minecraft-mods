@@ -1,5 +1,6 @@
 package com.chimericdream.villagertweaks.mixin;
 
+import com.chimericdream.villagertweaks.advancement.VillagerTweaksAdvancements;
 import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.chimericdream.villagertweaks.item.ModItems;
 import com.chimericdream.villagertweaks.tag.ModTags;
@@ -21,6 +22,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -31,6 +33,7 @@ import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.villager.VillagerData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,6 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
 
 @Mixin(Villager.class)
 public abstract class VTVillagerEntityMixin extends AbstractVillager {
@@ -59,6 +63,9 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Shadow
     public @Final GossipContainer gossips;
+
+    @Shadow
+    public abstract VillagerData getVillagerData();
 
     public VTVillagerEntityMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
         super(entityType, world);
@@ -106,7 +113,42 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
             if (mainHandItem.is(ModTags.TEMPTATION_ITEMS) || offHandItem.is(ModTags.TEMPTATION_ITEMS)) {
                 this.getMoveControl().setWantedPosition(player.getX(), player.getY(), player.getZ(), 0.5f);
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    vt$checkPiedPiper(world, serverPlayer);
+                }
             }
+        }
+    }
+
+    /**
+     * Counts every villager within luring range of {@code player} that's independently eligible to be
+     * tempted toward them right now, and awards Pied Piper once 8 or more are tempted at once. Each
+     * villager tempted this tick runs this same check, so the count only needs to be right, not
+     * deduplicated across callers.
+     */
+    @Unique
+    private void vt$checkPiedPiper(ServerLevel world, ServerPlayer player) {
+        AABB searchArea = player.getBoundingBox().inflate(12.0);
+        int temptedCount = 0;
+
+        for (Villager villager : world.getEntitiesOfClass(Villager.class, searchArea)) {
+            if (
+                villager.isNoAi()
+                    || villager.getLastHurtByMob() != null
+                    || villager.isPanicking()
+                    || villager.isTrading()
+            ) {
+                continue;
+            }
+
+            if (world.getNearestPlayer(villager, 12.0f) == player) {
+                temptedCount++;
+            }
+        }
+
+        if (temptedCount >= VillagerTweaksAdvancements.PIED_PIPER_THRESHOLD) {
+            VillagerTweaksAdvancements.award(player, VillagerTweaksAdvancements.PIED_PIPER);
         }
     }
 
@@ -131,6 +173,10 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
                 newItemStack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
                 newItemStack.set(DataComponents.CUSTOM_DATA, nbtComponent);
+
+                if (this.getVillagerData().level() >= VillagerData.MAX_VILLAGER_LEVEL && player instanceof ServerPlayer serverPlayer) {
+                    VillagerTweaksAdvancements.award(serverPlayer, VillagerTweaksAdvancements.BAG_AND_TAG);
+                }
 
                 player.addItem(newItemStack);
                 itemStack.shrink(1);

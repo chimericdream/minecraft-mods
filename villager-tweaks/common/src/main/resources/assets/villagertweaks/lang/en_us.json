@@ -34,5 +34,11 @@
     "text.config.option.displayGrowUpTime.desc": "Display the time until a baby villager grows up. (Default: false)",
     "text.config.option.enableEmeraldTemptation": "Lure villagers",
     "text.config.option.enableEmeraldTemptation.desc": "Villagers will follow you if you hold an emerald ore block, deepslate emerald ore block, or emerald block. (Default: false)",
-    "item.villagertweaks.bagged_villager": "Bagged Villager"
+    "item.villagertweaks.bagged_villager": "Bagged Villager",
+    "advancements.villagertweaks.root.title": "Villager Tweaks",
+    "advancements.villagertweaks.root.desc": "Tricks for managing your local trade population.",
+    "advancements.villagertweaks.bag_and_tag.title": "Bag and Tag",
+    "advancements.villagertweaks.bag_and_tag.desc": "Bag a villager who has reached max trading level.",
+    "advancements.villagertweaks.pied_piper.title": "Pied Piper",
+    "advancements.villagertweaks.pied_piper.desc": "Lure 8 villagers to you at the same time."
 }
