@@ -12,6 +12,7 @@
 * Building that same shape around a Detached Creaking Heart instead produces an inert Creaking
   statue that never moves
 * Wearing a Pale Carved Pumpkin as a helmet keeps any creaking, tame or wild, from noticing you
+* Added "Change of Heart" advancement; scrape a creaking heart block to get a "detatched" creaking heart
 
 ### 26.2 - 3.0.0
 
