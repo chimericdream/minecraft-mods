@@ -14,6 +14,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
@@ -51,6 +52,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
     private @Nullable BlockPattern creakingGolemFull;
     private static final Predicate<BlockState> PALE_LOGS_PREDICATE;
     private static final Predicate<BlockState> PALE_PUMPKINS_PREDICATE;
+    private static final Predicate<BlockState> CREAKING_HEARTS_PREDICATE;
 
     public @NonNull MapCodec<? extends CarvedPumpkinBlock> codec() {
         return CODEC;
@@ -78,7 +80,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         final boolean movedByPiston
     ) {
         if (!oldState.is(state.getBlock())) {
-            this.trySpawnGolem(level, pos);
+            this.trySpawnGolem(level, pos, state);
         }
     }
 
@@ -86,7 +88,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         return this.getOrCreateCreakingGolemBase().find(level, topPos) != null;
     }
 
-    private void trySpawnGolem(final Level level, final BlockPos topPos) {
+    private void trySpawnGolem(final Level level, final BlockPos topPos, final BlockState state) {
         BlockPattern.BlockPatternMatch creakingGolemMatch = this.getOrCreateCreakingGolemFull().find(level, topPos);
         if (creakingGolemMatch != null) {
             Creaking creaking = (Creaking) EntityTypes.CREAKING.create(level, EntitySpawnReason.TRIGGERED);
@@ -98,15 +100,29 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
                 creaking.setHealth(creaking.getMaxHealth());
                 creaking.setPersistenceRequired();
                 ((PassiveCreakingAccessor) creaking).ah$setPassive(true);
-                spawnGolemInWorld(level, creakingGolemMatch, creaking, creakingGolemMatch.getBlock(1, 2, 0).getPos());
+                if (creakingGolemMatch.getBlock(1, 1, 0).getState().is(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get())) {
+                    // A Detached Creaking Heart is fully decorative, so the golem it builds is inert - it stands
+                    // in place instead of stalking players like one built on a real creaking heart.
+                    creaking.setNoAi(true);
+                }
+                float golemYaw = state.getValue(FACING).toYRot();
+                BlockPos spawnPos = creakingGolemMatch.getBlock(1, 2, 0).getPos();
+                spawnGolemInWorld(level, creakingGolemMatch, creaking, spawnPos, golemYaw);
                 return;
             }
         }
     }
 
-    private static void spawnGolemInWorld(final Level level, final BlockPattern.BlockPatternMatch match, final Entity golem, final BlockPos spawnPos) {
+    private static void spawnGolemInWorld(final Level level, final BlockPattern.BlockPatternMatch match, final Entity golem, final BlockPos spawnPos, final float yaw) {
         clearPatternBlocks(level, match);
-        golem.snapTo((double)spawnPos.getX() + (double)0.5F, (double)spawnPos.getY() + 0.05, (double)spawnPos.getZ() + (double)0.5F, 0.0F, 0.0F);
+        golem.snapTo((double)spawnPos.getX() + (double)0.5F, (double)spawnPos.getY() + 0.05, (double)spawnPos.getZ() + (double)0.5F, yaw, 0.0F);
+        if (golem instanceof Mob mob) {
+            // snapTo only sets yRot/xRot. The spawn packet's client-side body/head orientation comes from
+            // yHeadRot instead, which otherwise stays at its construction-time default (0) until AI ticks
+            // catch it up - so a NoAi golem would spawn facing the wrong way and never correct itself.
+            mob.setYHeadRot(yaw);
+            mob.setYBodyRot(yaw);
+        }
         level.addFreshEntity(golem);
 
         for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate((double)5.0F))) {
@@ -147,7 +163,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         if (this.creakingGolemBase == null) {
             this.creakingGolemBase = BlockPatternBuilder.start()
                 .aisle(new String[]{"~ ~", "fhf", "~#~"})
-                .where('h', BlockInWorld.hasState(BlockStatePredicate.forBlock(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get())))
+                .where('h', BlockInWorld.hasState(CREAKING_HEARTS_PREDICATE))
                 .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
                 .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
                 .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
@@ -162,7 +178,7 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
             this.creakingGolemFull = BlockPatternBuilder.start()
                 .aisle(new String[]{"~^~", "fhf", "~#~"})
                 .where('^', BlockInWorld.hasState(PALE_PUMPKINS_PREDICATE))
-                .where('h', BlockInWorld.hasState(BlockStatePredicate.forBlock(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get())))
+                .where('h', BlockInWorld.hasState(CREAKING_HEARTS_PREDICATE))
                 .where('#', BlockInWorld.hasState(PALE_LOGS_PREDICATE))
                 .where('f', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.PALE_OAK_FENCE)))
                 .where('~', BlockInWorld.hasState(BlockBehaviour.BlockStateBase::isAir))
@@ -176,5 +192,6 @@ public class PaleCarvedPumpkinBlock extends HorizontalDirectionalBlock {
         FACING = HorizontalDirectionalBlock.FACING;
         PALE_LOGS_PREDICATE = (input) -> input.is(BlockTags.PALE_OAK_LOGS);
         PALE_PUMPKINS_PREDICATE = (input) -> input.is(ModBlocks.PALE_CARVED_PUMPKIN_BLOCK.get()) || input.is(ModBlocks.PALE_JACK_O_LANTERN_BLOCK.get());
+        CREAKING_HEARTS_PREDICATE = (input) -> input.is(Blocks.CREAKING_HEART) || input.is(ModBlocks.ARTIFICIAL_CREAKING_HEART_BLOCK.get());
     }
 }

@@ -26,10 +26,11 @@ without their behavior.
   axe for the creaking heart), keeping the workflow intuitive and vanilla-friendly.
 * **Pale Pumpkin** — a pale garden-themed pumpkin, with matching carved and jack o'lantern variants. Pale
   pumpkin patches also grow naturally in Pale Garden biomes.
-* **Creaking Golem** — build a golem shape from pale oak fence and logs around a Detached Creaking Heart,
-  then top it with a carved pale pumpkin or jack o'lantern to summon a friendly, sturdy creaking. It
-  reacts to nearby players just like a wild one — it'll even freeze in place if you stare it down — but
-  it will never attack you. Wearing a Pale Carved Pumpkin as a helmet keeps any creaking, tame or wild,
+* **Creaking Golem** — build a golem shape from pale oak fence and logs around a Creaking Heart, then top
+  it with a carved pale pumpkin or jack o'lantern to summon a friendly, sturdy creaking. It reacts to
+  nearby players just like a wild one — it'll even freeze in place if you stare it down — but it will
+  never attack you. Building the same shape around a Detached Creaking Heart instead produces an inert
+  statue that never moves. Wearing a Pale Carved Pumpkin as a helmet keeps any creaking, tame or wild,
   from noticing you at all.
 
 ## Notes for Documentation
