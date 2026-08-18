@@ -6,6 +6,8 @@ _Gives players more control over how their nether portals link between the Nethe
 
 ## Introduction
 
+![Example Screenshot](./docs/img/linked-portals-example.png)
+
 ### Minecraft Versions
 
 * 26.2: supported
