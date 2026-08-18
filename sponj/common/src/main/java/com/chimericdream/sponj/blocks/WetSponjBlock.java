@@ -1,6 +1,7 @@
 package com.chimericdream.sponj.blocks;
 
 import com.chimericdream.sponj.ModInfo;
+import com.chimericdream.sponj.advancement.SponjAdvancements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,6 +13,7 @@ import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.Nullable;
 
 public class WetSponjBlock extends AbstractWetSponjBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "wet_sponj");
@@ -41,5 +43,11 @@ public class WetSponjBlock extends AbstractWetSponjBlock {
         } catch (RuntimeException e) {
             return false;
         }
+    }
+
+    @Override
+    @Nullable
+    protected Identifier getDryOutAdvancement() {
+        return SponjAdvancements.DRY_HEAT;
     }
 }

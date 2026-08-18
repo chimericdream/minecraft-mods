@@ -1,14 +1,17 @@
 package com.chimericdream.sponj.blocks;
 
 import com.chimericdream.sponj.ModInfo;
+import com.chimericdream.sponj.advancement.SponjAdvancements;
 
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,5 +54,10 @@ public class SponjBlock extends AbstractSponjBlock {
     @Override
     protected boolean absorbsWashableBlocks() {
         return true;
+    }
+
+    @Override
+    protected void onFluidAbsorbed(Level world, BlockPos pos, int blocksAbsorbed) {
+        SponjAdvancements.incrementWaterAbsorbed(world, pos, blocksAbsorbed);
     }
 }

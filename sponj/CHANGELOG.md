@@ -1,3 +1,12 @@
+### Unreleased changes
+
+#### New Features
+
+* Added four advancements: **Big Gulp** (dry a region with a 16-sponj wall), **Spill Response Team**
+  (absorb a total of 100,000 blocks of water), **Dry Heat** (dry a wet sponj in the nether), and
+  **Space Heater** (dry a wet lava sponj in the end).
+
+
 ### 26.2 - 6.0.0
 
 #### BREAKING CHANGES

@@ -2,5 +2,18 @@
     "block.sponj.sponj": "Sponj",
     "block.sponj.lava_sponj": "Lava Sponj",
     "block.sponj.wet_sponj": "Wet Sponj",
-    "block.sponj.wet_lava_sponj": "Wet Lava Sponj"
+    "block.sponj.wet_lava_sponj": "Wet Lava Sponj",
+
+    "advancements.sponj.root.title": "Sponj",
+    "advancements.sponj.root.desc": "Soak it all up",
+    "advancements.sponj.big_gulp.title": "Big Gulp",
+    "advancements.sponj.big_gulp.desc": "Dry a region with 16 or more connected sponjes",
+    "advancements.sponj.spill_response_team.title": "Spill Response Team",
+    "advancements.sponj.spill_response_team.desc": "Absorb a total of 100,000 blocks of water",
+    "advancements.sponj.dry_heat.title": "Dry Heat",
+    "advancements.sponj.dry_heat.desc": "Dry a wet sponj in the nether",
+    "advancements.sponj.space_heater.title": "Space Heater",
+    "advancements.sponj.space_heater.desc": "Dry a wet lava sponj in the end",
+
+    "stat.sponj.water_absorbed": "Water Blocks Absorbed"
 }

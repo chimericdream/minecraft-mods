@@ -1,0 +1,24 @@
+{
+    "parent": "sponj:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:end_stone"
+        },
+        "title": {
+            "translate": "advancements.sponj.space_heater.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.sponj.space_heater.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}
