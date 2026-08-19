@@ -6,8 +6,13 @@
     "client": [
     ],
     "mixins": [
-        "CN$WaterAnimalMixin",
-        "CN$AnvilMenuMixin"
+        "CN$AgeableMobRendererMixin",
+        "CN$AnvilMenuMixin",
+        "CN$CamelMixin",
+        "CN$CamelRendererMixin",
+        "CN$CamelRenderStateMixin",
+        "CN$LivingEntityRendererAccessor",
+        "CN$WaterAnimalMixin"
     ],
     "injectors": {
         "defaultRequire": 1

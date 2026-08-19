@@ -129,6 +129,37 @@ BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup)
 
 Reference: `minekea/fabric/.../data/ModDataGenerator.java`. Full write-up: `docs/MC-26.2-NOTES.md`.
 
+## Mixin-added `SynchedEntityData` fields crash on NeoForge only
+
+Adding a new synced-data field to a **vanilla** entity via `@Mixin` — a `@Unique static final
+EntityDataAccessor<T> FOO = SynchedEntityData.defineId(TargetEntity.class, ...)` merged into the
+target class by Mixin — compiles and works fine on Fabric, but crashes NeoForge at bootstrap with an
+opaque `net.neoforged.fml.ModLoadingException: ... ExceptionInInitializerError: null` during "Registry
+initialization." The crash report and logs give **no stack trace or cause** for this one — FML's
+`ModLoader.waitForFuture` only formats the caught exception's class + message, never its `getCause()`
+chain, so the real reason never surfaces anywhere on disk. Confirmed by attaching a debugger and by
+bisecting the mixin file line-by-line.
+
+**Root cause**: NeoForge patches `SynchedEntityData.defineId` to verify the calling code's declaring
+class actually *is* the entity class being registered against, and hard-rejects mismatches as "attempt
+to add synced data to a foreign entity." Mixin's bytecode merge makes the field's initializer *execute*
+as part of the target class's own `<clinit>`, but the merged code still isn't recognized as declared by
+the entity class, so NeoForge (and only NeoForge — Fabric has no equivalent check) blocks it
+unconditionally. This is deliberate on NeoForge's part (preventing synced-data id collisions between
+mods), not a bug to work around with mixin priority/ordering tricks.
+
+**Fix**: don't use `SynchedEntityData` for mixin-added fields on vanilla entities. Use each platform's
+native attachment API instead (NeoForge's `AttachmentType`, Fabric's
+`AttachmentType`/`AttachmentRegistry`/`AttachmentTarget`), which isn't drawn from a fixed id space and
+supports both persistence (`.serialize(MapCodec)` / `.persistent(Codec)`) and client sync
+(`.sync(StreamCodec)` / `.syncWith(StreamCodec, AttachmentSyncPredicate)`). Put the platform split
+behind a common `Provider` interface set via `setProvider(...)` at platform mod-init — **not**
+`@ExpectPlatform`, since NeoForge's dev run resolves `common` and the `neoforge` source set as separate
+JPMS modules, and an `@ExpectPlatform`-generated `Impl` class in the same package as its interface
+causes two modules to export that package, which fails FML startup ("Modules ... export package ...").
+Reference implementations: `sneaky-tweaks`'s `CampfireGraceHolder` (the original instance of this
+pattern) and `camel-nostrils`'s `CN$CamelSnoutState`.
+
 ## Scaffolding
 
 - **New mod**: `scripts/init-mod.sh` (interactive) runs `bun create mod` against the `.bun-create/mod/`
