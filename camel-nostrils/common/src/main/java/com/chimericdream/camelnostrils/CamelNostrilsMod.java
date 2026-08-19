@@ -2,6 +2,7 @@ package com.chimericdream.camelnostrils;
 
 import com.chimericdream.camelnostrils.block.ModBlocks;
 import com.chimericdream.camelnostrils.entity.ModEntities;
+import com.chimericdream.camelnostrils.stats.ModStats;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -21,6 +22,7 @@ public final class CamelNostrilsMod {
 
         ModEntities.init();
         ModBlocks.init();
+        ModStats.init();
 
         REGISTRY_HELPER.init();
     }

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WaterAnimal.class)
-public class CamelNostrils$WaterAnimalMixin {
+public class CN$WaterAnimalMixin {
     @Inject(method = "canBeLeashed", at = @At("HEAD"), cancellable = true)
     private void cn$allowLeashingFish(final CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(true);
