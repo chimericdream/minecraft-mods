@@ -14,6 +14,8 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 ### Current Features
 
 * Leads can be attached to fish. This doesn't make them live outside water, though.
+* The Livna block: an anvil that falls upward instead of down, damaging anything above it. Works just like a regular anvil, including wearing out into a Chipped and then Damaged version over time.
+* Leash a camel and let it lag too far behind you, and there's a small chance you'll rip its snout clean off. It drops as an item, and pulling one off for the first time unlocks a hidden advancement.
 
 ## FAQ
 
