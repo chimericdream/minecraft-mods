@@ -8,6 +8,9 @@ import net.minecraft.server.level.ServerPlayer;
 
 public final class CamelNostrilsAdvancements {
     public static final Identifier CAMEL_NOSTRILS = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "camel_nostrils");
+    public static final Identifier FISH_WALKER = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fish_walker");
+    public static final Identifier FISH_OUT_OF_WATER = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fish_out_of_water");
+    public static final Identifier WHAT_GOES_UP = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "what_goes_up");
 
     private CamelNostrilsAdvancements() {
     }

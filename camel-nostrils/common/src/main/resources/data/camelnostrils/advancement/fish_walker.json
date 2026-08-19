@@ -1,0 +1,24 @@
+{
+    "parent": "camelnostrils:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:lead"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.fish_walker.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.fish_walker.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

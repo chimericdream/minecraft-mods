@@ -11,6 +11,8 @@
         "CN$CamelMixin",
         "CN$CamelRendererMixin",
         "CN$CamelRenderStateMixin",
+        "CN$EntityMixin",
+        "CN$LivingEntityMixin",
         "CN$LivingEntityRendererAccessor",
         "CN$WaterAnimalMixin"
     ],

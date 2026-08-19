@@ -1,6 +1,7 @@
 package com.chimericdream.camelnostrils.block;
 
 import com.chimericdream.camelnostrils.ModInfo;
+import com.chimericdream.camelnostrils.advancement.CamelNostrilsAdvancements;
 import com.chimericdream.camelnostrils.entity.ModEntities;
 import com.chimericdream.camelnostrils.stats.ModStats;
 import com.chimericdream.lib.blocks.FallingUpwardBlock;
@@ -12,13 +13,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
@@ -91,6 +95,14 @@ public class LivnaBlock extends FallingUpwardBlock {
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
+    }
+
+    public void setPlacedBy(@NonNull Level level, @NonNull BlockPos pos, @NonNull BlockState state, @Nullable LivingEntity placer, @NonNull ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+
+        if (!level.isClientSide() && placer instanceof ServerPlayer serverPlayer) {
+            CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.WHAT_GOES_UP);
+        }
     }
 
     protected @NonNull InteractionResult useWithoutItem(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull BlockHitResult hitResult) {

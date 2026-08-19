@@ -1,0 +1,24 @@
+{
+    "parent": "camelnostrils:fish_walker",
+    "display": {
+        "icon": {
+            "id": "minecraft:cod"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.fish_out_of_water.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.fish_out_of_water.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}
