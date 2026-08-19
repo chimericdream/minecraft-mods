@@ -44,7 +44,7 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
             CN$CamelSnoutState.hasSnout(self)
                 && holder instanceof Player player
                 && player.level() instanceof ServerLevel level
-                && player.getRandom().nextFloat() < 0.99f
+                && player.getRandom().nextFloat() < 0.05f
         ) {
             CamelNostrilsMod.LOGGER.info("Leashing too far... ripping nose off");
             if (CAMEL_SNOUT == null) {
