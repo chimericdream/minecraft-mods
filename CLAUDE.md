@@ -160,6 +160,39 @@ causes two modules to export that package, which fails FML startup ("Modules ...
 Reference implementations: `sneaky-tweaks`'s `CampfireGraceHolder` (the original instance of this
 pattern) and `camel-nostrils`'s `CN$CamelSnoutState`.
 
+## Custom entity renderers must register in the NeoForge mod constructor, not a lifecycle event
+
+Registering a **custom entity's** renderer via Architectury's
+`dev.architectury.registry.client.level.entity.EntityRendererRegistry.register(...)` works fine on
+Fabric but silently no-ops on NeoForge if the call happens from any `@SubscribeEvent` lifecycle
+handler — including `EntityRenderersEvent.RegisterRenderers`, the event that looks like the obviously
+correct place. The entity then has no renderer, and the game crashes the next time it's anywhere in
+view: `NullPointerException: Cannot invoke "EntityRenderer.shouldRender(...)" because "renderer" is
+null` in `EntityRenderDispatcher.shouldRender`, reached via `LevelExtractor.extractVisibleEntities` on
+the render thread. Confirmed via `camel-nostrils`'s Livna block (spawns a
+`FallingUpwardBlockEntity`) — placing the block summoned the entity and crashed the client
+immediately.
+
+**Root cause**: `EntityRendererRegistry.register(...)` just stores the factory in a static map
+(`EntityRendererRegistryImpl.RENDERERS`, in architectury-neoforge). That map is only drained into the
+real game renderer dispatch by **Architectury's own** `EntityRenderersEvent.RegisterRenderers`
+listener, which is subscribed on *architectury's own mod event bus* — not yours. NeoForge fires this
+event separately per mod bus, in mod-load order, and every mod here declares `architectury` as an
+`ordering = "AFTER"` dependency, so architectury's bus fires (and drains the map) *before* your mod's
+bus gets the same event. By the time your own `RegisterRenderers` handler runs and populates the map,
+architectury has already read it and moved on — the entry is added too late and never consumed.
+
+**Fix**: call `EntityRendererRegistry.register(...)` directly and unconditionally in the platform mod
+class's **constructor** (guarded by `FMLEnvironment.getDist() == Dist.CLIENT`), not from any
+`@SubscribeEvent` hook. Mod construction for every mod completes before any lifecycle or client event
+fires for any of them, so this is early enough regardless of bus-firing order. This does **not** apply
+on Fabric — `ClientModInitializer.onInitializeClient()` already runs early enough relative to Fabric's
+own entity-renderer map construction — and it does **not** apply to Architectury's separate
+`BlockEntityRendererRegistry` (block-entity renderers), which registers fine from inside
+`EntityRenderersEvent.RegisterRenderers`. Reference implementations:
+`minekea/neoforge/.../MinekeaNeoForge.java` constructor (the original instance of this pattern) and
+`camel-nostrils/neoforge/.../CamelNostrilsNeoForge.java` constructor.
+
 ## Scaffolding
 
 - **New mod**: `scripts/init-mod.sh` (interactive) runs `bun create mod` against the `.bun-create/mod/`
