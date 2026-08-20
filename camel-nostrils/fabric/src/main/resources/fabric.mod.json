@@ -23,7 +23,8 @@
         ]
     },
     "mixins": [
-        "camelnostrils.mixins.json"
+        "camelnostrils.mixins.json",
+        "camelnostrils.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_compat}",

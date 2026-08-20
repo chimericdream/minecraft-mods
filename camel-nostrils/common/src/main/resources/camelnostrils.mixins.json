@@ -16,7 +16,6 @@
         "CN$LivingEntityMixin",
         "CN$LivingEntityRendererAccessor",
         "CN$PlayerAccessor",
-        "CN$ServerPlayerMixin",
         "CN$WaterAnimalMixin"
     ],
     "injectors": {

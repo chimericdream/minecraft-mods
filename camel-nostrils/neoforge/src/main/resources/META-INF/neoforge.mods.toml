@@ -50,3 +50,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "camelnostrils.mixins.json"
+
+[[mixins]]
+config = "META-INF/camelnostrils.neoforge.mixins.json"

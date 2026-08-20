@@ -68,3 +68,48 @@ own entity-renderer map construction — and it does **not** apply to Architectu
 `EntityRenderersEvent.RegisterRenderers`. Reference implementations:
 `minekea/neoforge/.../MinekeaNeoForge.java` constructor (the original instance of this pattern) and
 `camel-nostrils/neoforge/.../CamelNostrilsNeoForge.java` constructor.
+
+## NeoForge's event-hook patches restructure vanilla method bodies into differently-numbered lambdas
+
+A `@Redirect`/`@Inject` mixin whose `method =` and `@At(target = ...)` were derived from vanilla/Fabric
+bytecode can fail purely on NeoForge with `InjectionError: ... failed injection check, (0/1)
+succeeded. Scanned 0 target(s)` — even though the named method still exists in the patched class (so
+it's not the usual "method renamed/removed" case) and even though `required`/`defaultRequire` are
+otherwise satisfied. Confirmed via `camel-nostrils`'s `CN$ServerPlayerMixin`, which redirects
+`BedRule.canSleep`/`canSetSpawn` and a `PlayerTrigger.trigger` call inside
+`ServerPlayer#startSleepInBed`.
+
+**Root cause**: NeoForge patches many vanilla methods to wrap their body in an event hook (here,
+`EventHooks.canPlayerStartSleeping`). To do this without duplicating logic, the patcher moves the
+method's *entire original body* into a synthetic lambda (`invokedynamic` + `lambda$originalMethod$N`),
+computes its result once for the event to see/override, then falls through to the real state change
+(often via `super.methodName(...)`, unpatched on the superclass) only if the event didn't cancel.
+Confirmed via `javap` against `~/.gradle/caches/fabric-loom/{mc_version}/neoforge/{neoforge_version}/minecraft-merged-official-at-patched.jar`
+(the actual patched jar Loom builds against — **not** the `neoforge-*-sources.jar` from Maven, which is
+NeoForge's own mod source, not patched vanilla source): on NeoForge,
+`ServerPlayer#startSleepInBed` no longer contains the `BedRule` checks or the `bedBlocked` call at
+all — they moved into `lambda$startSleepInBed$0`, and the advancement-trigger consumer that's
+`lambda$startSleepInBed$1` on vanilla/Fabric shifted to `lambda$startSleepInBed$2` (NeoForge's patch
+adds an extra lambda earlier in the method, shifting every later lambda's synthetic index). Mixin's
+injector still finds the *named* target method fine; it just scans zero matching instructions inside
+it, hence "Scanned 0 target(s)" rather than a "target not found" error.
+
+**Fix**: don't assume a mixin targeting vanilla method/lambda names works unmodified on NeoForge if
+that method is patched. Diff the two independently with `javap -p -c` (extract just the class you need
+from the patched jar above, and from the unpatched
+`~/.gradle/caches/fabric-loom/{mc_version}/net/minecraft/minecraft-merged-deobf/**.jar` or equivalent,
+rather than trusting a decompile of one side) to find the real target method/lambda names and confirm
+which `INVOKE`s actually live where on each platform. If they differ, split into a common mixin (used
+by Fabric only) plus a NeoForge-only mixin class + its own mixin config, each targeting the correct
+lambda numbering for that platform — register the common config only from `fabric.mod.json` (add a
+`camelnostrils.fabric.mixins.json`-style second config there for the fabric-only pieces) and the
+NeoForge one only from `neoforge.mods.toml`'s own `[[mixins]]` block, so mixins unaffected by the
+patch can stay in one shared config while the affected one gets platform-specific implementations.
+Redirects that only consume the `@At(INVOKE)`'s own call arguments (not surrounding locals) are
+unaffected by which method contains them and don't need MixinExtras `@Local` sugar at all — only the
+ones capturing an enclosing-method local (e.g. via `@Local(argsOnly = true)`) need their target
+updated to whichever method/lambda now contains that local in scope. Reference implementation:
+`camel-nostrils`'s `CN$ServerPlayerMixin` — compare
+`common/.../mixin/CN$ServerPlayerMixin.java` (Fabric, registered via `camelnostrils.fabric.mixins.json`)
+against `neoforge/.../neoforge/mixin/CN$ServerPlayerMixin.java` (registered via
+`META-INF/camelnostrils.neoforge.mixins.json`).
