@@ -13,6 +13,8 @@ public final class CamelNostrilsAdvancements {
     public static final Identifier WHAT_GOES_UP = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "what_goes_up");
     public static final Identifier GOLDEN_EGG_FIRST_EATEN = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "golden_egg_first_eaten");
     public static final Identifier NAP_TIME = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "nap_time");
+    public static final Identifier MIRACLE_GRO = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "miracle_gro");
+    public static final Identifier MIRACLE_CURE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "miracle_cure");
 
     private CamelNostrilsAdvancements() {
     }

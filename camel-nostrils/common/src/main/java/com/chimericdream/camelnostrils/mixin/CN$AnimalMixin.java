@@ -1,7 +1,9 @@
 package com.chimericdream.camelnostrils.mixin;
 
+import com.chimericdream.camelnostrils.advancement.CamelNostrilsAdvancements;
 import com.chimericdream.camelnostrils.item.ModItems;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,6 +39,10 @@ public abstract class CN$AnimalMixin {
             if (!chicken.level().isClientSide()) {
                 itemStack.consume(1, player);
                 chicken.setAge(0);
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.MIRACLE_GRO);
+                }
             }
 
             cir.setReturnValue(InteractionResult.SUCCESS);

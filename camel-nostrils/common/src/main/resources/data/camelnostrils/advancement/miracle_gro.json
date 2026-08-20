@@ -1,0 +1,24 @@
+{
+    "parent": "camelnostrils:root",
+    "display": {
+        "icon": {
+            "id": "camelnostrils:golden_cactus"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.miracle_gro.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.miracle_gro.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

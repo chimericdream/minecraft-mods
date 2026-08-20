@@ -85,6 +85,10 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
                 itemStack.consume(1, player);
                 self.setAge(0);
                 self.playSound(SoundEvents.CAMEL_EAT, 1.0F, 1.0F);
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.MIRACLE_GRO);
+                }
             }
 
             self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
@@ -93,6 +97,10 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
         } else if (!self.level().isClientSide() && !CN$CamelSnoutState.hasSnout(self)) {
             CN$CamelSnoutState.setHasSnout(self, true);
             self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.MIRACLE_CURE);
+            }
         }
     }
 
