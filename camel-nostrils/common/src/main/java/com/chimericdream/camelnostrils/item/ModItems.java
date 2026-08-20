@@ -20,6 +20,7 @@ public class ModItems {
                 .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
                 .food(Foods.GOLDEN_CARROT)
                 .setId(REGISTRY_HELPER.makeItemRegistryKey("golden_egg"))
+                .stacksTo(16)
         )
     );
 
