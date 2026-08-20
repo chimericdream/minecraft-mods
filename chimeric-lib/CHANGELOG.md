@@ -1,8 +1,17 @@
 ### Unreleased changes
 
+
+### 26.2 - 6.3.0
+
 #### New Features
 
-* Added `FallingUpwardBlock` type; it's falling blocks, but they go up instead of down
+* Added `FallingUpwardBlock`/`Risable`/`FallingUpwardBlockEntity` — the inverse of vanilla's falling
+  block/`Fallable`: blocks that rise toward the sky instead of falling, despawning past the top of the
+  world instead of the bottom.
+* Added `ChimericLibParticleUtils#spawnParticleAbove` — spawns a particle just above a block position,
+  used by `FallingUpwardBlock`'s dust animation.
+* Added `ProfileUtils#makeGameProfile` — builds a `GameProfile` with a texture property from a
+  UUID-encoding int array and base64 texture payload, for custom player-head skins.
 
 
 ### 26.2 - 6.2.0

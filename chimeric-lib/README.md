@@ -1,6 +1,6 @@
 # ChimericLib (Fabric/NeoForge)
 
-![Version: 6.1.0-beta.0](https://img.shields.io/badge/version-6.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 6.3.0](https://img.shields.io/badge/version-6.3.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Shared library with common code for chimericdream's mods._
 
@@ -29,8 +29,10 @@ For developers, ChimericLib provides shared code across the Architectury `common
 * **Inventories** — `ImplementedInventory` and `InventoryUtils` for block entities that hold items.
 * **Screens** — reusable single- and double-wide inventory screens and screen handlers.
 * **Tags** — common block and item tag definitions shared between mods.
-* **Utilities** — helpers for colors, fluids, text, textures, math/direction, tools, and configuration.
-* **Entities** — a `SimpleSeatEntity` for sittable blocks (e.g. chairs and stools).
+* **Utilities** — helpers for colors, fluids, text, textures, math/direction, tools, configuration, and
+  custom player-head game profiles.
+* **Entities** — a `SimpleSeatEntity` for sittable blocks (e.g. chairs and stools), plus
+  `FallingUpwardBlock`/`FallingUpwardBlockEntity` for blocks that rise instead of fall.
 * **Commands** — a small framework (`ChimericCommand`/`ChimericCommands`) for registering commands
   across both loaders without touching Architectury's command event directly. Ships its own first
   command, `/chimericlib blockstate get|set|modify`.
