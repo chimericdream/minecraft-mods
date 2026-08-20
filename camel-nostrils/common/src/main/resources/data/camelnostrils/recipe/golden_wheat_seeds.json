@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "W": "minecraft:wheat",
+        "G": "minecraft:gold_ingot"
+    },
+    "pattern": [
+        "WWW",
+        "WGW",
+        "WWW"
+    ],
+    "result": {
+        "count": 8,
+        "id": "camelnostrils:golden_wheat_seeds"
+    }
+}

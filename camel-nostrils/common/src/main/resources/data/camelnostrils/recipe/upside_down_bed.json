@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "P": "#minecraft:planks",
+        "W": "#minecraft:wool"
+    },
+    "pattern": [
+        "PPP",
+        "WWW"
+    ],
+    "result": {
+        "id": "camelnostrils:upside_down_bed"
+    }
+}

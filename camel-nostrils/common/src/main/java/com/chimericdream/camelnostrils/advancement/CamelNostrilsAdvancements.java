@@ -11,6 +11,8 @@ public final class CamelNostrilsAdvancements {
     public static final Identifier FISH_WALKER = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fish_walker");
     public static final Identifier FISH_OUT_OF_WATER = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "fish_out_of_water");
     public static final Identifier WHAT_GOES_UP = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "what_goes_up");
+    public static final Identifier GOLDEN_EGG_FIRST_EATEN = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "golden_egg_first_eaten");
+    public static final Identifier NAP_TIME = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "nap_time");
 
     private CamelNostrilsAdvancements() {
     }

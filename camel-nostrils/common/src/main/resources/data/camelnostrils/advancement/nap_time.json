@@ -1,0 +1,24 @@
+{
+    "parent": "camelnostrils:root",
+    "display": {
+        "icon": {
+            "id": "camelnostrils:upside_down_bed"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.nap_time.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.nap_time.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

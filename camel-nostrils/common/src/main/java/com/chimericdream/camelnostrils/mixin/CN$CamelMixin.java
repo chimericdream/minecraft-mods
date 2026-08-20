@@ -2,18 +2,23 @@ package com.chimericdream.camelnostrils.mixin;
 
 import com.chimericdream.camelnostrils.CamelNostrilsMod;
 import com.chimericdream.camelnostrils.advancement.CamelNostrilsAdvancements;
+import com.chimericdream.camelnostrils.block.ModBlocks;
 import com.chimericdream.camelnostrils.entity.CN$CamelAccessor;
 import com.chimericdream.camelnostrils.entity.CN$CamelSnoutState;
 import com.chimericdream.lib.util.ProfileUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Leashable;
 import net.minecraft.world.entity.animal.camel.Camel;
@@ -24,6 +29,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Camel.class)
 public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
@@ -42,6 +50,7 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
 
         if (
             CN$CamelSnoutState.hasSnout(self)
+                && !self.isBaby()
                 && holder instanceof Player player
                 && player.level() instanceof ServerLevel level
                 && player.getRandom().nextFloat() < 0.05f
@@ -60,6 +69,31 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
         }
 
         this.dropLeash();
+    }
+
+    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
+    private void cn$feedGoldenCactus(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        Camel self = (Camel) (Object) this;
+        ItemStack itemStack = player.getItemInHand(hand);
+
+        if (!itemStack.is(ModBlocks.GOLDEN_CACTUS.get().asItem())) {
+            return;
+        }
+
+        if (self.isBaby()) {
+            if (!self.level().isClientSide()) {
+                itemStack.consume(1, player);
+                self.setAge(0);
+                self.playSound(SoundEvents.CAMEL_EAT, 1.0F, 1.0F);
+            }
+
+            self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            cir.cancel();
+        } else if (!self.level().isClientSide() && !CN$CamelSnoutState.hasSnout(self)) {
+            CN$CamelSnoutState.setHasSnout(self, true);
+            self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
+        }
     }
 
     @Unique

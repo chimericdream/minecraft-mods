@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/cactus",
+    "textures": {
+        "particle": "camelnostrils:block/golden_cactus_side",
+        "bottom": "camelnostrils:block/golden_cactus_bottom",
+        "top": "camelnostrils:block/golden_cactus_top",
+        "side": "camelnostrils:block/golden_cactus_side"
+    }
+}

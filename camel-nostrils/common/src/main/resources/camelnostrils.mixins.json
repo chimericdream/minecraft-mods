@@ -7,6 +7,7 @@
     ],
     "mixins": [
         "CN$AgeableMobRendererMixin",
+        "CN$AnimalMixin",
         "CN$AnvilMenuMixin",
         "CN$CamelMixin",
         "CN$CamelRendererMixin",
@@ -14,6 +15,8 @@
         "CN$EntityMixin",
         "CN$LivingEntityMixin",
         "CN$LivingEntityRendererAccessor",
+        "CN$PlayerAccessor",
+        "CN$ServerPlayerMixin",
         "CN$WaterAnimalMixin"
     ],
     "injectors": {
