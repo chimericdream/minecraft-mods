@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
+        "camelnostrils:upside_down_chest",
         "camelnostrils:upside_down_crafting_table"
     ]
 }

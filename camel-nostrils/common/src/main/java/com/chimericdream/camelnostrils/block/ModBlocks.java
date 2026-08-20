@@ -20,21 +20,21 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> LIVNA_BLOCK = REGISTRY_HELPER.registerWithItem(
         LivnaBlock.BLOCK_ID,
         LivnaBlock::create,
-        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.ITEM_REGISTRY_KEY)
+        new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.ITEM_REGISTRY_KEY)
     );
 
     @SuppressWarnings("UnstableApiUsage")
     public static final RegistrySupplier<Block> CHIPPED_LIVNA_BLOCK = REGISTRY_HELPER.registerWithItem(
         LivnaBlock.CHIPPED_BLOCK_ID,
         LivnaBlock::createChipped,
-        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.CHIPPED_ITEM_REGISTRY_KEY)
+        new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.CHIPPED_ITEM_REGISTRY_KEY)
     );
 
     @SuppressWarnings("UnstableApiUsage")
     public static final RegistrySupplier<Block> DAMAGED_LIVNA_BLOCK = REGISTRY_HELPER.registerWithItem(
         LivnaBlock.DAMAGED_BLOCK_ID,
         LivnaBlock::createDamaged,
-        new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.DAMAGED_ITEM_REGISTRY_KEY)
+        new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(LivnaBlock.DAMAGED_ITEM_REGISTRY_KEY)
     );
 
     @SuppressWarnings("UnstableApiUsage")
