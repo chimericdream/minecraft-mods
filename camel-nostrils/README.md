@@ -14,12 +14,13 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 ### Current Features
 
 * Leads can be attached to fish. This doesn't make them live outside water, though.
-* The Livna block: an anvil that falls upward instead of down, damaging anything above it. Works just like a regular anvil, including wearing out into a Chipped and then Damaged version over time.
+* The Livna block: an anvil that falls upward instead of down, damaging anything above it. Works just like a regular anvil, including wearing out into a Chipped and then Damaged version over time. Crafted just like a regular anvil, but with the iron blocks and ingot rows flipped.
 * Leash a camel and let it lag too far behind you, and there's a small chance you'll rip its snout clean off. It drops as an item, and pulling one off for the first time unlocks a hidden advancement. This can't happen to baby camels.
-* Golden Wheat Seeds: craft with wheat and a gold ingot. Feed one to a chicken for a chance at a Golden Egg, or to a baby chicken to grow it up instantly.
+* Golden Wheat Seeds: craft with wheat seeds and a gold ingot. Feed one to a chicken for a chance at a Golden Egg, or to a baby chicken to grow it up instantly.
 * Golden Egg: as filling as a golden carrot. Eating one for the first time unlocks a hidden advancement.
 * Golden Cactus: craft with cactus and a gold ingot, and it grows just like a regular cactus. Feed it to a camel to regrow a pulled-off snout, or to a baby camel to grow it up instantly.
 * Upside-Down Bed: crafted like a regular bed with the planks and wool swapped, and it hangs from the ceiling instead of sitting on the floor. Sleep in it to turn day straight into night. Using one for the first time unlocks a hidden advancement. Comes in all sixteen dye colors.
+* Upside-Down Crafting Table: looks flipped upside-down, but works exactly like a regular crafting table. Craft one from a regular crafting table by itself, and vice versa to flip it back.
 
 ## FAQ
 

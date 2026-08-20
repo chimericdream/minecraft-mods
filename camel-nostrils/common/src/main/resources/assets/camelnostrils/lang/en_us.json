@@ -32,8 +32,10 @@
     "block.camelnostrils.purple_upside_down_bed": "Purple Upside-Down Bed",
     "block.camelnostrils.red_upside_down_bed": "Red Upside-Down Bed",
     "block.camelnostrils.upside_down_bed": "Upside-Down Bed",
+    "block.camelnostrils.upside_down_crafting_table": "Upside-Down Crafting Table",
     "block.camelnostrils.yellow_upside_down_bed": "Yellow Upside-Down Bed",
     "item.camelnostrils.golden_egg": "Golden Egg",
     "item.camelnostrils.golden_wheat_seeds": "Golden Wheat Seeds",
-    "stat.camelnostrils.interact_with_livna": "Interactions with Livna"
+    "stat.camelnostrils.interact_with_livna": "Interactions with Livna",
+    "stat.camelnostrils.interact_with_upside_down_crafting_table": "Interactions with Upside-Down Crafting Table"
 }

@@ -42,6 +42,12 @@ public class ModBlocks {
     );
 
     @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Block> UPSIDE_DOWN_CRAFTING_TABLE = REGISTRY_HELPER.registerWithItem(
+        UpsideDownCraftingTableBlock.BLOCK_ID,
+        UpsideDownCraftingTableBlock::create,
+        new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(UpsideDownCraftingTableBlock.ITEM_REGISTRY_KEY)
+    );
+
     public static final Map<DyeColor, RegistrySupplier<Block>> UPSIDE_DOWN_BEDS = registerUpsideDownBeds();
 
     @SuppressWarnings("UnstableApiUsage")
@@ -58,7 +64,11 @@ public class ModBlocks {
                 UpsideDownBedBlock.blockId(color),
                 () -> new BedItem(
                     bed.get(),
-                    new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(UpsideDownBedBlock.itemRegistryKey(color))
+                    new Item.Properties()
+                        .arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS)
+                        .useBlockDescriptionPrefix()
+                        .setId(UpsideDownBedBlock.itemRegistryKey(color))
+                        .stacksTo(1)
                 )
             );
 
