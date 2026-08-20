@@ -59,8 +59,7 @@ public class UpsideDownBedBlock extends BedBlock {
     }
 
     public static Identifier blockId(DyeColor color) {
-        String name = color == DyeColor.WHITE ? "upside_down_bed" : color.getName() + "_upside_down_bed";
-        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, color.getName() + "_upside_down_bed");
     }
 
     public static ResourceKey<Block> blockRegistryKey(DyeColor color) {

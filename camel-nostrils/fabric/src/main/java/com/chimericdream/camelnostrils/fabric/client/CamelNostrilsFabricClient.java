@@ -7,5 +7,6 @@ public final class CamelNostrilsFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         CamelNostrilsClient.registerEntityRenderers();
+        CamelNostrilsClient.registerBlockEntityRenderers();
     }
 }

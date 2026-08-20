@@ -21,6 +21,7 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 * Golden Cactus: craft with cactus and a gold ingot, and it grows just like a regular cactus. Feed it to a camel to regrow a pulled-off snout, or to a baby camel to grow it up instantly.
 * Upside-Down Bed: crafted like a regular bed with the planks and wool swapped, and it hangs from the ceiling instead of sitting on the floor. Sleep in it to turn day straight into night. Using one for the first time unlocks a hidden advancement. Comes in all sixteen dye colors.
 * Upside-Down Crafting Table: looks flipped upside-down, but works exactly like a regular crafting table. Craft one from a regular crafting table by itself, and vice versa to flip it back.
+* Upside-Down Chest: looks flipped upside-down, but works exactly like a regular chest. Craft one from a regular chest by itself, and vice versa to flip it back.
 
 ## FAQ
 

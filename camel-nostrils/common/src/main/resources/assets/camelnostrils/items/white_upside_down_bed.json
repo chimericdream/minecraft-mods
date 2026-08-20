@@ -4,11 +4,11 @@
         "models": [
             {
                 "type": "minecraft:model",
-                "model": "camelnostrils:block/upside_down_bed_head"
+                "model": "camelnostrils:block/white_upside_down_bed_head"
             },
             {
                 "type": "minecraft:model",
-                "model": "camelnostrils:block/upside_down_bed_foot",
+                "model": "camelnostrils:block/white_upside_down_bed_foot",
                 "transformation": {
                     "left_rotation": [0.0, 0.0, 0.0, 1.0],
                     "right_rotation": [0.0, 0.0, 0.0, 1.0],

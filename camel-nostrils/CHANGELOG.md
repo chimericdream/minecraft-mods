@@ -13,3 +13,4 @@
 * Added the Upside-Down Bed, crafted like a regular bed but with the planks and wool swapped. It hangs from the ceiling instead of sitting on the floor, and sleeping in it turns day straight into night. The first time you use one unlocks a hidden advancement.
 * The Upside-Down Bed now comes in all sixteen dye colors, just like a regular bed.
 * Added the Upside-Down Crafting Table: looks flipped upside-down, but works exactly like a regular crafting table. Craft one by placing a regular crafting table by itself in a crafting grid, and vice versa to flip it back.
+* Added the Upside-Down Chest: looks flipped upside-down, but works exactly like a regular chest. Craft one by placing a regular chest by itself in a crafting grid, and vice versa to flip it back.
