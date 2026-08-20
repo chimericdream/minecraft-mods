@@ -1,6 +1,6 @@
 package com.chimericdream.camelnostrils.mixin;
 
-import com.chimericdream.camelnostrils.block.ModBlocks;
+import com.chimericdream.camelnostrils.block.UpsideDownBedBlock;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.advancements.triggers.PlayerTrigger;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ public abstract class CN$ServerPlayerMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/BedRule;canSleep(Lnet/minecraft/world/level/Level;)Z")
     )
     private boolean cn$allowSleepAnytimeInUpsideDownBed(BedRule rule, Level level, @Local(argsOnly = true) BlockPos pos) {
-        this.cn$upsideDownBedSleep = level.getBlockState(pos).is(ModBlocks.UPSIDE_DOWN_BED.get());
+        this.cn$upsideDownBedSleep = level.getBlockState(pos).getBlock() instanceof UpsideDownBedBlock;
         return this.cn$upsideDownBedSleep || rule.canSleep(level);
     }
 
@@ -49,7 +49,7 @@ public abstract class CN$ServerPlayerMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/BedRule;canSetSpawn(Lnet/minecraft/world/level/Level;)Z")
     )
     private boolean cn$neverSetSpawnFromUpsideDownBed(BedRule rule, Level level, @Local(argsOnly = true) BlockPos pos) {
-        return !level.getBlockState(pos).is(ModBlocks.UPSIDE_DOWN_BED.get()) && rule.canSetSpawn(level);
+        return !(level.getBlockState(pos).getBlock() instanceof UpsideDownBedBlock) && rule.canSetSpawn(level);
     }
 
     @Redirect(
@@ -69,7 +69,7 @@ public abstract class CN$ServerPlayerMixin {
     private boolean cn$bedBlockedAllowsCeilingAttachment(ServerPlayer self, BlockPos pos, Direction direction) {
         CN$PlayerAccessor accessor = (CN$PlayerAccessor) self;
 
-        if (self.level().getBlockState(pos).is(ModBlocks.UPSIDE_DOWN_BED.get())) {
+        if (self.level().getBlockState(pos).getBlock() instanceof UpsideDownBedBlock) {
             BlockPos below = pos.below();
             return !accessor.cn$freeAt(below) || !accessor.cn$freeAt(below.relative(direction.getOpposite()));
         }

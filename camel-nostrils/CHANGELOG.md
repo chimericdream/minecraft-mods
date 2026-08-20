@@ -11,3 +11,4 @@
 * Added Golden Cactus, crafted from cactus and a gold ingot, and grows just like a regular cactus. Feed it to a camel to regrow a snout that's been pulled off, or to a baby camel to grow it up instantly.
 * A camel's snout can no longer be pulled off while it's still a baby.
 * Added the Upside-Down Bed, crafted like a regular bed but with the planks and wool swapped. It hangs from the ceiling instead of sitting on the floor, and sleeping in it turns day straight into night. The first time you use one unlocks a hidden advancement.
+* The Upside-Down Bed now comes in all sixteen dye colors, just like a regular bed.

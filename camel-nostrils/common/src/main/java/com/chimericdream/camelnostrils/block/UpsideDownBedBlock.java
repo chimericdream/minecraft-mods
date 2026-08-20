@@ -4,6 +4,7 @@ import com.chimericdream.camelnostrils.ModInfo;
 import com.chimericdream.camelnostrils.advancement.CamelNostrilsAdvancements;
 import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -37,11 +38,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UpsideDownBedBlock extends BedBlock {
-    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "upside_down_bed");
-    public static final ResourceKey<Block> BLOCK_REGISTRY_KEY = ResourceKey.create(Registries.BLOCK, BLOCK_ID);
-    public static final ResourceKey<Item> ITEM_REGISTRY_KEY = ResourceKey.create(Registries.ITEM, BLOCK_ID);
-
-    public static final MapCodec<BedBlock> CODEC = simpleCodec(UpsideDownBedBlock::new);
+    public static final MapCodec<BedBlock> CODEC = RecordCodecBuilder.mapCodec(
+        instance -> instance.group(DyeColor.CODEC.fieldOf("color").forGetter(BedBlock::getColor), propertiesCodec())
+            .apply(instance, UpsideDownBedBlock::new)
+    );
 
     private static final Map<Direction, VoxelShape> SHAPES;
 
@@ -50,16 +50,25 @@ public class UpsideDownBedBlock extends BedBlock {
         return CODEC;
     }
 
-    public UpsideDownBedBlock() {
-        this(Properties.ofFullCopy(Blocks.BED.white()).setId(BLOCK_REGISTRY_KEY));
+    public UpsideDownBedBlock(DyeColor color, BlockBehaviour.Properties properties) {
+        super(color, properties);
     }
 
-    public UpsideDownBedBlock(BlockBehaviour.Properties properties) {
-        super(DyeColor.WHITE, properties);
+    public static UpsideDownBedBlock create(DyeColor color) {
+        return new UpsideDownBedBlock(color, Properties.ofFullCopy(Blocks.BED.pick(color)).setId(blockRegistryKey(color)));
     }
 
-    public static UpsideDownBedBlock create() {
-        return new UpsideDownBedBlock();
+    public static Identifier blockId(DyeColor color) {
+        String name = color == DyeColor.WHITE ? "upside_down_bed" : color.getName() + "_upside_down_bed";
+        return Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+    }
+
+    public static ResourceKey<Block> blockRegistryKey(DyeColor color) {
+        return ResourceKey.create(Registries.BLOCK, blockId(color));
+    }
+
+    public static ResourceKey<Item> itemRegistryKey(DyeColor color) {
+        return ResourceKey.create(Registries.ITEM, blockId(color));
     }
 
     @Override

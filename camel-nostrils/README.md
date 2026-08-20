@@ -19,7 +19,7 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 * Golden Wheat Seeds: craft with wheat and a gold ingot. Feed one to a chicken for a chance at a Golden Egg, or to a baby chicken to grow it up instantly.
 * Golden Egg: as filling as a golden carrot. Eating one for the first time unlocks a hidden advancement.
 * Golden Cactus: craft with cactus and a gold ingot, and it grows just like a regular cactus. Feed it to a camel to regrow a pulled-off snout, or to a baby camel to grow it up instantly.
-* Upside-Down Bed: crafted like a regular bed with the planks and wool swapped, and it hangs from the ceiling instead of sitting on the floor. Sleep in it to turn day straight into night. Using one for the first time unlocks a hidden advancement.
+* Upside-Down Bed: crafted like a regular bed with the planks and wool swapped, and it hangs from the ceiling instead of sitting on the floor. Sleep in it to turn day straight into night. Using one for the first time unlocks a hidden advancement. Comes in all sixteen dye colors.
 
 ## FAQ
 

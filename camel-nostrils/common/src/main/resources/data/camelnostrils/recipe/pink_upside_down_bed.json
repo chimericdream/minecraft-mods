@@ -3,13 +3,13 @@
     "group": "upside_down_bed",
     "key": {
         "P": "#minecraft:planks",
-        "W": "#minecraft:wool"
+        "W": "minecraft:pink_wool"
     },
     "pattern": [
         "PPP",
         "WWW"
     ],
     "result": {
-        "id": "camelnostrils:upside_down_bed"
+        "id": "camelnostrils:pink_upside_down_bed"
     }
 }

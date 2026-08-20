@@ -3,8 +3,12 @@ package com.chimericdream.camelnostrils.block;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 import static com.chimericdream.camelnostrils.CamelNostrilsMod.REGISTRY_HELPER;
 
@@ -38,19 +42,30 @@ public class ModBlocks {
     );
 
     @SuppressWarnings("UnstableApiUsage")
-    public static final RegistrySupplier<Block> UPSIDE_DOWN_BED = REGISTRY_HELPER.registerBlock(
-        UpsideDownBedBlock.BLOCK_ID,
-        UpsideDownBedBlock::create
-    );
+    public static final Map<DyeColor, RegistrySupplier<Block>> UPSIDE_DOWN_BEDS = registerUpsideDownBeds();
 
-    static {
-        REGISTRY_HELPER.registerItem(
-            UpsideDownBedBlock.BLOCK_ID,
-            () -> new BedItem(
-                UPSIDE_DOWN_BED.get(),
-                new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(UpsideDownBedBlock.ITEM_REGISTRY_KEY)
-            )
-        );
+    @SuppressWarnings("UnstableApiUsage")
+    private static Map<DyeColor, RegistrySupplier<Block>> registerUpsideDownBeds() {
+        Map<DyeColor, RegistrySupplier<Block>> beds = new EnumMap<>(DyeColor.class);
+
+        for (DyeColor color : DyeColor.values()) {
+            RegistrySupplier<Block> bed = REGISTRY_HELPER.registerBlock(
+                UpsideDownBedBlock.blockId(color),
+                () -> UpsideDownBedBlock.create(color)
+            );
+
+            REGISTRY_HELPER.registerItem(
+                UpsideDownBedBlock.blockId(color),
+                () -> new BedItem(
+                    bed.get(),
+                    new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS).useBlockDescriptionPrefix().setId(UpsideDownBedBlock.itemRegistryKey(color))
+                )
+            );
+
+            beds.put(color, bed);
+        }
+
+        return beds;
     }
 
     public static void init() {
