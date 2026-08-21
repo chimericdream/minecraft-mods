@@ -1,4 +1,4 @@
-### Unreleased changes
+### 26.2 - 3.1.0
 
 #### New Features
 
