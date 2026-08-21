@@ -1,3 +1,12 @@
+### 26.2 - 4.0.2
+
+#### Bug Fixes
+
+* The config screen no longer shows unrelated settings left over from another mod's config. It now
+  only has the one option that actually applies here: how often the Plated Shulker Upgrade Smithing
+  Template drops in bastion treasure chests.
+
+
 ### 26.2 - 4.0.1
 
 #### Bug Fixes
