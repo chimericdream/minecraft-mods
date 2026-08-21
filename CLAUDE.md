@@ -178,6 +178,14 @@ fix + reference implementation) found while working in this repo.
   chimeric-lib** — it's a shared library consumed by other mods, so its changelog/README audience
   is developers; stay concise but technical detail (API names, method signatures, behavior) is
   appropriate there.
+- **Before committing, check whether the affected mod's `CHANGELOG.md` and/or `README.md` need
+  updating.** A changelog entry belongs under that mod's `### Unreleased changes` heading (see
+  above) whenever the commit changes player-visible behavior (new feature, bug fix, balance/behavior
+  change) — a pure internal refactor with no behavior change (e.g. hand-written files replaced by
+  equivalent datagen output) does not need one. A README update belongs alongside any change to
+  something the README documents (a feature list, supported versions, setup steps, public API
+  surface for chimeric-lib, etc.). Skip either file when nothing it covers actually changed — don't
+  add an entry just to have one.
 
 ## Conventions
 
