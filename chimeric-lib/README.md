@@ -36,6 +36,9 @@ For developers, ChimericLib provides shared code across the Architectury `common
 * **Commands** — a small framework (`ChimericCommand`/`ChimericCommands`) for registering commands
   across both loaders without touching Architectury's command event directly. Ships its own first
   command, `/chimericlib blockstate get|set|modify`.
+* **Armor trims** — `TrimMaterialConfig`, `TrimMaterialRegistryHelper`, and `ArmorTrimAtlasProvider`
+  automate generating a custom `trim_material` and its `armor_trims`/`items` atlas overrides, so a mod
+  only has to hand-author the palette texture and its own material list.
 
 ## Issues & Suggestions
 

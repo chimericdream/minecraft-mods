@@ -14,6 +14,20 @@ loom {
     neoForge {
         convertAccessWideners(tasks.named("shadowJar", Jar), "effectivegear.accesswidener")
     }
+
+    runs {
+        data {
+            serverData()
+            name "Data Generation"
+            programArgs(
+                '--mod', mod_id,
+                '--all',
+                '--output', project(':effective-gear:common').file("src/main/generated").absolutePath,
+                '--existing', project(':effective-gear:common').file("src/main/resources").absolutePath
+            )
+            runDir "build/datagen"
+        }
+    }
 }
 
 configurations {

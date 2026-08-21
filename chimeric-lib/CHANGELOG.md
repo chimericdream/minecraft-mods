@@ -1,5 +1,16 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added `trims/TrimMaterialConfig`, `trims/TrimMaterialRegistryHelper`, and
+  `trims/ArmorTrimAtlasProvider` — a loader-agnostic datagen layer for custom armor trim materials.
+  `TrimMaterialRegistryHelper.bootstrap` registers a mod's `TrimMaterialConfig` list into the
+  `trim_material` dynamic registry (usable from both Fabric's `buildRegistry` and NeoForge's
+  `RegistrySetBuilder`); `ArmorTrimAtlasProvider` generates the mod's
+  `assets/minecraft/atlases/armor_trims.json`/`items.json` overrides from that same list, so a
+  consuming mod only has to hand-author the palette texture and its own material definitions instead
+  of restating vanilla's full trim-pattern texture list per material.
+
 
 ### 26.2 - 6.3.0
 

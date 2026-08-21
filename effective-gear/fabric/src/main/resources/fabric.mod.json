@@ -15,6 +15,9 @@
     "icon": "assets/effectivegear/icon.png",
     "environment": "*",
     "entrypoints": {
+        "fabric-datagen": [
+            "com.chimericdream.effectivegear.fabric.data.ModDataGenerator"
+        ],
         "main": [
             "com.chimericdream.effectivegear.fabric.EffectiveGearFabric"
         ],
