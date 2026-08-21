@@ -6,7 +6,8 @@
     "client": [
     ],
     "mixins": [
-        "EG$EnderpearlItemMixin"
+        "EG$EnderpearlItemMixin",
+        "EG$EndermanMixin"
     ],
     "injectors": {
         "defaultRequire": 1
