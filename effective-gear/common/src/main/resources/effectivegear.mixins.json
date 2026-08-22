@@ -7,7 +7,12 @@
     ],
     "mixins": [
         "EG$EnderpearlItemMixin",
-        "EG$EndermanMixin"
+        "EG$EndermanMixin",
+        "EG$ItemsMixin",
+        "EG$PiglinAiMixin",
+        "EG$BeehiveBlockMixin",
+        "EG$LivingEntityMixin",
+        "EG$PlayerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

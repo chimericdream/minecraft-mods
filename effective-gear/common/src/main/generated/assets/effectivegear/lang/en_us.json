@@ -1,3 +1,10 @@
 {
-  "trim_material.effectivegear.ender_pearl": "Ender Pearl Material"
+  "trim_material.effectivegear.blaze_powder": "Blaze Powder Material",
+  "trim_material.effectivegear.echo_shard": "Echo Shard Material",
+  "trim_material.effectivegear.enchanted_golden_apple": "Enchanted Golden Apple Material",
+  "trim_material.effectivegear.ender_pearl": "Ender Pearl Material",
+  "trim_material.effectivegear.honeycomb": "Honeycomb Material",
+  "trim_material.effectivegear.nether_star": "Nether Star Material",
+  "trim_material.effectivegear.slimeball": "Slimeball Material",
+  "trim_material.effectivegear.turtle_scute": "Turtle Scute Material"
 }

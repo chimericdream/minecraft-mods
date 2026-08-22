@@ -12,6 +12,19 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Current Features
 
+* Eight new armor trim materials: ender pearl, blaze powder, echo shard, enchanted golden apple, honeycomb, nether star, slimeball, and turtle scute.
+* Wearing a full set of armor with the same trim (or, for two bonuses below, the same material) grants a bonus as long as it's worn:
+  * **Ender pearl** — endermen ignore your gaze.
+  * **Gold** — piglins treat you as if you're wearing gold armor.
+  * **Netherite armor** — fire resistance.
+  * **Honeycomb** — harvest bee nests without a campfire, and without angering the bees.
+  * **Turtle scute** — water breathing.
+  * **Echo shard** — partial resistance to a warden's sonic boom.
+  * **Slimeball** — knockback resistance.
+  * **Nether star** — regeneration.
+  * **Blaze powder** — melee attacks set your target on fire.
+  * **Enchanted golden apple** — stronger regeneration and saturation.
+
 ## Notes for Documentation
 
 ## Issues & Suggestions

@@ -4,7 +4,14 @@
       "type": "minecraft:paletted_permutations",
       "palette_key": "minecraft:trims/color_palettes/trim_palette",
       "permutations": {
-        "ender_pearl": "effectivegear:trims/color_palettes/ender_pearl"
+        "blaze_powder": "effectivegear:trims/color_palettes/blaze_powder",
+        "echo_shard": "effectivegear:trims/color_palettes/echo_shard",
+        "enchanted_golden_apple": "effectivegear:trims/color_palettes/enchanted_golden_apple",
+        "ender_pearl": "effectivegear:trims/color_palettes/ender_pearl",
+        "honeycomb": "effectivegear:trims/color_palettes/honeycomb",
+        "nether_star": "effectivegear:trims/color_palettes/nether_star",
+        "slimeball": "effectivegear:trims/color_palettes/slimeball",
+        "turtle_scute": "effectivegear:trims/color_palettes/turtle_scute"
       },
       "textures": [
         "minecraft:trims/entity/humanoid/sentry",
