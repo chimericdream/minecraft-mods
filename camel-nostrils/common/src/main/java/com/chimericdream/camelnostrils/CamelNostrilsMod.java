@@ -27,5 +27,9 @@ public final class CamelNostrilsMod {
         ModStats.init();
 
         REGISTRY_HELPER.init();
+
+        // Entity attributes can only be registered once the entity types above actually exist in the
+        // registry, which REGISTRY_HELPER.init() just did.
+        ModEntities.registerAttributes();
     }
 }
