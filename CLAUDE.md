@@ -172,6 +172,15 @@ fix + reference implementation) found while working in this repo.
   commit or session. When a release is cut (beta or final), `### Unreleased changes` is renamed to a
   dated `### <mc_version> - <version>` heading (matching the git tag) and a fresh, empty `###
   Unreleased changes` starts collecting the next round.
+- **Group related Unreleased entries instead of appending each as its own top-level bullet.** When a
+  single work session adds several related items in the same category (e.g. a handful of new trim
+  materials, or a batch of set-bonus effects tied to those materials), nest them under one descriptive
+  bullet rather than writing N separate top-level bullets — e.g. "Added new armor trim materials:"
+  followed by an indented list of the materials, and a separate "Wearing a full set of armor trimmed
+  with the same material grants a bonus ..." bullet with its own nested list of bonuses. Still keep the
+  `#### New Features`/`#### Bug Fixes`/`#### Changes` top-level structure — this is about grouping
+  *within* those sections, not replacing them. Unrelated one-off changes still just get their own
+  top-level bullet.
 - **Changelog/README tone**: player-facing docs (changelogs, READMEs) must be concise and
   non-technical — the audience is Minecraft players, not programmers. Editing test: for each
   sentence, if removing it still conveys the information accurately, delete it. **Exception:
