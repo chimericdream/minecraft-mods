@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 6.4.0
+
 #### New Features
 
 * Added `trims/TrimMaterialConfig`, `trims/TrimMaterialRegistryHelper`, and
