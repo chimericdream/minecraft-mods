@@ -38,7 +38,11 @@ For developers, ChimericLib provides shared code across the Architectury `common
   command, `/chimericlib blockstate get|set|modify`.
 * **Armor trims** — `TrimMaterialConfig`, `TrimMaterialRegistryHelper`, and `ArmorTrimAtlasProvider`
   automate generating a custom `trim_material` and its `armor_trims`/`items` atlas overrides, so a mod
-  only has to hand-author the palette texture and its own material list.
+  only has to hand-author the palette texture and its own material list. On Fabric, chimeric-lib's own
+  client init also registers a dynamic item model (`fabric/trims/TrimmedArmorItemModel`) so a custom
+  material's icon renders correctly in the inventory too, not just on the worn armor — the Fabric
+  equivalent of what NeoForge already does natively. Nothing extra to call for this; it applies
+  automatically once a mod's materials are registered.
 
 ## Issues & Suggestions
 

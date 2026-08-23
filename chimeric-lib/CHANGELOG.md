@@ -10,6 +10,27 @@
   `assets/minecraft/atlases/armor_trims.json`/`items.json` overrides from that same list, so a
   consuming mod only has to hand-author the palette texture and its own material definitions instead
   of restating vanilla's full trim-pattern texture list per material.
+* Added `fabric/trims/TrimmedArmorItemModel` and `fabric/trims/TrimmedArmorModelLoadingPlugin` — a
+  Fabric port of NeoForge's own `neoforge:trimmed_armor` item model type, fixing a Fabric-only gap:
+  vanilla's armor item icon only recognizes its own hardcoded trim materials, so a modded material
+  renders correctly on the worn 3D layer (which reads the `ArmorTrim` component directly) but falls
+  back to the untrimmed 2D inventory icon. `TrimmedArmorModelLoadingPlugin` registers a Fabric Model
+  Loading API `modifyItemModelBeforeBake` hook that wraps every item's model with
+  `TrimmedArmorItemModel`, which no-ops unless the live stack actually carries both an `ArmorTrim` and
+  an armor-slot `Equippable` component, then resolves the trim overlay sprite from whatever
+  `TrimMaterial` is on the stack — the same source vanilla's own entity layer reads — instead of a
+  fixed list of cases baked into a model JSON. (The wrap has to be unconditional and the check deferred
+  to render time: MC 26.2 doesn't bind items' default components until a
+  `ReloadableServerResources` reload, which hasn't happened yet during the client's very first
+  resource/model reload, so checking a default component at bake time throws `NullPointerException:
+  Components not bound yet` — see `docs/MC-26.2-NOTES.md`.) Reaching the two private vanilla classes
+  needed to bake a flat icon layer (`CuboidItemModelWrapper`, `ItemModelGenerator.ItemLayerKey`) is
+  done via reflection, not an access widener — widening a private constructor on a private *nested*
+  class compiled fine but still threw `IllegalAccessError` at actual game runtime. This needs no
+  resource pack override, runs automatically for any mod's armor and any mod's trim materials (not
+  just chimeric-lib's), and is wired into chimeric-lib's own Fabric client init, so a consuming mod
+  doesn't need to call anything — registering trim materials through `TrimMaterialRegistryHelper` is
+  enough for their icons to render correctly on both loaders.
 
 
 ### 26.2 - 6.3.0
