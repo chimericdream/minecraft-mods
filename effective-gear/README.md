@@ -12,18 +12,36 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Current Features
 
-* Eight new armor trim materials: ender pearl, blaze powder, echo shard, enchanted golden apple, honeycomb, nether star, slimeball, and turtle scute.
-* Wearing a full set of armor with the same trim (or, for two bonuses below, the same material) grants a bonus as long as it's worn:
+* New armor trim materials
+  * Blaze powder
+  * Echo shard
+  * Enchanted golden apple
+  * Ender pearl
+  * Honeycomb
+  * Nether star
+  * Slimeball
+  * Turtle scute
+* Wearing a full set of armor trimmed with the same material grants a bonus as long as it's worn:
+  * **Amethyst** — a small bonus to the experience dropped by blocks and mobs.
+  * **Blaze powder** — melee attacks set your target on fire.
+  * **Copper** — immune to lightning strikes.
+  * **Diamond** — your tools mine as if their Efficiency enchantment were one level higher.
+  * **Echo shard** — partial resistance to a warden's sonic boom.
+  * **Emerald** — a small discount when trading with villagers.
+  * **Enchanted golden apple** — regeneration II and resistance.
   * **Ender pearl** — endermen ignore your gaze.
   * **Gold** — piglins treat you as if you're wearing gold armor.
-  * **Netherite armor** — fire resistance.
   * **Honeycomb** — harvest bee nests without a campfire, and without angering the bees.
-  * **Turtle scute** — water breathing.
-  * **Echo shard** — partial resistance to a warden's sonic boom.
-  * **Slimeball** — knockback resistance.
+  * **Iron** — iron golems won't attack you.
+  * **Lapis lazuli** — when enchanting, a small chance for an enchantment to come out at max level + 1.
   * **Nether star** — regeneration.
-  * **Blaze powder** — melee attacks set your target on fire.
-  * **Enchanted golden apple** — stronger regeneration and saturation.
+  * **Netherite** — fire resistance.
+  * **Quartz** — move more freely across terrain that would normally slow you down.
+  * **Redstone** — right-click a block with an empty hand to send it a quick redstone pulse, anywhere a button could be placed.
+  * **Resin** — creakings ignore you.
+  * **Slimeball** — knockback resistance.
+  * **Turtle scute** — water breathing.
+* Wearing a full set of netherite armor grants you fire resistance.
 
 ## Notes for Documentation
 

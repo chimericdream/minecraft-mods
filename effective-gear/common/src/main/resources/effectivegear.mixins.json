@@ -12,7 +12,13 @@
         "EG$PiglinAiMixin",
         "EG$BeehiveBlockMixin",
         "EG$LivingEntityMixin",
-        "EG$PlayerMixin"
+        "EG$PlayerMixin",
+        "EG$CreakingMixin",
+        "EG$EnchantmentMenuMixin",
+        "EG$ExperienceOrbMixin",
+        "EG$IronGolemMixin",
+        "EG$ServerPlayerGameModeMixin",
+        "EG$VillagerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

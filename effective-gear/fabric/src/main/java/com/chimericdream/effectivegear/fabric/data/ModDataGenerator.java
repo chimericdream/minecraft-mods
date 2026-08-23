@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -36,7 +37,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
+        public void generateTranslations(HolderLookup.@NonNull Provider registryLookup, @NonNull TranslationBuilder translationBuilder) {
             for (TrimMaterialConfig material : Trims.MATERIALS) {
                 translationBuilder.add(material.translationKey(), material.displayName());
             }
