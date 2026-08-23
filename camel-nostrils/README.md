@@ -46,6 +46,8 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 
 Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
 
+The zombie fish textures are adapted from community-made mob skins — see [CREDITS.md](./CREDITS.md) for the artists and sources.
+
 ## License
 
 This mod is released under the MIT license. [The full text of the license can be found here.](./LICENSE)
