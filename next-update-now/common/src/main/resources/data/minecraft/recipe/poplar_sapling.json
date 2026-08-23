@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "#minecraft:saplings"
+  ],
+  "result": {
+    "id": "minecraft:poplar_sapling"
+  }
+}

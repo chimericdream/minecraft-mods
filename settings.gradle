@@ -31,6 +31,7 @@ def projectList = [
     'log-all-the-things',
     'minekea',
     'miniblock-merchants',
+    'next-update-now',
 //    'pannotia-companion',
 //    'playgrounds',
     'shulker-stuff',
