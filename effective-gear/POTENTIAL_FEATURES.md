@@ -11,3 +11,33 @@ The mod's identity: small quality-of-life tweaks and bonuses for player armor, w
     sensors.
   * etc.
 * etc.
+
+## From the idea backlog (2026-08-22)
+
+* **New trim materials** (same pattern as existing materials — full matching set grants a bonus):
+  * Prismarine / sea lantern — indefinite underwater breathing, or reduced hunger drain while
+    swimming.
+  * Glowstone — full brightness for the wearer, or immunity to blindness/darkness.
+  * Wither skeleton skull / soul soil — wither effect immunity, or withers never target you.
+  * Snow / powder snow bucket — never take freezing damage; walk on powder snow like leather boots
+    do for rabbits.
+  * Phantom membrane — no phantom spawns from insomnia, or a slow-fall/feather-falling boost.
+  * Totem of undying — high-rarity material; on lethal damage while wearing the full set, survive
+    once without consuming anything, on a long cooldown (mirrors the totem item itself).
+  * Ghast tear — regen after taking fire damage, or ghasts stop targeting you.
+  * Shulker shell — immunity to the levitation effect.
+* **Weapon/tool trims** — the README already frames the mod's scope as "armor, weapons, and tools,"
+  but only armor is implemented. A parallel trim system for swords/tools, with bonuses gated on
+  wielding rather than wearing, would fill that gap:
+  * Blaze powder pickaxe — lava immunity while mining near lava.
+  * Echo shard pickaxe — mines sculk without triggering nearby sensors (same idea as the "Silence"
+    template above, but material-driven instead of template-driven).
+  * Amethyst tool — geodes/amethyst clusters always drop max yield.
+* **Trim-template-based bonuses** — give specific vanilla trim *templates* (not materials) their own
+  minor situational bonus that stacks with the material bonus:
+  * Silence — see above.
+  * Ward — extra resistance to the warden's sonic boom specifically.
+  * Snout — piglins/hoglins never provoked by nearby block-breaking.
+* **Mixed-material bonus** — a smaller universal bonus (e.g. reduced fall damage) for wearing four
+  *different* trim materials at once, rewarding variety as a second axis alongside the existing
+  matched-full-set bonus.
