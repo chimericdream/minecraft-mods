@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "bettertargetdummies:item/dummy_spawn_egg"
+    }
+}

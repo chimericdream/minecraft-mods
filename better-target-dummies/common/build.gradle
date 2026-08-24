@@ -1,0 +1,7 @@
+architectury {
+    common project(':better-target-dummies').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/bettertargetdummies.accesswidener")
+}

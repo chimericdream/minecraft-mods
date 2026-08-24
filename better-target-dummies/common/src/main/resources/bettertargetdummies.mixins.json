@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "package": "com.chimericdream.bettertargetdummies.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "BTD$LivingEntityMixin",
+        "BTD$MobMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "bettertargetdummies:item/dummy_spawn_egg"
+    }
+}
