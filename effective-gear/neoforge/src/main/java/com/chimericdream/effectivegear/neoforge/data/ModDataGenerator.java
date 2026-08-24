@@ -36,6 +36,9 @@ public class ModDataGenerator {
             for (TrimMaterialConfig material : Trims.MATERIALS) {
                 add(material.translationKey(), material.displayName());
             }
+
+            add("key.category.effectivegear.keybinds", "Effective Gear");
+            add("key.effectivegear.abilities.use", "Use Trim Ability");
         }
     }
 }

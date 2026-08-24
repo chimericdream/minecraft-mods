@@ -50,6 +50,13 @@ public class Trims {
         "trims/color_palettes/nether_star",
         "Nether Star Material"
     );
+    public static final TrimMaterialConfig PRISMARINE_SHARD = new TrimMaterialConfig(
+        ModInfo.MOD_ID,
+        "prismarine_shard",
+        0x6ECFC4,
+        "trims/color_palettes/prismarine_shard",
+        "Prismarine Shard Material"
+    );
     public static final TrimMaterialConfig SLIMEBALL = new TrimMaterialConfig(
         ModInfo.MOD_ID,
         "slimeball",
@@ -73,6 +80,7 @@ public class Trims {
         ENDER_PEARL,
         HONEYCOMB,
         NETHER_STAR,
+        PRISMARINE_SHARD,
         SLIMEBALL,
         TURTLE_SCUTE
     );
@@ -83,6 +91,7 @@ public class Trims {
     public static final ResourceKey<TrimMaterial> ENDER_PEARL_TRIM_ID = trimKey(ENDER_PEARL);
     public static final ResourceKey<TrimMaterial> HONEYCOMB_TRIM_ID = trimKey(HONEYCOMB);
     public static final ResourceKey<TrimMaterial> NETHER_STAR_TRIM_ID = trimKey(NETHER_STAR);
+    public static final ResourceKey<TrimMaterial> PRISMARINE_SHARD_TRIM_ID = trimKey(PRISMARINE_SHARD);
     public static final ResourceKey<TrimMaterial> SLIMEBALL_TRIM_ID = trimKey(SLIMEBALL);
     public static final ResourceKey<TrimMaterial> TURTLE_SCUTE_TRIM_ID = trimKey(TURTLE_SCUTE);
 

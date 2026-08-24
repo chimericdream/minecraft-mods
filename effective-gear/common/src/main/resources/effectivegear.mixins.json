@@ -16,9 +16,11 @@
         "EG$CreakingMixin",
         "EG$EnchantmentMenuMixin",
         "EG$ExperienceOrbMixin",
+        "EG$HoglinAiMixin",
         "EG$IronGolemMixin",
         "EG$ServerPlayerGameModeMixin",
-        "EG$VillagerMixin"
+        "EG$VillagerMixin",
+        "EG$WeatherCheckMixin"
     ],
     "injectors": {
         "defaultRequire": 1

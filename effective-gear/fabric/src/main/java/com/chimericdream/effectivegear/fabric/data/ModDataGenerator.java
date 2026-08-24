@@ -41,6 +41,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             for (TrimMaterialConfig material : Trims.MATERIALS) {
                 translationBuilder.add(material.translationKey(), material.displayName());
             }
+
+            translationBuilder.add("key.category.effectivegear.keybinds", "Effective Gear");
+            translationBuilder.add("key.effectivegear.abilities.use", "Use Trim Ability");
         }
     }
 }

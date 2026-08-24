@@ -45,6 +45,10 @@ public class EG$ItemsMixin {
             return properties.trimMaterial(Trims.NETHER_STAR_TRIM_ID);
         }
 
+        if (id.equals(ItemIds.PRISMARINE_SHARD)) {
+            return properties.trimMaterial(Trims.PRISMARINE_SHARD_TRIM_ID);
+        }
+
         if (id.equals(ItemIds.SLIME_BALL)) {
             return properties.trimMaterial(Trims.SLIMEBALL_TRIM_ID);
         }

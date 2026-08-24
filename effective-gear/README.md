@@ -19,12 +19,13 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
   * Ender pearl
   * Honeycomb
   * Nether star
+  * Prismarine shard
   * Slimeball
   * Turtle scute
 * Wearing a full set of armor trimmed with the same material grants a bonus as long as it's worn:
   * **Amethyst** — a small bonus to the experience dropped by blocks and mobs.
   * **Blaze powder** — melee attacks set your target on fire.
-  * **Copper** — immune to lightning strikes.
+  * **Copper** — a channeling trident can summon lightning even when it isn't storming.
   * **Diamond** — your tools mine as if their Efficiency enchantment were one level higher.
   * **Echo shard** — partial resistance to a warden's sonic boom.
   * **Emerald** — a small discount when trading with villagers.
@@ -36,12 +37,32 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
   * **Lapis lazuli** — when enchanting, a small chance for an enchantment to come out at max level + 1.
   * **Nether star** — regeneration.
   * **Netherite** — fire resistance.
+  * **Prismarine shard** — partial resistance to a guardian's or elder guardian's laser attack.
   * **Quartz** — move more freely across terrain that would normally slow you down.
   * **Redstone** — right-click a block with an empty hand to send it a quick redstone pulse, anywhere a button could be placed.
   * **Resin** — creakings ignore you.
   * **Slimeball** — knockback resistance.
   * **Turtle scute** — water breathing.
 * Wearing a full set of netherite armor grants you fire resistance.
+* Wearing a full set of armor trimmed with the same *pattern* (regardless of material) grants its own bonus, as long as it's worn. Patterns marked ⚡ have an active ability triggered with the "Use Trim Ability" key (set it in Controls) — you can only be wearing one such pattern's full set at a time, so this one key works for whichever ability you currently have:
+  * **Bolt** ⚡ — while sprinting, press the ability key to burst forward, then wait out a short cooldown before dashing again.
+  * **Coast** — swim and mine underwater as though you have Aqua Affinity; if your helmet already has real Aqua Affinity, you also stop losing mining speed while off the ground.
+  * **Dune** — melee attacks also weaken your target.
+  * **Eye** — deal extra damage to endermen.
+  * **Flow** — press jump again while already in the air to get a second boost upward, like a burst of wind underfoot. Has a short cooldown.
+  * **Host** — a discount when trading with villagers, stacking with the emerald material bonus.
+  * **Raiser** — deal extra damage to undead mobs.
+  * **Rib** — immune to the wither effect.
+  * **Sentry** — deal extra damage to pillagers, whether in melee or at range.
+  * **Shaper** — reach a little farther, for both blocks and entities.
+  * **Silence** — breaking a block while sneaking won't alert nearby sculk sensors.
+  * **Snout** — hoglins and piglin brutes leave you alone.
+  * **Spire** — immune to levitation.
+  * **Tide** — immune to mining fatigue.
+  * **Vex** — partial resistance to Evoker Fangs and Vex attacks.
+  * **Ward** — extra partial resistance to a warden's sonic boom, stacking with the echo shard material bonus.
+  * **Wayfinder** — any mount you're riding gets a small speed boost, stacking with potion effects.
+  * **Wild** — immune to poison.
 
 ## Notes for Documentation
 

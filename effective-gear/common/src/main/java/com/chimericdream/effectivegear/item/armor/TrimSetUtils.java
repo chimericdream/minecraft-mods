@@ -9,11 +9,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 /**
  * Shared helpers for checking whether an entity is wearing a full set of armor that qualifies for
- * one of this mod's set bonuses: either all four pieces trimmed with a specific material, or all
- * four pieces belonging to a specific item tag (e.g. netherite armor).
+ * one of this mod's set bonuses: either all four pieces trimmed with a specific material, all four
+ * pieces trimmed with a specific pattern (regardless of material), or all four pieces belonging to a
+ * specific item tag (e.g. netherite armor).
  */
 public class TrimSetUtils {
     private static final EquipmentSlot[] ARMOR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
@@ -30,6 +32,22 @@ public class TrimSetUtils {
 
             ArmorTrim trim = stack.get(DataComponents.TRIM);
             if (trim == null || !trim.material().is(trimId)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean isWearingFullPattern(LivingEntity entity, ResourceKey<TrimPattern> patternId) {
+        for (EquipmentSlot slot : ARMOR_SLOTS) {
+            ItemStack stack = entity.getItemBySlot(slot);
+            if (stack.isEmpty()) {
+                return false;
+            }
+
+            ArmorTrim trim = stack.get(DataComponents.TRIM);
+            if (trim == null || !trim.pattern().is(patternId)) {
                 return false;
             }
         }

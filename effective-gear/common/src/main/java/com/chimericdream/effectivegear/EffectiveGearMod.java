@@ -1,8 +1,11 @@
 package com.chimericdream.effectivegear;
 
 import com.chimericdream.effectivegear.block.EGBlocks;
+import com.chimericdream.effectivegear.network.ServerNetworking;
+import com.chimericdream.effectivegear.util.PlayerAbilityState;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
+import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +22,9 @@ public final class EffectiveGearMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         EGBlocks.init();
+
+        ServerNetworking.init();
+        PlayerEvent.PLAYER_QUIT.register(PlayerAbilityState::remove);
 
         REGISTRY_HELPER.init();
     }
