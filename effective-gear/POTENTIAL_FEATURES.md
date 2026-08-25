@@ -41,3 +41,14 @@ The mod's identity: small quality-of-life tweaks and bonuses for player armor, w
 * **Mixed-material bonus** — a smaller universal bonus (e.g. reduced fall damage) for wearing four
   *different* trim materials at once, rewarding variety as a second axis alongside the existing
   matched-full-set bonus.
+
+## From the idea backlog (2026-08-25)
+
+* **Preserving: capture the specific biome tint, not just the default color.** The shipped Preserving
+  enchantment always locks a mined leaf to vanilla's fixed default color. A more nuanced version would
+  instead remember the *exact* tint the leaves had when broken (e.g. "Oak" vs. "Oak with taiga tint"),
+  so a builder could match a specific biome's leaf color anywhere. This needs a (non-ticking, cheap)
+  block entity to hold the captured color/biome, since blockstate can't hold an open-ended biome
+  identifier. Full design write-up, including why it needs a block entity, why that's not a performance
+  concern here, and what's still unresolved (tooltip mechanism, naming scheme): see
+  `docs/PRESERVING-PER-BIOME-TINT.md`.
