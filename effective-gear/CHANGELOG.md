@@ -13,7 +13,7 @@
     real Aqua Affinity, you also stop losing mining speed while off the ground
   * Dune — melee attacks also weaken your target
   * Eye — deal extra damage to endermen
-  * Flow — press jump again while already in the air to get a second boost upward, with a short
+  * Flow ⚡ — while airborne, press the ability key to get a boost upward, once per jump, with a short
     cooldown
   * Host — a discount when trading with villagers, stacking with the emerald material bonus
   * Raiser — deal extra damage to undead mobs

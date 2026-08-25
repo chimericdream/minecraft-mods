@@ -2,11 +2,15 @@ package com.chimericdream.effectivegear.mixin;
 
 import com.chimericdream.effectivegear.item.armor.Trims;
 import com.chimericdream.effectivegear.item.armor.TrimSetUtils;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -22,6 +26,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -107,6 +112,29 @@ public class EG$LivingEntityMixin {
             cir.setReturnValue(false);
         } else if (effect.is(MobEffects.POISON) && TrimSetUtils.isWearingFullPattern(self, TrimPatterns.WILD)) {
             cir.setReturnValue(false);
+        }
+    }
+
+    // Swapping gear can grant pattern immunity to an effect the entity already has (e.g. mining fatigue
+    // from Elder Guardians, then equipping a full Tide set) - canBeAffected only blocks new applications,
+    // so also strip any currently active effect it no longer qualifies for.
+    @Inject(method = "tickEffects", at = @At("TAIL"))
+    private void eg$removeEffectsBlockedByPatternImmunity(CallbackInfo ci) {
+        LivingEntity self = (LivingEntity) (Object) this;
+
+        if (!(self.level() instanceof ServerLevel)) {
+            return;
+        }
+
+        List<Holder<MobEffect>> toRemove = new ArrayList<>();
+        for (MobEffectInstance effect : self.getActiveEffects()) {
+            if (!self.canBeAffected(effect)) {
+                toRemove.add(effect.getEffect());
+            }
+        }
+
+        for (Holder<MobEffect> effect : toRemove) {
+            self.removeEffect(effect);
         }
     }
 }

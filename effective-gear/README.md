@@ -49,7 +49,7 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
   * **Coast** — swim and mine underwater as though you have Aqua Affinity; if your helmet already has real Aqua Affinity, you also stop losing mining speed while off the ground.
   * **Dune** — melee attacks also weaken your target.
   * **Eye** — deal extra damage to endermen.
-  * **Flow** — press jump again while already in the air to get a second boost upward, like a burst of wind underfoot. Has a short cooldown.
+  * **Flow** ⚡ — while airborne, press the ability key to get a boost upward, like a burst of wind underfoot. Once per jump, with a short cooldown.
   * **Host** — a discount when trading with villagers, stacking with the emerald material bonus.
   * **Raiser** — deal extra damage to undead mobs.
   * **Rib** — immune to the wither effect.

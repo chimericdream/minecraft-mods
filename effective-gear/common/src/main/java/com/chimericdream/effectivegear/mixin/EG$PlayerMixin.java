@@ -10,8 +10,6 @@ import java.util.UUID;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -28,7 +26,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.item.equipment.trim.TrimPatterns;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -101,22 +98,11 @@ public class EG$PlayerMixin {
         eg$updateSubmergedMiningSpeed(self);
         eg$updateMountSpeedBonus(self);
 
-        if (PlayerAbilityState.tick(self, TrimSetUtils.isWearingFullPattern(self, TrimPatterns.FLOW))) {
-            eg$applyFlowDoubleJump(self);
-        }
+        PlayerAbilityState.tick(self);
 
         if (self.level() instanceof ServerLevel serverLevel) {
             RedstoneTrimPulses.tick(serverLevel);
         }
-    }
-
-    @Unique
-    private static void eg$applyFlowDoubleJump(Player player) {
-        Vec3 look = player.getLookAngle();
-        Vec3 forward = new Vec3(look.x, 0.0, look.z).normalize();
-        player.setDeltaMovement(player.getDeltaMovement().add(forward.scale(0.65)).add(0.0, 0.6, 0.0));
-        player.hurtMarked = true;
-        player.level().playSound(null, player, SoundEvents.WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     @Unique
@@ -184,7 +170,7 @@ public class EG$PlayerMixin {
         boolean shouldHaveBonus = TrimSetUtils.isWearingFullPattern(player, TrimPatterns.WAYFINDER);
         boolean hasBonus = attribute.getModifier(EG$MOUNT_SPEED_ID) != null;
         if (shouldHaveBonus && !hasBonus) {
-            attribute.addTransientModifier(new AttributeModifier(EG$MOUNT_SPEED_ID, 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            attribute.addTransientModifier(new AttributeModifier(EG$MOUNT_SPEED_ID, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         } else if (!shouldHaveBonus && hasBonus) {
             attribute.removeModifier(EG$MOUNT_SPEED_ID);
         }

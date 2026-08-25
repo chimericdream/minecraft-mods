@@ -7,7 +7,8 @@ import net.minecraft.server.level.ServerPlayer;
 // Checked in order on each "use ability" press; a player can only match one, since each armor piece carries a single trim pattern.
 public final class TrimAbilities {
     public static final List<TrimAbility> ABILITIES = List.of(
-        new BoltDashAbility()
+        new BoltDashAbility(),
+        new FlowDoubleJumpAbility()
     );
 
     private TrimAbilities() {

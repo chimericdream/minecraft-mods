@@ -8,13 +8,10 @@ import net.minecraft.world.entity.player.Player;
 
 // Per-player Bolt/Flow ability state and Wayfinder's last-boosted-vehicle tracking; ticked once per player per tick from EG$PlayerMixin.
 public final class PlayerAbilityState {
-    private static final int FLOW_DOUBLE_JUMP_COOLDOWN_TICKS = 20;
-
     private static final class State {
         int boltDashCooldown;
         int flowJumpCooldown;
         boolean flowJumpUsedSinceGrounded;
-        boolean wasJumping;
         UUID lastSpeedBoostedVehicle;
     }
 
@@ -39,8 +36,8 @@ public final class PlayerAbilityState {
         stateFor(player).boltDashCooldown = ticks;
     }
 
-    // Edge-checks jump-while-airborne against the stored previous-tick state before overwriting it; returns whether Flow's double jump should trigger.
-    public static boolean tick(Player player, boolean wearingFlowTrim) {
+    // Decrements cooldowns and resets the once-per-airborne-stint Flow flag once the player lands.
+    public static void tick(Player player) {
         State state = stateFor(player);
 
         if (state.boltDashCooldown > 0) {
@@ -54,22 +51,17 @@ public final class PlayerAbilityState {
         if (player.onGround()) {
             state.flowJumpUsedSinceGrounded = false;
         }
+    }
 
-        boolean jumpPressedThisTick = player.isJumping() && !state.wasJumping;
-        boolean triggerFlowDoubleJump = wearingFlowTrim
-            && jumpPressedThisTick
-            && !player.onGround()
-            && !state.flowJumpUsedSinceGrounded
-            && state.flowJumpCooldown <= 0;
+    public static boolean isFlowJumpReady(Player player) {
+        State state = stateFor(player);
+        return state.flowJumpCooldown <= 0 && !state.flowJumpUsedSinceGrounded;
+    }
 
-        if (triggerFlowDoubleJump) {
-            state.flowJumpUsedSinceGrounded = true;
-            state.flowJumpCooldown = FLOW_DOUBLE_JUMP_COOLDOWN_TICKS;
-        }
-
-        state.wasJumping = player.isJumping();
-
-        return triggerFlowDoubleJump;
+    public static void startFlowJumpCooldown(Player player, int ticks) {
+        State state = stateFor(player);
+        state.flowJumpCooldown = ticks;
+        state.flowJumpUsedSinceGrounded = true;
     }
 
     public static UUID getLastSpeedBoostedVehicle(Player player) {
