@@ -44,6 +44,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
             translationBuilder.add("key.category.effectivegear.keybinds", "Effective Gear");
             translationBuilder.add("key.effectivegear.abilities.use", "Use Trim Ability");
+
+            translationBuilder.add("enchantment.effectivegear.preserving", "Preserving");
+            translationBuilder.add("item.effectivegear.preserving.tooltip", "Color Preserved");
         }
     }
 }

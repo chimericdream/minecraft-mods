@@ -39,6 +39,9 @@ public class ModDataGenerator {
 
             add("key.category.effectivegear.keybinds", "Effective Gear");
             add("key.effectivegear.abilities.use", "Use Trim Ability");
+
+            add("enchantment.effectivegear.preserving", "Preserving");
+            add("item.effectivegear.preserving.tooltip", "Color Preserved");
         }
     }
 }

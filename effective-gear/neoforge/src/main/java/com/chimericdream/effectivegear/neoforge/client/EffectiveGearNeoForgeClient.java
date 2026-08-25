@@ -2,6 +2,7 @@ package com.chimericdream.effectivegear.neoforge.client;
 
 import com.chimericdream.effectivegear.ModInfo;
 import com.chimericdream.effectivegear.client.Keybindings;
+import com.chimericdream.effectivegear.client.PreservingBlockColors;
 import com.chimericdream.effectivegear.network.UseAbilityPayload;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,6 +16,7 @@ public class EffectiveGearNeoForgeClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         Keybindings.init();
+        PreservingBlockColors.init();
     }
 
     @SubscribeEvent

@@ -1,4 +1,6 @@
 {
+  "enchantment.effectivegear.preserving": "Preserving",
+  "item.effectivegear.preserving.tooltip": "Color Preserved",
   "key.category.effectivegear.keybinds": "Effective Gear",
   "key.effectivegear.abilities.use": "Use Trim Ability",
   "trim_material.effectivegear.blaze_powder": "Blaze Powder Material",

@@ -1,6 +1,7 @@
 package com.chimericdream.effectivegear;
 
 import com.chimericdream.effectivegear.block.EGBlocks;
+import com.chimericdream.effectivegear.enchantment.ModEnchantments;
 import com.chimericdream.effectivegear.network.ServerNetworking;
 import com.chimericdream.effectivegear.util.PlayerAbilityState;
 import com.chimericdream.lib.registries.ModRegistryHelper;
@@ -22,6 +23,7 @@ public final class EffectiveGearMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         EGBlocks.init();
+        ModEnchantments.init();
 
         ServerNetworking.init();
         PlayerEvent.PLAYER_QUIT.register(PlayerAbilityState::remove);

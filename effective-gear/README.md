@@ -12,6 +12,10 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Current Features
 
+* New enchantments:
+  * **Preserving** (shears, applied via anvil) — leaves mined with Preserving-enchanted shears keep
+    their original color forever, no matter what biome they're placed in. Crafting a preserved leaf
+    block by itself turns it back into an ordinary one.
 * New armor trim materials
   * Blaze powder
   * Echo shard

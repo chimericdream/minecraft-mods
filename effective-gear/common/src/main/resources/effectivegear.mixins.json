@@ -7,6 +7,8 @@
     ],
     "mixins": [
         "EG$BeehiveBlockMixin",
+        "EG$BlockItemStatePropertiesMixin",
+        "EG$BlockMixin",
         "EG$CreakingMixin",
         "EG$EnchantmentMenuMixin",
         "EG$EndermanMixin",
@@ -15,6 +17,7 @@
         "EG$HoglinAiMixin",
         "EG$IronGolemMixin",
         "EG$ItemsMixin",
+        "EG$LeavesBlockMixin",
         "EG$LivingEntityMixin",
         "EG$PiglinAiMixin",
         "EG$PiglinBruteAiMixin",

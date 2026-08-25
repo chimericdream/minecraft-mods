@@ -1,3 +1,14 @@
+### Unreleased changes
+
+#### New Features
+
+* Added a **Preserving** enchantment for shears (applied via anvil, since shears can't be enchanted at
+  a table). Leaves mined with Preserving-enchanted shears keep their original color forever, even when
+  placed somewhere with a very different biome color — handy for building with a consistent leaf color
+  regardless of where you place it. Works on Oak, Jungle, Acacia, Dark Oak, and Mangrove leaves (the
+  only leaves whose color actually changes by biome). Crafting a preserved leaf block by itself turns
+  it back into an ordinary one.
+
 ### 26.2 - 1.1.0
 
 #### New Features
