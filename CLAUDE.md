@@ -148,24 +148,38 @@ fix + reference implementation) found while working in this repo.
 
 ## Versioning & releases
 
-- **Only bump `mod_version` (in each mod's `gradle.properties`) when actually cutting a release.**
-  Day-to-day commits between releases do not get their own version number or dated changelog entry,
-  even if they'd otherwise look changelog-worthy (new feature, bug fix, etc.) — none of this is
-  published anywhere until a release is explicitly cut, so there's no reader for an intermediate
-  version.
+- **Day-to-day commits between releases do not get their own dated changelog entry or release
+  version number.** Nothing accumulating under `### Unreleased changes` is published anywhere until a
+  release is explicitly cut. What *does* need to stay current between releases is `mod_version` itself
+  — see the next two bullets — since it's what tells you, at any commit, what the next release would
+  be if cut right now.
 - **Official releases are tagged in git** (e.g. `chimericlib/26.2-6.0.0`, `minekea/26.2-10.0.0`,
   `chimericlib/3.1.0-beta.1` — see `git tag --list`). A pre-release (`-beta.x`) tag counts as a real
   release just as much as a final one — the distinction that matters is tagged vs. untagged, not
-  beta vs. final. A mod's current `mod_version` therefore reflects one of two states:
+  beta vs. final. A mod's current `mod_version` therefore reflects one of these states:
   - **At the tagged commit itself**: the exact released version, matching the tag (e.g. `6.0.0`, or
     `3.1.0-beta.1`).
-  - **Any commit after that tag, until the next release is cut**: the next anticipated version,
-    suffixed `-beta.0` if the prior release was final, or `-beta.<x+1>` if the prior release was
-    itself `-beta.x` (e.g. after tagging `6.0.0`, `mod_version` becomes `6.1.0-beta.0`; after tagging
-    `3.1.0-beta.1`, it becomes `3.1.0-beta.2`). Either way it *stays* there through every commit —
-    features, fixes, refactors — until it's actually time to cut the next release, at which point it's
-    renamed to whatever that release's real version is and tagged. Don't increment the beta number
-    per-commit or per-session; it only moves when a release actually ships.
+  - **Continuing pre-release iterations of a target whose most recent tag was itself `-beta.x`**: the
+    same `x.y.z`, suffixed `-beta.<x+1>` (e.g. after tagging `3.1.0-beta.1`, `mod_version` becomes
+    `3.1.0-beta.2`). The target version doesn't change here — the prior tag already committed to
+    `x.y.z` as the eventual release, this just continues iterating toward it.
+  - **Otherwise, mid-cycle after a final tag (or after the target escalates — see below)**: the next
+    anticipated pre-release version, chosen by what has actually accumulated under `### Unreleased
+    changes` so far:
+    - Only bug fixes so far → a patch bump: `x.y.(z+1)-beta.0`.
+    - Any feature present → a minor bump: `x.(y+1).0-beta.0`.
+  - **This target can escalate mid-cycle.** If `mod_version` is currently a patch-level pre-release
+    (`x.y.(z+1)-beta.0`) from fixes only, and a feature then gets committed, re-target it up to the
+    minor-level pre-release (`x.(y+1).0-beta.0`) instead — e.g. `6.0.0` → (first fix) `6.0.1-beta.0` →
+    (later feature) `6.1.0-beta.0`. Once escalated to minor for a cycle, further fixes or features in
+    that same cycle don't downgrade it back to patch.
+- **Check `mod_version` every time you touch `CHANGELOG.md`, not on a separate cadence.** Whenever a
+  commit adds an entry under `### Unreleased changes` (see the changelog-update rule below), also check
+  whether `gradle.properties`' `mod_version` already reflects the correct next pre-release version per
+  the rule above. If it does, no action is needed. If not, bump it in the same commit — using the
+  patch/minor/escalation logic above, based on what's now in `### Unreleased changes` taken as a whole
+  (not just the entry you're adding). Don't increment the pre-release number for any other reason —
+  e.g. never bump per-commit or per-session once `mod_version` already matches the correct target.
 - **Changelog structure follows the same split.** Each mod's `CHANGELOG.md` accumulates all untagged
   work under a single `### Unreleased changes` heading at the top (with the usual `#### New
   Features`/`#### Bug Fixes`/`#### Changes` subheadings) — not a new dated/versioned heading per
@@ -194,7 +208,8 @@ fix + reference implementation) found while working in this repo.
   equivalent datagen output) does not need one. A README update belongs alongside any change to
   something the README documents (a feature list, supported versions, setup steps, public API
   surface for chimeric-lib, etc.). Skip either file when nothing it covers actually changed — don't
-  add an entry just to have one.
+  add an entry just to have one. **Whenever this adds a `CHANGELOG.md` entry, also run the
+  `mod_version` check** from the versioning rules above in the same commit.
 
 ## Conventions
 
