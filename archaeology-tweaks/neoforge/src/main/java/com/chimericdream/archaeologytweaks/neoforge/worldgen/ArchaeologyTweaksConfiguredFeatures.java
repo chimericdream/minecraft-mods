@@ -47,12 +47,12 @@ public class ArchaeologyTweaksConfiguredFeatures {
         registerDisk(context, SUSPICIOUS_CLAY_RIVER_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_CLAY.get(), 1, 2, Blocks.CLAY);
         registerDisk(context, SUSPICIOUS_CLAY_BEACH_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_CLAY.get(), 1, 2, Blocks.CLAY, Blocks.SAND);
         registerDisk(context, SUSPICIOUS_DIRT_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_DIRT.get(), 1, 2, Blocks.DIRT, Blocks.COARSE_DIRT);
-        registerDisk(context, SUSPICIOUS_DIRT_TAIGA_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_DIRT.get(), 1, 2, Blocks.DIRT, Blocks.COARSE_DIRT);
+        registerDisk(context, SUSPICIOUS_DIRT_TAIGA_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_DIRT.get(), 1, 1, Blocks.DIRT, Blocks.COARSE_DIRT);
         registerDisk(context, SUSPICIOUS_DIRT_PLAINS_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_DIRT.get(), 1, 2, Blocks.DIRT, Blocks.COARSE_DIRT);
         registerDisk(context, SUSPICIOUS_MUD_SWAMP_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_MUD.get(), 1, 2, Blocks.MUD, Blocks.DIRT);
         registerDisk(context, SUSPICIOUS_MUD_MANGROVE_SWAMP_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_MUD.get(), 1, 2, Blocks.MUD);
         registerDisk(context, SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_PACKED_MUD.get(), 1, 1, Blocks.MUD);
-        registerDisk(context, SUSPICIOUS_RED_SAND_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_RED_SAND.get(), 1, 2, Blocks.RED_SAND);
+        registerDisk(context, SUSPICIOUS_RED_SAND_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_RED_SAND.get(), 1, 1, Blocks.RED_SAND);
 
         registerOre(context, SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_ROOTED_DIRT.get(), Blocks.ROOTED_DIRT, 2);
         registerOre(context, SUSPICIOUS_SOUL_SAND_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_SOUL_SAND.get(), Blocks.SOUL_SAND, 4);

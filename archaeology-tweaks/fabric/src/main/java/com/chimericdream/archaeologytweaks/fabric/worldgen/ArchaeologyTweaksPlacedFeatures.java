@@ -47,20 +47,20 @@ public class ArchaeologyTweaksPlacedFeatures {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         registerDisk(context, configuredFeatures, SUSPICIOUS_CLAY_RIVER_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_CLAY_RIVER_CONFIGURED_KEY, 1);
-        registerDisk(context, configuredFeatures, SUSPICIOUS_CLAY_BEACH_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_CLAY_BEACH_CONFIGURED_KEY, 1);
+        registerDisk(context, configuredFeatures, SUSPICIOUS_CLAY_BEACH_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_CLAY_BEACH_CONFIGURED_KEY, 20);
         registerDisk(context, configuredFeatures, SUSPICIOUS_DIRT_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_DIRT_CONFIGURED_KEY, 1);
-        registerDisk(context, configuredFeatures, SUSPICIOUS_DIRT_TAIGA_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_DIRT_TAIGA_CONFIGURED_KEY, 2);
+        registerDisk(context, configuredFeatures, SUSPICIOUS_DIRT_TAIGA_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_DIRT_TAIGA_CONFIGURED_KEY, 8);
         registerDisk(context, configuredFeatures, SUSPICIOUS_DIRT_PLAINS_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_DIRT_PLAINS_CONFIGURED_KEY, 2);
-        registerDisk(context, configuredFeatures, SUSPICIOUS_MUD_SWAMP_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_MUD_SWAMP_CONFIGURED_KEY, 4);
-        registerDisk(context, configuredFeatures, SUSPICIOUS_MUD_MANGROVE_SWAMP_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_MUD_MANGROVE_SWAMP_CONFIGURED_KEY, 10);
-        registerDisk(context, configuredFeatures, SUSPICIOUS_PACKED_MUD_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY, 10);
+        registerDisk(context, configuredFeatures, SUSPICIOUS_MUD_SWAMP_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_MUD_SWAMP_CONFIGURED_KEY, 16);
+        registerDisk(context, configuredFeatures, SUSPICIOUS_MUD_MANGROVE_SWAMP_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_MUD_MANGROVE_SWAMP_CONFIGURED_KEY, 40);
+        registerDisk(context, configuredFeatures, SUSPICIOUS_PACKED_MUD_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY, 40);
         registerDisk(context, configuredFeatures, SUSPICIOUS_RED_SAND_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_RED_SAND_CONFIGURED_KEY, 25);
 
-        registerOre(context, configuredFeatures, SUSPICIOUS_ROOTED_DIRT_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY, 1, VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(200), 8);
+        registerOre(context, configuredFeatures, SUSPICIOUS_ROOTED_DIRT_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY, 1, VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(200), 160);
         // Not biome-restricted to Soul Sand Valley (see biome injection) — soul sand/soil spawn
         // anywhere in the Nether. Height range matches vanilla's own nether_gold_ore (near the
         // full dimension height, not just the thin band vanilla's ore_soul_sand feature carves).
-        registerOre(context, configuredFeatures, SUSPICIOUS_SOUL_SAND_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_SOUL_SAND_CONFIGURED_KEY, 1, VerticalAnchor.aboveBottom(10), VerticalAnchor.belowTop(10), 128);
+        registerOre(context, configuredFeatures, SUSPICIOUS_SOUL_SAND_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_SOUL_SAND_CONFIGURED_KEY, 2, VerticalAnchor.aboveBottom(10), VerticalAnchor.belowTop(10), 128);
         registerOre(context, configuredFeatures, SUSPICIOUS_SOUL_SOIL_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_SOUL_SOIL_CONFIGURED_KEY, 1, VerticalAnchor.aboveBottom(10), VerticalAnchor.belowTop(10), 128);
     }
 

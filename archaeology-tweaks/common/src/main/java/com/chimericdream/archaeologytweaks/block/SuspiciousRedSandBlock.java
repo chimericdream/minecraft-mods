@@ -9,8 +9,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BrushableBlock;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -51,6 +53,10 @@ public class SuspiciousRedSandBlock extends BrushableBlock {
         BlockEntity var6 = world.getBlockEntity(pos);
         if (var6 instanceof ATBrushableBlockEntity brushableBlockEntity) {
             brushableBlockEntity.scheduledTick(world);
+        }
+
+        if (FallingBlock.isFree(world.getBlockState(pos.below())) && pos.getY() >= world.getMinY()) {
+            FallingBlockEntity.fall(world, pos, state).disableDrop();
         }
     }
 }
