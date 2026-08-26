@@ -40,7 +40,6 @@ public class ArchaeologyTweaksBiomeModifiers {
         registerKeys(context, biomes, placedFeatures, "suspicious_packed_mud", ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_PACKED_MUD_PLACED_KEY, Biomes.MANGROVE_SWAMP);
 
         registerTag(context, biomes, placedFeatures, "suspicious_red_sand", BiomeTags.IS_BADLANDS, ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_RED_SAND_PLACED_KEY);
-        registerTag(context, biomes, placedFeatures, "suspicious_rooted_dirt", BiomeTags.IS_FOREST, ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_ROOTED_DIRT_PLACED_KEY);
 
         registerTag(context, biomes, placedFeatures, "suspicious_soul_sand", BiomeTags.IS_NETHER, ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_SOUL_SAND_PLACED_KEY);
         registerTag(context, biomes, placedFeatures, "suspicious_soul_soil", BiomeTags.IS_NETHER, ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_SOUL_SOIL_PLACED_KEY);

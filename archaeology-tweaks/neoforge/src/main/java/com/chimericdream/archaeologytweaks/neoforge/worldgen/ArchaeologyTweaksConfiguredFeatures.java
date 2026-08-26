@@ -20,10 +20,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTes
 /**
  * Most suspicious blocks are small {@code Feature.DISK} deposits (the same feature type vanilla uses
  * for clay/sand/gravel disks), anchored to the terrain heightmap so they're always exposed to air or
- * water. Rooted dirt and the two Soul Sand Valley blocks use {@code Feature.ORE} instead: rooted dirt
- * doesn't need the exposure guarantee, and heightmaps don't work in the Nether at all (the solid roof
- * near the top of the world means a heightmap search lands at the ceiling, not the valley floor) — see
- * {@link ArchaeologyTweaksPlacedFeatures}.
+ * water. The two Soul Sand Valley blocks use {@code Feature.ORE} instead, since heightmaps don't work
+ * in the Nether at all (the solid roof near the top of the world means a heightmap search lands at
+ * the ceiling, not the valley floor) — see {@link ArchaeologyTweaksPlacedFeatures}. Suspicious rooted
+ * dirt isn't a worldgen feature at all: real rooted dirt is rare enough (it's effectively only found
+ * under azalea trees) that searching for it via a feature almost never found anything to replace, so
+ * it's produced instead by mixins hooking the actual vanilla placement sites — see
+ * {@code RootSystemFeatureMixin} / {@code TrunkPlacerMixin}.
  */
 public class ArchaeologyTweaksConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_CLAY_RIVER_CONFIGURED_KEY = key("suspicious_clay_river");
@@ -35,7 +38,6 @@ public class ArchaeologyTweaksConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_MUD_MANGROVE_SWAMP_CONFIGURED_KEY = key("suspicious_mud_mangrove_swamp");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY = key("suspicious_packed_mud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_RED_SAND_CONFIGURED_KEY = key("suspicious_red_sand");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY = key("suspicious_rooted_dirt");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_SOUL_SAND_CONFIGURED_KEY = key("suspicious_soul_sand");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUSPICIOUS_SOUL_SOIL_CONFIGURED_KEY = key("suspicious_soul_soil");
 
@@ -54,7 +56,6 @@ public class ArchaeologyTweaksConfiguredFeatures {
         registerDisk(context, SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_PACKED_MUD.get(), 1, 1, Blocks.MUD);
         registerDisk(context, SUSPICIOUS_RED_SAND_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_RED_SAND.get(), 1, 1, Blocks.RED_SAND);
 
-        registerOre(context, SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_ROOTED_DIRT.get(), Blocks.ROOTED_DIRT, 2);
         registerOre(context, SUSPICIOUS_SOUL_SAND_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_SOUL_SAND.get(), Blocks.SOUL_SAND, 4);
         registerOre(context, SUSPICIOUS_SOUL_SOIL_CONFIGURED_KEY, ModBlocks.SUSPICIOUS_SOUL_SOIL.get(), Blocks.SOUL_SOIL, 3);
     }

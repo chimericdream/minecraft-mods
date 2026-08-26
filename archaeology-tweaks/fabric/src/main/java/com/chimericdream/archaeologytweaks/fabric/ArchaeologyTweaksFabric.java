@@ -69,11 +69,6 @@ public final class ArchaeologyTweaksFabric implements ModInitializer {
             ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_RED_SAND_PLACED_KEY
         );
         BiomeModifications.addFeature(
-            BiomeSelectors.tag(BiomeTags.IS_FOREST),
-            GenerationStep.Decoration.UNDERGROUND_ORES,
-            ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_ROOTED_DIRT_PLACED_KEY
-        );
-        BiomeModifications.addFeature(
             BiomeSelectors.foundInTheNether(),
             GenerationStep.Decoration.UNDERGROUND_ORES,
             ArchaeologyTweaksPlacedFeatures.SUSPICIOUS_SOUL_SAND_PLACED_KEY

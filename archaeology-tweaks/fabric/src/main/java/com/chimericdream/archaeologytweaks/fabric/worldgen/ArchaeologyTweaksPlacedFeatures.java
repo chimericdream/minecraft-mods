@@ -31,7 +31,6 @@ public class ArchaeologyTweaksPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SUSPICIOUS_MUD_MANGROVE_SWAMP_PLACED_KEY = key("suspicious_mud_mangrove_swamp");
     public static final ResourceKey<PlacedFeature> SUSPICIOUS_PACKED_MUD_PLACED_KEY = key("suspicious_packed_mud");
     public static final ResourceKey<PlacedFeature> SUSPICIOUS_RED_SAND_PLACED_KEY = key("suspicious_red_sand");
-    public static final ResourceKey<PlacedFeature> SUSPICIOUS_ROOTED_DIRT_PLACED_KEY = key("suspicious_rooted_dirt");
     public static final ResourceKey<PlacedFeature> SUSPICIOUS_SOUL_SAND_PLACED_KEY = key("suspicious_soul_sand");
     public static final ResourceKey<PlacedFeature> SUSPICIOUS_SOUL_SOIL_PLACED_KEY = key("suspicious_soul_soil");
 
@@ -56,7 +55,6 @@ public class ArchaeologyTweaksPlacedFeatures {
         registerDisk(context, configuredFeatures, SUSPICIOUS_PACKED_MUD_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_PACKED_MUD_CONFIGURED_KEY, 40);
         registerDisk(context, configuredFeatures, SUSPICIOUS_RED_SAND_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_RED_SAND_CONFIGURED_KEY, 25);
 
-        registerOre(context, configuredFeatures, SUSPICIOUS_ROOTED_DIRT_PLACED_KEY, ArchaeologyTweaksConfiguredFeatures.SUSPICIOUS_ROOTED_DIRT_CONFIGURED_KEY, 1, VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(200), 160);
         // Not biome-restricted to Soul Sand Valley (see biome injection) — soul sand/soil spawn
         // anywhere in the Nether. Height range matches vanilla's own nether_gold_ore (near the
         // full dimension height, not just the thin band vanilla's ore_soul_sand feature carves).
@@ -94,8 +92,7 @@ public class ArchaeologyTweaksPlacedFeatures {
     /**
      * Ore-style placement over a fixed Y range instead of a heightmap. The Nether has a solid roof
      * near the top of the world, so a heightmap search there lands at the ceiling instead of the
-     * Soul Sand Valley floor and never finds its target block — this is also used for rooted dirt,
-     * which doesn't need the surface-exposure guarantee the heightmap gives the other blocks.
+     * Soul Sand Valley floor and never finds its target block.
      */
     private static void registerOre(
         BootstrapContext<PlacedFeature> context,
