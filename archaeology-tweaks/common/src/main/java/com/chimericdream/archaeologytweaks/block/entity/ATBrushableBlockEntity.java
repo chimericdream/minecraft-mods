@@ -91,6 +91,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
     public void setItem(ItemStack item) {
         this.item = item;
         this.lootTable = null;
+        this.sourceLootTable = null;
         this.setChanged();
     }
 

@@ -17,10 +17,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 public class SuspiciousRedSandBlock extends BrushableBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "suspicious_red_sand");
+    private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, BLOCK_ID.withPrefix("blocks/"));
 
     public SuspiciousRedSandBlock() {
         super(
@@ -39,7 +41,9 @@ public class SuspiciousRedSandBlock extends BrushableBlock {
 
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ATBrushableBlockEntity(pos, state);
+        ATBrushableBlockEntity blockEntity = new ATBrushableBlockEntity(pos, state);
+        blockEntity.setLootTable(LOOT_TABLE, RandomSource.create().nextLong());
+        return blockEntity;
     }
 
     @Override
