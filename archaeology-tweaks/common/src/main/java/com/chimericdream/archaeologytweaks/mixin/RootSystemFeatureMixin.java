@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(RootSystemFeature.class)
 public abstract class RootSystemFeatureMixin {
     @Unique
-    private static final float SUSPICIOUS_CHANCE = 0.1F;
+    private static final float SUSPICIOUS_CHANCE = 0.02F;
 
     @Redirect(
         method = "placeRootedDirt",
