@@ -15,6 +15,9 @@
     "icon": "assets/archtweaks/icon.png",
     "environment": "*",
     "entrypoints": {
+        "fabric-datagen": [
+            "com.chimericdream.archaeologytweaks.fabric.data.ModDataGenerator"
+        ],
         "main": [
             "com.chimericdream.archaeologytweaks.fabric.ArchaeologyTweaksFabric"
         ],

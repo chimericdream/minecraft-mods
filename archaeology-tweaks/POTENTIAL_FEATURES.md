@@ -25,7 +25,9 @@ starting points for future planning.
 ## Dig sites & world generation
 
 * **Buried dig sites** — small worldgen features that cluster 5–15 suspicious blocks around a skeleton,
-  fossil, or ruined foundation, so players can find a "site" rather than lone blocks.
+  fossil, or ruined foundation, so players can find a "site" rather than lone blocks. _Phase 1
+  (scattered single-block deposits, no centerpiece or torn-map-fragment mechanic) has shipped — this
+  clustered/structure-based version remains the deferred follow-up._
 * **Fossil excavations** — vanilla fossils generate partially encased in suspicious blocks; fully brushing
   the site yields bonus bone blocks and rare sherds.
 * **Torn map fragments** — a loot item that, when several are combined, points to a nearby dig site
@@ -54,4 +56,5 @@ starting points for future planning.
 ## From the idea backlog (2026-08-13)
 
 * Add thematic/fun advancements.
-* Add small features to world generation with the new suspicious blocks.
+* ~~Add small features to world generation with the new suspicious blocks.~~ Done — see "Dig sites &
+  world generation" above.

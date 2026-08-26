@@ -30,6 +30,8 @@ whatever loot has been assigned to it.
 * Each block is brushed exactly like vanilla suspicious sand/gravel, revealing its loot piece by piece
 * Includes gravity-affected variants that behave like the block they are based on (e.g. sand and red sand fall)
 * Loot is driven by loot tables, making it easy for datapacks to customize what each block can contain
+* Each suspicious block generates naturally as a small, rare deposit in a fitting biome (e.g. suspicious clay
+  near rivers and beaches, suspicious soul sand in the Soul Sand Valley)
 
 ## Notes for Documentation
 

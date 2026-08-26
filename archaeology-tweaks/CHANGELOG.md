@@ -1,3 +1,13 @@
+### Unreleased changes
+
+#### New Features
+
+* Suspicious blocks now generate naturally in the world as small, rare deposits — clay near rivers
+  and beaches, dirt in forests, taiga, and plains, mud and packed mud in swamps, red sand in
+  badlands, rooted dirt in forests, and soul sand/soul soil anywhere in the Nether. Brushing one now
+  also yields real loot instead of nothing.
+
+
 ### 26.2 - 4.1.0
 
 #### Changes
