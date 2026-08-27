@@ -72,6 +72,14 @@ for the edit→build loop in this repo.
 - `bun run clean` — `./gradlew clean` (or scoped `:mod:clean` tasks with `--mods`/`--exclude`).
 - `./gradlew build` / `./gradlew clean` — Gradle directly (skips the Bun lifecycle).
 
+### Data generation
+- `bun run datagen` — runs `runDatagen` (Fabric) and/or `runData` (NeoForge) for every selected
+  mod that declares `has_fabric_datagen = true` / `has_neoforge_datagen = true` in its
+  `gradle.properties` (see "Datagen gotcha" below and the gradle.properties flags rule). Mods that
+  declare neither flag are skipped. Supports the same `--mods=<id,id,...>` / `--exclude=<id,id,...>`
+  scoping as the build scripts. **Run this before cutting any release** (see Versioning & releases)
+  so generated data on disk reflects the latest code, not a stale prior run.
+
 ### chimeric-lib
 - `bun run publish:lib` — publish chimeric-lib to maven-local / GitHub Packages for **external**
   consumers (release-only; not needed to develop mods in this repo — see above).
@@ -129,6 +137,16 @@ BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup)
 
 Reference: `minekea/fabric/.../data/ModDataGenerator.java`. Full write-up: `docs/MC-26.2-NOTES.md`.
 
+### Keep the `gradle.properties` datagen flags in sync
+
+Each mod's `gradle.properties` declares `has_fabric_datagen = true` and/or `has_neoforge_datagen =
+true` when that platform registers a datagen entrypoint (Fabric: a `fabric-datagen` entrypoint in
+`fabric.mod.json` pointing at a `ModDataGenerator`; NeoForge: a `data { ... }` run + `GatherDataEvent`
+listener). `bun run datagen` (see Commands) reads these flags to decide what to run, so **whenever
+you add, remove, or port a mod's data generation** (either platform), update that mod's
+`gradle.properties` in the same change — add the flag when datagen is newly wired up, remove it if a
+platform's datagen is deleted. A mod with no datagen on either platform has neither flag.
+
 ## Platform-specific gotchas
 
 If you're writing a `@Mixin` on a vanilla entity, registering entity/block-entity renderers, or
@@ -148,6 +166,12 @@ fix + reference implementation) found while working in this repo.
 
 ## Versioning & releases
 
+- **Before cutting any release (tagging a beta or final version), run `bun run datagen`** scoped
+  to the mod being released (e.g. `bun run datagen --mods=<mod_id>`) and commit any resulting
+  changes under `<mod>/*/src/main/generated`. This is a required safety check — released jars must
+  ship data generated from the code at the tagged commit, not from whatever the generated files
+  happened to contain from an earlier run. See "Data generation" under Commands and the
+  gradle.properties flags rule above.
 - **Day-to-day commits between releases do not get their own dated changelog entry or release
   version number.** Nothing accumulating under `### Unreleased changes` is published anywhere until a
   release is explicitly cut. What *does* need to stay current between releases is `mod_version` itself

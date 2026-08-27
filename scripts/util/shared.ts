@@ -11,6 +11,8 @@ export type ModProperties = {
     archives_name: string;
     enabled_platforms: string;
     has_patchouli_guide?: boolean;
+    has_fabric_datagen?: boolean;
+    has_neoforge_datagen?: boolean;
     architectury_compat: string;
     chimericlib_compat: string;
     fabric_compat?: string;

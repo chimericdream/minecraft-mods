@@ -7,6 +7,7 @@
         "build:modpacks": "bun ./scripts/create-modpacks.ts",
         "clean": "bun ./scripts/clean.ts",
         "copy:accesswideners": "bun ./scripts/copy-accesswideners.ts",
+        "datagen": "bun ./scripts/run-datagen.ts",
         "prepare:build": "bun run copy:accesswideners && bun run update:patchoulibooks",
         "publish:lib": "./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal",
         "teardown:build": "bun ./scripts/revert-fabricmodjson.ts",
