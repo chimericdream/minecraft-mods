@@ -8,6 +8,8 @@
   regardless of where you place it. Works on Oak, Jungle, Acacia, Dark Oak, and Mangrove leaves (the
   only leaves whose color actually changes by biome). Crafting a preserved leaf block by itself turns
   it back into an ordinary one.
+* Added an advancement, **Colors that Pop**, earned the first time you break a leaf block with shears
+  enchanted with Preserving.
 
 ### 26.2 - 1.1.0
 

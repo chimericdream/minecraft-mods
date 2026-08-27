@@ -1,4 +1,8 @@
 {
+  "advancements.effectivegear.colors_that_pop.desc": "Break a leaf block with shears enchanted with Preserving",
+  "advancements.effectivegear.colors_that_pop.title": "Colors that Pop",
+  "advancements.effectivegear.root.desc": "Small quality-of-life tweaks and bonuses for your armor, weapons, and tools",
+  "advancements.effectivegear.root.title": "Effective Gear",
   "enchantment.effectivegear.preserving": "Preserving",
   "item.effectivegear.preserving.tooltip": "Color Preserved",
   "key.category.effectivegear.keybinds": "Effective Gear",

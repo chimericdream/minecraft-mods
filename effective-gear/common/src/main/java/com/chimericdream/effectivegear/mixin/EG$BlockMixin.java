@@ -1,9 +1,11 @@
 package com.chimericdream.effectivegear.mixin;
 
+import com.chimericdream.effectivegear.advancement.EffectiveGearAdvancements;
 import com.chimericdream.effectivegear.enchantment.PreservingHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemInstance;
@@ -22,9 +24,9 @@ import java.util.List;
 /**
  * When a leaves block preservable by the Preserving enchantment is mined with a tool carrying it, tags
  * the dropped leaf item(s) with the vanilla {@code BLOCK_STATE} component so the block keeps its
- * default color no matter where it's placed next (see {@link EG$LeavesBlockMixin}). This overload of
- * {@code getDrops} is only reached from {@code Block#playerDestroy}, so explosions and other block
- * removal paths are unaffected.
+ * default color no matter where it's placed next (see {@link EG$LeavesBlockMixin}), and awards the
+ * breaking player the "Colors that Pop" advancement. This overload of {@code getDrops} is only reached
+ * from {@code Block#playerDestroy}, so explosions and other block removal paths are unaffected.
  */
 @Mixin(Block.class)
 public abstract class EG$BlockMixin {
@@ -51,6 +53,10 @@ public abstract class EG$BlockMixin {
             if (stack.is(leafItem)) {
                 stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(PreservingHelper.PRESERVED, true));
             }
+        }
+
+        if (breaker instanceof ServerPlayer player) {
+            EffectiveGearAdvancements.award(player, EffectiveGearAdvancements.COLORS_THAT_POP);
         }
     }
 }

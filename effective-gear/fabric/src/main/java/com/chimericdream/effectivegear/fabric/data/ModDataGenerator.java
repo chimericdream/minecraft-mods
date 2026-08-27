@@ -47,6 +47,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
             translationBuilder.add("enchantment.effectivegear.preserving", "Preserving");
             translationBuilder.add("item.effectivegear.preserving.tooltip", "Color Preserved");
+
+            translationBuilder.add("advancements.effectivegear.root.title", "Effective Gear");
+            translationBuilder.add("advancements.effectivegear.root.desc", "Small quality-of-life tweaks and bonuses for your armor, weapons, and tools");
+            translationBuilder.add("advancements.effectivegear.colors_that_pop.title", "Colors that Pop");
+            translationBuilder.add("advancements.effectivegear.colors_that_pop.desc", "Break a leaf block with shears enchanted with Preserving");
         }
     }
 }

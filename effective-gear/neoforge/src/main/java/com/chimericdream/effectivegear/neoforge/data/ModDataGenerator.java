@@ -42,6 +42,11 @@ public class ModDataGenerator {
 
             add("enchantment.effectivegear.preserving", "Preserving");
             add("item.effectivegear.preserving.tooltip", "Color Preserved");
+
+            add("advancements.effectivegear.root.title", "Effective Gear");
+            add("advancements.effectivegear.root.desc", "Small quality-of-life tweaks and bonuses for your armor, weapons, and tools");
+            add("advancements.effectivegear.colors_that_pop.title", "Colors that Pop");
+            add("advancements.effectivegear.colors_that_pop.desc", "Break a leaf block with shears enchanted with Preserving");
         }
     }
 }

@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "id": "minecraft:netherite_chestplate"
+        },
+        "title": {
+            "translate": "advancements.effectivegear.root.title"
+        },
+        "description": {
+            "translate": "advancements.effectivegear.root.desc",
+            "color": "green"
+        },
+        "background": "minecraft:block/netherite_block",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "trigger": {
+            "trigger": "minecraft:tick"
+        }
+    }
+}
