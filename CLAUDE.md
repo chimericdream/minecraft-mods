@@ -271,7 +271,15 @@ fix + reference implementation) found while working in this repo.
 - `DEPENDENCY-PLAN.md` — how chimeric-lib is wired as an in-build project dependency (no publish loop)
   and the remaining monorepo build-structure improvements.
 - `docs/MC-26.2-NOTES.md` — MC 26.2 port gotchas: datagen component binding, API renames, reading
-  decompiled vanilla source, the shutdown-watchdog false crash.
+  decompiled vanilla source, the shutdown-watchdog false crash, and build/datagen/GameTest tasks that
+  hang after finishing (see next bullet).
+- **Any build/datagen/GameTest/`run*` task can finish its real work and then hang indefinitely instead
+  of exiting the JVM** (no self-kill, unlike the watchdog crash above). Check status every **~10
+  minutes**, not every 20-30+ — the vast majority of these tasks finish in well under that, so a check
+  still coming back "still running" past ~10 minutes means it's hung, not slow. Poll the expected
+  *output* (log tail, generated-file timestamps, whether the artifact already exists), not just whether
+  the process/shell command reports completion. Full unblock steps (find + kill the stuck `java.exe`):
+  see `docs/MC-26.2-NOTES.md`.
 - `docs/BLOCK-MIGRATION.md` — non-breaking block/item deprecation & rename across both loaders (no DataFixerUpper).
 - `CODE-REVIEW-PLAN.md` (repo root) — phased code-review plan. Phase 1 (critical bugs) done on unmerged
   `fix/*` branches; Phase 2+ not started.
