@@ -1,0 +1,24 @@
+{
+    "parent": "camelnostrils:fish_out_of_water",
+    "display": {
+        "icon": {
+            "id": "minecraft:tropical_fish"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.faster_than_a_snail.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.faster_than_a_snail.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

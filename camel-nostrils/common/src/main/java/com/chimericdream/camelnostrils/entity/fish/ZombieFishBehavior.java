@@ -19,6 +19,7 @@ public final class ZombieFishBehavior {
     private static final int ATTACK_COOLDOWN_TICKS = 20;
     private static final double ATTACK_RANGE_SQR = 1.5 * 1.5;
     private static final double FLOP_STEER_STRENGTH = 0.025;
+    private static final double SWIM_SPEED = 1.0;
 
     private ZombieFishBehavior() {
     }
@@ -42,6 +43,26 @@ public final class ZombieFishBehavior {
         double horizontalDist = Math.sqrt(horizontalDistSqr);
         Vec3 steer = new Vec3(toTarget.x / horizontalDist, 0.0, toTarget.z / horizontalDist).scale(FLOP_STEER_STRENGTH);
         fish.setDeltaMovement(fish.getDeltaMovement().add(steer));
+    }
+
+    /**
+     * These fish skip {@code AbstractFish.registerGoals()} entirely (see the class docs on
+     * {@link ZombieCod}/{@link ZombieSalmon}/{@link ZombieTropicalFish}), so they never get the
+     * vanilla {@code FishSwimGoal} that normally drives {@code FishMoveControl} while submerged.
+     * Without it, a zombie fish that ends up back in water just floats in place instead of chasing —
+     * this re-issues a swim-to-target path whenever the current one has finished or gone stale, which
+     * is enough for the mob's own {@code navigation.tick()}/{@code moveControl.tick()} (still ticking
+     * normally every frame) to carry it the rest of the way.
+     */
+    public static void swimTowardTarget(Mob fish) {
+        LivingEntity target = fish.getTarget();
+        if (target == null || !fish.isInWater()) {
+            return;
+        }
+
+        if (fish.getNavigation().isDone()) {
+            fish.getNavigation().moveTo(target, SWIM_SPEED);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@
 #### New Features
 
 * Leash a salmon, cod, or tropical fish and let it die out of water, and it comes back wrong: a hostile zombie fish with 1 heart of health, immune to sunlight, and a poisonous tail-slap bite. It still just flops around — but now it flops toward you, leash still attached.
+* New advancement, "Faster Than a Snail": take damage from a zombie fish.
 
 ### 26.2 - 1.0.0
 

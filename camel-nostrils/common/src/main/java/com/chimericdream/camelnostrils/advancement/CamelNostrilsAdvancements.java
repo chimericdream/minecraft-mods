@@ -15,6 +15,7 @@ public final class CamelNostrilsAdvancements {
     public static final Identifier NAP_TIME = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "nap_time");
     public static final Identifier MIRACLE_GRO = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "miracle_gro");
     public static final Identifier MIRACLE_CURE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "miracle_cure");
+    public static final Identifier FASTER_THAN_A_SNAIL = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "faster_than_a_snail");
 
     private CamelNostrilsAdvancements() {
     }

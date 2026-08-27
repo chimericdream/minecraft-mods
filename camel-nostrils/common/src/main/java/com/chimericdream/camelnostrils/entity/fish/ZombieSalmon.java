@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.fish.Salmon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A salmon that flopped its last flop while leashed out of water — see {@link ZombieFishConverter}.
@@ -41,22 +42,28 @@ public class ZombieSalmon extends Salmon {
         super.aiStep();
         if (!this.level().isClientSide()) {
             ZombieFishBehavior.steerFlopTowardTarget(this);
+            ZombieFishBehavior.swimTowardTarget(this);
         }
     }
 
     @Override
-    protected void customServerAiStep(ServerLevel level) {
+    protected void customServerAiStep(@NonNull ServerLevel level) {
         super.customServerAiStep(level);
         this.attackCooldown = ZombieFishBehavior.tickTailSlapAttack(this, this.attackCooldown, level);
     }
 
     @Override
-    protected void handleAirSupply(ServerLevel level, int preTickAirSupply) {
+    protected void handleAirSupply(@NonNull ServerLevel level, int preTickAirSupply) {
         // Undead — doesn't need to breathe, so it never drowns from flopping around out of water.
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected boolean shouldTakeDrowningDamage() {
+        return false;
+    }
+
+    @Override
+    protected @NonNull InteractionResult mobInteract(@NonNull Player player, @NonNull InteractionHand hand) {
         // Hostile now — no more scooping it into a bucket like a docile fish.
         return InteractionResult.PASS;
     }

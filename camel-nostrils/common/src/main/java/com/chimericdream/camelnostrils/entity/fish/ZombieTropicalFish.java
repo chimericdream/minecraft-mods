@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.fish.TropicalFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A tropical fish that flopped its last flop while leashed out of water — see
@@ -33,7 +34,7 @@ public class ZombieTropicalFish extends TropicalFish {
     protected void registerGoals() {
         // Deliberately not calling super — the vanilla schooling/panic/flee-the-player goals don't make
         // sense for a hostile fish that's stuck flopping on land.
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
     @Override
@@ -41,22 +42,28 @@ public class ZombieTropicalFish extends TropicalFish {
         super.aiStep();
         if (!this.level().isClientSide()) {
             ZombieFishBehavior.steerFlopTowardTarget(this);
+            ZombieFishBehavior.swimTowardTarget(this);
         }
     }
 
     @Override
-    protected void customServerAiStep(ServerLevel level) {
+    protected void customServerAiStep(@NonNull ServerLevel level) {
         super.customServerAiStep(level);
         this.attackCooldown = ZombieFishBehavior.tickTailSlapAttack(this, this.attackCooldown, level);
     }
 
     @Override
-    protected void handleAirSupply(ServerLevel level, int preTickAirSupply) {
+    protected void handleAirSupply(@NonNull ServerLevel level, int preTickAirSupply) {
         // Undead — doesn't need to breathe, so it never drowns from flopping around out of water.
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected boolean shouldTakeDrowningDamage() {
+        return false;
+    }
+
+    @Override
+    protected @NonNull InteractionResult mobInteract(@NonNull Player player, @NonNull InteractionHand hand) {
         // Hostile now — no more scooping it into a bucket like a docile fish.
         return InteractionResult.PASS;
     }
