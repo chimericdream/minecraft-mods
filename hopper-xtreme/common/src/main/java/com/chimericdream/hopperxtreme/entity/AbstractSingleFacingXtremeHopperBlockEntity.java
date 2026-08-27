@@ -44,22 +44,20 @@ public abstract class AbstractSingleFacingXtremeHopperBlockEntity extends Abstra
             return false;
         }
 
+        int itemsPerTick = this.getItemsPerTick();
+
         for (int i = 0; i < this.getContainerSize(); ++i) {
             ItemStack itemStack = this.getItem(i);
 
             if (!itemStack.isEmpty()) {
-                int j = itemStack.getCount();
-                ItemStack itemStack2 = transfer(this, inventory, this.removeItem(i, 1), direction);
+                int transferCount = Math.min(itemsPerTick, itemStack.getCount());
+                ItemStack leftover = transfer(this, inventory, this.removeItem(i, transferCount), direction);
 
-                if (itemStack2.isEmpty()) {
+                returnToSlot(this, i, leftover);
+
+                if (leftover.getCount() != transferCount) {
                     inventory.setChanged();
                     return true;
-                }
-
-                itemStack.setCount(j);
-
-                if (j == 1) {
-                    this.setItem(i, itemStack);
                 }
             }
         }
@@ -67,7 +65,7 @@ public abstract class AbstractSingleFacingXtremeHopperBlockEntity extends Abstra
         return false;
     }
 
-    /** Drop a single item in front of {@link #facing} when that face isn't sturdy. */
+    /** Drop up to this tier's items-per-tick in front of {@link #facing} when that face isn't sturdy. */
     protected boolean dropOutput(Level world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.relative(this.facing));
         if (blockState.isFaceSturdy(world, pos, this.facing)) {
@@ -79,9 +77,10 @@ public abstract class AbstractSingleFacingXtremeHopperBlockEntity extends Abstra
             return false;
         }
 
+        int dropCount = Math.min(this.getItemsPerTick(), stack.getCount());
         ItemStack stack2 = stack.copy();
-        stack2.setCount(1);
-        stack.shrink(1);
+        stack2.setCount(dropCount);
+        stack.shrink(dropCount);
 
         this.setItem(0, stack);
 

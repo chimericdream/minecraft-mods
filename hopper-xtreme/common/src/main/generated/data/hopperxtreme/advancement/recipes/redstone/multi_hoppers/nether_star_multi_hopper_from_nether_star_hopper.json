@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nether_star_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hopperxtreme:nether_star_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hopperxtreme:multi_hoppers/nether_star_multi_hopper_from_nether_star_hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_nether_star_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hopperxtreme:multi_hoppers/nether_star_multi_hopper_from_nether_star_hopper"
+    ]
+  }
+}

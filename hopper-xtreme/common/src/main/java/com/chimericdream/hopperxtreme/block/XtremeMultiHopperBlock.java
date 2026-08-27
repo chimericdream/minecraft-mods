@@ -29,6 +29,7 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock implements 
     public static final MapCodec<XtremeMultiHopperBlock> CODEC = simpleCodec(XtremeMultiHopperBlock::create);
 
     private final int cooldownInTicks;
+    private final int itemsPerTick;
     private final String baseKey;
     private final boolean withFilter;
 
@@ -41,6 +42,10 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock implements 
     }
 
     public XtremeMultiHopperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
+        this(cooldownInTicks, 1, baseKey, withFilter);
+    }
+
+    public XtremeMultiHopperBlock(int cooldownInTicks, int itemsPerTick, String baseKey, boolean withFilter) {
         super(
             Properties.ofFullCopy(Blocks.HOPPER)
                 .mapColor(MapColor.STONE)
@@ -52,12 +57,18 @@ public class XtremeMultiHopperBlock extends AbstractMultiHopperBlock implements 
         );
 
         this.cooldownInTicks = cooldownInTicks;
+        this.itemsPerTick = itemsPerTick;
         this.baseKey = baseKey;
         this.withFilter = withFilter;
     }
 
     public int getCooldownInTicks() {
         return cooldownInTicks;
+    }
+
+    @Override
+    public int getItemsPerTick() {
+        return itemsPerTick;
     }
 
     public String getBaseKey() {

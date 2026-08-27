@@ -1,0 +1,19 @@
+{
+    "name": "Glazed Nether Star Multi-Hopper",
+    "sortnum": 10,
+    "icon": "hopperxtreme:glazed_nether_star_multi_hopper",
+    "category": "hopperxtreme:glazed_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)1 game tick (up to 320 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:glazed_nether_star_multi_hopper",
+            "recipe2": "hopperxtreme:glazed_nether_star_hopper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

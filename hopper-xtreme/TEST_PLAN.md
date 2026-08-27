@@ -3,7 +3,8 @@
 Hopper X-Treme is the suite's **reference implementation for automated testing** — it already ships
 four Fabric GameTest classes. This plan documents what exists, the gaps, and the manual checklist.
 Feature surface: tiered hoppers (honeyed 20t / copper 8t-redstone-immune / golden 4t / diamond 2t /
-netherite 1t), multi-hoppers (multiple output sides), huppers (push up) and multi-huppers, glazed
+netherite 1t / nether star 1t-but-16-items-per-transfer), multi-hoppers (multiple output sides),
+huppers (push up) and multi-huppers, glazed
 variants (eject instead of store), built-in item filtering (Hopper Item Filter item, include/exclude
 via `HopperXtremeFilterModeComponent`, filter slot = index 5 with `getContainerSize()` reporting 5 —
 see the filter-slot convention memory/docs), the Wrench, deprecated `filtered_*` block conversion
@@ -27,7 +28,9 @@ All in `fabric/src/main/java/com/chimericdream/hopperxtreme/fabric/test/`, regis
 > see "ChimericLib helper opportunities" below). See `chimeric-lib/TEST_PLAN.md` for the reference.
 
 * **`TransferSpeedTest`** — honeyed/copper/golden/diamond/netherite: 4 items move in the expected
-  tick window (copper variant also proves redstone immunity by never unlocking it).
+  tick window (copper variant also proves redstone immunity by never unlocking it). Gap: no case yet
+  for the Nether Star tier's multi-item-per-tick transfer (`itemsPerTick`) — the harness only asserts
+  single-item-per-cooldown counts, so it needs a new assertion shape, not just a new structure.
 * **`SixSlotTransferTest`** — golden/diamond/netherite: all 5 storage slots drain in order into the
   chest below; filter slot untouched.
 * **`PreventFilterExtractionTest`** — vanilla + tiered hoppers below a filtered hopper cannot steal

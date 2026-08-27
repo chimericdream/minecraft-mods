@@ -1,3 +1,14 @@
+### Unreleased changes
+
+#### New Features
+
+* Added the **Nether Star Hopper** tier — the ultimate upgrade beyond netherite. It has the same 1-tick cooldown
+  as a Netherite Hopper, but moves up to 16 items in a single transfer instead of 1 (still never more than a
+  full stack at a time), for up to 320 items per second. Crafted from a Netherite Hopper and a Nether Star.
+  Available as a Hopper, Glazed Hopper, Multi-Hopper, Glazed Multi-Hopper, Hupper, and Multi-Hupper, just like
+  the other tiers.
+
+
 ### 26.2 - 4.0.2
 
 #### Bug Fixes

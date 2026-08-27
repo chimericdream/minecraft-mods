@@ -145,6 +145,8 @@ public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtrem
 
     /** Insert into the connected containers, round-robining a fresh side per non-empty slot. */
     protected boolean insertOutput(Level world, BlockPos pos) {
+        int itemsPerTick = this.getItemsPerTick();
+
         for (int i = 0; i < this.getContainerSize(); ++i) {
             ItemStack itemStack = this.getItem(i);
 
@@ -164,18 +166,14 @@ public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtrem
                     continue;
                 }
 
-                int j = itemStack.getCount();
-                ItemStack itemStack2 = transfer(this, inventory, this.removeItem(i, 1), direction);
+                int transferCount = Math.min(itemsPerTick, itemStack.getCount());
+                ItemStack leftover = transfer(this, inventory, this.removeItem(i, transferCount), direction);
 
-                if (itemStack2.isEmpty()) {
+                returnToSlot(this, i, leftover);
+
+                if (leftover.getCount() != transferCount) {
                     inventory.setChanged();
                     return true;
-                }
-
-                itemStack.setCount(j);
-
-                if (j == 1) {
-                    this.setItem(i, itemStack);
                 }
             }
         }
@@ -183,7 +181,7 @@ public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtrem
         return false;
     }
 
-    /** Drop a single item toward the next connected side whose face isn't sturdy. */
+    /** Drop up to this tier's items-per-tick toward the next connected side whose face isn't sturdy. */
     protected boolean dropOutput(Level world, BlockPos pos) {
         ItemStack stack = this.getItem(0);
 
@@ -201,9 +199,10 @@ public abstract class AbstractMultiXtremeHopperBlockEntity extends AbstractXtrem
             return false;
         }
 
+        int dropCount = Math.min(this.getItemsPerTick(), stack.getCount());
         ItemStack stack2 = stack.copy();
-        stack2.setCount(1);
-        stack.shrink(1);
+        stack2.setCount(dropCount);
+        stack.shrink(dropCount);
 
         this.setItem(0, stack);
 

@@ -30,6 +30,7 @@ public class GlazedHopperBlock extends AbstractHopperBlock implements HopperVari
     public static final String TOOLTIP_KEY = "block.hopperxtreme.honey_glazed_hopper.tooltip";
 
     private final int cooldownInTicks;
+    private final int itemsPerTick;
     private final String baseKey;
     private final boolean withFilter;
 
@@ -43,6 +44,10 @@ public class GlazedHopperBlock extends AbstractHopperBlock implements HopperVari
     }
 
     public GlazedHopperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
+        this(cooldownInTicks, 1, translationKey, withFilter);
+    }
+
+    public GlazedHopperBlock(int cooldownInTicks, int itemsPerTick, String translationKey, boolean withFilter) {
         super(
             Properties.ofFullCopy(Blocks.HOPPER)
                 .mapColor(MapColor.STONE)
@@ -54,12 +59,18 @@ public class GlazedHopperBlock extends AbstractHopperBlock implements HopperVari
         );
 
         this.cooldownInTicks = cooldownInTicks;
+        this.itemsPerTick = itemsPerTick;
         this.baseKey = translationKey;
         this.withFilter = withFilter;
     }
 
     public int getCooldownInTicks() {
         return cooldownInTicks;
+    }
+
+    @Override
+    public int getItemsPerTick() {
+        return itemsPerTick;
     }
 
     public String getBaseKey() {

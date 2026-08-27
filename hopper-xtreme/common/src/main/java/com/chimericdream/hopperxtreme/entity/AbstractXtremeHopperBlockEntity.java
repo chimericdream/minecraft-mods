@@ -216,6 +216,44 @@ public abstract class AbstractXtremeHopperBlockEntity extends RandomizableContai
         return 8;
     }
 
+    /** How many items this hopper may move in a single transfer, per its block's tier. Defaults to 1. */
+    protected int getItemsPerTick() {
+        return getItemsPerTickForBlock(this.getBlockState().getBlock());
+    }
+
+    private static int getItemsPerTickForBlock(Hopper hopper) {
+        if (hopper instanceof AbstractXtremeHopperBlockEntity blockEntity) {
+            return blockEntity.getItemsPerTick();
+        }
+
+        return 1;
+    }
+
+    private static int getItemsPerTickForBlock(Block block) {
+        if (block instanceof HopperVariantBlock variant) {
+            return variant.getItemsPerTick();
+        }
+
+        return 1;
+    }
+
+    /**
+     * Puts an amount that couldn't be moved back where it came from: merged into whatever remains in
+     * the slot, or placed directly if the slot was fully emptied by the extraction.
+     */
+    protected static void returnToSlot(Container container, int slot, ItemStack stack) {
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        ItemStack current = container.getItem(slot);
+        if (current.isEmpty()) {
+            container.setItem(slot, stack);
+        } else {
+            current.grow(stack.getCount());
+        }
+    }
+
     private static boolean insertAndExtract(Level world, BlockPos pos, BlockState state, AbstractXtremeHopperBlockEntity blockEntity, BooleanSupplier booleanSupplier) {
         if (world.isClientSide()) {
             return false;
@@ -364,18 +402,18 @@ public abstract class AbstractXtremeHopperBlockEntity extends RandomizableContai
     private static boolean extract(Hopper hopper, Container inventory, int slot, Direction side) {
         ItemStack itemStack = inventory.getItem(slot);
         if (!itemStack.isEmpty() && canExtract(hopper, inventory, itemStack, slot, side)) {
-            int i = itemStack.getCount();
-            ItemStack itemStack2 = transfer(inventory, hopper, inventory.removeItem(slot, 1), null);
+            int transferCount = Math.min(getItemsPerTickForBlock(hopper), itemStack.getCount());
+            ItemStack removed = inventory.removeItem(slot, transferCount);
+            ItemStack leftover = transfer(inventory, hopper, removed, null);
 
-            if (itemStack2.isEmpty()) {
-                inventory.setChanged();
-                return true;
+            returnToSlot(inventory, slot, leftover);
+
+            if (leftover.getCount() == transferCount) {
+                return false;
             }
 
-            itemStack.setCount(i);
-            if (i == 1) {
-                inventory.setItem(slot, itemStack);
-            }
+            inventory.setChanged();
+            return true;
         }
 
         return false;

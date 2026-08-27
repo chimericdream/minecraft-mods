@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hopperxtreme:nether_star_hopper",
+    "minecraft:gray_glazed_terracotta"
+  ],
+  "result": {
+    "id": "hopperxtreme:glazed_nether_star_hopper"
+  }
+}
