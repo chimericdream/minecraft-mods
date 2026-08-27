@@ -26,7 +26,7 @@ final class ModStatusReader {
     private static final String CHANGELOG = "CHANGELOG.md";
     private static final String UNRELEASED_HEADING = "### Unreleased changes";
 
-    /** Matches the start of the heading that ends the "Unreleased changes" section. */
+    /** Matches the start of the heading that ends the "Unreleased changes/Initial release" section. */
     private static final Pattern NEXT_HEADING = Pattern.compile("\n###\s");
 
     private ModStatusReader() {
@@ -69,7 +69,39 @@ final class ModStatusReader {
             return null;
         }
 
-        return new ModStatus(modId, version, hasUnreleasedChanges(directory.findChild(CHANGELOG)));
+        return new ModStatus(
+            modId,
+            version,
+            hasUnreleasedChanges(directory.findChild(CHANGELOG)),
+            isNewMod(directory.findChild(CHANGELOG))
+        );
+    }
+
+    /**
+     * A mod "is new" when there are no further {@code ### } headings after the
+     * initial {@code ### Unreleased changes} line.
+     */
+    private static boolean isNewMod(@Nullable VirtualFile changelog) {
+        if (changelog == null || changelog.isDirectory()) {
+            return false;
+        }
+
+        String text = loadText(changelog);
+
+        if (text == null) {
+            return false;
+        }
+
+        int headingIndex = text.indexOf(UNRELEASED_HEADING);
+
+        if (headingIndex == -1) {
+            return false;
+        }
+
+        String afterHeading = text.substring(headingIndex + UNRELEASED_HEADING.length());
+        Matcher nextHeading = NEXT_HEADING.matcher(afterHeading);
+
+        return !nextHeading.find();
     }
 
     /**

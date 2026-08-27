@@ -2,13 +2,17 @@
 
 Shows each mod's version in the Project View, next to the folder name, in the same muted style the
 IDE uses for `node_modules`' "library root" label. Mods with pending changelog entries get an amber
-dot beside the version and a matching badge on the folder icon.
+dot beside the version and a matching badge on the folder icon; mods that have never been released get
+a green dot instead. A mod can be both at once — new *and* already carrying more unreleased changes —
+in which case it gets both dots.
 
 ```
-▸ 📁 chimeric-lib     6.4.0
-▸ 📁 hopper-xtreme    4.1.0-beta.0 ●
-▸ 📁 minekea          10.1.0
-▸ 📁 sponj●           6.1.0 ●
+▸ 📁 chimeric-lib       6.4.0
+▸ 📁 hopper-xtreme      4.1.0-beta.0 ●
+▸ 📁 minekea            10.1.0
+▸ 📁 next-update-now●   1.0.0 ●●
+▸ 📁 playgrounds●       1.0.0 ●
+▸ 📁 sponj●             6.1.0 ●
 ▸ 📁 docs
 ▸ 📁 node_modules  library root
 ```
@@ -18,6 +22,10 @@ Same source of truth as `bun run status` (`scripts/mod-status.ts`):
 - **version** — `mod_version` from the folder's `gradle.properties`.
 - **unreleased** — non-blank content between `### Unreleased changes` and the next `### ` heading in
   the folder's `CHANGELOG.md`.
+- **new** — the folder's `CHANGELOG.md` has an `### Unreleased changes` heading with no `### ` heading
+  after it at all, meaning the mod has never had a tagged release yet (its whole changelog is still
+  "Unreleased changes"). This is independent of *unreleased*: a mod is "new" purely on heading count,
+  regardless of whether that first `### Unreleased changes` section has any content under it yet.
 
 A folder is treated as a mod when its `gradle.properties` declares **both** `mod_id` and
 `mod_version`. That is what distinguishes the mod roots from the repo root and from each mod's
@@ -61,11 +69,11 @@ Drop the flag on a machine without TLS-inspecting antivirus.
 
 | File | Role |
 | --- | --- |
-| `ModStatusNodeDecorator` | The `com.intellij.projectViewNodeDecorator` extension. Appends the version and marker, and badges the icon. |
+| `ModStatusNodeDecorator` | The `com.intellij.projectViewNodeDecorator` extension. Appends the version and marker(s), and badges the icon. |
 | `ModStatusReader` | Parses `gradle.properties` / `CHANGELOG.md`. No platform state, so the rules live in one readable place. |
 | `ModStatusService` | Project-level cache. The tree asks for decorations far more often than the files change. |
 | `ModStatusFileListener` | Invalidates the cache and refreshes the Project View when either file is touched. |
-| `UnreleasedBadgeIcon` | The amber dot, drawn rather than shipped as an SVG so it scales with DPI and needs no light/dark pair. |
+| `UnreleasedBadgeIcon` | The amber and green dots, drawn rather than shipped as SVGs so they scale with DPI and need no light/dark pair. |
 
 Two platform details shaped the design:
 
@@ -78,4 +86,10 @@ Two platform details shaped the design:
 - **The badge is layered onto the folder icon, not placed beside it.** A tree row is a
   `SimpleColoredComponent` with exactly one icon, always leftmost — there is no "right icon" API. A
   `RowIcon` would widen mod rows and knock them out of alignment with the rest of the tree, so
-  `LayeredIcon` puts the dot in the icon's bottom-right corner instead.
+  `LayeredIcon` puts the dot in the icon's top-right corner instead (bottom-right is where the
+  platform already draws its own "module content root" marker).
+- **The icon badge is always the amber dot, never the green one.** `withBadge` always layers
+  `UnreleasedBadgeIcon.INSTANCE`, which paints in `COLOR` (amber) regardless of why it was called. A
+  new mod with no other unreleased content still gets an amber icon badge, even though its text
+  marker next to the version is green — the icon doesn't distinguish the two states, only the text
+  does.

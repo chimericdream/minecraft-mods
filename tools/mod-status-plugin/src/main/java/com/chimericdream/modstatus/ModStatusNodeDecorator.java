@@ -36,6 +36,9 @@ public final class ModStatusNodeDecorator implements ProjectViewNodeDecorator {
     private static final SimpleTextAttributes UNRELEASED_ATTRIBUTES =
         new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, UnreleasedBadgeIcon.COLOR);
 
+    private static final SimpleTextAttributes NEW_MOD_ATTRIBUTES =
+        new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, UnreleasedBadgeIcon.NEW_MOD_COLOR);
+
     @Override
     public void decorate(@NotNull ProjectViewNode<?> node, @NotNull PresentationData data) {
         Project project = node.getProject();
@@ -72,7 +75,15 @@ public final class ModStatusNodeDecorator implements ProjectViewNodeDecorator {
 
         data.addText(versionText, SimpleTextAttributes.GRAYED_ATTRIBUTES);
 
-        if (status.hasUnreleasedChanges()) {
+        if (status.isNewMod()) {
+            data.addText(UNRELEASED_MARKER, NEW_MOD_ATTRIBUTES);
+            if (status.hasUnreleasedChanges()) {
+                data.addText(UNRELEASED_MARKER, UNRELEASED_ATTRIBUTES);
+            }
+
+            data.setIcon(withBadge(data.getIcon(false)));
+            data.setTooltip(status.modId() + " " + status.version() + " — not yet released");
+        } else if (status.hasUnreleasedChanges()) {
             data.addText(UNRELEASED_MARKER, UNRELEASED_ATTRIBUTES);
             data.setIcon(withBadge(data.getIcon(false)));
             data.setTooltip(status.modId() + " " + status.version() + " — has unreleased changes");

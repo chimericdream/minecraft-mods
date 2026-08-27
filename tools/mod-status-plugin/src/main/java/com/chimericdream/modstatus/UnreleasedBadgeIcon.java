@@ -20,6 +20,9 @@ final class UnreleasedBadgeIcon implements Icon {
     /** Amber in both themes -- brighter on dark backgrounds so it stays legible. */
     static final JBColor COLOR = new JBColor(0xB8730A, 0xE8A33D);
 
+    /** Green in both themes -- brighter on dark backgrounds so it stays legible. */
+    static final JBColor NEW_MOD_COLOR = new JBColor(0x0AB856, 0x3DE886);
+
     private static final int UNSCALED_SIZE = 6;
 
     private UnreleasedBadgeIcon() {

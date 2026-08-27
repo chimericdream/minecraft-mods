@@ -21,7 +21,7 @@ public final class ModStatusService {
      * Stand-in for "this directory is not a mod folder". {@link ConcurrentHashMap} cannot hold null
      * values, and caching the negative answer matters: most directories in the tree are not mods.
      */
-    private static final ModStatus NOT_A_MOD = new ModStatus("", "", false);
+    private static final ModStatus NOT_A_MOD = new ModStatus("", "", false, false);
 
     private final Map<String, ModStatus> cache = new ConcurrentHashMap<>();
 

@@ -5,5 +5,5 @@ package com.chimericdream.modstatus;
  * next/current version is, and whether {@code CHANGELOG.md} has anything sitting under
  * {@code ### Unreleased changes}.
  */
-public record ModStatus(String modId, String version, boolean hasUnreleasedChanges) {
+public record ModStatus(String modId, String version, boolean hasUnreleasedChanges, boolean isNewMod) {
 }
