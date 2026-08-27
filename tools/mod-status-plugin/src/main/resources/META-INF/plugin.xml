@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.chimericdream.mod-status</id>
+    <name>Chimeric Mod Status</name>
+    <vendor email="bill@chimericdream.com" url="https://chimericdream.com">Chimeric Dream</vendor>
+
+    <description><![CDATA[
+        Shows each Minecraft mod's current version directly in the Project View, next to the mod's
+        folder name, in the same muted style the IDE uses for labels like "library root".
+
+        <p>Mods whose <code>CHANGELOG.md</code> has entries under <code>### Unreleased changes</code>
+        are marked with an amber dot, both beside the version and as a badge on the folder icon, so
+        it is obvious at a glance which mods have work that has not been released yet.</p>
+
+        <p>Built for the chimeric-mods monorepo: a folder is treated as a mod when its
+        <code>gradle.properties</code> declares both <code>mod_id</code> and
+        <code>mod_version</code>.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectViewNodeDecorator implementation="com.chimericdream.modstatus.ModStatusNodeDecorator"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.chimericdream.modstatus.ModStatusFileListener"
+                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
+</idea-plugin>

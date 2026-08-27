@@ -29,6 +29,9 @@ both Fabric and NeoForge.
   chimeric-lib is not part of the build.
 - **Project list**: active projects are controlled by `settings.gradle` `projectList` and mirrored in
   `project-list.json` (kept in sync by the `update:*` scripts).
+- **`tools/`**: developer tooling that is **not** part of the mod build. Each subdirectory is its own
+  standalone Gradle build with its own wrapper, deliberately absent from `settings.gradle`, so
+  `./gradlew build` at the repo root never sees it. See "tools/" below.
 
 ### Active vs. inactive mods
 
@@ -122,6 +125,40 @@ callers are `prebuild`/`bun run build`, not something you'd invoke standalone) a
 got swept up in a `git add` — delete the copied `.accesswidener` file and remove the `"accessWidener"`
 line from `fabric.mod.json` before committing. This is easy to forget since nothing about it looks
 wrong at a glance (the mod still compiles and builds fine either way).
+
+## tools/
+
+Standalone builds that support development in this repo but ship nothing to players. Each has its own
+Gradle wrapper and is **not** in `settings.gradle` — run them from their own directory, and don't add
+them to the project list or `project-list.json`.
+
+- **`tools/mod-status-plugin/`** — an IntelliJ plugin that shows each mod's `mod_version` next to its
+  folder in the Project View, plus an amber dot when that mod's `CHANGELOG.md` has content under
+  `### Unreleased changes`. It reads the same two files `bun run status`
+  (`scripts/mod-status.ts`) does, so **if the rule for either ever changes, change it in both places**
+  — `ModStatusReader.java` and `mod-status.ts`. Build with `./gradlew buildPlugin` from
+  `tools/mod-status-plugin/` and install the zip from `build/distributions/`; see that directory's
+  `README.md` for the platform details that shaped it.
+
+## Gradle: `PKIX path validation failed` on this machine
+
+Avast's "Web/Mail Shield" intercepts HTTPS and re-signs it with a root CA that lives in the **Windows
+certificate store** but not in any JDK's `cacerts`. `curl` works, every JVM fails, and Gradle swallows
+the handshake error and reports it as a bogus resolution miss:
+
+> Plugin [id: '...'] was not found in any of the following sources
+
+Only `--debug` reveals the real cause (`Starting handshake` → `Shutdown connection`, and
+`SSLHandshakeException: PKIX path validation failed`). Fix by pointing the daemon at the Windows store,
+which already trusts that root:
+
+```properties
+org.gradle.jvmargs = -Xmx2G -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT
+```
+
+The mod build doesn't hit this because its dependencies are already in `~/.gradle/caches` — it bites
+**new** Gradle builds that must download something. `tools/mod-status-plugin/gradle.properties` carries
+the flag for that reason. Don't chase repository URLs or plugin versions before ruling this out.
 
 ## Datagen gotcha (MC 26.2)
 
