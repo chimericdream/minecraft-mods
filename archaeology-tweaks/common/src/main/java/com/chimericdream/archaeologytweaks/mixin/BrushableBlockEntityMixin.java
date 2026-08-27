@@ -1,9 +1,11 @@
 package com.chimericdream.archaeologytweaks.mixin;
 
+import com.chimericdream.archaeologytweaks.advancement.ArchaeologyTweaksAdvancements;
 import com.chimericdream.archaeologytweaks.enchantment.GentleTouchHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
@@ -74,6 +76,10 @@ abstract public class BrushableBlockEntityMixin {
         BrushableBlockEntity self = (BrushableBlockEntity) (Object) this;
 
         this.at$dropContent(world, brusher, brush);
+
+        if (brusher instanceof ServerPlayer serverPlayer) {
+            ArchaeologyTweaksAdvancements.award(serverPlayer, ArchaeologyTweaksAdvancements.LUCKY_BLOCK);
+        }
 
         this.brushCount = 0;
         this.hitDirection = null;

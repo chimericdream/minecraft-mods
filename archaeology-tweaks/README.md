@@ -32,6 +32,8 @@ whatever loot has been assigned to it.
 * Loot is driven by loot tables, making it easy for datapacks to customize what each block can contain
 * Each suspicious block generates naturally as a small, rare deposit in a fitting biome (e.g. suspicious clay
   near rivers and beaches, suspicious soul sand in the Soul Sand Valley)
+* Adds advancements for using a brush for the first time, collecting every pottery sherd, brushing a
+  suspicious block in the Nether, and getting a second drop via the Gentle Touch enchantment
 
 ## Notes for Documentation
 

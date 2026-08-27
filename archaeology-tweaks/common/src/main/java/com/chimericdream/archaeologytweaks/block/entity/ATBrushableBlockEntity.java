@@ -1,5 +1,6 @@
 package com.chimericdream.archaeologytweaks.block.entity;
 
+import com.chimericdream.archaeologytweaks.advancement.ArchaeologyTweaksAdvancements;
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
 import com.chimericdream.archaeologytweaks.enchantment.GentleTouchHelper;
 import com.mojang.logging.LogUtils;
@@ -124,6 +125,9 @@ public class ATBrushableBlockEntity extends BlockEntity {
 
         int gentleTouchLevel = GentleTouchHelper.getLevel(world, brush);
         if (this.sourceLootTable != null && GentleTouchHelper.rolls(world, gentleTouchLevel)) {
+            if (brusher instanceof ServerPlayer serverPlayer) {
+                ArchaeologyTweaksAdvancements.award(serverPlayer, ArchaeologyTweaksAdvancements.LUCKY_BLOCK);
+            }
             this.rerollForGentleTouch(world);
             return;
         }

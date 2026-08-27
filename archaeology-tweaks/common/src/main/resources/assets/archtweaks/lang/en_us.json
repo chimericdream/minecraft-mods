@@ -15,5 +15,15 @@
     "block.archtweaks.suspicious_soul_sand": "Suspicious Soul Sand",
     "item.archtweaks.suspicious_soul_sand": "Suspicious Soul Sand",
     "block.archtweaks.suspicious_soul_soil": "Suspicious Soul Soil",
-    "item.archtweaks.suspicious_soul_soil": "Suspicious Soul Soil"
+    "item.archtweaks.suspicious_soul_soil": "Suspicious Soul Soil",
+    "advancements.archtweaks.root.title": "Archaeology Tweaks",
+    "advancements.archtweaks.root.desc": "Dig a little deeper",
+    "advancements.archtweaks.first_dig.title": "First Dig",
+    "advancements.archtweaks.first_dig.desc": "Use a brush for the first time",
+    "advancements.archtweaks.preservationist.title": "Preservationist",
+    "advancements.archtweaks.preservationist.desc": "Collect every pottery sherd",
+    "advancements.archtweaks.interdimensional_archaeology.title": "Interdimensional Archaeology",
+    "advancements.archtweaks.interdimensional_archaeology.desc": "Brush a suspicious block in the Nether",
+    "advancements.archtweaks.lucky_block.title": "Lucky Block",
+    "advancements.archtweaks.lucky_block.desc": "Get a second drop from a block with Gentle Touch"
 }

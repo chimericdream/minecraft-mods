@@ -1,0 +1,24 @@
+{
+    "parent": "archtweaks:root",
+    "display": {
+        "icon": {
+            "id": "archtweaks:suspicious_soul_sand"
+        },
+        "title": {
+            "translate": "advancements.archtweaks.interdimensional_archaeology.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.archtweaks.interdimensional_archaeology.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

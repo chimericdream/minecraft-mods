@@ -6,6 +6,11 @@
   and beaches, dirt in forests, taiga, and plains, mud and packed mud in swamps, red sand in
   badlands, rooted dirt in forests, and soul sand/soul soil anywhere in the Nether. Brushing one now
   also yields real loot instead of nothing.
+* Added four new advancements:
+  * **First Dig** — use a brush for the first time.
+  * **Preservationist** — collect every pottery sherd.
+  * **Interdimensional Archaeology** — brush a suspicious block in the Nether.
+  * **Lucky Block** — get a second drop from a block via the Gentle Touch enchantment.
 
 
 ### 26.2 - 4.1.0
