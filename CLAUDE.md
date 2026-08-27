@@ -35,13 +35,19 @@ both Fabric and NeoForge.
 
 ### Active vs. inactive mods
 
-**Active (15)** — uncommented in `settings.gradle`:
-`archaeology-tweaks`, `artificial-heart`, `athenaeum`, `banner-tweaks`, `beacon-conduit-tweaks`,
-`chimeric-lib` (core library), `enchantment-numbers-fix`, `flat-bedrock`, `hopper-xtreme`,
-`houdini-block`, `minekea`, `miniblock-merchants`, `shulker-stuff`, `sponj`, `villager-tweaks`.
+`settings.gradle`'s `projectList` is the source of truth — the lists below are a snapshot and drift as
+mods are added, so check it before relying on them.
 
-**Inactive (6)** — commented out but their directories still exist on disk:
-`blacklight`, `cobblicious`, `hang-from-slabs`, `jdcrafte`, `pannotia-companion`, `playgrounds`.
+**Active (26)** — uncommented in `settings.gradle`:
+`archaeology-tweaks`, `artificial-heart`, `athenaeum`, `banner-tweaks`, `beacon-conduit-tweaks`,
+`better-portal-linking`, `better-target-dummies`, `but-what-about`, `camel-nostrils`,
+`chimeric-lib` (core library), `effective-gear`, `enchantment-numbers-fix`, `flat-bedrock`,
+`hang-from-slabs`, `hopper-xtreme`, `houdini-block`, `log-all-the-things`, `minekea`,
+`miniblock-merchants`, `next-update-now`, `shulker-stuff`, `sneaky-tweaks`, `sponj`, `stack-it-up`,
+`toy-box`, `villager-tweaks`.
+
+**Inactive (5)** — commented out but their directories still exist on disk:
+`blacklight`, `cobblicious`, `jdcrafte`, `pannotia-companion`, `playgrounds`.
 
 To work on an inactive mod, uncomment it in `settings.gradle` (and run `bun run update:projectlist`).
 
