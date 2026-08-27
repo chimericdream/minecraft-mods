@@ -24,6 +24,22 @@
     "butwhatabout:cracked_stone_bricks_wall",
     "butwhatabout:end_stone_wall",
     "butwhatabout:netherrack_wall",
-    "butwhatabout:smooth_basalt_wall"
+    "butwhatabout:smooth_basalt_wall",
+    "butwhatabout:white_concrete_wall",
+    "butwhatabout:orange_concrete_wall",
+    "butwhatabout:magenta_concrete_wall",
+    "butwhatabout:light_blue_concrete_wall",
+    "butwhatabout:yellow_concrete_wall",
+    "butwhatabout:lime_concrete_wall",
+    "butwhatabout:pink_concrete_wall",
+    "butwhatabout:gray_concrete_wall",
+    "butwhatabout:light_gray_concrete_wall",
+    "butwhatabout:cyan_concrete_wall",
+    "butwhatabout:purple_concrete_wall",
+    "butwhatabout:blue_concrete_wall",
+    "butwhatabout:brown_concrete_wall",
+    "butwhatabout:green_concrete_wall",
+    "butwhatabout:red_concrete_wall",
+    "butwhatabout:black_concrete_wall"
   ]
 }

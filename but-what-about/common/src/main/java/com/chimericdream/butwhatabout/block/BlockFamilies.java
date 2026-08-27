@@ -3,12 +3,16 @@ package com.chimericdream.butwhatabout.block;
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.blocks.family.BlockFamily;
 import com.chimericdream.lib.blocks.family.BlockFamilyVariant;
+import com.chimericdream.lib.colors.ColorHelpers;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,6 +27,8 @@ import static com.chimericdream.butwhatabout.ButWhatAboutMod.REGISTRY_HELPER;
 public class BlockFamilies {
     @SuppressWarnings("UnstableApiUsage")
     private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
+    @SuppressWarnings("UnstableApiUsage")
+    private static final Item.Properties COLORED_BLOCKS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
     public static final BlockFamily CALCITE = family("calcite", "Calcite", Blocks.CALCITE);
     public static final BlockFamily CHISELED_COPPER = family("chiseled_copper", "Chiseled Copper", Blocks.CHISELED_COPPER.weathering().unaffected());
@@ -67,33 +73,61 @@ public class BlockFamilies {
     public static final BlockFamily NETHERRACK = family("netherrack", "Netherrack", Blocks.NETHERRACK);
     public static final BlockFamily SMOOTH_BASALT = family("smooth_basalt", "Smooth Basalt", Blocks.SMOOTH_BASALT);
 
-    public static final List<BlockFamily> ALL = List.of(
-        CALCITE,
-        CHISELED_COPPER,
-        EXPOSED_CHISELED_COPPER,
-        WEATHERED_CHISELED_COPPER,
-        OXIDIZED_CHISELED_COPPER,
-        WAXED_CHISELED_COPPER,
-        WAXED_EXPOSED_CHISELED_COPPER,
-        WAXED_WEATHERED_CHISELED_COPPER,
-        WAXED_OXIDIZED_CHISELED_COPPER,
-        CHISELED_DEEPSLATE,
-        CHISELED_NETHER_BRICKS,
-        CHISELED_POLISHED_BLACKSTONE,
-        CHISELED_RED_SANDSTONE,
-        CHISELED_RESIN_BRICKS,
-        CHISELED_SANDSTONE,
-        CHISELED_STONE_BRICKS,
-        CHISELED_SULFUR,
-        CRACKED_DEEPSLATE_BRICKS,
-        CRACKED_DEEPSLATE_TILES,
-        CRACKED_NETHER_BRICKS,
-        CRACKED_POLISHED_BLACKSTONE_BRICKS,
-        CRACKED_STONE_BRICKS,
-        END_STONE,
-        NETHERRACK,
-        SMOOTH_BASALT
-    );
+    /**
+     * Vanilla concrete gets the full stairs/slab/wall trio, like any other solid stone-like block.
+     * Placed in the Colored Blocks tab (like vanilla concrete itself) instead of Building Blocks.
+     */
+    public static final List<BlockFamily> CONCRETE = concreteFamilies();
+
+    public static final List<BlockFamily> ALL = Stream.of(
+            List.of(
+                CALCITE,
+                CHISELED_COPPER,
+                EXPOSED_CHISELED_COPPER,
+                WEATHERED_CHISELED_COPPER,
+                OXIDIZED_CHISELED_COPPER,
+                WAXED_CHISELED_COPPER,
+                WAXED_EXPOSED_CHISELED_COPPER,
+                WAXED_WEATHERED_CHISELED_COPPER,
+                WAXED_OXIDIZED_CHISELED_COPPER,
+                CHISELED_DEEPSLATE,
+                CHISELED_NETHER_BRICKS,
+                CHISELED_POLISHED_BLACKSTONE,
+                CHISELED_RED_SANDSTONE,
+                CHISELED_RESIN_BRICKS,
+                CHISELED_SANDSTONE,
+                CHISELED_STONE_BRICKS,
+                CHISELED_SULFUR,
+                CRACKED_DEEPSLATE_BRICKS,
+                CRACKED_DEEPSLATE_TILES,
+                CRACKED_NETHER_BRICKS,
+                CRACKED_POLISHED_BLACKSTONE_BRICKS,
+                CRACKED_STONE_BRICKS,
+                END_STONE,
+                NETHERRACK,
+                SMOOTH_BASALT
+            ),
+            CONCRETE
+        )
+        .flatMap(List::stream)
+        .toList();
+
+    private static List<BlockFamily> concreteFamilies() {
+        List<BlockFamily> families = new ArrayList<>();
+
+        for (DyeColor color : DyeColor.values()) {
+            families.add(family(
+                color.getSerializedName() + "_concrete",
+                ColorHelpers.getName(color) + " Concrete",
+                Blocks.CONCRETE.pick(color),
+                Tool.PICKAXE,
+                COLORED_BLOCKS_SETTINGS,
+                BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL
+            ));
+        }
+
+        return families;
+    }
 
     private static BlockFamily family(String material, String materialName, Block ingredient) {
         return family(material, materialName, ingredient, TextureUtils.block(ingredient));
@@ -104,13 +138,21 @@ public class BlockFamilies {
     }
 
     private static BlockFamily family(String material, String materialName, Block ingredient, Identifier texture) {
+        return family(material, materialName, ingredient, texture, Tool.PICKAXE, DEFAULT_SETTINGS, BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL);
+    }
+
+    private static BlockFamily family(String material, String materialName, Block ingredient, Tool tool, Item.Properties itemSettings, BlockFamilyVariant... variants) {
+        return family(material, materialName, ingredient, TextureUtils.block(ingredient), tool, itemSettings, variants);
+    }
+
+    private static BlockFamily family(String material, String materialName, Block ingredient, Identifier texture, Tool tool, Item.Properties itemSettings, BlockFamilyVariant... variants) {
         return BlockFamily.builder(REGISTRY_HELPER, material, new BlockConfig()
                 .materialName(materialName)
                 .ingredient(ingredient)
-                .tool(Tool.PICKAXE)
+                .tool(tool)
                 .texture(texture))
-            .variants(BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL)
-            .itemSettings(DEFAULT_SETTINGS)
+            .variants(variants)
+            .itemSettings(itemSettings)
             .build();
     }
 
