@@ -7,6 +7,8 @@
   full stack at a time), for up to 320 items per second. Crafted from a Netherite Hopper and a Nether Star.
   Available as a Hopper, Glazed Hopper, Multi-Hopper, Glazed Multi-Hopper, Hupper, and Multi-Hupper, just like
   the other tiers.
+* Added the **Diamond Hopper Item Filter** — works just like the standard Hopper Item Filter, but with ten
+  filter slots instead of five. Crafted by upgrading a Hopper Item Filter with a diamond.
 
 
 ### 26.2 - 4.0.2

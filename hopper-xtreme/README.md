@@ -56,7 +56,9 @@ Upgraded hoppers support **built-in item filtering** so you can control exactly 
 managed with two items:
 
 * **Hopper Item Filter** — configure what a hopper accepts. It has **Include** and **Exclude** modes: include mode
-  only lets the listed items through, exclude mode blocks the listed items.
+  only lets the listed items through, exclude mode blocks the listed items. Holds up to five filter entries.
+* **Diamond Hopper Item Filter** — works exactly like the standard filter, but holds up to ten filter entries.
+  Crafted by upgrading a Hopper Item Filter with a diamond.
 * **Wrench** — a tool for configuring/adjusting hoppers.
 
 ### Creative tabs

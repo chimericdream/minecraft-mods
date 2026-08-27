@@ -1,7 +1,6 @@
 package com.chimericdream.hopperxtreme.item;
 
 import com.chimericdream.hopperxtreme.ModInfo;
-import com.chimericdream.hopperxtreme.client.screen.HopperItemFilterScreenHandler;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.lib.inventories.ImplementedInventory;
@@ -29,21 +28,40 @@ import static com.chimericdream.hopperxtreme.HopperXtremeMod.REGISTRY_HELPER;
 
 public class HopperItemFilterItem extends Item {
     public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "hopper_item_filter");
+    public static final Identifier DIAMOND_ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "diamond_hopper_item_filter");
+
+    public static final int STANDARD_FILTER_SLOTS = 5;
+    public static final int DIAMOND_FILTER_SLOTS = 10;
 
     public static final Map<FilterMode, String> TOOLTIP_KEYS = Map.of(
         FilterMode.INCLUDE, "item.hopperxtreme.hopper_item_filter.tooltip.include",
         FilterMode.EXCLUDE, "item.hopperxtreme.hopper_item_filter.tooltip.exclude"
     );
 
+    private final int filterSlotCount;
+    private final MenuConstructor menuConstructor;
+
     @SuppressWarnings("UnstableApiUsage")
-    public HopperItemFilterItem() {
+    public HopperItemFilterItem(Identifier id, int filterSlotCount, MenuConstructor menuConstructor) {
         super(
             new Properties()
                 .stacksTo(1)
                 .arch$tab(CreativeModeTabs.REDSTONE_BLOCKS)
                 .useItemDescriptionPrefix()
-                .setId(REGISTRY_HELPER.makeItemRegistryKey(ITEM_ID))
+                .setId(REGISTRY_HELPER.makeItemRegistryKey(id))
         );
+
+        this.filterSlotCount = filterSlotCount;
+        this.menuConstructor = menuConstructor;
+    }
+
+    public int getFilterSlotCount() {
+        return filterSlotCount;
+    }
+
+    /** Builds this filter tier's screen handler. A hook so {@link #openScreen} doesn't need to know which tier it's serving. */
+    public interface MenuConstructor {
+        AbstractContainerMenu create(int syncId, Inventory playerInventory, ItemStack filter);
     }
 
     @Override
@@ -96,20 +114,19 @@ public class HopperItemFilterItem extends Item {
 
                 @Override
                 public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
-                    return new HopperItemFilterScreenHandler(syncId, inv, filter);
+                    return ((HopperItemFilterItem) filter.getItem()).menuConstructor.create(syncId, inv, filter);
                 }
             });
         }
     }
 
     public static class FilterInventory implements ImplementedInventory {
-        public static final int INVENTORY_SIZE = 5;
-
         private final ItemStack filterStack;
-        private final NonNullList<ItemStack> items = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
+        private final NonNullList<ItemStack> items;
 
         public FilterInventory(ItemStack stack) {
             filterStack = stack;
+            items = NonNullList.withSize(((HopperItemFilterItem) stack.getItem()).getFilterSlotCount(), ItemStack.EMPTY);
 
             ItemContainerContents inventory = filterStack.get(DataComponents.CONTAINER);
 
