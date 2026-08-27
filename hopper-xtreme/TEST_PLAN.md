@@ -28,11 +28,15 @@ All in `fabric/src/main/java/com/chimericdream/hopperxtreme/fabric/test/`, regis
 > see "ChimericLib helper opportunities" below). See `chimeric-lib/TEST_PLAN.md` for the reference.
 
 * **`TransferSpeedTest`** — honeyed/copper/golden/diamond/netherite: 4 items move in the expected
-  tick window (copper variant also proves redstone immunity by never unlocking it). Gap: no case yet
-  for the Nether Star tier's multi-item-per-tick transfer (`itemsPerTick`) — the harness only asserts
-  single-item-per-cooldown counts, so it needs a new assertion shape, not just a new structure.
-* **`SixSlotTransferTest`** — golden/diamond/netherite: all 5 storage slots drain in order into the
-  chest below; filter slot untouched.
+  tick window (copper variant also proves redstone immunity by never unlocking it). Nether Star:
+  `runItemTransferSpeedTest` takes an `itemsPerTransfer` parameter (defaults to 1) so the same
+  4-cooldown-cycle assertion scales to the tier's `itemsPerTick` — expects 4×16 = 64 redstone blocks
+  moved (16 in the hopper, 48 delivered) instead of 4×1.
+* **`SixSlotTransferTest`** — golden/diamond/netherite/nether star: all 5 storage slots drain in
+  order into the chest below; filter slot untouched. The Nether Star case doubles as the "never more
+  than one stack at a time" check — each item has stack size 1, so it must still drain at the same
+  one-item-per-tick pace as Netherite despite `itemsPerTick` = 16, proving the cap is per-slot-count,
+  not a guaranteed batch size.
 * **`PreventFilterExtractionTest`** — vanilla + tiered hoppers below a filtered hopper cannot steal
   the installed filter item.
 * **`DeprecatedBlockConversionTest`** — deprecated filtered golden hopper converts on first tick to
