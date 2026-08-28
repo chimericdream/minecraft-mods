@@ -53,18 +53,36 @@ public class ModBlocks {
 
     /**
      * There's still no natural world generation for poplar (no biome places it), but bonemealing the
-     * sapling now grows a real tree: "red_poplar" is one of the three ConfiguredFeature variants ported
-     * from the 26.3-snapshot-9 client (see com.chimericdream.nextupdatenow.worldgen), copied to 26.2's
+     * sapling now grows a real tree, randomly one of the three ConfiguredFeature variants ported from
+     * the 26.3-snapshot-9 client (see com.chimericdream.nextupdatenow.worldgen), copied to 26.2's
      * data/minecraft/worldgen/configured_feature/ path. 26.2's TreeGrower only has room for one primary
-     * "tree" pick (no weighted 3-way choice like the real 26.3 TreeGrower), so orange/yellow_poplar sit
-     * unused here for now — easy to wire up if/when this mod gets real weighted tree selection.
+     * "tree" pick (no weighted 3-way choice like the real 26.3 TreeGrower), so instead of one grower
+     * with three unused variants, each color gets its own TreeGrower and ModSaplingBlock picks among
+     * them (equal weight) itself — see its class comment.
      */
-    public static final TreeGrower POPLAR_TREE_GROWER = new TreeGrower(
-        "poplar",
+    public static final TreeGrower POPLAR_RED_TREE_GROWER = new TreeGrower(
+        "poplar_red",
         Optional.empty(),
         Optional.of(ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.withDefaultNamespace("red_poplar"))),
         Optional.empty()
     );
+    public static final TreeGrower POPLAR_YELLOW_TREE_GROWER = new TreeGrower(
+        "poplar_yellow",
+        Optional.empty(),
+        Optional.of(ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.withDefaultNamespace("yellow_poplar"))),
+        Optional.empty()
+    );
+    public static final TreeGrower POPLAR_ORANGE_TREE_GROWER = new TreeGrower(
+        "poplar_orange",
+        Optional.empty(),
+        Optional.of(ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.withDefaultNamespace("orange_poplar"))),
+        Optional.empty()
+    );
+    public static final TreeGrower[] POPLAR_TREE_GROWERS = {
+        POPLAR_RED_TREE_GROWER,
+        POPLAR_YELLOW_TREE_GROWER,
+        POPLAR_ORANGE_TREE_GROWER,
+    };
 
     public static void init() {
         registerConcreteAndWoolSlabsAndStairs();
@@ -163,7 +181,7 @@ public class ModBlocks {
 
         registerBlockWithItem(
             "poplar_sapling",
-            () -> new ModSaplingBlock(POPLAR_TREE_GROWER, blockSettings(Blocks.OAK_SAPLING, "poplar_sapling")),
+            () -> new ModSaplingBlock(POPLAR_TREE_GROWERS, blockSettings(Blocks.OAK_SAPLING, "poplar_sapling")),
             NATURAL_BLOCK_SETTINGS
         );
 
