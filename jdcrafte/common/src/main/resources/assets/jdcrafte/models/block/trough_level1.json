@@ -1,0 +1,17 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "block/hay_block_top",
+		"particle": "block/hay_block_top"
+	},
+	"elements": [
+		{
+			"from": [5, 4, 4],
+			"to": [16, 5, 12],
+			"faces": {
+				"up": {"uv": [0, 4, 11, 12], "texture": "#1"}
+			}
+		}
+	]
+}

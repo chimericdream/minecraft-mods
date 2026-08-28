@@ -28,7 +28,7 @@ def projectList = [
     'hang-from-slabs',
     'hopper-xtreme',
     'houdini-block',
-//    'jdcrafte',
+    'jdcrafte',
     'log-all-the-things',
     'minekea',
     'miniblock-merchants',

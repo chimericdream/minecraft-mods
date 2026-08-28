@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.jdcrafte.fabric.client.JDCrafteFabricClient"
+        ],
+        "fabric-datagen": [
+            "com.chimericdream.jdcrafte.fabric.data.ModDataGenerator"
         ]
     },
     "mixins": [

@@ -1,0 +1,78 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough"
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1"
+      },
+      "when": {
+        "axis": "x",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2"
+      },
+      "when": {
+        "axis": "x",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3"
+      },
+      "when": {
+        "axis": "x",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough",
+        "y": 90
+      },
+      "when": {
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "level": "3"
+      }
+    }
+  ]
+}
