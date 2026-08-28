@@ -23,7 +23,8 @@
         ]
     },
     "mixins": [
-        "logallthethings.mixins.json"
+        "logallthethings.mixins.json",
+        "logallthethings.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_compat}",

@@ -12,6 +12,10 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
 
 ### Current Features
 
+* **Lava-logging** — right-click a non-flammable slab, stairs, wall, fence, iron bars/glass pane,
+  trapdoor, ladder, or chain with a lava bucket to fill it with lava, just like water-logging. Empty
+  the bucket on it again to pick the lava back up.
+
 ## Notes for Documentation
 
 ## Issues & Suggestions

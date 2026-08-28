@@ -1,1 +1,3 @@
 accessWidener v2 official
+
+accessible method net/minecraft/world/level/block/Block registerDefaultState (Lnet/minecraft/world/level/block/state/BlockState;)V

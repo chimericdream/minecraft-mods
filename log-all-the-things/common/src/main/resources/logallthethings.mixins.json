@@ -6,6 +6,16 @@
     "client": [
     ],
     "mixins": [
+        "LATT$BucketItemMixin",
+        "LATT$ChainBlockMixin",
+        "LATT$CrossCollisionBlockMixin",
+        "LATT$FenceBlockMixin",
+        "LATT$IronBarsBlockMixin",
+        "LATT$LadderBlockMixin",
+        "LATT$SlabBlockMixin",
+        "LATT$StairBlockMixin",
+        "LATT$TrapDoorBlockMixin",
+        "LATT$WallBlockMixin"
     ],
     "injectors": {
         "defaultRequire": 1
