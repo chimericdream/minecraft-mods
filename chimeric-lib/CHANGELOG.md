@@ -1,5 +1,16 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added `GameTestPlayers` to the `testFixtures` GameTest helpers (alongside `GameTestContainers` /
+  `GameTestEntities` / `GameTestMenus`): `makeFacingPlayer` creates a mock server player positioned
+  and oriented at a target block, and `useItem` calls an item's `use()` and applies the resulting
+  `InteractionResult.Success#heldItemTransformedTo()` to the held item — both needed for any GameTest
+  simulating an item that overrides the general `Item#use` dispatch (buckets doing their own
+  reach-limited raycast, e.g.) rather than `useOn`/`useWithoutItem`, which `GameTestHelper#useBlock`
+  already covers. `makeFacingPlayer` also works around a `NullPointerException` mock players hit
+  calling `ServerPlayer#lookAt` directly (it tries to send a look-rotation packet over a connection
+  mock players don't have).
 
 ### 26.2 - 6.4.0
 

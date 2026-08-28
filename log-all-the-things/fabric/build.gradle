@@ -13,4 +13,12 @@ configurations {
 dependencies {
     common(project(path: ':log-all-the-things:common')) { transitive false }
     shadowBundle project(path: ':log-all-the-things:common', configuration: 'transformProductionFabric')
+
+    // The `gametest` source set (created by fabricApi.configureTests, see root build.gradle) is a
+    // separate, never-shipped source set: its classpath is extended from `main`, and its output goes
+    // only to the `runGameTest` run config — never into the published/shaded jar. The reusable
+    // GameTest harness helpers (GameTestPlayers, GameTestContainers, ...) live in chimeric-lib
+    // common's published `testFixtures` variant; consume them here the same way chimeric-lib's own
+    // gametest source set does.
+    gametestImplementation(testFixtures(project(":chimeric-lib:common")))
 }

@@ -71,8 +71,11 @@ helpers live in `chimeric-lib/common/src/testFixtures/java/com/chimericdream/lib
 
 - `BootstrapMinecraft` (JUnit bootstrap, above).
 - GameTest helpers under `.../testkit/gametest/`: `GameTestContainers`, `GameTestEntities`,
-  `GameTestMenus` — they touch only vanilla `GameTestHelper`/`Container`/`AbstractContainerMenu`, so
-  they compile in `common` and never leak into a production jar.
+  `GameTestMenus`, `GameTestPlayers` — they touch only vanilla
+  `GameTestHelper`/`Container`/`AbstractContainerMenu`/`Player`, so they compile in `common` and never
+  leak into a production jar. `GameTestPlayers` covers positioning/orienting a mock player and driving
+  an item's general `use()` dispatch (buckets, and anything else `GameTestHelper#useBlock` can't
+  reach, since that only drives `useOn`/`useWithoutItem`).
 
 Consuming them (the root `build.gradle` already wires `test`; a mod's `gametest` opts in per project):
 - In-build (the normal case, every mod): `testFixtures(project(":chimeric-lib:common"))` /
