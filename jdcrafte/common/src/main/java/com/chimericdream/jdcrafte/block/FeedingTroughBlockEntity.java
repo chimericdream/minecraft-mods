@@ -91,6 +91,20 @@ public class FeedingTroughBlockEntity extends BlockEntity implements Implemented
     }
 
     /**
+     * Removes and returns the first non-empty slot's entire stack, or {@link ItemStack#EMPTY} if the
+     * trough has nothing stored.
+     */
+    public ItemStack extractStack() {
+        for (int slot = 0; slot < SLOT_COUNT; slot++) {
+            if (!getItem(slot).isEmpty()) {
+                return removeItemNoUpdate(slot);
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    /**
      * Inserts as much of the given stack as the trough's remaining capacity and single-food-type
      * restriction allow, spread across whichever slots have room, and returns whatever didn't fit.
      */

@@ -116,6 +116,21 @@ public class FeedingTroughBlock extends BaseEntityBlock {
         }
 
         ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
+
+        if (held.isEmpty() && player.isShiftKeyDown()) {
+            if (trough.isEmpty()) {
+                return InteractionResult.PASS;
+            }
+
+            if (level.isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
+
+            player.setItemInHand(InteractionHand.MAIN_HAND, trough.extractStack());
+
+            return InteractionResult.SUCCESS;
+        }
+
         if (!FeedingTroughBlockEntity.isValidFood(held)) {
             return InteractionResult.PASS;
         }
