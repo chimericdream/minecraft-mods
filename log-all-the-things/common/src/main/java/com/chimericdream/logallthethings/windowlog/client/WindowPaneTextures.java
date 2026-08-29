@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.Block;
 
 /**
  * Resolves the two textures a window pane's own model already defines, so the glass frame geometry
- * (see {@link WindowFrameGeometry}) can be drawn in whatever color pane the player actually used.
+ * (see {@link WindowPaneGeometry}) can be drawn in whatever color pane the player actually used.
  *
  * <p>Every vanilla pane's model (e.g. {@code red_stained_glass_pane_post.json}) is a thin wrapper
  * around {@code block/template_glass_pane_post.json} with two texture slots: {@code pane} (the flat
@@ -28,18 +28,18 @@ import net.minecraft.world.level.block.Block;
  * model's quads) gets both concrete texture locations generically, for any modded pane that follows
  * the same convention as vanilla's — no hardcoded per-color texture paths needed.
  */
-public final class WindowFramePaneTextures {
+public final class WindowPaneTextures {
     public record PaneSprites(TextureAtlasSprite flat, TextureAtlasSprite edge) {
     }
 
     private static final Gson GSON = new Gson();
     private static final Map<Block, Optional<PaneSprites>> CACHE = new HashMap<>();
 
-    private WindowFramePaneTextures() {
+    private WindowPaneTextures() {
     }
 
     public static Optional<PaneSprites> get(Block paneBlock) {
-        return CACHE.computeIfAbsent(paneBlock, WindowFramePaneTextures::load);
+        return CACHE.computeIfAbsent(paneBlock, WindowPaneTextures::load);
     }
 
     private static Optional<PaneSprites> load(Block paneBlock) {

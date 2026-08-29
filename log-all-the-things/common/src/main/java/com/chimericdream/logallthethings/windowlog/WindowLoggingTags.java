@@ -7,14 +7,14 @@ import net.minecraft.world.level.block.Block;
 
 import com.chimericdream.logallthethings.ModInfo;
 
-public final class WindowLogTags {
+public final class WindowLoggingTags {
     /** Blocks a compatible pane can be window-logged into. Seeded with slabs and stairs only for now. */
-    public static final TagKey<Block> WINDOWABLE = TagKey.create(Registries.BLOCK, id("windowable"));
+    public static final TagKey<Block> WINDOW_LOGGABLE = TagKey.create(Registries.BLOCK, id("window_loggable"));
 
     /** Blocks that count as a "pane" for window-logging. Seeded with glass panes only for now. */
     public static final TagKey<Block> WINDOW = TagKey.create(Registries.BLOCK, id("window"));
 
-    private WindowLogTags() {
+    private WindowLoggingTags() {
     }
 
     private static Identifier id(String path) {

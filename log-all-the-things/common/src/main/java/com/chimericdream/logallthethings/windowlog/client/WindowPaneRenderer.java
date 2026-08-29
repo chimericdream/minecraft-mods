@@ -17,17 +17,17 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 
-import com.chimericdream.logallthethings.windowlog.client.WindowFramePaneTextures.PaneSprites;
+import com.chimericdream.logallthethings.windowlog.client.WindowPaneTextures.PaneSprites;
 
 /**
  * Renders the glass "frame" that fills a window-logged stair/slab's open notch, using hand-authored
- * per-shape geometry (see {@link WindowFrameGeometry}) instead of a generic flat pane. Only covers the
+ * per-shape geometry (see {@link WindowPaneGeometry}) instead of a generic flat pane. Only covers the
  * shape/half/facing combinations a model file actually exists for — see the {@code select} dispatch
  * table below for the current naming convention and which permutations are still missing. Falls back
  * to the caller's own flat-pane rendering (unchanged from before this) for anything not yet covered.
  */
-public final class WindowFrameRenderer {
-    private WindowFrameRenderer() {
+public final class WindowPaneRenderer {
+    private WindowPaneRenderer() {
     }
 
     /**
@@ -40,12 +40,12 @@ public final class WindowFrameRenderer {
             return false;
         }
 
-        Optional<WindowFrameGeometry> geometry = WindowFrameGeometryCache.get(selection.modelName);
+        Optional<WindowPaneGeometry> geometry = WindowPaneGeometryCache.get(selection.modelName);
         if (geometry.isEmpty()) {
             return false;
         }
 
-        Optional<PaneSprites> sprites = WindowFramePaneTextures.get(windowState.getBlock());
+        Optional<PaneSprites> sprites = WindowPaneTextures.get(windowState.getBlock());
         if (sprites.isEmpty()) {
             return false;
         }
@@ -55,7 +55,7 @@ public final class WindowFrameRenderer {
         poseStack.mulPose(Axis.YP.rotationDegrees(selection.yRotation));
         poseStack.translate(-0.5, -0.5, -0.5);
 
-        WindowFrameGeometry resolvedGeometry = geometry.get();
+        WindowPaneGeometry resolvedGeometry = geometry.get();
         PaneSprites resolvedSprites = sprites.get();
         queue.submitCustomGeometry(
             poseStack,
@@ -68,8 +68,8 @@ public final class WindowFrameRenderer {
         return true;
     }
 
-    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, WindowFrameGeometry geometry, PaneSprites sprites, int light) {
-        for (WindowFrameGeometry.Element element : geometry.elements()) {
+    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, WindowPaneGeometry geometry, PaneSprites sprites, int light) {
+        for (WindowPaneGeometry.Element element : geometry.elements()) {
             float x0 = element.from()[0] / 16f;
             float y0 = element.from()[1] / 16f;
             float z0 = element.from()[2] / 16f;
@@ -77,9 +77,9 @@ public final class WindowFrameRenderer {
             float y1 = element.to()[1] / 16f;
             float z1 = element.to()[2] / 16f;
 
-            for (Map.Entry<Direction, WindowFrameGeometry.Face> entry : element.faces().entrySet()) {
+            for (Map.Entry<Direction, WindowPaneGeometry.Face> entry : element.faces().entrySet()) {
                 Direction direction = entry.getKey();
-                WindowFrameGeometry.Face face = entry.getValue();
+                WindowPaneGeometry.Face face = entry.getValue();
                 TextureAtlasSprite sprite = face.paneTextureSlot() == 1 ? sprites.flat() : sprites.edge();
 
                 emitFace(pose, buffer, direction, x0, y0, z0, x1, y1, z1, face.uv(), face.rotation(), sprite, light, element.rotation());
@@ -97,7 +97,7 @@ public final class WindowFrameRenderer {
         int rotation,
         TextureAtlasSprite sprite,
         int light,
-        WindowFrameGeometry.Rotation elementRotation
+        WindowPaneGeometry.Rotation elementRotation
     ) {
         float[][] corners = corners(direction, x0, y0, z0, x1, y1, z1);
         // TextureAtlasSprite#getU/getV take a 0-1 fraction of the sprite, not the model JSON's 0-16
@@ -139,11 +139,11 @@ public final class WindowFrameRenderer {
     }
 
     /**
-     * Applies a hand-authored element's {@link WindowFrameGeometry.Rotation} (Blockbench pivot
+     * Applies a hand-authored element's {@link WindowPaneGeometry.Rotation} (Blockbench pivot
      * rotation, in the model's 0-16 pixel space) to a point already scaled into 0-1 block space.
      * {@code null} (no rotation authored for this element) is the identity transform.
      */
-    private static float[] rotatePoint(float[] point, WindowFrameGeometry.Rotation rotation) {
+    private static float[] rotatePoint(float[] point, WindowPaneGeometry.Rotation rotation) {
         if (rotation == null) {
             return point;
         }
@@ -158,7 +158,7 @@ public final class WindowFrameRenderer {
     }
 
     /** Rotates a direction vector (no translation) by X, then Y, then Z — Blockbench's own composition order. */
-    private static float[] rotateVector(float[] vector, WindowFrameGeometry.Rotation rotation) {
+    private static float[] rotateVector(float[] vector, WindowPaneGeometry.Rotation rotation) {
         if (rotation == null) {
             return vector;
         }
@@ -202,7 +202,7 @@ public final class WindowFrameRenderer {
      * refuses the interaction for inner/outer corners), so there is exactly one stairs geometry file
      * per half — {@code stairs_ew_pane.json} / {@code top_stairs_ew_pane.json} — reused for all four
      * facings by rotating it around Y. The {@code _top} variant bakes its own vertical flip into each
-     * element's Blockbench pivot rotation (see {@link WindowFrameGeometry.Rotation}), so no extra
+     * element's Blockbench pivot rotation (see {@link WindowPaneGeometry.Rotation}), so no extra
      * matrix rotation is needed here for it either.
      */
     private static Selection select(BlockState hostState) {
