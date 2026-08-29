@@ -1,0 +1,36 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"material": "minecraft:block/stone_bricks",
+		"glass": "minecraft:block/glass",
+		"glass_pane_top": "minecraft:block/glass_pane_top"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#material", "cullface": "north"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#material", "cullface": "east"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#material", "cullface": "south"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#material", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#material"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#material", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 8, 7.5],
+			"to": [16, 16, 8.5],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#glass"},
+				"east": {"uv": [8, 0, 9, 8], "texture": "#glass_pane_top"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#glass"},
+				"west": {"uv": [7, 0, 8, 8], "texture": "#glass_pane_top"},
+				"up": {"uv": [7, 0, 8, 16], "rotation": 90, "texture": "#glass_pane_top"},
+				"down": {"uv": [0, 1, 16, 2], "texture": "#missing"}
+			}
+		}
+	]
+}

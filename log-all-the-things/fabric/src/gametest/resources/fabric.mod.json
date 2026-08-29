@@ -11,7 +11,8 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
-            "com.chimericdream.logallthethings.fabric.test.LavaLoggingGameTest"
+            "com.chimericdream.logallthethings.fabric.test.LavaLoggingGameTest",
+            "com.chimericdream.logallthethings.fabric.test.WindowLoggingGameTest"
         ]
     },
     "depends": {

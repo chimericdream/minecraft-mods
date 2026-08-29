@@ -15,6 +15,9 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
 * **Lava-logging** — right-click a non-flammable slab, stairs, wall, fence, iron bars/glass pane,
   trapdoor, ladder, or chain with a lava bucket to fill it with lava, just like water-logging. Empty
   the bucket on it again to pick the lava back up.
+* **Window-logging** — right-click a slab or stairs with a glass pane (any color) to fit it into the
+  empty part of the block, turning it into a window. Aim at the glass while mining to pop just the
+  pane back out, or mine the solid part to break the whole thing.
 
 ## Notes for Documentation
 
