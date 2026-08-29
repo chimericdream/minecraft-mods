@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 4.2.0-beta.0
+
 #### New Features
 
 * Suspicious blocks now generate naturally in the world as small, rare deposits — clay near rivers
