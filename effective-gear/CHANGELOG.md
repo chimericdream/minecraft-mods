@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.2.0-beta.0
+
 #### New Features
 
 * Added a **Preserving** enchantment for shears (applied via anvil, since shears can't be enchanted at
