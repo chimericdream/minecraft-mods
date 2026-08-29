@@ -10,28 +10,151 @@
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level1"
+        "model": "jdcrafte:block/trough_level1_wheat"
       },
       "when": {
         "axis": "x",
+        "food": "wheat",
         "level": "1"
       }
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level2"
+        "model": "jdcrafte:block/trough_level1_beetroot"
       },
       "when": {
         "axis": "x",
+        "food": "beetroot",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "carrots",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_potatoes"
+      },
+      "when": {
+        "axis": "x",
+        "food": "potatoes",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_wheat_seeds"
+      },
+      "when": {
+        "axis": "x",
+        "food": "wheat_seeds",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_wheat"
+      },
+      "when": {
+        "axis": "x",
+        "food": "wheat",
         "level": "2"
       }
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level3"
+        "model": "jdcrafte:block/trough_level2_beetroot"
       },
       "when": {
         "axis": "x",
+        "food": "beetroot",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "carrots",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_potatoes"
+      },
+      "when": {
+        "axis": "x",
+        "food": "potatoes",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_wheat_seeds"
+      },
+      "when": {
+        "axis": "x",
+        "food": "wheat_seeds",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_wheat"
+      },
+      "when": {
+        "axis": "x",
+        "food": "wheat",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_beetroot"
+      },
+      "when": {
+        "axis": "x",
+        "food": "beetroot",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "carrots",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_potatoes"
+      },
+      "when": {
+        "axis": "x",
+        "food": "potatoes",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_wheat_seeds"
+      },
+      "when": {
+        "axis": "x",
+        "food": "wheat_seeds",
         "level": "3"
       }
     },
@@ -46,31 +169,166 @@
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level1",
+        "model": "jdcrafte:block/trough_level1_wheat",
         "y": 90
       },
       "when": {
         "axis": "z",
+        "food": "wheat",
         "level": "1"
       }
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level2",
+        "model": "jdcrafte:block/trough_level1_beetroot",
         "y": 90
       },
       "when": {
         "axis": "z",
+        "food": "beetroot",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "carrots",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_potatoes",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "potatoes",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_wheat_seeds",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "wheat_seeds",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_wheat",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "wheat",
         "level": "2"
       }
     },
     {
       "apply": {
-        "model": "jdcrafte:block/trough_level3",
+        "model": "jdcrafte:block/trough_level2_beetroot",
         "y": 90
       },
       "when": {
         "axis": "z",
+        "food": "beetroot",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "carrots",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_potatoes",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "potatoes",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_wheat_seeds",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "wheat_seeds",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_wheat",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "wheat",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_beetroot",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "beetroot",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "carrots",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_potatoes",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "potatoes",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_wheat_seeds",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "wheat_seeds",
         "level": "3"
       }
     }

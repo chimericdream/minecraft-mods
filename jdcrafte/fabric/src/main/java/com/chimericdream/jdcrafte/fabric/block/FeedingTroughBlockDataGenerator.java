@@ -65,9 +65,12 @@ public class FeedingTroughBlockDataGenerator implements FabricBlockDataGenerator
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         MultiVariant baseModel = BlockModelGenerators.plainVariant(modelId("trough"));
 
-        Map<Integer, MultiVariant> contentModels = new HashMap<>();
+        Map<String, MultiVariant> contentModels = new HashMap<>();
         for (int level = 1; level <= 3; level++) {
-            contentModels.put(level, BlockModelGenerators.plainVariant(modelId("trough_level" + level)));
+            for (FeedingTroughBlock.FoodType food : FeedingTroughBlock.FoodType.values()) {
+                String key = contentKey(level, food);
+                contentModels.put(key, BlockModelGenerators.plainVariant(modelId("trough_level" + key)));
+            }
         }
 
         blockStateModelGenerator.registerSimpleItemModel(block, modelId("trough"));
@@ -83,15 +86,22 @@ public class FeedingTroughBlockDataGenerator implements FabricBlockDataGenerator
             );
 
             for (int level = 1; level <= 3; level++) {
-                generator.with(
-                    new ConditionBuilder()
-                        .term(FeedingTroughBlock.AXIS, axis)
-                        .term(FeedingTroughBlock.LEVEL, level),
-                    contentModels.get(level).with(rotation)
-                );
+                for (FeedingTroughBlock.FoodType food : FeedingTroughBlock.FoodType.values()) {
+                    generator.with(
+                        new ConditionBuilder()
+                            .term(FeedingTroughBlock.AXIS, axis)
+                            .term(FeedingTroughBlock.LEVEL, level)
+                            .term(FeedingTroughBlock.FOOD, food),
+                        contentModels.get(contentKey(level, food)).with(rotation)
+                    );
+                }
             }
         }
 
         blockStateModelGenerator.blockStateOutput.accept(generator);
+    }
+
+    private static String contentKey(int level, FeedingTroughBlock.FoodType food) {
+        return level + "_" + food.getSerializedName();
     }
 }

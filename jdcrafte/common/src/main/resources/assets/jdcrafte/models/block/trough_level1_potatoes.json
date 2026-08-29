@@ -2,8 +2,8 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "block/hay_block_top",
-		"particle": "block/hay_block_top"
+		"1": "jdcrafte:block/from_minekea/compressed_potato",
+		"particle": "jdcrafte:block/from_minekea/compressed_potato"
 	},
 	"elements": [
 		{

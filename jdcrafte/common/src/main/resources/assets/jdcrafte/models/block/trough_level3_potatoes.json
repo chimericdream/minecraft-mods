@@ -1,0 +1,17 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "jdcrafte:block/from_minekea/compressed_potato",
+		"particle": "jdcrafte:block/from_minekea/compressed_potato"
+	},
+	"elements": [
+		{
+			"from": [5, 4, 4],
+			"to": [16, 7, 12],
+			"faces": {
+				"up": {"uv": [0, 4, 11, 12], "texture": "#1"}
+			}
+		}
+	]
+}
