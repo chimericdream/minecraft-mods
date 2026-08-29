@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0-beta.0
+
 #### New Features
 
 - Added colored concrete and wool slabs and stairs, in every dye color.
