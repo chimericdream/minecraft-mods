@@ -2,6 +2,7 @@ package com.chimericdream.logallthethings.mixin;
 
 import java.util.Optional;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -167,8 +168,10 @@ public abstract class LATT$IronBarsBlockMixin implements SimpleWaterloggedBlock 
             }
         }
 
-        if (changed) {
-            cir.setReturnValue(result);
+        Pair<Boolean, BlockState> lavaLogResult = LavaLogHelper.tryLavaLogOnPlace(level, pos, result);
+
+        if (changed || lavaLogResult.getFirst()) {
+            cir.setReturnValue(lavaLogResult.getSecond());
         }
     }
 }

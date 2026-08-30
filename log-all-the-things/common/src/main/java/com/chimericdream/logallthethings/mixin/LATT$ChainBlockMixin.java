@@ -2,12 +2,14 @@ package com.chimericdream.logallthethings.mixin;
 
 import java.util.Optional;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -102,6 +104,20 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     ) {
         if (state.getValue(LavaLogProperties.LAVALOGGED)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
+        }
+    }
+
+    /** Automatically lava-logs a freshly-placed block when it's being placed into a lava source. */
+    @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+    private void latt$tryLavaLogOnPlace(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
+        BlockState result = cir.getReturnValue();
+        if (result == null) {
+            return;
+        }
+
+        Pair<Boolean, BlockState> lavaLogResult = LavaLogHelper.tryLavaLogOnPlace(context.getLevel(), context.getClickedPos(), result);
+        if (lavaLogResult.getFirst()) {
+            cir.setReturnValue(lavaLogResult.getSecond());
         }
     }
 }

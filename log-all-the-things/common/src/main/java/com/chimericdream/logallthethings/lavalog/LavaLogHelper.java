@@ -2,6 +2,7 @@ package com.chimericdream.logallthethings.lavalog;
 
 import java.util.Optional;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
@@ -16,33 +17,25 @@ import net.minecraft.world.level.material.Fluids;
 /**
  * Shared lava-logging logic used by every per-block mixin. Mirrors
  * {@link net.minecraft.world.level.block.SimpleWaterloggedBlock}'s water-flavored defaults, but for
- * {@link Fluids#LAVA}, plus the non-flammable and mutual-exclusion-with-water gates that make it safe -
- * and, deliberately unlike water, only ever via an explicit lava bucket (see
- * {@link #explicitBucketAction}), never by real lava flowing into a container on its own.
+ * {@link Fluids#LAVA}, plus the non-flammable and mutual-exclusion-with-water gates that make it safe.
+ * Every lava-loggable block's {@code canPlaceLiquid}/{@code placeLiquid} override routes its LAVA
+ * branch through {@link #canLavaLog}/{@link #placeLava} - the same two interface methods vanilla's
+ * {@code FlowingFluid} spread/tick logic calls on any adjacent {@code LiquidBlockContainer} to
+ * auto-fill it, exactly the way flowing water auto-waterlogs a fence it flows into. Freshly-placed
+ * blocks are covered separately by {@link #tryLavaLogOnPlace}, called from each mixin's
+ * {@code getStateForPlacement} injection.
  */
 public final class LavaLogHelper {
-    /**
-     * Every lava-loggable block's {@code canPlaceLiquid}/{@code placeLiquid} override routes its LAVA
-     * branch through {@link #canLavaLog}/{@link #placeLava} - the same two interface methods vanilla's
-     * {@code FlowingFluid} spread/tick logic calls on any adjacent {@code LiquidBlockContainer} to
-     * auto-fill it, exactly the way flowing water auto-waterlogs a fence it flows into. Unlike water,
-     * lava-logging is meant to be bucket-only (deliberately not mirroring that part of water's behavior),
-     * so both methods refuse unless this flag says the call is happening inside an explicit bucket
-     * action - set by {@code LATT$BucketItemMixin} around {@code BucketItem#use}, which covers a player
-     * emptying a lava bucket (both loaders) but not a dispenser doing the same (a narrower, accepted gap
-     * rather than chasing NeoForge's differently-patched {@code emptyContents} overload).
-     */
-    private static boolean explicitBucketAction = false;
-
     private LavaLogHelper() {
     }
 
-    public static void beginExplicitBucketAction() {
-        explicitBucketAction = true;
-    }
+    public static Pair<Boolean, BlockState> tryLavaLogOnPlace(BlockGetter level, BlockPos pos, BlockState state) {
+        BlockState currentState = level.getBlockState(pos);
+        if (currentState.getFluidState().isSourceOfType(Fluids.LAVA) && state.hasProperty(LavaLogProperties.LAVALOGGED)) {
+            return Pair.of(true, state.setValue(LavaLogProperties.LAVALOGGED, true));
+        }
 
-    public static void endExplicitBucketAction() {
-        explicitBucketAction = false;
+        return Pair.of(false, state);
     }
 
     public static boolean canLavaLog(BlockGetter level, BlockPos pos, BlockState state) {
@@ -59,9 +52,6 @@ public final class LavaLogHelper {
      * {@code WindowedBlock}'s state never has {@code WATERLOGGED} at all.
      */
     public static boolean canLavaLog(BlockGetter level, BlockPos pos, BlockState carrierState, BlockState flammabilityState) {
-        if (!explicitBucketAction) {
-            return false;
-        }
         if (carrierState.hasProperty(BlockStateProperties.WATERLOGGED) && carrierState.getValue(BlockStateProperties.WATERLOGGED)) {
             return false;
         }
@@ -73,7 +63,7 @@ public final class LavaLogHelper {
     }
 
     public static boolean placeLava(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!explicitBucketAction || state.getValue(LavaLogProperties.LAVALOGGED) || !fluidState.is(Fluids.LAVA)) {
+        if (state.getValue(LavaLogProperties.LAVALOGGED) || !fluidState.isSourceOfType(Fluids.LAVA)) {
             return false;
         }
 
