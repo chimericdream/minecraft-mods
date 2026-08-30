@@ -25,19 +25,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.ModInfo;
-import org.jspecify.annotations.NonNull;
 
 /**
  * The block a window-logged slab/stair actually becomes in the world. Carries no blockstate
  * properties of its own (see {@code windowed_block.json}, which points every state at the empty
- * {@code minecraft:block/air} model) — all the real state lives in its {@link WindowLoggedBlockEntity},
+ * {@code minecraft:block/air} model) — all the real state lives in its {@link WindowedBlockEntity},
  * and {@code RenderShape.INVISIBLE} hands rendering entirely to
  * {@code windowlog.client.WindowedBlockEntityRenderer}. Shape/collision delegate to the union of the
  * host and window sub-states; drops are hardcoded to one of each sub-block's item, which is safe
  * because every vanilla slab/stair/pane always drops exactly itself regardless of loot conditions.
  */
-public class WindowLoggedBlock extends Block implements EntityBlock {
-    public WindowLoggedBlock() {
+public class WindowedBlock extends Block implements EntityBlock {
+    public WindowedBlock() {
         super(
             BlockBehaviour.Properties.of()
                 .noOcclusion()
@@ -48,14 +47,14 @@ public class WindowLoggedBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected @NonNull MapCodec<? extends Block> codec() {
-        return simpleCodec(properties -> new WindowLoggedBlock());
+    protected MapCodec<? extends Block> codec() {
+        return simpleCodec(properties -> new WindowedBlock());
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NonNull BlockPos pos, @NonNull BlockState state) {
-        return new WindowLoggedBlockEntity(pos, state);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WindowedBlockEntity(pos, state);
     }
 
     /**
@@ -66,20 +65,20 @@ public class WindowLoggedBlock extends Block implements EntityBlock {
      * model and skips binding a (pointless) model for it.
      */
     @Override
-    protected @NonNull RenderShape getRenderShape(@NonNull BlockState state) {
+    protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
     }
 
     public BlockState getHostState(BlockGetter level, BlockPos pos) {
-        return level.getBlockEntity(pos) instanceof WindowLoggedBlockEntity be ? be.getHostState() : Blocks.AIR.defaultBlockState();
+        return level.getBlockEntity(pos) instanceof WindowedBlockEntity be ? be.getHostState() : Blocks.AIR.defaultBlockState();
     }
 
     public BlockState getWindowState(BlockGetter level, BlockPos pos) {
-        return level.getBlockEntity(pos) instanceof WindowLoggedBlockEntity be ? be.getWindowState() : Blocks.AIR.defaultBlockState();
+        return level.getBlockEntity(pos) instanceof WindowedBlockEntity be ? be.getWindowState() : Blocks.AIR.defaultBlockState();
     }
 
     @Override
-    protected @NonNull VoxelShape getShape(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.or(
             getHostState(level, pos).getShape(level, pos, context),
             getWindowState(level, pos).getShape(level, pos, context)
@@ -87,13 +86,13 @@ public class WindowLoggedBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected @NonNull VoxelShape getCollisionShape(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull CollisionContext context) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, context);
     }
 
     @Override
-    protected @NonNull List<ItemStack> getDrops(@NonNull BlockState state, LootParams.Builder params) {
-        if (!(params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof WindowLoggedBlockEntity be)) {
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        if (!(params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof WindowedBlockEntity be)) {
             return List.of();
         }
 

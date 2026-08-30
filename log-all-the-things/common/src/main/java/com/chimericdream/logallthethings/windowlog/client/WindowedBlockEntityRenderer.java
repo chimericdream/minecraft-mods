@@ -17,8 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.chimericdream.logallthethings.windowlog.WindowLoggedBlockEntity;
-import org.jspecify.annotations.NonNull;
+import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
 
 /**
  * Renders a window-logged slab/stair: the host renders as an ordinary block model via
@@ -28,25 +27,25 @@ import org.jspecify.annotations.NonNull;
  * points every state at the empty {@code minecraft:block/air} model, and this renderer supplies the
  * real geometry every frame from the block entity's {@code hostState}.
  *
- * <p>The window itself prefers {@link WindowPaneRenderer}'s hand-authored, shape-fitted glass
+ * <p>The window itself prefers {@link WindowFrameRenderer}'s hand-authored, shape-fitted glass
  * geometry, falling back to the same {@code submitMovingBlock} treatment (a plain connected pane) only
  * when no frame model exists yet for that particular stair shape/half or for slabs.
  */
-public class WindowLoggedBlockEntityRenderer implements BlockEntityRenderer<WindowLoggedBlockEntity, WindowLoggedBlockRenderState> {
-    public WindowLoggedBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+public class WindowedBlockEntityRenderer implements BlockEntityRenderer<WindowedBlockEntity, WindowedBlockRenderState> {
+    public WindowedBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public @NotNull WindowLoggedBlockRenderState createRenderState() {
-        return new WindowLoggedBlockRenderState();
+    public @NotNull WindowedBlockRenderState createRenderState() {
+        return new WindowedBlockRenderState();
     }
 
     @Override
     public void extractRenderState(
-        @NonNull WindowLoggedBlockEntity blockEntity,
-        @NonNull WindowLoggedBlockRenderState state,
+        WindowedBlockEntity blockEntity,
+        WindowedBlockRenderState state,
         float tickProgress,
-        @NonNull Vec3 cameraPos,
+        Vec3 cameraPos,
         @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay
     ) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, tickProgress, cameraPos, crumblingOverlay);
@@ -70,13 +69,13 @@ public class WindowLoggedBlockEntityRenderer implements BlockEntityRenderer<Wind
     }
 
     @Override
-    public void submit(WindowLoggedBlockRenderState state, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector submitNodeCollector, @NonNull CameraRenderState camera) {
+    public void submit(WindowedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.host != null) {
             submitNodeCollector.submitMovingBlock(poseStack, state.host, 0);
         }
         if (state.window != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
-            boolean renderedFrame = WindowPaneRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.window.blockState);
+            boolean renderedFrame = WindowFrameRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.window.blockState);
             if (!renderedFrame) {
                 submitNodeCollector.submitMovingBlock(poseStack, state.window, 0);
             }

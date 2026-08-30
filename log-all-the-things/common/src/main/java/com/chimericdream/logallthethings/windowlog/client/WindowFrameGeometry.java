@@ -29,7 +29,7 @@ import net.minecraft.core.Direction;
  * order can silently resolve to the key no face actually uses - dropping every face that referenced the
  * other one instead.
  */
-public record WindowPaneGeometry(List<Element> elements) {
+public record WindowFrameGeometry(List<Element> elements) {
     public record Element(float[] from, float[] to, Map<Direction, Face> faces, Rotation rotation) {
     }
 
@@ -75,7 +75,7 @@ public record WindowPaneGeometry(List<Element> elements) {
         String texture;
     }
 
-    public static WindowPaneGeometry fromJson(Json json) {
+    public static WindowFrameGeometry fromJson(Json json) {
         List<Element> elements = new ArrayList<>();
 
         if (json.elements != null) {
@@ -103,7 +103,7 @@ public record WindowPaneGeometry(List<Element> elements) {
             }
         }
 
-        return new WindowPaneGeometry(elements);
+        return new WindowFrameGeometry(elements);
     }
 
     /**

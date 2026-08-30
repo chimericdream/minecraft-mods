@@ -22,7 +22,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -50,7 +49,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable LivingEntity user, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull BlockState state, @NonNull Fluid type) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity user, BlockGetter level, BlockPos pos, BlockState state, Fluid type) {
         if (type == Fluids.LAVA) {
             return LavaLogHelper.canLavaLog(level, pos, state);
         }
@@ -59,7 +58,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public boolean placeLiquid(@NonNull LevelAccessor level, @NonNull BlockPos pos, @NonNull BlockState state, FluidState fluidState) {
+    public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
         if (fluidState.is(Fluids.LAVA)) {
             return LavaLogHelper.placeLava(level, pos, state, fluidState);
         }
@@ -68,7 +67,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public @NonNull ItemStack pickupBlock(@Nullable LivingEntity user, @NonNull LevelAccessor level, @NonNull BlockPos pos, BlockState state) {
+    public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
         latt$lastPickupWasLava = state.getValue(LavaLogProperties.LAVALOGGED);
         if (latt$lastPickupWasLava) {
             return LavaLogHelper.pickupLava(level, pos, state);
@@ -78,7 +77,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public @NonNull Optional<SoundEvent> getPickupSound() {
+    public Optional<SoundEvent> getPickupSound() {
         return latt$lastPickupWasLava ? LavaLogHelper.getPickupSound() : SimpleWaterloggedBlock.super.getPickupSound();
     }
 

@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Shared logic behind window-logging: turning a plain slab/stair plus a held pane into a
- * {@link WindowLoggedBlock}, and (per the aim-based partial-breaking design) letting a player pop just
+ * {@link WindowedBlock}, and (per the aim-based partial-breaking design) letting a player pop just
  * the pane back out by targeting it specifically when mining.
  *
  * <p>Both entry points are wired to cross-loader Architectury events in
@@ -33,20 +33,20 @@ import net.minecraft.world.phys.Vec3;
  * {@code BlockEvent.BREAK}) rather than mixins — unlike lava-logging, nothing here needs to change
  * vanilla's {@code StairBlock}/{@code SlabBlock} classes themselves.
  */
-public final class WindowLoggingHelper {
-    private WindowLoggingHelper() {
+public final class WindowLogHelper {
+    private WindowLogHelper() {
     }
 
     public static EventResult tryWindowLog(Player player, InteractionHand hand, BlockPos pos, Direction face) {
         Level level = player.level();
         ItemStack stack = player.getItemInHand(hand);
 
-        if (!player.mayBuild() || !(stack.getItem() instanceof BlockItem paneItem) || !paneItem.getBlock().defaultBlockState().is(WindowLoggingTags.WINDOW)) {
+        if (!player.mayBuild() || !(stack.getItem() instanceof BlockItem paneItem) || !paneItem.getBlock().defaultBlockState().is(WindowLogTags.WINDOW)) {
             return EventResult.pass();
         }
 
         BlockState targetState = level.getBlockState(pos);
-        if (!targetState.is(WindowLoggingTags.WINDOW_LOGGABLE) || targetState.getBlock() instanceof WindowLoggedBlock) {
+        if (!targetState.is(WindowLogTags.WINDOWABLE) || targetState.getBlock() instanceof WindowedBlock) {
             return EventResult.pass();
         }
         if (targetState.getOptionalValue(SlabBlock.TYPE).map(SlabType.DOUBLE::equals).orElse(false)) {
@@ -59,8 +59,8 @@ public final class WindowLoggingHelper {
         if (!level.isClientSide()) {
             BlockState windowState = orientWindowPane(paneItem.getBlock().defaultBlockState(), targetState);
 
-            level.setBlock(pos, WindowLoggingBlocks.WINDOW_LOGGED_BLOCK.get().defaultBlockState(), Block.UPDATE_CLIENTS);
-            if (level.getBlockEntity(pos) instanceof WindowLoggedBlockEntity be) {
+            level.setBlock(pos, WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState(), Block.UPDATE_CLIENTS);
+            if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be) {
                 be.setHostState(targetState);
                 be.setWindowState(windowState);
                 be.setChanged();
@@ -101,7 +101,7 @@ public final class WindowLoggingHelper {
     }
 
     public static EventResult tryPartialBreak(Level level, BlockPos pos, BlockState state, ServerPlayer player) {
-        if (!(state.getBlock() instanceof WindowLoggedBlock) || !(level.getBlockEntity(pos) instanceof WindowLoggedBlockEntity be)) {
+        if (!(state.getBlock() instanceof WindowedBlock) || !(level.getBlockEntity(pos) instanceof WindowedBlockEntity be)) {
             return EventResult.pass();
         }
 

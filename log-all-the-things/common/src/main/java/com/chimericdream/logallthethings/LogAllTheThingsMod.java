@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.function.Supplier;
 
-import com.chimericdream.logallthethings.windowlog.WindowLoggingBlocks;
-import com.chimericdream.logallthethings.windowlog.WindowLoggingHelper;
+import com.chimericdream.logallthethings.windowlog.WindowLogBlocks;
+import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
 
 public final class LogAllTheThingsMod {
     public static Supplier<RegistrarManager> MANAGER;
@@ -22,11 +22,11 @@ public final class LogAllTheThingsMod {
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
-        WindowLoggingBlocks.init();
+        WindowLogBlocks.init();
 
         REGISTRY_HELPER.init();
 
-        InteractionEvent.RIGHT_CLICK_BLOCK.register(WindowLoggingHelper::tryWindowLog);
-        BlockEvent.BREAK.register(WindowLoggingHelper::tryPartialBreak);
+        InteractionEvent.RIGHT_CLICK_BLOCK.register(WindowLogHelper::tryWindowLog);
+        BlockEvent.BREAK.register(WindowLogHelper::tryPartialBreak);
     }
 }
