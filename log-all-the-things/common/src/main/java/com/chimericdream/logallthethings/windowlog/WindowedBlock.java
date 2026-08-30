@@ -9,8 +9,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -44,6 +46,12 @@ public class WindowedBlock extends Block implements EntityBlock {
             BlockBehaviour.Properties.of()
                 .noOcclusion()
                 .dynamicShape()
+                // dynamicShape() disables BlockBehaviour's per-state shape cache, and that cache is
+                // what its "legacySolid"/blocksMotion() flag is derived from - without forceSolidOn(),
+                // this block reads as non-solid the same way {@code minecraft:air} or a flower does,
+                // which is what let flowing lava treat it as fair game to destroy instead of leaving it
+                // alone the way a real (non-dynamic-shape) stair/slab/pane does.
+                .forceSolidOn()
                 .strength(2.0F)
                 .setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "windowed_block")))
         );
@@ -121,6 +129,28 @@ public class WindowedBlock extends Block implements EntityBlock {
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, context);
+    }
+
+    /**
+     * Without this, mining speed comes from this block's own fixed {@code strength(2.0F)} regardless
+     * of which part is targeted. Delegating to whichever sub-state {@link WindowLogHelper#isAimingAtWindow}
+     * says the player is aiming at gives each part its own real hardness/correct-tool speed (glass
+     * pane vs. the host stair/slab), and reusing that exact aim test keeps the speed you mine at
+     * consistent with what {@link WindowLogHelper#tryPartialBreak} actually breaks once you finish.
+     */
+    @Override
+    protected float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be && level instanceof Level realLevel) {
+            BlockState windowState = be.getWindowState();
+            BlockState hostState = be.getHostState();
+            BlockState targeted = WindowLogHelper.isAimingAtWindow(realLevel, pos, windowState, player) ? windowState : hostState;
+
+            if (!targeted.isAir()) {
+                return targeted.getDestroyProgress(player, level, pos);
+            }
+        }
+
+        return super.getDestroyProgress(state, player, level, pos);
     }
 
     @Override

@@ -235,4 +235,51 @@ public class WindowLoggingGameTest {
 
         context.succeed();
     }
+
+    // --- Solidity / mining stats ---
+
+    @GameTest
+    public void windowedBlockBlocksMotionSoFlowingFluidsCannotDestroyIt(GameTestHelper context) {
+        if (!WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState().blocksMotion()) {
+            context.fail(
+                "WindowedBlock should report blocksMotion()=true (via forceSolidOn(), since dynamicShape() "
+                    + "otherwise disables the shape cache that flag is normally derived from) so flowing "
+                    + "lava/water treats it like a real stair/slab/pane instead of a destructible plant/flower"
+            );
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void miningSpeedMatchesTheTargetedSubBlock(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState());
+        be.setChanged();
+
+        BlockPos pos = context.absolutePos(TARGET);
+        BlockState windowedState = targetState(context);
+
+        ServerPlayer windowPlayer = facingPlayerAt(context, paneOnlyPointOf(context));
+        float windowProgress = windowedState.getDestroyProgress(windowPlayer, context.getLevel(), pos);
+        float expectedWindowProgress = be.getWindowState().getDestroyProgress(windowPlayer, context.getLevel(), pos);
+        if (Math.abs(windowProgress - expectedWindowProgress) > 1.0e-5) {
+            context.fail("Expected mining the glass portion to use glass's own destroy progress (" + expectedWindowProgress + "), got " + windowProgress);
+        }
+
+        ServerPlayer hostPlayer = facingPlayerAt(context, hostOnlyPointOf(context));
+        float hostProgress = windowedState.getDestroyProgress(hostPlayer, context.getLevel(), pos);
+        float expectedHostProgress = be.getHostState().getDestroyProgress(hostPlayer, context.getLevel(), pos);
+        if (Math.abs(hostProgress - expectedHostProgress) > 1.0e-5) {
+            context.fail("Expected mining the host portion to use its own destroy progress (" + expectedHostProgress + "), got " + hostProgress);
+        }
+
+        if (windowProgress == hostProgress) {
+            context.fail("Expected window (glass) and host (slab) destroy progress to differ, both were " + windowProgress);
+        }
+
+        context.succeed();
+    }
 }

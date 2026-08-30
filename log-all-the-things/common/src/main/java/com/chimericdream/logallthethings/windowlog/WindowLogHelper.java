@@ -116,21 +116,7 @@ public final class WindowLogHelper {
         }
 
         BlockState windowState = be.getWindowState();
-        if (windowState.isAir()) {
-            return EventResult.pass();
-        }
-
-        Vec3 start = player.getEyePosition(1.0F);
-        Vec3 end = start.add(player.getLookAngle().scale(player.blockInteractionRange()));
-        BlockHitResult hit = level.clip(new ClipContext(start, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
-        if (hit.getType() != HitResult.Type.BLOCK || !hit.getBlockPos().equals(pos)) {
-            return EventResult.pass();
-        }
-
-        Vec3 localHit = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-        boolean hitWindow = windowState.getShape(level, pos).toAabbs().stream()
-            .anyMatch(box -> box.inflate(0.05).contains(localHit));
-        if (!hitWindow) {
+        if (!isAimingAtWindow(level, pos, windowState, player)) {
             return EventResult.pass();
         }
 
@@ -142,5 +128,29 @@ public final class WindowLogHelper {
         level.levelEvent(null, 2001, pos, Block.getId(windowState));
 
         return EventResult.interruptFalse();
+    }
+
+    /**
+     * Whether {@code player} is currently aiming precisely at {@code windowState}'s own shape within
+     * the block at {@code pos}, rather than at the host portion — shared by {@link #tryPartialBreak}
+     * (which pane to pop) and {@code WindowedBlock#getDestroyProgress} (which sub-block's mining speed
+     * applies), so a block always breaks at the speed of whichever part the completed break actually
+     * affects.
+     */
+    public static boolean isAimingAtWindow(Level level, BlockPos pos, BlockState windowState, Player player) {
+        if (windowState.isAir()) {
+            return false;
+        }
+
+        Vec3 start = player.getEyePosition(1.0F);
+        Vec3 end = start.add(player.getLookAngle().scale(player.blockInteractionRange()));
+        BlockHitResult hit = level.clip(new ClipContext(start, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+        if (hit.getType() != HitResult.Type.BLOCK || !hit.getBlockPos().equals(pos)) {
+            return false;
+        }
+
+        Vec3 localHit = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+        return windowState.getShape(level, pos).toAabbs().stream()
+            .anyMatch(box -> box.inflate(0.05).contains(localHit));
     }
 }
