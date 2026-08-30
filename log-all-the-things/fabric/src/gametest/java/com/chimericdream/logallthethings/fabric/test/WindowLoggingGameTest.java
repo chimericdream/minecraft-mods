@@ -431,6 +431,38 @@ public class WindowLoggingGameTest {
         context.succeed();
     }
 
+    /**
+     * Regression coverage for {@code LATT$StainedGlassPaneBlockMixin}: {@code StainedGlassPaneBlock}'s
+     * own constructor re-calls {@code registerDefaultState} (to set its NORTH/EAST/SOUTH/WEST/
+     * WATERLOGGED defaults) from {@code stateDefinition.any()} rather than {@code defaultBlockState()},
+     * which silently dropped {@code LATT$IronBarsBlockMixin}'s {@code LAVALOGGED = false} fix-up back to
+     * {@code any()}'s implicit (and, for a fresh {@code BooleanProperty}, {@code true}) default - so
+     * every freshly-placed stained pane, of any color, came back already lava-logged even with no lava
+     * anywhere in the world. Plain (colorless) {@code glass_pane}/{@code iron_bars} never hit this, since
+     * a bare {@code IronBarsBlock} only calls {@code registerDefaultState} once.
+     */
+    @GameTest
+    public void freshStainedGlassPaneIsNotLavaLoggedByDefault(GameTestHelper context) {
+        if (Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState().getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Expected a yellow stained glass pane's own default state to not be lava-logged");
+        }
+
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+        be.setWindowState(Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
+        be.setChanged();
+
+        context.placeBlock(TARGET.east(), Blocks.STAINED_GLASS_PANE.yellow(), Direction.UP);
+
+        BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.east()));
+        if (neighborState.getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Expected a freshly-placed yellow pane next to a window-logged neighbor to not be lava-logged, got " + neighborState);
+        }
+
+        context.succeed();
+    }
+
     @GameTest
     public void windowLoggingConnectsAnAlreadyPlacedNeighborPane(GameTestHelper context) {
         context.setBlock(TARGET.west(), Blocks.GLASS_PANE);
