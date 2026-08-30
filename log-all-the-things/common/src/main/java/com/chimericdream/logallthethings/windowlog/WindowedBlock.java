@@ -99,7 +99,7 @@ public class WindowedBlock extends Block implements EntityBlock {
      * mesh is used instead of the pane's own shape; slabs keep the pane's real shape since a slab's
      * missing half genuinely is the pane's full 16x16 footprint.
      */
-    private static final double STAIR_WINDOW_HALF_THICKNESS = 0.03125; // half of 1px, matching the glass mesh's 7.5-8.5 Z range
+    private static final double STAIR_WINDOW_HALF_THICKNESS = 0.0625; // half of 2px, matching the glass mesh's 7-9 Z range
 
     private static VoxelShape stairWindowShape(Direction facing, Half half) {
         double lowY = half == Half.BOTTOM ? 0.5 : 0.0;
