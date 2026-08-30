@@ -26,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import dev.architectury.event.EventResult;
 
 import com.chimericdream.lib.testkit.gametest.GameTestPlayers;
+import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 import com.chimericdream.logallthethings.windowlog.WindowLogBlocks;
 import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
 import com.chimericdream.logallthethings.windowlog.WindowedBlock;
@@ -422,6 +423,9 @@ public class WindowLoggingGameTest {
         BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.east()));
         if (!neighborState.getValue(CrossCollisionBlock.WEST)) {
             context.fail("Expected a freshly-placed pane to connect its WEST arm toward the window-logged neighbor, got " + neighborState);
+        }
+        if (neighborState.getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Connecting to a window-logged neighbor should not affect the fresh pane's own lava-logged state, got " + neighborState);
         }
 
         context.succeed();
