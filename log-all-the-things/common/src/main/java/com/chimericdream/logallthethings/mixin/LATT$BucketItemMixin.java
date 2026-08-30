@@ -1,6 +1,10 @@
 package com.chimericdream.logallthethings.mixin;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluids;
@@ -8,8 +12,12 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+
+import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 
 /**
  * Vanilla {@link BucketItem#use} hardcodes {@code this.content == Fluids.WATER} to decide whether a
@@ -42,5 +50,22 @@ public abstract class LATT$BucketItemMixin {
     )
     private FlowingFluid latt$allowLavaInUse(FlowingFluid original) {
         return this.content == Fluids.LAVA ? Fluids.LAVA : original;
+    }
+
+    /**
+     * Brackets the whole {@code use()} call so {@link LavaLogHelper#canLavaLog}/{@code #placeLava} know
+     * this is a deliberate bucket action rather than ambient {@code FlowingFluid} spread reaching the
+     * same {@code canPlaceLiquid}/{@code placeLiquid} interface methods on its own - see
+     * {@link LavaLogHelper}'s doc comment on {@code explicitBucketAction}. {@code @At("RETURN")} injects
+     * before every return in the method, so this clears reliably regardless of which branch exits.
+     */
+    @Inject(method = "use", at = @At("HEAD"))
+    private void latt$beginBucketAction(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        LavaLogHelper.beginExplicitBucketAction();
+    }
+
+    @Inject(method = "use", at = @At("RETURN"))
+    private void latt$endBucketAction(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        LavaLogHelper.endExplicitBucketAction();
     }
 }

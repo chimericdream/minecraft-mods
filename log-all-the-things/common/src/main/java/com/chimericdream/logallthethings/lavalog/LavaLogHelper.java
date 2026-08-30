@@ -16,13 +16,39 @@ import net.minecraft.world.level.material.Fluids;
 /**
  * Shared lava-logging logic used by every per-block mixin. Mirrors
  * {@link net.minecraft.world.level.block.SimpleWaterloggedBlock}'s water-flavored defaults, but for
- * {@link Fluids#LAVA}, plus the non-flammable and mutual-exclusion-with-water gates that make it safe.
+ * {@link Fluids#LAVA}, plus the non-flammable and mutual-exclusion-with-water gates that make it safe -
+ * and, deliberately unlike water, only ever via an explicit lava bucket (see
+ * {@link #explicitBucketAction}), never by real lava flowing into a container on its own.
  */
 public final class LavaLogHelper {
+    /**
+     * Every lava-loggable block's {@code canPlaceLiquid}/{@code placeLiquid} override routes its LAVA
+     * branch through {@link #canLavaLog}/{@link #placeLava} - the same two interface methods vanilla's
+     * {@code FlowingFluid} spread/tick logic calls on any adjacent {@code LiquidBlockContainer} to
+     * auto-fill it, exactly the way flowing water auto-waterlogs a fence it flows into. Unlike water,
+     * lava-logging is meant to be bucket-only (deliberately not mirroring that part of water's behavior),
+     * so both methods refuse unless this flag says the call is happening inside an explicit bucket
+     * action - set by {@code LATT$BucketItemMixin} around {@code BucketItem#use}, which covers a player
+     * emptying a lava bucket (both loaders) but not a dispenser doing the same (a narrower, accepted gap
+     * rather than chasing NeoForge's differently-patched {@code emptyContents} overload).
+     */
+    private static boolean explicitBucketAction = false;
+
     private LavaLogHelper() {
     }
 
+    public static void beginExplicitBucketAction() {
+        explicitBucketAction = true;
+    }
+
+    public static void endExplicitBucketAction() {
+        explicitBucketAction = false;
+    }
+
     public static boolean canLavaLog(BlockGetter level, BlockPos pos, BlockState state) {
+        if (!explicitBucketAction) {
+            return false;
+        }
         if (state.getValue(BlockStateProperties.WATERLOGGED) || state.getValue(LavaLogProperties.LAVALOGGED)) {
             return false;
         }
@@ -31,7 +57,7 @@ public final class LavaLogHelper {
     }
 
     public static boolean placeLava(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED) || !fluidState.is(Fluids.LAVA)) {
+        if (!explicitBucketAction || state.getValue(LavaLogProperties.LAVALOGGED) || !fluidState.is(Fluids.LAVA)) {
             return false;
         }
 
