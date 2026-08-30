@@ -214,11 +214,15 @@ public final class WindowFrameRenderer {
             Direction facing = hostState.getValue(StairBlock.FACING);
             boolean top = hostState.getValue(StairBlock.HALF) == Half.TOP;
 
+            // NOTE: this is the *opposite* of vanilla's blockstate y-rotation convention
+            // (facing=south -> y=90, facing=north -> y=270) because PoseStack#mulPose(Axis.YP...)
+            // rotates the other way around - using vanilla's values here lands the glass mesh on the
+            // stair's solid side instead of its open notch for south/north facings.
             int baseY = switch (facing) {
                 case EAST -> 0;
-                case SOUTH -> 90;
+                case SOUTH -> 270;
                 case WEST -> 180;
-                case NORTH -> 270;
+                case NORTH -> 90;
                 default -> 0;
             };
 

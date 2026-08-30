@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -14,9 +15,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -77,12 +80,42 @@ public class WindowedBlock extends Block implements EntityBlock {
         return level.getBlockEntity(pos) instanceof WindowedBlockEntity be ? be.getWindowState() : Blocks.AIR.defaultBlockState();
     }
 
+    /**
+     * A stair's open notch is only half the block's width (the raised step occupies the other half),
+     * but a real {@code minecraft:glass_pane} blockstate's connected shape always spans the block's
+     * <em>full</em> 16px width/depth regardless — unioning it in directly (as this used to) covers the
+     * already-solid host half too, so the visible collision box comes out full-width instead of fitted
+     * to the notch (a "1x8x16" slab flush against the upper step, not the "8x8x1" the hand-authored
+     * {@code WindowFrameRenderer} glass mesh actually occupies). For stairs, a shape sized to that same
+     * mesh is used instead of the pane's own shape; slabs keep the pane's real shape since a slab's
+     * missing half genuinely is the pane's full 16x16 footprint.
+     */
+    private static final double STAIR_WINDOW_HALF_THICKNESS = 0.03125; // half of 1px, matching the glass mesh's 7.5-8.5 Z range
+
+    private static VoxelShape stairWindowShape(Direction facing, Half half) {
+        double lowY = half == Half.BOTTOM ? 0.5 : 0.0;
+        double highY = half == Half.BOTTOM ? 1.0 : 0.5;
+        double centerLow = 0.5 - STAIR_WINDOW_HALF_THICKNESS;
+        double centerHigh = 0.5 + STAIR_WINDOW_HALF_THICKNESS;
+
+        return switch (facing) {
+            case EAST -> Shapes.box(0.0, lowY, centerLow, 0.5, highY, centerHigh);
+            case WEST -> Shapes.box(0.5, lowY, centerLow, 1.0, highY, centerHigh);
+            case SOUTH -> Shapes.box(centerLow, lowY, 0.0, centerHigh, highY, 0.5);
+            case NORTH -> Shapes.box(centerLow, lowY, 0.5, centerHigh, highY, 1.0);
+            default -> Shapes.empty();
+        };
+    }
+
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.or(
-            getHostState(level, pos).getShape(level, pos, context),
-            getWindowState(level, pos).getShape(level, pos, context)
-        );
+        BlockState hostState = getHostState(level, pos);
+
+        VoxelShape windowShape = hostState.getBlock() instanceof StairBlock
+            ? stairWindowShape(hostState.getValue(StairBlock.FACING), hostState.getValue(StairBlock.HALF))
+            : getWindowState(level, pos).getShape(level, pos, context);
+
+        return Shapes.or(hostState.getShape(level, pos, context), windowShape);
     }
 
     @Override

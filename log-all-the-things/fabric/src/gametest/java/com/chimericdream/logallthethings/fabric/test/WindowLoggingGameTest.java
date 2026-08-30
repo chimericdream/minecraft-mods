@@ -112,7 +112,7 @@ public class WindowLoggingGameTest {
     }
 
     @GameTest
-    public void windowLoggingAnEastFacingStairsOrientsThePaneNorthSouth(GameTestHelper context) {
+    public void windowLoggingAnEastFacingStairsOrientsThePaneEastWest(GameTestHelper context) {
         context.setBlock(TARGET, Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.EAST));
 
         Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
@@ -121,11 +121,11 @@ public class WindowLoggingGameTest {
         WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
 
         WindowedBlockEntity be = targetWindowedBlockEntity(context);
-        if (!be.getWindowState().getValue(CrossCollisionBlock.NORTH) || !be.getWindowState().getValue(CrossCollisionBlock.SOUTH)) {
-            context.fail("Window state should be forced flat north-south to face the same way an east-facing stair opens, got " + be.getWindowState());
+        if (!be.getWindowState().getValue(CrossCollisionBlock.EAST) || !be.getWindowState().getValue(CrossCollisionBlock.WEST)) {
+            context.fail("Window state should be forced flat east-west to stand across the notch of an east-facing stair, got " + be.getWindowState());
         }
-        if (be.getWindowState().getValue(CrossCollisionBlock.EAST) || be.getWindowState().getValue(CrossCollisionBlock.WEST)) {
-            context.fail("Window state should not also be connected east-west, got " + be.getWindowState());
+        if (be.getWindowState().getValue(CrossCollisionBlock.NORTH) || be.getWindowState().getValue(CrossCollisionBlock.SOUTH)) {
+            context.fail("Window state should not also be connected north-south, got " + be.getWindowState());
         }
 
         context.succeed();

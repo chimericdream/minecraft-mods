@@ -1,5 +1,7 @@
 package com.chimericdream.logallthethings.windowlog;
 
+import java.util.Optional;
+
 import dev.architectury.event.EventResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -86,18 +88,26 @@ public final class WindowLogHelper {
      * window-logging's neighbours are almost never another connectable pane/wall. A real window should
      * look like a flat pane filling the opening instead, so this forces a connection on one axis
      * unconditionally rather than computing it: {@link CrossCollisionBlock#EAST}/{@code WEST} (pane
-     * faces north/south) when the host has no horizontal facing (slabs, symmetric either way), or
-     * whichever axis is perpendicular to the host's {@link StairBlock#FACING} so the pane faces the same
-     * way the stair opens.
+     * faces north/south) when the host has no horizontal facing at all (slabs, symmetric either way), or
+     * whichever axis the host's {@link StairBlock#FACING} itself runs along, so the pane's collision
+     * plate stands across the stair's open notch the same way {@code WindowFrameRenderer}'s hand-authored
+     * glass mesh already does — extending <em>along</em> {@code FACING}'s axis, not perpendicular to it
+     * (a stair's notch spans the full width of the axis perpendicular to {@code FACING}, so a plate
+     * extending along {@code FACING}'s own axis is the one that reaches across that opening). The
+     * no-facing case is checked explicitly (rather than defaulting {@code FACING} to some direction and
+     * falling into one of the two branches below) because {@code NORTH} and {@code SOUTH} no longer share
+     * an answer with each other the way they coincidentally did under the old (buggy) perpendicular
+     * logic — a real north/south-facing stair needs a different outcome than a slab with no facing at
+     * all, even though both would otherwise land on the same default.
      */
     private static BlockState orientWindowPane(BlockState windowState, BlockState hostState) {
-        Direction facing = hostState.getOptionalValue(StairBlock.FACING).orElse(Direction.NORTH);
+        Optional<Direction> facing = hostState.getOptionalValue(StairBlock.FACING);
 
-        if (facing.getAxis() == Direction.Axis.X) {
-            return windowState.setValue(CrossCollisionBlock.NORTH, true).setValue(CrossCollisionBlock.SOUTH, true);
+        if (facing.isEmpty() || facing.get().getAxis() == Direction.Axis.X) {
+            return windowState.setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true);
         }
 
-        return windowState.setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true);
+        return windowState.setValue(CrossCollisionBlock.NORTH, true).setValue(CrossCollisionBlock.SOUTH, true);
     }
 
     public static EventResult tryPartialBreak(Level level, BlockPos pos, BlockState state, ServerPlayer player) {
