@@ -108,33 +108,38 @@ public final class WindowFrameRenderer {
         float v1 = uv[3] / 16f;
         float[][] uvCorners = {{u0, v0}, {u0, v1}, {u1, v1}, {u1, v0}};
         int shift = ((rotation / 90) % 4 + 4) % 4;
+        // corners() for UP/DOWN was reordered (see below) to fix backface culling, which reverses the
+        // traversal direction relative to NORTH/SOUTH/EAST/WEST's untouched arrays - index 1 and 3 now
+        // hold the opposite physical corners from before. uvCorners was authored against the original
+        // traversal direction, so UP/DOWN need the matching reversed index to keep each corner's texture
+        // coordinate the same as before; anything else still pairs directly.
+        boolean reverseUv = direction == Direction.UP || direction == Direction.DOWN;
 
+        // Only the element's own Blockbench pivot rotation is baked in here - the per-facing Y rotation
+        // WindowFrameRenderer#submit applies to the whole mesh (poseStack.mulPose) lives in `pose`
+        // itself, so the pose-aware setNormal(pose, ...) overload below (not the raw 3-arg one) is what
+        // actually applies it to the normal. Skipping that overload left north/south/west/east faces
+        // shaded as if they were still in the un-rotated (EAST-facing) orientation for every other
+        // facing, producing a visibly different brightness/tint than a real block's quads.
         float[] normal = rotateVector(new float[]{direction.getStepX(), direction.getStepY(), direction.getStepZ()}, elementRotation);
-        float[] backNormal = {-normal[0], -normal[1], -normal[2]};
 
-        // translucentMovingBlock() culls backfaces. A real pane is visible from either side, so emit
-        // the quad in both winding orders instead of chasing which order a given element's rotation
-        // ends up front-facing from - reversed order + negated normal is the mirror image of the loop
-        // below, needed once per quad regardless of rotation.
+        // Each geometry file already defines both sides of a thin pane element as separate opposing
+        // faces (e.g. "north" and "south" each with their own uv/cullface) - the same way vanilla's own
+        // template_glass_pane_post.json does. So a single, correctly-wound quad per face is enough;
+        // translucentMovingBlock()'s backface culling then hides it from the opposite side exactly like
+        // a real pane. Emitting a second, mirrored-winding copy here (as this used to) double-draws
+        // every face - once correctly and once as a permanently-visible "backface" - which both
+        // oversaturates the translucent blend and defeats culling entirely.
         for (int i = 0; i < 4; i++) {
             float[] pos = rotatePoint(corners[i], elementRotation);
-            float[] tex = uvCorners[(i + shift) % 4];
+            int uvIndex = reverseUv ? (4 - i) % 4 : i;
+            float[] tex = uvCorners[(uvIndex + shift) % 4];
 
             buffer.addVertex(pose.pose(), pos[0], pos[1], pos[2])
                 .setColor(1f, 1f, 1f, 1f)
                 .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
                 .setLight(light)
-                .setNormal(normal[0], normal[1], normal[2]);
-        }
-        for (int i = 3; i >= 0; i--) {
-            float[] pos = rotatePoint(corners[i], elementRotation);
-            float[] tex = uvCorners[(i + shift) % 4];
-
-            buffer.addVertex(pose.pose(), pos[0], pos[1], pos[2])
-                .setColor(1f, 1f, 1f, 1f)
-                .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
-                .setLight(light)
-                .setNormal(backNormal[0], backNormal[1], backNormal[2]);
+                .setNormal(pose, normal[0], normal[1], normal[2]);
         }
     }
 
@@ -188,8 +193,13 @@ public final class WindowFrameRenderer {
 
     private static float[][] corners(Direction direction, float x0, float y0, float z0, float x1, float y1, float z1) {
         return switch (direction) {
-            case DOWN -> new float[][]{{x0, y0, z0}, {x0, y0, z1}, {x1, y0, z1}, {x1, y0, z0}};
-            case UP -> new float[][]{{x0, y1, z1}, {x0, y1, z0}, {x1, y1, z0}, {x1, y1, z1}};
+            // UP/DOWN were wound backwards (confirmed against GlassJarFluidRenderCommandQueue's
+            // known-good quads): with the old double-emit hack in emitFace, one of the two mirrored
+            // copies always happened to be front-facing so the reversed winding here never showed up.
+            // Now that each face is emitted once, a reversed winding gets backface-culled from the
+            // correct viewing side instead of the wrong one - visible as a missing top/bottom cap.
+            case DOWN -> new float[][]{{x0, y0, z0}, {x1, y0, z0}, {x1, y0, z1}, {x0, y0, z1}};
+            case UP -> new float[][]{{x0, y1, z1}, {x1, y1, z1}, {x1, y1, z0}, {x0, y1, z0}};
             case NORTH -> new float[][]{{x1, y1, z0}, {x1, y0, z0}, {x0, y0, z0}, {x0, y1, z0}};
             case SOUTH -> new float[][]{{x0, y1, z1}, {x0, y0, z1}, {x1, y0, z1}, {x1, y1, z1}};
             case WEST -> new float[][]{{x0, y1, z0}, {x0, y0, z0}, {x0, y0, z1}, {x0, y1, z1}};
