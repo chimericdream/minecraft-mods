@@ -1,5 +1,7 @@
 package com.chimericdream.logallthethings.fabric.test;
 
+import java.lang.reflect.Method;
+
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,8 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CrossCollisionBlock;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -435,6 +439,47 @@ public class WindowLoggingGameTest {
         BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.west()));
         if (!neighborState.getValue(CrossCollisionBlock.EAST)) {
             context.fail("Expected the pre-existing neighbor pane to connect its EAST arm toward the newly window-logged block, got " + neighborState);
+        }
+
+        context.succeed();
+    }
+
+    // --- Flammability follows the host block (LATT$FireBlockMixin) ---
+
+    /**
+     * {@code FireBlock#getIgniteOdds(LevelReader, BlockPos)} is private - it's the exact method
+     * {@code LATT$FireBlockMixin} redirects, and calling it directly (via reflection) checks that
+     * mechanism deterministically rather than waiting on vanilla's randomized per-tick fire spread.
+     */
+    private static int igniteOddsAt(GameTestHelper context, BlockPos pos) {
+        try {
+            Method method = FireBlock.class.getDeclaredMethod("getIgniteOdds", LevelReader.class, BlockPos.class);
+            method.setAccessible(true);
+            return (int) method.invoke(Blocks.FIRE, context.getLevel(), pos);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Failed to call FireBlock#getIgniteOdds via reflection", e);
+        }
+    }
+
+    @GameTest
+    public void windowLoggedOakStairsAreFlammableLikeOak(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.OAK_STAIRS.defaultBlockState());
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState());
+        be.setChanged();
+
+        int oddsNextToOak = igniteOddsAt(context, context.absolutePos(TARGET.above()));
+        if (oddsNextToOak <= 0) {
+            context.fail("Expected fire to see an oak-stairs-hosted windowed block as flammable, ignite odds were " + oddsNextToOak);
+        }
+
+        be.setHostState(Blocks.STONE_BRICK_STAIRS.defaultBlockState());
+        be.setChanged();
+
+        int oddsNextToStone = igniteOddsAt(context, context.absolutePos(TARGET.above()));
+        if (oddsNextToStone != 0) {
+            context.fail("Expected fire to see a stone-brick-stairs-hosted windowed block as non-flammable, ignite odds were " + oddsNextToStone);
         }
 
         context.succeed();

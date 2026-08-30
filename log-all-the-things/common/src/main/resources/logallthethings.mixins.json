@@ -10,6 +10,7 @@
         "LATT$ChainBlockMixin",
         "LATT$CrossCollisionBlockMixin",
         "LATT$FenceBlockMixin",
+        "LATT$FireBlockMixin",
         "LATT$IronBarsBlockMixin",
         "LATT$LadderBlockMixin",
         "LATT$SlabBlockMixin",
