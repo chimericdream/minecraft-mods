@@ -2,6 +2,7 @@ package com.chimericdream.logallthethings.windowlog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -9,20 +10,31 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -31,6 +43,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.ModInfo;
+import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
+import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 
 /**
  * The block a window-logged slab/stair actually becomes in the world. Carries no blockstate
@@ -41,7 +55,7 @@ import com.chimericdream.logallthethings.ModInfo;
  * host and window sub-states; drops are hardcoded to one of each sub-block's item, which is safe
  * because every vanilla slab/stair/pane always drops exactly itself regardless of loot conditions.
  */
-public class WindowedBlock extends Block implements EntityBlock {
+public class WindowedBlock extends Block implements EntityBlock, LiquidBlockContainer, BucketPickup {
     public WindowedBlock() {
         super(
             BlockBehaviour.Properties.of()
@@ -56,11 +70,27 @@ public class WindowedBlock extends Block implements EntityBlock {
                 .strength(2.0F)
                 .setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "windowed_block")))
         );
+        registerDefaultState(defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, false));
     }
 
     @Override
     protected MapCodec<? extends Block> codec() {
         return simpleCodec(properties -> new WindowedBlock());
+    }
+
+    /**
+     * Lets a lava-logged stair/slab stay lava-logged once window-logged (and vice versa - see
+     * {@link WindowLogHelper#tryWindowLog}/{@code tryPartialBreak}, which carry
+     * {@link LavaLogProperties#LAVALOGGED} across that transition on the host state). Unlike a plain
+     * stair/slab, {@code WindowedBlock} has no properties of its own to derive {@code getFluidState()}
+     * from - it needs its own copy of the flag, kept in sync with the block entity's {@code hostState}
+     * by {@link #latt$syncHostLavaLogged}, since {@code getFluidState(BlockState)} is state-only (no
+     * level/pos to consult the block entity with).
+     */
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(LavaLogProperties.LAVALOGGED);
     }
 
     @Nullable
@@ -79,6 +109,84 @@ public class WindowedBlock extends Block implements EntityBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
+    }
+
+    /**
+     * Flammability's own {@code LATT$FireBlockMixin} substitutes the host state when consulting fire
+     * odds, so {@link com.chimericdream.logallthethings.lavalog.LavaLogFlammability#isFlammable} is
+     * checked against the real host below rather than this block's own (never-flammable) state - a
+     * window-logged oak-stairs host should still refuse a lava bucket, exactly like a plain oak stairs
+     * would.
+     */
+    @Override
+    public boolean canPlaceLiquid(@Nullable LivingEntity user, BlockGetter level, BlockPos pos, BlockState state, Fluid type) {
+        if (type != Fluids.LAVA) {
+            return false;
+        }
+
+        BlockState hostState = getHostState(level, pos);
+        return !hostState.isAir() && LavaLogHelper.canLavaLog(level, pos, state, hostState);
+    }
+
+    @Override
+    public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
+        if (!fluidState.is(Fluids.LAVA) || !LavaLogHelper.placeLava(level, pos, state, fluidState)) {
+            return false;
+        }
+
+        latt$syncHostLavaLogged(level, pos, true);
+        return true;
+    }
+
+    @Override
+    public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
+        ItemStack result = LavaLogHelper.pickupLava(level, pos, state);
+        if (!result.isEmpty()) {
+            latt$syncHostLavaLogged(level, pos, false);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Optional<SoundEvent> getPickupSound() {
+        return LavaLogHelper.getPickupSound();
+    }
+
+    /**
+     * Mirrors {@link LavaLogProperties#LAVALOGGED} from this block's own carrier state onto the block
+     * entity's {@code hostState}, so the plain stair/slab that comes back out of
+     * {@code WindowLogHelper#tryPartialBreak} (or gets read by {@code WindowedBlock#getDrops}) still
+     * remembers whether it was lava-logged while windowed.
+     */
+    private static void latt$syncHostLavaLogged(LevelAccessor level, BlockPos pos, boolean lavalogged) {
+        if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be && be.getHostState().hasProperty(LavaLogProperties.LAVALOGGED)) {
+            be.setHostState(be.getHostState().setValue(LavaLogProperties.LAVALOGGED, lavalogged));
+            be.setChanged();
+        }
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(LavaLogProperties.LAVALOGGED) ? Fluids.LAVA.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected BlockState updateShape(
+        BlockState state,
+        LevelReader level,
+        ScheduledTickAccess ticks,
+        BlockPos pos,
+        Direction directionToNeighbour,
+        BlockPos neighbourPos,
+        BlockState neighbourState,
+        RandomSource random
+    ) {
+        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+            ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
+        }
+
+        return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
     }
 
     public BlockState getHostState(BlockGetter level, BlockPos pos) {

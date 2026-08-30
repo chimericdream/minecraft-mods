@@ -26,11 +26,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
+import com.chimericdream.logallthethings.windowlog.WindowedBlock;
+import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
 
 /**
  * Adds a {@code lavalogged} blockstate property to stairs, mirroring vanilla waterlogging but for
@@ -112,5 +115,47 @@ public abstract class LATT$StairBlockMixin implements SimpleWaterloggedBlock {
         if (state.getValue(LavaLogProperties.LAVALOGGED)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
         }
+    }
+
+    /**
+     * A window-logged stair neighbour is always a {@link WindowedBlock} instance, not a
+     * {@code StairBlock}, so vanilla's own {@code isStairs}/{@code FACING} corner-shape checks inside
+     * the private {@code getStairsShape}/{@code canTakeShape} helpers never recognise it as a stair to
+     * connect to - a plain stair placed next to one stays permanently {@code STRAIGHT} instead of
+     * forming the normal inner/outer corner. Substituting the window-logged neighbour's host state
+     * (only when that host actually is a stair) at every {@code getBlockState} call site inside those
+     * two helpers - the same "see through WindowedBlock to its host" trick
+     * {@code LATT$FireBlockMixin} already uses for flammability - lets the corner form normally. This
+     * can never force the window-logged neighbour itself to change shape: it has no {@code SHAPE}
+     * property of its own and isn't a {@code StairBlock} instance, so only the plain stair on the other
+     * side of the connection is ever the one whose state gets updated.
+     */
+    @Unique
+    private static BlockState latt$effectiveStairNeighborState(BlockGetter level, BlockPos pos) {
+        BlockState real = level.getBlockState(pos);
+        if (real.getBlock() instanceof WindowedBlock && level.getBlockEntity(pos) instanceof WindowedBlockEntity be) {
+            BlockState host = be.getHostState();
+            if (host.getBlock() instanceof StairBlock) {
+                return host;
+            }
+        }
+
+        return real;
+    }
+
+    @Redirect(
+        method = "getStairsShape",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;")
+    )
+    private static BlockState latt$getStairsShapeSeesWindowLoggedHost(BlockGetter level, BlockPos pos) {
+        return latt$effectiveStairNeighborState(level, pos);
+    }
+
+    @Redirect(
+        method = "canTakeShape",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;")
+    )
+    private static BlockState latt$canTakeShapeSeesWindowLoggedHost(BlockGetter level, BlockPos pos) {
+        return latt$effectiveStairNeighborState(level, pos);
     }
 }

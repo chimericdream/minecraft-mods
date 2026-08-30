@@ -46,14 +46,30 @@ public final class LavaLogHelper {
     }
 
     public static boolean canLavaLog(BlockGetter level, BlockPos pos, BlockState state) {
+        return canLavaLog(level, pos, state, state);
+    }
+
+    /**
+     * Same gating as {@link #canLavaLog(BlockGetter, BlockPos, BlockState)}, but with the flammability
+     * check split onto a separate {@code flammabilityState} - {@code WindowedBlock} needs this, since
+     * its own carrier state (the one that actually holds {@link LavaLogProperties#LAVALOGGED}) has no
+     * {@code WATERLOGGED} property and isn't itself the block whose flammability matters; the real
+     * answer comes from its block entity's host state instead. {@code carrierState} is checked with
+     * {@code hasProperty} rather than an unconditional {@code getValue} for the same reason -
+     * {@code WindowedBlock}'s state never has {@code WATERLOGGED} at all.
+     */
+    public static boolean canLavaLog(BlockGetter level, BlockPos pos, BlockState carrierState, BlockState flammabilityState) {
         if (!explicitBucketAction) {
             return false;
         }
-        if (state.getValue(BlockStateProperties.WATERLOGGED) || state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (carrierState.hasProperty(BlockStateProperties.WATERLOGGED) && carrierState.getValue(BlockStateProperties.WATERLOGGED)) {
+            return false;
+        }
+        if (carrierState.getValue(LavaLogProperties.LAVALOGGED)) {
             return false;
         }
 
-        return !LavaLogFlammability.isFlammable(level, pos, state);
+        return !LavaLogFlammability.isFlammable(level, pos, flammabilityState);
     }
 
     public static boolean placeLava(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {

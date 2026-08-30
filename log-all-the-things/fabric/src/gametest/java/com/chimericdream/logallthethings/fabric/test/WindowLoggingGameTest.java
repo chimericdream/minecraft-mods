@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
 import dev.architectury.event.EventResult;
@@ -250,6 +252,29 @@ public class WindowLoggingGameTest {
         }
         if (!targetState(context).is(Blocks.STONE_SLAB)) {
             context.fail("Target should have reverted to a plain stone slab, got " + targetState(context));
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void breakingThePaneRevertsToALavaLoggedSlab(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, true));
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP).setValue(LavaLogProperties.LAVALOGGED, true));
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState());
+        be.setChanged();
+
+        ServerPlayer player = facingPlayerAt(context, paneOnlyPointOf(context));
+
+        WindowLogHelper.tryPartialBreak(context.getLevel(), context.absolutePos(TARGET), targetState(context), player);
+
+        BlockState reverted = targetState(context);
+        if (!reverted.is(Blocks.STONE_SLAB) || !reverted.getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Target should have reverted to a lava-logged stone slab, got " + reverted);
+        }
+        if (!context.getLevel().getFluidState(context.absolutePos(TARGET)).is(Fluids.LAVA)) {
+            context.fail("Reverted slab's fluid state should be lava");
         }
 
         context.succeed();
@@ -516,6 +541,128 @@ public class WindowLoggingGameTest {
         int oddsNextToStone = igniteOddsAt(context, context.absolutePos(TARGET.above()));
         if (oddsNextToStone != 0) {
             context.fail("Expected fire to see a stone-brick-stairs-hosted windowed block as non-flammable, ignite odds were " + oddsNextToStone);
+        }
+
+        context.succeed();
+    }
+
+    // --- Sneaking bypasses window-logging (place the pane normally instead) ---
+
+    @GameTest
+    public void shiftKeyDownBypassesWindowLoggingOfAStoneSlab(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB);
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_PANE));
+        player.setShiftKeyDown(true);
+
+        EventResult result = WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        if (result.interruptsFurtherEvaluation()) {
+            context.fail("Expected sneaking to bypass window-logging and pass through to vanilla placement, got " + result);
+        }
+        if (targetState(context).getBlock() instanceof WindowedBlock) {
+            context.fail("Sneaking while placing a pane on a windowable slab should not window-log it");
+        }
+        if (player.getItemInHand(InteractionHand.MAIN_HAND).getCount() != 1) {
+            context.fail("Sneaking should leave the pane un-consumed, since window-logging never ran");
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void shiftKeyDownBypassesWindowLoggingWithIronBars(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.EAST));
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_BARS));
+        player.setShiftKeyDown(true);
+
+        EventResult result = WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        if (result.interruptsFurtherEvaluation()) {
+            context.fail("Expected sneaking to bypass window-logging with iron bars too, got " + result);
+        }
+        if (targetState(context).getBlock() instanceof WindowedBlock) {
+            context.fail("Sneaking while placing iron bars on a windowable stair should not window-log it");
+        }
+
+        context.succeed();
+    }
+
+    // --- Window-logged slab pane orientation follows the placing player's facing (perpendicular) ---
+
+    @GameTest
+    public void windowLoggingASlabWithPlayerFacingEastWestOrientsThePaneNorthSouth(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB);
+
+        BlockPos eastOfTarget = TARGET.offset(3, 0, 0);
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, eastOfTarget, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_PANE));
+
+        WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.WEST);
+
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        if (!be.getWindowState().getValue(CrossCollisionBlock.NORTH) || !be.getWindowState().getValue(CrossCollisionBlock.SOUTH)) {
+            context.fail("Expected the pane to orient north-south when the placing player faced east/west, got " + be.getWindowState());
+        }
+        if (be.getWindowState().getValue(CrossCollisionBlock.EAST) || be.getWindowState().getValue(CrossCollisionBlock.WEST)) {
+            context.fail("Window state should not also be connected east-west, got " + be.getWindowState());
+        }
+
+        context.succeed();
+    }
+
+    // --- A regular stair next to a window-logged stair still forms a normal corner ---
+
+    /**
+     * {@code StairBlock#getStairsShape} is private - calling it via reflection lets this test check the
+     * exact corner-shape outcome ({@code LATT$StairBlockMixin}'s target) deterministically, without
+     * depending on {@code GameTestHelper#placeBlock}'s own placement-context quirks for stairs.
+     */
+    private static StairsShape stairsShapeAt(GameTestHelper context, BlockState state, BlockPos pos) {
+        try {
+            Method method = StairBlock.class.getDeclaredMethod("getStairsShape", BlockState.class, BlockGetter.class, BlockPos.class);
+            method.setAccessible(true);
+            return (StairsShape) method.invoke(null, state, context.getLevel(), context.absolutePos(pos));
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Failed to call StairBlock#getStairsShape via reflection", e);
+        }
+    }
+
+    @GameTest
+    public void regularStairFormsTheSameCornerNextToAWindowLoggedHostAsNextToAPlainOne(GameTestHelper context) {
+        // The new stair's FACING (EAST, axis X) must differ in axis from the host's FACING (NORTH, axis
+        // Z) and the host must sit along the new stair's own FACING axis (west of it, i.e. "in front" of
+        // an east-facing stair) for getStairsShape's corner branch to trigger at all - see StairBlock's
+        // decompiled source for the exact geometry this mirrors.
+        BlockState newStairState = Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.EAST);
+
+        BlockPos windowedHostPos = TARGET;
+        BlockPos windowedNewPos = windowedHostPos.east();
+        context.setBlock(windowedHostPos, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.NORTH));
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState().setValue(CrossCollisionBlock.NORTH, true).setValue(CrossCollisionBlock.SOUTH, true));
+        be.setChanged();
+        context.setBlock(windowedNewPos, newStairState);
+        StairsShape windowedNeighborShape = stairsShapeAt(context, newStairState, windowedNewPos);
+
+        BlockPos plainHostPos = TARGET.offset(0, 0, 4);
+        BlockPos plainNewPos = plainHostPos.east();
+        context.setBlock(plainHostPos, Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.NORTH));
+        context.setBlock(plainNewPos, newStairState);
+        StairsShape plainNeighborShape = stairsShapeAt(context, newStairState, plainNewPos);
+
+        if (plainNeighborShape == StairsShape.STRAIGHT) {
+            context.fail("Test setup error: the plain-neighbor control should form a corner, got STRAIGHT");
+        }
+        if (windowedNeighborShape != plainNeighborShape) {
+            context.fail(
+                "Expected a stair next to a window-logged stair host to compute the same corner shape ("
+                    + plainNeighborShape + ") as next to a plain matching stair, got " + windowedNeighborShape
+            );
         }
 
         context.succeed();

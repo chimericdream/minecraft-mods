@@ -28,6 +28,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
+
 /**
  * Shared logic behind window-logging: turning a plain slab/stair plus a held pane into a
  * {@link WindowedBlock}, and (per the aim-based partial-breaking design) letting a player pop just
@@ -49,6 +51,13 @@ public final class WindowLogHelper {
         if (!player.mayBuild() || !(stack.getItem() instanceof BlockItem paneItem) || !paneItem.getBlock().defaultBlockState().is(WindowLogTags.WINDOW)) {
             return EventResult.pass();
         }
+        // Sneaking bypasses window-logging entirely, the same way BucketItem#emptyContents already lets
+        // a sneaking player bypass lava-/water-logging a LiquidBlockContainer (see LavaLogHelper) -
+        // passing through here hands the click back to vanilla's normal BlockItem placement, which
+        // places the pane as its own free-standing block instead.
+        if (player.isShiftKeyDown()) {
+            return EventResult.pass();
+        }
 
         BlockState targetState = level.getBlockState(pos);
         if (!targetState.is(WindowLogTags.WINDOWABLE) || targetState.getBlock() instanceof WindowedBlock) {
@@ -62,9 +71,17 @@ public final class WindowLogHelper {
         }
 
         if (!level.isClientSide()) {
-            BlockState windowState = orientWindowPane(paneItem.getBlock().defaultBlockState(), targetState);
+            BlockState windowState = orientWindowPane(paneItem.getBlock().defaultBlockState(), targetState, player.getDirection());
 
-            level.setBlock(pos, WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState(), Block.UPDATE_CLIENTS);
+            // Carries a lava-logged host's LAVALOGGED value onto the new WindowedBlock's own copy of
+            // that flag (see WindowedBlock#createBlockStateDefinition) so a lava-logged stair/slab stays
+            // lava-logged once window-logged, instead of silently losing its lava.
+            BlockState windowedState = WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState();
+            if (targetState.hasProperty(LavaLogProperties.LAVALOGGED) && targetState.getValue(LavaLogProperties.LAVALOGGED)) {
+                windowedState = windowedState.setValue(LavaLogProperties.LAVALOGGED, true);
+            }
+
+            level.setBlock(pos, windowedState, Block.UPDATE_CLIENTS);
             if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be) {
                 be.setHostState(targetState);
                 be.setWindowState(windowState);
@@ -99,23 +116,27 @@ public final class WindowLogHelper {
      * from the real world neighbours (as a placed pane normally would) leaves it that way here, since
      * window-logging's neighbours are almost never another connectable pane/wall. A real window should
      * look like a flat pane filling the opening instead, so this forces a connection on one axis
-     * unconditionally rather than computing it: {@link CrossCollisionBlock#EAST}/{@code WEST} (pane
-     * faces north/south) when the host has no horizontal facing at all (slabs, symmetric either way), or
-     * whichever axis the host's {@link StairBlock#FACING} itself runs along, so the pane's collision
-     * plate stands across the stair's open notch the same way {@code WindowFrameRenderer}'s hand-authored
-     * glass mesh already does — extending <em>along</em> {@code FACING}'s axis, not perpendicular to it
-     * (a stair's notch spans the full width of the axis perpendicular to {@code FACING}, so a plate
-     * extending along {@code FACING}'s own axis is the one that reaches across that opening). The
-     * no-facing case is checked explicitly (rather than defaulting {@code FACING} to some direction and
-     * falling into one of the two branches below) because {@code NORTH} and {@code SOUTH} no longer share
-     * an answer with each other the way they coincidentally did under the old (buggy) perpendicular
-     * logic — a real north/south-facing stair needs a different outcome than a slab with no facing at
-     * all, even though both would otherwise land on the same default.
+     * unconditionally rather than computing it: whichever axis the host's {@link StairBlock#FACING}
+     * itself runs along, so the pane's collision plate stands across the stair's open notch the same way
+     * {@code WindowFrameRenderer}'s hand-authored glass mesh already does — extending <em>along</em>
+     * {@code FACING}'s axis, not perpendicular to it (a stair's notch spans the full width of the axis
+     * perpendicular to {@code FACING}, so a plate extending along {@code FACING}'s own axis is the one
+     * that reaches across that opening).
+     *
+     * <p>Slabs have no {@code FACING} of their own to derive an axis from (they're symmetric either
+     * way), so for those the pane instead orients off {@code playerFacing} — the direction the placing
+     * player was looking, per {@link Player#getDirection()} — and perpendicular to it rather than along
+     * it, like a window they're looking through: facing north/south puts the pane east/west, and facing
+     * east/west puts it north/south. This is the opposite relationship from the stair case above, which
+     * is why the two branches don't collapse into one "same axis" rule.
      */
-    private static BlockState orientWindowPane(BlockState windowState, BlockState hostState) {
+    private static BlockState orientWindowPane(BlockState windowState, BlockState hostState, Direction playerFacing) {
         Optional<Direction> facing = hostState.getOptionalValue(StairBlock.FACING);
+        Direction.Axis paneAxis = facing.isPresent()
+            ? facing.get().getAxis()
+            : (playerFacing.getAxis() == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X);
 
-        if (facing.isEmpty() || facing.get().getAxis() == Direction.Axis.X) {
+        if (paneAxis == Direction.Axis.X) {
             return windowState.setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true);
         }
 

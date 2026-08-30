@@ -2,6 +2,7 @@ package com.chimericdream.logallthethings.fabric.test;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
@@ -20,6 +22,10 @@ import net.minecraft.world.level.material.Fluids;
 import com.chimericdream.lib.testkit.gametest.GameTestPlayers;
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
+import com.chimericdream.logallthethings.windowlog.WindowLogBlocks;
+import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
+import com.chimericdream.logallthethings.windowlog.WindowedBlock;
+import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
 
 /**
  * Coverage for lava-logging (see {@code com.chimericdream.logallthethings.lavalog} and the per-block
@@ -275,5 +281,120 @@ public class LavaLoggingGameTest {
     @GameTest
     public void lavaLoggedChainFluidStateIsLava(GameTestHelper context) {
         assertForcedLavaLoggedStateIsLava(context, Blocks.IRON_CHAIN);
+    }
+
+    // --- Lava-logging and window-logging are compatible with each other ---
+
+    @GameTest
+    public void windowLoggingALavaLoggedSlabKeepsItLavaLogged(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB.defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, true));
+
+        Player player = placePlayerFacingTarget(context);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_PANE));
+        WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        BlockState windowedState = targetState(context);
+        if (!(windowedState.getBlock() instanceof WindowedBlock)) {
+            context.fail("Expected the slab to have become a WindowedBlock, got " + windowedState);
+        }
+        if (!windowedState.getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Expected the WindowedBlock's own state to stay lava-logged after window-logging a lava-logged slab");
+        }
+        if (!context.getLevel().getFluidState(context.absolutePos(TARGET)).is(Fluids.LAVA)) {
+            context.fail("Expected the window-logged block's fluid state to still be lava");
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void lavaBucketLavaLogsAWindowLoggedSlab(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        if (!(context.getLevel().getBlockEntity(context.absolutePos(TARGET)) instanceof WindowedBlockEntity be)) {
+            throw new AssertionError("Expected a WindowedBlockEntity at the target position");
+        }
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState());
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
+        be.setChanged();
+
+        Player player = placePlayerFacingTarget(context);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.LAVA_BUCKET));
+
+        InteractionResult result = GameTestPlayers.useItem(context.getLevel(), player, InteractionHand.MAIN_HAND);
+
+        if (!result.consumesAction()) {
+            context.fail("Expected the lava bucket to be used on a window-logged slab, got " + result);
+        }
+        if (!targetState(context).getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Window-logged block should be lava-logged after using a lava bucket on it");
+        }
+        if (!be.getHostState().getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("The block entity's host state should also be marked lava-logged, so it stays lava-logged if the window is later popped out");
+        }
+        if (!context.getLevel().getFluidState(context.absolutePos(TARGET)).is(Fluids.LAVA)) {
+            context.fail("Lava-logged windowed block's fluid state should be lava");
+        }
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.BUCKET)) {
+            context.fail("Bucket should have emptied to a plain bucket, got " + player.getItemInHand(InteractionHand.MAIN_HAND));
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void emptyBucketPicksLavaBackUpFromAWindowLoggedSlab(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, true));
+        if (!(context.getLevel().getBlockEntity(context.absolutePos(TARGET)) instanceof WindowedBlockEntity be)) {
+            throw new AssertionError("Expected a WindowedBlockEntity at the target position");
+        }
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, true));
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
+        be.setChanged();
+
+        Player player = placePlayerFacingTarget(context);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.BUCKET));
+
+        InteractionResult result = GameTestPlayers.useItem(context.getLevel(), player, InteractionHand.MAIN_HAND);
+
+        if (!result.consumesAction()) {
+            context.fail("Expected the empty bucket to pick lava up from the window-logged slab, got " + result);
+        }
+        if (targetState(context).getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Windowed block should no longer be lava-logged after being picked up");
+        }
+        if (be.getHostState().getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("The block entity's host state should also have its lava-logged flag cleared");
+        }
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.LAVA_BUCKET)) {
+            context.fail("Bucket should have filled with lava, got " + player.getItemInHand(InteractionHand.MAIN_HAND));
+        }
+
+        context.succeed();
+    }
+
+    // --- Sneaking bypasses lava-logging too (vanilla's own BucketItem#emptyContents shift-key gate on
+    // LiquidBlockContainer, exercised end-to-end here now that WindowedBlock is one) ---
+
+    @GameTest
+    public void shiftKeyDownBypassesLavaLoggingAndPlacesLavaAdjacentInstead(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB);
+
+        Player player = placePlayerFacingTarget(context);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.LAVA_BUCKET));
+        player.setShiftKeyDown(true);
+
+        InteractionResult result = GameTestPlayers.useItem(context.getLevel(), player, InteractionHand.MAIN_HAND);
+
+        if (!result.consumesAction()) {
+            context.fail("Expected the lava bucket to still place loose lava adjacent while sneaking, got " + result);
+        }
+        if (targetState(context).getValue(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Sneaking while using a lava bucket on a lava-loggable slab should not lava-log it");
+        }
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.BUCKET)) {
+            context.fail("Bucket should still have emptied (as loose lava placed nearby), got " + player.getItemInHand(InteractionHand.MAIN_HAND));
+        }
+
+        context.succeed();
     }
 }
