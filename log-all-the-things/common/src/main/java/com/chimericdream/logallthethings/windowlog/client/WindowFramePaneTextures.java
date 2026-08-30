@@ -27,6 +27,12 @@ import net.minecraft.world.level.block.Block;
  * Reading the pane block's own {@code <path>_post.json} directly (rather than introspecting its baked
  * model's quads) gets both concrete texture locations generically, for any modded pane that follows
  * the same convention as vanilla's — no hardcoded per-color texture paths needed.
+ *
+ * <p>Iron bars' own {@code iron_bars_post.json} follows the same {@code template_..._post.json} +
+ * {@code edge} shape but names its flat-face slot {@code bars} instead of {@code pane} (both slots
+ * point at the same texture there, since a bars grate looks the same from the flat and edge sides) —
+ * {@link #load} tries {@code pane} first and falls back to {@code bars} so both window types resolve
+ * through the one lookup.
  */
 public final class WindowFramePaneTextures {
     public record PaneSprites(TextureAtlasSprite flat, TextureAtlasSprite edge) {
@@ -55,6 +61,9 @@ public final class WindowFramePaneTextures {
 
             JsonObject textures = json.getAsJsonObject("textures");
             Identifier flat = readTexture(textures, "pane");
+            if (flat == null) {
+                flat = readTexture(textures, "bars");
+            }
             Identifier edge = readTexture(textures, "edge");
             if (flat == null || edge == null) {
                 return Optional.empty();

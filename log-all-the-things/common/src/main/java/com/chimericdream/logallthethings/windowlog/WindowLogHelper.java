@@ -11,14 +11,17 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.world.phys.BlockHitResult;
@@ -67,6 +70,15 @@ public final class WindowLogHelper {
                 be.setWindowState(windowState);
                 be.setChanged();
                 level.sendBlockUpdated(pos, targetState, targetState, Block.UPDATE_CLIENTS);
+
+                // Deliberately deferred until here (rather than folded into the UPDATE_ALL flag on the
+                // setBlock above): a neighbour recomputing its shape any earlier would see the
+                // placeholder WindowedBlock before its host/window state is populated - e.g.
+                // LATT$IronBarsBlockMixin connecting a real pane would still find an air/empty window
+                // and refuse. updateNeighbourShapes (not updateNeighborsAt, which only fires the mostly
+                // no-op neighborChanged reactive hook) is what actually makes neighbours re-run
+                // updateShape - the same recompute a real setBlock(..., UPDATE_ALL) would have triggered.
+                level.getBlockState(pos).updateNeighbourShapes(level, pos, Block.UPDATE_ALL);
             }
 
             SoundType sound = windowState.getSoundType();
@@ -152,5 +164,59 @@ public final class WindowLogHelper {
         Vec3 localHit = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
         return windowState.getShape(level, pos).toAabbs().stream()
             .anyMatch(box -> box.inflate(0.05).contains(localHit));
+    }
+
+    /**
+     * Whichever of {@code windowState}/{@code hostState} {@code player} is aiming at, per
+     * {@link #isAimingAtWindow} — the single decision that mining speed
+     * ({@code WindowedBlock#getDestroyProgress}) and break particles
+     * ({@code WindowedBlock#spawnDestroyParticles}) both need to agree on.
+     */
+    public static BlockState pickTargetedState(Level level, BlockPos pos, BlockState windowState, BlockState hostState, Player player) {
+        return isAimingAtWindow(level, pos, windowState, player) ? windowState : hostState;
+    }
+
+    /**
+     * Same decision as {@link #pickTargetedState}, but for {@code WindowedBlock#getCloneItemStack},
+     * which (per vanilla's {@code getCloneItemStack(LevelReader, BlockPos, BlockState, boolean)}
+     * signature) is never given the player doing the picking. Scanning {@code level.players()} for
+     * whichever nearby player is actually aiming at the window is a reasonable stand-in: pick-block is
+     * an inherently local, single-player-driven action, so the common case (including singleplayer) has
+     * exactly one candidate, and even a multiplayer coincidence just falls back to the host's item
+     * rather than crashing or guessing wrong in a way that matters.
+     */
+    public static BlockState pickTargetedStateForPickBlock(LevelReader levelReader, BlockPos pos, BlockState windowState, BlockState hostState) {
+        if (levelReader instanceof Level level) {
+            for (Player player : level.players()) {
+                if (player.isWithinBlockInteractionRange(pos, 1.0) && isAimingAtWindow(level, pos, windowState, player)) {
+                    return windowState;
+                }
+            }
+        }
+
+        return hostState;
+    }
+
+    /**
+     * Whether a {@code WindowedBlock} at {@code pos} has a window-tagged pane/bars oriented to reach
+     * toward the neighbour in direction {@code towardQuerier} — the check {@code LATT$IronBarsBlockMixin}
+     * uses to let a real pane/bars placed (or already standing) next to a window-logged block connect to
+     * it as though it were a full pane, instead of seeing the host's own notch-shaped, non-full-face
+     * collision shape and refusing to connect. {@code orientWindowPane} always forces both directions of
+     * one axis true together, so checking the single {@code towardQuerier} property is enough to know the
+     * whole axis is open.
+     */
+    public static boolean hasAlignedWindow(BlockGetter level, BlockPos pos, Direction towardQuerier) {
+        if (!(level.getBlockEntity(pos) instanceof WindowedBlockEntity be)) {
+            return false;
+        }
+
+        BlockState windowState = be.getWindowState();
+        if (windowState.isAir() || !windowState.is(WindowLogTags.WINDOW)) {
+            return false;
+        }
+
+        BooleanProperty property = CrossCollisionBlock.PROPERTY_BY_DIRECTION.get(towardQuerier);
+        return property != null && windowState.hasProperty(property) && windowState.getValue(property);
     }
 }

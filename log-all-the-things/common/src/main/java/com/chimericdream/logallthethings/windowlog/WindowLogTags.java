@@ -11,7 +11,7 @@ public final class WindowLogTags {
     /** Blocks a compatible pane can be window-logged into. Seeded with slabs and stairs only for now. */
     public static final TagKey<Block> WINDOWABLE = TagKey.create(Registries.BLOCK, id("windowable"));
 
-    /** Blocks that count as a "pane" for window-logging. Seeded with glass panes only for now. */
+    /** Blocks that count as a "pane" for window-logging. Seeded with glass panes and iron bars. */
     public static final TagKey<Block> WINDOW = TagKey.create(Registries.BLOCK, id("window"));
 
     private WindowLogTags() {

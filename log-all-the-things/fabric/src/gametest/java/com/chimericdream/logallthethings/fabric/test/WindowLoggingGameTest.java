@@ -74,6 +74,21 @@ public class WindowLoggingGameTest {
         return (ServerPlayer) player;
     }
 
+    /**
+     * Same positioning as {@link #facingPlayerAt}, but via {@code makeMockServerPlayerInLevel} instead
+     * of {@code makeMockServerPlayer} — {@code WindowedBlock#getCloneItemStack} (pick-block) isn't given
+     * a player, so {@link WindowLogHelper#pickTargetedStateForPickBlock} finds one by scanning
+     * {@code level.players()}, which only a player actually placed in the level (not a detached mock)
+     * appears in.
+     */
+    private static ServerPlayer facingPlayerInLevelAt(GameTestHelper context, Vec3 aimPoint) {
+        ServerPlayer player = context.makeMockServerPlayerInLevel();
+        Vec3 playerPos = Vec3.atBottomCenterOf(context.absolutePos(PLAYER_POS));
+        player.setPos(playerPos.x, playerPos.y, playerPos.z);
+        GameTestPlayers.lookAt(player, aimPoint);
+        return player;
+    }
+
     // --- Placement (RIGHT_CLICK_BLOCK) ---
 
     @GameTest
@@ -126,6 +141,27 @@ public class WindowLoggingGameTest {
         }
         if (be.getWindowState().getValue(CrossCollisionBlock.NORTH) || be.getWindowState().getValue(CrossCollisionBlock.SOUTH)) {
             context.fail("Window state should not also be connected north-south, got " + be.getWindowState());
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void windowLoggingAStoneSlabWithIronBars(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB);
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_BARS));
+
+        EventResult result = WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        if (!result.interruptsFurtherEvaluation()) {
+            context.fail("Expected window-logging a stone slab with iron bars to interrupt the event, got " + result);
+        }
+
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        if (!be.getWindowState().is(Blocks.IRON_BARS)) {
+            context.fail("Window state should be iron bars, got " + be.getWindowState());
         }
 
         context.succeed();
@@ -278,6 +314,127 @@ public class WindowLoggingGameTest {
 
         if (windowProgress == hostProgress) {
             context.fail("Expected window (glass) and host (slab) destroy progress to differ, both were " + windowProgress);
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void preferredToolForTheHostFollowsTheHostBlockType(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.OAK_STAIRS.defaultBlockState());
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState());
+        be.setChanged();
+
+        BlockPos pos = context.absolutePos(TARGET);
+        BlockState windowedState = targetState(context);
+
+        ServerPlayer withAxe = facingPlayerAt(context, hostOnlyPointOf(context));
+        withAxe.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+        float axeProgress = windowedState.getDestroyProgress(withAxe, context.getLevel(), pos);
+
+        ServerPlayer withPickaxe = facingPlayerAt(context, hostOnlyPointOf(context));
+        withPickaxe.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WOODEN_PICKAXE));
+        float pickaxeProgress = windowedState.getDestroyProgress(withPickaxe, context.getLevel(), pos);
+
+        if (axeProgress <= pickaxeProgress) {
+            context.fail("Expected an axe to mine an oak-stairs host faster than a pickaxe, got axe=" + axeProgress + " pickaxe=" + pickaxeProgress);
+        }
+
+        be.setHostState(Blocks.STONE_BRICK_STAIRS.defaultBlockState());
+        be.setChanged();
+        windowedState = targetState(context);
+
+        ServerPlayer withAxe2 = facingPlayerAt(context, hostOnlyPointOf(context));
+        withAxe2.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+        float axeProgress2 = windowedState.getDestroyProgress(withAxe2, context.getLevel(), pos);
+
+        ServerPlayer withPickaxe2 = facingPlayerAt(context, hostOnlyPointOf(context));
+        withPickaxe2.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WOODEN_PICKAXE));
+        float pickaxeProgress2 = windowedState.getDestroyProgress(withPickaxe2, context.getLevel(), pos);
+
+        if (pickaxeProgress2 <= axeProgress2) {
+            context.fail("Expected a pickaxe to mine a stone-brick-stairs host faster than an axe, got pickaxe=" + pickaxeProgress2 + " axe=" + axeProgress2);
+        }
+
+        context.succeed();
+    }
+
+    // --- Pick block (getCloneItemStack) ---
+
+    @GameTest
+    public void pickBlockAimedAtTheWindowReturnsTheWindowItem(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+        be.setWindowState(Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState());
+        be.setChanged();
+
+        facingPlayerInLevelAt(context, paneOnlyPointOf(context));
+
+        BlockPos pos = context.absolutePos(TARGET);
+        ItemStack picked = targetState(context).getCloneItemStack(context.getLevel(), pos, false);
+
+        if (!picked.is(Items.STAINED_GLASS_PANE.yellow())) {
+            context.fail("Expected pick-block on the pane to return a yellow stained glass pane, got " + picked);
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void pickBlockAimedAtTheHostReturnsTheHostItem(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_BRICK_STAIRS.defaultBlockState());
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState());
+        be.setChanged();
+
+        facingPlayerInLevelAt(context, hostOnlyPointOf(context));
+
+        BlockPos pos = context.absolutePos(TARGET);
+        ItemStack picked = targetState(context).getCloneItemStack(context.getLevel(), pos, false);
+
+        if (!picked.is(Items.STONE_BRICK_STAIRS)) {
+            context.fail("Expected pick-block on the host to return stone brick stairs, got " + picked);
+        }
+
+        context.succeed();
+    }
+
+    // --- Connecting real panes/bars to a window-logged neighbor (LATT$IronBarsBlockMixin) ---
+
+    @GameTest
+    public void realPaneConnectsWhenPlacedNextToAWindowLoggedNeighbor(GameTestHelper context) {
+        context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+        be.setWindowState(Blocks.GLASS_PANE.defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
+        be.setChanged();
+
+        context.placeBlock(TARGET.east(), Blocks.GLASS_PANE, Direction.UP);
+
+        BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.east()));
+        if (!neighborState.getValue(CrossCollisionBlock.WEST)) {
+            context.fail("Expected a freshly-placed pane to connect its WEST arm toward the window-logged neighbor, got " + neighborState);
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void windowLoggingConnectsAnAlreadyPlacedNeighborPane(GameTestHelper context) {
+        context.setBlock(TARGET.west(), Blocks.GLASS_PANE);
+        context.setBlock(TARGET, Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_PANE));
+        WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.west()));
+        if (!neighborState.getValue(CrossCollisionBlock.EAST)) {
+            context.fail("Expected the pre-existing neighbor pane to connect its EAST arm toward the newly window-logged block, got " + neighborState);
         }
 
         context.succeed();

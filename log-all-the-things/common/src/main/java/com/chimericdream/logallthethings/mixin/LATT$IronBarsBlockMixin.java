@@ -8,16 +8,19 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -31,6 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
+import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
 
 /**
  * Covers both iron bars and glass panes: {@code IronBarsBlock} is the vanilla class used for both.
@@ -102,6 +106,69 @@ public abstract class LATT$IronBarsBlockMixin implements SimpleWaterloggedBlock 
     ) {
         if (state.getValue(LavaLogProperties.LAVALOGGED)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
+        }
+    }
+
+    /**
+     * A window-logged neighbour's exposed {@code WindowedBlock} state has no properties of its own and a
+     * notch-shaped, non-full-face collision shape, so vanilla's own {@code attachsTo} check (not full,
+     * not an {@code IronBarsBlock}, not a wall) never connects to it — even when the pane/bars embedded
+     * inside it is aligned to face this exact direction. Overriding just that one direction's property
+     * after vanilla computes the rest keeps every other neighbour's normal connection logic untouched.
+     */
+    @Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
+    private void latt$connectToWindowLoggedNeighbor(
+        BlockState state,
+        LevelReader level,
+        ScheduledTickAccess ticks,
+        BlockPos pos,
+        Direction directionToNeighbour,
+        BlockPos neighbourPos,
+        BlockState neighbourState,
+        RandomSource random,
+        CallbackInfoReturnable<BlockState> cir
+    ) {
+        if (!directionToNeighbour.getAxis().isHorizontal()) {
+            return;
+        }
+
+        BooleanProperty property = CrossCollisionBlock.PROPERTY_BY_DIRECTION.get(directionToNeighbour);
+        BlockState result = cir.getReturnValue();
+        if (property == null || result == null || !result.hasProperty(property) || result.getValue(property)) {
+            return;
+        }
+
+        if (WindowLogHelper.hasAlignedWindow(level, neighbourPos, directionToNeighbour.getOpposite())) {
+            cir.setReturnValue(result.setValue(property, true));
+        }
+    }
+
+    /** Same connection as {@link #latt$connectToWindowLoggedNeighbor}, for freshly-placed panes/bars. */
+    @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+    private void latt$connectToWindowLoggedNeighborsOnPlace(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
+        BlockState result = cir.getReturnValue();
+        if (result == null) {
+            return;
+        }
+
+        BlockGetter level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        boolean changed = false;
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            BooleanProperty property = CrossCollisionBlock.PROPERTY_BY_DIRECTION.get(direction);
+            if (property == null || !result.hasProperty(property) || result.getValue(property)) {
+                continue;
+            }
+
+            if (WindowLogHelper.hasAlignedWindow(level, pos.relative(direction), direction.getOpposite())) {
+                result = result.setValue(property, true);
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            cir.setReturnValue(result);
         }
     }
 }

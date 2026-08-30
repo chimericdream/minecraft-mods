@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -141,9 +142,7 @@ public class WindowedBlock extends Block implements EntityBlock {
     @Override
     protected float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be && level instanceof Level realLevel) {
-            BlockState windowState = be.getWindowState();
-            BlockState hostState = be.getHostState();
-            BlockState targeted = WindowLogHelper.isAimingAtWindow(realLevel, pos, windowState, player) ? windowState : hostState;
+            BlockState targeted = WindowLogHelper.pickTargetedState(realLevel, pos, be.getWindowState(), be.getHostState(), player);
 
             if (!targeted.isAir()) {
                 return targeted.getDestroyProgress(player, level, pos);
@@ -151,6 +150,51 @@ public class WindowedBlock extends Block implements EntityBlock {
         }
 
         return super.getDestroyProgress(state, player, level, pos);
+    }
+
+    /**
+     * Vanilla's default (see {@code Block#playerWillDestroy}) fires the break-particle burst using
+     * whatever {@code state} is being destroyed — this block's own single, blockstate-less state, whose
+     * {@code RenderShape.INVISIBLE} model gives the particle system no texture to draw. Popping just the
+     * window (see {@code WindowLogHelper#tryPartialBreak}) already fires its own correctly-textured event
+     * for that case; this covers the other path, where aiming at the host lets vanilla's normal breaking
+     * take over and destroy the whole block - delegating to whichever sub-state was actually aimed at
+     * (same aim test as {@link #getDestroyProgress}) gives real glass/host particles either way.
+     */
+    @Override
+    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be) {
+            BlockState targeted = WindowLogHelper.pickTargetedState(level, pos, be.getWindowState(), be.getHostState(), player);
+
+            if (!targeted.isAir()) {
+                level.levelEvent(player, 2001, pos, Block.getId(targeted));
+                return;
+            }
+        }
+
+        super.spawnDestroyParticles(level, player, pos, state);
+    }
+
+    /**
+     * This block has no registered {@code BlockItem} of its own (window-logging is something you do to
+     * an existing slab/stair, not something you place directly), so vanilla's default here would return
+     * an empty pick-block result. Returning whichever sub-block the aiming player is actually looking at
+     * - reusing the same aim test as {@link #getDestroyProgress}/{@link #spawnDestroyParticles}, via
+     * {@link WindowLogHelper#pickTargetedStateForPickBlock} since this hook isn't given the player - lets
+     * pick-block hand back a real glass pane/bars or a real host slab/stair, matching what that part of
+     * the block actually is.
+     */
+    @Override
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        if (level.getBlockEntity(pos) instanceof WindowedBlockEntity be) {
+            BlockState targeted = WindowLogHelper.pickTargetedStateForPickBlock(level, pos, be.getWindowState(), be.getHostState());
+
+            if (!targeted.isAir()) {
+                return new ItemStack(targeted.getBlock());
+            }
+        }
+
+        return super.getCloneItemStack(level, pos, state, includeData);
     }
 
     @Override
