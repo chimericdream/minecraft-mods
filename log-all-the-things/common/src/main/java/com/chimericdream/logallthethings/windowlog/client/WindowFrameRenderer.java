@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.CardinalLighting;
 import org.joml.Vector3f;
+import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,7 +40,7 @@ public final class WindowFrameRenderer {
      * should fall back to its own (flat pane) rendering instead.
      */
     public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int[] faceLight, CardinalLighting cardinalLighting, BlockState hostState, BlockState windowState) {
-        Selection selection = select(hostState);
+        Selection selection = select(hostState, windowState);
         if (selection == null) {
             return false;
         }
@@ -230,7 +231,7 @@ public final class WindowFrameRenderer {
      * element's Blockbench pivot rotation (see {@link WindowFrameGeometry.Rotation}), so no extra
      * matrix rotation is needed here for it either.
      */
-    private static Selection select(BlockState hostState) {
+    private static Selection select(BlockState hostState, BlockState windowState) {
         if (hostState.getBlock() instanceof StairBlock) {
             if (hostState.getValue(StairBlock.SHAPE) != StairsShape.STRAIGHT) {
                 return null;
@@ -256,9 +257,11 @@ public final class WindowFrameRenderer {
 
         if (hostState.getBlock() instanceof SlabBlock) {
             boolean top = hostState.getValue(SlabBlock.TYPE) == SlabType.TOP;
-            // Slabs have no facing to derive an axis from (symmetric either way) - "ew" is an
-            // arbitrary but consistent default, matching WindowLogHelper#orientWindowPane's fallback.
-            return new Selection((top ? "slab_top_" : "slab_") + "ew_pane", 0);
+            // Slabs have no facing of their own - the pane's axis instead comes from whichever axis
+            // WindowLogHelper#orientWindowPane forced open on windowState (NORTH/SOUTH vs EAST/WEST).
+            boolean northSouth = windowState.hasProperty(CrossCollisionBlock.NORTH) && windowState.getValue(CrossCollisionBlock.NORTH);
+            String axis = northSouth ? "ns" : "ew";
+            return new Selection((top ? "slab_top_" : "slab_") + axis + "_pane", 0);
         }
 
         return null;

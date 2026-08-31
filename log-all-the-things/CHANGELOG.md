@@ -32,3 +32,5 @@
 * Fixed the mod failing to load entirely on NeoForge with a mixin error, caused by NeoForge changing
   a vanilla fire-spreading method's signature in a way the window-logging fire-flammability fix didn't
   account for.
+* Fixed a window-logged slab's glass always rendering running east-west, even when it was actually
+  facing north-south - the pane's hitbox was correct, but the visible glass ran the wrong way.
