@@ -2,6 +2,8 @@ package com.chimericdream.logallthethings.client;
 
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 
+import com.chimericdream.logallthethings.carpetlog.CarpetLogBlocks;
+import com.chimericdream.logallthethings.carpetlog.client.CarpetedBlockEntityRenderer;
 import com.chimericdream.logallthethings.windowlog.WindowLogBlocks;
 import com.chimericdream.logallthethings.windowlog.client.WindowedBlockEntityRenderer;
 
@@ -13,6 +15,10 @@ public final class LogAllTheThingsClient {
         BlockEntityRendererRegistry.register(
             WindowLogBlocks.WINDOWED_BLOCK_ENTITY.get(),
             WindowedBlockEntityRenderer::new
+        );
+        BlockEntityRendererRegistry.register(
+            CarpetLogBlocks.CARPETED_BLOCK_ENTITY.get(),
+            CarpetedBlockEntityRenderer::new
         );
     }
 }

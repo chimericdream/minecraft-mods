@@ -18,6 +18,8 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
 * **Window-logging** — right-click a slab or stairs with a glass pane (any color) to fit it into the
   empty part of the block, turning it into a window. Aim at the glass while mining to pop just the
   pane back out, or mine the solid part to break the whole thing.
+* **Carpet-logging** — right-click a slab or plain stairs with a carpet to lay it into the block. Aim
+  at the carpet while mining to pop just it back out, or mine the solid part to break the whole thing.
 
 ## Notes for Documentation
 

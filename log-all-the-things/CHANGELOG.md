@@ -17,3 +17,13 @@
   window-logged one still forms the usual corner shape. A windowed slab's pane faces the direction you
   were looking when you placed it. Sneak while placing the pane/bars to place it normally instead of
   window-logging. Lava-logging and window-logging can be combined on the same block.
+* Added carpet-logging: right-click a slab or plain stairs (not the corner-shaped ones) with a carpet
+  to lay it into the block instead of placing a separate carpet on top. Aim at the carpet while mining
+  to pop just it back out; mining the solid part breaks the whole thing and drops both items. Sneak
+  while placing the carpet to place it normally instead of carpet-logging.
+
+#### Bug Fixes
+
+* Fixed window-logged and carpet-logged blocks rendering noticeably brighter/flatter than the same
+  block placed normally, most visible under overhangs like leaves - they were missing the soft
+  darkening real blocks get near solid neighbors.

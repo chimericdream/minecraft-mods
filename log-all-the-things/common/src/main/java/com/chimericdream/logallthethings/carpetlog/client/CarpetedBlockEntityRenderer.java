@@ -1,4 +1,4 @@
-package com.chimericdream.logallthethings.windowlog.client;
+package com.chimericdream.logallthethings.carpetlog.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -17,34 +17,29 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.chimericdream.logallthethings.carpetlog.CarpetedBlockEntity;
 import com.chimericdream.logallthethings.client.RealNeighborMovingBlockRenderState;
-import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
 
 /**
- * Renders a window-logged slab/stair: the host renders as an ordinary block model via
- * {@link SubmitNodeCollector#submitMovingBlock} — the same vanilla mechanism
- * {@code PistonHeadRenderer} uses to render the block a piston is currently pushing. No custom baked
- * model or Forge-style per-instance model data is needed for the host: {@code windowed_block.json}
- * points every state at the empty {@code minecraft:block/air} model, and this renderer supplies the
- * real geometry every frame from the block entity's {@code hostState}.
- *
- * <p>The window itself prefers {@link WindowFrameRenderer}'s hand-authored, shape-fitted glass
- * geometry, falling back to the same {@code submitMovingBlock} treatment (a plain connected pane) only
- * when no frame model exists yet for that particular stair shape/half or for slabs.
+ * Renders a carpet-logged slab/stair: the host renders as an ordinary block model via
+ * {@link SubmitNodeCollector#submitMovingBlock}, and the carpet prefers {@link CarpetFrameRenderer}'s
+ * hand-authored, shape-fitted overlay, falling back to the same {@code submitMovingBlock} treatment (a
+ * plain flat carpet) only when no overlay model exists yet for that host shape. Mirrors
+ * {@code windowlog.client.WindowedBlockEntityRenderer}.
  */
-public class WindowedBlockEntityRenderer implements BlockEntityRenderer<WindowedBlockEntity, WindowedBlockRenderState> {
-    public WindowedBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<CarpetedBlockEntity, CarpetedBlockRenderState> {
+    public CarpetedBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public @NotNull WindowedBlockRenderState createRenderState() {
-        return new WindowedBlockRenderState();
+    public @NotNull CarpetedBlockRenderState createRenderState() {
+        return new CarpetedBlockRenderState();
     }
 
     @Override
     public void extractRenderState(
-        WindowedBlockEntity blockEntity,
-        WindowedBlockRenderState state,
+        CarpetedBlockEntity blockEntity,
+        CarpetedBlockRenderState state,
         float tickProgress,
         Vec3 cameraPos,
         @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay
@@ -52,7 +47,7 @@ public class WindowedBlockEntityRenderer implements BlockEntityRenderer<Windowed
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, tickProgress, cameraPos, crumblingOverlay);
 
         state.host = null;
-        state.window = null;
+        state.carpet = null;
 
         if (!(blockEntity.getLevel() instanceof ClientLevel level)) {
             return;
@@ -64,21 +59,21 @@ public class WindowedBlockEntityRenderer implements BlockEntityRenderer<Windowed
         if (!blockEntity.getHostState().isAir()) {
             state.host = createMovingBlock(pos, blockEntity.getHostState(), biome, level);
         }
-        if (!blockEntity.getWindowState().isAir()) {
-            state.window = createMovingBlock(pos, blockEntity.getWindowState(), biome, level);
+        if (!blockEntity.getCarpetState().isAir()) {
+            state.carpet = createMovingBlock(pos, blockEntity.getCarpetState(), biome, level);
         }
     }
 
     @Override
-    public void submit(WindowedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    public void submit(CarpetedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.host != null) {
             submitNodeCollector.submitMovingBlock(poseStack, state.host, 0);
         }
-        if (state.window != null) {
+        if (state.carpet != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
-            boolean renderedFrame = WindowFrameRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.window.blockState);
+            boolean renderedFrame = CarpetFrameRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.carpet.blockState);
             if (!renderedFrame) {
-                submitNodeCollector.submitMovingBlock(poseStack, state.window, 0);
+                submitNodeCollector.submitMovingBlock(poseStack, state.carpet, 0);
             }
         }
     }
