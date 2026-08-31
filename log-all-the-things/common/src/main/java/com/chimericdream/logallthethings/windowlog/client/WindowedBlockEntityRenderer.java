@@ -17,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.chimericdream.logallthethings.client.FaceLighting;
 import com.chimericdream.logallthethings.client.RealNeighborMovingBlockRenderState;
 import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
 
@@ -60,6 +61,8 @@ public class WindowedBlockEntityRenderer implements BlockEntityRenderer<Windowed
 
         BlockPos pos = blockEntity.getBlockPos();
         Holder<Biome> biome = level.getBiome(pos);
+        state.faceLight = FaceLighting.neighborLight(level, pos);
+        state.cardinalLighting = level.cardinalLighting();
 
         if (!blockEntity.getHostState().isAir()) {
             state.host = createMovingBlock(pos, blockEntity.getHostState(), biome, level);
@@ -76,7 +79,7 @@ public class WindowedBlockEntityRenderer implements BlockEntityRenderer<Windowed
         }
         if (state.window != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
-            boolean renderedFrame = WindowFrameRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.window.blockState);
+            boolean renderedFrame = WindowFrameRenderer.submit(poseStack, submitNodeCollector, state.faceLight, state.cardinalLighting, hostState, state.window.blockState);
             if (!renderedFrame) {
                 submitNodeCollector.submitMovingBlock(poseStack, state.window, 0);
             }

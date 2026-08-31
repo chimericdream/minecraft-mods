@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.CardinalLighting;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,10 +54,12 @@ public final class CarpetFrameRenderer {
     }
 
     /**
+     * @param faceLight per-neighbor-direction packed light, indexed by {@link Direction#get3DDataValue()}
+     *                  (see {@link com.chimericdream.logallthethings.client.FaceLighting}).
      * @return {@code true} if overlay geometry was found and submitted; {@code false} if the caller
      * should fall back to its own (flat carpet) rendering instead.
      */
-    public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int lightCoords, BlockState hostState, BlockState carpetState) {
+    public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int[] faceLight, CardinalLighting cardinalLighting, BlockState hostState, BlockState carpetState) {
         String modelName = select(hostState);
         if (modelName == null) {
             return false;
@@ -77,13 +80,13 @@ public final class CarpetFrameRenderer {
         queue.submitCustomGeometry(
             poseStack,
             RenderTypes.solidMovingBlock(),
-            (pose, buffer) -> renderGeometry(pose, buffer, resolvedGeometry, resolvedSprite, lightCoords)
+            (pose, buffer) -> renderGeometry(pose, buffer, resolvedGeometry, resolvedSprite, faceLight, cardinalLighting)
         );
 
         return true;
     }
 
-    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, CarpetFrameGeometry geometry, TextureAtlasSprite sprite, int light) {
+    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, CarpetFrameGeometry geometry, TextureAtlasSprite sprite, int[] faceLight, CardinalLighting cardinalLighting) {
         for (CarpetFrameGeometry.Element element : geometry.elements()) {
             float x0 = element.from()[0] / 16f;
             float y0 = element.from()[1] / 16f;
@@ -93,8 +96,11 @@ public final class CarpetFrameRenderer {
             float z1 = element.to()[2] / 16f;
 
             for (Map.Entry<Direction, CarpetFrameGeometry.Face> entry : element.faces().entrySet()) {
+                Direction direction = entry.getKey();
                 CarpetFrameGeometry.Face face = entry.getValue();
-                emitFace(pose, buffer, entry.getKey(), x0, y0, z0, x1, y1, z1, face.uv(), face.rotation(), sprite, light);
+                int light = faceLight[direction.get3DDataValue()];
+                float shade = cardinalLighting.byFace(direction);
+                emitFace(pose, buffer, direction, x0, y0, z0, x1, y1, z1, face.uv(), face.rotation(), sprite, light, shade);
             }
         }
     }
@@ -108,7 +114,8 @@ public final class CarpetFrameRenderer {
         float[] uv,
         int rotation,
         TextureAtlasSprite sprite,
-        int light
+        int light,
+        float shade
     ) {
         float[][] corners = corners(direction, x0, y0, z0, x1, y1, z1);
         // TextureAtlasSprite#getU/getV take a 0-1 fraction of the sprite, not the model JSON's 0-16
@@ -149,7 +156,7 @@ public final class CarpetFrameRenderer {
                     pos[1] + normal[1] * SURFACE_NUDGE,
                     pos[2] + normal[2] * SURFACE_NUDGE
                 )
-                .setColor(1f, 1f, 1f, 1f)
+                .setColor(shade, shade, shade, 1f)
                 .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
                 .setLight(light)
                 .setNormal(pose, normal[0], normal[1], normal[2]);

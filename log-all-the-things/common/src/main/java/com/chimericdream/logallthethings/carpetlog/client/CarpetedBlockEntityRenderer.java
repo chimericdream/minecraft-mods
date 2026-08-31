@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.carpetlog.CarpetedBlockEntity;
+import com.chimericdream.logallthethings.client.FaceLighting;
 import com.chimericdream.logallthethings.client.RealNeighborMovingBlockRenderState;
 
 /**
@@ -55,6 +56,8 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
 
         BlockPos pos = blockEntity.getBlockPos();
         Holder<Biome> biome = level.getBiome(pos);
+        state.faceLight = FaceLighting.neighborLight(level, pos);
+        state.cardinalLighting = level.cardinalLighting();
 
         if (!blockEntity.getHostState().isAir()) {
             state.host = createMovingBlock(pos, blockEntity.getHostState(), biome, level);
@@ -71,7 +74,7 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
         }
         if (state.carpet != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
-            boolean renderedFrame = CarpetFrameRenderer.submit(poseStack, submitNodeCollector, state.lightCoords, hostState, state.carpet.blockState);
+            boolean renderedFrame = CarpetFrameRenderer.submit(poseStack, submitNodeCollector, state.faceLight, state.cardinalLighting, hostState, state.carpet.blockState);
             if (!renderedFrame) {
                 submitNodeCollector.submitMovingBlock(poseStack, state.carpet, 0);
             }

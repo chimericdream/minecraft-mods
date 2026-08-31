@@ -25,5 +25,7 @@
 #### Bug Fixes
 
 * Fixed window-logged and carpet-logged blocks rendering noticeably brighter/flatter than the same
-  block placed normally, most visible under overhangs like leaves - they were missing the soft
-  darkening real blocks get near solid neighbors.
+  block placed normally - they were missing the soft darkening real blocks get near solid neighbors
+  (most visible under overhangs like leaves), and their shape-fitted glass/carpet overlays on stairs
+  and slabs were missing the darkening real blocks get on their side and bottom faces, and lighting
+  those faces from the block's own light level instead of each face's actual neighbor.

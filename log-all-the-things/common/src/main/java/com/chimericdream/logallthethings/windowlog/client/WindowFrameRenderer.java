@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.CardinalLighting;
+import org.joml.Vector3f;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,10 +33,12 @@ public final class WindowFrameRenderer {
     }
 
     /**
+     * @param faceLight per-neighbor-direction packed light, indexed by {@link Direction#get3DDataValue()}
+     *                  (see {@link com.chimericdream.logallthethings.client.FaceLighting}).
      * @return {@code true} if frame geometry was found and submitted; {@code false} if the caller
      * should fall back to its own (flat pane) rendering instead.
      */
-    public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int lightCoords, BlockState hostState, BlockState windowState) {
+    public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int[] faceLight, CardinalLighting cardinalLighting, BlockState hostState, BlockState windowState) {
         Selection selection = select(hostState);
         if (selection == null) {
             return false;
@@ -60,7 +64,7 @@ public final class WindowFrameRenderer {
         queue.submitCustomGeometry(
             poseStack,
             RenderTypes.translucentMovingBlock(),
-            (pose, buffer) -> renderGeometry(pose, buffer, resolvedGeometry, resolvedSprites, lightCoords)
+            (pose, buffer) -> renderGeometry(pose, buffer, resolvedGeometry, resolvedSprites, faceLight, cardinalLighting)
         );
 
         poseStack.popPose();
@@ -68,7 +72,7 @@ public final class WindowFrameRenderer {
         return true;
     }
 
-    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, WindowFrameGeometry geometry, PaneSprites sprites, int light) {
+    private static void renderGeometry(PoseStack.Pose pose, VertexConsumer buffer, WindowFrameGeometry geometry, PaneSprites sprites, int[] faceLight, CardinalLighting cardinalLighting) {
         for (WindowFrameGeometry.Element element : geometry.elements()) {
             float x0 = element.from()[0] / 16f;
             float y0 = element.from()[1] / 16f;
@@ -82,7 +86,7 @@ public final class WindowFrameRenderer {
                 WindowFrameGeometry.Face face = entry.getValue();
                 TextureAtlasSprite sprite = face.paneTextureSlot() == 1 ? sprites.flat() : sprites.edge();
 
-                emitFace(pose, buffer, direction, x0, y0, z0, x1, y1, z1, face.uv(), face.rotation(), sprite, light, element.rotation());
+                emitFace(pose, buffer, direction, x0, y0, z0, x1, y1, z1, face.uv(), face.rotation(), sprite, faceLight, cardinalLighting, element.rotation());
             }
         }
     }
@@ -96,7 +100,8 @@ public final class WindowFrameRenderer {
         float[] uv,
         int rotation,
         TextureAtlasSprite sprite,
-        int light,
+        int[] faceLight,
+        CardinalLighting cardinalLighting,
         WindowFrameGeometry.Rotation elementRotation
     ) {
         float[][] corners = corners(direction, x0, y0, z0, x1, y1, z1);
@@ -123,6 +128,16 @@ public final class WindowFrameRenderer {
         // facing, producing a visibly different brightness/tint than a real block's quads.
         float[] normal = rotateVector(new float[]{direction.getStepX(), direction.getStepY(), direction.getStepZ()}, elementRotation);
 
+        // The mesh's own local-space direction isn't the real-world face direction once this element's
+        // Blockbench pivot rotation and WindowFrameRenderer#submit's whole-mesh yRotation are both
+        // applied - reusing `pose`'s own normal matrix (the same one setNormal(pose, ...) below feeds
+        // into the GPU) to transform `normal` gets the actual world-space direction without having to
+        // duplicate the sign/handedness convention of PoseStack's Y rotation by hand.
+        Vector3f worldNormal = pose.transformNormal(normal[0], normal[1], normal[2], new Vector3f());
+        Direction worldDirection = Direction.getApproximateNearest(worldNormal.x(), worldNormal.y(), worldNormal.z());
+        int light = faceLight[worldDirection.get3DDataValue()];
+        float shade = cardinalLighting.byFace(worldDirection);
+
         // Each geometry file already defines both sides of a thin pane element as separate opposing
         // faces (e.g. "north" and "south" each with their own uv/cullface) - the same way vanilla's own
         // template_glass_pane_post.json does. So a single, correctly-wound quad per face is enough;
@@ -136,7 +151,7 @@ public final class WindowFrameRenderer {
             float[] tex = uvCorners[(uvIndex + shift) % 4];
 
             buffer.addVertex(pose.pose(), pos[0], pos[1], pos[2])
-                .setColor(1f, 1f, 1f, 1f)
+                .setColor(shade, shade, shade, 1f)
                 .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
                 .setLight(light)
                 .setNormal(pose, normal[0], normal[1], normal[2]);
