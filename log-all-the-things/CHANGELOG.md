@@ -29,3 +29,6 @@
   (most visible under overhangs like leaves), and their shape-fitted glass/carpet overlays on stairs
   and slabs were missing the darkening real blocks get on their side and bottom faces, and lighting
   those faces from the block's own light level instead of each face's actual neighbor.
+* Fixed the mod failing to load entirely on NeoForge with a mixin error, caused by NeoForge changing
+  a vanilla fire-spreading method's signature in a way the window-logging fire-flammability fix didn't
+  account for.

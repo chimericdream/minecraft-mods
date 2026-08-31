@@ -6,8 +6,7 @@
     "client": [
     ],
     "mixins": [
-        "LATT$BucketItemFabricMixin",
-        "LATT$FireBlockFabricMixin"
+        "LATT$FireBlockNeoForgeMixin"
     ],
     "injectors": {
         "defaultRequire": 1

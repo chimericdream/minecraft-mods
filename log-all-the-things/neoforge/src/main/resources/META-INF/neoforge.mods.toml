@@ -50,3 +50,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "logallthethings.mixins.json"
+
+[[mixins]]
+config = "logallthethings.neoforge.mixins.json"

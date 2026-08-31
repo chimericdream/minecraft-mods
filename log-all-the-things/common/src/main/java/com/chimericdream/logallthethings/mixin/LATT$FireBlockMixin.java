@@ -2,7 +2,6 @@ package com.chimericdream.logallthethings.mixin;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,12 +23,21 @@ import com.chimericdream.logallthethings.windowlog.WindowedBlockEntity;
  * <p>Every decision point below independently re-fetches {@code BlockState} via {@code getBlockState},
  * discarding position by the time it reaches the actual odds tables - the fix has to happen at each of
  * these {@code getBlockState} call sites instead, substituting the block entity's real
- * {@code hostState} whenever the neighbour being inspected is a {@code WindowedBlock}. This covers the
- * two mechanics that actually make a block "flammable" in vanilla: spreading fire into a new adjacent
- * air pocket ({@code getIgniteOdds(LevelReader, BlockPos)}), and an already-burning neighbour
- * eventually consuming the block ({@code checkBurnOut}) - plus the two checks that decide whether fire
- * can exist/keep existing next to it at all ({@code isValidFireLocation}, and the flint-and-steel
- * placement check in the 2-arg {@code getStateForPlacement}).
+ * {@code hostState} whenever the neighbour being inspected is a {@code WindowedBlock}. This covers
+ * two of the mechanics that actually make a block "flammable" in vanilla: spreading fire into a new
+ * adjacent air pocket ({@code getIgniteOdds(LevelReader, BlockPos)}), and the below-block sturdiness
+ * check in the flint-and-steel placement check ({@code getStateForPlacement}).
+ *
+ * <p>Two more mechanics - an already-burning neighbour eventually consuming the block
+ * ({@code checkBurnOut}), and whether fire can exist/keep existing next to a block at all
+ * ({@code isValidFireLocation}, plus {@code getStateForPlacement}'s own per-direction neighbour loop)
+ * - are handled by the platform-specific {@code LATT$FireBlockFabricMixin} /
+ * {@code LATT$FireBlockNeoForgeMixin} instead. NeoForge's patcher restructures {@code FireBlock} so
+ * these no longer call {@code getBlockState} directly: {@code checkBurnOut} gains a trailing
+ * {@code Direction} parameter, and {@code isValidFireLocation}/the neighbour loop route through a new
+ * {@code canCatchFire(BlockGetter, BlockPos, Direction)} choke point instead of inlining
+ * {@code getBlockState} + {@code canBurn} - so no single {@code method =}/{@code @At} pair matches both
+ * platforms for those two mechanics.
  */
 @Mixin(FireBlock.class)
 public abstract class LATT$FireBlockMixin {
@@ -53,28 +61,6 @@ public abstract class LATT$FireBlockMixin {
         )
     )
     private BlockState latt$igniteOddsSeesHostBlock(LevelReader level, BlockPos pos) {
-        return latt$effectiveFlammabilityState(level, pos, level.getBlockState(pos));
-    }
-
-    @Redirect(
-        method = "checkBurnOut(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/util/RandomSource;I)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
-        )
-    )
-    private BlockState latt$checkBurnOutSeesHostBlock(Level level, BlockPos pos) {
-        return latt$effectiveFlammabilityState(level, pos, level.getBlockState(pos));
-    }
-
-    @Redirect(
-        method = "isValidFireLocation",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
-        )
-    )
-    private BlockState latt$isValidFireLocationSeesHostBlock(BlockGetter level, BlockPos pos) {
         return latt$effectiveFlammabilityState(level, pos, level.getBlockState(pos));
     }
 
