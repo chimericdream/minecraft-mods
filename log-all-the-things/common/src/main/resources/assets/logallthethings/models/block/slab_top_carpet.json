@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "block/white_wool",
-		"material": "block/stone_bricks",
-		"particle": "block/white_wool"
+		"particle": "block/white_wool",
+		"material": "block/stone_bricks"
 	},
 	"elements": [
 		{
@@ -23,11 +23,11 @@
 			"from": [0, 0, 0],
 			"to": [16, 1, 16],
 			"faces": {
-				"north": {"uv": [0, 1, 16, 2], "texture": "#1"},
-				"east": {"uv": [0, 1, 16, 2], "texture": "#1"},
-				"south": {"uv": [0, 1, 16, 2], "texture": "#1"},
-				"west": {"uv": [0, 1, 16, 2], "texture": "#1"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"north": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"up": {"uv": [0, 16, 16, 0], "texture": "#1"},
 				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
 			}
 		}

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -25,8 +24,31 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
  * (currently just non-straight stairs, which {@code CarpetLogHelper} refuses to log in the first
  * place). Mirrors {@code windowlog.client.WindowFrameRenderer}, minus the flat/edge texture split and
  * the per-element Blockbench pivot rotation support - none of this set's carpet elements use one.
+ *
+ * <p>Unlike the window-pane set (one file per shape, reused for all four facings by rotating the
+ * whole mesh at render time), stairs carpet has one file <em>per facing</em>
+ * ({@code stairs_carpet_east.json}, {@code _south}, {@code _west}, {@code _north}, and the
+ * {@code top_stairs_carpet_*} equivalents). A shared-and-rotated mesh was tried first and reverted:
+ * the low-run/corner-top elements are each only half the block's footprint (non-square), and rotating
+ * a non-square footprint 90 degrees swaps which world axis is wide versus narrow - no UV
+ * transform on a single shared crop can compensate for that without stretching, since the actual
+ * texel density along each world axis would need to differ between facings. Baking each facing's
+ * geometry into its own file (each with UV crops proportioned for its own real, un-rotated footprint)
+ * avoids the problem entirely. Slabs don't need this: a slab's carpet is a single full-footprint
+ * (square) element with no facing to begin with, so one file already renders correctly as-is.
  */
 public final class CarpetFrameRenderer {
+    /**
+     * Unlike a window pane (which fills a notch the host doesn't otherwise occupy), these carpet
+     * models sit flush against real host geometry - e.g. a bottom slab's carpet top face and a real
+     * (unmodified) {@code SlabBlock}'s own top face both land at exactly y=0.5, since the host renders
+     * its own true, un-notched shape via {@code submitMovingBlock} regardless of what this overlay
+     * draws. Two coplanar quads at the same depth z-fight (flicker between which one wins per pixel).
+     * Nudging every vertex outward along its own face normal by a sliver moves this overlay's faces
+     * just in front of the host's coincident ones, resolving the tie without any visible gap.
+     */
+    private static final float SURFACE_NUDGE = 1f / 2048f;
+
     private CarpetFrameRenderer() {
     }
 
@@ -35,12 +57,12 @@ public final class CarpetFrameRenderer {
      * should fall back to its own (flat carpet) rendering instead.
      */
     public static boolean submit(PoseStack poseStack, SubmitNodeCollector queue, int lightCoords, BlockState hostState, BlockState carpetState) {
-        Selection selection = select(hostState);
-        if (selection == null) {
+        String modelName = select(hostState);
+        if (modelName == null) {
             return false;
         }
 
-        Optional<CarpetFrameGeometry> geometry = CarpetFrameGeometryCache.get(selection.modelName);
+        Optional<CarpetFrameGeometry> geometry = CarpetFrameGeometryCache.get(modelName);
         if (geometry.isEmpty()) {
             return false;
         }
@@ -50,11 +72,6 @@ public final class CarpetFrameRenderer {
             return false;
         }
 
-        poseStack.pushPose();
-        poseStack.translate(0.5, 0.5, 0.5);
-        poseStack.mulPose(Axis.YP.rotationDegrees(selection.yRotation));
-        poseStack.translate(-0.5, -0.5, -0.5);
-
         CarpetFrameGeometry resolvedGeometry = geometry.get();
         TextureAtlasSprite resolvedSprite = sprite.get();
         queue.submitCustomGeometry(
@@ -62,8 +79,6 @@ public final class CarpetFrameRenderer {
             RenderTypes.solidMovingBlock(),
             (pose, buffer) -> renderGeometry(pose, buffer, resolvedGeometry, resolvedSprite, lightCoords)
         );
-
-        poseStack.popPose();
 
         return true;
     }
@@ -102,8 +117,7 @@ public final class CarpetFrameRenderer {
         float v0 = uv[1] / 16f;
         float u1 = uv[2] / 16f;
         float v1 = uv[3] / 16f;
-        float[][] uvCorners = {{u0, v0}, {u0, v1}, {u1, v1}, {u1, v0}};
-        int shift = ((rotation / 90) % 4 + 4) % 4;
+        int rotationSteps = ((rotation / 90) % 4 + 4) % 4;
         // corners() for UP/DOWN is reordered relative to NORTH/SOUTH/EAST/WEST to fix backface culling
         // (see WindowFrameRenderer, whose corners() this mirrors exactly), which reverses uv traversal
         // for those two directions relative to how uvCorners was authored.
@@ -114,9 +128,27 @@ public final class CarpetFrameRenderer {
         for (int i = 0; i < 4; i++) {
             float[] pos = corners[i];
             int uvIndex = reverseUv ? (4 - i) % 4 : i;
-            float[] tex = uvCorners[(uvIndex + shift) % 4];
+            // Canonical unit-square corner matching uvIndex's own traversal order: (0,0), (0,1),
+            // (1,1), (1,0). Expressing the corner parametrically (rather than picking directly from a
+            // 4-entry UV corner list) means the model's own "rotation" field composes with linear
+            // interpolation below in a way that naturally honors any flip already baked into the raw
+            // uv values (u0 > u1 or v0 > v1) without needing to special-case it.
+            float s = (uvIndex == 0 || uvIndex == 1) ? 0f : 1f;
+            float t = (uvIndex == 1 || uvIndex == 2) ? 1f : 0f;
+            for (int step = 0; step < rotationSteps; step++) {
+                float ns = t;
+                float nt = 1f - s;
+                s = ns;
+                t = nt;
+            }
+            float[] tex = {u0 + (u1 - u0) * s, v0 + (v1 - v0) * t};
 
-            buffer.addVertex(pose.pose(), pos[0], pos[1], pos[2])
+            buffer.addVertex(
+                    pose.pose(),
+                    pos[0] + normal[0] * SURFACE_NUDGE,
+                    pos[1] + normal[1] * SURFACE_NUDGE,
+                    pos[2] + normal[2] * SURFACE_NUDGE
+                )
                 .setColor(1f, 1f, 1f, 1f)
                 .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
                 .setLight(light)
@@ -138,12 +170,9 @@ public final class CarpetFrameRenderer {
     /**
      * Only {@code StairsShape.STRAIGHT} stairs can be carpet-logged at all ({@code CarpetLogHelper}
      * refuses the interaction for inner/outer corners), so there is exactly one stairs geometry file
-     * per half — {@code stairs_carpet.json} / {@code top_stairs_carpet.json} — reused for all four
-     * facings by rotating it around Y. Both files are authored assuming {@code FACING == EAST}; the
-     * per-facing degree table here matches {@code CarpetedBlock#stairsYRotation} exactly so the
-     * collision box drawn always agrees with what's rendered.
+     * per half per facing — {@code stairs_carpet_<facing>.json} / {@code top_stairs_carpet_<facing>.json}.
      */
-    private static Selection select(BlockState hostState) {
+    private static String select(BlockState hostState) {
         if (hostState.getBlock() instanceof StairBlock) {
             if (hostState.getValue(StairBlock.SHAPE) != StairsShape.STRAIGHT) {
                 return null;
@@ -152,25 +181,22 @@ public final class CarpetFrameRenderer {
             Direction facing = hostState.getValue(StairBlock.FACING);
             boolean top = hostState.getValue(StairBlock.HALF) == Half.TOP;
 
-            int baseY = switch (facing) {
-                case EAST -> 0;
-                case SOUTH -> 270;
-                case WEST -> 180;
-                case NORTH -> 90;
-                default -> 0;
+            String facingName = switch (facing) {
+                case EAST -> "east";
+                case SOUTH -> "south";
+                case WEST -> "west";
+                case NORTH -> "north";
+                default -> "east";
             };
 
-            return new Selection(top ? "top_stairs_carpet" : "stairs_carpet", baseY);
+            return (top ? "top_stairs_carpet_" : "stairs_carpet_") + facingName;
         }
 
         if (hostState.getBlock() instanceof SlabBlock) {
             boolean top = hostState.getValue(SlabBlock.TYPE) == SlabType.TOP;
-            return new Selection(top ? "slab_top_carpet" : "slab_carpet", 0);
+            return top ? "slab_top_carpet" : "slab_carpet";
         }
 
         return null;
-    }
-
-    private record Selection(String modelName, int yRotation) {
     }
 }

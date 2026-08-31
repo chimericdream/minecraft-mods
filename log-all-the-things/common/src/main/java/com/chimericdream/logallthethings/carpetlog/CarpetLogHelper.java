@@ -96,7 +96,7 @@ public final class CarpetLogHelper {
         }
 
         BlockState carpetState = be.getCarpetState();
-        if (!isAimingAtCarpet(level, pos, carpetState, player)) {
+        if (!isAimingAtCarpet(level, pos, be.getHostState(), carpetState, player)) {
             return EventResult.pass();
         }
 
@@ -111,14 +111,17 @@ public final class CarpetLogHelper {
     }
 
     /**
-     * Whether {@code player} is currently aiming at {@code carpetState}'s own (real, unfitted) shape
-     * within the block at {@code pos} — shared by {@link #tryPartialBreak} (which sub-block to pop) and
-     * {@code CarpetedBlock#getDestroyProgress} (which sub-block's mining speed applies). Mirrors
-     * {@code WindowLogHelper#isAimingAtWindow}, including using the sub-block's own natural shape here
-     * rather than {@code CarpetedBlock}'s fitted-to-the-host-notch collision shape — good enough for aim
-     * detection, and consistent with the precedent that class already sets.
+     * Whether {@code player} is currently aiming at the carpet portion of the block at {@code pos} —
+     * shared by {@link #tryPartialBreak} (which sub-block to pop) and
+     * {@code CarpetedBlock#getDestroyProgress} (which sub-block's mining speed applies). Unlike
+     * {@code WindowLogHelper#isAimingAtWindow}, this can't use the sub-block's own real (unfitted)
+     * shape: a real {@code CarpetBlock}'s shape is always a flat square fixed to the bottom of its own
+     * block (y0-1), which only happens to match where this mod actually draws it for the top-slab/
+     * top-stairs cases — for a bottom slab/stairs the carpet sits well above y0-1, so that shape would
+     * never register a hit there. {@link CarpetedBlock#carpetShape} is the exact fitted geometry this
+     * mod actually draws for {@code hostState}, so this always agrees with what the player sees.
      */
-    public static boolean isAimingAtCarpet(Level level, BlockPos pos, BlockState carpetState, Player player) {
+    public static boolean isAimingAtCarpet(Level level, BlockPos pos, BlockState hostState, BlockState carpetState, Player player) {
         if (carpetState.isAir()) {
             return false;
         }
@@ -131,12 +134,12 @@ public final class CarpetLogHelper {
         }
 
         Vec3 localHit = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-        return carpetState.getShape(level, pos).toAabbs().stream()
+        return CarpetedBlock.carpetShape(hostState).toAabbs().stream()
             .anyMatch(box -> box.inflate(0.05).contains(localHit));
     }
 
     public static BlockState pickTargetedState(Level level, BlockPos pos, BlockState carpetState, BlockState hostState, Player player) {
-        return isAimingAtCarpet(level, pos, carpetState, player) ? carpetState : hostState;
+        return isAimingAtCarpet(level, pos, hostState, carpetState, player) ? carpetState : hostState;
     }
 
     /**
@@ -147,7 +150,7 @@ public final class CarpetLogHelper {
     public static BlockState pickTargetedStateForPickBlock(LevelReader levelReader, BlockPos pos, BlockState carpetState, BlockState hostState) {
         if (levelReader instanceof Level level) {
             for (Player player : level.players()) {
-                if (player.isWithinBlockInteractionRange(pos, 1.0) && isAimingAtCarpet(level, pos, carpetState, player)) {
+                if (player.isWithinBlockInteractionRange(pos, 1.0) && isAimingAtCarpet(level, pos, hostState, carpetState, player)) {
                     return carpetState;
                 }
             }
