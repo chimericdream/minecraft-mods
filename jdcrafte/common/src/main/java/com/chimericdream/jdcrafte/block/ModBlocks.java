@@ -33,6 +33,24 @@ public class ModBlocks {
         () -> new BlockEntityType<>(FeedingTroughBlockEntity::new, Set.of(FEEDING_TROUGH.get()))
     );
 
+    public static final RegistrySupplier<Block> WEATHERVANE = REGISTRY_HELPER.registerWithItem(
+        "weathervane",
+        () -> new WeathervaneBlock(
+            BlockBehaviour.Properties
+                .of()
+                .strength(2.0F)
+                .sound(SoundType.LANTERN)
+                .noOcclusion()
+                .setId(ResourceKey.create(Registries.BLOCK, REGISTRY_HELPER.makeId("weathervane")))
+        ),
+        new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS)
+    );
+
+    public static final RegistrySupplier<BlockEntityType<WeathervaneBlockEntity>> WEATHERVANE_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
+        "weathervane",
+        () -> new BlockEntityType<>(WeathervaneBlockEntity::new, Set.of(WEATHERVANE.get()))
+    );
+
     public static void init() {
     }
 }
