@@ -15,16 +15,15 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
 * **Lava-logging** — right-click a non-flammable slab, stairs, wall, fence, iron bars/glass pane,
   trapdoor, ladder, or chain with a lava bucket to fill it with lava, just like water-logging. Empty
   the bucket on it again to pick the lava back up.
-* **Window-logging** — right-click a slab or stairs with a glass pane (any color) to fit it into the
-  empty part of the block, turning it into a window. Aim at the glass while mining to pop just the
-  pane back out, or mine the solid part to break the whole thing.
-* **Carpet-logging** — right-click a slab or plain stairs with a carpet to lay it into the block. Aim
-  at the carpet while mining to pop just it back out, or mine the solid part to break the whole thing.
+* **Window-logging** — right-click a slab or stairs with a glass pane or bars to fit it into the
+  block, turning it into a window. Mine just the glass/bars to pop it back out, or mine the solid part
+  to break the whole thing.
+* **Carpet-logging** — right-click a slab or plain stairs with a carpet to lay it into the block
+  instead of placing one on top. Mine just the carpet to pop it back out, or mine the solid part to
+  break the whole thing.
 * **Snow-logging** — right-click a slab, plain stairs, wall, fence, chain, bars, or glass pane with
-  snow to build it up in layers, the same way you'd stack snow on the ground. Each block only holds as
-  many layers as actually fit — up to one shy of a full snow block. Aim at the snow while mining to pop
-  it back out (a shovel is required, just like normal snow), or mine the solid part to break the whole
-  thing.
+  snow to build it up in layers. Mine just the snow to pop it back out (requires a shovel), or mine
+  the solid part to break the whole thing.
 
 ## Notes for Documentation
 
