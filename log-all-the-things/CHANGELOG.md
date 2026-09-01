@@ -25,6 +25,14 @@
   to real neighbors (and to other carpet-logged ones) exactly like the un-logged block would, in both
   directions - a wall placed next to a carpet-logged fence connects to it immediately, and a
   carpet-logged fence updates to connect toward a wall placed next to it afterward.
+* Added snow-logging: right-click a slab, plain stairs (not the corner-shaped ones), wall, fence,
+  chain, bars, or glass pane with snow to build it up into the block one layer at a time, instead of
+  placing snow separately on top. Each right-click adds another layer, capped at whatever headroom the
+  block actually has - up to one shy of a full snow block on an open host like a fence, or up to half
+  that on a slab or stairs, since only half the block is open there. Aim at the snow while mining to
+  pop it all back out at once (a shovel is required to get anything back, same as normal snow); mining
+  the solid part breaks the whole thing. Sneak while placing snow to place it normally instead of
+  snow-logging. Doesn't currently combine with carpet-logging on the same block.
 
 #### Bug Fixes
 

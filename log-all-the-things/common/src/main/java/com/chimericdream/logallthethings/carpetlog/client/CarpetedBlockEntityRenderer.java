@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.carpetlog.CarpetedBlockEntity;
 import com.chimericdream.logallthethings.client.FaceLighting;
+import com.chimericdream.logallthethings.client.QuadEmitter;
 import com.chimericdream.logallthethings.client.RealNeighborMovingBlockRenderState;
 
 /**
@@ -82,17 +83,17 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
                 // same way a slab/stair's fitted overlay coincides with its host's top face - and once
                 // a wall/fence/bars/pane is connected on a side, that connection's arm reaches all the
                 // way to the block's edge, so the carpet's own side faces at x/z=0/1 land exactly on
-                // that arm's own outer end face too. {@code CarpetFrameRenderer} resolves the same kind
+                // that arm's own outer end face too. {@code QuadEmitter} resolves the same kind
                 // of tie per-vertex, along each vertex's own face normal; a whole real block model here
                 // isn't individual vertices this renderer controls, so this nudges the whole moving-block
                 // render instead - down in Y for the bottom-face case, and very slightly wider in X/Z
                 // (scaled outward from the block's horizontal center) for the side-face case. Both use
-                // the same {@link CarpetFrameRenderer#SURFACE_NUDGE} magnitude so the effect stays exactly
+                // the same {@link QuadEmitter#SURFACE_NUDGE} magnitude so the effect stays exactly
                 // as imperceptible as the per-vertex version.
                 poseStack.pushPose();
-                poseStack.translate(0.0, -CarpetFrameRenderer.SURFACE_NUDGE, 0.0);
+                poseStack.translate(0.0, -QuadEmitter.SURFACE_NUDGE, 0.0);
                 poseStack.translate(0.5, 0.0, 0.5);
-                poseStack.scale(1.0F + 2.0F * CarpetFrameRenderer.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * CarpetFrameRenderer.SURFACE_NUDGE);
+                poseStack.scale(1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE);
                 poseStack.translate(-0.5, 0.0, -0.5);
                 submitNodeCollector.submitMovingBlock(poseStack, state.carpet, 0);
                 poseStack.popPose();

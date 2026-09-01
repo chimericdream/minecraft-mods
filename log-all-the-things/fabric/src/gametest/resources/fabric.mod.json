@@ -12,7 +12,8 @@
     "entrypoints": {
         "fabric-gametest": [
             "com.chimericdream.logallthethings.fabric.test.LavaLoggingGameTest",
-            "com.chimericdream.logallthethings.fabric.test.WindowLoggingGameTest"
+            "com.chimericdream.logallthethings.fabric.test.WindowLoggingGameTest",
+            "com.chimericdream.logallthethings.fabric.test.SnowLoggingGameTest"
         ]
     },
     "depends": {

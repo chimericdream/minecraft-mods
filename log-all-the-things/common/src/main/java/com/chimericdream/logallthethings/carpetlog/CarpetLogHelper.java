@@ -24,6 +24,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.chimericdream.logallthethings.snowlog.SnowedBlock;
+
 /**
  * Shared logic behind carpet-logging: turning a plain slab/stair/wall/fence/chain/bars/pane (see
  * {@link CarpetLogTags#CARPETABLE}) plus a held carpet into a {@link CarpetedBlock}, and letting a
@@ -53,7 +55,9 @@ public final class CarpetLogHelper {
         }
 
         BlockState targetState = level.getBlockState(pos);
-        if (!targetState.is(CarpetLogTags.CARPETABLE) || targetState.getBlock() instanceof CarpetedBlock) {
+        // Mutually exclusive with snow-logging for now - see SnowLogHelper's own class doc.
+        if (!targetState.is(CarpetLogTags.CARPETABLE) || targetState.getBlock() instanceof CarpetedBlock
+            || targetState.getBlock() instanceof SnowedBlock) {
             return EventResult.pass();
         }
         if (targetState.getOptionalValue(SlabBlock.TYPE).map(SlabType.DOUBLE::equals).orElse(false)) {

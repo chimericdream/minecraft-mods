@@ -12,6 +12,8 @@ import java.util.function.Supplier;
 
 import com.chimericdream.logallthethings.carpetlog.CarpetLogBlocks;
 import com.chimericdream.logallthethings.carpetlog.CarpetLogHelper;
+import com.chimericdream.logallthethings.snowlog.SnowLogBlocks;
+import com.chimericdream.logallthethings.snowlog.SnowLogHelper;
 import com.chimericdream.logallthethings.windowlog.WindowLogBlocks;
 import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
 
@@ -26,12 +28,15 @@ public final class LogAllTheThingsMod {
 
         WindowLogBlocks.init();
         CarpetLogBlocks.init();
+        SnowLogBlocks.init();
 
         REGISTRY_HELPER.init();
 
         InteractionEvent.RIGHT_CLICK_BLOCK.register(WindowLogHelper::tryWindowLog);
         InteractionEvent.RIGHT_CLICK_BLOCK.register(CarpetLogHelper::tryCarpetLog);
+        InteractionEvent.RIGHT_CLICK_BLOCK.register(SnowLogHelper::tryPlaceSnow);
         BlockEvent.BREAK.register(WindowLogHelper::tryPartialBreak);
         BlockEvent.BREAK.register(CarpetLogHelper::tryPartialBreak);
+        BlockEvent.BREAK.register(SnowLogHelper::tryPartialBreak);
     }
 }

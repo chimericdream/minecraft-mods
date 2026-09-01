@@ -20,6 +20,11 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
   pane back out, or mine the solid part to break the whole thing.
 * **Carpet-logging** — right-click a slab or plain stairs with a carpet to lay it into the block. Aim
   at the carpet while mining to pop just it back out, or mine the solid part to break the whole thing.
+* **Snow-logging** — right-click a slab, plain stairs, wall, fence, chain, bars, or glass pane with
+  snow to build it up in layers, the same way you'd stack snow on the ground. Each block only holds as
+  many layers as actually fit — up to one shy of a full snow block. Aim at the snow while mining to pop
+  it back out (a shovel is required, just like normal snow), or mine the solid part to break the whole
+  thing.
 
 ## Notes for Documentation
 
