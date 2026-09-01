@@ -33,6 +33,12 @@ import net.minecraft.world.level.block.Block;
  * point at the same texture there, since a bars grate looks the same from the flat and edge sides) —
  * {@link #load} tries {@code pane} first and falls back to {@code bars} so both window types resolve
  * through the one lookup.
+ *
+ * <p>A waxed copper bars variant (e.g. {@code waxed_weathered_copper_bars}) has no {@code _post.json}
+ * of its own — its blockstate points straight at its unwaxed counterpart's model
+ * ({@code weathered_copper_bars_post.json}), since waxing only stops further oxidation and doesn't
+ * change appearance. {@link #load} retries with a stripped {@code waxed_} prefix on a lookup miss so
+ * those still resolve instead of falling back to flat-pane rendering.
  */
 public final class WindowFramePaneTextures {
     public record PaneSprites(TextureAtlasSprite flat, TextureAtlasSprite edge) {
@@ -50,7 +56,17 @@ public final class WindowFramePaneTextures {
 
     private static Optional<PaneSprites> load(Block paneBlock) {
         Identifier blockId = BuiltInRegistries.BLOCK.getKey(paneBlock);
-        Identifier modelLocation = Identifier.fromNamespaceAndPath(blockId.getNamespace(), "models/block/" + blockId.getPath() + "_post.json");
+
+        Optional<PaneSprites> sprites = loadModel(blockId.getNamespace(), blockId.getPath());
+        if (sprites.isPresent() || !blockId.getPath().startsWith("waxed_")) {
+            return sprites;
+        }
+
+        return loadModel(blockId.getNamespace(), blockId.getPath().substring("waxed_".length()));
+    }
+
+    private static Optional<PaneSprites> loadModel(String namespace, String path) {
+        Identifier modelLocation = Identifier.fromNamespaceAndPath(namespace, "models/block/" + path + "_post.json");
 
         try {
             Resource resource = Minecraft.getInstance().getResourceManager().getResourceOrThrow(modelLocation);

@@ -8,11 +8,11 @@
         "chimericdream"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/log-all-the-things",
+        "sources": "https://github.com/chimericdream/minecraft-mods/log-all-the-things"
     },
     "license": "MIT",
-    "icon": "assets/logallthethings/icon.png",
+    "icon": "assets/logallthethings/icon.gif",
     "environment": "*",
     "entrypoints": {
         "main": [

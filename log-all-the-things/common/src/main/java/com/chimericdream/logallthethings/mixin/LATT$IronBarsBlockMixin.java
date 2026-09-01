@@ -41,7 +41,9 @@ import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
 
 /**
- * Covers both iron bars and glass panes: {@code IronBarsBlock} is the vanilla class used for both.
+ * Covers glass panes, iron bars, and copper bars: {@code IronBarsBlock} is the vanilla class used for
+ * all of them (including every weathering/waxed copper bars variant, via its
+ * {@code WeatheringCopperBarsBlock} subclass and the plain-{@code IronBarsBlock} waxed instances).
  */
 @Mixin(IronBarsBlock.class)
 public abstract class LATT$IronBarsBlockMixin implements SimpleWaterloggedBlock {

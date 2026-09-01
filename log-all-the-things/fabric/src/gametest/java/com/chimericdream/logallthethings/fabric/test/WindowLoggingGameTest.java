@@ -175,6 +175,27 @@ public class WindowLoggingGameTest {
     }
 
     @GameTest
+    public void windowLoggingAStoneSlabWithCopperBars(GameTestHelper context) {
+        context.setBlock(TARGET, Blocks.STONE_SLAB);
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COPPER_BARS.weathering().unaffected()));
+
+        EventResult result = WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        if (!result.interruptsFurtherEvaluation()) {
+            context.fail("Expected window-logging a stone slab with copper bars to interrupt the event, got " + result);
+        }
+
+        WindowedBlockEntity be = targetWindowedBlockEntity(context);
+        if (!be.getWindowState().is(Blocks.COPPER_BARS.weathering().unaffected())) {
+            context.fail("Window state should be copper bars, got " + be.getWindowState());
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
     public void windowLoggingIsRefusedOnADoubleSlab(GameTestHelper context) {
         context.setBlock(TARGET, Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.DOUBLE));
 
