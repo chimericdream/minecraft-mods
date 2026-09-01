@@ -1,6 +1,6 @@
 ### Unreleased changes
 
-### 26.2 - 1.2.0-beta.0
+### 26.2 - 1.2.0
 
 #### New Features
 
