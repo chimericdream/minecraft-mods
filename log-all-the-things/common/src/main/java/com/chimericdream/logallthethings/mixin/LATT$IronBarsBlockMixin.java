@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.chimericdream.logallthethings.carpetlog.CarpetLogHelper;
+import com.chimericdream.logallthethings.LoggedNeighborHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 import com.chimericdream.logallthethings.windowlog.WindowLogHelper;
@@ -181,14 +181,14 @@ public abstract class LATT$IronBarsBlockMixin implements SimpleWaterloggedBlock 
     }
 
     /**
-     * Substitutes a carpet-logged neighbour's stored host state in place of its real (connection-
-     * property-less) {@code CarpetedBlock} carrier state before vanilla's own {@code attachsTo} check
-     * runs, so real bars/a real pane connects to carpet-logged bars/panes/a wall exactly as it would to
-     * the live block - the carpetlog counterpart to {@link #latt$connectToWindowLoggedNeighbor} above,
-     * which instead handles a pane/bars embedded <em>inside</em> a window-logged slab/stair.
-     * {@code IronBarsBlock#updateShape} uses only this parameter (never re-queries the level for the
-     * neighbour), so substituting it here is enough - see
-     * {@link CarpetLogHelper#effectiveNeighborState}. {@code ordinal = 1} picks the second
+     * Substitutes a carpet-logged or snow-logged neighbour's stored host state in place of its real
+     * (connection-property-less) {@code CarpetedBlock}/{@code SnowedBlock} carrier state before
+     * vanilla's own {@code attachsTo} check runs, so real bars/a real pane connects to carpet-logged or
+     * snow-logged bars/panes/a wall exactly as it would to the live block - the counterpart to
+     * {@link #latt$connectToWindowLoggedNeighbor} above, which instead handles a pane/bars embedded
+     * <em>inside</em> a window-logged slab/stair. {@code IronBarsBlock#updateShape} uses only this
+     * parameter (never re-queries the level for the neighbour), so substituting it here is enough - see
+     * {@link LoggedNeighborHelper#effectiveNeighborState}. {@code ordinal = 1} picks the second
      * {@code BlockState}-typed argument ({@code neighbourState}), since {@code state} (the block's own
      * state) is ordinal 0.
      */
@@ -202,21 +202,21 @@ public abstract class LATT$IronBarsBlockMixin implements SimpleWaterloggedBlock 
         Direction directionToNeighbour,
         BlockPos neighbourPos
     ) {
-        return CarpetLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+        return LoggedNeighborHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
     }
 
     /**
      * Same substitution as {@link #latt$substituteCarpetedNeighbor}, for the four
      * {@code level.getBlockState(...)} calls {@code IronBarsBlock#getStateForPlacement} makes directly
      * (one per horizontal neighbour) instead of receiving the neighbour as a parameter - lets bars/a
-     * pane placed directly against a carpet-logged bars/pane/wall connect to it immediately, not just
-     * after a later neighbour update.
+     * pane placed directly against a carpet-logged or snow-logged bars/pane/wall connect to it
+     * immediately, not just after a later neighbour update.
      */
     @Redirect(
         method = "getStateForPlacement",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;")
     )
     private BlockState latt$substituteCarpetedNeighborOnPlace(BlockGetter level, BlockPos pos) {
-        return CarpetLogHelper.effectiveNeighborState(level, pos, level.getBlockState(pos));
+        return LoggedNeighborHelper.effectiveNeighborState(level, pos, level.getBlockState(pos));
     }
 }

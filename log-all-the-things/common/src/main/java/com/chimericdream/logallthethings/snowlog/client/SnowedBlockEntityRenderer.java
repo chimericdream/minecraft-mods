@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.client.FaceLighting;
+import com.chimericdream.logallthethings.client.QuadEmitter;
 import com.chimericdream.logallthethings.client.RealNeighborMovingBlockRenderState;
 import com.chimericdream.logallthethings.snowlog.SnowedBlockEntity;
 
@@ -109,12 +110,33 @@ public class SnowedBlockEntityRenderer implements BlockEntityRenderer<SnowedBloc
 
         boolean bottomSlab = hostState.getBlock() instanceof SlabBlock && hostState.getValue(SlabBlock.TYPE) != SlabType.TOP;
         if (bottomSlab) {
+            // The offset snow stack's own bottom face lands exactly on the slab's own top face (both
+            // at y=0.5) - see CarpetedBlockEntityRenderer#submit's fallback branch for why two
+            // independently-submitted moving blocks (unlike ordinary chunk geometry) don't get culled
+            // against each other and so z-fight at any coincident plane. Nudging the whole stack up by
+            // QuadEmitter#SURFACE_NUDGE separates the planes by an imperceptible sliver instead.
             poseStack.pushPose();
-            poseStack.translate(0.0, 0.5, 0.0);
+            poseStack.translate(0.0, 0.5 + QuadEmitter.SURFACE_NUDGE, 0.0);
             submitNodeCollector.submitMovingBlock(poseStack, state.snow, 0);
             poseStack.popPose();
         } else {
+            // A wall/fence/chain/bars/pane host (and a top slab, which shares this branch since its
+            // open space is also unoffset from the floor) leaves the real snow blockstate's own bottom
+            // face exactly coincident with the host's own bottom face at y=0 - the snow-logging
+            // counterpart of CarpetedBlockEntityRenderer#submit's wall/fence/bars/pane fallback. Once a
+            // wall/fence/bars/pane is connected on a side, that connection's arm also reaches the
+            // block's edge, so the snow's own side faces at x/z=0/1 land exactly on that arm's own end
+            // face too. Nudging the whole moving-block render down in Y and very slightly wider in X/Z
+            // (scaled outward from the block's horizontal center) resolves both ties the same way
+            // CarpetedBlockEntityRenderer's fallback does, at the same imperceptible
+            // {@link QuadEmitter#SURFACE_NUDGE} magnitude.
+            poseStack.pushPose();
+            poseStack.translate(0.0, -QuadEmitter.SURFACE_NUDGE, 0.0);
+            poseStack.translate(0.5, 0.0, 0.5);
+            poseStack.scale(1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE);
+            poseStack.translate(-0.5, 0.0, -0.5);
             submitNodeCollector.submitMovingBlock(poseStack, state.snow, 0);
+            poseStack.popPose();
         }
     }
 

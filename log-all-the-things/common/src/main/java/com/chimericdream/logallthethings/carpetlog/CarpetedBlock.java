@@ -36,6 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.HostFootprint;
+import com.chimericdream.logallthethings.LoggedNeighborHelper;
 import com.chimericdream.logallthethings.ModInfo;
 
 /**
@@ -98,8 +99,9 @@ public class CarpetedBlock extends Block implements EntityBlock {
      * stub of the connection facing that fence stayed stuck open. Delegating to the host's own
      * {@code updateShape} - the same call a live fence/wall/bars/pane would receive for this exact
      * neighbour change - keeps this in lockstep with vanilla's own connection rules, and substituting
-     * the neighbour through {@link CarpetLogHelper#effectiveNeighborState} first means a neighbour that
-     * is itself carpet-logged is seen as its real host too, not as an unrecognized block.
+     * the neighbour through {@link LoggedNeighborHelper#effectiveNeighborState} first means a neighbour
+     * that is itself carpet-logged or snow-logged is seen as its real host too, not as an unrecognized
+     * block.
      */
     @Override
     protected BlockState updateShape(
@@ -115,7 +117,7 @@ public class CarpetedBlock extends Block implements EntityBlock {
         if (level instanceof Level realLevel && !realLevel.isClientSide() && level.getBlockEntity(pos) instanceof CarpetedBlockEntity be) {
             BlockState hostState = be.getHostState();
             if (!hostState.isAir()) {
-                BlockState effectiveNeighbor = CarpetLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+                BlockState effectiveNeighbor = LoggedNeighborHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
                 BlockState updatedHost = hostState.updateShape(realLevel, ticks, pos, directionToNeighbour, neighbourPos, effectiveNeighbor, random);
 
                 if (!updatedHost.equals(hostState)) {

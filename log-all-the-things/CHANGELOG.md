@@ -32,7 +32,9 @@
   that on a slab or stairs, since only half the block is open there. Aim at the snow while mining to
   pop it all back out at once (a shovel is required to get anything back, same as normal snow); mining
   the solid part breaks the whole thing. Sneak while placing snow to place it normally instead of
-  snow-logging. Doesn't currently combine with carpet-logging on the same block.
+  snow-logging. Doesn't currently combine with carpet-logging on the same block. A snow-logged wall,
+  fence, or bars/pane still connects to real neighbors (and to other snow-logged or carpet-logged ones)
+  exactly like the un-logged block would, in both directions.
 
 #### Bug Fixes
 
@@ -46,3 +48,6 @@
   account for.
 * Fixed a window-logged slab's glass always rendering running east-west, even when it was actually
   facing north-south - the pane's hitbox was correct, but the visible glass ran the wrong way.
+* Fixed a snow-logged wall, fence, bars, or pane flickering right where the snow met its host - the
+  snow's own texture was drawn exactly flush with the host's, so the two fought over which one showed
+  through.

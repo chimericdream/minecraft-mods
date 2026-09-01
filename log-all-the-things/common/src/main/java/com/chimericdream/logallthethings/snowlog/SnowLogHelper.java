@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -227,17 +226,5 @@ public final class SnowLogHelper {
         }
 
         return hostState;
-    }
-
-    /** Mirrors {@code CarpetLogHelper#effectiveNeighborState}, substituting a {@link SnowedBlock} neighbour's stored host state the same way. */
-    public static BlockState effectiveNeighborState(BlockGetter level, BlockPos neighborPos, BlockState neighborState) {
-        if (neighborState.getBlock() instanceof SnowedBlock && level.getBlockEntity(neighborPos) instanceof SnowedBlockEntity be) {
-            BlockState hostState = be.getHostState();
-            if (!hostState.isAir()) {
-                return hostState;
-            }
-        }
-
-        return neighborState;
     }
 }

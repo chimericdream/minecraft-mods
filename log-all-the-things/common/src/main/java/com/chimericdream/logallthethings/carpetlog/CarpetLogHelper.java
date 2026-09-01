@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -164,30 +163,5 @@ public final class CarpetLogHelper {
         }
 
         return hostState;
-    }
-
-    /**
-     * The state a wall/fence/bars neighbour-connection check should see at {@code neighborPos}: the
-     * real state there, unless it's a {@link CarpetedBlock}, in which case its stored
-     * {@code hostState} — the real fence/wall/bars/pane it's actually wrapping — is substituted
-     * instead. A carpet-logged block's own carrier state has none of the vanilla connection
-     * properties (no {@code NORTH}/{@code EAST}/{@code SOUTH}/{@code WEST}, no {@code CrossCollisionBlock}/
-     * {@code WallBlock}/{@code IronBarsBlock} identity), so without this substitution every
-     * {@code connectsTo}/{@code attachsTo} check in {@code LATT$FenceBlockMixin},
-     * {@code LATT$WallBlockMixin}, and {@code LATT$IronBarsBlockMixin} would see it as a plain,
-     * unrecognized block and refuse to connect — this is what lets a real fence/wall/bars placed (or
-     * already standing) next to a carpet-logged one connect as though the carpet weren't there, and
-     * (via {@link CarpetedBlock#updateShape}, which uses this for the other direction) lets the
-     * carpet-logged block's own stored connections react to that neighbour too.
-     */
-    public static BlockState effectiveNeighborState(BlockGetter level, BlockPos neighborPos, BlockState neighborState) {
-        if (neighborState.getBlock() instanceof CarpetedBlock && level.getBlockEntity(neighborPos) instanceof CarpetedBlockEntity be) {
-            BlockState hostState = be.getHostState();
-            if (!hostState.isAir()) {
-                return hostState;
-            }
-        }
-
-        return neighborState;
     }
 }

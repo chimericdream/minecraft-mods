@@ -37,6 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import com.chimericdream.logallthethings.HostFootprint;
+import com.chimericdream.logallthethings.LoggedNeighborHelper;
 import com.chimericdream.logallthethings.ModInfo;
 
 /**
@@ -88,7 +89,7 @@ public class SnowedBlock extends Block implements EntityBlock {
         return level.getBlockEntity(pos) instanceof SnowedBlockEntity be ? be.getSnowState() : Blocks.AIR.defaultBlockState();
     }
 
-    /** See {@code CarpetedBlock#updateShape} - identical reasoning, delegated via {@link SnowLogHelper#effectiveNeighborState}. */
+    /** See {@code CarpetedBlock#updateShape} - identical reasoning, delegated via {@link LoggedNeighborHelper#effectiveNeighborState}. */
     @Override
     protected BlockState updateShape(
         BlockState state,
@@ -103,7 +104,7 @@ public class SnowedBlock extends Block implements EntityBlock {
         if (level instanceof Level realLevel && !realLevel.isClientSide() && level.getBlockEntity(pos) instanceof SnowedBlockEntity be) {
             BlockState hostState = be.getHostState();
             if (!hostState.isAir()) {
-                BlockState effectiveNeighbor = SnowLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+                BlockState effectiveNeighbor = LoggedNeighborHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
                 BlockState updatedHost = hostState.updateShape(realLevel, ticks, pos, directionToNeighbour, neighbourPos, effectiveNeighbor, random);
 
                 if (!updatedHost.equals(hostState)) {

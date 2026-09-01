@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -335,6 +336,55 @@ public class SnowLoggingGameTest {
         // ground" assertion is made here since GameTestHelper has no direct query for it, but this
         // documents the expectation this test is guarding: no exception, and no forced drop bypassing
         // the loot table the way carpet-logging's own hardcoded drop would.
+
+        context.succeed();
+    }
+
+    // --- Connecting real fences/walls/bars to a snow-logged neighbor (LATT$FenceBlockMixin et al.) ---
+
+    /**
+     * Regression coverage for {@code LoggedNeighborHelper}: before it existed,
+     * {@code LATT$FenceBlockMixin}/{@code LATT$WallBlockMixin}/{@code LATT$IronBarsBlockMixin} only
+     * substituted a {@code CarpetedBlock} neighbour's stored host state, so a real fence placed next to
+     * a snow-logged fence saw the connection-property-less {@code SnowedBlock} carrier and refused to
+     * connect - mirrors {@code WindowLoggingGameTest#realPaneConnectsWhenPlacedNextToAWindowLoggedNeighbor}.
+     */
+    @GameTest
+    public void realFenceConnectsWhenPlacedNextToASnowLoggedNeighbor(GameTestHelper context) {
+        context.setBlock(TARGET, SnowLogBlocks.SNOWED_BLOCK.get());
+        SnowedBlockEntity be = targetSnowedBlockEntity(context);
+        be.setHostState(Blocks.OAK_FENCE.defaultBlockState());
+        be.setSnowState(Blocks.SNOW.defaultBlockState().setValue(SnowLayerBlock.LAYERS, 4));
+        be.setChanged();
+
+        context.placeBlock(TARGET.east(), Blocks.OAK_FENCE, Direction.UP);
+
+        BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.east()));
+        if (!neighborState.getValue(CrossCollisionBlock.WEST)) {
+            context.fail("Expected a freshly-placed fence to connect its WEST arm toward the snow-logged neighbor, got " + neighborState);
+        }
+
+        context.succeed();
+    }
+
+    /** Same regression as {@link #realFenceConnectsWhenPlacedNextToASnowLoggedNeighbor}, other direction. */
+    @GameTest
+    public void snowLoggingAFenceKeepsAnAlreadyPlacedNeighborFenceConnected(GameTestHelper context) {
+        context.setBlock(TARGET.west(), Blocks.OAK_FENCE);
+        context.setBlock(TARGET, Blocks.OAK_FENCE);
+
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SNOW, 4));
+        SnowLogHelper.tryPlaceSnow(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
+
+        if (!(targetState(context).getBlock() instanceof SnowedBlock)) {
+            context.fail("Target should have become a SnowedBlock, got " + targetState(context));
+        }
+
+        BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.west()));
+        if (!neighborState.getValue(CrossCollisionBlock.EAST)) {
+            context.fail("Expected the pre-existing neighbor fence to stay connected toward the newly snow-logged fence, got " + neighborState);
+        }
 
         context.succeed();
     }

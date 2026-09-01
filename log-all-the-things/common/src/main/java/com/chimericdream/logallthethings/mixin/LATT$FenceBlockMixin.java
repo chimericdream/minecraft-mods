@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.chimericdream.logallthethings.carpetlog.CarpetLogHelper;
+import com.chimericdream.logallthethings.LoggedNeighborHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 
@@ -122,14 +122,14 @@ public abstract class LATT$FenceBlockMixin implements SimpleWaterloggedBlock {
     }
 
     /**
-     * Substitutes a carpet-logged neighbour's stored host state in place of its real (connection-
-     * property-less) {@code CarpetedBlock} carrier state before vanilla's own {@code connectsTo} check
-     * runs, so a real fence connects to a carpet-logged fence/wall exactly as it would to the live
-     * block. {@code FenceBlock#updateShape} uses only this parameter (never re-queries the level for
-     * the neighbour), so substituting it here is enough - see
-     * {@link CarpetLogHelper#effectiveNeighborState}. {@code ordinal = 1} picks the second
-     * {@code BlockState}-typed argument ({@code neighbourState}), since {@code state} (the block's own
-     * state) is ordinal 0.
+     * Substitutes a carpet-logged or snow-logged neighbour's stored host state in place of its real
+     * (connection-property-less) {@code CarpetedBlock}/{@code SnowedBlock} carrier state before
+     * vanilla's own {@code connectsTo} check runs, so a real fence connects to a carpet-logged or
+     * snow-logged fence/wall exactly as it would to the live block. {@code FenceBlock#updateShape} uses
+     * only this parameter (never re-queries the level for the neighbour), so substituting it here is
+     * enough - see {@link LoggedNeighborHelper#effectiveNeighborState}. {@code ordinal = 1} picks the
+     * second {@code BlockState}-typed argument ({@code neighbourState}), since {@code state} (the
+     * block's own state) is ordinal 0.
      */
     @ModifyVariable(method = "updateShape", at = @At("HEAD"), ordinal = 1, argsOnly = true)
     private BlockState latt$substituteCarpetedNeighbor(
@@ -141,21 +141,21 @@ public abstract class LATT$FenceBlockMixin implements SimpleWaterloggedBlock {
         Direction directionToNeighbour,
         BlockPos neighbourPos
     ) {
-        return CarpetLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+        return LoggedNeighborHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
     }
 
     /**
      * Same substitution as {@link #latt$substituteCarpetedNeighbor}, for the four
      * {@code level.getBlockState(...)} calls {@code FenceBlock#getStateForPlacement} makes directly
      * (one per horizontal neighbour) instead of receiving the neighbour as a parameter - lets a fence
-     * placed directly against a carpet-logged fence/wall connect to it immediately, not just after a
-     * later neighbour update.
+     * placed directly against a carpet-logged or snow-logged fence/wall connect to it immediately, not
+     * just after a later neighbour update.
      */
     @Redirect(
         method = "getStateForPlacement",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;")
     )
     private BlockState latt$substituteCarpetedNeighborOnPlace(BlockGetter level, BlockPos pos) {
-        return CarpetLogHelper.effectiveNeighborState(level, pos, level.getBlockState(pos));
+        return LoggedNeighborHelper.effectiveNeighborState(level, pos, level.getBlockState(pos));
     }
 }
