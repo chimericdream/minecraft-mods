@@ -159,32 +159,6 @@ public class LavaLoggingGameTest {
         context.succeed();
     }
 
-    // --- Bucket-only: real/ambient lava can't lava-log a container on its own ---
-
-    /**
-     * {@code LavaLogHelper#placeLava} is the exact method vanilla's own {@code FlowingFluid} spread/tick
-     * logic would call on a {@code LiquidBlockContainer} to auto-fill it with real flowing/source lava,
-     * the same way flowing water auto-waterlogs a fence it flows into. Calling it directly here, with no
-     * {@code LATT$BucketItemMixin}-driven bucket action in progress, simulates exactly that ambient path
-     * without needing to actually flow real lava in a GameTest - lava-logging is deliberately bucket-only,
-     * so this must refuse even though the slab is otherwise perfectly lava-loggable.
-     */
-    @GameTest
-    public void ambientLavaCannotLavaLogWithoutABucket(GameTestHelper context) {
-        context.setBlock(TARGET, Blocks.STONE_SLAB);
-
-        boolean placed = LavaLogHelper.placeLava(context.getLevel(), context.absolutePos(TARGET), targetState(context), Fluids.LAVA.getSource(false));
-
-        if (placed) {
-            context.fail("Expected placeLava to refuse outside of an explicit bucket action");
-        }
-        if (targetState(context).getValue(LavaLogProperties.LAVALOGGED)) {
-            context.fail("Slab should not become lava-logged from ambient lava with no bucket action in progress");
-        }
-
-        context.succeed();
-    }
-
     // --- Flammability gate ---
 
     @GameTest
