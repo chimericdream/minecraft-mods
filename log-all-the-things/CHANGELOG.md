@@ -6,7 +6,6 @@
   chains made of a non-flammable material, mirroring how water-logging already works:
   * Right-click one with a lava bucket to fill it with lava; empty the bucket on it again to pick the
     lava back up. Sneak while using the bucket to place lava normally instead of logging it.
-  * Flowing lava that reaches one logs it automatically, the same way flowing water does.
   * Placing one directly into a lava source logs it automatically too, instead of requiring a separate
     bucket right-click afterward.
 * Added window-logging: right-click a slab or plain stairs (not the corner-shaped ones) with a glass
