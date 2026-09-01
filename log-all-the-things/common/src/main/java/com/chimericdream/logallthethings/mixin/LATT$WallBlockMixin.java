@@ -28,9 +28,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.chimericdream.logallthethings.carpetlog.CarpetLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogHelper;
 import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 
@@ -119,5 +122,45 @@ public abstract class LATT$WallBlockMixin implements SimpleWaterloggedBlock {
         if (lavaLogResult.getFirst()) {
             cir.setReturnValue(lavaLogResult.getSecond());
         }
+    }
+
+    /**
+     * Substitutes a carpet-logged neighbour's stored host state in place of its real (connection-
+     * property-less) {@code CarpetedBlock} carrier state before vanilla's own {@code connectsTo} check
+     * runs, so a real wall connects to a carpet-logged wall/fence/bars exactly as it would to the live
+     * block. {@code WallBlock#updateShape} uses only this parameter (never re-queries the level for the
+     * neighbour), so substituting it here is enough - see
+     * {@link CarpetLogHelper#effectiveNeighborState}. {@code ordinal = 1} picks the second
+     * {@code BlockState}-typed argument ({@code neighbourState}), since {@code state} (the block's own
+     * state) is ordinal 0.
+     */
+    @ModifyVariable(method = "updateShape", at = @At("HEAD"), ordinal = 1, argsOnly = true)
+    private BlockState latt$substituteCarpetedNeighbor(
+        BlockState neighbourState,
+        BlockState state,
+        LevelReader level,
+        ScheduledTickAccess ticks,
+        BlockPos pos,
+        Direction directionToNeighbour,
+        BlockPos neighbourPos
+    ) {
+        return CarpetLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+    }
+
+    /**
+     * Same substitution as {@link #latt$substituteCarpetedNeighbor}, for the five
+     * {@code level.getBlockState(...)} calls {@code WallBlock#getStateForPlacement} makes directly (one
+     * per horizontal neighbour, plus the block above) instead of receiving them as parameters - lets a
+     * wall placed directly against a carpet-logged wall/fence/bars connect to it immediately, not just
+     * after a later neighbour update. Unlike {@code FenceBlock}/{@code IronBarsBlock}, {@code WallBlock}
+     * declares its local {@code level} variable as {@code LevelReader} rather than {@code BlockGetter},
+     * so the compiled call site targets {@code LevelReader#getBlockState} instead.
+     */
+    @Redirect(
+        method = "getStateForPlacement",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelReader;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;")
+    )
+    private BlockState latt$substituteCarpetedNeighborOnPlace(LevelReader level, BlockPos pos) {
+        return CarpetLogHelper.effectiveNeighborState(level, pos, level.getBlockState(pos));
     }
 }

@@ -21,10 +21,14 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
  * Renders the carpet "overlay" that lies across a carpet-logged stair/slab, using hand-authored
  * per-shape geometry (see {@link CarpetFrameGeometry}) instead of a generic flat carpet. Only covers
  * the shape/half/facing combinations a model file actually exists for — see the {@code select}
- * dispatch table below. Falls back to the caller's own flat-carpet rendering for anything not covered
- * (currently just non-straight stairs, which {@code CarpetLogHelper} refuses to log in the first
- * place). Mirrors {@code windowlog.client.WindowFrameRenderer}, minus the flat/edge texture split and
- * the per-element Blockbench pivot rotation support - none of this set's carpet elements use one.
+ * dispatch table below. Falls back to the caller's own flat-carpet rendering for anything not covered:
+ * non-straight stairs (which {@code CarpetLogHelper} refuses to log in the first place), and every
+ * carpetable host that isn't a stair or slab at all (walls, fences, chains, bars, glass panes) - those
+ * have no flat surface of their own to fit an overlay to, so the fallback's plain floor-level carpet
+ * (matching a real {@code CarpetBlock}'s own shape) is already the correct look with no overlay
+ * authoring needed. Mirrors {@code windowlog.client.WindowFrameRenderer}, minus the flat/edge texture
+ * split and the per-element Blockbench pivot rotation support - none of this set's carpet elements use
+ * one.
  *
  * <p>Unlike the window-pane set (one file per shape, reused for all four facings by rotating the
  * whole mesh at render time), stairs carpet has one file <em>per facing</em>
@@ -47,8 +51,10 @@ public final class CarpetFrameRenderer {
      * draws. Two coplanar quads at the same depth z-fight (flicker between which one wins per pixel).
      * Nudging every vertex outward along its own face normal by a sliver moves this overlay's faces
      * just in front of the host's coincident ones, resolving the tie without any visible gap.
+     * Package-visible: {@code CarpetedBlockEntityRenderer} reuses the same value to nudge its plain
+     * flat-carpet fallback render (a coarser, whole-model version of the same fix - see its own use).
      */
-    private static final float SURFACE_NUDGE = 1f / 2048f;
+    static final float SURFACE_NUDGE = 1f / 2048f;
 
     private CarpetFrameRenderer() {
     }

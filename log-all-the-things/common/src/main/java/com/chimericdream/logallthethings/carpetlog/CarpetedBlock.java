@@ -11,9 +11,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -36,15 +38,15 @@ import org.jetbrains.annotations.Nullable;
 import com.chimericdream.logallthethings.ModInfo;
 
 /**
- * The block a carpet-logged slab/stair actually becomes in the world. Carries no blockstate
- * properties of its own (see {@code carpeted_block.json}, which points every state at the empty
- * {@code minecraft:block/air} model) — all the real state lives in its {@link CarpetedBlockEntity},
- * and {@code RenderShape.INVISIBLE} hands rendering entirely to
+ * The block a carpet-logged host (slab, stairs, wall, fence, chain, bars, or glass pane) actually
+ * becomes in the world. Carries no blockstate properties of its own (see {@code carpeted_block.json},
+ * which points every state at the empty {@code minecraft:block/air} model) — all the real state lives
+ * in its {@link CarpetedBlockEntity}, and {@code RenderShape.INVISIBLE} hands rendering entirely to
  * {@code carpetlog.client.CarpetedBlockEntityRenderer}. Shape/collision delegate to the host plus a
  * thin footprint fitted to whichever part of the host is actually flat enough for a carpet to lie on
  * (see {@link #carpetShape}); drops are hardcoded to one of each sub-block's item, which is
- * safe because every vanilla slab/stair/carpet always drops exactly itself regardless of loot
- * conditions.
+ * safe because every vanilla slab/stair/wall/fence/chain/bars/pane/carpet always drops exactly itself
+ * regardless of loot conditions.
  */
 public class CarpetedBlock extends Block implements EntityBlock {
     public CarpetedBlock() {
@@ -84,6 +86,46 @@ public class CarpetedBlock extends Block implements EntityBlock {
 
     public BlockState getCarpetState(BlockGetter level, BlockPos pos) {
         return level.getBlockEntity(pos) instanceof CarpetedBlockEntity be ? be.getCarpetState() : Blocks.AIR.defaultBlockState();
+    }
+
+    /**
+     * Keeps a connectable host (wall/fence/bars/pane) looking connected to its real neighbours even
+     * after carpet-logging - without this, the stored {@code hostState} is frozen exactly as it was
+     * the moment it got carpet-logged, so a fence placed next to this block afterward would visibly
+     * connect toward it (per {@code LATT$FenceBlockMixin} et al., which substitute this block's stored
+     * host in place of its own connection-property-less carrier state) while this block's own rendered
+     * stub of the connection facing that fence stayed stuck open. Delegating to the host's own
+     * {@code updateShape} - the same call a live fence/wall/bars/pane would receive for this exact
+     * neighbour change - keeps this in lockstep with vanilla's own connection rules, and substituting
+     * the neighbour through {@link CarpetLogHelper#effectiveNeighborState} first means a neighbour that
+     * is itself carpet-logged is seen as its real host too, not as an unrecognized block.
+     */
+    @Override
+    protected BlockState updateShape(
+        BlockState state,
+        LevelReader level,
+        ScheduledTickAccess ticks,
+        BlockPos pos,
+        Direction directionToNeighbour,
+        BlockPos neighbourPos,
+        BlockState neighbourState,
+        RandomSource random
+    ) {
+        if (level instanceof Level realLevel && !realLevel.isClientSide() && level.getBlockEntity(pos) instanceof CarpetedBlockEntity be) {
+            BlockState hostState = be.getHostState();
+            if (!hostState.isAir()) {
+                BlockState effectiveNeighbor = CarpetLogHelper.effectiveNeighborState(level, neighbourPos, neighbourState);
+                BlockState updatedHost = hostState.updateShape(realLevel, ticks, pos, directionToNeighbour, neighbourPos, effectiveNeighbor, random);
+
+                if (!updatedHost.equals(hostState)) {
+                    be.setHostState(updatedHost);
+                    be.setChanged();
+                    realLevel.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+                }
+            }
+        }
+
+        return state;
     }
 
     @Override
@@ -182,6 +224,13 @@ public class CarpetedBlock extends Block implements EntityBlock {
      * also make the wrong region readable as "carpet" for pick-block/mining-speed purposes even
      * though nothing is drawn there.
      *
+     * <p>Every other carpetable host (walls, fences, chains, bars, glass panes) has no flat surface of
+     * its own for a carpet to sit on top of - it's the same as a real carpet placed in the same block
+     * as one of those, lying flush across the whole footprint at floor level (y0-1). That's exactly a
+     * real {@code CarpetBlock}'s own natural shape, which is why {@code CarpetedBlockEntityRenderer}'s
+     * plain {@code submitMovingBlock} fallback (no {@code CarpetFrameRenderer} overlay needed) already
+     * renders it correctly with no per-host model authoring.
+     *
      * <p>The stair case is computed assuming {@code FACING == EAST} and rotated to the real facing
      * via {@link #stairsYRotation}. {@code CarpetFrameRenderer} instead ships one pre-rotated model
      * file per facing (see its class doc for why a single shared-and-rotated mesh doesn't work for
@@ -194,6 +243,10 @@ public class CarpetedBlock extends Block implements EntityBlock {
      * "corner top" for an upside-down stair.
      */
     static VoxelShape carpetShape(BlockState hostState) {
+        if (hostState.isAir()) {
+            return Shapes.empty();
+        }
+
         if (hostState.getBlock() instanceof StairBlock) {
             if (hostState.getValue(StairBlock.SHAPE) != StairsShape.STRAIGHT) {
                 return Shapes.empty();
@@ -218,7 +271,7 @@ public class CarpetedBlock extends Block implements EntityBlock {
             return Shapes.box(0.0, y0, 0.0, 1.0, y1, 1.0);
         }
 
-        return Shapes.empty();
+        return Shapes.box(0.0, 0.0, 0.0, 1.0, CARPET_THICKNESS, 1.0);
     }
 
     /**

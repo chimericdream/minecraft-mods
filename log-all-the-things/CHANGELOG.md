@@ -17,10 +17,14 @@
   window-logged one still forms the usual corner shape. A windowed slab's pane faces the direction you
   were looking when you placed it. Sneak while placing the pane/bars to place it normally instead of
   window-logging. Lava-logging and window-logging can be combined on the same block.
-* Added carpet-logging: right-click a slab or plain stairs (not the corner-shaped ones) with a carpet
-  to lay it into the block instead of placing a separate carpet on top. Aim at the carpet while mining
-  to pop just it back out; mining the solid part breaks the whole thing and drops both items. Sneak
-  while placing the carpet to place it normally instead of carpet-logging.
+* Added carpet-logging: right-click a slab, plain stairs (not the corner-shaped ones), wall, fence,
+  chain (iron or copper), bars (iron or copper), or glass pane with a carpet to lay it into the block
+  instead of placing a separate carpet on top. Aim at the carpet while mining to pop just it back out;
+  mining the solid part breaks the whole thing and drops both items. Sneak while placing the carpet to
+  place it normally instead of carpet-logging. A carpet-logged wall, fence, or bars/pane still connects
+  to real neighbors (and to other carpet-logged ones) exactly like the un-logged block would, in both
+  directions - a wall placed next to a carpet-logged fence connects to it immediately, and a
+  carpet-logged fence updates to connect toward a wall placed next to it afterward.
 
 #### Bug Fixes
 

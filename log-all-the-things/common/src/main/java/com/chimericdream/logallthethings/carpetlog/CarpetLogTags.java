@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Block;
 import com.chimericdream.logallthethings.ModInfo;
 
 public final class CarpetLogTags {
-    /** Blocks a compatible carpet can be carpet-logged onto. Seeded with slabs and stairs only for now. */
+    /** Blocks a compatible carpet can be carpet-logged onto: slabs, stairs, walls, fences, chains (iron/copper), bars (iron/copper), and glass panes. */
     public static final TagKey<Block> CARPETABLE = TagKey.create(Registries.BLOCK, id("carpetable"));
 
     /** Blocks that count as a "carpet" for carpet-logging. Seeded with the wool and moss carpets. */

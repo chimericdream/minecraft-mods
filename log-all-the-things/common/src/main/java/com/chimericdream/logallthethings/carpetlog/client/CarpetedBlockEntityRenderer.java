@@ -76,7 +76,26 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
             boolean renderedFrame = CarpetFrameRenderer.submit(poseStack, submitNodeCollector, state.faceLight, state.cardinalLighting, hostState, state.carpet.blockState);
             if (!renderedFrame) {
+                // A wall/fence/bars/pane host has no shape-fitted overlay (see CarpetFrameRenderer's
+                // select()), so this renders the carpet as its own real, unmodified block model. That
+                // model's own bottom face (y=0) coincides with a connected host's own bottom face the
+                // same way a slab/stair's fitted overlay coincides with its host's top face - and once
+                // a wall/fence/bars/pane is connected on a side, that connection's arm reaches all the
+                // way to the block's edge, so the carpet's own side faces at x/z=0/1 land exactly on
+                // that arm's own outer end face too. {@code CarpetFrameRenderer} resolves the same kind
+                // of tie per-vertex, along each vertex's own face normal; a whole real block model here
+                // isn't individual vertices this renderer controls, so this nudges the whole moving-block
+                // render instead - down in Y for the bottom-face case, and very slightly wider in X/Z
+                // (scaled outward from the block's horizontal center) for the side-face case. Both use
+                // the same {@link CarpetFrameRenderer#SURFACE_NUDGE} magnitude so the effect stays exactly
+                // as imperceptible as the per-vertex version.
+                poseStack.pushPose();
+                poseStack.translate(0.0, -CarpetFrameRenderer.SURFACE_NUDGE, 0.0);
+                poseStack.translate(0.5, 0.0, 0.5);
+                poseStack.scale(1.0F + 2.0F * CarpetFrameRenderer.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * CarpetFrameRenderer.SURFACE_NUDGE);
+                poseStack.translate(-0.5, 0.0, -0.5);
                 submitNodeCollector.submitMovingBlock(poseStack, state.carpet, 0);
+                poseStack.popPose();
             }
         }
     }
