@@ -1,5 +1,13 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.1
+
+#### Bug Fixes
+
+- Fixed a crash when placing poplar signs or hanging signs.
+- Fixed poplar doors and trapdoors letting you see through the wall behind them.
+- Fixed the mod failing to load on NeoForge.
+
 ### 26.2 - 1.0.0
 
 #### New Features

@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -144,12 +145,12 @@ public class ModBlocks {
         );
         registerBlockWithItem(
             "poplar_door",
-            () -> new ModDoorBlock(POPLAR_BLOCK_SET_TYPE, blockSettings(Blocks.OAK_PLANKS, "poplar_door")),
+            () -> new ModDoorBlock(POPLAR_BLOCK_SET_TYPE, blockSettings(Blocks.OAK_DOOR, "poplar_door")),
             REDSTONE_BLOCK_SETTINGS
         );
         registerBlockWithItem(
             "poplar_trapdoor",
-            () -> new ModTrapDoorBlock(POPLAR_BLOCK_SET_TYPE, blockSettings(Blocks.OAK_PLANKS, "poplar_trapdoor")),
+            () -> new ModTrapDoorBlock(POPLAR_BLOCK_SET_TYPE, blockSettings(Blocks.OAK_TRAPDOOR, "poplar_trapdoor")),
             REDSTONE_BLOCK_SETTINGS
         );
         registerBlockWithItem(
@@ -197,6 +198,8 @@ public class ModBlocks {
             "poplar_sign",
             () -> new SignItem(standingSign.get(), wallSign.get(), itemSettings(FUNCTIONAL_BLOCK_SETTINGS, "poplar_sign"))
         );
+        ModBlockEntityValidBlocks.register(BlockEntityTypes.SIGN, standingSign);
+        ModBlockEntityValidBlocks.register(BlockEntityTypes.SIGN, wallSign);
 
         RegistrySupplier<Block> hangingSign = registerBlock(
             "poplar_hanging_sign",
@@ -210,6 +213,8 @@ public class ModBlocks {
             "poplar_hanging_sign",
             () -> new HangingSignItem(hangingSign.get(), wallHangingSign.get(), itemSettings(FUNCTIONAL_BLOCK_SETTINGS, "poplar_hanging_sign"))
         );
+        ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, hangingSign);
+        ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, wallHangingSign);
     }
 
     /**

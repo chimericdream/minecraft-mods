@@ -2,7 +2,6 @@ package com.chimericdream.nextupdatenow;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.nextupdatenow.block.ModBlocks;
-import com.chimericdream.nextupdatenow.worldgen.ModWorldgenTypes;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +18,6 @@ public final class NextUpdateNowMod {
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
-        ModWorldgenTypes.init();
         ModBlocks.init();
 
         REGISTRY_HELPER.init();
