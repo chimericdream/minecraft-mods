@@ -11,4 +11,7 @@ Plans
 * World gen?
 * More animals?
 * Villager profession(s)?
+* Candlestick
+* Wall sconce
+* Fertilizers
 * ...?
