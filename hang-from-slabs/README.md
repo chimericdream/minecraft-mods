@@ -8,7 +8,7 @@ _Allows items such as lanterns and hanging signs to be placed under a top slab_
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

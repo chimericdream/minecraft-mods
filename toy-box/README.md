@@ -8,7 +8,7 @@ _Creeper-in-a-box, talking villager dolls, and other such toys and decorative it
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

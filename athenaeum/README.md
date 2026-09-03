@@ -18,9 +18,8 @@ datapacks, which allows for easy customization and expansion.
 
 ### Minecraft Versions
 
-* 26.2: supported
-* 1.21.x: supported
-* < 1.21: not planned
+* 26.2: Supported
+* 26.1.2: Bug fixes only
 
 ### Current Features
 

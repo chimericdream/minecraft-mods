@@ -12,7 +12,10 @@ staying recognizably "hopper."
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
+* 26.1.2: Bug fixes only
+* 1.21.4: Bug fixes only
+* 1.21: Bug fixes only
 
 ## Current Features
 

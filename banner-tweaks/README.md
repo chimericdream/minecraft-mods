@@ -11,7 +11,9 @@ raises that limit and smooths out the rough edges around applying, rendering, an
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
+* 26.1.2: Bug fixes only
+* 1.21.5: Bug fixes only
 
 ### Current Features
 

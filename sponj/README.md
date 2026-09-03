@@ -8,13 +8,11 @@ _Yet another sponge mod_
 
 This simple mod adds two new blocks: a sponj and lava sponj. 
 
-### Versions
+### Minecraft Versions
 
-* 26.2: supported
-* 1.20.x: supported
-* 1.19.x: maintenance only
-* 1.18.2: maintenance only
-* < 1.18.2: not planned
+* 26.2: Supported
+* 26.1.2: Bug fixes only
+* 1.21.4: Bug fixes only
 
 ### Current Features
 

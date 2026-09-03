@@ -12,18 +12,10 @@ _Simple, functional, decorative blocks for all your building and storage needs (
 
 This mod contains a wide variety of functional and decorative furniture blocks for use in your Minecraft world.
 
-### Versions
+### Minecraft Versions
 
-* 26.2: supported
-* 1.21.3: planned
-* 1.21.2: not planned
-* 1.21-1.21.1: supported
-* 1.19.1-2: supported up to version 4.0.2
-* 1.19: supported up to version 3.4.2
-* 1.18.2: supported up to version 2.8.3
-* 1.18.1: supported up to version 2.6.1
-* 1.17.1: supported up to version 2.6.1
-* < 1.17.1: not planned
+* 26.2: Supported
+* 26.1.2: Bug fixes only
 
 ### Current Features
 

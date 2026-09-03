@@ -8,7 +8,7 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

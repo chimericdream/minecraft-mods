@@ -16,7 +16,8 @@ it is safe to add or remove at any time and does not need to be installed on the
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
+* 26.1.2: Bug fixes only
 
 ### Current Features
 

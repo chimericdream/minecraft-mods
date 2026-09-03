@@ -8,7 +8,7 @@ _AllStackable, reborn for Fabric and NeoForge in the 26.x+ era._
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

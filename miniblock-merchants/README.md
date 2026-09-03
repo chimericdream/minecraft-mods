@@ -10,6 +10,11 @@
 
 This mod provides over two dozen new villager professions which trade nearly 1000 miniblocks to decorate your world!
 
+### Minecraft Versions
+
+* 26.2: Supported
+* 26.1.2: Bug fixes only
+
 ## Gameplay
 
 If you come across a conversion item for a miniblock merchant, you can use it to convert an existing villager. For this

@@ -8,7 +8,7 @@ _When Mojang adds new blocks to the game, but leaves some out, this mod fills in
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

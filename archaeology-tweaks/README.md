@@ -13,8 +13,8 @@ whatever loot has been assigned to it.
 
 ### Minecraft Versions
 
-* 26.2: supported
-* Earlier versions: see the git history for builds targeting older releases
+* 26.2: Supported
+* 26.1.2: Bug fixes only
 
 ### Current Features
 

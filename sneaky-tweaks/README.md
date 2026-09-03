@@ -10,7 +10,7 @@ Vanilla Minecraft already gives sneaking a handful of side effects — you don't
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

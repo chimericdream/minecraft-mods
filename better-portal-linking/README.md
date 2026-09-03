@@ -10,7 +10,7 @@ _Gives players more control over how their nether portals link between the Nethe
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

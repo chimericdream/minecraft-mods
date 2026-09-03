@@ -8,8 +8,7 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 
 ### Minecraft Versions
 
-* 26.2: supported
-* <26.2: not planned
+* 26.2: Supported
 
 ### Current Features
 

@@ -8,7 +8,7 @@ _Craft a target dummy block that can take on the skin of any mob, so you can tes
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
 
 ### Current Features
 

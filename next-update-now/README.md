@@ -6,10 +6,9 @@ _Get content from the next update on the current version!_
 
 ## Introduction
 
-### Supported Minecraft Versions
+### Minecraft Versions
 
-* 26.2: supported for 26.3 content only
-* <26.2: not planned
+* 26.2: Supported (26.3 content only)
 
 ### What does this mod do?
 

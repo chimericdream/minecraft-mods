@@ -16,7 +16,10 @@ nothing visible in-game, so **in-game documentation is not applicable** to this 
 
 ### Minecraft Versions
 
-* 26.2: supported
+* 26.2: Supported
+* 26.1.2: Bug fixes only
+* 1.21.5: Bug fixes only
+* 1.21.4: Bug fixes only
 
 ### What's Inside
 
