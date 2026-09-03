@@ -10,6 +10,8 @@ public final class SneakyTweaksAdvancements {
     public static final Identifier SNEAK_THROUGH_BERRIES = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "sneak_through_berries");
     public static final Identifier SNEAK_ON_CAMPFIRE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "sneak_on_campfire");
     public static final Identifier OVERSTAY_YOUR_WELCOME = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "overstay_your_welcome");
+    public static final Identifier CROUCH_BRIDGE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "crouch_bridge");
+    public static final Identifier LOOKED_DOWN = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "looked_down");
 
     private SneakyTweaksAdvancements() {
     }

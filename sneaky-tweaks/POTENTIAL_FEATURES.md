@@ -51,4 +51,3 @@ Because this mod is a grab bag by design, the config needs to pull its weight mo
 ## From the idea backlog (2026-08-13)
 
 * Add thematic/fun advancements.
-* **"Wile E. Coyote" style sneaking** — when sneaking, if you don't look down, you can cross a 2-3 block air gap as though you're on solid ground.

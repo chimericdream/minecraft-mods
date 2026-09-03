@@ -9,7 +9,8 @@
     "mixins": [
         "SneakyTweaks$SweetBerryBushBlockMixin",
         "SneakyTweaks$LivingEntityMixin",
-        "SneakyTweaks$CampfireBlockMixin"
+        "SneakyTweaks$CampfireBlockMixin",
+        "SneakyTweaks$PlayerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

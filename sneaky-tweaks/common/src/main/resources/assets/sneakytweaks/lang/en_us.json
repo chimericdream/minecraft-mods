@@ -2,6 +2,9 @@
     "text.config.sneakytweaks.title": "Sneaky Tweaks Config",
     "text.config.sneakytweaks.option.enableCampfireSneaking": "Enable Timed Campfire Immunity",
     "text.config.sneakytweaks.option.campfireGraceTicks": "Campfire Grace Duration (ticks)",
+    "text.config.sneakytweaks.option.enableCrouchBridging": "Enable Crouch Bridging",
+    "text.config.sneakytweaks.option.crouchBridgeMaxGapBlocks": "Crouch Bridge Max Gap (blocks)",
+    "text.config.sneakytweaks.option.crouchBridgeLookDownThreshold": "Crouch Bridge Look-Down Threshold (degrees)",
 
     "advancements.sneakytweaks.root.title": "Sneaky Tweaks",
     "advancements.sneakytweaks.root.desc": "A few careful adjustments for cautious feet",
@@ -10,5 +13,9 @@
     "advancements.sneakytweaks.sneak_on_campfire.title": "Cold Feet",
     "advancements.sneakytweaks.sneak_on_campfire.desc": "Sneak on a lit campfire without taking damage",
     "advancements.sneakytweaks.overstay_your_welcome.title": "Overstayed Your Welcome",
-    "advancements.sneakytweaks.overstay_your_welcome.desc": "Sneak on a campfire long enough that it starts hurting you again"
+    "advancements.sneakytweaks.overstay_your_welcome.desc": "Sneak on a campfire long enough that it starts hurting you again",
+    "advancements.sneakytweaks.crouch_bridge.title": "Who Needs Bridges?",
+    "advancements.sneakytweaks.crouch_bridge.desc": "Cross a gap while sneaking without looking down",
+    "advancements.sneakytweaks.looked_down.title": "Oh, Right, Gravity",
+    "advancements.sneakytweaks.looked_down.desc": "Fall because you looked down while crouch-bridging across a gap"
 }

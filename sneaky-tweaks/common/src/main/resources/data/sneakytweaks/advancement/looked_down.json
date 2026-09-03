@@ -1,0 +1,24 @@
+{
+    "parent": "sneakytweaks:crouch_bridge",
+    "display": {
+        "icon": {
+            "id": "minecraft:anvil"
+        },
+        "title": {
+            "translate": "advancements.sneakytweaks.looked_down.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.sneakytweaks.looked_down.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}
