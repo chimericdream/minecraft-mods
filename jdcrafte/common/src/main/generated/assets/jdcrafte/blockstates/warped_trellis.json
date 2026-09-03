@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "jdcrafte:block/warped_trellis",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "jdcrafte:block/warped_trellis"
+    },
+    "facing=south": {
+      "model": "jdcrafte:block/warped_trellis",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "jdcrafte:block/warped_trellis",
+      "y": 270
+    }
+  }
+}

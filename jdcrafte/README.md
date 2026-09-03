@@ -20,6 +20,7 @@ surviving the game; it's all the rustic dressing that makes a farm worth showing
   for your animals. Right-click it with feed in hand to fill it up, and it'll visibly fill as more
   is added; shift-right-click with an empty hand to take feed back out.
 * **Weathervane.** A decorative rooftop weather vane. Right-click it to spin it in place.
+* **Trellis.** A climbable decorative wooden lattice. Comes in every wood type.
 
 ## Notes for Documentation
 
