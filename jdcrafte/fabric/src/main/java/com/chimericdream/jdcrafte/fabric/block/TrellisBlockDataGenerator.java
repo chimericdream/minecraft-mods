@@ -19,10 +19,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
@@ -60,6 +64,20 @@ public class TrellisBlockDataGenerator implements FabricBlockDataGenerator {
     @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
         generator.dropSelf(block);
+    }
+
+    @Override
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        Block log = block.config.getIngredient("log");
+
+        generator.shaped(RecipeCategory.DECORATIONS, block, 4)
+            .pattern("LSL")
+            .pattern("SSS")
+            .pattern("LSL")
+            .define('L', log)
+            .define('S', Items.STICK)
+            .unlockedBy(RecipeProvider.getHasName(log), generator.has(log))
+            .save(exporter);
     }
 
     @Override

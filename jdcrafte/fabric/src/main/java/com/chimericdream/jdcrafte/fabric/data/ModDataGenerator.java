@@ -11,11 +11,15 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +49,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(JDCrafteModelGenerator::new);
         pack.addProvider(JDCrafteBlockLootTables::new);
+        pack.addProvider(JDCrafteRecipeProvider::new);
         pack.addProvider(JDCrafteEnglishLangProvider::new);
         pack.addProvider(JDCrafteBlockTagGenerator::new);
     }
@@ -88,6 +93,35 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureBlockLootTables(this, this.registryLookup);
             }
+        }
+    }
+
+    private static class JDCrafteRecipeProvider extends FabricRecipeProvider {
+        public JDCrafteRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+            return new RecipeProvider(registryLookup, exporter) {
+                @Override
+                public void buildRecipes() {
+                    // MC 26.2 binds item data components lazily during a server reload rather than at
+                    // bootstrap, so recipes that read component defaults would otherwise throw
+                    // "Components not bound yet". See CLAUDE.md's "Datagen gotcha" section.
+                    BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.build(registryLookup)
+                        .forEach(pending -> pending.apply());
+
+                    for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
+                        blockGenerator.configureRecipes(registryLookup, exporter, this);
+                    }
+                }
+            };
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "JDCrafteRecipeProvider";
         }
     }
 

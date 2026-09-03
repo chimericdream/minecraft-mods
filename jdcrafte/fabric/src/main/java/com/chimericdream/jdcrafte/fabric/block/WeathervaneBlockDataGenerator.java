@@ -8,11 +8,17 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Function;
 
@@ -40,6 +46,21 @@ public class WeathervaneBlockDataGenerator implements FabricBlockDataGenerator {
     @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
         generator.dropSelf(block);
+    }
+
+    @Override
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.DECORATIONS, block)
+            .pattern("   ")
+            .pattern("F E")
+            .pattern("III")
+            .define('F', Items.FLINT)
+            .define('E', ItemTags.EGGS)
+            .define('I', Blocks.IRON_BARS)
+            .unlockedBy(RecipeProvider.getHasName(Items.FLINT), generator.has(Items.FLINT))
+            .unlockedBy("has_egg", generator.has(ItemTags.EGGS))
+            .unlockedBy(RecipeProvider.getHasName(Blocks.IRON_BARS), generator.has(Blocks.IRON_BARS))
+            .save(exporter);
     }
 
     @Override

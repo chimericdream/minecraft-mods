@@ -14,10 +14,15 @@ import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
@@ -54,6 +59,19 @@ public class FeedingTroughBlockDataGenerator implements FabricBlockDataGenerator
     @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
         generator.dropSelf(block);
+    }
+
+    @Override
+    public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
+        generator.shaped(RecipeCategory.DECORATIONS, block, 2)
+            .pattern("W W")
+            .pattern("WWW")
+            .pattern("S S")
+            .define('W', ItemTags.WOODEN_SLABS)
+            .define('S', Items.STICK)
+            .unlockedBy("has_wooden_slab", generator.has(ItemTags.WOODEN_SLABS))
+            .unlockedBy(RecipeProvider.getHasName(Items.STICK), generator.has(Items.STICK))
+            .save(exporter);
     }
 
     @Override
