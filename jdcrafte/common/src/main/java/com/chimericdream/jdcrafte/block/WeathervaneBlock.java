@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * A decorative rooftop weathercock. Its only blockstate property is {@link #ROTATION} (0-7, 45 degrees
+ * A decorative rooftop weather vane. Its only blockstate property is {@link #ROTATION} (0-7, 45 degrees
  * per step, same 8-way convention as an item frame's held-item rotation), which right-clicking cycles
  * through one step at a time - see {@link #useWithoutItem}.
  *
