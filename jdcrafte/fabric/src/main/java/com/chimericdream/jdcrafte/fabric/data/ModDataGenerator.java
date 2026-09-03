@@ -2,6 +2,7 @@ package com.chimericdream.jdcrafte.fabric.data;
 
 import com.chimericdream.jdcrafte.block.ModBlocks;
 import com.chimericdream.jdcrafte.fabric.block.FeedingTroughBlockDataGenerator;
+import com.chimericdream.jdcrafte.fabric.block.TrellisArchBlockDataGenerator;
 import com.chimericdream.jdcrafte.fabric.block.TrellisBlockDataGenerator;
 import com.chimericdream.jdcrafte.fabric.block.WeathervaneBlockDataGenerator;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
@@ -20,12 +21,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class ModDataGenerator implements DataGeneratorEntrypoint {
     private static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = buildBlockGenerators();
@@ -40,6 +45,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             generators.add(new TrellisBlockDataGenerator(trellis.get()));
         }
 
+        for (RegistrySupplier<Block> trellisArch : ModBlocks.TRELLIS_ARCH_BLOCKS) {
+            generators.add(new TrellisArchBlockDataGenerator(trellisArch.get()));
+        }
+
         return generators;
     }
 
@@ -52,6 +61,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(JDCrafteRecipeProvider::new);
         pack.addProvider(JDCrafteEnglishLangProvider::new);
         pack.addProvider(JDCrafteBlockTagGenerator::new);
+        pack.addProvider(JDCrafteItemTagGenerator::new);
     }
 
     private static class JDCrafteBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
@@ -63,6 +73,19 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         protected void addTags(HolderLookup.Provider arg) {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureBlockTags(arg, this::builder);
+            }
+        }
+    }
+
+    private static class JDCrafteItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
+        public JDCrafteItemTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider arg) {
+            for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
+                blockGenerator.configureItemTags(arg, this::builder);
             }
         }
     }

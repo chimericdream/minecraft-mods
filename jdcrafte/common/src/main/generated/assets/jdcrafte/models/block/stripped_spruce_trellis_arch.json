@@ -1,0 +1,7 @@
+{
+  "parent": "jdcrafte:block/trellis_arch",
+  "textures": {
+    "log": "minecraft:block/stripped_spruce_log",
+    "log_top": "minecraft:block/stripped_spruce_log_top"
+  }
+}

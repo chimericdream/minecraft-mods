@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": "jdcrafte:birch_trellis"
+  },
+  "pattern": [
+    " T ",
+    "T T"
+  ],
+  "result": {
+    "count": 3,
+    "id": "jdcrafte:birch_trellis_arch"
+  }
+}

@@ -31,3 +31,6 @@
   * Stripped Pale Oak Trellis
   * Stripped Spruce Trellis
   * Stripped Warped Trellis
+* Added the trellis arch, a climbable, 3-block-wide decorative archway crafted from 3 trellises.
+  Comes in the same 24 wood types as the trellis - crafting a trellis arch takes 3 trellises of
+  that same type.

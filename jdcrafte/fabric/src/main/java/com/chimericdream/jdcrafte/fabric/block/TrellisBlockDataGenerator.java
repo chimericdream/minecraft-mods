@@ -1,6 +1,7 @@
 package com.chimericdream.jdcrafte.fabric.block;
 
 import com.chimericdream.jdcrafte.JDCrafteMod;
+import com.chimericdream.jdcrafte.block.ModItemTags;
 import com.chimericdream.jdcrafte.block.TrellisBlock;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.fabric.blocks.TranslationUtils;
@@ -26,6 +27,7 @@ import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -59,6 +61,11 @@ public class TrellisBlockDataGenerator implements FabricBlockDataGenerator {
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
         getBuilder.apply(BlockTags.CLIMBABLE).add(block.builtInRegistryHolder().key());
         getBuilder.apply(BlockTags.MINEABLE_WITH_AXE).add(block.builtInRegistryHolder().key());
+    }
+
+    @Override
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
+        getBuilder.apply(ModItemTags.TRELLIS).add(block.asItem().builtInRegistryHolder().key());
     }
 
     @Override

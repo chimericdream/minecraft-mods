@@ -1,0 +1,121 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch_top"
+      },
+      "when": {
+        "facing": "north",
+        "part": "center"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch"
+      },
+      "when": {
+        "facing": "north",
+        "part": "front"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 180
+      },
+      "when": {
+        "facing": "north",
+        "part": "back"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch_top",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "part": "center"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "part": "front"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 270
+      },
+      "when": {
+        "facing": "east",
+        "part": "back"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch_top",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "part": "center"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "part": "front"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch"
+      },
+      "when": {
+        "facing": "south",
+        "part": "back"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch_top",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "part": "center"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "part": "front"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/stripped_dark_oak_trellis_arch",
+        "y": 90
+      },
+      "when": {
+        "facing": "west",
+        "part": "back"
+      }
+    }
+  ]
+}

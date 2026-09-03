@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "jdcrafte:pale_oak_trellis_arch",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "center"
+              }
+            }
+          ],
+          "name": "jdcrafte:pale_oak_trellis_arch"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
