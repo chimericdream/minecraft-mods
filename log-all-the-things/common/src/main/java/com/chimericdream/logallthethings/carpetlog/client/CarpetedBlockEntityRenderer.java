@@ -71,7 +71,7 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
     @Override
     public void submit(CarpetedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.host != null) {
-            submitNodeCollector.submitMovingBlock(poseStack, state.host, 0);
+            submitNodeCollector.submitMovingBlock(poseStack, state.host);
         }
         if (state.carpet != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
@@ -95,7 +95,7 @@ public class CarpetedBlockEntityRenderer implements BlockEntityRenderer<Carpeted
                 poseStack.translate(0.5, 0.0, 0.5);
                 poseStack.scale(1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE);
                 poseStack.translate(-0.5, 0.0, -0.5);
-                submitNodeCollector.submitMovingBlock(poseStack, state.carpet, 0);
+                submitNodeCollector.submitMovingBlock(poseStack, state.carpet);
                 poseStack.popPose();
             }
         }
