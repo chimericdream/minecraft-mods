@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": "jdcrafte:dark_oak_trellis"
+  },
+  "pattern": [
+    " T ",
+    "T T"
+  ],
+  "result": {
+    "count": 3,
+    "id": "jdcrafte:dark_oak_trellis_arch"
+  }
+}

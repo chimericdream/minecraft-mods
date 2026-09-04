@@ -1,0 +1,7 @@
+architectury {
+    common project(':log-all-the-things').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/logallthethings.accesswidener")
+}

@@ -1,0 +1,26 @@
+{
+    "parent": "minecraft:block/block",
+    "textures": {
+        "particle": "minecraft:block/crafting_table_front",
+        "down": "minecraft:block/crafting_table_top",
+        "up": "minecraft:block/oak_planks",
+        "north": "minecraft:block/crafting_table_front",
+        "south": "minecraft:block/crafting_table_side",
+        "east": "minecraft:block/crafting_table_side",
+        "west": "minecraft:block/crafting_table_front"
+    },
+    "elements": [
+        {
+            "from": [0, 0, 0],
+            "to": [16, 16, 16],
+            "faces": {
+                "down": { "uv": [16, 16, 0, 0], "texture": "#down", "cullface": "down" },
+                "up": { "uv": [16, 16, 0, 0], "texture": "#up", "cullface": "up" },
+                "north": { "uv": [0, 16, 16, 0], "texture": "#north", "cullface": "north" },
+                "south": { "uv": [0, 16, 16, 0], "texture": "#south", "cullface": "south" },
+                "west": { "uv": [0, 16, 16, 0], "texture": "#west", "cullface": "west" },
+                "east": { "uv": [0, 16, 16, 0], "texture": "#east", "cullface": "east" }
+            }
+        }
+    ]
+}

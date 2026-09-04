@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": "#minecraft:eggs",
+    "F": "minecraft:flint",
+    "I": "minecraft:iron_bars"
+  },
+  "pattern": [
+    "   ",
+    "F E",
+    "III"
+  ],
+  "result": {
+    "id": "jdcrafte:weathervane"
+  }
+}

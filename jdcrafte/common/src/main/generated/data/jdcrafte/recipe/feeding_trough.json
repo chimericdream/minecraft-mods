@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "#minecraft:wooden_slabs"
+  },
+  "pattern": [
+    "W W",
+    "WWW",
+    "S S"
+  ],
+  "result": {
+    "count": 2,
+    "id": "jdcrafte:feeding_trough"
+  }
+}

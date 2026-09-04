@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "conditions": [
+                        {
+                            "block": "camelnostrils:pink_upside_down_bed",
+                            "condition": "minecraft:block_state_property",
+                            "properties": {
+                                "part": "head"
+                            }
+                        }
+                    ],
+                    "name": "camelnostrils:pink_upside_down_bed"
+                }
+            ],
+            "rolls": 1.0
+        }
+    ],
+    "random_sequence": "camelnostrils:blocks/pink_upside_down_bed"
+}

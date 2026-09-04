@@ -1,0 +1,18 @@
+{
+    "required": true,
+    "package": "com.chimericdream.sneakytweaks.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+        "SneakyTweaks$HudMixin"
+    ],
+    "mixins": [
+        "SneakyTweaks$SweetBerryBushBlockMixin",
+        "SneakyTweaks$LivingEntityMixin",
+        "SneakyTweaks$CampfireBlockMixin",
+        "SneakyTweaks$PlayerMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

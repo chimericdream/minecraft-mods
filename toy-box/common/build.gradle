@@ -1,0 +1,7 @@
+architectury {
+    common project(':toy-box').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/toybox.accesswidener")
+}

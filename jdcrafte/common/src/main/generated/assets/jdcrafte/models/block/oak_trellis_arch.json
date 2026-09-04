@@ -1,0 +1,7 @@
+{
+  "parent": "jdcrafte:block/trellis_arch",
+  "textures": {
+    "log": "minecraft:block/oak_log",
+    "log_top": "minecraft:block/oak_log_top"
+  }
+}

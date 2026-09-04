@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "jdcrafte:block/stripped_spruce_trellis",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "jdcrafte:block/stripped_spruce_trellis"
+    },
+    "facing=south": {
+      "model": "jdcrafte:block/stripped_spruce_trellis",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "jdcrafte:block/stripped_spruce_trellis",
+      "y": 270
+    }
+  }
+}

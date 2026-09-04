@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "package": "com.chimericdream.logallthethings.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "LATT$BucketItemFabricMixin",
+        "LATT$FireBlockFabricMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

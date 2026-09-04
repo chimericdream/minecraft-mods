@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "package": "com.chimericdream.nextupdatenow.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "BlockEntityTypeMixin",
+        "FoliagePlacerTypeMixin",
+        "TrunkPlacerTypeMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
