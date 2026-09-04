@@ -20,14 +20,13 @@ starting points for future planning.
   faster and/or have more durability. Gold could trade durability for a luck bonus.
 * **"Keen Eye" enchantment** — suspicious blocks within a few chunks shimmer faintly while a brush with
   this enchantment is held, solving the "they're invisible in terrain" discoverability problem.
+* **"Careful Hands" enchantment** — a chance to pull a *second* roll from the loot table on completion.
 * **Brush handle customization** — combine a brush with dye or a banner pattern purely for looks.
 
 ## Dig sites & world generation
 
 * **Buried dig sites** — small worldgen features that cluster 5–15 suspicious blocks around a skeleton,
-  fossil, or ruined foundation, so players can find a "site" rather than lone blocks. _Phase 1
-  (scattered single-block deposits, no centerpiece or torn-map-fragment mechanic) has shipped — this
-  clustered/structure-based version remains the deferred follow-up._
+  fossil, or ruined foundation, so players can find a "site" rather than lone blocks.
 * **Fossil excavations** — vanilla fossils generate partially encased in suspicious blocks; fully brushing
   the site yields bonus bone blocks and rare sherds.
 * **Torn map fragments** — a loot item that, when several are combined, points to a nearby dig site
@@ -41,8 +40,8 @@ starting points for future planning.
   mycelium, a soul-flame sherd from soul sand, etc.), usable on vanilla decorated pots.
 * **Field Journal item** — records every unique artifact you've brushed up; doubles as a collection
   checklist with advancement hooks.
-* **Advancements** — "First Dig," "Museum Quality" (collect every sherd), "Interdimensional
-  Archaeology."
+* **Advancements** — "First Dig," "Gentle Touch" (complete a dig without breaking the block), "Museum
+  Quality" (collect every sherd), "Interdimensional Archaeology."
 
 ## Integration & configurability
 
@@ -56,5 +55,4 @@ starting points for future planning.
 ## From the idea backlog (2026-08-13)
 
 * Add thematic/fun advancements.
-* ~~Add small features to world generation with the new suspicious blocks.~~ Done — see "Dig sites &
-  world generation" above.
+* Add small features to world generation with the new suspicious blocks.
