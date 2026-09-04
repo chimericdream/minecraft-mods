@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.general;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -47,8 +49,7 @@ public class MossyBasaltBricksDataGenerator extends ChimericLibBlockDataGenerato
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, "Mossy Basalt Bricks");
-        translationBuilder.add(BLOCK.asItem(), "Mossy Basalt Bricks");
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, "Mossy Basalt Bricks");
     }
 
     @Override

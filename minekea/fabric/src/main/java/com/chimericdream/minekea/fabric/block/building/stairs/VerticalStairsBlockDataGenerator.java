@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.VerticalStairsBlock;
@@ -28,7 +30,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
     public static final ModelTemplate VERTICAL_STAIRS_MODEL = new ModelTemplate(
         Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/building/stairs/vertical")),
         Optional.empty(),
-        TextureSlot.ALL
+        TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
     );
 
     public final VerticalStairsBlock BLOCK;
@@ -39,10 +41,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK);
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -61,8 +60,7 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Vertical %s Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -72,7 +70,17 @@ public class VerticalStairsBlockDataGenerator extends ChimericLibBlockDataGenera
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(BLOCK.config.getTexture()));
+        Identifier defaultTextureId = BLOCK.config.getTexture();
+        Identifier bottomTextureId = BLOCK.config.getTextureOrDefault("bottom", defaultTextureId);
+        Identifier topTextureId = BLOCK.config.getTextureOrDefault("top", defaultTextureId);
+        Identifier sideTextureId = BLOCK.config.getTextureOrDefault("side", defaultTextureId);
+
+        assert bottomTextureId != null && topTextureId != null && sideTextureId != null;
+
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.BOTTOM, new Material(bottomTextureId))
+            .put(TextureSlot.TOP, new Material(topTextureId))
+            .put(TextureSlot.SIDE, new Material(sideTextureId));
 
         ModelUtils.registerVerticalStairsBlock(
             blockStateModelGenerator,

@@ -1,12 +1,16 @@
 package com.chimericdream.minekea.fabric.block.building.stairs;
 
-import com.chimericdream.lib.util.Tool;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.family.FamilyBlockModels;
+import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.stairs.StairsBlock;
+import com.chimericdream.minekea.block.building.stairs.VerticalStairsBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.model.sprite.Material;
@@ -20,7 +24,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
@@ -32,10 +35,7 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK);
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -54,8 +54,7 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Stairs", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Stairs", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Stairs", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -65,20 +64,26 @@ public class StairsBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+        Identifier defaultTextureId = BLOCK.config.getTexture();
+        Identifier bottomTextureId = BLOCK.config.getTextureOrDefault("bottom", defaultTextureId);
+        Identifier topTextureId = BLOCK.config.getTextureOrDefault("top", defaultTextureId);
+        Identifier sideTextureId = BLOCK.config.getTextureOrDefault("side", defaultTextureId);
+
+        assert bottomTextureId != null && topTextureId != null && sideTextureId != null;
+
+        Material bottomTexture = new Material(bottomTextureId);
+        Material topTexture = new Material(topTextureId);
+        Material sideTexture = new Material(sideTextureId);
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, new Material(textureId))
-            .put(TextureSlot.TOP, new Material(textureId))
-            .put(TextureSlot.SIDE, new Material(textureId));
+            .put(TextureSlot.BOTTOM, bottomTexture)
+            .put(TextureSlot.TOP, topTexture)
+            .put(TextureSlot.SIDE, sideTexture);
 
-        ModelUtils.registerStairsBlock(
+        FamilyBlockModels.registerStairsBlock(
             blockStateModelGenerator,
             BLOCK,
-            textures,
-            ModelTemplates.STAIRS_INNER,
-            ModelTemplates.STAIRS_STRAIGHT,
-            ModelTemplates.STAIRS_OUTER
+            textures
         );
     }
 }

@@ -97,8 +97,8 @@ def slot_of(path):
 
 WOOD_BANDS = [
     ["building/beams", "building/covers", "building/general/framed_planks"],
-    ["building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
-    ["building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
+    ["building/slabs", "building/slabs/vertical", "building/slabs/bookshelves", "building/slabs/bookshelves/vertical"],
+    ["building/stairs", "building/stairs/vertical", "building/stairs/bookshelves", "building/stairs/bookshelves/vertical"],
     ["furniture/bookshelves", "furniture/shelves/floating", "furniture/shelves/supported"],
     ["furniture/seating/chairs", "furniture/seating/stools", "furniture/tables"],
     ["containers/crates", "containers/crates/trapped", "containers/barrels",
@@ -128,6 +128,7 @@ STONE_RULES = [
     ("netherrack", ["netherrack"]), ("bone", ["bone"]),
     ("stone", ["stone_brick", "smooth_stone"]), ("stone", ["stone"]),
     ("mud", ["mud"]), ("earth", ["dirt", "sand", "gravel", "clay", "soul_sand"]),
+    ("resin", ["resin"]),
     ("brick", ["brick"]),
 ]
 
@@ -137,7 +138,7 @@ ORDER_WOODS = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangro
 ORDER_STONES = ["stone", "cobblestone", "granite", "diorite", "andesite", "deepslate",
                 "tuff", "blackstone", "basalt", "sandstone", "red_sandstone", "prismarine",
                 "quartz", "purpur", "nether_brick", "end_stone", "netherrack", "obsidian",
-                "calcite", "mud", "bone", "brick", "amethyst"]
+                "calcite", "mud", "bone", "brick", "amethyst", "resin"]
 ORDER_METALS = ["iron", "gold", "copper", "diamond", "netherite", "lapis", "redstone"]
 ORDER_TAIL = ["earth", "food", "lighting", "misc"]
 
@@ -226,7 +227,7 @@ def canonical(p):
     for w in WOOD_BASES:
         if mn == w or mn.startswith("stripped_" + w):
             return w
-        if mn.startswith(w + "_") and mn[len(w) + 1:] in ("log", "planks", "stem", "mosaic", "wood", "hyphae"):
+        if mn.startswith(w + "_") and mn[len(w) + 1:] in ("log", "planks", "stem", "mosaic", "wood", "hyphae", "block"):
             return w
     for bucket, tests in STONE_RULES:
         if any(t in mn for t in tests):
@@ -264,7 +265,8 @@ JAR_FLUID_FILL = 8.0
 MOB_NBT = {
     "minecraft:allay": "NoGravity:1b,Health:20.0f", "minecraft:bat": "BatFlags:0b,Health:6.0f",
     "minecraft:bee": "Health:10.0f,Age:0", "minecraft:endermite": "Health:8.0f,Lifetime:0",
-    "minecraft:silverfish": "Health:8.0f", "minecraft:slime": "Size:0,Health:1.0f",
+    "minecraft:magma_cube": "Size:0,Health:1.0f", "minecraft:silverfish": "Health:8.0f",
+    "minecraft:slime": "Size:0,Health:1.0f",
     "minecraft:vex": "NoGravity:1b,Health:14.0f",
 }
 jar_kind_by_id = {}
@@ -295,8 +297,9 @@ for p in ["containers/cauldrons/honey", "containers/cauldrons/milk",
 # forms (is_bagged=false + is_bagged=true). Source of truth: the blockstate JSONs carrying an
 # `is_bagged=true` variant (grep 'is_bagged=true' .../blockstates/storage/compressed/*.json).
 BAGGABLE_STORAGE = {
-    "beetroot", "beetroot_seeds", "carrot", "chorus_fruit", "gold_nugget", "iron_nugget",
-    "melon_seeds", "phantom_membrane", "potato", "pumpkin_seeds", "sugar", "wheat_seeds",
+    "beetroot", "beetroot_seeds", "carrot", "chorus_fruit", "copper_nugget", "gold_nugget",
+    "iron_nugget", "leaf_litter", "melon_seeds", "phantom_membrane", "potato", "pumpkin_seeds",
+    "sugar", "wheat_seeds", "wildflowers",
 }
 
 # ---- classify -------------------------------------------------------------
@@ -625,10 +628,18 @@ if TOOL_SHOWCASE:
         msgs = ",".join(sign_line(ln) for ln in txt)
         lines.append(f"setblock {x} {yb} {zf} minecraft:oak_wall_sign[facing=south]"
                      f"{{front_text:{{messages:[{msgs}]}}}}")
-    # 3) the item frames on the front/south face of the upper wall block
+    # 3) the item frames on the front/south face of the upper wall block. MC 26.2's
+    # BlockAttachedEntity reads its attachment point from `block_pos` (an [I;x,y,z] via
+    # BlockPos.CODEC), checked against the entity's own blockPosition() at load time — but
+    # Entity.load() only applies the summon command's positional x/y/z *after* readAdditionalSaveData
+    # runs, so blockPosition() still reads (0,0,0) at that moment unless the NBT also carries a
+    # `Pos` (Vec3.CODEC list) to seed it early. Without `Pos`, block_pos parses fine but always
+    # fails the closerThan(16) check, logging "Block-attached entity at invalid position: <pos>"
+    # once per frame on every load even though the frame ends up rendering in the right place.
     for (x, item_id, _txt) in tool_cols:
         lines.append(f'summon minecraft:item_frame {x} {yt} {zf} '
-                     f'{{Facing:3b,Fixed:1b,Invisible:0b,Item:{{id:"{item_id}",count:1}}}}')
+                     f'{{Facing:3b,Fixed:1b,Invisible:0b,Item:{{id:"{item_id}",count:1}},'
+                     f'Pos:[{x}.0d,{yt}.0d,{zf}.0d],block_pos:[I;{x},{yt},{zf}]}}')
     lines.append("")
 lines.append(f"# region label signs + teleport command blocks + plates ({len(regions)})")
 for rg in regions.values():

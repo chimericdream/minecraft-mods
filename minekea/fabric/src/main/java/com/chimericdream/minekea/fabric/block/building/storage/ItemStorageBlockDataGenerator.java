@@ -1,13 +1,14 @@
 package com.chimericdream.minekea.fabric.block.building.storage;
 
 import com.chimericdream.lib.blocks.BlockConfig;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.lib.resource.TextureUtils;
-import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.storage.ItemStorageBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.resource.MinekeaTextures;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import com.google.gson.JsonArray;
@@ -44,7 +45,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected static ModelTemplate makeCubeModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.withDefaultNamespace("block/cube_all")),
             Optional.empty(),
@@ -53,7 +54,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
     }
 
     protected static ModelTemplate makeColumnModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_column")),
             Optional.empty(),
@@ -63,8 +64,19 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         );
     }
 
+    protected static ModelTemplate makeAltColumnModel(BlockConfig.RenderType renderType) {
+        return new CustomBlockModel(
+            renderType,
+            Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed_alt_column")),
+            Optional.empty(),
+            TextureSlot.END,
+            MinekeaTextures.SIDE_A,
+            MinekeaTextures.SIDE_B
+        );
+    }
+
     protected static ModelTemplate makeBaggedModel(BlockConfig.RenderType renderType) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             renderType,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/bagged_block")),
             Optional.empty(),
@@ -74,10 +86,7 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK);
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -114,11 +123,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.config.getName() != null) {
-            translationBuilder.add(BLOCK, BLOCK.config.getName());
-            translationBuilder.add(BLOCK.asItem(), BLOCK.config.getName());
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, BLOCK.config.getName());
         } else {
-            translationBuilder.add(BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
-            translationBuilder.add(BLOCK.asItem(), String.format("Compressed %s", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("Compressed %s", BLOCK.config.getMaterialName()));
         }
     }
 
@@ -148,6 +155,10 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
                         .select(true, baggedModel)
                         .select(false, baseModel))
             );
+
+        if (BLOCK.isBaggedItem) {
+            blockStateModelGenerator.registerSimpleItemModel(BLOCK, baggedModelId);
+        }
 
 //        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLOCK);
     }
@@ -223,6 +234,21 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
         ModelUtils.registerBlockWithAxis(blockStateModelGenerator, ItemStorageBlock.AXIS, BLOCK, subModelId);
     }
 
+    protected void configureBlockStateModelsWithAltAxis(BlockModelGenerators blockStateModelGenerator) {
+        Identifier endTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_end", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideATexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side_a", BLOCK.BLOCK_ID.getPath()));
+        Identifier sideBTexture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, String.format("block/%s_side_b", BLOCK.BLOCK_ID.getPath()));
+
+        TextureMapping textures = new TextureMapping()
+            .put(TextureSlot.END, new Material(endTexture))
+            .put(MinekeaTextures.SIDE_A, new Material(sideATexture))
+            .put(MinekeaTextures.SIDE_B, new Material(sideBTexture));
+
+        Identifier subModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "", makeAltColumnModel(BLOCK.config.getRenderType()), unused -> textures);
+
+        ModelUtils.registerBlockWithAxis(blockStateModelGenerator, ItemStorageBlock.AXIS, BLOCK, subModelId);
+    }
+
     protected void configureDefaultBlockStateModel(BlockModelGenerators blockStateModelGenerator) {
         TextureMapping textures = new TextureMapping().put(TextureSlot.ALL, new Material(TextureUtils.block(BLOCK)));
         blockStateModelGenerator.createTrivialBlock(
@@ -241,6 +267,9 @@ public class ItemStorageBlockDataGenerator extends ChimericLibBlockDataGenerator
                 break;
             case AXIS:
                 configureBlockStateModelsWithAxis(blockStateModelGenerator);
+                break;
+            case ALT_AXIS:
+                configureBlockStateModelsWithAltAxis(blockStateModelGenerator);
                 break;
             case BAGGED:
                 configureBaggedBlockModels(blockStateModelGenerator);
