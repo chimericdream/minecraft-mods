@@ -24,6 +24,7 @@
         "fabric-gametest": [
             "com.chimericdream.hopperxtreme.fabric.test.DeprecatedBlockConversionTest",
             "com.chimericdream.hopperxtreme.fabric.test.ExtractGuardTest",
+            "com.chimericdream.hopperxtreme.fabric.test.FilterDropOnBreakTest",
             "com.chimericdream.hopperxtreme.fabric.test.FilterSlotGeometryTest",
             "com.chimericdream.hopperxtreme.fabric.test.MultiHopperPersistenceTest",
             "com.chimericdream.hopperxtreme.fabric.test.PreventFilterExtractionTest",

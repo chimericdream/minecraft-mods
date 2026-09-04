@@ -113,6 +113,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock implements HopperVar
     }
 
     private final int cooldownInTicks;
+    private final int itemsPerTick;
     private final String baseKey;
     private final boolean withFilter;
 
@@ -125,6 +126,10 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock implements HopperVar
     }
 
     public XtremeMultiHupperBlock(int cooldownInTicks, String baseKey, boolean withFilter) {
+        this(cooldownInTicks, 1, baseKey, withFilter);
+    }
+
+    public XtremeMultiHupperBlock(int cooldownInTicks, int itemsPerTick, String baseKey, boolean withFilter) {
         super(
             Properties.ofFullCopy(Blocks.HOPPER)
                 .mapColor(MapColor.STONE)
@@ -136,6 +141,7 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock implements HopperVar
         );
 
         this.cooldownInTicks = cooldownInTicks;
+        this.itemsPerTick = itemsPerTick;
         this.baseKey = baseKey;
         this.withFilter = withFilter;
 
@@ -153,6 +159,11 @@ public class XtremeMultiHupperBlock extends BaseEntityBlock implements HopperVar
 
     public int getCooldownInTicks() {
         return cooldownInTicks;
+    }
+
+    @Override
+    public int getItemsPerTick() {
+        return itemsPerTick;
     }
 
     public String getBaseKey() {

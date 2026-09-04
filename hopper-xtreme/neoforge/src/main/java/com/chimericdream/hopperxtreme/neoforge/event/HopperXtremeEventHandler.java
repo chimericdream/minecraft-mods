@@ -6,7 +6,6 @@ import com.chimericdream.hopperxtreme.block.ModBlocks;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.lib.text.TextHelpers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +36,7 @@ public class HopperXtremeEventHandler {
             return;
         }
 
-        if (stack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get())) {
+        if (stack.getItem() instanceof HopperItemFilterItem) {
             HopperXtremeFilterModeComponent component = stack.getOrDefault(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
             HopperItemFilterItem.FilterMode mode = HopperItemFilterItem.FilterMode.fromString(component.mode());
 

@@ -1,6 +1,6 @@
 # Hopper X-Treme (Fabric/NeoForge)
 
-![Version: 3.0.1](https://img.shields.io/badge/version-3.0.1-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 3.1.0](https://img.shields.io/badge/version-3.1.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Upgrade your hoppers!_
 
@@ -30,18 +30,19 @@ range from a deliberately slow "trickle" hopper up to a hopper that moves an ite
 | Copper Hopper | 8 ticks | Same speed as vanilla, but **ignores redstone** — it can never be locked by a redstone signal. |
 | Golden Hopper | 4 ticks | 2× vanilla speed. |
 | Diamond Hopper | 2 ticks | 4× vanilla speed. |
-| Netherite Hopper | 1 tick | 8× vanilla speed — the fastest tier. |
+| Netherite Hopper | 1 tick | 8× vanilla speed. |
+| Nether Star Hopper | 1 tick | Same cooldown as Netherite, but moves up to 16 items at once instead of 1 — up to 320 items per second. The fastest tier. Crafted from a Netherite Hopper and a Nether Star. |
 
 ### Multi-Hoppers
 
 Multi-Hoppers output items to more than one side, so a single hopper can send items to several destinations at once.
-They come in the same tiers as regular hoppers (Multi-Hopper, Golden, Diamond, Netherite).
+They come in the same tiers as regular hoppers (Multi-Hopper, Golden, Diamond, Netherite, Nether Star).
 
 ### Huppers (upward hoppers)
 
 A **Hupper** is a hopper that pushes items **up** instead of down, making vertical item elevators trivial. Huppers
-are available in every tier (Hupper, Honeyed, Copper, Golden, Diamond, Netherite) and as **Multi-Huppers** for
-sending to multiple sides while moving items upward.
+are available in every tier (Hupper, Honeyed, Copper, Golden, Diamond, Netherite, Nether Star) and as
+**Multi-Huppers** for sending to multiple sides while moving items upward.
 
 ### Glazed variants
 
@@ -58,7 +59,9 @@ Upgraded hoppers support **built-in item filtering** so you can control exactly 
 managed with two items:
 
 * **Hopper Item Filter** — configure what a hopper accepts. It has **Include** and **Exclude** modes: include mode
-  only lets the listed items through, exclude mode blocks the listed items.
+  only lets the listed items through, exclude mode blocks the listed items. Holds up to five filter entries.
+* **Diamond Hopper Item Filter** — works exactly like the standard filter, but holds up to ten filter entries.
+  Crafted by upgrading a Hopper Item Filter with a diamond.
 * **Wrench** — a tool for configuring/adjusting hoppers.
 
 ### Creative tabs

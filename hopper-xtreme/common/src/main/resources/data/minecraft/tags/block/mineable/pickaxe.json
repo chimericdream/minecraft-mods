@@ -6,22 +6,26 @@
         "hopperxtreme:golden_hopper",
         "hopperxtreme:diamond_hopper",
         "hopperxtreme:netherite_hopper",
+        "hopperxtreme:nether_star_hopper",
 
         "hopperxtreme:glazed_hopper",
         "hopperxtreme:honey_glazed_hopper",
         "hopperxtreme:glazed_golden_hopper",
         "hopperxtreme:glazed_diamond_hopper",
         "hopperxtreme:glazed_netherite_hopper",
+        "hopperxtreme:glazed_nether_star_hopper",
 
         "hopperxtreme:multi_hopper",
         "hopperxtreme:golden_multi_hopper",
         "hopperxtreme:diamond_multi_hopper",
         "hopperxtreme:netherite_multi_hopper",
+        "hopperxtreme:nether_star_multi_hopper",
 
         "hopperxtreme:glazed_multi_hopper",
         "hopperxtreme:glazed_golden_multi_hopper",
         "hopperxtreme:glazed_diamond_multi_hopper",
         "hopperxtreme:glazed_netherite_multi_hopper",
+        "hopperxtreme:glazed_nether_star_multi_hopper",
 
         "hopperxtreme:hupper",
         "hopperxtreme:honeyed_hupper",
@@ -29,11 +33,13 @@
         "hopperxtreme:golden_hupper",
         "hopperxtreme:diamond_hupper",
         "hopperxtreme:netherite_hupper",
+        "hopperxtreme:nether_star_hupper",
 
         "hopperxtreme:multi_hupper",
         "hopperxtreme:golden_multi_hupper",
         "hopperxtreme:diamond_multi_hupper",
         "hopperxtreme:netherite_multi_hupper",
+        "hopperxtreme:nether_star_multi_hupper",
 
         "hopperxtreme:filtered_golden_hopper",
         "hopperxtreme:filtered_diamond_hopper",

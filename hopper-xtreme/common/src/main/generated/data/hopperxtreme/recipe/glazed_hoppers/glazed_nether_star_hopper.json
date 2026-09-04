@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hopperxtreme:glazed_netherite_hopper",
+    "minecraft:nether_star"
+  ],
+  "result": {
+    "id": "hopperxtreme:glazed_nether_star_hopper"
+  }
+}
