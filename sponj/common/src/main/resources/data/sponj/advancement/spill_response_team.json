@@ -1,0 +1,24 @@
+{
+    "parent": "sponj:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:water_bucket"
+        },
+        "title": {
+            "translate": "advancements.sponj.spill_response_team.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.sponj.spill_response_team.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

@@ -15,6 +15,9 @@
     "icon": "assets/sponj/icon.png",
     "environment": "*",
     "entrypoints": {
+        "fabric-datagen": [
+            "com.chimericdream.sponj.fabric.data.ModDataGenerator"
+        ],
         "main": [
             "com.chimericdream.sponj.fabric.SponjFabric"
         ],
