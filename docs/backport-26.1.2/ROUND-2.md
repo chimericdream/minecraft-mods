@@ -18,8 +18,8 @@ The work is sized for a fleet of Sonnet sub-agents working in parallel, one mod 
 ## 1. Topology and the core technique
 
 ```
-                        ┌── round 1 backport (28 commits) ──┐
-e4817fa4 ──────────────────────────────────────────────────► fb2df9a94  (26.1.2, HEAD)
+                        ┌── round 1 backport (29 commits) ──┐
+e4817fa4 ──────────────────────────────────────────────────► 26.1.2 (HEAD, moves)
    │  (merge-base)
    └──► c5f2cc4d ──► 23d614746 ──────── 235 commits ────────► 34066bb59  (main, HEAD)
          (26.2 port)   (PORT2)              (payload)
@@ -29,7 +29,7 @@ e4817fa4 ───────────────────────�
 |---|---|---|
 | `PORT2` | `23d614746` | tag `hopper-xtreme/26.2-4.0.1` — the last `main` commit whose content is already on `26.1.2` |
 | `HEAD` | `34066bb59` | current `origin/main` |
-| `BASE` | `fb2df9a94` | current `26.1.2` |
+| `BASE` | `26.1.2` | current `26.1.2` branch head — always branch off the **ref**, not a SHA; this doc's own commit has since moved it past `fb2df9a94` |
 
 **The unit of backport is the diff, not the commit list:**
 
@@ -47,18 +47,48 @@ This is *pure feature work expressed in 26.2 terms* — the 26.2 port is already
 
 `26.1.2`'s tree = `main@PORT2`'s tree, minus three things:
 
-1. **26.2 → 26.1.2 API reversals** applied in round 1 (see §5).
+1. **26.2 → 26.1.2 API reversals** applied in round 1 (see §5). This is the big one: **2,702 files**
+   differ between `26.1.2` and `PORT2`, and round 1 is 29 commits, not a thin patch.
 2. **Version numbers** — every mod is one major behind, MC compat is `26.1.2`.
-3. **Three 26.1.2-only commits**: `2178c727d` (hopper-xtreme filter-GUI dupe fix — *its
-   counterpart `0e8b9f1d6` is already on `main` behind `PORT2`, so there is no risk of undoing it*),
-   `dd0fc7cc8` / `c29ef1a43` (version bumps + release changelog headings), `fb2df9a94` (bun.lock).
+3. **A handful of 26.1.2-only commits** on top of the round-1 work: `2178c727d` (hopper-xtreme
+   filter-GUI dupe fix — *its counterpart `0e8b9f1d6` is already on `main` behind `PORT2`, so there
+   is no risk of undoing it*), `dd0fc7cc8` / `c29ef1a43` (version bumps + release changelog
+   headings), `fb2df9a94` (bun.lock), `50da5d636` (this document).
 
-A payload file can only conflict where **both** the payload changed it **and** `26.1.2` differs
-from `PORT2`. Measured across the whole payload, that is exactly **three files**, all named in §9:
-`archaeology-tweaks/.../ATBrushableBlockEntity.java`,
-`beacon-conduit-tweaks/.../BCTweaksBeaconMixin.java`, and
-`hopper-xtreme/fabric/.../XtremeHopperRecipeGenerator.java`. Everything else applies clean; the
-work is API adaptation, not merge resolution.
+### The real conflict surface — measure it, don't assume it
+
+A payload file conflicts where **both** the payload changed it **and** `26.1.2` diverged from
+`PORT2` *in overlapping hunks*. Measured with a full three-way merge:
+
+```bash
+git merge-tree --write-tree --merge-base=23d614746 26.1.2 origin/main
+```
+
+**82 files genuinely conflict.** Breakdown:
+
+| Kind | Count | Who resolves it |
+|---|---|---|
+| `*/CHANGELOG.md` | 15 | Wave 2 (each mod's agent owns its changelog — trivial, keep 26.1.2's dated headings, add payload content under `### Unreleased changes`) |
+| `*/README.md` | 14 | Wave 0 sweep `a3c4ba15d` (Minecraft-versions section) |
+| `*/gradle.properties` | 11 | Wave 2 (version numbers — just set the §3 target) |
+| `minekea/common/**/*.java` | **11** | **Wave 2-A1 — see §9** |
+| `minekea/fabric/**/*.java` | **26** | **Wave 2-A2 — see §9** |
+| `chimeric-lib/…/family/WallBlockDataGenerator.java` | 1 | Wave 1 — a *rename*, see below |
+| `hopper-xtreme/…/XtremeHopperRecipeGenerator.java` | 1 | Wave 2-B |
+| `CLAUDE.md`, `docs/MC-26.2-NOTES.md`, `.claude/skills/mc-visual-smoke-test/SKILL.md` | 3 | Wave 0 (§0.3, §0.4 — all three are already handled there) |
+
+Two files this plan previously called conflicts are **not**:
+`archaeology-tweaks/.../ATBrushableBlockEntity.java` and
+`beacon-conduit-tweaks/.../BCTweaksBeaconMixin.java` diverge from `PORT2` but their hunks don't
+overlap the payload's, so they merge clean. They still need the `CriteriaTriggers` / `EntityTypes` /
+`BlockEntityTypes` reversals applied to the **newly added** lines — that is API adaptation, not
+merge resolution. Wave 2-J and 2-M still own them.
+
+⚠ **One conflict is a cross-mod file move.** `main` moved
+`minekea/fabric/.../block/building/WallBlockDataGenerator.java` into chimeric-lib as
+`chimeric-lib/fabric/.../blocks/family/WallBlockDataGenerator.java`; git rename-detects it, so the
+two waves collide on what git considers one file. **Wave 1 adds the chimeric-lib copy; Wave 2-A2
+deletes minekea's.** Neither agent will infer this on its own — it is called out again in §8 and §9.
 
 ---
 
@@ -114,7 +144,8 @@ Wave 0  ── backport/26.1.2/r2-shared            (SERIAL, blocking, one agent
 Wave 1  ── backport/26.1.2/r2-chimeric-lib      (SERIAL, blocking, one agent)
               │  ~3,100 lines of new public API that 6 other mods compile against
               ▼
-Wave 2  ── 14 parallel branches (see §9 for the grouping)
+Wave 2  ── 15 assignments / 14 parallel lanes (see §9 for the grouping)
+              │  minekea is split: A1 (`common/`, registration) ──► A2 (`fabric/` + datagen regen)
               │  branch off r2-chimeric-lib, one per mod (or per small group)
               ▼
 Wave 3  ── backport/26.1.2/r2-integration       (SERIAL, one agent)
@@ -218,7 +249,7 @@ touched by **nothing but** these. Doing them once here keeps 26 agents from each
 
 | Commit | Sweep |
 |---|---|
-| `d347dfba0` | every `*.mixins.json`: `"compatibilityLevel": "JAVA_21"` → `"JAVA_25"`. ✅ Correct on 26.1.2 — this branch already compiles at `options.release = 25` (`build.gradle:217-222`). |
+| `d347dfba0` | every `*.mixins.json`: `"compatibilityLevel": "JAVA_21"` → `"JAVA_25"` (24 files on this branch). ✅ Correct on 26.1.2 — this branch already compiles at `options.release = 25` (`build.gradle:217-222`). ⚠ `miniblock-merchants/common/src/main/resources/miniblockmerchants.mixins.json` is `JAVA_17`, not `JAVA_21`. It is `JAVA_17` on `main` too and that sweep left it alone — **leave it alone here as well**, so the branches stay identical. |
 | `1efade63c` | every `fabric.mod.json`: `"java": ">=21"` → `">=25"`; delete the redundant per-subproject `.gitignore` files. |
 | `710359e2a` | every `LICENSE`: copyright year → 2026. |
 | `f891bed6c` | every `README.md`: issue-tracker URL → `https://github.com/chimericdream/minecraft-mods/issues`. |
@@ -349,7 +380,7 @@ These correct or extend the round-1 map. **Trust these over round-1 where they d
 
 | Symbol | Verdict on 26.1.2 |
 |---|---|
-| `net.minecraft.util.LightCoordsUtil` | **PRESENT** (round 1 called it 26.2-only — wrong). It has `pack`/`block`/`sky`/`withBlock`/`smoothPack`/`smoothBlend`/… but **no `getLightCoords` and no `BrightnessGetter`**. So `log-all-the-things`' `FaceLighting.java` mostly stands; check method-by-method rather than rewriting the class. |
+| `net.minecraft.util.LightCoordsUtil` | **PRESENT** (round 1 called it 26.2-only — wrong). It has `pack`/`block`/`sky`/`withBlock`/`smoothPack`/`smoothBlend`/… but **no `getLightCoords`, and no nested `BrightnessGetter`**. `BrightnessGetter` is not gone, it *moved*: it is `LevelRenderer$BrightnessGetter` on 26.1.2 and `LightCoordsUtil$BrightnessGetter` on 26.2. So `log-all-the-things`' `FaceLighting.java` mostly stands; check method-by-method rather than rewriting the class. **Resolved:** 26.1.2 has `LevelRenderer.getLightCoords(BlockAndLightGetter, BlockPos)` and `getLightCoords(LevelRenderer$BrightnessGetter, BlockAndLightGetter, BlockState, BlockPos)` — the 2-arg overload is the one `FaceLighting.java:31` needs, and that is the file's **only** call site. |
 | `net.minecraft.world.attribute.BedRule` | **PRESENT.** `camel-nostrils`' sleep mixin is far lower-risk than it looked. |
 | `net.minecraft.client.gui.GuiGraphicsExtractor` | **PRESENT**, with its nested `HoveredTextEffects` / `RenderingTextCollector` / `ScissorStack`. |
 | `net.minecraft.client.gui.Hud` | **ABSENT** — the class does not exist anywhere in the 26.1.2 jar. `sneaky-tweaks`' `@Mixin(Hud.class)` retargets to `net.minecraft.client.gui.Gui`. |
@@ -366,7 +397,12 @@ These correct or extend the round-1 map. **Trust these over round-1 where they d
 ### ⛔ Vanilla content that exists in 26.2 but **not** 26.1.2 — features that cannot be backported
 
 A full field-level diff of `Blocks` and `Items` between the two jars found exactly two families of
-genuinely new vanilla content (everything else in the diff is the collection refactor above):
+genuinely new vanilla content (everything else in that diff is the collection refactor above).
+⚠ A **class**-level diff of the two jars adds a third thing the field diff cannot see: the
+sulfur *mob* and its supporting types — `world.entity.monster.cubemob.SulfurCube`,
+`AbstractCubeMob`, `SulfurCubeArchetype(s)`, `world.item.component.SulfurCubeContent`,
+`PotentSulfurBlock(Entity)`, `SulfurSpikeBlock` — none of which exist on 26.1.2. Check classes,
+not just registry fields, before assuming a feature ports.
 
 - **Sulfur**: `SULFUR`, `POTENT_SULFUR`, `SULFUR_SPIKE`, `SULFUR_{SLAB,STAIRS,WALL}`,
   `POLISHED_SULFUR{,_SLAB,_STAIRS,_WALL}`, `SULFUR_BRICKS`, `SULFUR_BRICK_{SLAB,STAIRS,WALL}`,
@@ -379,8 +415,8 @@ genuinely new vanilla content (everything else in the diff is the collection ref
 
 | Mod | What must be dropped |
 |---|---|
-| **minekea** | The sulfur and cinnabar halves of `670b08f78` (Chaos Cubed variations) and all of `1e001f7a2` (small sulfur cubes in glass jars). Sulfur/cinnabar appear in **8 real Java files** (`Beams`, `Covers`, `Slabs`, `Stairs`, `CompressedBlocks`, `Bookshelves`, `GlassJarItem`, plus the demo-world generators) and **1,235 generated files**. |
-| **but-what-about** | The Chiseled Sulfur entries in `block/BlockFamilies.java` (1 Java file, 28 generated files). |
+| **minekea** | The sulfur and cinnabar halves of `670b08f78` (Chaos Cubed variations) and all of `1e001f7a2` (small sulfur cubes in glass jars). Sulfur/cinnabar appear in **7 Java files — all under `common/`, so Wave 2-A1 owns the whole carve-out** (`Beams`, `Covers`, `Slabs`, `Stairs`, `CompressedBlocks`, `Bookshelves`, and `GlassJarItem`, whose payload change imports the 26.2-only entity `SulfurCube`) — plus **two Python demo-world generators** (`generate_layout.py`, `extract_jar_contents.py`, owned by A2) and **1,303 generated files** (filename match; they disappear on regen, so don't delete them by hand). |
+| **but-what-about** | The Chiseled Sulfur entries in `block/BlockFamilies.java` (1 Java file, 25 generated files — regenerated, not deleted). |
 
 Record each omission in the mod's `CHANGELOG.md` under `### Unreleased changes` — say plainly that
 the feature needs 26.2 vanilla blocks — and in its `POTENTIAL_FEATURES.md` if it should return later.
@@ -437,13 +473,20 @@ Target `mod_version = 5.5.0-beta.0`.
 
 1. `GameTestPlayers` — rewrite against `makeMockPlayer` / a hand-built `ServerPlayer` (§7).
 2. `ArmorTrimAtlasProvider.VANILLA_TRIM_PATTERNS` is a hardcoded 18-entry list commented "MC 26.2".
-   Verify against 26.1.2's `assets/minecraft/atlases/armor_trims.json` in the client jar and trim to
-   whatever actually exists.
+   **Already verified — this is a no-op.** The vanilla trim patterns are identical on both versions
+   (`bolt coast dune eye flow host raiser rib sentry shaper silence snout spire tide vex ward
+   wayfinder wild`), so the list ports verbatim. Only update the javadoc's "MC 26.2" reference.
+   **Do not invent a difference here.**
 3. `TrimmedArmorItemModel` reads `ArmorTrim`/`Equippable` off the live stack at **render** time
    rather than bake time, because default data components aren't bound until a server reload. That
    reasoning **holds on 26.1.2 too** (lazy binding is confirmed present here) — keep the design.
 4. `chimeric-lib/common/src/testFixtures/.../BootstrapMinecraft` already exists on `26.1.2` (round 1
    backported it). Do not re-add it; only `GameTestPlayers` is new.
+5. ⚠ **`fabric/.../blocks/family/WallBlockDataGenerator.java` is a move, not a new file.** `main`
+   lifted it out of `minekea/fabric/.../block/building/WallBlockDataGenerator.java`, and because
+   `26.1.2` reversed APIs in minekea's copy, git reports it as a rename **conflict** (§1). Add the
+   chimeric-lib copy here in 26.1.2 terms; **Wave 2-A2 deletes minekea's copy and repoints its
+   callers.** Do not touch anything under `minekea/` from this branch — just flag it to Wave 2-A2.
 
 **Acceptance**
 
@@ -457,26 +500,27 @@ Target `mod_version = 5.5.0-beta.0`.
 
 ## 9. Wave 2 — per-mod branches
 
-Every branch forks from `backport/26.1.2/r2-chimeric-lib`. Fourteen assignments; each is one agent.
+Every branch forks from `backport/26.1.2/r2-chimeric-lib` — **with one exception: `r2-minekea-fabric` (A2) forks from `r2-minekea-common` (A1)**, because minekea's datagen classes will not compile without its block registrations. Fifteen assignments, one agent each; fourteen run in parallel and A2 waits on A1.
 
 `athenaeum`, `enchantment-numbers-fix`, `houdini-block` and `miniblock-merchants` appear nowhere
 here — their entire payload is the Wave 0 sweeps.
 
 | # | Branch suffix | Mod(s) | Payload (files / Java) | Risk | The actual work |
 |---|---|---|---|---|---|
-| A | `minekea` | minekea | 3751 / 81 | **High** | 24 feature commits. **3,632 files are regenerable datagen — regenerate, don't patch.** Port the 81 Java files, apply the ColorCollection + weathering + `TagAppender<T,T>` + `this::valueLookupBuilder` reversals (~350 sites, mechanical), adopt the new chimeric-lib `BlockFamily`/datagen helpers, then `./gradlew :minekea:fabric:runDatagen`. **Drop sulfur + cinnabar entirely** (§7). Zero merge conflicts — no minekea Java diverged on `26.1.2`. |
-| B | `hopper-xtreme` | hopper-xtreme | 154 / 24 | **High** | Nether Star Hopper tier (16 items/transfer), Diamond Hopper Item Filter (10 slots) via a new `AbstractHopperItemFilterScreenHandler` base, and the filter-drop-on-break fix. **One real conflict: `fabric/.../XtremeHopperRecipeGenerator.java`** — `26.1.2` uses `Tuple` + `Items.GRAY_GLAZED_TERRACOTTA`; the payload adds lines in `Pair` + `Items.GLAZED_TERRACOTTA.gray()` form. Keep 26.1.2's style, splice in the new recipes. ⚠ **The anti-dupe `FilterSlot` logic (`mayPlace`/`safeInsert`/`remove`/`getMaxStackSize`) must survive the base-class extraction verbatim** — it moves into the new abstract base. Verified safe on `main`; do not regress it. |
-| C | `log-all-the-things` | log-all-the-things (new) | 112 / 66 | **High** | Lava-, carpet-, snow- and window-logging. 12 shared mixins + loader-split `FireBlock`/`BucketItem` mixins. 3 new block entities with custom renderers. `LightCoordsUtil` **exists** on 26.1.2 but lacks `getLightCoords` — fix `client/FaceLighting.java` method-by-method. 3× `new BlockEntityType<>` need AW entries. GameTests in a `gametest` source set with their own `fabric.mod.json` — `Blocks.COPPER_BARS.weathering().unaffected()` → `Blocks.COPPER_BARS.unaffected()`, `Blocks.CARPET.white()` → `Blocks.WHITE_CARPET`, `makeMockServerPlayer` → chimeric-lib's adapted `GameTestPlayers`. |
+| A1 | `minekea-common` | minekea (`common/`) | 24 java / 11 conflicts | **High** | **Registration side only.** Owns `minekea/common/src/main/java/**`, `common/src/main/resources/**` (16 files incl. `minekea.mixins.json` and the new compressed-block textures/models), plus `gradle.properties`, `CHANGELOG.md`, `README.md`, `POTENTIAL_FEATURES.md`. Apply the ColorCollection + weathering reversals across the block/item registration classes. **Owns the entire sulfur/cinnabar carve-out** — all six affected Java files are here (`Beams`, `Covers`, `Slabs`, `Stairs`, `CompressedBlocks`, `Bookshelves`), plus `item/containers/GlassJarItem.java`, whose payload change imports the 26.2-only **entity** `world.entity.monster.cubemob.SulfurCube`: drop commit `1e001f7a2` whole. 11 of the 37 minekea conflicts land here; resolve toward 26.1.2 (rule 5). ⛔ **Do not touch `common/src/main/generated/`** — A2 regenerates it. Do not touch `fabric/`, `neoforge/` or `demo-world/`. **Acceptance:** `./gradlew :minekea:common:build`. You cannot run datagen from this branch — that is A2's job. **Handoff:** hand A2 the list of block/item ids you added and dropped, so it knows what the regen must and must not produce. |
+| A2 | `minekea-fabric` | minekea (`fabric/` + datagen output) | 57 java / 26 conflicts + 3,632 generated | **High** | ⚠ **Branches off `backport/26.1.2/r2-minekea-common`, not off `r2-chimeric-lib`** — the fabric datagen classes reference A1's block registrations and will not compile without them. Owns `minekea/fabric/**` (incl. `fabric.mod.json`), `minekea/common/src/main/generated/**` (**by regeneration only — never hand-edit**), and `minekea/demo-world/**`. Work: the `BlockDataGenerator` signature migration from §8 across ~57 generator classes, the `TagAppender<T,T>` + `this::valueLookupBuilder` reversals, and **delete `fabric/.../block/building/WallBlockDataGenerator.java`, repointing its callers at chimeric-lib's `lib.fabric.blocks.family.WallBlockDataGenerator`** (§8 item 5). Strip sulfur/cinnabar from `demo-world/generate_layout.py` and `extract_jar_contents.py`, then regenerate the demo-world files — **never hand-edit them**. Finally `./gradlew :minekea:fabric:runDatagen`. 26 of the 37 conflicts land here. **Acceptance:** `:minekea:common:build`, `:minekea:fabric:build`, `:minekea:neoforge:build`, `:minekea:fabric:runGameTest`, and a second `runDatagen` that produces no diff. |
+| B | `hopper-xtreme` | hopper-xtreme | 154 / 29 | **High** | Nether Star Hopper tier (16 items/transfer), Diamond Hopper Item Filter (10 slots) via a new `AbstractHopperItemFilterScreenHandler` base, and the filter-drop-on-break fix. **One real conflict: `fabric/.../XtremeHopperRecipeGenerator.java`** — `26.1.2` uses `Tuple` + `Items.GRAY_GLAZED_TERRACOTTA`; the payload adds lines in `Pair` + `Items.GLAZED_TERRACOTTA.gray()` form. Keep 26.1.2's style, splice in the new recipes. ⚠ **The anti-dupe `FilterSlot` logic (`mayPlace`/`safeInsert`/`remove`/`getMaxStackSize`) must survive the base-class extraction verbatim** — it moves into the new abstract base. Verified safe on `main`; do not regress it. |
+| C | `log-all-the-things` | log-all-the-things (new) | 112 / 66 | **High** | Lava-, carpet-, snow- and window-logging. 12 shared mixins + loader-split `FireBlock`/`BucketItem` mixins. 3 new block entities with custom renderers. `LightCoordsUtil` **exists** on 26.1.2 but lacks `getLightCoords` — **resolved:** `client/FaceLighting.java:31` is the single call site; rewrite `LightCoordsUtil.getLightCoords(level, scratch)` as `LevelRenderer.getLightCoords(level, scratch)` and drop the `net.minecraft.util.LightCoordsUtil` import. Everything else in that class stands. 3× `new BlockEntityType<>` need AW entries. GameTests in a `gametest` source set with their own `fabric.mod.json` — `Blocks.COPPER_BARS.weathering().unaffected()` → `Blocks.COPPER_BARS.unaffected()`, `Blocks.CARPET.white()` → `Blocks.WHITE_CARPET`, `makeMockServerPlayer` → chimeric-lib's adapted `GameTestPlayers`. |
 | D | `camel-nostrils` | camel-nostrils (new) | 226 / 50 | **High** | Camel snout removal, zombie fish, golden crops, Livna (upside-down anvil), upside-down bed/chest/crafting table, 8 advancements, 3 new entities. 11 shared mixins **plus loader-split `CN$ServerPlayerMixin`** (NeoForge restructures the sleep method's lambdas — see `docs/NEOFORGE.md`). `BedRule` **exists** on 26.1.2. `advancements.triggers.PlayerTrigger` → `advancements.criterion.PlayerTrigger` (2 files). `new BlockEntityType<>` at `block/ModBlocks.java:63` needs an AW entry. Depends on chimeric-lib `FallingUpwardBlock(Entity)` + `ProfileUtils`. ⚠ Register entity renderers in the **NeoForge mod constructor**, not a lifecycle event. |
-| E | `effective-gear` | effective-gear (new) | 103 / 49 | **High** | Preserving enchantment for shears, 16 trim-material set bonuses, ender-pearl trim calming endermen, 2 advancements, a keybinding, a network payload. **19 shared mixins**, several on AI classes (`HoglinAi`, `PiglinAi`, `PiglinBruteAi`, `VibrationSystem.Listener`) — verify each target signature against the 26.1.2 jar. Datagen on **both** loaders. Hard-depends on chimeric-lib's whole `trims` package. `chimericlib_compat` → `5.4.0`. No 26.2-only symbols found in its own source. |
-| F | `stack-it-up` | stack-it-up (new) | 56 / 34 | **High** | AllStackable reborn: configurable stack sizes plus 14 shared mixins working around stack-size-sensitive vanilla systems, a loader-split `MixinItemStackDamage`, a Gson config with a migration path, and `/stackitup` (needs chimeric-lib's new `commands` package). ⚠ **Two mixins target numbered anonymous inner classes** — `DispenseItemBehavior$12` and `HorseInventoryMenu$1`. Anonymous-class numbering is not stable across MC versions: **re-derive both from the 26.1.2 jar** (`unzip -l "$J1" \| grep 'DispenseItemBehavior\$'` then `javap -p` to find the right one), do not assume they carry over. JUnit `ConfigMigrationTest` must pass. |
+| E | `effective-gear` | effective-gear (new) | 103 / 49 | **High** | Preserving enchantment for shears, 16 trim-material set bonuses, ender-pearl trim calming endermen, 2 advancements, a keybinding, a network payload. **20 shared mixins**, several on AI classes (`HoglinAi`, `PiglinAi`, `PiglinBruteAi`, `VibrationSystem.Listener`) — verify each target *signature* against the 26.1.2 jar. All 20 target **classes** are confirmed present on 26.1.2 (`VibrationSystem$Listener` sits at `world/level/gameevent/vibrations/`, `WeatherCheck` at `world/level/storage/loot/predicates/`), so only method shapes are at risk. Datagen on **both** loaders. Hard-depends on chimeric-lib's whole `trims` package. `chimericlib_compat` → `5.4.0`. No 26.2-only symbols found in its own source. |
+| F | `stack-it-up` | stack-it-up (new) | 56 / 34 | **High** | AllStackable reborn: configurable stack sizes plus 14 shared mixins working around stack-size-sensitive vanilla systems, a loader-split `MixinItemStackDamage`, a Gson config with a migration path, and `/stackitup` (needs chimeric-lib's new `commands` package). ⚠ **Two mixins target numbered anonymous inner classes** — `DispenseItemBehavior$12` and `HorseInventoryMenu$1`. Anonymous-class numbering is not stable across MC versions. **Both already re-derived against the 26.1.2 jar:** `MixinDispenserBehavior9` → **`DispenseItemBehavior$13`** (it is the honeycomb-waxing behavior — on 26.1.2 `$13` is the one calling `HoneycombItem.getWaxed`, while `$12` is `ItemStack.hurtAndBreak`; the class's own header comment already records this). `MixinHorseScreenHandler` → **`HorseInventoryMenu$1` is unchanged** (structurally identical on both versions: `extends ArmorSlot`, same ctor descriptor, same `isActive()`). Update the header comment's version list rather than deleting it. JUnit `ConfigMigrationTest` must pass. |
 | G | `but-what-about` | but-what-about (new) | 1061 / 9 | **High** | Stairs/slabs/walls for vanilla blocks Mojang skipped. Only 9 Java files, but 1,028 generated — **regenerate via `runDatagen`, don't patch**. `block/BlockFamilies.java` is written almost entirely in `.weathering()` + `Blocks.CONCRETE.pick(color)` form; rewrite in 26.1.2 flat-constant form. **Drop the Chiseled Sulfur family** (§7). Depends on chimeric-lib `blocks.family`. |
-| H | `jdcrafte` | jdcrafte (revived) | 387 / 22 | **High** | Feeding trough (real inventory, shift-right-click to empty), weathervane, trellis + trellis arch in every wood type. Wave 0 already replaced the stale 1.21.10-era directory wholesale, so this is a straight port. 327 generated files — regenerate. `TagAppender<Block>` → `TagAppender<Block, Block>` across 5 datagen classes. 2× `new BlockEntityType<>` need AW entries. Depends on chimeric-lib fabric `TranslationUtils`. |
+| H | `jdcrafte` | jdcrafte (revived) | 387 / 20 | **High** | Feeding trough (real inventory, shift-right-click to empty), weathervane, trellis + trellis arch in every wood type. Wave 0 already replaced the stale 1.21.10-era directory wholesale, so this is a straight port. 327 generated files — regenerate. `TagAppender<Block>` → `TagAppender<Block, Block>` across 5 datagen classes. 2× `new BlockEntityType<>` need AW entries. Depends on chimeric-lib fabric `TranslationUtils`. |
 | I | `next-update-now` | next-update-now (new) | 903 / 20 | **Med-High** | Poplar wood set (custom foliage/trunk placers, three sapling colours) + colored concrete/wool slabs & stairs. 870 **hand-authored** resources (no datagen) — copy verbatim. `BlockEntityTypes.SIGN` / `.HANGING_SIGN` → `BlockEntityType.*` at `block/ModBlocks.java:201,202,216,217` and `ModBlockEntityValidBlocks.java`. That sign-integration mixin was already the source of a crash fixed in 1.0.1 — **test placing poplar signs and hanging signs on both loaders**. AW widens `FoliagePlacerType.<init>` / `TrunkPlacerType.<init>`. |
-| J | `worldgen-mods` | archaeology-tweaks, artificial-heart | 91+86 / 21+20 | **Medium** | Both newly gain worldgen the same way — Fabric registers `configured_feature`/`placed_feature` through a `FabricDynamicRegistryProvider`; NeoForge additionally needs a `BiomeModifier`. One agent learns the pattern once. **archaeology-tweaks**: 8 naturally-generating suspicious blocks + loot tables, suspicious rooted dirt via a mixin redirect on azalea root placement (2%), the **Gentle Touch** enchantment, 4 advancements. Conflict: `ATBrushableBlockEntity.java` (`advancements.triggers.CriteriaTriggers`, `EntityTypes.ITEM` ×2 — `26.1.2` already reversed both in this file). **artificial-heart**: pale pumpkin block/crop/seeds/carved, Pale Garden patch worldgen, passive Creaking Golem summoning, 2 advancements. `PaleCarvedPumpkinBlock.java` + 2 mixins need the `CriteriaTriggers` / `EntityTypes` reversals; no merge conflicts. |
-| K | `new-small-mods` | better-target-dummies, better-portal-linking | 59+38 / 19+17 | **Medium** | **better-target-dummies**: target dummy block that takes any mob's skin, dummy spawn egg, mob-picker screen. `new BlockEntityType<>` at `block/ModBlocks.java:22` needs an AW entry. Its AW already widens `MenuScreens.register` — harmless but unnecessary on 26.1.2. **better-portal-linking**: portal-corner blocks address which Nether portal links where; YACL config; 2 mixins (`NetherPortalBlock`, `PortalForcer`). Its 3 JUnit tests use `Blocks.CONCRETE.red()` / `Blocks.DYED_TERRACOTTA.white()` ~15 times — reverse to flat constants. `BootstrapMinecraft` already exists on `26.1.2`. |
-| L | `scaffold-mods` | sneaky-tweaks, toy-box, hang-from-slabs | 46+21+10 / 20+5+5 | **Low** | **sneaky-tweaks**: berry-bush immunity, timed campfire immunity with a HUD grace meter, crouch bridging, 6 advancements, YACL config. One real fix: `@Mixin(Hud.class)` → `@Mixin(net.minecraft.client.gui.Gui.class)`; `Gui.extractAirBubbles(…)` exists with the identical signature, so the injection point is unchanged. **toy-box** and **hang-from-slabs** are empty scaffolds — Wave 0's import plus a build is the whole job. |
-| M | `client-and-config` | beacon-conduit-tweaks, flat-bedrock, banner-tweaks | 14+17+10 / 7+8+1 | **Medium** | **beacon-conduit-tweaks**: hide the beacon beam with a carpet on top, or tinted glass in the column (a second pane re-reveals it); 5 new render-state/section mixins. Conflict: `BCTweaksBeaconMixin.java` — `BlockEntityTypes.BEACON` → `BlockEntityType.BEACON` (26.1.2 already reversed it) and a `getRegisteredName()` call to verify. **flat-bedrock**: brand-new YACL/Mod Menu config — per-dimension thickness, replacement block, Nether no-roof; check against YACL `3.9.4`, not `3.9.5`. **banner-tweaks**: one mixin line adding "N/12 layers" to banner tooltips. |
+| J | `worldgen-mods` | archaeology-tweaks, artificial-heart | 91+86 / 28+26 | **Medium** | Both newly gain worldgen the same way — Fabric registers `configured_feature`/`placed_feature` through a `FabricDynamicRegistryProvider`; NeoForge additionally needs a `BiomeModifier`. One agent learns the pattern once. **archaeology-tweaks**: 8 naturally-generating suspicious blocks + loot tables, suspicious rooted dirt via a mixin redirect on azalea root placement (2%), the **Gentle Touch** enchantment, 4 advancements. `ATBrushableBlockEntity.java` — **not a merge conflict** (it diverges from `PORT2`, but the hunks don't overlap, so it merges clean); what it needs is the reversal applied to the payload's *newly added* lines: `advancements.triggers.CriteriaTriggers` and `EntityTypes.ITEM` ×2, both already reversed elsewhere in this same file, so copy the surrounding style. **artificial-heart**: pale pumpkin block/crop/seeds/carved, Pale Garden patch worldgen, passive Creaking Golem summoning, 2 advancements. `PaleCarvedPumpkinBlock.java` + 2 mixins need the `CriteriaTriggers` / `EntityTypes` reversals; no merge conflicts. |
+| K | `new-small-mods` | better-target-dummies, better-portal-linking | 59+38 / 19+17 | **Medium** | **better-target-dummies**: target dummy block that takes any mob's skin, dummy spawn egg, mob-picker screen. `new BlockEntityType<>` at `block/ModBlocks.java:22` needs an AW entry. Its AW already widens `MenuScreens.register` — harmless but unnecessary on 26.1.2. **better-portal-linking**: portal-corner blocks address which Nether portal links where; YACL config; 2 mixins (`NetherPortalBlock`, `PortalForcer`). Its JUnit tests use `Blocks.CONCRETE.red()` / `Blocks.DYED_TERRACOTTA.white()` 20 times across `PortalAddressTest` (17) and `PortalAddressLinkerSelectTest` (3) — reverse to flat constants. `BootstrapMinecraft` already exists on `26.1.2`. |
+| L | `scaffold-mods` | sneaky-tweaks, toy-box, hang-from-slabs | 46+21+10 / 20+5+0 | **Low** | **sneaky-tweaks**: berry-bush immunity, timed campfire immunity with a HUD grace meter, crouch bridging, 6 advancements, YACL config. One real fix: `@Mixin(Hud.class)` → `@Mixin(net.minecraft.client.gui.Gui.class)`; `Gui.extractAirBubbles(…)` exists with the identical signature, so the injection point is unchanged. **toy-box** and **hang-from-slabs** are empty scaffolds — Wave 0's import plus a build is the whole job. |
+| M | `client-and-config` | beacon-conduit-tweaks, flat-bedrock, banner-tweaks | 14+17+10 / 7+8+1 | **Medium** | **beacon-conduit-tweaks**: hide the beacon beam with a carpet on top, or tinted glass in the column (a second pane re-reveals it); 5 new render-state/section mixins. `BCTweaksBeaconMixin.java` — **not a merge conflict** (diverges from `PORT2`, but merges clean); apply `BlockEntityTypes.BEACON` → `BlockEntityType.BEACON` to the payload's new lines (26.1.2 already reversed the existing ones) and verify the `getRegisteredName()` call. **flat-bedrock**: brand-new YACL/Mod Menu config — per-dimension thickness, replacement block, Nether no-roof; check against YACL `3.9.4`, not `3.9.5`. **banner-tweaks**: one mixin line adding "N/12 layers" to banner tooltips. |
 | N | `additive-features` | sponj, villager-tweaks, shulker-stuff | 25+24+11 / 9+9+3 | **Low** | **sponj**: datagen scaffolding, a custom stat, 4 advancements (Big Gulp, Spill Response Team, Dry Heat, Space Heater). **villager-tweaks**: configurable baby growth time (two vanilla code paths — spawned and bred), a max-discount cap, leashable nitwits, datagen + 2 advancements. **shulker-stuff**: stackable-shulker dupe fix and a config gutted of ~230 lines of copy-pasted dead fields. No conflicts, no 26.2-only symbols in any of the three. |
 
 ### Procedure for a Wave 2 agent
@@ -486,12 +530,16 @@ MOD=<mod-name>
 PORT2=23d614746
 
 git checkout -b backport/26.1.2/r2-$MOD backport/26.1.2/r2-chimeric-lib
+#   EXCEPT minekea-fabric (A2), which forks from the A1 branch instead:
+#   git checkout -b backport/26.1.2/r2-minekea-fabric backport/26.1.2/r2-minekea-common
 
 # The payload for this mod — feature work only; the 26.2 port is already behind PORT2.
 git diff --no-ext-diff --binary $PORT2..origin/main -- $MOD/ > /tmp/$MOD.patch
 
 git apply --3way /tmp/$MOD.patch
 #   on failure:  git apply --reject /tmp/$MOD.patch   and hand-merge the .rej hunks
+#   EXPECT failure if §1 lists your mod: minekea-common (11), minekea-fabric (26) and
+#   hopper-xtreme (1) all conflict. See rule 4b — always resolve toward the 26.1.2 side.
 #   for a NEW mod Wave 0 already imported: there is no patch to apply — the 26.2 source
 #   is already in your tree. Your job is to make it compile and behave on 26.1.2.
 
@@ -514,15 +562,20 @@ git apply --3way /tmp/$MOD.patch
    content under `### Unreleased changes`. **Cut no tags and add no dated heading.**
 4. **Don't "fix" 26.2-looking APIs that are already in the existing `26.1.2` code.** If a symbol is
    used on this branch, it exists. Check with `git grep '<Symbol>' 26.1.2` first.
-5. **For absence, use the jar, never `git grep`.** §7 has the command; both version jars are cached.
-6. **Preserve intent, not literal text.** Where adaptation is needed, keep the behaviour the commit
+5. **Resolve every conflict toward `26.1.2`, never toward `main`.** A conflict means round 1
+   already reversed that code. Take 26.1.2's side as the base and splice the payload's *new* entries
+   into it in 26.1.2 form. Resolving the other way silently re-introduces a 26.2 API that compiles
+   nowhere. §1 lists which files conflict and who owns them — check it before you start, and if you
+   hit a conflict in a file §1 doesn't list, **stop and report** rather than guessing.
+6. **For absence, use the jar, never `git grep`.** §7 has the command; both version jars are cached.
+7. **Preserve intent, not literal text.** Where adaptation is needed, keep the behaviour the commit
    message describes and re-express it in 26.1.2 terms.
-7. **Keep the explanatory comments and javadoc.** A large share of this payload is documentation of
+8. **Keep the explanatory comments and javadoc.** A large share of this payload is documentation of
    *why* — the `@Overwrite` justifications, the reflection rationale in `TrimmedArmorItemModel`, the
    loader-split mixin explanations. That is the durable value; do not strip it as "just comments".
-8. **Regenerate datagen; never hand-edit `src/main/generated/`.** If your mod has thousands of
+9. **Regenerate datagen; never hand-edit `src/main/generated/`.** If your mod has thousands of
    generated files in the payload, port the Java and re-run `runDatagen`.
-9. **Report honestly.** If something cannot be backported (26.2-only vanilla block, missing API, a
+10. **Report honestly.** If something cannot be backported (26.2-only vanilla block, missing API, a
    test that can't run), finish everything else and say explicitly what you left out and why.
    Do not silently narrow scope.
 
@@ -549,7 +602,8 @@ Branch `backport/26.1.2/r2-integration` off `26.1.2` with every Wave 2 branch me
 
 The backport is done when, on the merged `26.1.2` branch:
 
-1. `./gradlew clean build` is green for all **27** mods across both loaders.
+1. `./gradlew clean build` is green for all **27** mods across both loaders (15 Wave 2 branches
+   merged, minekea contributing two).
 2. `bun run build` completes and produces modpacks for every mod.
 3. `bun run status` lists every mod with the §3 version and shows unreleased changes where expected.
 4. `./gradlew :chimeric-lib:fabric:test` and `:chimeric-lib:fabric:runGameTest` pass.
@@ -557,11 +611,15 @@ The backport is done when, on the merged `26.1.2` branch:
    `:houdini-block:…`, `:villager-tweaks:…`, `:log-all-the-things:fabric:runGameTest` pass.
 6. `:better-portal-linking:fabric:test` and `:stack-it-up:fabric:test` (JUnit) pass.
 7. `bun run datagen` is a no-op — every mod's committed generated output is current.
-8. No 26.2-only API leaked in:
+8. No 26.2-only API leaked in. The earlier form of this grep missed half the `ColorCollection`
+   fields; use this one, which covers every symbol the full `Blocks`/`Items` field diff found:
    ```bash
-   git grep -nE 'EntityTypes\.|BlockEntityTypes\.|\.weathering\(\)|advancements\.triggers|advancements\.predicates|makeMockServerPlayer\(|Blocks\.(WOOL|CARPET|CONCRETE|STAINED_GLASS|DYED_TERRACOTTA|BANNER|BED)\.|Items\.DYE\.' -- '*.java'
+   git grep -nE 'EntityTypes\.|BlockEntityTypes\.|\.weathering\(\)|\.pick\(|advancements\.triggers|advancements\.predicates|makeMockServerPlayer\(|LightCoordsUtil\.getLightCoords|EntitySpawnRequest|distToCenterSqr|Blocks\.(WOOL|CARPET|CONCRETE|CONCRETE_POWDER|STAINED_GLASS|STAINED_GLASS_PANE|GLAZED_TERRACOTTA|DYED_TERRACOTTA|DYED_SHULKER_BOX|DYED_CANDLE|DYED_CANDLE_CAKE|BANNER|WALL_BANNER|BED)\.|Items\.(DYE|DYED_BUNDLE|HARNESS)\.' -- '*.java'
    ```
-   returns nothing. Same for `SULFUR` / `CINNABAR` outside a changelog note.
+   returns nothing. Same for `SULFUR` / `CINNABAR` / `MUSIC_DISC_BOUNCE` outside a changelog note.
+
+   > `\.pick\(` and `\.weathering\(\)` are the two easiest to miss by eye — `but-what-about`'s
+   > `BlockFamilies.java` is written almost entirely in those two forms.
 9. `git ls-files --eol | grep -v 'w/lf'` returns nothing but `gradlew.bat`.
 10. CI (`.github/workflows/build.yml`) is green on JDK 25 without a `GITHUB_TOKEN`.
 
@@ -582,3 +640,48 @@ These are the behaviours a compile can't prove, ordered by how likely they are t
 - **log-all-the-things**: window-logged stairs/slabs render on the right axis and don't z-fight.
 - **archaeology-tweaks / artificial-heart**: new-world generation actually places suspicious blocks
   and pale pumpkin patches on **both** loaders (NeoForge needs the biome modifier).
+
+---
+
+## 13. Verification provenance
+
+Every factual claim in §1, §3, §5 and §7 was re-checked against the repo and both deobf jars on
+2026-09-03, after the first draft of this plan was written. Corrections applied in that pass:
+
+- **§1 conflict surface** — the first draft claimed "exactly three files". A real three-way merge
+  finds **82**, including **37 minekea Java files**. §9's minekea row (now split into A1/A2) previously said "zero merge conflicts
+  — no minekea Java diverged"; 67 minekea Java files diverge. This was the plan's most dangerous
+  error and is now corrected in both places.
+- **§1** — the minekea → chimeric-lib `WallBlockDataGenerator.java` move was undocumented.
+- **§4 / §9** — minekea was a single agent carrying 81 payload Java files, 37 conflicts and a
+  3,632-file datagen regen, which is several times any other Wave 2 assignment. It is now split
+  into **A1 (`common/`, registration: 24 java / 11 conflicts)** and **A2 (`fabric/` + datagen
+  output: 57 java / 26 conflicts)**. The seam is real, not cosmetic: the two file sets are
+  disjoint, all six sulfur/cinnabar registration files sit in `common/`, and every conflict
+  falls cleanly on one side. It is **serial, not parallel** — fabric's datagen classes reference
+  common's block registrations — so A2 forks from A1's branch. The one crossing edge is
+  `common/src/main/generated/`, which physically lives under `common/` but is produced by
+  `:minekea:fabric:runDatagen`; **A2 owns it, by regeneration only.**
+- **§7** — the carve-out was justified by a `Blocks`/`Items` *field* diff, which misses the
+  sulfur mob. `SulfurCube` and friends are 26.2-only classes, which is what actually blocks
+  `1e001f7a2` (`GlassJarItem` imports the entity). Counts corrected: 7 Java files not 8,
+  1,303 generated not 1,235, but-what-about 25 not 28.
+- **§8** — the `VANILLA_TRIM_PATTERNS` verification is a confirmed no-op (both versions ship the
+  same 18 patterns).
+- **§9 F** — `DispenseItemBehavior$13` and `HorseInventoryMenu$1` re-derived; no longer open work.
+- **§9 C** — `FaceLighting.java`'s single call site and its exact 26.1.2 replacement identified.
+- **§11.8** — the leak grep was missing 9 `ColorCollection` symbols and `.pick(`.
+- Per-mod Java counts corrected for hopper-xtreme, jdcrafte, archaeology-tweaks, artificial-heart,
+  hang-from-slabs; effective-gear is 20 mixins, not 19.
+
+**Confirmed accurate, no change needed** (listed so nobody re-litigates them): all 15 referenced
+commit SHAs; the §3 version table against `main`; `gradle/mod-conventions.gradle`, `.github/` and
+root `gradle.properties` being unchanged by the payload; chimeric-lib's payload at 52 files
+`+3107/−20`; the broken `diff.external`; and the entirety of §7's reverse API map — `Hud` absent,
+`Gui.extractAirBubbles` private with an identical signature, `BedRule` and `GuiGraphicsExtractor`
+present, `Minecraft.renderNames()` public static, `advancements.criterion.PlayerTrigger`,
+`BlockEntityType`'s constructor private on 26.1.2 (four mods already ship the exact access-widener
+line to copy), `makeMockServerPlayer` absent, `COPPER_BARS`/`COPPER_CHAIN`/`COPPER_LANTERN` as
+`WeatheringCopperBlocks` with direct stage accessors, `TagAppender<E,T>` vs `<T>`, and
+`EntitySpawnRequest` being 26.2-only. The sulfur/cinnabar carve-out list is **exactly complete**
+against a full field-level diff of `Blocks` and `Items`, `MUSIC_DISC_BOUNCE` included.
