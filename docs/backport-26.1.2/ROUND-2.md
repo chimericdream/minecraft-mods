@@ -140,20 +140,20 @@ Wave 0  ── backport/26.1.2/r2-shared            (SERIAL, blocking, one agent
               │  root build files, scripts/, tools/, .bun-create/, .claude/, docs/, CLAUDE.md
               │  + the 7 repo-wide sweeps across every mod
               │  + verbatim import of the 12 new mod directories (26.2 source, not yet compiling)
-              ├──► 0R   adversarial review (blind, blocking)            §10
+              ├──► review gate: layers 1+2, layer 3 on hand-written src  §10
               ▼
 Wave 1  ── backport/26.1.2/r2-chimeric-lib      (SERIAL, blocking, one agent)
               │  ~3,100 lines of new public API that 6 other mods compile against
-              ├──► 1R   adversarial review (blind, blocking)            §10
+              ├──► review gate: layers 1+2+3 (highest-risk branch)       §10
               ▼
 Wave 2  ── 15 assignments / 14 parallel lanes (see §9 for the grouping)
               │  minekea is split: A1 (`common/`, registration) ──► A2 (`fabric/` + datagen regen)
               │  branch off r2-chimeric-lib, one per mod (or per small group)
-              ├──► A1R A2R BR … NR   one blind reviewer per assignment  §10
+              ├──► review gate per assignment, layers tiered by risk     §10
               ▼
 Wave 3  ── backport/26.1.2/r2-integration       (SERIAL, one agent)
-              ├──► 3R   adversarial review (blind, blocking)            §10
-                 full build, modpacks, all test suites, datagen re-run, final doc pass
+              │  full build, modpacks, all test suites, datagen re-run, final doc pass
+              └──► review gate: layer 1 repo-wide + layer 2 vs §12       §10
 ```
 
 **Merge model.** Each wave branches off the previous wave's branch and merges into `26.1.2` in
@@ -581,114 +581,175 @@ git apply --3way /tmp/$MOD.patch
    loader-split mixin explanations. That is the durable value; do not strip it as "just comments".
 9. **Regenerate datagen; never hand-edit `src/main/generated/`.** If your mod has thousands of
    generated files in the payload, port the Java and re-run `runDatagen`.
-10. **Expect to be reviewed blind.** A fresh agent that has never seen this plan, the payload, or
-    your report will read your output cold and try to break it (§10). Write for that reader:
-    keep the explanatory comments, make the changelog match what the code actually does, and
-    don't leave anything you would have to explain in person.
+10. **Expect to be reviewed twice, two different ways (§10).** One pass reconciles your branch
+    against the payload diff and will surface anything you dropped without saying so — so say so.
+    A second, on the higher-risk assignments, reads your files cold with no idea what changed or
+    why. Write for that reader: keep the explanatory comments, and make the changelog match what
+    the code actually does.
 11. **Report honestly.** If something cannot be backported (26.2-only vanilla block, missing API, a
    test that can't run), finish everything else and say explicitly what you left out and why.
    Do not silently narrow scope.
 
 ---
 
-## 10. The adversarial review gate
+## 10. The review gate
 
-Every branch that produces work is followed by a **paired review agent** before it merges: Wave 0
-(`0R`), Wave 1 (`1R`), each Wave 2 assignment (`A1R`, `A2R`, `BR` … `NR`), and Wave 3 (`3R`).
-A reviewer is always a **fresh agent** — no shared context with its author, with the other
-reviewers, or with a previous review round.
+Every authoring branch passes a review gate before it merges — Wave 0, Wave 1, each Wave 2
+assignment, and Wave 3. The gate has **three layers, cheapest first**, and not every branch gets
+all three (§10.5).
 
-**The gate is blocking.** A branch does not merge into the next wave until its reviewer has
-reported and the author has answered every finding. Because Wave 1 blocks all of Wave 2, `1R`
-blocks all of Wave 2 too.
+**It is blocking.** A branch does not merge until its layers have run and every finding is
+answered. Because Wave 1 blocks all of Wave 2, Wave 1's gate does too.
 
-### 10.1 — The reviewer works blind, on purpose
+### 10.1 — Why it is split three ways
 
-A reviewer that knows the intended change will confirm it rather than test it. So it is given a
-scope and a target, and nothing about what moved. It answers one question: *"is this code correct
-and decent on its own terms, for Minecraft 26.1.2?"* — never *"does this match `main`?"*
+Two failure modes pull in opposite directions, and one reviewer cannot cover both:
+
+- **The author's story anchors the reviewer.** Tell a reviewer "I ported X, dropped sulfur,
+  reversed ColorCollection" and it checks those three boxes and stops. Guarding against this wants
+  a reviewer that knows *nothing* about the intended change.
+- **A reviewer that knows nothing cannot see an omission.** If an agent silently drops a feature,
+  narrows scope, or skips a file, there is no trace in the resulting code — absence looks exactly
+  like "this mod doesn't do that." Catching this *requires* the payload diff and the assignment.
+  Across 15 agents doing mechanical porting under conflict pressure, silent scope-narrowing is the
+  **more likely** failure; rule 11 in §9 exists because of it.
+
+So the two questions get two agents with opposite information, and everything mechanical is handed
+to a script that needs neither.
+
+### 10.2 — Layer 1: the automated gate (no agent, runs on every branch)
+
+Deterministic, free, and no false positives. Most of it already exists as §12's end-of-project
+acceptance criteria — the change is that it now runs **per branch, before every merge**, instead of
+once at Wave 3. Wave 3 re-runs the same checks repo-wide.
+
+```bash
+MOD=<mod-id>          # the gradle project name
+
+# 1 — builds and tests
+./gradlew :$MOD:common:build :$MOD:fabric:build :$MOD:neoforge:build
+./gradlew :$MOD:fabric:test           # if the mod has JUnit tests
+./gradlew :$MOD:fabric:runGameTest    # if the mod has GameTests
+
+# 2 — datagen is idempotent (this is also what proves generated/ was not hand-edited)
+./gradlew :$MOD:fabric:runDatagen && git status --porcelain -- "$MOD/"
+#   ^ must print nothing
+
+# 3 — no 26.2-only API leaked into this mod (same regex as §12.8)
+git grep -nE 'EntityTypes\.|BlockEntityTypes\.|\.weathering\(\)|\.pick\(|advancements\.triggers|advancements\.predicates|makeMockServerPlayer\(|LightCoordsUtil\.getLightCoords|EntitySpawnRequest|distToCenterSqr' -- "$MOD/**/*.java"
+#   ^ must print nothing
+
+# 4 — line endings
+git ls-files --eol -- "$MOD/" | grep 'w/crlf'
+#   ^ must print nothing. NB: `grep -v 'w/lf'` is NOT the same check — it also matches
+#     binaries (w/-text) and empty files (w/none), 2,276 of them repo-wide.
+
+# 5 — version and changelog hygiene
+grep -E '^\s*mod_version' "$MOD/gradle.properties"    # must equal the §3 target
+grep -c '^### Unreleased changes' "$MOD/CHANGELOG.md" # must be exactly 1
+grep -m1 '^### ' "$MOD/CHANGELOG.md"                  # must BE '### Unreleased changes' —
+#   a dated heading above it means someone cut a release; this backport cuts none (§2)
+```
+
+Layer 1 findings are **non-negotiable**: fix them, or the branch does not merge. They never reach a
+human. Handing these to an agent is waste — and worse, it gives a reviewer trivia to pad with.
+
+### 10.3 — Layer 2: completeness reconciliation (informed, narrow, cheap)
+
+**Given:** the payload diff for its scope (`git diff --no-ext-diff $PORT2..origin/main -- <paths>`),
+its §9 assignment row, its §3 target version, and the author's branch and report.
+
+**Asks exactly one question:** *is anything in the assignment missing, silently dropped, or
+contradicted?* Concretely — is every feature in the payload either present or recorded as an
+intentional omission; is every §7 carve-out written into `CHANGELOG.md` and, where it should return
+later, `POTENTIAL_FEATURES.md`; are the `has_*_datagen` flags right; is `mod_version` the §3 target.
+
+**Must not judge code quality.** Ugly but complete is a **PASS** here. Style, structure and
+refactors belong to layer 3 and are out of scope for this agent.
+
+**Output:** a reconciliation list — *accounted for* / *missing* / *dropped and documented* /
+**dropped silently**. Only that last category is a real finding.
+
+This is a checklist reconciliation, not a code read, so it is fast. Anchoring does not hurt it: it
+is not forming a quality judgement, so having the author's story costs nothing.
+
+### 10.4 — Layer 3: the cold read (blind, scoped to the delta's files)
 
 **Given:**
 
-- Its path allowlist (§10.4) — the exact paths its author owned.
+- **The list of files to review — paths only.** Not the diff, not why those files were selected.
+  This is the whole trick: it says *where* to look without saying *what changed* or *why*, so the
+  reviewer still cannot confirm the author's story, but it reads 24 files instead of a whole mod.
+  It may read anything else in the mod for context; it reports only on the listed files.
 - The target: **MC 26.1.2**, **Java 25**, Fabric + NeoForge via Architectury, official Mojang
   mappings (`net.minecraft.resources.Identifier`).
-- Both deobf jars as ground truth, plus the `unzip` / `javap` recipe from §7 for checking a symbol.
-- The build, test and datagen commands for its scope.
-- The repo's `CLAUDE.md` for conventions.
+- Both deobf jars as ground truth, plus §7's `unzip` / `javap` recipe.
+- Its build and test commands, and the repo's `CLAUDE.md` for conventions.
+- The mod's `CHANGELOG.md` under `### Unreleased changes` — a deliverable in its scope and a public
+  claim about the code, so *"the changelog says X, does the code do X?"* is fair game. It states
+  what the mod now claims to do, not what the patch touched.
 
-**Withheld — the reviewer prompt must not contain it, and the reviewer must not go looking for it:**
+**Withheld — must not be in the prompt, and the reviewer must not go looking:**
 
-- **This plan**, or anything else under `docs/backport-26.1.2/`.
-- **`origin/main`, `23d614746`, or any other 26.2 ref.** No `git diff`, `git log`, `git show` or
-  `git grep` against another branch, and no `git log` on its own branch either. A reviewer that
-  reads branch history has stopped being blind.
+- **This plan**, and everything else under `docs/backport-26.1.2/`.
+- **`origin/main`, `23d614746`, or any other 26.2 ref** — no `git diff` / `git log` / `git show` /
+  `git grep` against another branch, and no `git log` on its own branch either.
 - The author's report, transcript, patch, or commit messages.
-- Every directory outside its allowlist.
 
-> ⚠ Do not paste the author's summary into the reviewer's prompt "for context". That one shortcut
-> turns the whole gate into a rubber stamp.
+> ⚠ Do not paste the author's summary into the prompt "for context". That one shortcut turns layer
+> 3 into a rubber stamp, and layer 2 already covers what the summary would tell it.
 
-### 10.2 — The one statement of intent it does get
+**What it looks for** (layer 1 owns everything mechanical; do not re-check it):
 
-The mod's own `CHANGELOG.md`, under `### Unreleased changes`. It is a deliverable inside the
-reviewer's scope and a public claim about the code, so **"the changelog says X — does the code
-actually do X?"** is a legitimate and valuable review question. It is not a leak: it says what the
-mod now claims to do, not what the patch touched.
+1. **Correctness bugs.** Fixed-size `NonNullList` handling, mixin targets that resolve to the wrong
+   member or silently match nothing, loader-split code whose halves behave differently, NPE paths,
+   unbalanced open/close or viewer counts, leaked resources.
+2. **Symbols that do not exist on 26.1.2.** Verify against the jar, not intuition. Author and
+   reviewer tend to be wrong in the same direction here, which is what makes it worth a second pass.
+3. **Cross-loader parity.** Anything Fabric does that NeoForge does not, or the reverse.
+4. **Slop.** Dead code, copy-paste, comments that contradict the code, stripped javadoc.
 
-### 10.3 — What it looks for, in priority order
+**Must not:**
 
-1. **Does it actually build, pass and regenerate?** Run the commands; never infer a green build.
-2. **Symbols that do not exist on 26.1.2.** Verify against the jar, not intuition — §7's recipe.
-   Author and reviewer tend to be wrong in the same direction here, so this one earns its keep.
-3. **Correctness bugs.** Fixed-size `NonNullList` handling, mixin targets that resolve to the wrong
-   member or silently match nothing, loader-split code whose two halves behave differently, NPE
-   paths, unbalanced open/close or viewer counts, leaked resources.
-4. **Cross-loader parity.** Anything Fabric does that NeoForge does not, or the reverse.
-5. **Convention drift.** CRLF line endings, hand-edited `src/main/generated/`, hand-edited
-   `demo-world/` output, a player-visible change with no changelog entry, a dated changelog heading
-   (this backport cuts no tags), a `mod_version` that disagrees with §3.
-6. **Slop.** Dead code, copy-paste, comments that contradict the code, stripped javadoc.
+- **Fix anything.** Report only — a reviewer that edits becomes a second unreviewed author.
+- **Widen scope.** A finding pointing outside its file list is reported as a pointer, not chased.
+- **Treat unfamiliarity as a defect.** *"I don't know why this exists"* is not a finding;
+  *"this throws when the jar is full"* is.
+- **Pad.** An empty findings list is a valid, useful result.
 
-### 10.4 — Scope allowlists
+**Output:** findings ranked most-severe first, each with `file:line`, a one-sentence statement of
+the defect, and a concrete failure scenario (inputs or state → wrong behaviour).
 
-| Reviewer | Allowlist | Notes |
+### 10.5 — Which layers each assignment gets
+
+Tied to the risk column in §9, so effort follows exposure:
+
+| Risk | Assignments | Layers |
 |---|---|---|
-| `0R` | root build files, `scripts/`, `tools/`, `.bun-create/`, `.claude/`, `docs/` **except** `docs/backport-26.1.2/`, `CLAUDE.md`, and every mod's `LICENSE` / `README.md` / `CHANGELOG.md` / `POTENTIAL_FEATURES.md` / `*.mixins.json` / `fabric.mod.json` | The 12 imported mod directories are **out of scope** — at this point they are unported 26.2 source and reviewing them is pure noise. Check that `./gradlew projects` configures and the 15 pre-existing mods still build. |
-| `1R` | `chimeric-lib/` | The largest new-API surface in the backport; give it the most time. |
-| `A1R` | `minekea/common/src/main/java/`, `minekea/common/src/main/resources/`, `minekea/gradle.properties`, `minekea/CHANGELOG.md` | ⛔ **Not** `minekea/common/src/main/generated/`. |
-| `A2R` | `minekea/fabric/`, `minekea/common/src/main/generated/`, `minekea/demo-world/` | Do **not** read the 3,632 generated files line by line. The check is that a second `./gradlew :minekea:fabric:runDatagen` produces **no diff**, and that no generated or demo-world file was hand-edited. |
-| `BR` … `NR` | that assignment's mod directory or directories, and nothing else | |
-| `3R` | the merged tree, against §12 | The only reviewer allowed a repo-wide view — it is checking integration, not authorship. |
+| **High** | Wave 1, A1, A2, B, C, D, E, F, G, H | 1 + 2 + 3 |
+| **Medium** | I, J, K, M, and Wave 0 | 1 + 2, plus layer 3 on hand-written source only — skip generated and resource-heavy directories (I and G are mostly datagen output, which layer 1 already proves by regeneration) |
+| **Low** | L, N | 1 + 2 |
+| Wave 3 | — | 1 repo-wide, plus 2 against §12 |
 
-### 10.5 — What a reviewer must not do
+Row L is `sneaky-tweaks`, `toy-box` and `hang-from-slabs` — two of them empty scaffolds, one with
+**zero** changed Java files. A blind cold read there is ceremony, not review.
 
-- **Must not fix anything.** Report only. A reviewer that edits becomes a second unreviewed author,
-  and nobody reviews the reviewer.
-- **Must not widen scope.** If a finding points outside the allowlist, report the pointer and stop.
-  Do not chase it into another mod.
-- **Must not treat unfamiliarity as a defect.** It is reading a mod it has never seen. *"I don't
-  know why this exists"* is not a finding; *"this throws when the jar is full"* is.
-- **Must not pad.** An empty findings list is a valid and useful result. Inventing findings to look
-  thorough is the failure mode that makes this gate worthless.
+### 10.6 — Disposition
 
-### 10.6 — Output and disposition
+Each layer's findings are answered differently, which keeps the human queue short:
 
-Findings ranked most-severe first, each with `file:line`, a one-sentence statement of the defect,
-and a concrete failure scenario (inputs or state → wrong behaviour). Then a verdict:
-**PASS** / **PASS WITH FINDINGS** / **FAIL**.
+| Layer | Nature | Who resolves it |
+|---|---|---|
+| 1 | Deterministic pass/fail | Author fixes; no discussion, no escalation. |
+| 2 | Factual — present or not | Author completes the work, or records the omission per §7. Escalates only if the omission is a genuine scope decision. |
+| 3 | Judgement | Author gets one remediation pass and answers every finding: fixed, pre-existing, out of scope, or disagreed-with-a-reason. Anything still disputed goes to a human. |
 
-Findings go back to the **author**, which gets one remediation pass and must answer every one:
-fixed, pre-existing, out of scope, or disagreed-with-a-reason. Anything still disputed after that
-goes to a human — a reviewer never has the last word on its own, and never lands a change itself.
+A reviewer never lands a change and never has the last word on its own.
 
-### 10.7 — What this costs
-
-Be honest about the trade. A blind reviewer reviews its **whole scope**, not the delta, so cost
-scales with mod size rather than change size, and it will raise findings on pre-existing code its
-author never touched. That is the price of a genuinely cold read, and it is occasionally where the
-best findings come from. Budget for the noise and let the author dispose of it with "pre-existing"
-rather than argue.
+Layer 3 still reads its whole file list rather than the diff, so it will occasionally raise a
+finding on a line the author never touched. With the list scoped to the delta that is a thin
+margin, and it is sometimes where the good findings come from — dispose of it as "pre-existing"
+and move on.
 
 ---
 
@@ -731,10 +792,13 @@ The backport is done when, on the merged `26.1.2` branch:
 
    > `\.pick\(` and `\.weathering\(\)` are the two easiest to miss by eye — `but-what-about`'s
    > `BlockFamilies.java` is written almost entirely in those two forms.
-9. `git ls-files --eol | grep -v 'w/lf'` returns nothing but `gradlew.bat`.
+9. `git ls-files --eol | grep 'w/crlf'` returns nothing but `gradlew.bat`. (The older form of
+   this check, `grep -v 'w/lf'`, is wrong — it also matches binaries (`w/-text`) and empty
+   files (`w/none`), 2,276 of them repo-wide, so it can never pass.)
 10. CI (`.github/workflows/build.yml`) is green on JDK 25 without a `GITHUB_TOKEN`.
-11. Every branch passed its §10 adversarial review, and every finding is either fixed or
-    explicitly dispositioned by its author. No branch merged on an unanswered finding.
+11. Every branch passed its §10 review gate at the depth its risk tier requires, and every
+    finding is fixed or explicitly dispositioned. No branch merged on an unanswered finding, and
+    no layer-1 check was waived.
 
 ## 13. Manual verification worth doing before release
 
@@ -766,9 +830,16 @@ Every factual claim in §1, §3, §5 and §7 was re-checked against the repo and
   — no minekea Java diverged"; 67 minekea Java files diverge. This was the plan's most dangerous
   error and is now corrected in both places.
 - **§1** — the minekea → chimeric-lib `WallBlockDataGenerator.java` move was undocumented.
-- **§4 / §10** — added a blind adversarial review gate after every authoring branch, with
-  per-agent scope allowlists. Reviewers are denied this plan, `origin/main` and the author's
-  report by design, so they test the code rather than confirm the intent.
+- **§4 / §10** — added a review gate after every authoring branch. It was first written as a
+  single fully-blind adversarial reviewer; that version was replaced, because a blind reviewer is
+  structurally unable to detect a *silent omission* — the likelier failure across 15 porting
+  agents — and it paid for a whole-mod read to get there. The gate is now three layers: a free
+  deterministic script, an informed completeness reconciliation, and a cold read scoped to the
+  delta's file list (paths only, so it still cannot confirm the author's story). Depth is tiered
+  by the §9 risk column.
+- **§12.9** — the line-ending criterion was `git ls-files --eol | grep -v 'w/lf'`, which matches
+  2,276 binaries and empty files and can never pass. Corrected to `grep 'w/crlf'`, which returns
+  exactly `gradlew.bat`.
 - **§4 / §9** — minekea was a single agent carrying 81 payload Java files, 37 conflicts and a
   3,632-file datagen regen, which is several times any other Wave 2 assignment. It is now split
   into **A1 (`common/`, registration: 24 java / 11 conflicts)** and **A2 (`fabric/` + datagen
