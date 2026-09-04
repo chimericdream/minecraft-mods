@@ -13,8 +13,8 @@ whatever loot has been assigned to it.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
-* Earlier versions: see the git history for builds targeting older releases
+* 26.2: Supported
+* 26.1.2: Supported
 
 ### Current Features
 
@@ -39,7 +39,7 @@ block, equip a brush, and hold right-click to excavate it._
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/archaeology-tweaks/issues) to report any
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any
 bugs you find.
 
 ## Credits

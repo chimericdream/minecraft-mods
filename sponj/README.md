@@ -8,13 +8,11 @@ _Yet another sponge mod_
 
 This simple mod adds two new blocks: a sponj and lava sponj. 
 
-### Versions
+### Minecraft Versions
 
-* 26.1.2: supported
-* 1.20.x: supported
-* 1.19.x: maintenance only
-* 1.18.2: maintenance only
-* < 1.18.2: not planned
+* 26.2: Supported
+* 26.1.2: Supported
+* 1.21.4: Bug fixes only
 
 ### Current Features
 
@@ -44,7 +42,7 @@ This simple mod adds two new blocks: a sponj and lava sponj.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/sponj-fabric/issues) to report any bugs you find.
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you find.
 
 ## Credits
 

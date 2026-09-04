@@ -57,3 +57,7 @@ New ideas should slot into that grid rather than invent a new machine.
 
 * The README's four teachable concepts (tiers, multi, huppers, filtering) would become five with
   splitters — worth keeping the concept count low and the grid complete rather than adding one-off blocks.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

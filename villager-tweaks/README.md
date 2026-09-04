@@ -12,7 +12,8 @@ handy item for relocating villagers.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
 
 ## Current Features
 
@@ -60,7 +61,7 @@ interaction. The remaining tweaks are configuration toggles rather than in-game 
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/villagertweaks/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

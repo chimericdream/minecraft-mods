@@ -12,7 +12,8 @@ use.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
 
 ## Current Features
 

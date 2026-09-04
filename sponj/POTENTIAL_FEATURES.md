@@ -50,3 +50,7 @@ bonus — ideas below keep that "one block, one job" spirit.
 
 * **Modded fluid tags** — drive what each sponj absorbs from fluid tags so other mods' fluids can opt
   in via datapack.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

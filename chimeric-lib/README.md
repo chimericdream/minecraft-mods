@@ -16,7 +16,10 @@ nothing visible in-game, so **in-game documentation is not applicable** to this 
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
+* 1.21.5: Bug fixes only
+* 1.21.4: Bug fixes only
 
 ### What's Inside
 
@@ -34,7 +37,7 @@ For developers, ChimericLib provides shared code across the Architectury `common
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/chimericlib-mc/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find.
 
 ## Credits

@@ -8,6 +8,11 @@
 
 _Simple, functional, decorative blocks for all your building and storage needs (some assembly required)_
 
+### Minecraft Versions
+
+* 26.2: Supported
+* 26.1.2: Supported
+
 ## Introduction
 
 This mod contains a wide variety of functional and decorative furniture blocks for use in your Minecraft world.
@@ -66,7 +71,7 @@ This mod contains a wide variety of functional and decorative furniture blocks f
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/minekea-fabric/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find. If you have a suggestion for a feature that might fit with the mod, or if you think something should be
 tweaked or removed to improve gameplay, submit those as well!
 
