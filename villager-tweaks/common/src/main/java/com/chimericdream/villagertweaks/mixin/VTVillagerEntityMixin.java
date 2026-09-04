@@ -68,9 +68,6 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
     @Shadow
     public abstract VillagerData getVillagerData();
 
-    @Shadow
-    public abstract boolean getVillagerDataFinalized();
-
     public VTVillagerEntityMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
         super(entityType, world);
     }
