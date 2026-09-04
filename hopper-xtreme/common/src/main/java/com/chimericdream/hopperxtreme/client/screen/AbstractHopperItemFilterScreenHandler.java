@@ -6,6 +6,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -88,6 +89,29 @@ public abstract class AbstractHopperItemFilterScreenHandler extends AbstractCont
     @Override
     public @NotNull ItemStack quickMoveStack(@NonNull Player player, int invSlot) {
         return ItemStack.EMPTY;
+    }
+
+    // Ghost slots leak real items through SWAP, and only through SWAP. Every other click path that
+    // can take from a slot -- PICKUP, THROW (Q), PICKUP_ALL (double-click) -- funnels through
+    // Slot#tryRemove/safeTake and therefore through FilterSlot#remove, which hands back EMPTY.
+    // Vanilla's SWAP branch (hotbar keys 1-9, and the offhand key as button 40) does not: verified
+    // against 26.1.2's AbstractContainerMenu#doClick bytecode, it reads the slot via Slot#getItem,
+    // checks only Slot#mayPickup, and writes straight into the player's inventory via
+    // Inventory#setItem -- never calling remove(). On a ghost slot that mints a real, spendable
+    // item out of an entry that cost nothing to place.
+    //
+    // Overriding mayPickup to false would block SWAP, but it would also block the empty-cursor
+    // PICKUP that is how a filter entry is *meant* to be cleared, so the guard has to sit here
+    // instead. SWAP on a filter slot is simply ignored: setting an entry is still a normal click,
+    // clearing it is still an empty-cursor click, and neither ever hands the player an item.
+    @Override
+    public void clicked(int slotId, int button, ContainerInput input, @NonNull Player player) {
+        if (input == ContainerInput.SWAP && slotId >= 0 && slotId < this.slots.size()
+            && this.slots.get(slotId) instanceof FilterSlot) {
+            return;
+        }
+
+        super.clicked(slotId, button, input, player);
     }
 
     protected static class FilterSlot extends Slot {
