@@ -400,6 +400,23 @@ These correct or extend the round-1 map. **Trust these over round-1 where they d
 | Every other copper (`CUT_COPPER`, `COPPER_BLOCK`, `CHISELED_COPPER`, `COPPER_GRATE`, `COPPER_BULB`, `COPPER_DOOR`, `COPPER_TRAPDOOR`, `COPPER_CHEST`, `LIGHTNING_ROD`, `COPPER_GOLEM_STATUE`) | flat constants on 26.1.2 → `EXPOSED_CUT_COPPER`, `WAXED_OXIDIZED_COPPER_GRATE`, … |
 | `ColorCollection` fields (`Blocks.WOOL`, `CARPET`, `CONCRETE`, `CONCRETE_POWDER`, `STAINED_GLASS`, `STAINED_GLASS_PANE`, `GLAZED_TERRACOTTA`, `DYED_TERRACOTTA`, `BANNER`, `WALL_BANNER`, `BED`, `DYED_SHULKER_BOX`, `DYED_CANDLE`, `DYED_CANDLE_CAKE`; `Items.DYE`, `Items.DYED_BUNDLE`, `Items.HARNESS`) | **ABSENT** on 26.1.2 — confirmed by a full field diff of `Blocks`/`Items` between the two jars. Reverse to flat constants; remember the `DYED_` prefix is dropped. |
 
+### Found in flight (2026-09-04) — not in the original map
+
+Two whole *categories* the map missed. Both were caught only by a real build, and both bit more
+than one row:
+
+| Symbol | Verdict on 26.1.2 |
+|---|---|
+| `OrderedSubmitNodeCollector.submitMovingBlock` | **Arity differs.** 26.1.2: `submitMovingBlock(PoseStack, MovingBlockRenderState)` — **2 args**. 26.2 adds a trailing `int`. Every call site found so far passed a constant `0` for it, so dropping the argument is behaviour-preserving. `submitCustomGeometry` is **identical (3 args) on both** — don't "fix" that one. Hit independently by Wave 1 (`FallingUpwardBlockEntity`) and Wave 2-C (7 call sites across three block-entity renderers). Note the class sits at `net/minecraft/client/renderer/`, not `.../renderer/submit/`. |
+| **Architectury 20.0.7 event signatures** | ⚠ **Not a Minecraft difference at all** — a *library* one, which is why no jar diff or vanilla-symbol grep can find it. This branch pins Architectury **20.0.7**; `main` is on 21.x. On 20.x, `InteractionEvent.RIGHT_CLICK_BLOCK.click(...)` returns **`InteractionResult`**, not `EventResult` (adapt with `EventResult#asMinecraft()`), and `BlockEvent.BREAK.breakBlock(...)` takes an **extra trailing `IntValue`** (dropped exp) parameter. Bare method references written against 21.x will not bind. Check any Architectury event subscription. |
+
+**The general lesson:** §7's tables and the acceptance greps only catch *known* patterns. A plain new
+method on a vanilla class, a changed overload arity, or a dependency's API drift are all invisible to
+them — `Villager.getVillagerDataFinalized()` (26.2-only, caught as a dead `@Shadow` that failed
+mixin application) is a third example. **Build early; treat the greps as a backstop, never as proof.**
+And when probing a jar for absence, get the package right — a wrong path yields a false "absent"
+(`Villager` is at `world/entity/npc/villager/`, not `world/entity/npc/`).
+
 ### ⛔ Vanilla content that exists in 26.2 but **not** 26.1.2 — features that cannot be backported
 
 A full field-level diff of `Blocks` and `Items` between the two jars found exactly two families of
