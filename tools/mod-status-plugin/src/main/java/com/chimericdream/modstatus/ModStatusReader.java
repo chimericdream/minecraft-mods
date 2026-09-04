@@ -27,7 +27,7 @@ final class ModStatusReader {
     private static final String UNRELEASED_HEADING = "### Unreleased changes";
 
     /** Matches the start of the heading that ends the "Unreleased changes/Initial release" section. */
-    private static final Pattern NEXT_HEADING = Pattern.compile("\n###\s");
+    private static final Pattern NEXT_HEADING = Pattern.compile("\n###\\s");
 
     private ModStatusReader() {
     }

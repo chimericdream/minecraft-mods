@@ -311,7 +311,7 @@ Sub-agents apply this when a patch hunk rejects or the build fails. Derived from
 | `EntityTypes.X` (`net.minecraft.world.entity.EntityTypes`) | `EntityType.X` (`net.minecraft.world.entity.EntityType`) |
 | `net.minecraft.advancements.triggers.CriteriaTriggers` | `net.minecraft.advancements.CriteriaTriggers` |
 | `net.minecraft.advancements.predicates.*` | `net.minecraft.advancements.criterion.*` |
-| `net.minecraft.util.LightCoordsUtil.getLightCoords(...)` | `LevelRenderer.getLightCoords(...)` |
+| ~~`net.minecraft.util.LightCoordsUtil.getLightCoords(...)`~~ ⚠ **superseded — see round 2 §7** | `LevelRenderer.getLightCoords(...)`. The *call* still moves, but the premise was wrong: `LightCoordsUtil` **does** exist on 26.1.2 — it simply has no `getLightCoords`, and `BrightnessGetter` is `LevelRenderer$BrightnessGetter` here rather than absent. |
 | `Minecraft.getInstance().gui.hud.isHidden()` | `!Minecraft.getInstance().renderNames()` |
 | `view.getStringOr("k", d)` / `getBooleanOr` | `ValueInput.contains("k")` + the 26.1.2 getters |
 | `Blocks.WOOL.white()`, `Items.DYE.red()`, … (`ColorCollection`) | `Blocks.WHITE_WOOL`, `Items.RED_DYE`, … |
