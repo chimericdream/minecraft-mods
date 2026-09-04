@@ -60,7 +60,7 @@ public abstract class CN$ServerPlayerMixin {
 
     @Redirect(
         method = "lambda$startSleepInBed$1",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/triggers/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V")
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/criterion/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V")
     )
     private void cn$suppressVanillaSleepAdvancementForUpsideDownBed(PlayerTrigger trigger, ServerPlayer player) {
         if (!this.cn$upsideDownBedSleep) {
