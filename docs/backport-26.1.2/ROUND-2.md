@@ -140,20 +140,26 @@ Wave 0  ── backport/26.1.2/r2-shared            (SERIAL, blocking, one agent
               │  root build files, scripts/, tools/, .bun-create/, .claude/, docs/, CLAUDE.md
               │  + the 7 repo-wide sweeps across every mod
               │  + verbatim import of the 12 new mod directories (26.2 source, not yet compiling)
+              ├──► 0R   adversarial review (blind, blocking)            §10
               ▼
 Wave 1  ── backport/26.1.2/r2-chimeric-lib      (SERIAL, blocking, one agent)
               │  ~3,100 lines of new public API that 6 other mods compile against
+              ├──► 1R   adversarial review (blind, blocking)            §10
               ▼
 Wave 2  ── 15 assignments / 14 parallel lanes (see §9 for the grouping)
               │  minekea is split: A1 (`common/`, registration) ──► A2 (`fabric/` + datagen regen)
               │  branch off r2-chimeric-lib, one per mod (or per small group)
+              ├──► A1R A2R BR … NR   one blind reviewer per assignment  §10
               ▼
 Wave 3  ── backport/26.1.2/r2-integration       (SERIAL, one agent)
+              ├──► 3R   adversarial review (blind, blocking)            §10
                  full build, modpacks, all test suites, datagen re-run, final doc pass
 ```
 
 **Merge model.** Each wave branches off the previous wave's branch and merges into `26.1.2` in
-order. Wave 2 branches all fork from `backport/26.1.2/r2-chimeric-lib`.
+order. Wave 2 branches all fork from `backport/26.1.2/r2-chimeric-lib` (except A2, which forks
+from A1). **No branch merges until its §10 reviewer has reported and its author has answered
+every finding** — the review gate is part of the wave ordering, not an optional extra pass.
 
 **Expect a red full build between Wave 0 and Wave 3.** Wave 0 puts the twelve new mods' 26.2 source
 into the tree and activates them in `settings.gradle`, so `./gradlew build` and a bare `bun run build`
@@ -575,13 +581,118 @@ git apply --3way /tmp/$MOD.patch
    loader-split mixin explanations. That is the durable value; do not strip it as "just comments".
 9. **Regenerate datagen; never hand-edit `src/main/generated/`.** If your mod has thousands of
    generated files in the payload, port the Java and re-run `runDatagen`.
-10. **Report honestly.** If something cannot be backported (26.2-only vanilla block, missing API, a
+10. **Expect to be reviewed blind.** A fresh agent that has never seen this plan, the payload, or
+    your report will read your output cold and try to break it (§10). Write for that reader:
+    keep the explanatory comments, make the changelog match what the code actually does, and
+    don't leave anything you would have to explain in person.
+11. **Report honestly.** If something cannot be backported (26.2-only vanilla block, missing API, a
    test that can't run), finish everything else and say explicitly what you left out and why.
    Do not silently narrow scope.
 
 ---
 
-## 10. Wave 3 — integration (one agent, serial)
+## 10. The adversarial review gate
+
+Every branch that produces work is followed by a **paired review agent** before it merges: Wave 0
+(`0R`), Wave 1 (`1R`), each Wave 2 assignment (`A1R`, `A2R`, `BR` … `NR`), and Wave 3 (`3R`).
+A reviewer is always a **fresh agent** — no shared context with its author, with the other
+reviewers, or with a previous review round.
+
+**The gate is blocking.** A branch does not merge into the next wave until its reviewer has
+reported and the author has answered every finding. Because Wave 1 blocks all of Wave 2, `1R`
+blocks all of Wave 2 too.
+
+### 10.1 — The reviewer works blind, on purpose
+
+A reviewer that knows the intended change will confirm it rather than test it. So it is given a
+scope and a target, and nothing about what moved. It answers one question: *"is this code correct
+and decent on its own terms, for Minecraft 26.1.2?"* — never *"does this match `main`?"*
+
+**Given:**
+
+- Its path allowlist (§10.4) — the exact paths its author owned.
+- The target: **MC 26.1.2**, **Java 25**, Fabric + NeoForge via Architectury, official Mojang
+  mappings (`net.minecraft.resources.Identifier`).
+- Both deobf jars as ground truth, plus the `unzip` / `javap` recipe from §7 for checking a symbol.
+- The build, test and datagen commands for its scope.
+- The repo's `CLAUDE.md` for conventions.
+
+**Withheld — the reviewer prompt must not contain it, and the reviewer must not go looking for it:**
+
+- **This plan**, or anything else under `docs/backport-26.1.2/`.
+- **`origin/main`, `23d614746`, or any other 26.2 ref.** No `git diff`, `git log`, `git show` or
+  `git grep` against another branch, and no `git log` on its own branch either. A reviewer that
+  reads branch history has stopped being blind.
+- The author's report, transcript, patch, or commit messages.
+- Every directory outside its allowlist.
+
+> ⚠ Do not paste the author's summary into the reviewer's prompt "for context". That one shortcut
+> turns the whole gate into a rubber stamp.
+
+### 10.2 — The one statement of intent it does get
+
+The mod's own `CHANGELOG.md`, under `### Unreleased changes`. It is a deliverable inside the
+reviewer's scope and a public claim about the code, so **"the changelog says X — does the code
+actually do X?"** is a legitimate and valuable review question. It is not a leak: it says what the
+mod now claims to do, not what the patch touched.
+
+### 10.3 — What it looks for, in priority order
+
+1. **Does it actually build, pass and regenerate?** Run the commands; never infer a green build.
+2. **Symbols that do not exist on 26.1.2.** Verify against the jar, not intuition — §7's recipe.
+   Author and reviewer tend to be wrong in the same direction here, so this one earns its keep.
+3. **Correctness bugs.** Fixed-size `NonNullList` handling, mixin targets that resolve to the wrong
+   member or silently match nothing, loader-split code whose two halves behave differently, NPE
+   paths, unbalanced open/close or viewer counts, leaked resources.
+4. **Cross-loader parity.** Anything Fabric does that NeoForge does not, or the reverse.
+5. **Convention drift.** CRLF line endings, hand-edited `src/main/generated/`, hand-edited
+   `demo-world/` output, a player-visible change with no changelog entry, a dated changelog heading
+   (this backport cuts no tags), a `mod_version` that disagrees with §3.
+6. **Slop.** Dead code, copy-paste, comments that contradict the code, stripped javadoc.
+
+### 10.4 — Scope allowlists
+
+| Reviewer | Allowlist | Notes |
+|---|---|---|
+| `0R` | root build files, `scripts/`, `tools/`, `.bun-create/`, `.claude/`, `docs/` **except** `docs/backport-26.1.2/`, `CLAUDE.md`, and every mod's `LICENSE` / `README.md` / `CHANGELOG.md` / `POTENTIAL_FEATURES.md` / `*.mixins.json` / `fabric.mod.json` | The 12 imported mod directories are **out of scope** — at this point they are unported 26.2 source and reviewing them is pure noise. Check that `./gradlew projects` configures and the 15 pre-existing mods still build. |
+| `1R` | `chimeric-lib/` | The largest new-API surface in the backport; give it the most time. |
+| `A1R` | `minekea/common/src/main/java/`, `minekea/common/src/main/resources/`, `minekea/gradle.properties`, `minekea/CHANGELOG.md` | ⛔ **Not** `minekea/common/src/main/generated/`. |
+| `A2R` | `minekea/fabric/`, `minekea/common/src/main/generated/`, `minekea/demo-world/` | Do **not** read the 3,632 generated files line by line. The check is that a second `./gradlew :minekea:fabric:runDatagen` produces **no diff**, and that no generated or demo-world file was hand-edited. |
+| `BR` … `NR` | that assignment's mod directory or directories, and nothing else | |
+| `3R` | the merged tree, against §12 | The only reviewer allowed a repo-wide view — it is checking integration, not authorship. |
+
+### 10.5 — What a reviewer must not do
+
+- **Must not fix anything.** Report only. A reviewer that edits becomes a second unreviewed author,
+  and nobody reviews the reviewer.
+- **Must not widen scope.** If a finding points outside the allowlist, report the pointer and stop.
+  Do not chase it into another mod.
+- **Must not treat unfamiliarity as a defect.** It is reading a mod it has never seen. *"I don't
+  know why this exists"* is not a finding; *"this throws when the jar is full"* is.
+- **Must not pad.** An empty findings list is a valid and useful result. Inventing findings to look
+  thorough is the failure mode that makes this gate worthless.
+
+### 10.6 — Output and disposition
+
+Findings ranked most-severe first, each with `file:line`, a one-sentence statement of the defect,
+and a concrete failure scenario (inputs or state → wrong behaviour). Then a verdict:
+**PASS** / **PASS WITH FINDINGS** / **FAIL**.
+
+Findings go back to the **author**, which gets one remediation pass and must answer every one:
+fixed, pre-existing, out of scope, or disagreed-with-a-reason. Anything still disputed after that
+goes to a human — a reviewer never has the last word on its own, and never lands a change itself.
+
+### 10.7 — What this costs
+
+Be honest about the trade. A blind reviewer reviews its **whole scope**, not the delta, so cost
+scales with mod size rather than change size, and it will raise findings on pre-existing code its
+author never touched. That is the price of a genuinely cold read, and it is occasionally where the
+best findings come from. Budget for the noise and let the author dispose of it with "pre-existing"
+rather than argue.
+
+---
+
+## 11. Wave 3 — integration (one agent, serial)
 
 Branch `backport/26.1.2/r2-integration` off `26.1.2` with every Wave 2 branch merged in.
 
@@ -591,14 +702,14 @@ Branch `backport/26.1.2/r2-integration` off `26.1.2` with every Wave 2 branch me
 3. Verify modpack jar filenames: `<archives_name>-<platform>-26.1.2-<version>.jar`.
 4. Confirm `git status` is clean after the build — `revert-fabricmodjson.ts` must have stripped the
    transient `fabric.mod.json` / access-widener edits.
-5. Run every test suite (§11).
+5. Run every test suite (§12).
 6. Final doc pass: `CLAUDE.md`'s active/inactive mod lists, `docs/backport-26.1.2/README.md`'s
    round-2 pointer, and each mod's `README.md` "Minecraft Versions" section.
 7. Record the sulfur/cinnabar carve-out in `docs/` so it isn't rediscovered next round.
 
 ---
 
-## 11. Overall acceptance criteria
+## 12. Overall acceptance criteria
 
 The backport is done when, on the merged `26.1.2` branch:
 
@@ -622,8 +733,10 @@ The backport is done when, on the merged `26.1.2` branch:
    > `BlockFamilies.java` is written almost entirely in those two forms.
 9. `git ls-files --eol | grep -v 'w/lf'` returns nothing but `gradlew.bat`.
 10. CI (`.github/workflows/build.yml`) is green on JDK 25 without a `GITHUB_TOKEN`.
+11. Every branch passed its §10 adversarial review, and every finding is either fixed or
+    explicitly dispositioned by its author. No branch merged on an unanswered finding.
 
-## 12. Manual verification worth doing before release
+## 13. Manual verification worth doing before release
 
 These are the behaviours a compile can't prove, ordered by how likely they are to be wrong:
 
@@ -643,7 +756,7 @@ These are the behaviours a compile can't prove, ordered by how likely they are t
 
 ---
 
-## 13. Verification provenance
+## 14. Verification provenance
 
 Every factual claim in §1, §3, §5 and §7 was re-checked against the repo and both deobf jars on
 2026-09-03, after the first draft of this plan was written. Corrections applied in that pass:
@@ -653,6 +766,9 @@ Every factual claim in §1, §3, §5 and §7 was re-checked against the repo and
   — no minekea Java diverged"; 67 minekea Java files diverge. This was the plan's most dangerous
   error and is now corrected in both places.
 - **§1** — the minekea → chimeric-lib `WallBlockDataGenerator.java` move was undocumented.
+- **§4 / §10** — added a blind adversarial review gate after every authoring branch, with
+  per-agent scope allowlists. Reviewers are denied this plan, `origin/main` and the author's
+  report by design, so they test the code rather than confirm the intent.
 - **§4 / §9** — minekea was a single agent carrying 81 payload Java files, 37 conflicts and a
   3,632-file datagen regen, which is several times any other Wave 2 assignment. It is now split
   into **A1 (`common/`, registration: 24 java / 11 conflicts)** and **A2 (`fabric/` + datagen
@@ -670,7 +786,7 @@ Every factual claim in §1, §3, §5 and §7 was re-checked against the repo and
   same 18 patterns).
 - **§9 F** — `DispenseItemBehavior$13` and `HorseInventoryMenu$1` re-derived; no longer open work.
 - **§9 C** — `FaceLighting.java`'s single call site and its exact 26.1.2 replacement identified.
-- **§11.8** — the leak grep was missing 9 `ColorCollection` symbols and `.pick(`.
+- **§12.8** — the leak grep was missing 9 `ColorCollection` symbols and `.pick(`.
 - Per-mod Java counts corrected for hopper-xtreme, jdcrafte, archaeology-tweaks, artificial-heart,
   hang-from-slabs; effective-gear is 20 mixins, not 19.
 
