@@ -139,6 +139,7 @@ public class ItemStorageBlock extends Block {
         BAGGED,
         FACING,
         AXIS,
+        ALT_AXIS,
         CUSTOM;
     }
 }
