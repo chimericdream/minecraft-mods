@@ -2,7 +2,7 @@ package com.chimericdream.camelnostrils.mixin;
 
 import com.chimericdream.camelnostrils.block.UpsideDownBedBlock;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.advancements.triggers.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

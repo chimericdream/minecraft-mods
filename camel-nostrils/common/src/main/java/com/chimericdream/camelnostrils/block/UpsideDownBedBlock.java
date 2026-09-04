@@ -55,7 +55,33 @@ public class UpsideDownBedBlock extends BedBlock {
     }
 
     public static UpsideDownBedBlock create(DyeColor color) {
-        return new UpsideDownBedBlock(color, Properties.ofFullCopy(Blocks.BED.pick(color)).setId(blockRegistryKey(color)));
+        return new UpsideDownBedBlock(color, Properties.ofFullCopy(vanillaBedFor(color)).setId(blockRegistryKey(color)));
+    }
+
+    /**
+     * 26.1.2 has no {@code ColorCollection} grouping the sixteen bed colors under one field the way
+     * 26.2 does - they're still separate flat constants here, same as every MC version before 26.2 -
+     * so selecting one by {@link DyeColor} means switching over it directly.
+     */
+    private static Block vanillaBedFor(DyeColor color) {
+        return switch (color) {
+            case WHITE -> Blocks.WHITE_BED;
+            case ORANGE -> Blocks.ORANGE_BED;
+            case MAGENTA -> Blocks.MAGENTA_BED;
+            case LIGHT_BLUE -> Blocks.LIGHT_BLUE_BED;
+            case YELLOW -> Blocks.YELLOW_BED;
+            case LIME -> Blocks.LIME_BED;
+            case PINK -> Blocks.PINK_BED;
+            case GRAY -> Blocks.GRAY_BED;
+            case LIGHT_GRAY -> Blocks.LIGHT_GRAY_BED;
+            case CYAN -> Blocks.CYAN_BED;
+            case PURPLE -> Blocks.PURPLE_BED;
+            case BLUE -> Blocks.BLUE_BED;
+            case BROWN -> Blocks.BROWN_BED;
+            case GREEN -> Blocks.GREEN_BED;
+            case RED -> Blocks.RED_BED;
+            case BLACK -> Blocks.BLACK_BED;
+        };
     }
 
     public static Identifier blockId(DyeColor color) {

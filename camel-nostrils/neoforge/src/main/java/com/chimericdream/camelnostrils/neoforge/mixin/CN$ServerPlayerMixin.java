@@ -3,7 +3,7 @@ package com.chimericdream.camelnostrils.neoforge.mixin;
 import com.chimericdream.camelnostrils.block.UpsideDownBedBlock;
 import com.chimericdream.camelnostrils.mixin.CN$PlayerAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.advancements.triggers.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,6 +26,18 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  * vanilla/Fabric's, so the redirect targets here differ from the common mixin's even though the
  * injected logic is identical. Confirmed via javap against
  * {@code minecraft-merged-official-at-patched.jar}; see docs/NEOFORGE.md.
+ * <p>
+ * Re-verified for MC 26.1.2 + NeoForge 26.1.2.71: {@code javap -p -c} on both
+ * {@code minecraft-merged-official-at-patched.jar} (this platform) and
+ * {@code minecraft-merged-deobf-26.1.2.jar} (vanilla) shows the same shape as the 26.2 pair this
+ * class was originally written against - {@code startSleepInBed} on this jar is reduced to a single
+ * {@code Supplier.get()} invocation whose body is {@code lambda$startSleepInBed$0(BlockPos)}
+ * (contains the {@code BedRule.canSleep}/{@code canSetSpawn}/{@code asProblem} calls and the
+ * {@code bedBlocked} call), and the post-sleep advancement/stat award is
+ * {@code lambda$startSleepInBed$2(Unit)} (contains the {@code PlayerTrigger.trigger} call for
+ * {@code CriteriaTriggers.SLEPT_IN_BED}). The indices happen to land on {@code $0}/{@code $2} here
+ * too, so no renumbering was needed - but this was re-derived from bytecode for this MC/NeoForge
+ * pair, not assumed from the 26.2 numbers.
  */
 @Mixin(ServerPlayer.class)
 public abstract class CN$ServerPlayerMixin {
