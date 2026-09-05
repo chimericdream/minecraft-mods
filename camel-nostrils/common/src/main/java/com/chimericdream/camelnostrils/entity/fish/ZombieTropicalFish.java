@@ -34,7 +34,7 @@ public class ZombieTropicalFish extends TropicalFish {
     protected void registerGoals() {
         // Deliberately not calling super — the vanilla schooling/panic/flee-the-player goals don't make
         // sense for a hostile fish that's stuck flopping on land.
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     @Override

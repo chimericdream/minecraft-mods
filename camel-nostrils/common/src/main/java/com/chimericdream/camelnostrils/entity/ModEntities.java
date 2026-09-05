@@ -20,7 +20,7 @@ public class ModEntities {
 
     /**
      * Shared by every {@link com.chimericdream.lib.blocks.FallingUpwardBlock} registered by this mod,
-     * the same way vanilla shares a single {@code EntityTypes.FALLING_BLOCK} across sand, gravel,
+     * the same way vanilla shares a single {@code EntityType.FALLING_BLOCK} across sand, gravel,
      * anvils, etc. — the specific block being carried lives on the entity, not the type.
      */
     public static final RegistrySupplier<EntityType<FallingUpwardBlockEntity>> FALLING_UPWARD_BLOCK_ENTITY = REGISTRY_HELPER.registerEntityType(

@@ -2,7 +2,7 @@ package com.chimericdream.camelnostrils.mixin;
 
 import com.chimericdream.camelnostrils.block.UpsideDownBedBlock;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.advancements.triggers.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,7 +60,7 @@ public abstract class CN$ServerPlayerMixin {
 
     @Redirect(
         method = "lambda$startSleepInBed$1",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/triggers/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V")
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/criterion/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V")
     )
     private void cn$suppressVanillaSleepAdvancementForUpsideDownBed(PlayerTrigger trigger, ServerPlayer player) {
         if (!this.cn$upsideDownBedSleep) {
