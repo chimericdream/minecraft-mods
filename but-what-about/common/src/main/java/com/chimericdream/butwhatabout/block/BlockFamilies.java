@@ -31,14 +31,14 @@ public class BlockFamilies {
     private static final Item.Properties COLORED_BLOCKS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
     public static final BlockFamily CALCITE = family("calcite", "Calcite", Blocks.CALCITE);
-    public static final BlockFamily CHISELED_COPPER = family("chiseled_copper", "Chiseled Copper", Blocks.CHISELED_COPPER.weathering().unaffected());
-    public static final BlockFamily EXPOSED_CHISELED_COPPER = family("exposed_chiseled_copper", "Exposed Chiseled Copper", Blocks.CHISELED_COPPER.weathering().exposed());
-    public static final BlockFamily WEATHERED_CHISELED_COPPER = family("weathered_chiseled_copper", "Weathered Chiseled Copper", Blocks.CHISELED_COPPER.weathering().weathered());
-    public static final BlockFamily OXIDIZED_CHISELED_COPPER = family("oxidized_chiseled_copper", "Oxidized Chiseled Copper", Blocks.CHISELED_COPPER.weathering().oxidized());
-    public static final BlockFamily WAXED_CHISELED_COPPER = family("waxed_chiseled_copper", "Waxed Chiseled Copper", Blocks.CHISELED_COPPER.waxed().unaffected(), Blocks.CHISELED_COPPER.weathering().unaffected());
-    public static final BlockFamily WAXED_EXPOSED_CHISELED_COPPER = family("waxed_exposed_chiseled_copper", "Waxed Exposed Chiseled Copper", Blocks.CHISELED_COPPER.waxed().exposed(), Blocks.CHISELED_COPPER.weathering().exposed());
-    public static final BlockFamily WAXED_WEATHERED_CHISELED_COPPER = family("waxed_weathered_chiseled_copper", "Waxed Weathered Chiseled Copper", Blocks.CHISELED_COPPER.waxed().weathered(), Blocks.CHISELED_COPPER.weathering().weathered());
-    public static final BlockFamily WAXED_OXIDIZED_CHISELED_COPPER = family("waxed_oxidized_chiseled_copper", "Waxed Oxidized Chiseled Copper", Blocks.CHISELED_COPPER.waxed().oxidized(), Blocks.CHISELED_COPPER.weathering().oxidized());
+    public static final BlockFamily CHISELED_COPPER = family("chiseled_copper", "Chiseled Copper", Blocks.CHISELED_COPPER);
+    public static final BlockFamily EXPOSED_CHISELED_COPPER = family("exposed_chiseled_copper", "Exposed Chiseled Copper", Blocks.EXPOSED_CHISELED_COPPER);
+    public static final BlockFamily WEATHERED_CHISELED_COPPER = family("weathered_chiseled_copper", "Weathered Chiseled Copper", Blocks.WEATHERED_CHISELED_COPPER);
+    public static final BlockFamily OXIDIZED_CHISELED_COPPER = family("oxidized_chiseled_copper", "Oxidized Chiseled Copper", Blocks.OXIDIZED_CHISELED_COPPER);
+    public static final BlockFamily WAXED_CHISELED_COPPER = family("waxed_chiseled_copper", "Waxed Chiseled Copper", Blocks.WAXED_CHISELED_COPPER, Blocks.CHISELED_COPPER);
+    public static final BlockFamily WAXED_EXPOSED_CHISELED_COPPER = family("waxed_exposed_chiseled_copper", "Waxed Exposed Chiseled Copper", Blocks.WAXED_EXPOSED_CHISELED_COPPER, Blocks.EXPOSED_CHISELED_COPPER);
+    public static final BlockFamily WAXED_WEATHERED_CHISELED_COPPER = family("waxed_weathered_chiseled_copper", "Waxed Weathered Chiseled Copper", Blocks.WAXED_WEATHERED_CHISELED_COPPER, Blocks.WEATHERED_CHISELED_COPPER);
+    public static final BlockFamily WAXED_OXIDIZED_CHISELED_COPPER = family("waxed_oxidized_chiseled_copper", "Waxed Oxidized Chiseled Copper", Blocks.WAXED_OXIDIZED_CHISELED_COPPER, Blocks.OXIDIZED_CHISELED_COPPER);
     public static final BlockFamily CHISELED_DEEPSLATE = family("chiseled_deepslate", "Chiseled Deepslate", Blocks.CHISELED_DEEPSLATE);
     public static final BlockFamily CHISELED_NETHER_BRICKS = family("chiseled_nether_bricks", "Chiseled Nether Brick", Blocks.CHISELED_NETHER_BRICKS);
     public static final BlockFamily CHISELED_POLISHED_BLACKSTONE = family("chiseled_polished_blackstone", "Chiseled Polished Blackstone", Blocks.CHISELED_POLISHED_BLACKSTONE);
@@ -63,7 +63,6 @@ public class BlockFamilies {
     public static final BlockFamily CHISELED_RED_SANDSTONE = family("chiseled_red_sandstone", "Chiseled Red Sandstone", Blocks.CHISELED_RED_SANDSTONE);
     public static final BlockFamily CHISELED_RESIN_BRICKS = family("chiseled_resin_bricks", "Chiseled Resin Brick", Blocks.CHISELED_RESIN_BRICKS);
     public static final BlockFamily CHISELED_STONE_BRICKS = family("chiseled_stone_bricks", "Chiseled Stone Brick", Blocks.CHISELED_STONE_BRICKS);
-    public static final BlockFamily CHISELED_SULFUR = family("chiseled_sulfur", "Chiseled Sulfur", Blocks.CHISELED_SULFUR);
     public static final BlockFamily CRACKED_DEEPSLATE_BRICKS = family("cracked_deepslate_bricks", "Cracked Deepslate Brick", Blocks.CRACKED_DEEPSLATE_BRICKS);
     public static final BlockFamily CRACKED_DEEPSLATE_TILES = family("cracked_deepslate_tiles", "Cracked Deepslate Tile", Blocks.CRACKED_DEEPSLATE_TILES);
     public static final BlockFamily CRACKED_NETHER_BRICKS = family("cracked_nether_bricks", "Cracked Nether Brick", Blocks.CRACKED_NETHER_BRICKS);
@@ -97,7 +96,6 @@ public class BlockFamilies {
                 CHISELED_RESIN_BRICKS,
                 CHISELED_SANDSTONE,
                 CHISELED_STONE_BRICKS,
-                CHISELED_SULFUR,
                 CRACKED_DEEPSLATE_BRICKS,
                 CRACKED_DEEPSLATE_TILES,
                 CRACKED_NETHER_BRICKS,
@@ -119,7 +117,7 @@ public class BlockFamilies {
             families.add(family(
                 color.getSerializedName() + "_concrete",
                 ColorHelpers.getName(color) + " Concrete",
-                Blocks.CONCRETE.pick(color),
+                getConcrete(color),
                 Tool.PICKAXE,
                 COLORED_BLOCKS_SETTINGS,
                 BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL
@@ -127,6 +125,31 @@ public class BlockFamilies {
         }
 
         return families;
+    }
+
+    /**
+     * {@code Blocks.CONCRETE} is a 26.2 {@code ColorCollection}; 26.1.2 has no such collection, only
+     * the sixteen flat per-color constants, so the pick has to happen by hand here.
+     */
+    private static Block getConcrete(DyeColor color) {
+        return switch (color) {
+            case WHITE -> Blocks.WHITE_CONCRETE;
+            case LIGHT_GRAY -> Blocks.LIGHT_GRAY_CONCRETE;
+            case GRAY -> Blocks.GRAY_CONCRETE;
+            case BLACK -> Blocks.BLACK_CONCRETE;
+            case BROWN -> Blocks.BROWN_CONCRETE;
+            case RED -> Blocks.RED_CONCRETE;
+            case ORANGE -> Blocks.ORANGE_CONCRETE;
+            case YELLOW -> Blocks.YELLOW_CONCRETE;
+            case LIME -> Blocks.LIME_CONCRETE;
+            case GREEN -> Blocks.GREEN_CONCRETE;
+            case CYAN -> Blocks.CYAN_CONCRETE;
+            case LIGHT_BLUE -> Blocks.LIGHT_BLUE_CONCRETE;
+            case BLUE -> Blocks.BLUE_CONCRETE;
+            case PURPLE -> Blocks.PURPLE_CONCRETE;
+            case MAGENTA -> Blocks.MAGENTA_CONCRETE;
+            case PINK -> Blocks.PINK_CONCRETE;
+        };
     }
 
     private static BlockFamily family(String material, String materialName, Block ingredient) {
