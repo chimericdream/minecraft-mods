@@ -275,7 +275,10 @@ def jar_nbt(contents_id):
     if kind == "item":
         return '{StoredItem:"%s",StoredItemQty:64,FullItemStacks:7}' % contents_id
     if kind == "fluid":
-        return '{StoredFluid:"%s",StoredFluidAmount:%rd}' % (contents_id, JAR_FLUID_FILL)
+        # explicit .1f (not %r/repr) so this always emits a decimal point, regardless of
+        # whether JAR_FLUID_FILL is ever changed to a value whose repr() lacks one (an int
+        # repr has no trailing ".0", which would silently change the SNBT double literal)
+        return '{StoredFluid:"%s",StoredFluidAmount:%.1fd}' % (contents_id, JAR_FLUID_FILL)
     if kind == "mob":
         return '{"minecraft:entity_data":{id:"%s",%s}}' % (contents_id, MOB_NBT.get(contents_id, "NoGravity:1b"))
     return ""

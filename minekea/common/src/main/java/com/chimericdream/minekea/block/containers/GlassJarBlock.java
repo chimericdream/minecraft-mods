@@ -340,7 +340,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         GlassJarBlockEntity entity;
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
@@ -397,7 +402,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
@@ -507,7 +517,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error(String.format("The glass jar at %s had an invalid block entity.\nBlock Entity: %s", pos, world.getBlockEntity(pos)));
             return;

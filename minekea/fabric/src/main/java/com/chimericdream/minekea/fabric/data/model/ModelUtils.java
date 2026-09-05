@@ -60,7 +60,7 @@ public class ModelUtils {
         blockStateModelGenerator.blockStateOutput
             .accept(
                 MultiVariantGenerator.dispatch(block)
-                    .with(PropertyDispatch.initial(VerticalSlabBlock.FACING)
+                    .with(PropertyDispatch.initial(VerticalStairsBlock.FACING)
                         .select(
                             Direction.NORTH,
                             variant
