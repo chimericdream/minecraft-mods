@@ -1,6 +1,7 @@
 package com.chimericdream.hopperxtreme.client;
 
 import com.chimericdream.hopperxtreme.block.ModBlocks;
+import com.chimericdream.hopperxtreme.client.screen.DiamondHopperItemFilterScreen;
 import com.chimericdream.hopperxtreme.client.screen.FilteredGlazedHopperScreen;
 import com.chimericdream.hopperxtreme.client.screen.FilteredHopperScreen;
 import com.chimericdream.hopperxtreme.client.screen.GlazedHopperScreen;
@@ -14,5 +15,6 @@ public class HopperXtremeClient {
         MenuScreens.register(ModBlocks.FILTERED_GLAZED_HOPPER_SCREEN_HANDLER.get(), FilteredGlazedHopperScreen::new);
         MenuScreens.register(ModBlocks.GLAZED_HOPPER_SCREEN_HANDLER.get(), GlazedHopperScreen::new);
         MenuScreens.register(ModItems.HOPPER_ITEM_FILTER_SCREEN_HANDLER.get(), HopperItemFilterScreen::new);
+        MenuScreens.register(ModItems.DIAMOND_HOPPER_ITEM_FILTER_SCREEN_HANDLER.get(), DiamondHopperItemFilterScreen::new);
     }
 }

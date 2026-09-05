@@ -93,6 +93,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         ALLOWED_ITEMS.add(Items.AMETHYST_SHARD);
         ALLOWED_ITEMS.add(Items.APPLE);
+        ALLOWED_ITEMS.add(Items.ARMADILLO_SCUTE);
         ALLOWED_ITEMS.add(Items.BAMBOO);
         ALLOWED_ITEMS.add(Items.BEETROOT);
         ALLOWED_ITEMS.add(Items.BEETROOT_SEEDS);
@@ -114,6 +115,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEMS.add(Items.GOLDEN_APPLE);
         ALLOWED_ITEMS.add(Items.GRAVEL);
         ALLOWED_ITEMS.add(Items.HONEYCOMB);
+        ALLOWED_ITEMS.add(Items.LEAF_LITTER);
         ALLOWED_ITEMS.add(Items.LEATHER);
         ALLOWED_ITEMS.add(Items.MELON_SEEDS);
         ALLOWED_ITEMS.add(Items.MELON_SLICE);
@@ -138,6 +140,8 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         // ALLOWED_ITEMS.add(ModCrops.WARPED_WART_ITEM.get());
         ALLOWED_ITEMS.add(Items.WHEAT);
         ALLOWED_ITEMS.add(Items.WHEAT_SEEDS);
+        ALLOWED_ITEMS.add(Items.WILDFLOWERS);
+        ALLOWED_ITEMS.add(Items.WIND_CHARGE);
 
         ALLOWED_ITEMS.add(Items.WHITE_DYE);
         ALLOWED_ITEMS.add(Items.LIGHT_GRAY_DYE);
@@ -185,6 +189,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
          */
         ALLOWED_ITEM_IDS.put("minecraft:amethyst_shard", "minecraft:amethyst_block");
         ALLOWED_ITEM_IDS.put("minecraft:apple", StorageBlocks.APPLE_STORAGE_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:armadillo_scute", StorageBlocks.ARMADILLO_SCUTE_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:bamboo", "minecraft:bamboo_block");
         ALLOWED_ITEM_IDS.put("minecraft:beetroot", StorageBlocks.BEETROOT_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:beetroot_seeds", StorageBlocks.BEETROOT_SEEDS_BLOCK.getRegisteredName());
@@ -206,6 +211,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put("minecraft:golden_apple", StorageBlocks.GOLDEN_APPLE_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:gravel", "minecraft:gravel");
         ALLOWED_ITEM_IDS.put("minecraft:honeycomb", "minecraft:honeycomb_block");
+        ALLOWED_ITEM_IDS.put("minecraft:leaf_litter", StorageBlocks.LEAF_LITTER_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:leather", StorageBlocks.LEATHER_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:melon_seeds", StorageBlocks.MELON_SEEDS_BLOCK.getRegisteredName());
         ALLOWED_ITEM_IDS.put("minecraft:melon_slice", "minecraft:melon");
@@ -229,6 +235,8 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put(WarpedWartItem.ITEM_ID.toString(), "minecraft:warped_wart_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat", "minecraft:hay_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:wildflowers", StorageBlocks.WILDFLOWER_BLOCK.getRegisteredName());
+        ALLOWED_ITEM_IDS.put("minecraft:wind_charge", StorageBlocks.WIND_CHARGE_BLOCK.getRegisteredName());
 
         ALLOWED_ITEM_IDS.put("minecraft:white_dye", DyeBlock.makeId("white").toString());
         ALLOWED_ITEM_IDS.put("minecraft:light_gray_dye", DyeBlock.makeId("light_gray").toString());
@@ -332,7 +340,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         GlassJarBlockEntity entity;
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
@@ -389,7 +402,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error("The glass jar at {} had an invalid block entity.\nBlock Entity: {}", pos, world.getBlockEntity(pos));
 
@@ -499,7 +517,12 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
         try {
             entity = (GlassJarBlockEntity) world.getBlockEntity(pos);
-            assert entity != null;
+            // Not `assert entity != null` -- assertions are disabled by default (no -ea), so that
+            // would silently no-op and let a null `entity` fall out of this try block to crash below,
+            // instead of being caught by the log-and-return handler this cast is guarded by.
+            if (entity == null) {
+                throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+            }
         } catch (Exception e) {
             MinekeaMod.LOGGER.error(String.format("The glass jar at %s had an invalid block entity.\nBlock Entity: %s", pos, world.getBlockEntity(pos)));
             return;

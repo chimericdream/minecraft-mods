@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "minecraft:mangrove_swamp",
+  "features": "archtweaks:suspicious_packed_mud",
+  "step": "underground_ores"
+}

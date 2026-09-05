@@ -1,0 +1,33 @@
+{
+    "required": true,
+    "package": "com.chimericdream.effectivegear.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "EG$BeehiveBlockMixin",
+        "EG$BlockItemStatePropertiesMixin",
+        "EG$BlockMixin",
+        "EG$CreakingMixin",
+        "EG$EnchantmentMenuMixin",
+        "EG$EndermanMixin",
+        "EG$EnderpearlItemMixin",
+        "EG$ExperienceOrbMixin",
+        "EG$HoglinAiMixin",
+        "EG$IronGolemMixin",
+        "EG$ItemsMixin",
+        "EG$LeavesBlockMixin",
+        "EG$LivingEntityMixin",
+        "EG$PiglinAiMixin",
+        "EG$PiglinBruteAiMixin",
+        "EG$PlayerMixin",
+        "EG$ServerPlayerGameModeMixin",
+        "EG$VibrationSystemListenerMixin",
+        "EG$VillagerMixin",
+        "EG$WeatherCheckMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

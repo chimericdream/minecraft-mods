@@ -2,9 +2,9 @@ architectury {
     common project(":chimeric-lib").enabled_platforms.split(',')
 }
 
-//loom {
-//    accessWidenerPath = file("src/main/resources/chimericlib.accesswidener")
-//}
+loom {
+    accessWidenerPath = file("src/main/resources/chimericlib.accesswidener")
+}
 
 // Publish a `testFixtures` variant so consumer mods can reuse the shared unit-test helpers
 // (e.g. BootstrapMinecraft) instead of copying them. The variant is added to components.java,

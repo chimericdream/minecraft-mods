@@ -1,3 +1,23 @@
+### Unreleased changes
+
+#### New Features
+
+* Added a **Villager Growth** config section: an override for how long (in ticks) baby villagers take
+  to grow up, plus an option to display the remaining grow-up time — the breeder-adjacent sibling of
+  the existing zombie-conversion cure-time override/display options. The override applies to babies
+  from both spawn eggs/natural spawns and villager breeding.
+* Added a **Cap max discount** trading tweak: an optional cap on how far reputation-driven trade
+  discounts (mainly from curing zombie villagers repeatedly) can reduce a trade's price, expressed as
+  a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
+* Added a **Leash nitwits** toggle: leads can be attached to nitwit villagers. *(Default: off.)*
+* Added two advancements: **Bag and Tag**, for bagging a villager who's reached max trading level, and
+  **Pied Piper**, for luring 8 villagers to you at the same time.
+
+#### Changes
+
+* Added a datagen scaffold for the Fabric build (no generated content yet).
+
+
 ### 26.1.2 - 5.0.0
 
 #### BREAKING CHANGES

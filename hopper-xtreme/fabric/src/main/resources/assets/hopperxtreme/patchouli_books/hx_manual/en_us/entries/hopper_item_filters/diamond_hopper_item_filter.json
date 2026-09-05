@@ -1,0 +1,19 @@
+{
+    "name": "Diamond Hopper Item Filter",
+    "sortnum": 2,
+    "icon": "hopperxtreme:diamond_hopper_item_filter",
+    "category": "hopperxtreme:filtered_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The diamond hopper item filter works exactly like the standard hopper item filter, but gives you ten slots to define blocks or items instead of five."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:diamond_hopper_item_filter",
+            "title": "Recipe",
+            "text": "Upgrade a standard hopper item filter with a diamond. Its mode and any filter entries you've already set start over, so it's cheapest to upgrade before you fill it in."
+        }
+    ]
+}

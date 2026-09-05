@@ -1,0 +1,44 @@
+{
+    "parent": "minecraft:adventure/trade",
+    "criteria": {
+        "stripped_heart": {
+            "conditions": {
+                "location": [
+                    {
+                        "condition": "minecraft:location_check",
+                        "predicate": {
+                            "block": {
+                                "blocks": "minecraft:creaking_heart"
+                            }
+                        }
+                    },
+                    {
+                        "condition": "minecraft:match_tool",
+                        "predicate": {
+                            "items": "#minecraft:axes"
+                        }
+                    }
+                ]
+            },
+            "trigger": "minecraft:item_used_on_block"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "advancements.change_of_heart.description"
+        },
+        "frame": "task",
+        "icon": {
+            "id": "artificialheart:artificial_creaking_heart"
+        },
+        "title": {
+            "translate": "advancements.change_of_heart.title"
+        }
+    },
+    "requirements": [
+        [
+            "stripped_heart"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

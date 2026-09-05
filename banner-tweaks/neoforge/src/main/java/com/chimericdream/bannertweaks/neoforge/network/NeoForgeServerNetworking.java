@@ -1,7 +1,6 @@
 package com.chimericdream.bannertweaks.neoforge.network;
 
 import com.chimericdream.bannertweaks.ModInfo;
-import com.chimericdream.bannertweaks.config.BannerTweaksConfig;
 import com.chimericdream.bannertweaks.network.ServerNetworking;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,6 +24,6 @@ public class NeoForgeServerNetworking {
     }
 
     public static void receiveBannerLimitConfigPacket(final ServerNetworking.BannerLayerLimitPayload payload, final IPayloadContext context) {
-        BannerTweaksConfig.HANDLER.instance().maxBannerLayers = payload.getLimit();
+        ServerNetworking.applyServerLimit(payload.getLimit());
     }
 }

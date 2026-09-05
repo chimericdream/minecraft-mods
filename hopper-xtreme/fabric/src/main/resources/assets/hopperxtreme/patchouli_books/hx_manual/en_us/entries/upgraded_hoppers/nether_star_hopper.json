@@ -1,0 +1,18 @@
+{
+    "name": "Nether Star Hopper",
+    "sortnum": 6,
+    "icon": "hopperxtreme:nether_star_hopper",
+    "category": "hopperxtreme:upgraded_hoppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Beyond netherite! This hopper keeps the Netherite Hopper's 1-tick cooldown, but moves up to 16 items in a single transfer instead of just 1 — up to 320 items per second.$(br2)$(l)Cooldown$()$(br)1 game tick (up to 320 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:nether_star_hopper",
+            "title": "Recipe"
+        }
+    ]
+}

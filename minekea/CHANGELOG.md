@@ -1,3 +1,26 @@
+### Unreleased changes
+
+#### New Features
+
+* Added stairs, slabs, and their vertical variants for every wood type's logs, wood, and stripped
+  logs/wood, plus the bamboo block.
+* Added a compressed armadillo scute block, a compressed wind charge block, and compressed leaf
+  litter and wildflower blocks — all four can be stored in a glass jar.
+* Added compressed blocks, beams, and covers for polished tuff, tuff bricks, chiseled tuff, and
+  chiseled tuff bricks.
+* Added a copper nugget bag and copper nugget sack.
+
+#### Bug Fixes
+
+* Fixed misaligned textures where two crates connect to form a double-wide crate.
+
+#### Known omissions
+
+* Skipped capturing small sulfur cubes in a glass jar, and the new cinnabar and sulfur building
+  blocks (beams, covers, slabs, stairs, compressed blocks, bookshelves) — both need vanilla sulfur
+  and cinnabar blocks that don't exist yet on this branch's Minecraft version.
+
+
 ### 26.1.2 - 9.0.0
 
 #### BREAKING CHANGES

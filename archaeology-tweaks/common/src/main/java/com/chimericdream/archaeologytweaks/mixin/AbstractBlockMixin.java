@@ -91,13 +91,17 @@ public abstract class AbstractBlockMixin {
         Item offhandItem = player.getOffhandItem().getItem();
         ItemStack mainHandStack = player.getMainHandItem();
 
-        if (offhandItem.equals(Items.BRUSH) && mainHandStack != ItemStack.EMPTY) {
+        if (offhandItem.equals(Items.BRUSH) && !mainHandStack.isEmpty()) {
             world.setBlockAndUpdate(pos, newState);
 
             if (newState.is(Blocks.SUSPICIOUS_SAND) || newState.is(Blocks.SUSPICIOUS_GRAVEL)) {
                 BrushableBlockEntity be = (BrushableBlockEntity) world.getBlockEntity(pos);
 
-                assert be != null;
+                // Not `assert be != null` -- assertions are disabled by default (no -ea), so that
+                // would silently no-op and let a null `be` fall out of this block to crash below.
+                if (be == null) {
+                    throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+                }
 
                 ItemStack itemToHide = mainHandStack.copyWithCount(1);
                 mainHandStack.consume(1, player);
@@ -110,7 +114,9 @@ public abstract class AbstractBlockMixin {
             } else {
                 ATBrushableBlockEntity be = (ATBrushableBlockEntity) world.getBlockEntity(pos);
 
-                assert be != null;
+                if (be == null) {
+                    throw new NullPointerException("world.getBlockEntity(pos) returned null or the wrong type");
+                }
 
                 ItemStack itemToHide = mainHandStack.copyWithCount(1);
                 mainHandStack.consume(1, player);

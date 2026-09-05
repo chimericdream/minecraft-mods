@@ -1,0 +1,8 @@
+{
+  "parent": "minekea:block/building/slabs/vertical",
+  "textures": {
+    "bottom": "minecraft:block/jungle_log",
+    "side": "minecraft:block/jungle_log",
+    "top": "minecraft:block/jungle_log"
+  }
+}

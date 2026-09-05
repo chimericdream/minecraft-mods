@@ -1,0 +1,6 @@
+accessWidener v2 official
+
+accessible method net/minecraft/client/data/models/model/ModelTemplate createMap (Lnet/minecraft/client/data/models/model/TextureMapping;)Ljava/util/Map;
+accessible field net/minecraft/client/data/models/model/ModelTemplate model Ljava/util/Optional;
+accessible field net/minecraft/client/data/models/model/ModelTemplate requiredSlots Ljava/util/Set;
+accessible field net/minecraft/client/data/models/model/ModelTemplate suffix Ljava/util/Optional;

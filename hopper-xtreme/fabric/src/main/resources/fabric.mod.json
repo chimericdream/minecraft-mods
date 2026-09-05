@@ -24,6 +24,7 @@
         "fabric-gametest": [
             "com.chimericdream.hopperxtreme.fabric.test.DeprecatedBlockConversionTest",
             "com.chimericdream.hopperxtreme.fabric.test.ExtractGuardTest",
+            "com.chimericdream.hopperxtreme.fabric.test.FilterDropOnBreakTest",
             "com.chimericdream.hopperxtreme.fabric.test.FilterSlotGeometryTest",
             "com.chimericdream.hopperxtreme.fabric.test.MultiHopperPersistenceTest",
             "com.chimericdream.hopperxtreme.fabric.test.PreventFilterExtractionTest",
@@ -40,7 +41,7 @@
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",
-        "java": ">=21",
+        "java": ">=25",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
         "chimericlib": ">=${chimericlib_compat}"

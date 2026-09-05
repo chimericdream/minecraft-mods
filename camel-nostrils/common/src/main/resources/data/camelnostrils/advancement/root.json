@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "id": "minecraft:camel_spawn_egg"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.root.title"
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.root.desc",
+            "color": "green"
+        },
+        "background": "minecraft:block/sand",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "trigger": {
+            "trigger": "minecraft:tick"
+        }
+    }
+}

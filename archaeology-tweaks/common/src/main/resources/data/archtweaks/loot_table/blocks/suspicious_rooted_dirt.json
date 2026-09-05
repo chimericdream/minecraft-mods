@@ -1,4 +1,17 @@
 {
     "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1.0,
+            "entries": [
+                { "type": "minecraft:item", "name": "minecraft:flowering_azalea", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:moss_carpet", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:bone_meal", "weight": 2 },
+                { "type": "minecraft:item", "name": "minecraft:amethyst_shard", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:plenty_pottery_sherd", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:sheaf_pottery_sherd", "weight": 1 }
+            ]
+        }
+    ],
     "random_sequence": "archtweaks:blocks/suspicious_rooted_dirt"
 }

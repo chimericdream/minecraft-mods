@@ -1,0 +1,26 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":log-all-the-things:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "logallthethings.accesswidener")
+    }
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':log-all-the-things:common')) { transitive false }
+    shadowBundle project(path: ':log-all-the-things:common', configuration: 'transformProductionNeoForge')
+}

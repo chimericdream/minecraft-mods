@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/lapis_block"
+    "model": "minekea:item/building/beams/lapis_block"
   }
 }

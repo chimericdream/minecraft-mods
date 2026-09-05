@@ -1,7 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.compressed;
 
+import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.block.building.compressed.CompressedMinekeaBlock;
-import com.chimericdream.minekea.fabric.data.TextureGenerator;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
@@ -16,7 +16,7 @@ public class CompressedMinekeaBlockDataGenerator extends CompressedBlockDataGene
     @Override
     public void generateTextures() {
         TextureGenerator.getInstance().<Block>generate(Identifier.withDefaultNamespace("block"), instance -> {
-            final Optional<BufferedImage> source = instance.getMinekeaImage(((CompressedMinekeaBlock) BLOCK).baseBlockId.withPrefix("block/").getPath());
+            final Optional<BufferedImage> source = instance.getModImage(((CompressedMinekeaBlock) BLOCK).baseBlockId.withPrefix("block/").getPath());
             addTextureOverlay(instance, source, BLOCK.BLOCK_ID);
         });
     }

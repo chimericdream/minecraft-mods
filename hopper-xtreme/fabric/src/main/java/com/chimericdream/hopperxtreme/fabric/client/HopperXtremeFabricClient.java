@@ -6,7 +6,6 @@ import com.chimericdream.hopperxtreme.client.HopperXtremeClient;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.lib.text.TextHelpers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -31,7 +30,7 @@ public final class HopperXtremeFabricClient implements ClientModInitializer {
                 return;
             }
 
-            if (itemStack.is(ModItems.HOPPER_ITEM_FILTER_ITEM.get())) {
+            if (itemStack.getItem() instanceof HopperItemFilterItem) {
                 HopperXtremeFilterModeComponent component = itemStack.getOrDefault(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get(), new HopperXtremeFilterModeComponent("include"));
                 HopperItemFilterItem.FilterMode mode = HopperItemFilterItem.FilterMode.fromString(component.mode());
 

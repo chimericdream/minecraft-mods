@@ -11,7 +11,9 @@ raises that limit and smooths out the rough edges around applying, rendering, an
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
+* 1.21.5: Bug fixes only
 
 ### Current Features
 
@@ -33,7 +35,7 @@ Mod Menu on Fabric). Settings are stored in `config/bannertweaks.json5`.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/banner-tweaks/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

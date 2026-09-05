@@ -204,6 +204,20 @@ public class BlockConfig {
         return textures.get(name);
     }
 
+    public @Nullable Identifier getTextureOrDefault(String name) {
+        return getTextureOrDefault(name, getTexture());
+    }
+
+    public @Nullable Identifier getTextureOrDefault(String name, Identifier defaultTexture) {
+        Identifier texture = textures.get(name);
+
+        if (texture != null) {
+            return texture;
+        }
+
+        return defaultTexture;
+    }
+
     public BlockConfig renderType(RenderType renderType) {
         this.renderType = renderType;
         return this;

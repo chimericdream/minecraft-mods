@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/potato"
+    "model": "minekea:block/storage/compressed/potato_bagged"
   }
 }

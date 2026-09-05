@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stripped_bamboo_trellis": {
+      "conditions": {
+        "items": [
+          {
+            "items": "jdcrafte:stripped_bamboo_trellis"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jdcrafte:stripped_bamboo_trellis_arch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stripped_bamboo_trellis"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jdcrafte:stripped_bamboo_trellis_arch"
+    ]
+  }
+}

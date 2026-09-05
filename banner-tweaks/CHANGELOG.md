@@ -1,3 +1,10 @@
+### Unreleased changes
+
+#### New Features
+
+* Banner tooltips now show a layer count (e.g. "5/12 layers").
+
+
 ### 26.1.2 - 4.0.0
 
 #### BREAKING CHANGES

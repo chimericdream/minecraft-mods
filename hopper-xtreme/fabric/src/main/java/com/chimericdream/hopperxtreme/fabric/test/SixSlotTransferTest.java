@@ -27,6 +27,17 @@ public class SixSlotTransferTest {
         runSixSlotTransferTest(context, 1);
     }
 
+    /**
+     * The Nether Star Hopper's 16-items-per-transfer only ever applies within a single slot — each of
+     * these six items has a stack size of 1, so it should drain at exactly the same one-item-per-tick
+     * pace as the Netherite Hopper, never batching across slots to move faster than the source actually
+     * has available. This is the "never more than one stack at a time" cap in practice.
+     */
+    @GameTest(structure = "hopperxtreme:transfer_speed/nether_star_hopper")
+    public void netherStarHopperItemTransfer(GameTestHelper context) {
+        runSixSlotTransferTest(context, 1);
+    }
+
     private void runSixSlotTransferTest(GameTestHelper context, int singleItemTickTime) {
         BlockPos redstoneBlockPos = new BlockPos(2, 1, 1);
         BlockPos topChestPos = new BlockPos(1, 2, 1);

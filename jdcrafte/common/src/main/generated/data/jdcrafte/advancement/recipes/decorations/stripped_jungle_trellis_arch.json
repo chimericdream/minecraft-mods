@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stripped_jungle_trellis": {
+      "conditions": {
+        "items": [
+          {
+            "items": "jdcrafte:stripped_jungle_trellis"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jdcrafte:stripped_jungle_trellis_arch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stripped_jungle_trellis"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jdcrafte:stripped_jungle_trellis_arch"
+    ]
+  }
+}

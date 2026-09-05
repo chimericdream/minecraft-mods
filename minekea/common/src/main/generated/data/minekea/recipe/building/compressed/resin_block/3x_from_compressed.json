@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/resin_block/4x"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:building/compressed/resin_block/3x"
+  }
+}

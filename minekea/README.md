@@ -1,6 +1,6 @@
 # Minekea (Fabric/NeoForge)
 
-![Version: 9.0.0](https://img.shields.io/badge/version-9.0.0-blueviolet?style=flat-square)
+![Version: 9.1.0](https://img.shields.io/badge/version-9.1.0-blueviolet?style=flat-square)
 
 ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&labelColor=565656) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square&labelColor=565656) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square&labelColor=565656) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square&labelColor=565656)
 
@@ -8,22 +8,14 @@
 
 _Simple, functional, decorative blocks for all your building and storage needs (some assembly required)_
 
+### Minecraft Versions
+
+* 26.2: Supported
+* 26.1.2: Supported
+
 ## Introduction
 
 This mod contains a wide variety of functional and decorative furniture blocks for use in your Minecraft world.
-
-### Versions
-
-* 26.1.2: supported
-* 1.21.3: planned
-* 1.21.2: not planned
-* 1.21-1.21.1: supported
-* 1.19.1-2: supported up to version 4.0.2
-* 1.19: supported up to version 3.4.2
-* 1.18.2: supported up to version 2.8.3
-* 1.18.1: supported up to version 2.6.1
-* 1.17.1: supported up to version 2.6.1
-* < 1.17.1: not planned
 
 ### Current Features
 
@@ -66,7 +58,7 @@ This mod contains a wide variety of functional and decorative furniture blocks f
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/minekea-fabric/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find. If you have a suggestion for a feature that might fit with the mod, or if you think something should be
 tweaked or removed to improve gameplay, submit those as well!
 

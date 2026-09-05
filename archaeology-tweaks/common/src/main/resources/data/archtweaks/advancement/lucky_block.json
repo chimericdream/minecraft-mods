@@ -1,0 +1,24 @@
+{
+    "parent": "archtweaks:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:rabbit_foot"
+        },
+        "title": {
+            "translate": "advancements.archtweaks.lucky_block.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.archtweaks.lucky_block.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

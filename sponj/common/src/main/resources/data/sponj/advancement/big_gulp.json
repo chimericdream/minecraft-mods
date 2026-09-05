@@ -1,0 +1,24 @@
+{
+    "parent": "sponj:root",
+    "display": {
+        "icon": {
+            "id": "sponj:wet_sponj"
+        },
+        "title": {
+            "translate": "advancements.sponj.big_gulp.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.sponj.big_gulp.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

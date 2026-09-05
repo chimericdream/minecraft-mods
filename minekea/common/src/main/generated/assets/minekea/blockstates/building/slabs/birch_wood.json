@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/birch_wood"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/birch_wood_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/birch_wood_top_top"
+    }
+  }
+}

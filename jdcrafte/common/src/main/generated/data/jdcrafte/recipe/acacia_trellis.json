@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:acacia_log",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "LSL",
+    "SSS",
+    "LSL"
+  ],
+  "result": {
+    "count": 4,
+    "id": "jdcrafte:acacia_trellis"
+  }
+}

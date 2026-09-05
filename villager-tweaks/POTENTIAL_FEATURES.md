@@ -32,15 +32,11 @@ curing, and moving villagers around. Every idea below should stay a toggle, not 
 
 * **Reputation viewer** — an inspect mode (sneak + empty hand?) showing your numeric reputation with a
   villager, so the existing global/negative-rep toggles have visible feedback.
-* **Discount cap config** — set a maximum total cure-discount so stacked curing can be bounded on
-  servers that consider 1-emerald trades broken.
 * **Cure keepsake** — config so a cured villager remembers *who* cured it and greets that player with
   particles… okay, the real feature is per-player cure-discount config; the particles are free flavor.
 
 ## Breeder & population QoL
 
-* **Growth time config** — adjustable baby villager grow-up time (the breeder-adjacent sibling of the
-  existing cure-time override).
 * **Breeding requirements config** — toggle the bed requirement, adjust food thresholds — the two
   fiddly halves of every breeder design.
 * **Panic toggle** — option so villagers don't panic-sprint from zombies *when safely behind glass*, or
@@ -62,3 +58,7 @@ curing, and moving villagers around. Every idea below should stay a toggle, not 
   suggestion only.
 * **Advancements** — "Bag and Tag" (bag a max-level villager), "Fresh Start" (cure and re-employ the
   same villager), "Pied Piper" (lure 10 villagers at once).
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

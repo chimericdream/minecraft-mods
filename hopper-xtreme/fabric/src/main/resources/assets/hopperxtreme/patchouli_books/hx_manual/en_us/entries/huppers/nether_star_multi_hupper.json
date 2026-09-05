@@ -1,0 +1,19 @@
+{
+    "name": "Nether Star Multi-Hupper",
+    "sortnum": 11,
+    "icon": "hopperxtreme:nether_star_multi_hupper",
+    "category": "hopperxtreme:huppers",
+    "read_by_default": true,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l)Cooldown$()$(br)1 game tick (up to 320 items / second)"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "hopperxtreme:nether_star_multi_hupper",
+            "recipe2": "hopperxtreme:nether_star_hupper_from_multi",
+            "title": "Recipe"
+        }
+    ]
+}

@@ -1,14 +1,17 @@
 {
     "required": true,
     "package": "com.chimericdream.artificialheart.mixin",
-    "compatibilityLevel": "JAVA_21",
+    "compatibilityLevel": "JAVA_25",
     "minVersion": "0.8",
     "client": [
     ],
     "mixins": [
-        "ArtificialHeartAxeItemMixin",
-        "ArtificialHeartBlockItemMixin",
-        "ArtificialHeartShearsItemMixin"
+        "ArtificialHeart$AxeItemMixin",
+        "ArtificialHeart$BlockItemMixin",
+        "ArtificialHeart$CreakingMixin",
+        "ArtificialHeart$EntityMixin",
+        "ArtificialHeart$MobMixin",
+        "ArtificialHeart$ShearsItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -75,3 +75,14 @@ furniture you can use, and finishing touches for every room. Ideas are grouped b
 * **Block painter extensions** — let the painter recolor the new textiles (curtains, rugs, cushions).
 * **Wrench connection modes for new families** — couches, counters, and trim reuse the beam
   connect/disconnect interaction so the "assembly" language stays consistent mod-wide.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.
+* Support capturing small sulfur cubes in jars.
+* Add the cinnabar and sulfur building-block families (beams, covers, slabs, stairs, compressed
+  blocks, bookshelves) once this branch's Minecraft version has the vanilla sulfur and cinnabar
+  blocks to build them from.
+* Add blocks/block sets that were previously in the mod but haven't been ported yet (e.g. stairs made
+  from logs).
+* Add vertical stairs, slabs, etc. for new blocks added in 1.21.x and 26.x.

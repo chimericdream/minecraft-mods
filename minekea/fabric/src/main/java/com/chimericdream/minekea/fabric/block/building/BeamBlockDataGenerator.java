@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.building.beams.BeamBlock;
@@ -74,10 +76,7 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .setReplace(false)
             .add(BLOCK);
 
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK);
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -96,8 +95,7 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Beam", BLOCK.config.getMaterialName()));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Beam", BLOCK.config.getMaterialName()));
     }
 
     @Override
@@ -116,6 +114,8 @@ public class BeamBlockDataGenerator extends ChimericLibBlockDataGenerator {
         Identifier westModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_west", CONNECTED_WEST_MODEL, unused -> textures);
         Identifier upModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_up", CONNECTED_UP_MODEL, unused -> textures);
         Identifier downModelId = blockStateModelGenerator.createSuffixedVariant(BLOCK, "_connected_down", CONNECTED_DOWN_MODEL, unused -> textures);
+
+        blockStateModelGenerator.registerSimpleItemModel(BLOCK, BLOCK.BLOCK_ID.withPrefix("item/"));
 
         MultiVariant coreVariant = BlockModelGenerators.plainVariant(coreModelId);
         MultiVariant northVariant = BlockModelGenerators.plainVariant(northModelId);

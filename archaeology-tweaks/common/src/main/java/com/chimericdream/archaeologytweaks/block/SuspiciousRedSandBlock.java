@@ -9,18 +9,22 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BrushableBlock;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 public class SuspiciousRedSandBlock extends BrushableBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "suspicious_red_sand");
+    private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, BLOCK_ID.withPrefix("blocks/"));
 
     public SuspiciousRedSandBlock() {
         super(
@@ -39,7 +43,9 @@ public class SuspiciousRedSandBlock extends BrushableBlock {
 
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ATBrushableBlockEntity(pos, state);
+        ATBrushableBlockEntity blockEntity = new ATBrushableBlockEntity(pos, state);
+        blockEntity.setLootTable(LOOT_TABLE, RandomSource.create().nextLong());
+        return blockEntity;
     }
 
     @Override
@@ -47,6 +53,10 @@ public class SuspiciousRedSandBlock extends BrushableBlock {
         BlockEntity var6 = world.getBlockEntity(pos);
         if (var6 instanceof ATBrushableBlockEntity brushableBlockEntity) {
             brushableBlockEntity.scheduledTick(world);
+        }
+
+        if (FallingBlock.isFree(world.getBlockState(pos.below())) && pos.getY() >= world.getMinY()) {
+            FallingBlockEntity.fall(world, pos, state).disableDrop();
         }
     }
 }

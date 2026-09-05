@@ -1,0 +1,25 @@
+{
+    "required": true,
+    "package": "com.chimericdream.camelnostrils.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "CN$AgeableMobRendererMixin",
+        "CN$AnimalMixin",
+        "CN$AnvilMenuMixin",
+        "CN$CamelMixin",
+        "CN$CamelRendererMixin",
+        "CN$CamelRenderStateMixin",
+        "CN$EntityMixin",
+        "CN$LivingEntityMixin",
+        "CN$LivingEntityRendererAccessor",
+        "CN$PlayerAccessor",
+        "CN$PlayerMixin",
+        "CN$WaterAnimalMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

@@ -1,6 +1,7 @@
 package com.chimericdream.archaeologytweaks.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -15,8 +16,8 @@ import org.jetbrains.annotations.NotNull;
 public class BrushableFloatingNonFullBlock extends BrushableFloatingBlock {
     protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
-    public BrushableFloatingNonFullBlock(Block baseBlock, SoundEvent brushingSound, SoundEvent brushingCompleteSound, BlockBehaviour.Properties settings) {
-        super(baseBlock, brushingSound, brushingCompleteSound, settings);
+    public BrushableFloatingNonFullBlock(Block baseBlock, SoundEvent brushingSound, SoundEvent brushingCompleteSound, Identifier blockId, BlockBehaviour.Properties settings) {
+        super(baseBlock, brushingSound, brushingCompleteSound, blockId, settings);
     }
 
     protected @NotNull VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {

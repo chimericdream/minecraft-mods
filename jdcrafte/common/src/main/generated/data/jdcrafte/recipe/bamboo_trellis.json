@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:bamboo_block",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "LSL",
+    "SSS",
+    "LSL"
+  ],
+  "result": {
+    "count": 4,
+    "id": "jdcrafte:bamboo_trellis"
+  }
+}

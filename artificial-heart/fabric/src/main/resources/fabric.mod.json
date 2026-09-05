@@ -15,6 +15,9 @@
     "icon": "assets/artificialheart/icon.png",
     "environment": "*",
     "entrypoints": {
+        "fabric-datagen": [
+            "com.chimericdream.artificialheart.fabric.data.ModDataGenerator"
+        ],
         "main": [
             "com.chimericdream.artificialheart.fabric.ArtificialHeartFabric"
         ],
@@ -28,7 +31,7 @@
     "depends": {
         "fabricloader": ">=${fabric_compat}",
         "minecraft": "~${minecraft_compat}",
-        "java": ">=21",
+        "java": ">=25",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
         "chimericlib": ">=${chimericlib_compat}"

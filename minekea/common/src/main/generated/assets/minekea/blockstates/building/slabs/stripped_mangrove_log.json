@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minekea:block/building/slabs/stripped_mangrove_log"
+    },
+    "type=double": {
+      "model": "minekea:block/building/slabs/stripped_mangrove_log_double"
+    },
+    "type=top": {
+      "model": "minekea:block/building/slabs/stripped_mangrove_log_top_top"
+    }
+  }
+}

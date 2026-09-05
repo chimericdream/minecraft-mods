@@ -1,3 +1,15 @@
+### Unreleased changes
+
+#### Bug Fixes
+
+* Fixed a duplication bug that could happen when shulker boxes are made stackable (e.g. by Carpet
+  Mod) — stacked shulker boxes could be split apart in a container slot to produce more boxes than
+  were actually placed in.
+* The config screen no longer shows unrelated settings left over from another mod's config. It now
+  only has the one option that actually applies here: how often the Plated Shulker Upgrade Smithing
+  Template drops in bastion treasure chests.
+
+
 ### 26.1.2 - 3.0.0
 
 #### BREAKING CHANGES

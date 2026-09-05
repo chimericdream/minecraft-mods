@@ -27,6 +27,10 @@ public class VillagerTweaksConfig {
     public boolean enableGlobalReputation = Defaults.ENABLE_GLOBAL_REPUTATION;
     @SerialEntry
     public boolean enableBadReputation = Defaults.ENABLE_BAD_REPUTATION;
+    @SerialEntry
+    public boolean enableMaxDiscountCap = Defaults.ENABLE_MAX_DISCOUNT_CAP;
+    @SerialEntry
+    public int maxDiscountPercent = Defaults.MAX_DISCOUNT_PERCENT;
 
     @SerialEntry
     public boolean enableConversionTimeOverride = Defaults.ENABLE_CONVERSION_TIME_OVERRIDE;
@@ -38,7 +42,16 @@ public class VillagerTweaksConfig {
     public boolean displayConversionTime = Defaults.DISPLAY_CONVERSION_TIME;
 
     @SerialEntry
+    public boolean enableGrowUpTimeOverride = Defaults.ENABLE_GROW_UP_TIME_OVERRIDE;
+    @SerialEntry
+    public int growUpTime = Defaults.GROW_UP_TIME;
+    @SerialEntry
+    public boolean displayGrowUpTime = Defaults.DISPLAY_GROW_UP_TIME;
+
+    @SerialEntry
     public boolean enableEmeraldTemptation = Defaults.ENABLE_EMERALD_TEMPTATION;
+    @SerialEntry
+    public boolean enableNitwitLeashing = Defaults.ENABLE_NITWIT_LEASHING;
 
     public static ConfigClassHandler<VillagerTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(VillagerTweaksConfig.class)
         .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
@@ -88,6 +101,18 @@ public class VillagerTweaksConfig {
                     .binding(Defaults.ENABLE_BAD_REPUTATION, () -> config.enableBadReputation, newVal -> config.enableBadReputation = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableMaxDiscountCap"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableMaxDiscountCap.desc")))
+                    .binding(Defaults.ENABLE_MAX_DISCOUNT_CAP, () -> config.enableMaxDiscountCap, newVal -> config.enableMaxDiscountCap = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.option.maxDiscountPercent"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.maxDiscountPercent.desc")))
+                    .binding(Defaults.MAX_DISCOUNT_PERCENT, () -> config.maxDiscountPercent, newVal -> config.maxDiscountPercent = newVal)
+                    .controller(IntegerFieldControllerBuilder::create)
+                    .build())
                 .build())
             .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.section.conversion"))
@@ -117,11 +142,38 @@ public class VillagerTweaksConfig {
                     .build())
                 .build())
             .category(ConfigCategory.createBuilder()
+                .name(Component.translatable("text.config.section.growth"))
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableGrowUpTimeOverride"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableGrowUpTimeOverride.desc")))
+                    .binding(Defaults.ENABLE_GROW_UP_TIME_OVERRIDE, () -> config.enableGrowUpTimeOverride, newVal -> config.enableGrowUpTimeOverride = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.option.growUpTime"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.growUpTime.desc")))
+                    .binding(Defaults.GROW_UP_TIME, () -> config.growUpTime, newVal -> config.growUpTime = newVal)
+                    .controller(IntegerFieldControllerBuilder::create)
+                    .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.displayGrowUpTime"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.displayGrowUpTime.desc")))
+                    .binding(Defaults.DISPLAY_GROW_UP_TIME, () -> config.displayGrowUpTime, newVal -> config.displayGrowUpTime = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .build())
+            .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.section.misc"))
                 .option(Option.<Boolean>createBuilder()
                     .name(Component.translatable("text.config.option.enableEmeraldTemptation"))
                     .description(OptionDescription.of(Component.translatable("text.config.option.enableEmeraldTemptation.desc")))
                     .binding(Defaults.ENABLE_EMERALD_TEMPTATION, () -> config.enableEmeraldTemptation, newVal -> config.enableEmeraldTemptation = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.option.enableNitwitLeashing"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.enableNitwitLeashing.desc")))
+                    .binding(Defaults.ENABLE_NITWIT_LEASHING, () -> config.enableNitwitLeashing, newVal -> config.enableNitwitLeashing = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
                 .build())
@@ -134,12 +186,20 @@ public class VillagerTweaksConfig {
         public static boolean ENABLE_DEMAND_BONUS = true;
         public static boolean ENABLE_GLOBAL_REPUTATION = false;
         public static boolean ENABLE_BAD_REPUTATION = true;
+        public static boolean ENABLE_MAX_DISCOUNT_CAP = false;
+        public static int MAX_DISCOUNT_PERCENT = 99;
 
         public static boolean FORCE_VILLAGER_CONVERSION = false;
         public static boolean ENABLE_CONVERSION_TIME_OVERRIDE = false;
         public static int CONVERSION_TIME = 3600;
         public static boolean DISPLAY_CONVERSION_TIME = false;
 
+        public static boolean ENABLE_GROW_UP_TIME_OVERRIDE = false;
+        public static int GROW_UP_TIME = 24000;
+        public static boolean DISPLAY_GROW_UP_TIME = false;
+
         public static boolean ENABLE_EMERALD_TEMPTATION = false;
+
+        public static boolean ENABLE_NITWIT_LEASHING = false;
     }
 }

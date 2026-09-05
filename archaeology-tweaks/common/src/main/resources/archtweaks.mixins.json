@@ -1,13 +1,16 @@
 {
     "required": true,
     "package": "com.chimericdream.archaeologytweaks.mixin",
-    "compatibilityLevel": "JAVA_21",
+    "compatibilityLevel": "JAVA_25",
     "minVersion": "0.8",
     "client": [
     ],
     "mixins": [
         "AbstractBlockMixin",
-        "BrushItemMixin"
+        "BrushableBlockEntityMixin",
+        "BrushItemMixin",
+        "RootSystemFeatureMixin",
+        "TrunkPlacerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

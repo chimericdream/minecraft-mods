@@ -16,7 +16,10 @@ nothing visible in-game, so **in-game documentation is not applicable** to this 
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
+* 1.21.5: Bug fixes only
+* 1.21.4: Bug fixes only
 
 ### What's Inside
 
@@ -29,12 +32,24 @@ For developers, ChimericLib provides shared code across the Architectury `common
 * **Inventories** — `ImplementedInventory` and `InventoryUtils` for block entities that hold items.
 * **Screens** — reusable single- and double-wide inventory screens and screen handlers.
 * **Tags** — common block and item tag definitions shared between mods.
-* **Utilities** — helpers for colors, fluids, text, textures, math/direction, tools, and configuration.
-* **Entities** — a `SimpleSeatEntity` for sittable blocks (e.g. chairs and stools).
+* **Utilities** — helpers for colors, fluids, text, textures, math/direction, tools, configuration, and
+  custom player-head game profiles.
+* **Entities** — a `SimpleSeatEntity` for sittable blocks (e.g. chairs and stools), plus
+  `FallingUpwardBlock`/`FallingUpwardBlockEntity` for blocks that rise instead of fall.
+* **Commands** — a small framework (`ChimericCommand`/`ChimericCommands`) for registering commands
+  across both loaders without touching Architectury's command event directly. Ships its own first
+  command, `/chimericlib blockstate get|set|modify`.
+* **Armor trims** — `TrimMaterialConfig`, `TrimMaterialRegistryHelper`, and `ArmorTrimAtlasProvider`
+  automate generating a custom `trim_material` and its `armor_trims`/`items` atlas overrides, so a mod
+  only has to hand-author the palette texture and its own material list. On Fabric, chimeric-lib's own
+  client init also registers a dynamic item model (`fabric/trims/TrimmedArmorItemModel`) so a custom
+  material's icon renders correctly in the inventory too, not just on the worn armor — the Fabric
+  equivalent of what NeoForge already does natively. Nothing extra to call for this; it applies
+  automatically once a mod's materials are registered.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/chimericlib-mc/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find.
 
 ## Credits

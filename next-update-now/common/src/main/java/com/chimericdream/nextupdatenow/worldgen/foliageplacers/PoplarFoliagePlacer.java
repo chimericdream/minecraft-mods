@@ -1,0 +1,225 @@
+package com.chimericdream.nextupdatenow.worldgen.foliageplacers;
+
+import com.chimericdream.nextupdatenow.worldgen.ModWorldgenTypes;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.function.Function;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+
+/**
+ * Ported from the 26.3-snapshot-9 client jar (net.minecraft.world.level.levelgen.feature.foliageplacers.PoplarFoliagePlacer),
+ * adapted to 26.2's TreeConfiguration-based FoliagePlacer API and its simpler FoliageAttachment record
+ * (pos, radiusOffset, doubleTrunk) — 26.3's FoliageAttachment additionally carries a
+ * "foliageHeightOffset" field that 26.2 doesn't have. PoplarTrunkPlacer only ever builds the
+ * attachment through the (pos, radiusOffset, doubleTrunk) constructor, which always implies that
+ * offset is 0, so dropping it here changes nothing.
+ */
+public class PoplarFoliagePlacer extends FoliagePlacer {
+    public static final MapCodec<PoplarFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(
+        instance -> foliagePlacerParts(instance)
+            .and(
+                instance.group(
+                    IntProviders.codec(5, 16).fieldOf("height").forGetter(p -> p.height),
+                    Codec.floatRange(0.0F, 1.0F).fieldOf("side_hole_chance").forGetter(p -> p.sideHoleChance)
+                )
+            )
+            .apply(instance, PoplarFoliagePlacer::new)
+    );
+
+    private final IntProvider height;
+    private final float sideHoleChance;
+
+    public PoplarFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider height, float sideHoleChance) {
+        super(radius, offset);
+        this.height = height;
+        this.sideHoleChance = sideHoleChance;
+    }
+
+    @Override
+    protected FoliagePlacerType<?> type() {
+        return ModWorldgenTypes.POPLAR_FOLIAGE_PLACER;
+    }
+
+    @Override
+    protected void createFoliage(
+        WorldGenLevel level,
+        FoliagePlacer.FoliageSetter foliageSetter,
+        RandomSource random,
+        TreeConfiguration tree,
+        int treeHeight,
+        FoliagePlacer.FoliageAttachment foliageAttachment,
+        int foliageHeight,
+        int leafRadius,
+        int offset
+    ) {
+        boolean doubleTrunk = foliageAttachment.doubleTrunk();
+        BlockPos foliagePos = foliageAttachment.pos().above(offset);
+        int currentRadius = leafRadius + foliageAttachment.radiusOffset() - 1;
+        boolean flipRhombusShape = random.nextBoolean();
+        this.placeLeavesRow(level, foliageSetter, random, tree, foliagePos, currentRadius - 2, foliageHeight - 1, doubleTrunk, foliageHeight, flipRhombusShape);
+        this.placeLeavesRow(level, foliageSetter, random, tree, foliagePos, currentRadius - 1, foliageHeight - 2, doubleTrunk, foliageHeight, flipRhombusShape);
+        this.placeLeavesRow(level, foliageSetter, random, tree, foliagePos, currentRadius - 1, foliageHeight - 3, doubleTrunk, foliageHeight, flipRhombusShape);
+
+        for (int y = foliageHeight - 4; y >= 1; y--) {
+            this.placeLeavesRow(level, foliageSetter, random, tree, foliagePos, currentRadius, y, doubleTrunk, foliageHeight, flipRhombusShape);
+        }
+
+        this.replaceLeavesWithLog(level, foliageSetter, tree, random, foliagePos, currentRadius, foliageHeight - 4, doubleTrunk, foliageHeight, flipRhombusShape);
+        this.placeLeavesRow(level, foliageSetter, random, tree, foliagePos, currentRadius - 1, 0, doubleTrunk, foliageHeight, flipRhombusShape);
+        this.placeLeavesRow(
+            level, foliageSetter, random, tree, foliagePos, Mth.clamp(currentRadius - 2, 1, 2), -1, doubleTrunk, foliageHeight, flipRhombusShape
+        );
+    }
+
+    private void replaceLeavesWithLog(
+        WorldGenLevel level,
+        FoliagePlacer.FoliageSetter foliageSetter,
+        TreeConfiguration tree,
+        RandomSource random,
+        BlockPos origin,
+        int currentRadius,
+        int y,
+        boolean doubleTrunk,
+        int foliageHeight,
+        boolean flipRhombusShape
+    ) {
+        int offset = doubleTrunk ? 1 : 0;
+        MutableBlockPos pos = new MutableBlockPos();
+
+        for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {
+            for (int dz = -currentRadius; dz <= currentRadius + offset; dz++) {
+                int absDz = Mth.abs(dz);
+                int absDx = Mth.abs(dx);
+                if (isWithinRhombusShape(
+                        currentRadius,
+                        absDx,
+                        absDz,
+                        this.getCornerBlocksToCutForRhombusShape(dx, dz, currentRadius, this.shouldRowBePartialRhombusShape(foliageHeight, y), flipRhombusShape),
+                        2
+                    )
+                    && (absDz == 0 && currentRadius - absDx >= 4 || absDx == 0 && currentRadius - absDz >= 4)) {
+                    pos.setWithOffset(origin, dx, y, dz);
+                    tryPlaceLog(
+                        level,
+                        foliageSetter,
+                        random,
+                        tree,
+                        pos,
+                        getSidewaysStateModifier(Direction.fromAxisAndDirection(absDz == 0 ? Axis.X : Axis.Z, AxisDirection.POSITIVE))
+                    );
+                }
+            }
+        }
+    }
+
+    private static void tryPlaceLog(
+        WorldGenLevel level,
+        FoliagePlacer.FoliageSetter foliageSetter,
+        RandomSource random,
+        TreeConfiguration tree,
+        BlockPos pos,
+        Function<BlockState, BlockState> stateModifier
+    ) {
+        if (level.isStateAtPosition(pos, state -> state.equals(tree.foliageProvider.getState(level, random, pos)))) {
+            foliageSetter.set(pos, stateModifier.apply(tree.trunkProvider.getState(level, random, pos)));
+        }
+    }
+
+    private static Function<BlockState, BlockState> getSidewaysStateModifier(Direction branchDirection) {
+        return state -> state.trySetValue(RotatedPillarBlock.AXIS, branchDirection.getAxis());
+    }
+
+    @Override
+    public int foliageHeight(RandomSource random, int treeHeight, TreeConfiguration tree) {
+        return this.height.sample(random);
+    }
+
+    private void placeLeavesRow(
+        WorldGenLevel level,
+        FoliagePlacer.FoliageSetter foliageSetter,
+        RandomSource random,
+        TreeConfiguration tree,
+        BlockPos origin,
+        int currentRadius,
+        int y,
+        boolean doubleTrunk,
+        int foliageHeight,
+        boolean flipRhombusShape
+    ) {
+        int offset = doubleTrunk ? 1 : 0;
+        MutableBlockPos pos = new MutableBlockPos();
+
+        for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {
+            for (int dz = -currentRadius; dz <= currentRadius + offset; dz++) {
+                if (!this.shouldSkipLocation(random, dx, y, dz, currentRadius, doubleTrunk, foliageHeight, flipRhombusShape)) {
+                    pos.setWithOffset(origin, dx, y, dz);
+                    tryPlaceLeaf(level, foliageSetter, random, tree, pos);
+                }
+            }
+        }
+    }
+
+    private boolean shouldSkipLocation(
+        RandomSource random,
+        int dx,
+        int y,
+        int dz,
+        int currentRadius,
+        boolean doubleTrunk,
+        int foliageHeight,
+        boolean flipRhombusShape
+    ) {
+        boolean shouldRowBePartialRhombusShape = this.shouldRowBePartialRhombusShape(foliageHeight, y);
+        int cornerBlocksToCutForRhombusShape = this.getCornerBlocksToCutForRhombusShape(dx, dz, currentRadius, shouldRowBePartialRhombusShape, flipRhombusShape);
+        int absDx = Mth.abs(dx);
+        int absDz = Mth.abs(dz);
+        boolean isRhombusEdgeBlock = absDx == currentRadius || absDz == currentRadius;
+        if (shouldRowBePartialRhombusShape && isRhombusEdgeBlock) {
+            return true;
+        }
+
+        int additionalSideRemoval = random.nextFloat() <= this.sideHoleChance ? 1 : 0;
+        return !isWithinRhombusShape(currentRadius, absDx, absDz, cornerBlocksToCutForRhombusShape, additionalSideRemoval);
+    }
+
+    @Override
+    protected boolean shouldSkipLocation(RandomSource random, int dx, int y, int dz, int currentRadius, boolean doubleTrunk) {
+        throw new IllegalStateException("Overridden method needs more context");
+    }
+
+    private int getCornerBlocksToCutForRhombusShape(int dx, int dz, int currentRadius, boolean shouldRowBePartialRhombusShape, boolean flipRhombusShape) {
+        boolean isSmallCornerOfShape = flipRhombusShape ? isLeftTopCornerOrRightLowerCorner(dx, dz) : isLeftLowerCornerOrRightTopCorner(dx, dz);
+        return isSmallCornerOfShape ? currentRadius - 1 : (shouldRowBePartialRhombusShape ? currentRadius + 1 : currentRadius);
+    }
+
+    private static boolean isWithinRhombusShape(int currentRadius, int absDx, int absDz, int cornerBlocksToCutForRhombusShape, int additionalSideRemoval) {
+        return absDx + absDz <= currentRadius * 2 - (cornerBlocksToCutForRhombusShape + additionalSideRemoval);
+    }
+
+    private static boolean isLeftLowerCornerOrRightTopCorner(int dx, int dz) {
+        return dx > 0 && dz < 0 || dz > 0 && dx < 0;
+    }
+
+    private static boolean isLeftTopCornerOrRightLowerCorner(int dx, int dz) {
+        return dx > 0 && dz > 0 || dz < 0 && dx < 0;
+    }
+
+    private boolean shouldRowBePartialRhombusShape(int foliageHeight, int y) {
+        return foliageHeight - 1 == y || foliageHeight - 2 == y;
+    }
+}

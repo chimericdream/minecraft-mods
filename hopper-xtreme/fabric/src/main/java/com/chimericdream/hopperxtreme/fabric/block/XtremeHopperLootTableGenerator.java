@@ -33,6 +33,7 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
         add(ModBlocks.GOLDEN_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GOLDEN_HOPPER.get()));
         add(ModBlocks.DIAMOND_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.DIAMOND_HOPPER.get()));
         add(ModBlocks.NETHERITE_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHERITE_HOPPER.get()));
+        add(ModBlocks.NETHER_STAR_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHER_STAR_HOPPER.get()));
         add(ModBlocks.FILTERED_GOLDEN_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GOLDEN_HOPPER.get()));
         add(ModBlocks.FILTERED_DIAMOND_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_DIAMOND_HOPPER.get()));
         add(ModBlocks.FILTERED_NETHERITE_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_NETHERITE_HOPPER.get()));
@@ -44,6 +45,7 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
         add(ModBlocks.GLAZED_GOLDEN_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_GOLDEN_HOPPER.get()));
         add(ModBlocks.GLAZED_DIAMOND_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_DIAMOND_HOPPER.get()));
         add(ModBlocks.GLAZED_NETHERITE_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_NETHERITE_HOPPER.get()));
+        add(ModBlocks.GLAZED_NETHER_STAR_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_NETHER_STAR_HOPPER.get()));
         add(ModBlocks.FILTERED_GLAZED_GOLDEN_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GLAZED_GOLDEN_HOPPER.get()));
         add(ModBlocks.FILTERED_GLAZED_DIAMOND_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GLAZED_DIAMOND_HOPPER.get()));
         add(ModBlocks.FILTERED_GLAZED_NETHERITE_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GLAZED_NETHERITE_HOPPER.get()));
@@ -54,10 +56,12 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
         add(ModBlocks.GOLDEN_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GOLDEN_MULTI_HOPPER.get()));
         add(ModBlocks.DIAMOND_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.DIAMOND_MULTI_HOPPER.get()));
         add(ModBlocks.NETHERITE_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHERITE_MULTI_HOPPER.get()));
+        add(ModBlocks.NETHER_STAR_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHER_STAR_MULTI_HOPPER.get()));
         add(ModBlocks.GLAZED_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_MULTI_HOPPER.get()));
         add(ModBlocks.GLAZED_GOLDEN_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_GOLDEN_MULTI_HOPPER.get()));
         add(ModBlocks.GLAZED_DIAMOND_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_DIAMOND_MULTI_HOPPER.get()));
         add(ModBlocks.GLAZED_NETHERITE_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_NETHERITE_MULTI_HOPPER.get()));
+        add(ModBlocks.GLAZED_NETHER_STAR_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.GLAZED_NETHER_STAR_MULTI_HOPPER.get()));
         add(ModBlocks.FILTERED_GOLDEN_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GOLDEN_MULTI_HOPPER.get()));
         add(ModBlocks.FILTERED_DIAMOND_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_DIAMOND_MULTI_HOPPER.get()));
         add(ModBlocks.FILTERED_NETHERITE_MULTI_HOPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_NETHERITE_MULTI_HOPPER.get()));
@@ -73,6 +77,7 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
         add(ModBlocks.GOLDEN_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.GOLDEN_HUPPER.get()));
         add(ModBlocks.DIAMOND_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.DIAMOND_HUPPER.get()));
         add(ModBlocks.NETHERITE_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHERITE_HUPPER.get()));
+        add(ModBlocks.NETHER_STAR_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHER_STAR_HUPPER.get()));
         add(ModBlocks.FILTERED_GOLDEN_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GOLDEN_HUPPER.get()));
         add(ModBlocks.FILTERED_DIAMOND_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_DIAMOND_HUPPER.get()));
         add(ModBlocks.FILTERED_NETHERITE_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_NETHERITE_HUPPER.get()));
@@ -83,6 +88,7 @@ public class XtremeHopperLootTableGenerator extends FabricBlockLootSubProvider {
         add(ModBlocks.GOLDEN_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.GOLDEN_MULTI_HUPPER.get()));
         add(ModBlocks.DIAMOND_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.DIAMOND_MULTI_HUPPER.get()));
         add(ModBlocks.NETHERITE_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHERITE_MULTI_HUPPER.get()));
+        add(ModBlocks.NETHER_STAR_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.NETHER_STAR_MULTI_HUPPER.get()));
         add(ModBlocks.FILTERED_GOLDEN_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_GOLDEN_MULTI_HUPPER.get()));
         add(ModBlocks.FILTERED_DIAMOND_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_DIAMOND_MULTI_HUPPER.get()));
         add(ModBlocks.FILTERED_NETHERITE_MULTI_HUPPER.get(), createNameableBlockEntityTable(ModBlocks.FILTERED_NETHERITE_MULTI_HUPPER.get()));

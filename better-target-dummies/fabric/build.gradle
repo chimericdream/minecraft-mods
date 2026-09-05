@@ -1,0 +1,16 @@
+architectury {
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":better-target-dummies:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':better-target-dummies:common')) { transitive false }
+    shadowBundle project(path: ':better-target-dummies:common', configuration: 'transformProductionFabric')
+}

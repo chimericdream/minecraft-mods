@@ -1,9 +1,10 @@
 package com.chimericdream.minekea.fabric.block.building.slabs;
 
-import com.chimericdream.lib.util.Tool;
+import com.chimericdream.lib.fabric.blocks.TagUtils;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.family.FamilyBlockModels;
 import com.chimericdream.minekea.block.building.slabs.SlabBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -20,22 +21,18 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class SlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
-    private final SlabBlock BLOCK;
+    public final SlabBlock BLOCK;
 
     public SlabBlockDataGenerator(Block block) {
-        this.BLOCK = (SlabBlock) block;
+        BLOCK = (SlabBlock) block;
     }
 
     @Override
     public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
-        Tool tool = Optional.ofNullable(BLOCK.config.getTool()).orElse(Tool.PICKAXE);
-        getBuilder.apply(tool.getMineableTag())
-            .setReplace(false)
-            .add(BLOCK);
+        TagUtils.applyMineableTag(getBuilder, BLOCK.config.getTool(), BLOCK);
     }
 
     @Override
@@ -51,32 +48,40 @@ public class SlabBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     @Override
+    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Slab", BLOCK.config.getMaterialName()));
+    }
+
+    @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
         generator.add(BLOCK, generator.createSlabItemTable(BLOCK));
     }
 
     @Override
-    public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Slab", BLOCK.config.getMaterialName()));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Slab", BLOCK.config.getMaterialName()));
-    }
-
-    @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        Identifier textureId = BLOCK.config.getTexture();
+        Identifier defaultTextureId = BLOCK.config.getTexture();
+        Identifier bottomTextureId = BLOCK.config.getTextureOrDefault("bottom", defaultTextureId);
+        Identifier topTextureId = BLOCK.config.getTextureOrDefault("top", defaultTextureId);
+        Identifier sideTextureId = BLOCK.config.getTextureOrDefault("side", defaultTextureId);
+
+        assert bottomTextureId != null && topTextureId != null && sideTextureId != null;
+
+        Material bottomTexture = new Material(bottomTextureId);
+        Material topTexture = new Material(topTextureId);
+        Material sideTexture = new Material(sideTextureId);
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, new Material(textureId))
-            .put(TextureSlot.TOP, new Material(textureId))
-            .put(TextureSlot.ALL, new Material(textureId));
+            .put(TextureSlot.BOTTOM, bottomTexture)
+            .put(TextureSlot.TOP, topTexture)
+            .put(TextureSlot.SIDE, sideTexture);
 
-        ModelUtils.registerSlabBlock(
+        FamilyBlockModels.registerSlabBlock(
             blockStateModelGenerator,
             BLOCK,
             textures,
             ModelTemplates.SLAB_BOTTOM,
             ModelTemplates.SLAB_TOP,
-            ModelTemplates.CUBE_ALL
+            ModelTemplates.CUBE_BOTTOM_TOP
         );
     }
 }

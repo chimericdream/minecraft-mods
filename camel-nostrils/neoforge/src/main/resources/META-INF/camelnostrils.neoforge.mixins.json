@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "com.chimericdream.camelnostrils.neoforge.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "client": [
+    ],
+    "mixins": [
+        "CN$ServerPlayerMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

@@ -1,6 +1,6 @@
 # Villager Tweaks (Fabric/NeoForge)
 
-![Version: 5.0.0](https://img.shields.io/badge/version-5.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 5.2.0](https://img.shields.io/badge/version-5.2.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Some minor adjustments to villager interactions to ease a few headaches._
 
@@ -12,7 +12,8 @@ handy item for relocating villagers.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
 
 ## Current Features
 
@@ -28,6 +29,8 @@ minecarts.
 * **Override max trades** — optionally change how many times a villager will trade a given offer before it needs to
   restock. Set to `-1` for effectively infinite trades. *(Default: off, unlimited when enabled.)*
 * **Demand modifier** — toggle vanilla's price-increase-on-heavy-trading behavior. *(Default: on.)*
+* **Cap max discount** — limit how far reputation (mainly from curing zombie villagers) can discount a trade's
+  price, as a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
 
 ### Reputation tweaks
 
@@ -43,15 +46,22 @@ minecarts.
   timer. *(Default: off; default fixed time 3600 ticks when enabled.)*
 * **Display cure time** — show the remaining time until a zombie villager is cured. *(Default: off.)*
 
+### Villager growth tweaks
+
+* **Override grow up time** — set a fixed grow-up time (in ticks) for baby villagers instead of the vanilla timer.
+  *(Default: off; default fixed time 24000 ticks when enabled — same as vanilla.)*
+* **Display grow up time** — show the remaining time until a baby villager grows up. *(Default: off.)*
+
 ### Misc.
 
 * **Lure villagers** — villagers will follow you while you hold an emerald block, emerald ore, or deepslate emerald
   ore. *(Default: off.)*
+* **Leash nitwits** — allows leads to be attached to nitwit villagers. *(Default: off.)*
 
 ### Configuration
 
 Villager Tweaks uses [YACL](https://github.com/isXander/YetAnotherConfigLib) for its config screen (accessible via
-Mod Menu on Fabric), grouped into **Trading**, **Zombie Conversion**, and **Misc.** sections.
+Mod Menu on Fabric), grouped into **Trading**, **Zombie Conversion**, **Villager Growth**, and **Misc.** sections.
 
 ## Notes for Documentation
 
@@ -60,7 +70,7 @@ interaction. The remaining tweaks are configuration toggles rather than in-game 
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/villagertweaks/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

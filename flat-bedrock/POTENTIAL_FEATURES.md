@@ -43,3 +43,7 @@ the best way, and server-side only.
 ## Non-goals worth writing down
 
 * No new blocks, no client requirement, no bedrock-breaking mechanics — "flat" is the whole brand.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

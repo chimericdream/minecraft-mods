@@ -1,0 +1,24 @@
+{
+    "parent": "sneakytweaks:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:feather"
+        },
+        "title": {
+            "translate": "advancements.sneakytweaks.crouch_bridge.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.sneakytweaks.crouch_bridge.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

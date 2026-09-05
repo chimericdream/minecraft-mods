@@ -6,6 +6,11 @@
 ![](https://img.shields.io/badge/client-required-4caf50?style=flat-square)
 ![](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
+### Minecraft Versions
+
+* 26.2: Supported
+* 26.1.2: Supported
+
 ## Description
 
 This mod provides over two dozen new villager professions which trade nearly 1000 miniblocks to decorate your world!

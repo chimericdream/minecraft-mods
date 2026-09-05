@@ -19,6 +19,7 @@ public class SuspiciousSoulSandBlock extends BrushableFloatingNonFullBlock {
             Blocks.SOUL_SAND,
             SoundEvents.BRUSH_SAND,
             SoundEvents.BRUSH_SAND_COMPLETED,
+            BLOCK_ID,
             BlockBehaviour.Properties
                 .of()
                 .mapColor(MapColor.COLOR_BROWN)

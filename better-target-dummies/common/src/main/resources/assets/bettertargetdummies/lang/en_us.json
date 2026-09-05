@@ -1,0 +1,17 @@
+{
+    "item.bettertargetdummies.dummy_spawn_egg": "Dummy Spawn Egg",
+    "item.bettertargetdummies.target_dummy": "Target Dummy",
+    "bettertargetdummies.target_dummy.unbound": "No mob bound — right-click with a spawn egg",
+    "bettertargetdummies.target_dummy.bound_facing": "%s facing %s",
+    "bettertargetdummies.target_dummy.bound_unpowered": "%s facing %s — provide a redstone signal to activate",
+    "bettertargetdummies.target_dummy.cleared": "Dummy cleared",
+    "bettertargetdummies.dummy_spawn_egg.bound": "Bound to %s",
+    "bettertargetdummies.dummy_spawn_egg.unbound": "Unbound. Right-click in the air to pick a mob.",
+    "bettertargetdummies.dummy_spawn_egg.unresolved": "Right-click in the air to pick a mob, or rename this in an anvil to a mob's name",
+    "bettertargetdummies.mob_picker.title": "Pick a Mob",
+    "bettertargetdummies.mob_picker.search": "Search mobs...",
+    "bettertargetdummies.direction.north": "North",
+    "bettertargetdummies.direction.east": "East",
+    "bettertargetdummies.direction.south": "South",
+    "bettertargetdummies.direction.west": "West"
+}

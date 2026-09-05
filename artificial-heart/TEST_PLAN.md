@@ -3,9 +3,9 @@
 Artificial Heart adds decorative, behavior-free versions of pale garden blocks: the **Detached
 Creaking Heart** (no creaking spawns, orientable glowing faces, resin faces strippable with an axe)
 and **Clipped Eyeblossoms** (open/closed variants frozen in state, plus potted forms). Conversion
-happens via tool-use mixins: `ArtificialHeartAxeItemMixin` (creaking heart → artificial, and
-stripping individual faces off the artificial block), `ArtificialHeartShearsItemMixin` (eyeblossom →
-clipped), and `ArtificialHeartBlockItemMixin`.
+happens via tool-use mixins: `ArtificialHeart$AxeItemMixin` (creaking heart → artificial, and
+stripping individual faces off the artificial block), `ArtificialHeart$ShearsItemMixin` (eyeblossom →
+clipped), and `ArtificialHeart$BlockItemMixin`.
 
 ## Test conventions
 

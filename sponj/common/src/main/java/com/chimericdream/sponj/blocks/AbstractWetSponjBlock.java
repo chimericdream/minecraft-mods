@@ -1,8 +1,10 @@
 package com.chimericdream.sponj.blocks;
 
+import com.chimericdream.sponj.advancement.SponjAdvancements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 /**
@@ -33,12 +36,23 @@ public abstract class AbstractWetSponjBlock extends Block {
     /** Whether this sponj should dry out in the dimension it was just placed in. */
     protected abstract boolean shouldDryOut(Level world, BlockPos pos);
 
+    /** The advancement awarded (to nearby players) when this sponj dries out. Null for none. */
+    @Nullable
+    protected Identifier getDryOutAdvancement() {
+        return null;
+    }
+
     @Override
     public void onPlace(@NonNull BlockState state, Level world, @NonNull BlockPos pos, @NonNull BlockState oldState, boolean notify) {
         if (shouldDryOut(world, pos)) {
             world.setBlock(pos, getDryBlock().defaultBlockState(), 3);
             world.levelEvent(2009, pos, 0);
             world.playSound((Player) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
+
+            Identifier advancementId = getDryOutAdvancement();
+            if (advancementId != null) {
+                SponjAdvancements.awardNearby(world, pos, advancementId);
+            }
         }
     }
 

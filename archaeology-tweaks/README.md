@@ -1,6 +1,6 @@
 # Archaeology Tweaks (Fabric/NeoForge)
 
-![Version: 3.0.0](https://img.shields.io/badge/version-3.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 3.2.0](https://img.shields.io/badge/version-3.2.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Small, vanilla-friendly tweaks to Minecraft's archaeology system._
 
@@ -13,8 +13,8 @@ whatever loot has been assigned to it.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
-* Earlier versions: see the git history for builds targeting older releases
+* 26.2: Supported
+* 26.1.2: Supported
 
 ### Current Features
 
@@ -30,6 +30,10 @@ whatever loot has been assigned to it.
 * Each block is brushed exactly like vanilla suspicious sand/gravel, revealing its loot piece by piece
 * Includes gravity-affected variants that behave like the block they are based on (e.g. sand and red sand fall)
 * Loot is driven by loot tables, making it easy for datapacks to customize what each block can contain
+* Each suspicious block generates naturally as a small, rare deposit in a fitting biome (e.g. suspicious clay
+  near rivers and beaches, suspicious soul sand in the Soul Sand Valley)
+* Adds advancements for using a brush for the first time, collecting every pottery sherd, brushing a
+  suspicious block in the Nether, and getting a second drop via the Gentle Touch enchantment
 
 ## Notes for Documentation
 
@@ -39,7 +43,7 @@ block, equip a brush, and hold right-click to excavate it._
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/archaeology-tweaks/issues) to report any
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any
 bugs you find.
 
 ## Credits
