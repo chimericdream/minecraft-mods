@@ -12,7 +12,6 @@
   * Chiseled Red Sandstone
   * Chiseled Resin Bricks
   * Chiseled Stone Bricks
-  * Chiseled Sulfur
   * Cracked Deepslate Bricks
   * Cracked Deepslate Tiles
   * Cracked Nether Bricks
@@ -24,3 +23,6 @@
   * All 16 concrete colors
 
 #### Changes
+
+* Chiseled Sulfur stairs, slabs, and walls are not included on this version of Minecraft — Sulfur
+  and Chiseled Sulfur don't exist here yet. They'll be added once the game catches up.
