@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        "minecraft:egg",
+        "minecraft:paper"
+    ],
+    "result": {
+        "id": "bettertargetdummies:dummy_spawn_egg"
+    }
+}

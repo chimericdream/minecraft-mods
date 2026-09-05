@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:chest"
+    ],
+    "result": {
+        "id": "camelnostrils:upside_down_chest"
+    }
+}

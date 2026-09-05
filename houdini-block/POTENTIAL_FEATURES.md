@@ -48,3 +48,7 @@ clean builders. The stage-magic naming (Houdini) is a gift; lean into it.
   retraction).
 * **Config: which update types** — separate toggles for neighbor updates, shape updates, and comparator
   updates, for players who know exactly which mechanism they're exploiting.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

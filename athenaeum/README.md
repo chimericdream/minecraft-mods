@@ -18,9 +18,8 @@ datapacks, which allows for easy customization and expansion.
 
 ### Minecraft Versions
 
-* 26.1.2: supported
-* 1.21.x: supported
-* < 1.21: not planned
+* 26.2: Supported
+* 26.1.2: Supported
 
 ### Current Features
 
@@ -40,7 +39,7 @@ datapacks, which allows for easy customization and expansion.
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/athenaeum-mod/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

@@ -1,0 +1,7 @@
+architectury {
+    common project(':sneaky-tweaks').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/sneakytweaks.accesswidener")
+}

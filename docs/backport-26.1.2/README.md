@@ -1,7 +1,18 @@
-# Backport plan: `main` (MC 26.2) → `26.1.2`
+# Backport plan: `main` (MC 26.2) → `26.1.2` — round 1
 
-**Status:** ready to execute, pending the dependency version numbers in
-[§6](#6-version-numbers-needed-before-wave-0-starts).
+**Status:** ✅ **complete.** This is the round-1 plan; it brought `26.1.2` level with `main` as of
+the `hopper-xtreme/26.2-4.0.1` tag (`23d614746`, 2026-07-27).
+
+> ### 👉 Round 2 is the current plan
+>
+> For work after `23d614746`, see **[ROUND-2.md](ROUND-2.md)** — it carries the current anchors,
+> wave structure, review gate and, in its §7, the *corrected* 26.2 → 26.1.2 reverse API map.
+> **Where round 2's map disagrees with §5 below, round 2 wins** — it was re-verified with `javap`
+> against both deobf jars (notably: `LightCoordsUtil` and `BedRule` *do* exist on 26.1.2, and
+> `BlockEntityType`'s constructor is private here).
+>
+> Round 1's §5 API map and its per-mod files remain accurate for everything they do cover, and are
+> still the best reference for how a mod's 26.1.2 source came to look the way it does.
 
 This directory holds the full plan for backporting ~2 weeks of work from `main` onto the `26.1.2`
 branch. This file is the overarching plan and owns **every shared / cross-cutting change**. Each
@@ -300,7 +311,7 @@ Sub-agents apply this when a patch hunk rejects or the build fails. Derived from
 | `EntityTypes.X` (`net.minecraft.world.entity.EntityTypes`) | `EntityType.X` (`net.minecraft.world.entity.EntityType`) |
 | `net.minecraft.advancements.triggers.CriteriaTriggers` | `net.minecraft.advancements.CriteriaTriggers` |
 | `net.minecraft.advancements.predicates.*` | `net.minecraft.advancements.criterion.*` |
-| `net.minecraft.util.LightCoordsUtil.getLightCoords(...)` | `LevelRenderer.getLightCoords(...)` |
+| ~~`net.minecraft.util.LightCoordsUtil.getLightCoords(...)`~~ ⚠ **superseded — see round 2 §7** | `LevelRenderer.getLightCoords(...)`. The *call* still moves, but the premise was wrong: `LightCoordsUtil` **does** exist on 26.1.2 — it simply has no `getLightCoords`, and `BrightnessGetter` is `LevelRenderer$BrightnessGetter` here rather than absent. |
 | `Minecraft.getInstance().gui.hud.isHidden()` | `!Minecraft.getInstance().renderNames()` |
 | `view.getStringOr("k", d)` / `getBooleanOr` | `ValueInput.contains("k")` + the 26.1.2 getters |
 | `Blocks.WOOL.white()`, `Items.DYE.red()`, … (`ColorCollection`) | `Blocks.WHITE_WOOL`, `Items.RED_DYE`, … |

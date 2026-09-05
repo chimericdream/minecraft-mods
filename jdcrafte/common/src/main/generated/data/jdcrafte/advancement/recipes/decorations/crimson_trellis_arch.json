@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_crimson_trellis": {
+      "conditions": {
+        "items": [
+          {
+            "items": "jdcrafte:crimson_trellis"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jdcrafte:crimson_trellis_arch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_crimson_trellis"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jdcrafte:crimson_trellis_arch"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "bettertargetdummies:target_dummy"
+                }
+            ],
+            "rolls": 1.0
+        }
+    ],
+    "random_sequence": "bettertargetdummies:blocks/target_dummy"
+}

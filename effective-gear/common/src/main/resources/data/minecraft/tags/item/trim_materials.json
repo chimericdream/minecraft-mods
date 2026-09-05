@@ -1,0 +1,14 @@
+{
+    "replace": false,
+    "values": [
+        "minecraft:blaze_powder",
+        "minecraft:echo_shard",
+        "minecraft:enchanted_golden_apple",
+        "minecraft:ender_pearl",
+        "minecraft:honeycomb",
+        "minecraft:nether_star",
+        "minecraft:prismarine_shard",
+        "minecraft:slime_ball",
+        "minecraft:turtle_scute"
+    ]
+}

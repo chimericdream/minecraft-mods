@@ -1,0 +1,43 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "homepage": "https://fabricmc.net/",
+        "sources": "https://github.com/chimericdream/minecraft-mods"
+    },
+    "license": "MIT",
+    "icon": "assets/betterportallinking/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.betterportallinking.fabric.BetterPortalLinkingFabric"
+        ],
+        "client": [
+            "com.chimericdream.betterportallinking.fabric.client.BetterPortalLinkingFabricClient"
+        ],
+        "modmenu": [
+            "com.chimericdream.betterportallinking.fabric.config.ModMenuIntegration"
+        ]
+    },
+    "mixins": [
+        "betterportallinking.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_compat}",
+        "minecraft": "~${minecraft_compat}",
+        "java": ">=25",
+        "fabric-api": "*",
+        "architectury": ">=${architectury_compat}",
+        "chimericlib": ">=${chimericlib_compat}",
+        "yet_another_config_lib_v3": ">=${yacl_compat}"
+    },
+    "recommends": {
+        "modmenu": ">=${modmenu_compat}"
+    }
+}

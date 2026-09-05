@@ -7,6 +7,8 @@ read -p "Mod ID (e.g. bannertweaks; will also be the Java package name): " modid
 read -p "Folder (e.g. banner-tweaks): " foldername
 read -p "Main Java class, without \`*Mod\` (e.g. BannerTweaks): " classname
 
+mccompat=$(sed -nE 's/^minecraft_compatibility\s*=\s*//p' gradle.properties | head -1)
+
 bun create mod "./$foldername" --no-install --no-git
 
 mv "./$foldername/common/src/main/java/com/chimericdream/{{MOD_ID}}" "./$foldername/common/src/main/java/com/chimericdream/$modid"
@@ -24,6 +26,8 @@ mv "./$foldername/common/src/main/java/com/chimericdream/$modid/{{CLASS_NAME}}Mo
 templateFiles=(
   "./$foldername/build.gradle.tpl"
   "./$foldername/gradle.properties.tpl"
+  "./$foldername/README.md.tpl"
+  "./$foldername/POTENTIAL_FEATURES.md.tpl"
   "./$foldername/neoforge/build.gradle.tpl"
   "./$foldername/neoforge/src/main/resources/META-INF/neoforge.mods.toml.tpl"
   "./$foldername/neoforge/src/main/java/com/chimericdream/$modid/neoforge/${classname}NeoForge.java.tpl"
@@ -44,10 +48,13 @@ for tpl in ${templateFiles[@]}; do
   sed -Ei "s/\{\{MOD_ID\}\}/$modid/g" $tpl
   sed -Ei "s/\{\{FOLDER_NAME\}\}/$foldername/g" $tpl
   sed -Ei "s/\{\{CLASS_NAME\}\}/$classname/g" $tpl
+  sed -Ei "s/\{\{MC_COMPAT\}\}/$mccompat/g" $tpl
 done
 
 mv "./$foldername/build.gradle.tpl" "./$foldername/build.gradle"
 mv "./$foldername/gradle.properties.tpl" "./$foldername/gradle.properties"
+mv "./$foldername/README.md.tpl" "./$foldername/README.md"
+mv "./$foldername/POTENTIAL_FEATURES.md.tpl" "./$foldername/POTENTIAL_FEATURES.md"
 mv "./$foldername/neoforge/build.gradle.tpl" "./$foldername/neoforge/build.gradle"
 mv "./$foldername/neoforge/src/main/resources/META-INF/neoforge.mods.toml.tpl" "./$foldername/neoforge/src/main/resources/META-INF/neoforge.mods.toml"
 mv "./$foldername/neoforge/src/main/java/com/chimericdream/$modid/neoforge/${classname}NeoForge.java.tpl" "./$foldername/neoforge/src/main/java/com/chimericdream/$modid/neoforge/${classname}NeoForge.java"

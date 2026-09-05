@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "bettertargetdummies:block/target_dummy_side_a",
+        "up": "bettertargetdummies:block/target_dummy_end",
+        "down": "bettertargetdummies:block/target_dummy_end",
+        "north": "bettertargetdummies:block/target_dummy_side_a",
+        "east": "bettertargetdummies:block/target_dummy_side_b",
+        "south": "bettertargetdummies:block/target_dummy_side_c",
+        "west": "bettertargetdummies:block/target_dummy_side_d"
+    }
+}

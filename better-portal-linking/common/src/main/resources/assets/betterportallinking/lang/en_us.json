@@ -1,0 +1,8 @@
+{
+    "text.config.title": "Better Portal Linking Configuration",
+    "text.config.section.general": "General",
+    "text.config.option.enableAddressLinking": "Enable address linking",
+    "text.config.option.enableAddressLinking.desc": "Master switch for portal address linking. When disabled, the mod does nothing and vanilla portal linking applies. (Default: true)",
+    "text.config.option.logLinkingDecisions": "Log linking decisions",
+    "text.config.option.logLinkingDecisions.desc": "When enabled, logs the entry portal's address, each candidate portal's address and score, and the winning portal for every linking decision. (Default: false)"
+}

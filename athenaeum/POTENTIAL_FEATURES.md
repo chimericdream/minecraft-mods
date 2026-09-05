@@ -58,3 +58,7 @@ starting points for future planning. Several items build on the README's existin
   multiplayer-server flavor.
 * **Patchouli bridge** — auto-generate an in-game "library index" Patchouli book listing everything the
   player has discovered so far.
+
+## From the idea backlog (2026-08-13)
+
+* Add thematic/fun advancements.

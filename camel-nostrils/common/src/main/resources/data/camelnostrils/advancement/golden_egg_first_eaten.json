@@ -1,0 +1,29 @@
+{
+    "parent": "camelnostrils:root",
+    "display": {
+        "icon": {
+            "id": "camelnostrils:golden_egg"
+        },
+        "title": {
+            "translate": "advancements.camelnostrils.golden_egg_first_eaten.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.camelnostrils.golden_egg_first_eaten.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "consumed_golden_egg": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "items": "camelnostrils:golden_egg"
+                }
+            }
+        }
+    }
+}

@@ -16,7 +16,8 @@ it is safe to add or remove at any time and does not need to be installed on the
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
 
 ### Current Features
 
@@ -29,7 +30,7 @@ Because this mod only affects text rendering and adds no items or blocks, in-gam
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/enchantment-numbers-fix/issues) to report
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report
 any bugs you find.
 
 ## Credits

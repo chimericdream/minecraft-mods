@@ -1,0 +1,7 @@
+architectury {
+    common project(':next-update-now').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/nextupdatenow.accesswidener")
+}

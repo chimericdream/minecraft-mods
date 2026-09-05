@@ -31,7 +31,7 @@ This mod adds cobbled and mossy variants of a number of Minecraft's natural ston
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/cobblicious-mod/issues) to report any bugs you
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
 ## Credits

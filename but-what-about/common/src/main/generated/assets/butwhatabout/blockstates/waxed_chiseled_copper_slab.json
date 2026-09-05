@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "butwhatabout:block/waxed_chiseled_copper_slab"
+    },
+    "type=double": {
+      "model": "butwhatabout:block/waxed_chiseled_copper_slab_double"
+    },
+    "type=top": {
+      "model": "butwhatabout:block/waxed_chiseled_copper_slab_top_top"
+    }
+  }
+}

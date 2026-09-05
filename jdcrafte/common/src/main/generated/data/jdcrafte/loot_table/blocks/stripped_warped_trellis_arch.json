@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "jdcrafte:stripped_warped_trellis_arch",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "center"
+              }
+            }
+          ],
+          "name": "jdcrafte:stripped_warped_trellis_arch"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

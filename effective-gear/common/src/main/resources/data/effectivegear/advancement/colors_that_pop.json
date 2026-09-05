@@ -1,0 +1,24 @@
+{
+    "parent": "effectivegear:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:oak_leaves"
+        },
+        "title": {
+            "translate": "advancements.effectivegear.colors_that_pop.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.effectivegear.colors_that_pop.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

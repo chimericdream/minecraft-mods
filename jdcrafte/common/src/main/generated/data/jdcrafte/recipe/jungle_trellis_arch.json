@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": "jdcrafte:jungle_trellis"
+  },
+  "pattern": [
+    " T ",
+    "T T"
+  ],
+  "result": {
+    "count": 3,
+    "id": "jdcrafte:jungle_trellis_arch"
+  }
+}

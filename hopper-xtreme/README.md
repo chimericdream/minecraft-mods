@@ -12,7 +12,10 @@ staying recognizably "hopper."
 
 ### Minecraft Versions
 
-* 26.1.2: supported
+* 26.2: Supported
+* 26.1.2: Supported
+* 1.21.4: Bug fixes only
+* 1.21: Bug fixes only
 
 ## Current Features
 
@@ -77,7 +80,7 @@ many sides), **huppers** (push up), and **filtering** (include/exclude with the 
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/hopper-extreme/issues) to report any bugs
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs
 you find.
 
 ## Credits
