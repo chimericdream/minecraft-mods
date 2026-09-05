@@ -1,7 +1,6 @@
 package com.chimericdream.hopperxtreme.client.screen;
 
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
-import com.chimericdream.hopperxtreme.item.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +16,7 @@ public class NonFilterSlot extends Slot {
     @Override
     public boolean mayPlace(ItemStack stack) {
         if (HopperItemFilterItem.matchesFilter(this.container.getItem(this.filterSlotIndex), stack)) {
-            return !ItemStack.isSameItem(stack, new ItemStack(ModItems.HOPPER_ITEM_FILTER_ITEM.get()));
+            return !(stack.getItem() instanceof HopperItemFilterItem);
         }
 
         return false;

@@ -28,22 +28,26 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> GOLDEN_HOPPER = registerHopper("golden_hopper", 4);
     public static final RegistrySupplier<Block> DIAMOND_HOPPER = registerHopper("diamond_hopper", 2);
     public static final RegistrySupplier<Block> NETHERITE_HOPPER = registerHopper("netherite_hopper", 1);
+    public static final RegistrySupplier<Block> NETHER_STAR_HOPPER = registerHopper("nether_star_hopper", 1, 16);
 
     public static final RegistrySupplier<Block> GLAZED_HOPPER = registerGlazedHopper("glazed_hopper", 8);
     public static final RegistrySupplier<Block> HONEY_GLAZED_HOPPER = registerGlazedHopper("honey_glazed_hopper", 20);
     public static final RegistrySupplier<Block> GLAZED_GOLDEN_HOPPER = registerGlazedHopper("glazed_golden_hopper", 4);
     public static final RegistrySupplier<Block> GLAZED_DIAMOND_HOPPER = registerGlazedHopper("glazed_diamond_hopper", 2);
     public static final RegistrySupplier<Block> GLAZED_NETHERITE_HOPPER = registerGlazedHopper("glazed_netherite_hopper", 1);
+    public static final RegistrySupplier<Block> GLAZED_NETHER_STAR_HOPPER = registerGlazedHopper("glazed_nether_star_hopper", 1, 16);
 
     public static final RegistrySupplier<Block> MULTI_HOPPER = registerMultiHopper("multi_hopper", 8);
     public static final RegistrySupplier<Block> GOLDEN_MULTI_HOPPER = registerMultiHopper("golden_multi_hopper", 4);
     public static final RegistrySupplier<Block> DIAMOND_MULTI_HOPPER = registerMultiHopper("diamond_multi_hopper", 2);
     public static final RegistrySupplier<Block> NETHERITE_MULTI_HOPPER = registerMultiHopper("netherite_multi_hopper", 1);
+    public static final RegistrySupplier<Block> NETHER_STAR_MULTI_HOPPER = registerMultiHopper("nether_star_multi_hopper", 1, 16);
 
     public static final RegistrySupplier<Block> GLAZED_MULTI_HOPPER = registerGlazedMultiHopper("glazed_multi_hopper", 8);
     public static final RegistrySupplier<Block> GLAZED_GOLDEN_MULTI_HOPPER = registerGlazedMultiHopper("glazed_golden_multi_hopper", 4);
     public static final RegistrySupplier<Block> GLAZED_DIAMOND_MULTI_HOPPER = registerGlazedMultiHopper("glazed_diamond_multi_hopper", 2);
     public static final RegistrySupplier<Block> GLAZED_NETHERITE_MULTI_HOPPER = registerGlazedMultiHopper("glazed_netherite_multi_hopper", 1);
+    public static final RegistrySupplier<Block> GLAZED_NETHER_STAR_MULTI_HOPPER = registerGlazedMultiHopper("glazed_nether_star_multi_hopper", 1, 16);
 
     public static final RegistrySupplier<Block> HUPPER = registerHupper("hupper", 8);
     public static final RegistrySupplier<Block> HONEYED_HUPPER = registerHupper("honeyed_hupper", 20);
@@ -51,35 +55,74 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> GOLDEN_HUPPER = registerHupper("golden_hupper", 4);
     public static final RegistrySupplier<Block> DIAMOND_HUPPER = registerHupper("diamond_hupper", 2);
     public static final RegistrySupplier<Block> NETHERITE_HUPPER = registerHupper("netherite_hupper", 1);
+    public static final RegistrySupplier<Block> NETHER_STAR_HUPPER = registerHupper("nether_star_hupper", 1, 16);
 
     public static final RegistrySupplier<Block> MULTI_HUPPER = registerMultiHupper("multi_hupper", 8);
     public static final RegistrySupplier<Block> GOLDEN_MULTI_HUPPER = registerMultiHupper("golden_multi_hupper", 4);
     public static final RegistrySupplier<Block> DIAMOND_MULTI_HUPPER = registerMultiHupper("diamond_multi_hupper", 2);
     public static final RegistrySupplier<Block> NETHERITE_MULTI_HUPPER = registerMultiHupper("netherite_multi_hupper", 1);
+    public static final RegistrySupplier<Block> NETHER_STAR_MULTI_HUPPER = registerMultiHupper("nether_star_multi_hupper", 1, 16);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HOPPER = registerHopper("filtered_golden_hopper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HOPPER = registerHopper("filtered_diamond_hopper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HOPPER = registerHopper("filtered_netherite_hopper", 1, true);
+    // @TODO: remove all of these with 26.3, 26.4, or 27.1
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HOPPER = registerHopper("filtered_golden_hopper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HOPPER = registerHopper("filtered_diamond_hopper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HOPPER = registerHopper("filtered_netherite_hopper", 1);
 
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_HOPPER = registerGlazedHopper("filtered_glazed_golden_hopper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_HOPPER = registerGlazedHopper("filtered_glazed_diamond_hopper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_HOPPER = registerGlazedHopper("filtered_glazed_netherite_hopper", 1, true);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_HOPPER = registerGlazedHopper("filtered_glazed_golden_hopper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_HOPPER = registerGlazedHopper("filtered_glazed_diamond_hopper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_HOPPER = registerGlazedHopper("filtered_glazed_netherite_hopper", 1);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HOPPER = registerMultiHopper("filtered_golden_multi_hopper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HOPPER = registerMultiHopper("filtered_diamond_multi_hopper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HOPPER = registerMultiHopper("filtered_netherite_multi_hopper", 1, true);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HOPPER = registerMultiHopper("filtered_golden_multi_hopper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HOPPER = registerMultiHopper("filtered_diamond_multi_hopper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HOPPER = registerMultiHopper("filtered_netherite_multi_hopper", 1);
 
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_golden_multi_hopper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_diamond_multi_hopper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_netherite_multi_hopper", 1, true);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_GOLDEN_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_golden_multi_hopper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_DIAMOND_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_diamond_multi_hopper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GLAZED_NETHERITE_MULTI_HOPPER = registerGlazedMultiHopper("filtered_glazed_netherite_multi_hopper", 1);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HUPPER = registerHupper("filtered_golden_hupper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HUPPER = registerHupper("filtered_diamond_hupper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HUPPER = registerHupper("filtered_netherite_hupper", 1, true);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_HUPPER = registerHupper("filtered_golden_hupper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_HUPPER = registerHupper("filtered_diamond_hupper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_HUPPER = registerHupper("filtered_netherite_hupper", 1);
 
-    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HUPPER = registerMultiHupper("filtered_golden_multi_hupper", 4, true);
-    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HUPPER = registerMultiHupper("filtered_diamond_multi_hupper", 2, true);
-    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HUPPER = registerMultiHupper("filtered_netherite_multi_hupper", 1, true);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_GOLDEN_MULTI_HUPPER = registerMultiHupper("filtered_golden_multi_hupper", 4);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_DIAMOND_MULTI_HUPPER = registerMultiHupper("filtered_diamond_multi_hupper", 2);
+    @SuppressWarnings("DeprecatedIsStillUsed") // Left in place for backwards compatibility
+    @Deprecated(since="All hoppers are filtered since 26.x")
+    public static final RegistrySupplier<Block> FILTERED_NETHERITE_MULTI_HUPPER = registerMultiHupper("filtered_netherite_multi_hupper", 1);
 
     public static final RegistrySupplier<BlockEntityType<GlazedHopperBlockEntity>> GLAZED_HOPPER_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
         "glazed_hopper_block_entity",
@@ -91,6 +134,7 @@ public class ModBlocks {
                 GLAZED_GOLDEN_HOPPER.get(),
                 GLAZED_DIAMOND_HOPPER.get(),
                 GLAZED_NETHERITE_HOPPER.get(),
+                GLAZED_NETHER_STAR_HOPPER.get(),
                 FILTERED_GLAZED_GOLDEN_HOPPER.get(),
                 FILTERED_GLAZED_DIAMOND_HOPPER.get(),
                 FILTERED_GLAZED_NETHERITE_HOPPER.get()
@@ -108,6 +152,7 @@ public class ModBlocks {
                 GOLDEN_HOPPER.get(),
                 DIAMOND_HOPPER.get(),
                 NETHERITE_HOPPER.get(),
+                NETHER_STAR_HOPPER.get(),
                 FILTERED_GOLDEN_HOPPER.get(),
                 FILTERED_DIAMOND_HOPPER.get(),
                 FILTERED_NETHERITE_HOPPER.get()
@@ -126,6 +171,7 @@ public class ModBlocks {
                 GOLDEN_HUPPER.get(),
                 DIAMOND_HUPPER.get(),
                 NETHERITE_HUPPER.get(),
+                NETHER_STAR_HUPPER.get(),
                 FILTERED_GOLDEN_HUPPER.get(),
                 FILTERED_DIAMOND_HUPPER.get(),
                 FILTERED_NETHERITE_HUPPER.get()
@@ -142,6 +188,7 @@ public class ModBlocks {
                 GLAZED_GOLDEN_MULTI_HOPPER.get(),
                 GLAZED_DIAMOND_MULTI_HOPPER.get(),
                 GLAZED_NETHERITE_MULTI_HOPPER.get(),
+                GLAZED_NETHER_STAR_MULTI_HOPPER.get(),
                 FILTERED_GLAZED_GOLDEN_MULTI_HOPPER.get(),
                 FILTERED_GLAZED_DIAMOND_MULTI_HOPPER.get(),
                 FILTERED_GLAZED_NETHERITE_MULTI_HOPPER.get()
@@ -158,6 +205,7 @@ public class ModBlocks {
                 GOLDEN_MULTI_HOPPER.get(),
                 DIAMOND_MULTI_HOPPER.get(),
                 NETHERITE_MULTI_HOPPER.get(),
+                NETHER_STAR_MULTI_HOPPER.get(),
                 FILTERED_GOLDEN_MULTI_HOPPER.get(),
                 FILTERED_DIAMOND_MULTI_HOPPER.get(),
                 FILTERED_NETHERITE_MULTI_HOPPER.get()
@@ -174,6 +222,7 @@ public class ModBlocks {
                 GOLDEN_MULTI_HUPPER.get(),
                 DIAMOND_MULTI_HUPPER.get(),
                 NETHERITE_MULTI_HUPPER.get(),
+                NETHER_STAR_MULTI_HUPPER.get(),
                 FILTERED_GOLDEN_MULTI_HUPPER.get(),
                 FILTERED_DIAMOND_MULTI_HUPPER.get(),
                 FILTERED_NETHERITE_MULTI_HUPPER.get()
@@ -241,73 +290,73 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<Block> registerHopper(String key, int ticks) {
-        return registerHopper(key, ticks, true);
+        return registerHopper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerHopper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerHopper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new XtremeHopperBlock(ticks, key, withFilter),
+            () -> new XtremeHopperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks) {
-        return registerGlazedHopper(key, ticks, true);
+        return registerGlazedHopper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerGlazedHopper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new GlazedHopperBlock(ticks, key, withFilter),
+            () -> new GlazedHopperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks) {
-        return registerMultiHopper(key, ticks, true);
+        return registerMultiHopper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerMultiHopper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new XtremeMultiHopperBlock(ticks, key, withFilter),
+            () -> new XtremeMultiHopperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks) {
-        return registerGlazedMultiHopper(key, ticks, true);
+        return registerGlazedMultiHopper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerGlazedMultiHopper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new GlazedMultiHopperBlock(ticks, key, withFilter),
+            () -> new GlazedMultiHopperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHopperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerHupper(String key, int ticks) {
-        return registerHupper(key, ticks, true);
+        return registerHupper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerHupper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerHupper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new XtremeHupperBlock(ticks, key, withFilter),
+            () -> new XtremeHupperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultHupperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }
 
     private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks) {
-        return registerMultiHupper(key, ticks, true);
+        return registerMultiHupper(key, ticks, 1);
     }
 
-    private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks, boolean withFilter) {
+    private static RegistrySupplier<Block> registerMultiHupper(String key, int ticks, int itemsPerTick) {
         return REGISTRY_HELPER.registerWithItem(
             REGISTRY_HELPER.makeId(key),
-            () -> new XtremeMultiHupperBlock(ticks, key, withFilter),
+            () -> new XtremeMultiHupperBlock(ticks, itemsPerTick, key, true),
             (isDeprecatedKey(key) ? getDeprecatedSettings() : getDefaultMultiHupperSettings()).setId(REGISTRY_HELPER.makeItemRegistryKey(key))
         );
     }

@@ -97,6 +97,7 @@ public class XtremeHupperBlock extends BaseEntityBlock implements HopperVariantB
     }
 
     private final int cooldownInTicks;
+    private final int itemsPerTick;
     private final String baseKey;
     private final boolean withFilter;
 
@@ -110,6 +111,10 @@ public class XtremeHupperBlock extends BaseEntityBlock implements HopperVariantB
     }
 
     public XtremeHupperBlock(int cooldownInTicks, String translationKey, boolean withFilter) {
+        this(cooldownInTicks, 1, translationKey, withFilter);
+    }
+
+    public XtremeHupperBlock(int cooldownInTicks, int itemsPerTick, String translationKey, boolean withFilter) {
         super(
             Properties.ofFullCopy(Blocks.HOPPER)
                 .mapColor(MapColor.STONE)
@@ -121,6 +126,7 @@ public class XtremeHupperBlock extends BaseEntityBlock implements HopperVariantB
         );
 
         this.cooldownInTicks = cooldownInTicks;
+        this.itemsPerTick = itemsPerTick;
         this.baseKey = translationKey;
         this.withFilter = withFilter;
 
@@ -129,6 +135,11 @@ public class XtremeHupperBlock extends BaseEntityBlock implements HopperVariantB
 
     public int getCooldownInTicks() {
         return cooldownInTicks;
+    }
+
+    @Override
+    public int getItemsPerTick() {
+        return itemsPerTick;
     }
 
     public String getBaseKey() {

@@ -10,4 +10,6 @@ public interface HopperVariantBlock {
     boolean isWithFilter();
 
     int getCooldownInTicks();
+
+    int getItemsPerTick();
 }

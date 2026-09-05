@@ -1,5 +1,19 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the **Nether Star Hopper** tier — the ultimate upgrade beyond netherite. It has the same 1-tick cooldown
+  as a Netherite Hopper, but moves up to 16 items in a single transfer instead of 1 (still never more than a
+  full stack at a time), for up to 320 items per second. Crafted from a Netherite Hopper and a Nether Star.
+  Available as a Hopper, Glazed Hopper, Multi-Hopper, Glazed Multi-Hopper, Hupper, and Multi-Hupper, just like
+  the other tiers.
+* Added the **Diamond Hopper Item Filter** — works just like the standard Hopper Item Filter, but with ten
+  filter slots instead of five. Crafted by upgrading a Hopper Item Filter with a diamond.
+
+#### Bug Fixes
+
+* Breaking a filtered hopper or multi-hopper that had a filter installed no longer deletes the filter.
+  It now drops along with the rest of the hopper's contents, like it should.
 
 ### 26.1.2 - 3.0.1
 
