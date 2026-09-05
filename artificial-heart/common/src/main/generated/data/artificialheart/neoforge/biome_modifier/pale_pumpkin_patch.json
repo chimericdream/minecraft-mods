@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "minecraft:pale_garden",
+  "features": "artificialheart:pale_pumpkin_patch",
+  "step": "vegetal_decoration"
+}

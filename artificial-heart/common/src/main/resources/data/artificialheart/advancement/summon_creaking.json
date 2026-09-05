@@ -1,0 +1,37 @@
+{
+    "parent": "minecraft:adventure/trade",
+    "criteria": {
+        "summoned_golem": {
+            "conditions": {
+                "entity": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "minecraft:entity_type": "minecraft:creaking"
+                        }
+                    }
+                ]
+            },
+            "trigger": "minecraft:summoned_entity"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "advancements.summon_creaking_golem.description"
+        },
+        "frame": "goal",
+        "icon": {
+            "id": "artificialheart:pale_carved_pumpkin"
+        },
+        "title": {
+            "translate": "advancements.summon_creaking_golem.title"
+        }
+    },
+    "requirements": [
+        [
+            "summoned_golem"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

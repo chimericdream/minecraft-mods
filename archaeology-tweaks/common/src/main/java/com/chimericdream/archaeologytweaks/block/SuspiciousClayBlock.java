@@ -19,6 +19,7 @@ public class SuspiciousClayBlock extends BrushableFloatingBlock {
             Blocks.CLAY,
             SoundEvents.BRUSH_GRAVEL,
             SoundEvents.BRUSH_GRAVEL_COMPLETED,
+            BLOCK_ID,
             BlockBehaviour.Properties
                 .of()
                 .mapColor(MapColor.CLAY)

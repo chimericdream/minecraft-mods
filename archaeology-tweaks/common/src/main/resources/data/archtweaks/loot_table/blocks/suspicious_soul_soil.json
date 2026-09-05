@@ -1,4 +1,17 @@
 {
     "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1.0,
+            "entries": [
+                { "type": "minecraft:item", "name": "minecraft:bone", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:gold_nugget", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:nether_wart", "weight": 2 },
+                { "type": "minecraft:item", "name": "minecraft:glowstone_dust", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:howl_pottery_sherd", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:heartbreak_pottery_sherd", "weight": 1 }
+            ]
+        }
+    ],
     "random_sequence": "archtweaks:blocks/suspicious_soul_soil"
 }

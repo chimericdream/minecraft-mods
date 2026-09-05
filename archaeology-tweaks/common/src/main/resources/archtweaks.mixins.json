@@ -7,7 +7,10 @@
     ],
     "mixins": [
         "AbstractBlockMixin",
-        "BrushItemMixin"
+        "BrushableBlockEntityMixin",
+        "BrushItemMixin",
+        "RootSystemFeatureMixin",
+        "TrunkPlacerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

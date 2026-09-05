@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        "artificialheart:pale_pumpkin"
+    ],
+    "result": {
+        "count": 4,
+        "id": "artificialheart:pale_pumpkin_seeds"
+    }
+}

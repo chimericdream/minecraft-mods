@@ -1,7 +1,17 @@
 {
+    "advancements.change_of_heart.description": "Strip a Creaking Heart to detach it",
+    "advancements.change_of_heart.title": "Change of Heart",
+    "advancements.summon_creaking_golem.description": "Summon a creaking friend. It won't hurt you... probably.",
+    "advancements.summon_creaking_golem.title": "Red Light, Green Light",
     "block.artificialheart.artificial_creaking_heart": "Detached Creaking Heart",
+    "block.artificialheart.attached_pale_pumpkin_stem": "Attached Pale Pumpkin Stem",
     "block.artificialheart.clipped_eyeblossom": "Clipped Eyeblossom",
     "block.artificialheart.clipped_open_eyeblossom": "Clipped Open Eyeblossom",
+    "block.artificialheart.pale_carved_pumpkin": "Pale Carved Pumpkin",
+    "block.artificialheart.pale_jack_o_lantern": "Pale Jack o'Lantern",
+    "block.artificialheart.pale_pumpkin": "Pale Pumpkin",
+    "block.artificialheart.pale_pumpkin_stem": "Pale Pumpkin Stem",
     "block.artificialheart.potted_clipped_eyeblossom": "Potted Clipped Eyeblossom",
-    "block.artificialheart.potted_clipped_open_eyeblossom": "Potted Clipped Open Eyeblossom"
+    "block.artificialheart.potted_clipped_open_eyeblossom": "Potted Clipped Open Eyeblossom",
+    "item.artificialheart.pale_pumpkin_seeds": "Pale Pumpkin Seeds"
 }

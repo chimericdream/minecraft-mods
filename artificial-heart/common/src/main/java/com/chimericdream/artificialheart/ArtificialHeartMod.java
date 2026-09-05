@@ -1,6 +1,7 @@
 package com.chimericdream.artificialheart;
 
 import com.chimericdream.artificialheart.block.ModBlocks;
+import com.chimericdream.artificialheart.block.ModDispenserBehaviors;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -21,5 +22,16 @@ public final class ArtificialHeartMod {
         ModBlocks.init();
 
         REGISTRY_HELPER.init();
+    }
+
+    /**
+     * Runs logic that depends on registry objects actually being resolvable via {@code .get()}.
+     * On NeoForge, DeferredRegister entries aren't available until RegisterEvent fires, which
+     * happens after all mods finish construction - so this must run from a post-registration
+     * lifecycle hook (e.g. FMLCommonSetupEvent), not from {@link #init()} itself. On Fabric,
+     * registration is synchronous, so calling this immediately after {@link #init()} is safe.
+     */
+    public static void postInit() {
+        ModDispenserBehaviors.init();
     }
 }

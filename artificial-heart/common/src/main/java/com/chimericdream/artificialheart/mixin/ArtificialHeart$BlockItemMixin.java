@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
-abstract public class ArtificialHeartBlockItemMixin {
+abstract public class ArtificialHeart$BlockItemMixin {
     @Shadow
     abstract public Block getBlock();
 
