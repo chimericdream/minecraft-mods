@@ -33,7 +33,9 @@ public abstract class TrunkPlacerMixin {
     )
     private static BlockState at$maybeSuspicious(BlockStateProvider provider, WorldGenLevel level, RandomSource random, BlockPos pos) {
         BlockState state = provider.getOptionalState(level, random, pos);
-        if (state != null && state.is(Blocks.ROOTED_DIRT) && RandomSource.create().nextFloat() < SUSPICIOUS_CHANCE) {
+        // Reuse the worldgen's own seeded `random` here, not a fresh RandomSource.create() - the
+        // latter would make this roll unreproducible for a given world seed.
+        if (state != null && state.is(Blocks.ROOTED_DIRT) && random.nextFloat() < SUSPICIOUS_CHANCE) {
             return ModBlocks.SUSPICIOUS_ROOTED_DIRT.get().defaultBlockState();
         }
 

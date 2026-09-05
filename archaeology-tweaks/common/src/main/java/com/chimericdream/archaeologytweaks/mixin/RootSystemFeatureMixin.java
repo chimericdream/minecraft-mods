@@ -31,8 +31,10 @@ public abstract class RootSystemFeatureMixin {
             target = "Lnet/minecraft/world/level/WorldGenLevel;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"
         )
     )
-    private static boolean at$maybeSuspicious(WorldGenLevel level, BlockPos pos, BlockState state, int flags) {
-        if (state.is(Blocks.ROOTED_DIRT) && RandomSource.create().nextFloat() < SUSPICIOUS_CHANCE) {
+    private static boolean at$maybeSuspicious(WorldGenLevel level, BlockPos pos, BlockState state, int flags, RandomSource random) {
+        // `random` here is placeRootedDirt's own seeded RandomSource, captured from its parameter
+        // list - a fresh RandomSource.create() would make this roll unreproducible for a given seed.
+        if (state.is(Blocks.ROOTED_DIRT) && random.nextFloat() < SUSPICIOUS_CHANCE) {
             state = ModBlocks.SUSPICIOUS_ROOTED_DIRT.get().defaultBlockState();
         }
 
