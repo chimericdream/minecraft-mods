@@ -90,7 +90,7 @@ public class SnowedBlockEntityRenderer implements BlockEntityRenderer<SnowedBloc
     @Override
     public void submit(SnowedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.host != null) {
-            submitNodeCollector.submitMovingBlock(poseStack, state.host, 0);
+            submitNodeCollector.submitMovingBlock(poseStack, state.host);
         }
 
         if (state.snowState.isAir()) {
@@ -117,7 +117,7 @@ public class SnowedBlockEntityRenderer implements BlockEntityRenderer<SnowedBloc
             // QuadEmitter#SURFACE_NUDGE separates the planes by an imperceptible sliver instead.
             poseStack.pushPose();
             poseStack.translate(0.0, 0.5 + QuadEmitter.SURFACE_NUDGE, 0.0);
-            submitNodeCollector.submitMovingBlock(poseStack, state.snow, 0);
+            submitNodeCollector.submitMovingBlock(poseStack, state.snow);
             poseStack.popPose();
         } else {
             // A wall/fence/chain/bars/pane host (and a top slab, which shares this branch since its
@@ -135,7 +135,7 @@ public class SnowedBlockEntityRenderer implements BlockEntityRenderer<SnowedBloc
             poseStack.translate(0.5, 0.0, 0.5);
             poseStack.scale(1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE, 1.0F, 1.0F + 2.0F * QuadEmitter.SURFACE_NUDGE);
             poseStack.translate(-0.5, 0.0, -0.5);
-            submitNodeCollector.submitMovingBlock(poseStack, state.snow, 0);
+            submitNodeCollector.submitMovingBlock(poseStack, state.snow);
             poseStack.popPose();
         }
     }

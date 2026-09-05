@@ -1,9 +1,9 @@
 package com.chimericdream.logallthethings.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LightCoordsUtil;
 
 /**
  * Per-face packed light, sampled the way vanilla's non-AO block rendering does it
@@ -28,7 +28,7 @@ public final class FaceLighting {
         BlockPos.MutableBlockPos scratch = new BlockPos.MutableBlockPos();
         for (Direction direction : Direction.values()) {
             scratch.setWithOffset(pos, direction);
-            light[direction.get3DDataValue()] = LightCoordsUtil.getLightCoords(level, scratch);
+            light[direction.get3DDataValue()] = LevelRenderer.getLightCoords(level, scratch);
         }
         return light;
     }

@@ -179,7 +179,7 @@ public class WindowLoggingGameTest {
         context.setBlock(TARGET, Blocks.STONE_SLAB);
 
         Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
-        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COPPER_BARS.weathering().unaffected()));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COPPER_BARS.unaffected()));
 
         EventResult result = WindowLogHelper.tryWindowLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
 
@@ -188,7 +188,7 @@ public class WindowLoggingGameTest {
         }
 
         WindowedBlockEntity be = targetWindowedBlockEntity(context);
-        if (!be.getWindowState().is(Blocks.COPPER_BARS.weathering().unaffected())) {
+        if (!be.getWindowState().is(Blocks.COPPER_BARS.unaffected())) {
             context.fail("Window state should be copper bars, got " + be.getWindowState());
         }
 
@@ -419,7 +419,7 @@ public class WindowLoggingGameTest {
         context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
         WindowedBlockEntity be = targetWindowedBlockEntity(context);
         be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
-        be.setWindowState(Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState());
+        be.setWindowState(Blocks.YELLOW_STAINED_GLASS_PANE.defaultBlockState());
         be.setChanged();
 
         facingPlayerInLevelAt(context, paneOnlyPointOf(context));
@@ -427,7 +427,7 @@ public class WindowLoggingGameTest {
         BlockPos pos = context.absolutePos(TARGET);
         ItemStack picked = targetState(context).getCloneItemStack(context.getLevel(), pos, false);
 
-        if (!picked.is(Items.STAINED_GLASS_PANE.yellow())) {
+        if (!picked.is(Items.YELLOW_STAINED_GLASS_PANE)) {
             context.fail("Expected pick-block on the pane to return a yellow stained glass pane, got " + picked);
         }
 
@@ -489,17 +489,17 @@ public class WindowLoggingGameTest {
      */
     @GameTest
     public void freshStainedGlassPaneIsNotLavaLoggedByDefault(GameTestHelper context) {
-        if (Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState().getValue(LavaLogProperties.LAVALOGGED)) {
+        if (Blocks.YELLOW_STAINED_GLASS_PANE.defaultBlockState().getValue(LavaLogProperties.LAVALOGGED)) {
             context.fail("Expected a yellow stained glass pane's own default state to not be lava-logged");
         }
 
         context.setBlock(TARGET, WindowLogBlocks.WINDOWED_BLOCK.get());
         WindowedBlockEntity be = targetWindowedBlockEntity(context);
         be.setHostState(Blocks.STONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
-        be.setWindowState(Blocks.STAINED_GLASS_PANE.yellow().defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
+        be.setWindowState(Blocks.YELLOW_STAINED_GLASS_PANE.defaultBlockState().setValue(CrossCollisionBlock.EAST, true).setValue(CrossCollisionBlock.WEST, true));
         be.setChanged();
 
-        context.placeBlock(TARGET.east(), Blocks.STAINED_GLASS_PANE.yellow(), Direction.UP);
+        context.placeBlock(TARGET.east(), Blocks.YELLOW_STAINED_GLASS_PANE, Direction.UP);
 
         BlockState neighborState = context.getLevel().getBlockState(context.absolutePos(TARGET.east()));
         if (neighborState.getValue(LavaLogProperties.LAVALOGGED)) {

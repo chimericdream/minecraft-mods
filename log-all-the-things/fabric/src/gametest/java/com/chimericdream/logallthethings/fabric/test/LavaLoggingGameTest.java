@@ -73,11 +73,15 @@ public class LavaLoggingGameTest {
      * loose fluid block there instead, which makes {@code result.consumesAction()} true for reasons
      * unrelated to the block actually under test. Calling {@code emptyContents} directly with a
      * {@code null} hit result short-circuits that fallback ({@code hitResult != null && ...}), giving an
-     * unambiguous {@code false} when the target refuses, with no player positioning required either.
-     * Bucket-specific, so it stays local rather than joining {@link GameTestPlayers}.
+     * unambiguous {@code false} when the target refuses. Where the position/orientation ends up doesn't
+     * matter for this call — {@code emptyContents} never consults it — but {@code GameTestHelper} has no
+     * bare game-mode-taking mock-server-player factory on 26.1.2 (see {@link GameTestPlayers}'s
+     * javadoc), so {@link GameTestPlayers#makeFacingPlayer} is reused here purely to obtain a
+     * correctly-game-typed {@code ServerPlayer}. Bucket-specific, so it stays local rather than joining
+     * {@link GameTestPlayers}.
      */
     private static boolean emptyBucketDirectlyAtTarget(GameTestHelper context, Item bucketItem) {
-        Player player = context.makeMockServerPlayer(GameType.SURVIVAL);
+        Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
         return ((BucketItem) bucketItem).emptyContents(player, context.getLevel(), context.absolutePos(TARGET), null);
     }
 

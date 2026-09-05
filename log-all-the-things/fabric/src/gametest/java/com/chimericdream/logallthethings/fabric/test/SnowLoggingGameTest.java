@@ -225,7 +225,7 @@ public class SnowLoggingGameTest {
         context.setBlock(TARGET, CarpetLogBlocks.CARPETED_BLOCK.get());
         CarpetedBlockEntity carpetBe = (CarpetedBlockEntity) context.getLevel().getBlockEntity(context.absolutePos(TARGET));
         carpetBe.setHostState(Blocks.STONE_SLAB.defaultBlockState());
-        carpetBe.setCarpetState(Blocks.CARPET.white().defaultBlockState());
+        carpetBe.setCarpetState(Blocks.WHITE_CARPET.defaultBlockState());
         carpetBe.setChanged();
 
         Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
@@ -252,7 +252,7 @@ public class SnowLoggingGameTest {
         snowBe.setChanged();
 
         Player player = GameTestPlayers.makeFacingPlayer(context, GameType.SURVIVAL, PLAYER_POS, TARGET);
-        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CARPET.white()));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WHITE_CARPET));
 
         EventResult result = CarpetLogHelper.tryCarpetLog(player, InteractionHand.MAIN_HAND, context.absolutePos(TARGET), Direction.SOUTH);
 

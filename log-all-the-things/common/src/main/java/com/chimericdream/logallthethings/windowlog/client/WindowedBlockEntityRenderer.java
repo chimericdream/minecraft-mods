@@ -75,13 +75,13 @@ public class WindowedBlockEntityRenderer implements BlockEntityRenderer<Windowed
     @Override
     public void submit(WindowedBlockRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.host != null) {
-            submitNodeCollector.submitMovingBlock(poseStack, state.host, 0);
+            submitNodeCollector.submitMovingBlock(poseStack, state.host);
         }
         if (state.window != null) {
             BlockState hostState = state.host != null ? state.host.blockState : Blocks.AIR.defaultBlockState();
             boolean renderedFrame = WindowFrameRenderer.submit(poseStack, submitNodeCollector, state.faceLight, state.cardinalLighting, hostState, state.window.blockState);
             if (!renderedFrame) {
-                submitNodeCollector.submitMovingBlock(poseStack, state.window, 0);
+                submitNodeCollector.submitMovingBlock(poseStack, state.window);
             }
         }
     }

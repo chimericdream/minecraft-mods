@@ -32,11 +32,16 @@ public final class LogAllTheThingsMod {
 
         REGISTRY_HELPER.init();
 
-        InteractionEvent.RIGHT_CLICK_BLOCK.register(WindowLogHelper::tryWindowLog);
-        InteractionEvent.RIGHT_CLICK_BLOCK.register(CarpetLogHelper::tryCarpetLog);
-        InteractionEvent.RIGHT_CLICK_BLOCK.register(SnowLogHelper::tryPlaceSnow);
-        BlockEvent.BREAK.register(WindowLogHelper::tryPartialBreak);
-        BlockEvent.BREAK.register(CarpetLogHelper::tryPartialBreak);
-        BlockEvent.BREAK.register(SnowLogHelper::tryPartialBreak);
+        // Architectury 20.0.7 (pinned on this branch)'s RightClickBlock.click still returns the older
+        // InteractionResult, not the EventResult these helpers return for their GameTest callers'
+        // benefit - EventResult#asMinecraft() is Architectury's own bridge between the two.
+        InteractionEvent.RIGHT_CLICK_BLOCK.register((player, hand, pos, face) -> WindowLogHelper.tryWindowLog(player, hand, pos, face).asMinecraft());
+        InteractionEvent.RIGHT_CLICK_BLOCK.register((player, hand, pos, face) -> CarpetLogHelper.tryCarpetLog(player, hand, pos, face).asMinecraft());
+        InteractionEvent.RIGHT_CLICK_BLOCK.register((player, hand, pos, face) -> SnowLogHelper.tryPlaceSnow(player, hand, pos, face).asMinecraft());
+        // Architectury 20.0.7's BlockEvent.Break also passes an IntValue (the drop-exp accumulator)
+        // the payload's method-reference form didn't account for; none of these helpers need it.
+        BlockEvent.BREAK.register((level, pos, state, player, exp) -> WindowLogHelper.tryPartialBreak(level, pos, state, player));
+        BlockEvent.BREAK.register((level, pos, state, player, exp) -> CarpetLogHelper.tryPartialBreak(level, pos, state, player));
+        BlockEvent.BREAK.register((level, pos, state, player, exp) -> SnowLogHelper.tryPartialBreak(level, pos, state, player));
     }
 }
