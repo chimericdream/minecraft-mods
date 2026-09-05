@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "nextupdatenow_test",
+    "version": "1.0.0",
+    "name": "Next Update Now GameTest",
+    "description": "Test-only GameTests for Next Update Now. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.nextupdatenow.fabric.test.PoplarSignGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "nextupdatenow": "*"
+    }
+}

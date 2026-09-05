@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 /**
- * Vanilla's {@code BlockEntityType#validBlocks} (see {@code BlockEntityTypes.SIGN} /
+ * Vanilla's {@code BlockEntityType#validBlocks} (see {@code BlockEntityType.SIGN} /
  * {@code .HANGING_SIGN}) is an immutable {@code Set.of(...)} baked from the vanilla block list at
  * class-init time. A new block reusing an existing vanilla block entity type (poplar's sign/wall-sign/
  * hanging-sign/wall-hanging-sign blocks reuse {@code StandingSignBlock}/{@code WallSignBlock}/
