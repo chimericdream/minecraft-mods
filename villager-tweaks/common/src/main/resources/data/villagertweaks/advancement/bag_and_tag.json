@@ -1,0 +1,24 @@
+{
+    "parent": "villagertweaks:root",
+    "display": {
+        "icon": {
+            "id": "villagertweaks:bagged_villager"
+        },
+        "title": {
+            "translate": "advancements.villagertweaks.bag_and_tag.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.villagertweaks.bag_and_tag.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

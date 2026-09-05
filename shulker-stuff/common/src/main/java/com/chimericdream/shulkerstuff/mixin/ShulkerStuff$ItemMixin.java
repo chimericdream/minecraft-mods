@@ -44,7 +44,11 @@ public class ShulkerStuff$ItemMixin {
     @Inject(method = "overrideStackedOnOther", at = @At("HEAD"), cancellable = true)
     private void ss$overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickType, Player player, CallbackInfoReturnable<Boolean> cir) {
         try {
-            if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+            if (
+                stack.getCount() > 1
+                    || !(stack.getItem() instanceof BlockItem bi)
+                    || !(bi.getBlock() instanceof ShulkerBoxBlock)
+            ) {
                 return;
             }
 
@@ -81,7 +85,11 @@ public class ShulkerStuff$ItemMixin {
 
     @Inject(method = "overrideOtherStackedOnMe", at = @At("HEAD"), cancellable = true)
     private void ss$overrideOtherStackedOnMe(ItemStack stack, ItemStack otherStack, Slot slot, ClickAction clickType, Player player, SlotAccess cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
-        if (!(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof ShulkerBoxBlock)) {
+        if (
+            stack.getCount() > 1
+                || !(stack.getItem() instanceof BlockItem bi)
+                || !(bi.getBlock() instanceof ShulkerBoxBlock)
+        ) {
             return;
         }
 

@@ -15,7 +15,7 @@ public class SSLootTableModifier extends LootTableModifier {
         ShulkerStuffConfig config = ShulkerStuffConfig.HANDLER.instance();
 
         if (BuiltInLootTables.BASTION_TREASURE.identifier().equals(id)) {
-            poolBuilders.add(makeWeightedItem(ModItems.PLATED_SHULKER_UPGRADE.get(), 12));
+            poolBuilders.add(makeWeightedItem(ModItems.PLATED_SHULKER_UPGRADE.get(), config.platedShulkerUpgradeChance));
         }
     }
 }

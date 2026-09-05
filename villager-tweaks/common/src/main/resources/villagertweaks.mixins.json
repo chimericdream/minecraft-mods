@@ -4,8 +4,11 @@
     "package": "com.chimericdream.villagertweaks.mixin",
     "compatibilityLevel": "JAVA_25",
     "mixins": [
+        "VTAbstractVillagerMixin",
+        "VTAgeableMobMixin",
         "VTTradeOfferMixin",
         "VTVillagerEntityMixin",
+        "VTVillagerMakeLoveMixin",
         "VTZombieEntityMixin",
         "VTZombieVillagerEntityMixin"
     ],

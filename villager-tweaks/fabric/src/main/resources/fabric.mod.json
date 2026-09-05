@@ -15,6 +15,9 @@
     "icon": "assets/villagertweaks/logo.png",
     "environment": "*",
     "entrypoints": {
+        "fabric-datagen": [
+            "com.chimericdream.villagertweaks.fabric.data.ModDataGenerator"
+        ],
         "main": [
             "com.chimericdream.villagertweaks.fabric.VillagerTweaksFabric"
         ],

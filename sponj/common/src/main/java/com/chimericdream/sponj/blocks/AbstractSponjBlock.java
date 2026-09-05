@@ -1,6 +1,7 @@
 package com.chimericdream.sponj.blocks;
 
 import com.chimericdream.lib.blocks.BlockUtils;
+import com.chimericdream.sponj.advancement.SponjAdvancements;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +52,10 @@ public abstract class AbstractSponjBlock extends Block {
 
     /** Whether replaceable "washable" blocks (kelp, seagrass, …) are cleared too. Water only. */
     protected abstract boolean absorbsWashableBlocks();
+
+    /** Fluid-specific hook for tracking cumulative absorption. No-op unless overridden. */
+    protected void onFluidAbsorbed(Level world, BlockPos pos, int blocksAbsorbed) {
+    }
 
     @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
@@ -139,6 +144,12 @@ public abstract class AbstractSponjBlock extends Block {
                     world.levelEvent(2001, sponjPos, fluidId);
                 }
             }
+
+            if (sponjCount >= ModBlocks.MAX_CONNECTED_SPONJES) {
+                SponjAdvancements.awardNearby(world, pos, SponjAdvancements.BIG_GULP);
+            }
+
+            onFluidAbsorbed(world, pos, i);
         }
 
         return i > 0;
