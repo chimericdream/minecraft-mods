@@ -20,6 +20,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   Kotlin-for-Forge `6.3.0`, Loom `1.17-SNAPSHOT`, chimeric-lib `26.1.2-5.0.0`.
 - **Loom plugin**: `dev.architectury.loom-no-remap`; shadow via `com.gradleup.shadow`.
 
+### Content `main` has that this version doesn't
+
+Sulfur, Cinnabar (both the blocks and the `SulfurCube` entity family) and the `MUSIC_DISC_BOUNCE`
+item don't exist on 26.1.2 — they're 26.2-only vanilla content. Anything in `main` that depends on
+them is carved out here rather than ported:
+
+- **minekea**: no small sulfur cubes capturable in a glass jar, and no cinnabar/sulfur building
+  blocks (beams, covers, slabs, stairs, compressed blocks, bookshelves).
+- **but-what-about**: no Chiseled Sulfur stairs/slabs/walls.
+
+Before porting a future round's payload, re-check whether the running Minecraft version has caught
+up — if so, these carve-outs (and their `#### Known omissions` / changelog notes in the two mods
+above) can finally be filled in. `docs/backport-26.1.2/ROUND-2.md` §7 has the full verification
+history (a field-level diff of `Blocks`/`Items` plus the `SulfurCube` entity check).
+
 ## Architecture
 
 Multi-mod monorepo using Gradle + Architectury for cross-platform mod development. Each mod supports
