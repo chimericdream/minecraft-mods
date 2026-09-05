@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
-import net.minecraft.world.level.block.entity.BlockEntityTypes;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -198,8 +198,8 @@ public class ModBlocks {
             "poplar_sign",
             () -> new SignItem(standingSign.get(), wallSign.get(), itemSettings(FUNCTIONAL_BLOCK_SETTINGS, "poplar_sign"))
         );
-        ModBlockEntityValidBlocks.register(BlockEntityTypes.SIGN, standingSign);
-        ModBlockEntityValidBlocks.register(BlockEntityTypes.SIGN, wallSign);
+        ModBlockEntityValidBlocks.register(BlockEntityType.SIGN, standingSign);
+        ModBlockEntityValidBlocks.register(BlockEntityType.SIGN, wallSign);
 
         RegistrySupplier<Block> hangingSign = registerBlock(
             "poplar_hanging_sign",
@@ -213,8 +213,8 @@ public class ModBlocks {
             "poplar_hanging_sign",
             () -> new HangingSignItem(hangingSign.get(), wallHangingSign.get(), itemSettings(FUNCTIONAL_BLOCK_SETTINGS, "poplar_hanging_sign"))
         );
-        ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, hangingSign);
-        ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, wallHangingSign);
+        ModBlockEntityValidBlocks.register(BlockEntityType.HANGING_SIGN, hangingSign);
+        ModBlockEntityValidBlocks.register(BlockEntityType.HANGING_SIGN, wallHangingSign);
     }
 
     /**
