@@ -39,8 +39,8 @@ public class WeathervaneBlockDataGenerator implements FabricBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        getBuilder.apply(BlockTags.MINEABLE_WITH_PICKAXE).add(block.builtInRegistryHolder().key());
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+        getBuilder.apply(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider arg) {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
-                blockGenerator.configureBlockTags(arg, this::builder);
+                blockGenerator.configureBlockTags(arg, this::valueLookupBuilder);
             }
         }
     }
@@ -85,7 +85,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider arg) {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
-                blockGenerator.configureItemTags(arg, this::builder);
+                blockGenerator.configureItemTags(arg, this::valueLookupBuilder);
             }
         }
     }
