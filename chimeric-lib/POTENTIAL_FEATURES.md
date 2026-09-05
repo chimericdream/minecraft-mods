@@ -67,7 +67,12 @@ already exist in individual mods.
   * **Mock-player interaction wrappers** — "use item I on block face F", "use item I on entity E",
     "shift-right-click", and "hold-use for N ticks" (brushing). *(artificial-heart axe/shears,
     archaeology-tweaks brush, villager-tweaks bundle, miniblock-merchants conversion items,
-    minekea wrench/painter, hopper-xtreme wrench)*
+    minekea wrench/painter, hopper-xtreme wrench)* — **partially done**: `testkit.gametest.GameTestPlayers`
+    (added for log-all-the-things's lava-logging tests) has the two lowest-level building blocks,
+    `makeFacingPlayer` (positioned + oriented mock player) and `useItem` (calls `Item#use`, applies the
+    result to the held item) — covers general-`use()` items like buckets, which
+    `GameTestHelper#useBlock` can't reach at all. Still open: a `useOn`-specific convenience (block
+    face targeting), use-on-entity, shift-click, and hold-for-N-ticks.
   * **Villager fixture builder** — `spawnVillager(helper, pos).profession(X).level(3).offers(...)`
     with age/employment control; plus gossip/reputation assertion helpers. *(villager-tweaks,
     miniblock-merchants)*
