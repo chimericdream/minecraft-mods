@@ -149,7 +149,7 @@ public class TextureGenerator implements DataProvider {
 
             image.copyData(copy.getRaster());
 
-            return image;
+            return copy;
         }
 
         /**
@@ -187,9 +187,11 @@ public class TextureGenerator implements DataProvider {
                     return Optional.empty();
                 }
 
-                FileInputStream stream = new FileInputStream(imageFile);
+                final BufferedImage image;
 
-                final BufferedImage image = ImageIO.read(stream);
+                try (FileInputStream stream = new FileInputStream(imageFile)) {
+                    image = ImageIO.read(stream);
+                }
 
                 if (image != null) {
                     MOD_IMAGE_CACHE.put(cacheKey, copyImage(image));
@@ -214,7 +216,7 @@ public class TextureGenerator implements DataProvider {
             final String jarPath = "%s/%s/%s.png".formatted(BASE_PATH, this.registryKey.getPath(), path);
 
             return JarAccess.getInputStream(jarPath).flatMap(stream -> {
-                try {
+                try (stream) {
                     final BufferedImage image = ImageIO.read(stream);
 
                     if (image != null) IMAGE_CACHE.put(path, copyImage(image));
