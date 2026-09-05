@@ -79,7 +79,7 @@ public class WeathervaneBlockEntityRenderer implements BlockEntityRenderer<Weath
         poseStack.mulPose(Axis.YP.rotationDegrees(state.rotation * 45.0F));
         poseStack.translate(-0.5, 0.0, -0.5);
 
-        submitNodeCollector.submitMovingBlock(poseStack, state.movingBlock, 0);
+        submitNodeCollector.submitMovingBlock(poseStack, state.movingBlock);
 
         poseStack.popPose();
     }

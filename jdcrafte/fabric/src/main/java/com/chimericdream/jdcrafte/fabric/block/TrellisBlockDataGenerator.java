@@ -58,14 +58,14 @@ public class TrellisBlockDataGenerator implements FabricBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        getBuilder.apply(BlockTags.CLIMBABLE).add(block.builtInRegistryHolder().key());
-        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE).add(block.builtInRegistryHolder().key());
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+        getBuilder.apply(BlockTags.CLIMBABLE).add(block);
+        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE).add(block);
     }
 
     @Override
-    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item>> getBuilder) {
-        getBuilder.apply(ModItemTags.TRELLIS).add(block.asItem().builtInRegistryHolder().key());
+    public void configureItemTags(HolderLookup.Provider registryLookup, Function<TagKey<Item>, TagAppender<Item, Item>> getBuilder) {
+        getBuilder.apply(ModItemTags.TRELLIS).add(block.asItem());
     }
 
     @Override

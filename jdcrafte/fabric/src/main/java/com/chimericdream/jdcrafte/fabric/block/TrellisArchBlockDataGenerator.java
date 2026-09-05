@@ -73,9 +73,9 @@ public class TrellisArchBlockDataGenerator implements FabricBlockDataGenerator {
     }
 
     @Override
-    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
-        getBuilder.apply(BlockTags.CLIMBABLE).add(block.builtInRegistryHolder().key());
-        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE).add(block.builtInRegistryHolder().key());
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block, Block>> getBuilder) {
+        getBuilder.apply(BlockTags.CLIMBABLE).add(block);
+        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE).add(block);
     }
 
     // Only the CENTER part's state drops an item - same trick as vanilla's bed loot tables (conditioned
