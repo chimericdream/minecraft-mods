@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/beetroot_seeds"
+    "model": "minekea:block/storage/compressed/beetroot_seeds_bagged"
   }
 }

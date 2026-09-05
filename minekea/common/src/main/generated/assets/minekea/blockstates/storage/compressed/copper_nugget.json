@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_bagged=false": {
+      "model": "minekea:block/storage/compressed/copper_nugget"
+    },
+    "is_bagged=true": {
+      "model": "minekea:block/storage/compressed/copper_nugget_bagged"
+    }
+  }
+}

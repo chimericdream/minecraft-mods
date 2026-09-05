@@ -5,7 +5,7 @@
       -68
     ],
     "arena_z": [
-      94,
+      95,
       191
     ],
     "floor_y": 55,
@@ -15,12 +15,12 @@
       191
     ],
     "width": 125,
-    "depth": 98,
-    "regions": 57,
-    "display_blocks": 2988,
-    "tier_platforms": 308,
-    "jars_filled": 112,
-    "command_blocks": 57,
+    "depth": 97,
+    "regions": 55,
+    "display_blocks": 2833,
+    "tier_platforms": 290,
+    "jars_filled": 111,
+    "command_blocks": 55,
     "tool_showcase": {
       "items": 8,
       "front_left": [
@@ -526,34 +526,10 @@
       "tall": 7
     },
     {
-      "region": "cinnabar",
-      "label": "Cinnabar (71)",
-      "front_left": [
-        -149,
-        55,
-        118
-      ],
-      "w": 12,
-      "d": 11,
-      "tall": 10
-    },
-    {
-      "region": "sulfur",
-      "label": "Sulfur (83)",
-      "front_left": [
-        -135,
-        55,
-        118
-      ],
-      "w": 16,
-      "d": 11,
-      "tall": 10
-    },
-    {
       "region": "resin",
       "label": "Resin (20)",
       "front_left": [
-        -117,
+        -149,
         55,
         118
       ],
@@ -565,7 +541,7 @@
       "region": "iron",
       "label": "Iron (11)",
       "front_left": [
-        -108,
+        -140,
         55,
         118
       ],
@@ -577,7 +553,7 @@
       "region": "gold",
       "label": "Gold (11)",
       "front_left": [
-        -103,
+        -135,
         55,
         118
       ],
@@ -589,7 +565,7 @@
       "region": "copper",
       "label": "Copper (35)",
       "front_left": [
-        -98,
+        -130,
         55,
         118
       ],
@@ -601,7 +577,7 @@
       "region": "diamond",
       "label": "Diamond (11)",
       "front_left": [
-        -84,
+        -116,
         55,
         118
       ],
@@ -613,7 +589,7 @@
       "region": "netherite",
       "label": "Netherite (11)",
       "front_left": [
-        -79,
+        -111,
         55,
         118
       ],
@@ -625,7 +601,7 @@
       "region": "lapis",
       "label": "Lapis (11)",
       "front_left": [
-        -74,
+        -106,
         55,
         118
       ],
@@ -637,9 +613,9 @@
       "region": "redstone",
       "label": "Redstone (11)",
       "front_left": [
-        -191,
+        -101,
         55,
-        104
+        118
       ],
       "w": 3,
       "d": 5,
@@ -649,9 +625,9 @@
       "region": "earth",
       "label": "Soil & Sand (72)",
       "front_left": [
-        -186,
+        -96,
         55,
-        104
+        118
       ],
       "w": 11,
       "d": 10,
@@ -661,9 +637,9 @@
       "region": "food",
       "label": "Compressed Food (46)",
       "front_left": [
-        -173,
+        -83,
         55,
-        104
+        118
       ],
       "w": 12,
       "d": 5,
@@ -673,9 +649,9 @@
       "region": "lighting",
       "label": "Lighting (4)",
       "front_left": [
-        -159,
+        -191,
         55,
-        104
+        105
       ],
       "w": 4,
       "d": 2,
@@ -685,9 +661,9 @@
       "region": "misc",
       "label": "Misc (6)",
       "front_left": [
-        -153,
+        -185,
         55,
-        104
+        105
       ],
       "w": 6,
       "d": 2,
@@ -697,9 +673,9 @@
       "region": "jars_items",
       "label": "Glass Jars - Items (99)",
       "front_left": [
-        -145,
+        -177,
         55,
-        104
+        105
       ],
       "w": 12,
       "d": 10,
@@ -707,11 +683,11 @@
     },
     {
       "region": "jars_misc",
-      "label": "Glass Jars - Fluids & Mobs (14)",
+      "label": "Glass Jars - Fluids & Mobs (13)",
       "front_left": [
-        -131,
+        -163,
         55,
-        104
+        105
       ],
       "w": 12,
       "d": 3,

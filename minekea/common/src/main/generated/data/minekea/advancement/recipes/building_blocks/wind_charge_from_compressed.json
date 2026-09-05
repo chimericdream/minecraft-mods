@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_storage/compressed/wind_charge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minekea:storage/compressed/wind_charge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minekea:wind_charge_from_compressed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_storage/compressed/wind_charge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minekea:wind_charge_from_compressed"
+    ]
+  }
+}

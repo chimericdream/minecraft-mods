@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/netherrack"
+    "model": "minekea:item/building/beams/netherrack"
   }
 }

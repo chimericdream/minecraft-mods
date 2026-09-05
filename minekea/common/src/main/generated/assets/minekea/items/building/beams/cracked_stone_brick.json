@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/cracked_stone_brick"
+    "model": "minekea:item/building/beams/cracked_stone_brick"
   }
 }

@@ -1,6 +1,8 @@
 {
   "parent": "minekea:block/building/slabs/vertical",
   "textures": {
-    "all": "minecraft:block/andesite"
+    "bottom": "minecraft:block/andesite",
+    "side": "minecraft:block/andesite",
+    "top": "minecraft:block/andesite"
   }
 }
