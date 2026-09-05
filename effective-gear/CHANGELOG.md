@@ -1,23 +1,39 @@
 ### Unreleased changes
 
-### 26.2 - 1.2.0
-
 #### New Features
 
-* Added a **Preserving** enchantment for shears (applied via anvil, since shears can't be enchanted at
-  a table). Leaves mined with Preserving-enchanted shears keep their original color forever, even when
-  placed somewhere with a very different biome color — handy for building with a consistent leaf color
-  regardless of where you place it. Works on Oak, Jungle, Acacia, Dark Oak, and Mangrove leaves (the
-  only leaves whose color actually changes by biome). Crafting a preserved leaf block by itself turns
-  it back into an ordinary one.
-* Added an advancement, **Colors that Pop**, earned the first time you break a leaf block with shears
-  enchanted with Preserving.
-
-### 26.2 - 1.1.0
-
-#### New Features
-
-* Added a new armor trim material: Prismarine shard.
+* Added new armor trim materials:
+  * Blaze powder
+  * Echo shard
+  * Enchanted golden apple
+  * Ender pearl
+  * Honeycomb
+  * Nether star
+  * Prismarine shard
+  * Slimeball
+  * Turtle scute
+* Wearing a full set of armor trimmed with the same material grants a bonus as long as it's worn:
+  * Amethyst — a small bonus to the experience dropped by blocks and mobs
+  * Blaze powder — melee attacks set your target on fire
+  * Copper — a channeling trident can summon lightning even when it isn't storming
+  * Diamond — your tools mine as if their Efficiency enchantment were one level higher
+  * Echo shard — partial resistance to a warden's sonic boom attack
+  * Emerald — a small discount when trading with villagers
+  * Enchanted golden apple — regeneration II and resistance
+  * Ender pearl — endermen ignore your gaze
+  * Gold — piglins are pacified, just like wearing a piece of gold armor
+  * Honeycomb — harvest bee nests without a campfire and without angering the bees
+  * Iron — iron golems won't attack you
+  * Lapis lazuli — a small chance for an enchantment to come out one level higher than rolled
+  * Nether star — regeneration
+  * Netherite — fire resistance
+  * Prismarine shard — partial resistance to a guardian's or elder guardian's laser attack
+  * Quartz — move more freely across terrain that would normally slow you down
+  * Redstone — right-click a block with an empty hand to send it a quick redstone pulse, anywhere a button could be placed
+  * Resin — creakings ignore you
+  * Slimeball — knockback resistance
+  * Turtle scute — water breathing
+* Wearing a full set of netherite armor grants fire resistance, as long as it's worn.
 * Wearing a full set of armor trimmed with the same *pattern* (regardless of material) now grants its
   own bonus, as long as it's worn. Patterns marked ⚡ have an active ability triggered with the new
   "Use Trim Ability" key (set it in Controls) — a shared key, since you can only be wearing one such
@@ -44,51 +60,20 @@
     bonus
   * Wayfinder — any mount you're riding gets a small speed boost, stacking with potion effects
   * Wild — immune to poison
-* Wearing a full set of armor trimmed with prismarine shard grants partial resistance to a guardian's
-  or elder guardian's laser attack.
+* Added a **Preserving** enchantment for shears (applied via anvil, since shears can't be enchanted at
+  a table). Leaves mined with Preserving-enchanted shears keep their original color forever, even when
+  placed somewhere with a very different biome color — handy for building with a consistent leaf color
+  regardless of where you place it. Works on Oak, Jungle, Acacia, Dark Oak, and Mangrove leaves (the
+  only leaves whose color actually changes by biome). Crafting a preserved leaf block by itself turns
+  it back into an ordinary one.
+* Added an advancement, **Colors that Pop**, earned the first time you break a leaf block with shears
+  enchanted with Preserving.
 
 #### Changes
 
-* The full copper armor trim bonus no longer grants immunity to lightning strikes. Instead, a
-  channeling trident can summon lightning even when it isn't storming.
 * Rebalanced sonic boom resistance: the full echo shard material bonus alone is now a 25% reduction
-  (down from 75%), and the new full Ward pattern bonus alone is a 50% reduction. Wearing both stacks
-  to the same 75% reduction echo shard used to grant by itself.
-
-### 26.2 - 1.0.0
-
-#### New Features
-
-* Added new armor trim materials:
-  * Blaze powder
-  * Echo shard
-  * Enchanted golden apple
-  * Ender pearl
-  * Honeycomb
-  * Nether star
-  * Slimeball
-  * Turtle scute
-* Wearing a full set of armor trimmed with the same material grants a bonus as long as it's worn:
-  * Amethyst — a small bonus to the experience dropped by blocks and mobs
-  * Blaze powder — melee attacks set your target on fire
-  * Copper — immune to lightning strikes
-  * Diamond — your tools mine as if their Efficiency enchantment were one level higher
-  * Echo shard — partial resistance to a warden's sonic boom attack
-  * Emerald — a small discount when trading with villagers
-  * Enchanted golden apple — regeneration II and resistance
-  * Ender pearl — endermen ignore your gaze
-  * Gold — piglins are pacified, just like wearing a piece of gold armor
-  * Honeycomb — harvest bee nests without a campfire and without angering the bees
-  * Iron — iron golems won't attack you
-  * Lapis lazuli — a small chance for an enchantment to come out one level higher than rolled
-  * Nether star — regeneration
-  * Netherite — fire resistance
-  * Quartz — move more freely across terrain that would normally slow you down
-  * Redstone — right-click a block with an empty hand to send it a quick redstone pulse, anywhere a button could be placed
-  * Resin — creakings ignore you
-  * Slimeball — knockback resistance
-  * Turtle scute — water breathing
-* Wearing a full set of netherite armor grants fire resistance, as long as it's worn
+  (down from 75%), and the full Ward pattern bonus alone is a 50% reduction. Wearing both stacks to
+  the same 75% reduction echo shard used to grant by itself.
 
 #### Bug Fixes
 
