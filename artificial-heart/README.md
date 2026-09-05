@@ -1,6 +1,6 @@
 # Artificial Heart (Fabric/NeoForge)
 
-![Version: 2.0.0](https://img.shields.io/badge/version-2.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/version-2.1.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Decorative versions of the creaking heart and more._
 
@@ -25,6 +25,14 @@ without their behavior.
 * **Potted** variants of both clipped eyeblossoms for use in flower pots.
 * Obtained by "clipping" or "detaching" the vanilla blocks with the appropriate tool (shears for eyeblossoms, an
   axe for the creaking heart), keeping the workflow intuitive and vanilla-friendly.
+* **Pale Pumpkin** — a pale garden-themed pumpkin, with matching carved and jack o'lantern variants. Pale
+  pumpkin patches also grow naturally in Pale Garden biomes.
+* **Creaking Golem** — build a golem shape from pale oak fence and logs around a Creaking Heart, then top
+  it with a carved pale pumpkin or jack o'lantern to summon a friendly, sturdy creaking. It reacts to
+  nearby players just like a wild one — it'll even freeze in place if you stare it down — but it will
+  never attack you. Building the same shape around a Detached Creaking Heart instead produces an inert
+  statue that never moves. Wearing a Pale Carved Pumpkin as a helmet keeps any creaking, tame or wild,
+  from noticing you at all.
 
 ## Notes for Documentation
 

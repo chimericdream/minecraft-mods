@@ -19,6 +19,7 @@ public class SuspiciousMudBlock extends BrushableFloatingNonFullBlock {
             Blocks.MUD,
             SoundEvents.BRUSH_GRAVEL,
             SoundEvents.BRUSH_GRAVEL_COMPLETED,
+            BLOCK_ID,
             BlockBehaviour.Properties
                 .ofFullCopy(Blocks.DIRT)
                 .mapColor(MapColor.TERRACOTTA_CYAN)

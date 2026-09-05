@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_badlands",
+  "features": "archtweaks:suspicious_red_sand",
+  "step": "underground_ores"
+}

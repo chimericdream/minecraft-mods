@@ -1,0 +1,24 @@
+{
+    "parent": "archtweaks:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:brush"
+        },
+        "title": {
+            "translate": "advancements.archtweaks.first_dig.title",
+            "italic": false
+        },
+        "description": {
+            "translate": "advancements.archtweaks.first_dig.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "magic": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

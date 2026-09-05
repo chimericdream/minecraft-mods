@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/stem_fruit",
+    "textures": {
+        "stem": "artificialheart:block/pale_pumpkin_stem",
+        "upperstem": "artificialheart:block/attached_pale_pumpkin_stem"
+    }
+}

@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShearsItem.class)
-public class ArtificialHeartShearsItemMixin {
+public class ArtificialHeart$ShearsItemMixin {
     @Inject(method = "useOn", at = @At("RETURN"), cancellable = true)
     private void artificialHeartUseOnBlockMixin(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         Level world = context.getLevel();

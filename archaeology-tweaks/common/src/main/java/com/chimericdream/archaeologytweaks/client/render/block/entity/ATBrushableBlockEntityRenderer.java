@@ -59,34 +59,6 @@ public class ATBrushableBlockEntityRenderer implements BlockEntityRenderer<ATBru
         }
     }
 
-//    public void render(ATBrushableBlockEntity brushableBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, Vec3d vec3d) {
-//        if (brushableBlockEntity.getWorld() != null) {
-//            int k = brushableBlockEntity.getCachedState().get(Properties.DUSTED);
-//
-//            if (k > 0) {
-//                Direction direction = brushableBlockEntity.getHitDirection();
-//
-//                if (direction != null) {
-//                    ItemStack itemStack = brushableBlockEntity.getItem();
-//
-//                    if (!itemStack.isEmpty()) {
-//                        matrixStack.push();
-//                        matrixStack.translate(0.0F, 0.5F, 0.0F);
-//                        float[] fs = this.getTranslation(direction, k);
-//                        matrixStack.translate(fs[0], fs[1], fs[2]);
-//                        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(75.0F));
-//                        boolean bl = direction == Direction.EAST || direction == Direction.WEST;
-//                        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) ((bl ? 90 : 0) + 11)));
-//                        matrixStack.scale(0.5F, 0.5F, 0.5F);
-//                        int l = WorldRenderer.getLightmapCoordinates(WorldRenderer.BrightnessGetter.DEFAULT, brushableBlockEntity.getWorld(), brushableBlockEntity.getCachedState(), brushableBlockEntity.getPos().offset(direction));
-//                        this.itemRenderer.renderItem(itemStack, ItemDisplayContext.FIXED, l, OverlayTexture.DEFAULT_UV, matrixStack, vertexConsumerProvider, brushableBlockEntity.getWorld(), 0);
-//                        matrixStack.pop();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     private float[] getTranslation(Direction direction, int dustedLevel) {
         float[] fs = new float[]{0.5F, 0.0F, 0.5F};
         float f = (float) dustedLevel / 10.0F * 0.75F;

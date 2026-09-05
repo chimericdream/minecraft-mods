@@ -1,8 +1,10 @@
 package com.chimericdream.archaeologytweaks.mixin;
 
+import com.chimericdream.archaeologytweaks.advancement.ArchaeologyTweaksAdvancements;
 import com.chimericdream.archaeologytweaks.block.entity.ATBrushableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.BrushItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,6 +44,14 @@ abstract public class BrushItemMixin {
                         BlockPos blockPos = blockHitResult.getBlockPos();
                         if (world instanceof ServerLevel serverWorld) {
                             BlockEntity blockEntity = world.getBlockEntity(blockPos);
+
+                            if ((blockEntity instanceof ATBrushableBlockEntity || blockEntity instanceof BrushableBlockEntity) && playerEntity instanceof ServerPlayer serverPlayer) {
+                                ArchaeologyTweaksAdvancements.award(serverPlayer, ArchaeologyTweaksAdvancements.FIRST_DIG);
+
+                                if (world.dimension() == Level.NETHER) {
+                                    ArchaeologyTweaksAdvancements.award(serverPlayer, ArchaeologyTweaksAdvancements.INTERDIMENSIONAL_ARCHAEOLOGY);
+                                }
+                            }
 
                             if (blockEntity instanceof ATBrushableBlockEntity brushableBlockEntity) {
                                 boolean finishedBrushing = brushableBlockEntity.brush(

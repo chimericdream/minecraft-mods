@@ -6,9 +6,12 @@
     "client": [
     ],
     "mixins": [
-        "ArtificialHeartAxeItemMixin",
-        "ArtificialHeartBlockItemMixin",
-        "ArtificialHeartShearsItemMixin"
+        "ArtificialHeart$AxeItemMixin",
+        "ArtificialHeart$BlockItemMixin",
+        "ArtificialHeart$CreakingMixin",
+        "ArtificialHeart$EntityMixin",
+        "ArtificialHeart$MobMixin",
+        "ArtificialHeart$ShearsItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

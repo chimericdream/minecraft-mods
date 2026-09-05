@@ -1,6 +1,8 @@
 package com.chimericdream.archaeologytweaks.block.entity;
 
+import com.chimericdream.archaeologytweaks.advancement.ArchaeologyTweaksAdvancements;
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
+import com.chimericdream.archaeologytweaks.enchantment.GentleTouchHelper;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -40,6 +42,7 @@ import java.util.Objects;
 
 public class ATBrushableBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static final String GENTLE_TOUCH_SOURCE_LOOT_TABLE_TAG = "archtweaks_gentle_touch_source_loot_table";
     private int brushesCount;
     private long nextDustTime;
     private long nextBrushTime;
@@ -49,6 +52,9 @@ public class ATBrushableBlockEntity extends BlockEntity {
     @Nullable
     private ResourceKey<LootTable> lootTable;
     private long lootTableSeed;
+    // Kept even after generateItem() nulls out lootTable, so a Gentle Touch success can reroll it.
+    @Nullable
+    private ResourceKey<LootTable> sourceLootTable;
 
     public ATBrushableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.BRUSHABLE_MOD_BLOCK_ENTITY.get(), pos, state);
@@ -86,6 +92,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
     public void setItem(ItemStack item) {
         this.item = item;
         this.lootTable = null;
+        this.sourceLootTable = null;
         this.setChanged();
     }
 
@@ -115,6 +122,16 @@ public class ATBrushableBlockEntity extends BlockEntity {
 
     private void finishBrushing(ServerLevel world, LivingEntity brusher, ItemStack brush) {
         this.spawnItem(world, brusher, brush);
+
+        int gentleTouchLevel = GentleTouchHelper.getLevel(world, brush);
+        if (this.sourceLootTable != null && GentleTouchHelper.rolls(world, gentleTouchLevel)) {
+            if (brusher instanceof ServerPlayer serverPlayer) {
+                ArchaeologyTweaksAdvancements.award(serverPlayer, ArchaeologyTweaksAdvancements.LUCKY_BLOCK);
+            }
+            this.rerollForGentleTouch(world);
+            return;
+        }
+
         BlockState blockState = this.getBlockState();
         world.levelEvent(3008, this.getBlockPos(), Block.getId(blockState));
         Block block = this.getBlockState().getBlock();
@@ -126,6 +143,14 @@ public class ATBrushableBlockEntity extends BlockEntity {
         }
 
         world.setBlock(this.worldPosition, block2.defaultBlockState(), 3);
+    }
+
+    private void rerollForGentleTouch(ServerLevel world) {
+        this.brushesCount = 0;
+        this.hitDirection = null;
+        this.setLootTable(this.sourceLootTable, world.getRandom().nextLong());
+        world.setBlock(this.getBlockPos(), this.getBlockState().setValue(BlockStateProperties.DUSTED, 0), 3);
+        this.setChanged();
     }
 
     private void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush) {
@@ -212,6 +237,7 @@ public class ATBrushableBlockEntity extends BlockEntity {
         }
 
         this.hitDirection = (Direction) data.read("hit_direction", Direction.LEGACY_ID_CODEC).orElse(null);
+        this.sourceLootTable = data.read(GENTLE_TOUCH_SOURCE_LOOT_TABLE_TAG, LootTable.KEY_CODEC).orElse(this.lootTable);
     }
 
     protected void saveAdditional(ValueOutput data) {
@@ -219,11 +245,15 @@ public class ATBrushableBlockEntity extends BlockEntity {
         if (!this.writeLootTableToData(data) && !this.item.isEmpty()) {
             data.store("item", ItemStack.CODEC, this.item);
         }
+        if (this.sourceLootTable != null) {
+            data.store(GENTLE_TOUCH_SOURCE_LOOT_TABLE_TAG, LootTable.KEY_CODEC, this.sourceLootTable);
+        }
     }
 
     public void setLootTable(ResourceKey<LootTable> lootTable, long seed) {
         this.lootTable = lootTable;
         this.lootTableSeed = seed;
+        this.sourceLootTable = lootTable;
     }
 
     private int getDustedLevel() {

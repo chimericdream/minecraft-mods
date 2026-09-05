@@ -1,4 +1,17 @@
 {
     "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1.0,
+            "entries": [
+                { "type": "minecraft:item", "name": "minecraft:mud_bricks", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:brick", "weight": 3 },
+                { "type": "minecraft:item", "name": "minecraft:clay_ball", "weight": 2 },
+                { "type": "minecraft:item", "name": "minecraft:amethyst_shard", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:sheaf_pottery_sherd", "weight": 1 },
+                { "type": "minecraft:item", "name": "minecraft:shelter_pottery_sherd", "weight": 1 }
+            ]
+        }
+    ],
     "random_sequence": "archtweaks:blocks/suspicious_packed_mud"
 }
