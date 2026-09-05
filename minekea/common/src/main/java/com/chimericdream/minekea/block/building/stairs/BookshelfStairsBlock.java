@@ -9,9 +9,8 @@ public class BookshelfStairsBlock extends StairsBlock {
     public final Identifier BASE_BLOCK_ID;
 
     public BookshelfStairsBlock(BlockConfig config) {
-        super(config);
+        super(config, makeId(config.getMaterial()));
 
-        BLOCK_ID = makeId(config.getMaterial());
         BASE_BLOCK_ID = BookshelfBlock.makeId(config.getMaterial());
     }
 

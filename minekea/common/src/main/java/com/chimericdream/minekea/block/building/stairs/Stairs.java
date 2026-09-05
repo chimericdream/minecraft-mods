@@ -4,6 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.resource.TextureUtils;
 import com.chimericdream.lib.util.Tool;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
+import com.chimericdream.minekea.block.building.LogWoodFamilies;
 import com.chimericdream.minekea.block.building.general.BasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrackedBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock;
@@ -15,6 +16,7 @@ import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -35,12 +37,7 @@ public class Stairs implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> VERTICAL_BOOKSHELF_STAIRS_BLOCKS = new ArrayList<>();
 
     static {
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("basalt_bricks"), () -> new StairsBlock(new BlockConfig().material("basalt_bricks").materialName("Basalt Brick").ingredient(BuildingBlocks.BASALT_BRICKS.get()).texture(TextureUtils.block(BasaltBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("cracked_basalt_bricks"), () -> new StairsBlock(new BlockConfig().material("cracked_basalt_bricks").materialName("Cracked Basalt Brick").ingredient(BuildingBlocks.CRACKED_BASALT_BRICKS.get()).texture(TextureUtils.block(CrackedBasaltBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("crimson_basalt_bricks"), () -> new StairsBlock(new BlockConfig().material("crimson_basalt_bricks").materialName("Crimson Basalt Brick").ingredient(BuildingBlocks.CRIMSON_BASALT_BRICKS.get()).texture(TextureUtils.block(CrimsonBasaltBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("mossy_basalt_bricks"), () -> new StairsBlock(new BlockConfig().material("mossy_basalt_bricks").materialName("Mossy Basalt Brick").ingredient(BuildingBlocks.MOSSY_BASALT_BRICKS.get()).texture(TextureUtils.block(MossyBasaltBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("warped_basalt_bricks"), () -> new StairsBlock(new BlockConfig().material("warped_basalt_bricks").materialName("Warped Basalt Brick").ingredient(BuildingBlocks.WARPED_BASALT_BRICKS.get()).texture(TextureUtils.block(WarpedBasaltBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
-        STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(StairsBlock.makeId("warped_nether_bricks"), () -> new StairsBlock(new BlockConfig().material("warped_nether_bricks").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS.get()).texture(TextureUtils.block(WarpedNetherBricksBlock.BLOCK_ID))), DEFAULT_STAIRS_SETTINGS));
+        // basalt-brick-family plain stairs now come from BasaltBrickFamilies (chimeric-lib BlockFamily)
 
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("acacia_planks"), () -> new VerticalStairsBlock(new BlockConfig().material("acacia_planks").materialName("Acacia").ingredient(Blocks.ACACIA_PLANKS).flammable().tool(Tool.AXE)), DEFAULT_VERTICAL_STAIRS_SETTINGS));
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("birch_planks"), () -> new VerticalStairsBlock(new BlockConfig().material("birch_planks").materialName("Birch").ingredient(Blocks.BIRCH_PLANKS).flammable().tool(Tool.AXE)), DEFAULT_VERTICAL_STAIRS_SETTINGS));
@@ -106,6 +103,24 @@ public class Stairs implements ModThingGroup {
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("mossy_basalt_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("mossy_basalt_bricks").materialName("Mossy Basalt Brick").ingredient(BuildingBlocks.MOSSY_BASALT_BRICKS.get()).texture(TextureUtils.block(MossyBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("warped_basalt_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("warped_basalt_bricks").materialName("Warped Basalt Brick").ingredient(BuildingBlocks.WARPED_BASALT_BRICKS.get()).texture(TextureUtils.block(WarpedBasaltBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
         VERTICAL_STAIRS_BLOCKS.add(REGISTRY_HELPER.registerWithItem(VerticalStairsBlock.makeId("warped_nether_bricks"), () -> new VerticalStairsBlock(new BlockConfig().material("warped_nether_bricks").materialName("Warped Nether Brick").ingredient(BuildingBlocks.WARPED_NETHER_BRICKS.get()).texture(TextureUtils.block(WarpedNetherBricksBlock.BLOCK_ID))), DEFAULT_VERTICAL_STAIRS_SETTINGS));
+
+        LogWoodFamilies.ALL.forEach(entry -> {
+            STAIRS_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    StairsBlock.makeId(entry.material()),
+                    () -> new StairsBlock(entry.newConfig()),
+                    DEFAULT_STAIRS_SETTINGS
+                )
+            );
+
+            VERTICAL_STAIRS_BLOCKS.add(
+                REGISTRY_HELPER.registerWithItem(
+                    VerticalStairsBlock.makeId(entry.material()),
+                    () -> new VerticalStairsBlock(entry.newConfig()),
+                    DEFAULT_VERTICAL_STAIRS_SETTINGS
+                )
+            );
+        });
 
         Bookshelves.BOOKSHELF_CONFIGS.forEach((material, config) -> {
             BOOKSHELF_STAIRS_BLOCKS.add(
