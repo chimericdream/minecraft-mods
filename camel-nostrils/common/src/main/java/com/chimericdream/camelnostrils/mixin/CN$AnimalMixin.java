@@ -47,10 +47,21 @@ public abstract class CN$AnimalMixin {
 
             cir.setReturnValue(InteractionResult.SUCCESS);
             cir.cancel();
-        } else if (chicken.level() instanceof ServerLevel serverLevel && chicken.getRandom().nextFloat() < GOLDEN_EGG_CHANCE) {
-            chicken.spawnAtLocation(serverLevel, new ItemStack(ModItems.GOLDEN_EGG.get()));
-            chicken.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (chicken.getRandom().nextFloat() - chicken.getRandom().nextFloat()) * 0.2F + 1.0F);
-            chicken.gameEvent(GameEvent.ENTITY_PLACE);
+        } else {
+            // Feeding an adult chicken always spends the seed, win or lose on the egg roll below -
+            // otherwise the same seed could be fed indefinitely for repeated free rolls.
+            if (chicken.level() instanceof ServerLevel serverLevel) {
+                itemStack.consume(1, player);
+
+                if (chicken.getRandom().nextFloat() < GOLDEN_EGG_CHANCE) {
+                    chicken.spawnAtLocation(serverLevel, new ItemStack(ModItems.GOLDEN_EGG.get()));
+                    chicken.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (chicken.getRandom().nextFloat() - chicken.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    chicken.gameEvent(GameEvent.ENTITY_PLACE);
+                }
+            }
+
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            cir.cancel();
         }
     }
 }

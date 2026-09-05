@@ -94,13 +94,21 @@ public abstract class CN$CamelMixin implements Leashable, CN$CamelAccessor {
             self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
             cir.setReturnValue(InteractionResult.SUCCESS);
             cir.cancel();
-        } else if (!self.level().isClientSide() && !CN$CamelSnoutState.hasSnout(self)) {
-            CN$CamelSnoutState.setHasSnout(self, true);
-            self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
+        } else if (!CN$CamelSnoutState.hasSnout(self)) {
+            // Regrowing the snout always spends the cactus - otherwise the same one could be fed to
+            // every de-snouted camel in the world for free, indefinitely.
+            if (!self.level().isClientSide()) {
+                itemStack.consume(1, player);
+                CN$CamelSnoutState.setHasSnout(self, true);
+                self.level().addParticle(ParticleTypes.HAPPY_VILLAGER, self.getRandomX(1.0), self.getRandomY() + 0.5, self.getRandomZ(1.0), 0.0, 0.0, 0.0);
 
-            if (player instanceof ServerPlayer serverPlayer) {
-                CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.MIRACLE_CURE);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    CamelNostrilsAdvancements.award(serverPlayer, CamelNostrilsAdvancements.MIRACLE_CURE);
+                }
             }
+
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            cir.cancel();
         }
     }
 
