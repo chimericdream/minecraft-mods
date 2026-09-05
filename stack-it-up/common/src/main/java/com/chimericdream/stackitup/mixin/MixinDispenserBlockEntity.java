@@ -15,15 +15,20 @@ public class MixinDispenserBlockEntity implements IDispenserBlockEntity {
 
     @Override
     public boolean tryInsertAndStackItem(ItemStack itemStack) {
-        boolean inserted = false;
-        for (int i = 0; i < this.items.size(); ++i) {
+        // The caller treats `true` as "the whole stack was absorbed" and discards it entirely, so
+        // this must actually drain itemStack down to empty (spreading across every matching slot
+        // with room) rather than stopping after moving a single unit into the first slot found.
+        for (int i = 0; i < this.items.size() && !itemStack.isEmpty(); ++i) {
             ItemStack invStack = this.items.get(i);
-            if (invStack.getItem() == itemStack.getItem() && invStack.getCount() < invStack.getMaxStackSize()) {
-                invStack.grow(1);
-                inserted = true;
-                break;
+            if (invStack.getItem() == itemStack.getItem()) {
+                int space = invStack.getMaxStackSize() - invStack.getCount();
+                if (space > 0) {
+                    int transfer = Math.min(space, itemStack.getCount());
+                    invStack.grow(transfer);
+                    itemStack.shrink(transfer);
+                }
             }
         }
-        return inserted;
+        return itemStack.isEmpty();
     }
 }
