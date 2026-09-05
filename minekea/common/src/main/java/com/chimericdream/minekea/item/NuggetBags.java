@@ -15,7 +15,7 @@ public class NuggetBags implements ModThingGroup {
 
     public static final RegistrySupplier<Item> COPPER_NUGGET_BAG = REGISTRY_HELPER.registerItem(NuggetBag.makeId("copper"), () -> new NuggetBag("copper", "Copper", Items.COPPER_NUGGET));
     public static final RegistrySupplier<Item> GOLD_NUGGET_BAG = REGISTRY_HELPER.registerItem(NuggetBag.makeId("gold"), () -> new NuggetBag("gold", "Gold", Items.GOLD_NUGGET));
-    public static final RegistrySupplier<Item> IRON_NUGGET_BAG = REGISTRY_HELPER.registerItem(NuggetBag.makeId("iron"), () -> new NuggetBag("iron", "Iron", Items.GOLD_NUGGET));
+    public static final RegistrySupplier<Item> IRON_NUGGET_BAG = REGISTRY_HELPER.registerItem(NuggetBag.makeId("iron"), () -> new NuggetBag("iron", "Iron", Items.IRON_NUGGET));
 
     static {
         ITEMS.add(COPPER_NUGGET_BAG);
