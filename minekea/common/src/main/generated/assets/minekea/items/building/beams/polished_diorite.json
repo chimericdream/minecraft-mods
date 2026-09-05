@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/polished_diorite"
+    "model": "minekea:item/building/beams/polished_diorite"
   }
 }

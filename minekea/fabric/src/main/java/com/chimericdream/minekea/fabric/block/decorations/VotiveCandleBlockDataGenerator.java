@@ -2,10 +2,11 @@ package com.chimericdream.minekea.fabric.block.decorations;
 
 import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.lib.colors.ColorHelpers;
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.CustomBlockModel;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.block.decorations.candles.VotiveCandleBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.blockstate.suppliers.CustomBlockStateModelSupplier;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -50,7 +51,7 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
     }
 
     protected static ModelTemplate makeModel(String template) {
-        return new CustomBlockStateModelSupplier.CustomBlockModel(
+        return new CustomBlockModel(
             BlockConfig.RenderType.TRANSLUCENT,
             Optional.of(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, template)),
             Optional.empty(),
@@ -105,14 +106,12 @@ public class VotiveCandleBlockDataGenerator extends ChimericLibBlockDataGenerato
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         if (BLOCK.color.equals("plain")) {
-            translationBuilder.add(BLOCK, "Votive Candle");
-            translationBuilder.add(BLOCK.asItem(), "Votive Candle");
+            TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, "Votive Candle");
 
             return;
         }
 
-        translationBuilder.add(BLOCK, String.format("%s Votive Candle", ColorHelpers.getName(BLOCK.color)));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Votive Candle", ColorHelpers.getName(BLOCK.color)));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Votive Candle", ColorHelpers.getName(BLOCK.color)));
     }
 
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {

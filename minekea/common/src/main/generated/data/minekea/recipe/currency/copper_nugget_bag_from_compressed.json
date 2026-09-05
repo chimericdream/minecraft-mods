@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:storage/compressed/copper_nugget"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minekea:currency/copper_nugget_bag"
+  }
+}

@@ -1,5 +1,6 @@
 package com.chimericdream.minekea.fabric.block.furniture;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
 import com.chimericdream.lib.colors.ColorHelpers;
 import com.chimericdream.lib.tags.CommonBlockTags;
 import com.chimericdream.minekea.block.furniture.pillows.PillowBlock;
@@ -58,8 +59,7 @@ public class PillowBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
-        translationBuilder.add(BLOCK.asItem(), String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, String.format("%s Pillow", ColorHelpers.getName(BLOCK.color)));
     }
 
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {

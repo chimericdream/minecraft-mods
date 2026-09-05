@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/brown_glazed_terracotta"
+    "model": "minekea:item/building/beams/brown_glazed_terracotta"
   }
 }

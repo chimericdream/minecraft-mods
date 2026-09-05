@@ -1,8 +1,9 @@
 package com.chimericdream.minekea.fabric.block.decorations;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import com.chimericdream.minekea.block.decorations.lighting.LanternBlock;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
-import com.chimericdream.minekea.fabric.data.model.ModelUtils;
 import com.chimericdream.minekea.tag.MinekeaBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -51,8 +52,7 @@ public class LanternBlockDataGenerator extends ChimericLibBlockDataGenerator {
     }
 
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, BLOCK.config.getName());
-        translationBuilder.add(BLOCK.asItem(), BLOCK.config.getName());
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, BLOCK.config.getName());
     }
 
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {

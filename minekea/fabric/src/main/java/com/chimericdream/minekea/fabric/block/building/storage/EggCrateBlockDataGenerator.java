@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building.storage;
 
+import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+
 import com.chimericdream.minekea.block.building.storage.EggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
@@ -57,7 +59,6 @@ public class EggCrateBlockDataGenerator extends ChimericLibBlockDataGenerator {
 
     @Override
     public void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLOCK, "Egg Crate");
-        translationBuilder.add(BLOCK.asItem(), "Egg Crate");
+        TranslationUtils.addBlockAndItem(translationBuilder, BLOCK, "Egg Crate");
     }
 }

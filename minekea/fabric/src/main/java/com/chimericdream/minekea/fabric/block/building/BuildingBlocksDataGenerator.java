@@ -1,5 +1,7 @@
 package com.chimericdream.minekea.fabric.block.building;
 
+import com.chimericdream.lib.fabric.blocks.family.BlockFamilyDataGenerators;
+import com.chimericdream.minekea.block.building.BasaltBrickFamilies;
 import com.chimericdream.minekea.block.building.BuildingBlocks;
 import com.chimericdream.minekea.block.building.beams.Beams;
 import com.chimericdream.minekea.block.building.compressed.CompressedBlocks;
@@ -9,7 +11,6 @@ import com.chimericdream.minekea.block.building.framed.FramedBlocks;
 import com.chimericdream.minekea.block.building.slabs.Slabs;
 import com.chimericdream.minekea.block.building.stairs.Stairs;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
-import com.chimericdream.minekea.block.building.walls.Walls;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedColumnBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.compressed.CompressedMinekeaBlockDataGenerator;
@@ -35,6 +36,7 @@ import com.chimericdream.minekea.fabric.block.building.storage.DyeBlockDataGener
 import com.chimericdream.minekea.fabric.block.building.storage.EggCrateBlockDataGenerator;
 import com.chimericdream.minekea.fabric.block.building.storage.ItemStorageBlockDataGenerator;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
+import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGeneratorAdapter;
 import com.chimericdream.minekea.fabric.util.BlockDataGeneratorGroup;
 
 import java.util.ArrayList;
@@ -71,7 +73,9 @@ public class BuildingBlocksDataGenerator implements BlockDataGeneratorGroup {
         Stairs.VERTICAL_BOOKSHELF_STAIRS_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new VerticalBookshelfStairsBlockDataGenerator(block.get())));
         StorageBlocks.STORAGE_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new ItemStorageBlockDataGenerator(block.get())));
         StorageBlocks.DYE_BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new DyeBlockDataGenerator(block.get())));
-        Walls.BLOCKS.forEach(block -> BLOCK_GENERATORS.add(new WallBlockDataGenerator(block.get())));
+        BasaltBrickFamilies.ALL.forEach(family ->
+            BlockFamilyDataGenerators.of(family).forEach(generator ->
+                BLOCK_GENERATORS.add(new ChimericLibBlockDataGeneratorAdapter(generator))));
 
         BLOCK_GENERATORS.add(new CompressedBlockDataGenerator.CompressedBlockTooltipDataGenerator());
         BLOCK_GENERATORS.add(new BlueEggCrateBlockDataGenerator());

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/quartz_brick"
+    "model": "minekea:item/building/beams/quartz_brick"
   }
 }

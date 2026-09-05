@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/building/beams/cracked_deepslate_tile"
+    "model": "minekea:item/building/beams/cracked_deepslate_tile"
   }
 }

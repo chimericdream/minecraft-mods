@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minekea:block/storage/compressed/carrot"
+    "model": "minekea:block/storage/compressed/carrot_bagged"
   }
 }
