@@ -1,5 +1,14 @@
 ### Unreleased changes
 
+#### Changes
+
+* Added beacon beam visibility controls:
+  * Place a carpet on top of a beacon to stop the beam from rendering entirely.
+  * Place tinted glass in the beam's path to hide the beam from that point up; a second tinted glass
+    higher up makes it visible again. Credit to
+    [Discontinuous Beacon Beams by supersaiyansubtlety](https://www.curseforge.com/minecraft/mc-mods/discontinuous-beacon-beams)
+    for the original idea.
+
 
 ### 26.1.2 - 3.0.0
 

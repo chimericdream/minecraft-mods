@@ -1,5 +1,7 @@
 package com.chimericdream.flatbedrock.mixin;
 
+import com.chimericdream.flatbedrock.FlatBedrockContext;
+import com.chimericdream.flatbedrock.config.FlatBedrockConfig;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import org.spongepowered.asm.mixin.Final;
@@ -19,22 +21,30 @@ abstract public class FlatBedrockMixin {
     private static final Identifier fb$bedrockFloor = Identifier.withDefaultNamespace("bedrock_floor");
     @Unique
     private static final Identifier fb$bedrockRoof = Identifier.withDefaultNamespace("bedrock_roof");
-    @Unique
-    private static final VerticalAnchor fb$aboveBottom = VerticalAnchor.aboveBottom(1);
-    @Unique
-    private static final VerticalAnchor fb$belowTop = VerticalAnchor.belowTop(1);
 
+    // Vanilla's gradient is probabilistic between trueAtAndBelow and falseAtAndAbove. Pinning both
+    // bounds to the same T-block window (instead of leaving one at its vanilla default) removes that
+    // randomness entirely and gives an exact, deterministic thickness - including 0, which disables
+    // the layer altogether (used for the nether's "no roof" option).
     @Inject(method = "falseAtAndAbove", at = @At("HEAD"), cancellable = true)
-    private void falseAtAndAbove(CallbackInfoReturnable<VerticalAnchor> cir) {
-        if(randomName.equals(fb$bedrockFloor)) {
-            cir.setReturnValue(fb$aboveBottom);
+    private void fb$falseAtAndAbove(CallbackInfoReturnable<VerticalAnchor> cir) {
+        if (randomName.equals(fb$bedrockFloor)) {
+            int thickness = FlatBedrockConfig.resolveFloorThickness(FlatBedrockContext.get());
+            cir.setReturnValue(VerticalAnchor.aboveBottom(thickness));
+        } else if (randomName.equals(fb$bedrockRoof)) {
+            int thickness = FlatBedrockConfig.resolveRoofThickness();
+            cir.setReturnValue(VerticalAnchor.belowTop(thickness - 1));
         }
     }
 
     @Inject(method = "trueAtAndBelow", at = @At("HEAD"), cancellable = true)
-    private void trueAtAndBelow(CallbackInfoReturnable<VerticalAnchor> cir) {
-        if(randomName.equals(fb$bedrockRoof)) {
-            cir.setReturnValue(fb$belowTop);
+    private void fb$trueAtAndBelow(CallbackInfoReturnable<VerticalAnchor> cir) {
+        if (randomName.equals(fb$bedrockFloor)) {
+            int thickness = FlatBedrockConfig.resolveFloorThickness(FlatBedrockContext.get());
+            cir.setReturnValue(VerticalAnchor.aboveBottom(thickness - 1));
+        } else if (randomName.equals(fb$bedrockRoof)) {
+            int thickness = FlatBedrockConfig.resolveRoofThickness();
+            cir.setReturnValue(VerticalAnchor.belowTop(thickness));
         }
     }
 }
