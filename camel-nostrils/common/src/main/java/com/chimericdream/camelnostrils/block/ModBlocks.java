@@ -87,6 +87,8 @@ public class ModBlocks {
                 )
             );
 
+            ModBlockEntityValidBlocks.register(BlockEntityType.BED, bed);
+
             beds.put(color, bed);
         }
 
