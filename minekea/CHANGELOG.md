@@ -13,6 +13,7 @@
 #### Bug Fixes
 
 * Fixed misaligned textures where two crates connect to form a double-wide crate.
+* Fixed a missing texture on the sides of compressed Purpur Pillar blocks.
 
 #### Known omissions
 
