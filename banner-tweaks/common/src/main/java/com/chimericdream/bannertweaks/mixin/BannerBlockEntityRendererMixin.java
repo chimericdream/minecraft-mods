@@ -33,7 +33,10 @@ abstract public class BannerBlockEntityRendererMixin {
 
     @Unique
     protected void bt$renderLabelIfPresent(BannerRenderState renderState, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraRenderState, int light) {
-        double squaredDistanceToCamera = cameraRenderState.blockPos.distToCenterSqr(cameraRenderState.pos);
+        // Distance from the banner (renderState.blockPos) to the camera - not the camera's own
+        // blockPos-vs-pos, which is always ~0 and would defeat both the culling check below and
+        // submitNameTag's fade/scale-by-distance behavior.
+        double squaredDistanceToCamera = renderState.blockPos.distToCenterSqr(cameraRenderState.pos);
 
         if (squaredDistanceToCamera > 1024.0) {
             return;
