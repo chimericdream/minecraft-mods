@@ -1,6 +1,7 @@
 package com.chimericdream.archaeologytweaks.mixin;
 
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -31,9 +32,11 @@ public abstract class RootSystemFeatureMixin {
             target = "Lnet/minecraft/world/level/WorldGenLevel;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"
         )
     )
-    private static boolean at$maybeSuspicious(WorldGenLevel level, BlockPos pos, BlockState state, int flags, RandomSource random) {
-        // `random` here is placeRootedDirt's own seeded RandomSource, captured from its parameter
-        // list - a fresh RandomSource.create() would make this roll unreproducible for a given seed.
+    private static boolean at$maybeSuspicious(WorldGenLevel level, BlockPos pos, BlockState state, int flags, @Local RandomSource random) {
+        // `random` here is placeRootedDirt's own seeded RandomSource, captured via MixinExtras'
+        // @Local (a plain @Redirect can't just add an extra parameter - Mixin validates its
+        // signature against the redirected call's own arguments) - a fresh RandomSource.create()
+        // would make this roll unreproducible for a given seed.
         if (state.is(Blocks.ROOTED_DIRT) && random.nextFloat() < SUSPICIOUS_CHANCE) {
             state = ModBlocks.SUSPICIOUS_ROOTED_DIRT.get().defaultBlockState();
         }
