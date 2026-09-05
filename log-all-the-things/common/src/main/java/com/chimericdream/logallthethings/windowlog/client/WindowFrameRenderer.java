@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 
+import com.chimericdream.logallthethings.client.QuadEmitter;
 import com.chimericdream.logallthethings.windowlog.client.WindowFramePaneTextures.PaneSprites;
 
 /**
@@ -151,7 +152,17 @@ public final class WindowFrameRenderer {
             int uvIndex = reverseUv ? (4 - i) % 4 : i;
             float[] tex = uvCorners[(uvIndex + shift) % 4];
 
-            buffer.addVertex(pose.pose(), pos[0], pos[1], pos[2])
+            // Nudge off the coincident plane like QuadEmitter#emitFace does, for the same reason:
+            // this pane sits flush against the host stair/slab's own remaining solid faces, and
+            // without the nudge those coincident quads z-fight. Applied in local space (same as
+            // QuadEmitter) using the same per-vertex `normal` already computed above for setNormal,
+            // so it goes through the same pose.pose() transform as `pos` itself.
+            buffer.addVertex(
+                    pose.pose(),
+                    pos[0] + normal[0] * QuadEmitter.SURFACE_NUDGE,
+                    pos[1] + normal[1] * QuadEmitter.SURFACE_NUDGE,
+                    pos[2] + normal[2] * QuadEmitter.SURFACE_NUDGE
+                )
                 .setColor(shade, shade, shade, 1f)
                 .setUv(sprite.getU(tex[0]), sprite.getV(tex[1]))
                 .setLight(light)
