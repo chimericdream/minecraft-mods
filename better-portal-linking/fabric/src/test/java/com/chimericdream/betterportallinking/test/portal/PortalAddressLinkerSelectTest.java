@@ -22,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class PortalAddressLinkerSelectTest extends BootstrapMinecraft {
     private static final PortalAddress RED_ADDRESS = PortalAddress.fromBlocks(
-        List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red(), Blocks.CONCRETE.red(), Blocks.CONCRETE.red()));
-    private static final PortalAddress SINGLE_RED = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red()));
-    private static final PortalAddress SINGLE_BLUE = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.blue()));
+        List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE, Blocks.RED_CONCRETE, Blocks.RED_CONCRETE));
+    private static final PortalAddress SINGLE_RED = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE));
+    private static final PortalAddress SINGLE_BLUE = PortalAddress.fromBlocks(List.of(Blocks.BLUE_CONCRETE));
 
     @Test
     void highestScoreWinsEvenWhenMuchFartherFromTarget() {

@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PortalAddressTest extends BootstrapMinecraft {
     @Test
     void noOverlapScoresZero() {
-        PortalAddress entry = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red()));
-        PortalAddress candidate = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.blue()));
+        PortalAddress entry = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE));
+        PortalAddress candidate = PortalAddress.fromBlocks(List.of(Blocks.BLUE_CONCRETE));
 
         assertEquals(0, entry.score(candidate));
         assertEquals(0, candidate.score(entry));
@@ -30,8 +30,8 @@ public class PortalAddressTest extends BootstrapMinecraft {
 
     @Test
     void partialOverlapScoresSharedCount() {
-        PortalAddress entry = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.blue()));
-        PortalAddress candidate = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.DYED_TERRACOTTA.white()));
+        PortalAddress entry = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE));
+        PortalAddress candidate = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.WHITE_TERRACOTTA));
 
         assertEquals(1, entry.score(candidate));
         assertEquals(1, candidate.score(entry));
@@ -39,8 +39,8 @@ public class PortalAddressTest extends BootstrapMinecraft {
 
     @Test
     void orderIndependentEqualsAndScore() {
-        List<Block> blocks = List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.blue(), Blocks.DYED_TERRACOTTA.white(), Blocks.CONCRETE.red());
-        List<Block> shuffled = Arrays.asList(Blocks.DYED_TERRACOTTA.white(), Blocks.CONCRETE.red(), Blocks.CONCRETE.red(), Blocks.CONCRETE.blue());
+        List<Block> blocks = List.of(Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.WHITE_TERRACOTTA, Blocks.RED_CONCRETE);
+        List<Block> shuffled = Arrays.asList(Blocks.WHITE_TERRACOTTA, Blocks.RED_CONCRETE, Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE);
 
         PortalAddress a = PortalAddress.fromBlocks(blocks);
         PortalAddress b = PortalAddress.fromBlocks(shuffled);
@@ -50,16 +50,16 @@ public class PortalAddressTest extends BootstrapMinecraft {
         assertEquals(4, a.score(b));
         assertEquals(4, b.score(a));
 
-        PortalAddress other = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red(), Blocks.CONCRETE.blue(), Blocks.DYED_TERRACOTTA.white()));
+        PortalAddress other = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.WHITE_TERRACOTTA));
         assertEquals(a.score(other), b.score(other));
     }
 
     @Test
     void duplicatesUseMultisetMinNotRawCount() {
-        PortalAddress entryTwoA = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red()));
-        PortalAddress candidateOneA = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red()));
+        PortalAddress entryTwoA = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE));
+        PortalAddress candidateOneA = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE));
         PortalAddress candidateThreeA = PortalAddress.fromBlocks(
-            List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red(), Blocks.CONCRETE.red()));
+            List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE, Blocks.RED_CONCRETE));
 
         // min(2, 1) = 1, NOT 2 — this is the whole point of the multiset-min rule.
         assertEquals(1, entryTwoA.score(candidateOneA));
@@ -72,7 +72,7 @@ public class PortalAddressTest extends BootstrapMinecraft {
 
     @Test
     void identicalFourBlockAddressesScoreFour() {
-        List<Block> blocks = List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.blue(), Blocks.DYED_TERRACOTTA.white(), Blocks.CONCRETE.red());
+        List<Block> blocks = List.of(Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.WHITE_TERRACOTTA, Blocks.RED_CONCRETE);
         PortalAddress a = PortalAddress.fromBlocks(blocks);
         PortalAddress b = PortalAddress.fromBlocks(blocks);
 
@@ -81,7 +81,7 @@ public class PortalAddressTest extends BootstrapMinecraft {
 
     @Test
     void anythingScoredAgainstEmptyIsZero() {
-        PortalAddress nonEmpty = PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.blue()));
+        PortalAddress nonEmpty = PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.BLUE_CONCRETE));
 
         assertEquals(0, nonEmpty.score(PortalAddress.empty()));
         assertEquals(0, PortalAddress.empty().score(nonEmpty));
@@ -102,7 +102,7 @@ public class PortalAddressTest extends BootstrapMinecraft {
         );
 
         assertTrue(allAirAllRejected.isEmpty());
-        assertEquals(0, allAirAllRejected.score(PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red()))));
+        assertEquals(0, allAirAllRejected.score(PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE))));
     }
 
     @Test
@@ -112,12 +112,12 @@ public class PortalAddressTest extends BootstrapMinecraft {
 
         PortalAddress address = PortalAddress.fromCorners(
             corners,
-            pos -> pos.getX() == 0 ? Blocks.CONCRETE.red() : Blocks.AIR,
-            block -> block == Blocks.CONCRETE.red()
+            pos -> pos.getX() == 0 ? Blocks.RED_CONCRETE : Blocks.AIR,
+            block -> block == Blocks.RED_CONCRETE
         );
 
-        assertEquals(PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red())), address);
-        assertEquals(2, address.score(PortalAddress.fromBlocks(List.of(Blocks.CONCRETE.red(), Blocks.CONCRETE.red()))));
+        assertEquals(PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE)), address);
+        assertEquals(2, address.score(PortalAddress.fromBlocks(List.of(Blocks.RED_CONCRETE, Blocks.RED_CONCRETE))));
     }
 
     @Test
