@@ -22,7 +22,7 @@ import com.chimericdream.stackitup.util.ItemsHelper;
 // method, it could silently apply to the wrong behavior instead. NeoForge's own ASM patches to
 // dispenser-adjacent classes are a further, independent source of drift from the Fabric index
 // above - re-verify against a NeoForge decompile too before assuming this target is shared.
-@Mixin(targets = "net/minecraft/core/dispenser/DispenseItemBehavior$12")
+@Mixin(targets = "net/minecraft/core/dispenser/DispenseItemBehavior$13")
 public class MixinDispenserBehavior9 {
 
     @Inject(method = "execute", at = @At("HEAD"), cancellable = true)
