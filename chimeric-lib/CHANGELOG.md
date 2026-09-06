@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 5.5.0
+
 #### New Features
 
 * `blocks/family/BlockFamily` — declare a base block's `BlockConfig` once and register whichever of
