@@ -4,8 +4,6 @@ import com.chimericdream.archaeologytweaks.ModInfo;
 import com.chimericdream.archaeologytweaks.neoforge.worldgen.ArchaeologyTweaksBiomeModifiers;
 import com.chimericdream.archaeologytweaks.neoforge.worldgen.ArchaeologyTweaksConfiguredFeatures;
 import com.chimericdream.archaeologytweaks.neoforge.worldgen.ArchaeologyTweaksPlacedFeatures;
-import com.chimericdream.archaeologytweaks.villager.ModTradeSets;
-import com.chimericdream.archaeologytweaks.villager.ModVillagerTrades;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,9 +18,7 @@ public class ModDataGenerator {
         RegistrySetBuilder registryBuilder = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, ArchaeologyTweaksConfiguredFeatures::configure)
             .add(Registries.PLACED_FEATURE, ArchaeologyTweaksPlacedFeatures::configure)
-            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ArchaeologyTweaksBiomeModifiers::configure)
-            .add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap)
-            .add(Registries.TRADE_SET, ModTradeSets::bootstrap);
+            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ArchaeologyTweaksBiomeModifiers::configure);
 
         event.createDatapackRegistryObjects(registryBuilder);
     }
