@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 3.0.2
+
 #### Bug Fixes
 
 * Fixed a duplication bug that could happen when shulker boxes are made stackable (e.g. by Carpet
