@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 5.2.0
+
 #### New Features
 
 * Added a **Villager Growth** config section: an override for how long (in ticks) baby villagers take
