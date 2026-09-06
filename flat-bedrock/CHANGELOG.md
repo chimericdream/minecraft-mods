@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 3.1.0
+
 #### New Features
 
 * Added a config screen (via Mod Menu / YACL) with separate settings for the Overworld and the
