@@ -1,6 +1,6 @@
 # Effective Gear (Fabric/NeoForge)
 
-![Version: 1.2.0](https://img.shields.io/badge/version-1.2.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.3.0-beta.0](https://img.shields.io/badge/version-1.3.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
@@ -67,6 +67,8 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
   * **Ward** — extra partial resistance to a warden's sonic boom, stacking with the echo shard material bonus.
   * **Wayfinder** — any mount you're riding gets a small speed boost, stacking with potion effects.
   * **Wild** — immune to poison.
+* Wandering traders have a 20% chance of selling a random smithing template. The cost matches the
+  recipe for duplicating that trim (i.e. 7 diamonds + 1 of the necessary block).
 
 ## Notes for Documentation
 

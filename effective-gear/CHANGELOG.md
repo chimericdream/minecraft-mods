@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### New Features
+
+* Wandering traders have a 20% chance of selling a random smithing template.
+
+
 ### 26.2 - 1.2.0
 
 #### New Features

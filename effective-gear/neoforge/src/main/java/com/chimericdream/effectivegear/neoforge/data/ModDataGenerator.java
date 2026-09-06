@@ -2,6 +2,8 @@ package com.chimericdream.effectivegear.neoforge.data;
 
 import com.chimericdream.effectivegear.ModInfo;
 import com.chimericdream.effectivegear.item.armor.Trims;
+import com.chimericdream.effectivegear.villager.ModTradeSets;
+import com.chimericdream.effectivegear.villager.ModVillagerTrades;
 import com.chimericdream.lib.trims.ArmorTrimAtlasProvider;
 import com.chimericdream.lib.trims.TrimMaterialConfig;
 import com.chimericdream.lib.trims.TrimMaterialRegistryHelper;
@@ -18,7 +20,9 @@ public class ModDataGenerator {
     @SubscribeEvent
     public static void onGatherData(GatherDataEvent.Server event) {
         RegistrySetBuilder registryBuilder = new RegistrySetBuilder()
-            .add(Registries.TRIM_MATERIAL, context -> TrimMaterialRegistryHelper.bootstrap(context, Trims.MATERIALS));
+            .add(Registries.TRIM_MATERIAL, context -> TrimMaterialRegistryHelper.bootstrap(context, Trims.MATERIALS))
+            .add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap)
+            .add(Registries.TRADE_SET, ModTradeSets::bootstrap);
 
         event.createDatapackRegistryObjects(registryBuilder);
 

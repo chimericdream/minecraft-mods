@@ -1,7 +1,10 @@
 package com.chimericdream.effectivegear.fabric.data;
 
 import com.chimericdream.effectivegear.item.armor.Trims;
+import com.chimericdream.effectivegear.fabric.villager.EffectiveGearVillagerTradeProvider;
 import com.chimericdream.effectivegear.fabric.worldgen.EffectiveGearTrimProvider;
+import com.chimericdream.effectivegear.villager.ModTradeSets;
+import com.chimericdream.effectivegear.villager.ModVillagerTrades;
 import com.chimericdream.lib.trims.ArmorTrimAtlasProvider;
 import com.chimericdream.lib.trims.TrimMaterialConfig;
 import com.chimericdream.lib.trims.TrimMaterialRegistryHelper;
@@ -23,12 +26,15 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(EffectiveGearTrimProvider::new);
         pack.addProvider((FabricDataGenerator.Pack.Factory<ArmorTrimAtlasProvider>) output -> new ArmorTrimAtlasProvider(output, Trims.MATERIALS));
+        pack.addProvider(EffectiveGearVillagerTradeProvider::new);
         pack.addProvider(EffectiveGearLangProvider::new);
     }
 
     @Override
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
         registryBuilder.add(Registries.TRIM_MATERIAL, context -> TrimMaterialRegistryHelper.bootstrap(context, Trims.MATERIALS));
+        registryBuilder.add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap);
+        registryBuilder.add(Registries.TRADE_SET, ModTradeSets::bootstrap);
     }
 
     private static class EffectiveGearLangProvider extends FabricLanguageProvider {
