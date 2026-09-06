@@ -1,0 +1,13 @@
+{
+  "additional_wants": {
+    "id": "minecraft:brick"
+  },
+  "gives": {
+    "id": "minecraft:brewer_pottery_sherd"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "count": 8.0,
+    "id": "minecraft:emerald"
+  }
+}
