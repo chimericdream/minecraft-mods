@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 0.9.0
+
 #### New Features
 
 * Added lava-logging: right-click a non-flammable slab, stairs, wall, fence, iron bars/glass pane,
