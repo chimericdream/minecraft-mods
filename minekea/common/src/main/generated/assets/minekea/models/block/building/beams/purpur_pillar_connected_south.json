@@ -2,6 +2,6 @@
   "parent": "minekea:block/building/beams/connected_south",
   "textures": {
     "end": "minecraft:block/purpur_pillar_top",
-    "side": "minecraft:block/purpur_pillar_side"
+    "side": "minecraft:block/purpur_pillar"
   }
 }
