@@ -1,0 +1,6 @@
+{
+  "parent": "camelnostrils:item/template_upside_down_bed",
+  "textures": {
+    "particle": "minecraft:block/light_gray_wool"
+  }
+}
