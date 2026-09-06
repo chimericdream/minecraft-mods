@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 4.3.0
+
 #### New Features
 
 * Wandering traders have a 20% chance of selling a random pottery sherd for 8 emeralds and a brick.
