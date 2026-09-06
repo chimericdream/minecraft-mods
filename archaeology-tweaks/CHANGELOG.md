@@ -16,6 +16,7 @@
   * **Preservationist** — collect every pottery sherd.
   * **Interdimensional Archaeology** — brush a suspicious block in the Nether.
   * **Lucky Block** — get a second drop from a block via the Gentle Touch enchantment.
+* Wandering traders have a 20% chance of selling a random pottery sherd for 8 emeralds and a brick.
 
 
 ### 26.1.2 - 3.0.0

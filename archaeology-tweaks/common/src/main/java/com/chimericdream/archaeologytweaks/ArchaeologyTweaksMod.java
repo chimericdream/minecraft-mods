@@ -2,6 +2,8 @@ package com.chimericdream.archaeologytweaks;
 
 import com.chimericdream.archaeologytweaks.block.ModBlocks;
 import com.chimericdream.archaeologytweaks.enchantment.ModEnchantments;
+import com.chimericdream.archaeologytweaks.villager.ModTradeSets;
+import com.chimericdream.archaeologytweaks.villager.ModVillagerTrades;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -22,5 +24,7 @@ public final class ArchaeologyTweaksMod {
         REGISTRY_HELPER.init();
         ModEnchantments.init();
         ModBlocks.init();
+        ModVillagerTrades.init();
+        ModTradeSets.init();
     }
 }

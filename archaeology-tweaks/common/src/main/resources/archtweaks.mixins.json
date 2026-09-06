@@ -7,6 +7,8 @@
     ],
     "mixins": [
         "AbstractBlockMixin",
+        "AT$AbstractVillagerMixin",
+        "AT$WanderingTraderMixin",
         "BrushableBlockEntityMixin",
         "BrushItemMixin",
         "RootSystemFeatureMixin",
