@@ -1,0 +1,6 @@
+{
+  "parent": "jdcrafte:item/home_sweet_hrmm",
+  "textures": {
+    "sign": "minecraft:block/pale_oak_planks"
+  }
+}

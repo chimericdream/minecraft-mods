@@ -1,0 +1,82 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_left"
+      },
+      "when": {
+        "facing": "north",
+        "side": "left"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_right"
+      },
+      "when": {
+        "facing": "north",
+        "side": "right"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_left",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "side": "left"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_right",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "side": "right"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_left",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "side": "left"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_right",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "side": "right"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_left",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "side": "left"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/mangrove_home_sweet_hrmm_right",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "side": "right"
+      }
+    }
+  ]
+}

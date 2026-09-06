@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": "minecraft:emerald",
+    "S": "minecraft:spruce_sign"
+  },
+  "pattern": [
+    "E",
+    "S"
+  ],
+  "result": {
+    "id": "jdcrafte:spruce_home_sweet_hrmm"
+  }
+}

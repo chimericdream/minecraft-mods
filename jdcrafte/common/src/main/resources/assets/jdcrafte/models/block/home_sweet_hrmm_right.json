@@ -1,0 +1,37 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"overlay": "jdcrafte:block/overlays/home_sweet_hrmmm",
+		"particle": "#sign"
+	},
+	"elements": [
+		{
+			"from": [0, 3, 15],
+			"to": [16, 15, 16],
+			"rotation": {"x": 0, "y": 0, "z": -180, "origin": [8, 9, 15.5]},
+			"faces": {
+				"north": {"uv": [0, 1, 16, 13], "texture": "#sign"},
+				"east": {"uv": [1, 1, 2, 13], "texture": "#sign"},
+				"south": {"uv": [0, 1, 16, 13], "texture": "#sign"},
+				"west": {"uv": [0, 1, 1, 13], "texture": "#sign"},
+				"up": {"uv": [0, 0, 16, 1], "texture": "#sign"},
+				"down": {"uv": [0, 1, 16, 2], "texture": "#sign"}
+			}
+		},
+		{
+			"from": [14.75, 10, 14.999],
+			"to": [16, 13, 14.999],
+			"faces": {
+				"north": {"uv": [7.89011, 1.18681, 8.34066, 5.98901], "texture": "#overlay"}
+			}
+		},
+		{
+			"from": [0.5, 5, 14.999],
+			"to": [16, 9, 14.999],
+			"faces": {
+				"north": {"uv": [8, 8, 16, 16], "texture": "#overlay"}
+			}
+		}
+	]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "jdcrafte:block/home_sweet_hrmm_left",
+  "textures": {
+    "sign": "minecraft:block/mangrove_planks"
+  }
+}
