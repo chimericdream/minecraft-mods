@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 0.9.0
+
 #### New Features
 
 * Sneaking through a sweet berry bush no longer damages you.
