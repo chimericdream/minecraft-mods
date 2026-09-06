@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.1.0
+
 #### New Features
 
 * Crouch bridging. Sneak off a ledge without looking down and you'll walk across a gap of up to a
