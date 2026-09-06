@@ -4,6 +4,8 @@ import com.chimericdream.effectivegear.block.EGBlocks;
 import com.chimericdream.effectivegear.enchantment.ModEnchantments;
 import com.chimericdream.effectivegear.network.ServerNetworking;
 import com.chimericdream.effectivegear.util.PlayerAbilityState;
+import com.chimericdream.effectivegear.villager.ModTradeSets;
+import com.chimericdream.effectivegear.villager.ModVillagerTrades;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -24,6 +26,8 @@ public final class EffectiveGearMod {
 
         EGBlocks.init();
         ModEnchantments.init();
+        ModVillagerTrades.init();
+        ModTradeSets.init();
 
         ServerNetworking.init();
         PlayerEvent.PLAYER_QUIT.register(PlayerAbilityState::remove);

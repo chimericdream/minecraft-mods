@@ -2,6 +2,7 @@
 
 #### New Features
 
+* Wandering traders have a 20% chance of selling a random smithing template.
 * Added new armor trim materials:
   * Blaze powder
   * Echo shard

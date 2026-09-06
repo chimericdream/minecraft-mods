@@ -1,0 +1,13 @@
+{
+  "additional_wants": {
+    "id": "minecraft:purpur_block"
+  },
+  "gives": {
+    "id": "minecraft:spire_armor_trim_smithing_template"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "count": 7.0,
+    "id": "minecraft:diamond"
+  }
+}
