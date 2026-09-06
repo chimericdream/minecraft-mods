@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": "minecraft:emerald",
+    "S": "minecraft:warped_sign"
+  },
+  "pattern": [
+    "E",
+    "S"
+  ],
+  "result": {
+    "id": "jdcrafte:warped_home_sweet_hrmm"
+  }
+}

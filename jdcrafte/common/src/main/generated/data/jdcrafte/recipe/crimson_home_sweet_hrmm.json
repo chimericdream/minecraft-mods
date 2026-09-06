@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": "minecraft:emerald",
+    "S": "minecraft:crimson_sign"
+  },
+  "pattern": [
+    "E",
+    "S"
+  ],
+  "result": {
+    "id": "jdcrafte:crimson_home_sweet_hrmm"
+  }
+}

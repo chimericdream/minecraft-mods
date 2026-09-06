@@ -1,0 +1,36 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"overlay": "jdcrafte:block/overlays/home_sweet_hrmmm",
+		"particle": "#sign"
+	},
+	"elements": [
+		{
+			"from": [0, 3, 15],
+			"to": [16, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 2, 16, 14], "texture": "#sign"},
+				"east": {"uv": [1, 2, 2, 14], "texture": "#sign"},
+				"south": {"uv": [0, 2, 16, 14], "texture": "#sign"},
+				"west": {"uv": [0, 2, 1, 14], "texture": "#sign"},
+				"up": {"uv": [0, 0, 16, 1], "texture": "#sign"},
+				"down": {"uv": [0, 1, 16, 2], "texture": "#sign"}
+			}
+		},
+		{
+			"from": [0, 10, 14.999],
+			"to": [1.25, 13, 14.999],
+			"faces": {
+				"north": {"uv": [7.45055, 1.18681, 7.9011, 5.98901], "texture": "#overlay"}
+			}
+		},
+		{
+			"from": [0, 5, 14.999],
+			"to": [15.5, 9, 14.999],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#overlay"}
+			}
+		}
+	]
+}

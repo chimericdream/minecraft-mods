@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bamboo_sign": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bamboo_sign"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_emerald": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:emerald"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jdcrafte:bamboo_home_sweet_hrmm"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bamboo_sign",
+      "has_emerald"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jdcrafte:bamboo_home_sweet_hrmm"
+    ]
+  }
+}

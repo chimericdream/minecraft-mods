@@ -100,11 +100,22 @@ public class ModBlocks {
         new WoodType("stripped_warped", "Stripped Warped", Blocks.WARPED_PLANKS, Blocks.STRIPPED_WARPED_STEM, false)
     );
 
+    // Home Sweet Hrmm only varies by its plank ("sign") texture - it has no log/stem dimension like
+    // Trellis/TrellisArch - so a "stripped_*" entry would render byte-for-byte identical to its
+    // non-stripped counterpart. Limit it to the 12 base wood types, which map 1:1 onto vanilla's sign
+    // types (used by HomeSweetHrmmBlockDataGenerator's recipe).
+    private static final List<WoodType> HOME_SWEET_HRMM_WOOD_TYPES = WOOD_TYPES.stream()
+        .filter(wood -> !wood.material().startsWith("stripped_"))
+        .toList();
+
     public static final Item.Properties DEFAULT_TRELLIS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS);
     public static final List<RegistrySupplier<Block>> TRELLIS_BLOCKS = new ArrayList<>();
 
     public static final Item.Properties DEFAULT_TRELLIS_ARCH_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS);
     public static final List<RegistrySupplier<Block>> TRELLIS_ARCH_BLOCKS = new ArrayList<>();
+
+    public static final Item.Properties DEFAULT_HOME_SWEET_HRMM_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS);
+    public static final List<RegistrySupplier<Block>> HOME_SWEET_HRMM_BLOCKS = new ArrayList<>();
 
     static {
         for (WoodType wood : WOOD_TYPES) {
@@ -113,6 +124,10 @@ public class ModBlocks {
 
         for (WoodType wood : WOOD_TYPES) {
             TRELLIS_ARCH_BLOCKS.add(REGISTRY_HELPER.registerWithItem(TrellisArchBlock.makeId(wood.material()), () -> new TrellisArchBlock(wood.newConfig()), DEFAULT_TRELLIS_ARCH_SETTINGS));
+        }
+
+        for (WoodType wood : HOME_SWEET_HRMM_WOOD_TYPES) {
+            HOME_SWEET_HRMM_BLOCKS.add(REGISTRY_HELPER.registerWithItem(HomeSweetHrmmBlock.makeId(wood.material()), () -> new HomeSweetHrmmBlock(wood.newConfig()), DEFAULT_HOME_SWEET_HRMM_SETTINGS));
         }
     }
 

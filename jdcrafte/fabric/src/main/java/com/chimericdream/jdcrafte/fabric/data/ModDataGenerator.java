@@ -2,6 +2,7 @@ package com.chimericdream.jdcrafte.fabric.data;
 
 import com.chimericdream.jdcrafte.block.ModBlocks;
 import com.chimericdream.jdcrafte.fabric.block.FeedingTroughBlockDataGenerator;
+import com.chimericdream.jdcrafte.fabric.block.HomeSweetHrmmBlockDataGenerator;
 import com.chimericdream.jdcrafte.fabric.block.TrellisArchBlockDataGenerator;
 import com.chimericdream.jdcrafte.fabric.block.TrellisBlockDataGenerator;
 import com.chimericdream.jdcrafte.fabric.block.WeathervaneBlockDataGenerator;
@@ -47,6 +48,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
         for (RegistrySupplier<Block> trellisArch : ModBlocks.TRELLIS_ARCH_BLOCKS) {
             generators.add(new TrellisArchBlockDataGenerator(trellisArch.get()));
+        }
+
+        for (RegistrySupplier<Block> homeSweetHrmm : ModBlocks.HOME_SWEET_HRMM_BLOCKS) {
+            generators.add(new HomeSweetHrmmBlockDataGenerator(homeSweetHrmm.get()));
         }
 
         return generators;
