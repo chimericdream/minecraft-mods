@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 3.1.0
+
 #### New Features
 
 * Added the **Nether Star Hopper** tier — the ultimate upgrade beyond netherite. It has the same 1-tick cooldown
