@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 3.1.0
+
 #### Changes
 
 * Added beacon beam visibility controls:
