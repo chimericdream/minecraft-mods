@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 0.9.0
+
 #### New Features
 
 * Leash a camel and let it lag too far behind you, and there's a small chance you'll rip its snout clean off. The snout drops as a miniblock/player head item. This can't happen to baby camels.
