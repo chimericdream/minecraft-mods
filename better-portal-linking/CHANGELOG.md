@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.1.2 - 0.9.0
+
 #### New Features
 
 * Added portal addressing: place matching blocks (concrete, terracotta, or glazed terracotta by
