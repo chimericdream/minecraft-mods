@@ -9,6 +9,8 @@
         "CN$AgeableMobRendererMixin",
         "CN$AnimalMixin",
         "CN$AnvilMenuMixin",
+        "CN$BedRendererMixin",
+        "CN$BedRenderStateMixin",
         "CN$BlockEntityTypeMixin",
         "CN$CamelMixin",
         "CN$CamelRendererMixin",
