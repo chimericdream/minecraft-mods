@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 6.5.0
+
 #### New Features
 
 * Added `GameTestPlayers` to the `testFixtures` GameTest helpers (alongside `GameTestContainers` /
