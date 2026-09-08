@@ -1,0 +1,7 @@
+architectury {
+    common project(':all-hallows-steve').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/allhallowssteve.accesswidener")
+}

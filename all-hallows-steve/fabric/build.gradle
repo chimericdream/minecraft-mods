@@ -1,0 +1,16 @@
+architectury {
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":all-hallows-steve:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':all-hallows-steve:common')) { transitive false }
+    shadowBundle project(path: ':all-hallows-steve:common', configuration: 'transformProductionFabric')
+}
