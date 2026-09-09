@@ -1,1 +1,7 @@
 ### Unreleased changes
+
+#### New Features
+
+* Added the Pumpkin Carving Station. Craft one from 4 pumpkins and a crafting table.
+* The station can dye pumpkins: place a pumpkin and up to 3 dyes in it to get a colored pumpkin back.
+* Already-dyed pumpkins can go back in the station to be re-dyed — new dyes mix with the existing color instead of replacing it.

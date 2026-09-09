@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/cube_bottom_top",
+    "textures": {
+        "particle": "minecraft:block/pumpkin_side",
+        "side": "minecraft:block/pumpkin_side",
+        "bottom": "minecraft:block/pumpkin_top",
+        "top": "minecraft:block/crafting_table_top"
+    }
+}

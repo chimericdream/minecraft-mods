@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " P ",
+        "PCP",
+        " P "
+    ],
+    "key": {
+        "P": "minecraft:pumpkin",
+        "C": "minecraft:crafting_table"
+    },
+    "result": {
+        "count": 1,
+        "id": "allhallowssteve:carving_station"
+    }
+}

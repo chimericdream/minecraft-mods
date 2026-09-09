@@ -1,10 +1,11 @@
 package com.chimericdream.allhallowssteve.fabric.client;
 
+import com.chimericdream.allhallowssteve.client.AllHallowsSteveClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class AllHallowsSteveFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+        AllHallowsSteveClient.onInitializeClient();
     }
 }

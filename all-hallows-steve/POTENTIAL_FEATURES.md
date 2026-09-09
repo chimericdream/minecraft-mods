@@ -7,6 +7,13 @@ around jack-o'-lanterns, pumpkins, and other harvest/spooky-season flavor.
 
 ## Pumpkin Dyeing
 
+**Uncarved-pumpkin dyeing is implemented** (`CarvingStationBlock`/`CarvingStationScreenHandler`):
+place a plain pumpkin plus up to 3 dyes in the Pumpkin Carving Station to get a `DyedPumpkinBlock`
+back, tinted from the mixed dye color. Carving (turning a pumpkin into a jack-o'-lantern, in this
+station or otherwise) is **not implemented yet** — deliberately deferred as a follow-up. Below is the
+original brainstorm this built from, kept for the still-open pieces (carving, undyeing, and whether
+carved pumpkins should also be dyeable).
+
 The headline feature: let players dye carved/uncarved pumpkins (and jack-o'-lanterns) an arbitrary
 color, the same way [[Shulker Stuff]]'s Dye Station lets players recolor shulker boxes without
 wasting dye on a crafting-grid re-dye.

@@ -12,6 +12,9 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 
 ### Current Features
 
+* **Pumpkin Carving Station** — craft one from 4 pumpkins and a crafting table. Place a pumpkin in the
+  station with up to 3 dyes to recolor it.
+
 ## Notes for Documentation
 
 ## Issues & Suggestions
