@@ -1,9 +1,12 @@
 {
-    "parent": "minecraft:block/cube_bottom_top",
+    "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "minecraft:block/pumpkin_side",
-        "side": "minecraft:block/pumpkin_side",
-        "bottom": "minecraft:block/pumpkin_top",
-        "top": "minecraft:block/crafting_table_top"
+        "particle": "allhallowssteve:block/carving_station/carving_station_side",
+        "down": "allhallowssteve:block/carving_station/carving_station_bottom",
+        "up": "allhallowssteve:block/carving_station/carving_station_top",
+        "north": "allhallowssteve:block/carving_station/carving_station_front",
+        "south": "allhallowssteve:block/carving_station/carving_station_side",
+        "east": "allhallowssteve:block/carving_station/carving_station_side",
+        "west": "allhallowssteve:block/carving_station/carving_station_side"
     }
 }
