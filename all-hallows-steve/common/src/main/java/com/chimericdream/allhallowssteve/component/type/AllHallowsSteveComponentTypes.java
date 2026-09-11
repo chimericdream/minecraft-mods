@@ -11,6 +11,11 @@ public class AllHallowsSteveComponentTypes {
         () -> DataComponentType.<DyedColorComponent>builder().persistent(DyedColorComponent.CODEC).build()
     );
 
+    public static final RegistrySupplier<DataComponentType<PumpkinStencilsComponent>> STENCILS_COMPONENT = REGISTRY_HELPER.CUSTOM_COMPONENTS.register(
+        PumpkinStencilsComponent.COMPONENT_ID,
+        () -> DataComponentType.<PumpkinStencilsComponent>builder().persistent(PumpkinStencilsComponent.CODEC).build()
+    );
+
     public static void init() {
     }
 }

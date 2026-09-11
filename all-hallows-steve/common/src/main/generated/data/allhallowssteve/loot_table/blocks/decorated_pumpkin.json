@@ -14,7 +14,8 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "allhallowssteve:dyed_color"
+                "allhallowssteve:dyed_color",
+                "allhallowssteve:pumpkin_stencils"
               ],
               "source": "block_entity"
             }

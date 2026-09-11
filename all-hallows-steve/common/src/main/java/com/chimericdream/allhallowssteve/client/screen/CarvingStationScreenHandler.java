@@ -5,10 +5,13 @@ import com.chimericdream.lib.screen.ScreenHelpers;
 import com.chimericdream.allhallowssteve.ModInfo;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
+import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
+import com.chimericdream.allhallowssteve.component.type.PumpkinStencilsComponent;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.item.PumpkinStencilItem;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
@@ -26,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CarvingStationScreenHandler extends AbstractContainerMenu {
     public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/block/carving_station");
@@ -40,6 +44,19 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
     public static final int STENCIL_SLOT_LEFT = 5;
     public static final int STENCIL_SLOT_RIGHT = 6;
     public static final int STENCIL_SLOT_BOTTOM = 7;
+
+    /**
+     * Maps each stencil slot to the face of the pumpkin (in its default, {@code FACING == NORTH}
+     * orientation) it carves — laid out the way a compass rose reads on a map, with north at the top:
+     * top = north, right = east, bottom = south, left = west. {@link DecoratedPumpkinBlockEntity}
+     * stores stencils by these same directions, and the whole set rotates with the placed block.
+     */
+    public static final Map<Integer, Direction> STENCIL_SLOT_FACES = Map.of(
+        STENCIL_SLOT_TOP, Direction.NORTH,
+        STENCIL_SLOT_RIGHT, Direction.EAST,
+        STENCIL_SLOT_BOTTOM, Direction.SOUTH,
+        STENCIL_SLOT_LEFT, Direction.WEST
+    );
     /** The result slot, which is backed by {@link #output} rather than by the station. */
     public static final int OUTPUT_SLOT_INDEX = STATION_SLOT_COUNT;
     /** Everything from here on belongs to the player's inventory. */
@@ -190,9 +207,21 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
                 }
             }
 
-            // Carving isn't implemented yet, so with no dye present there's nothing this station can
-            // do to a plain pumpkin.
-            if (dyes.isEmpty()) {
+            // A stencil slot with a stencil in it carves that face; an empty slot leaves whatever was
+            // already carved into the input pumpkin's corresponding face untouched (mirrors how an
+            // empty dye slot leaves the input's existing color untouched, below).
+            PumpkinStencilsComponent resolvedStencils = pumpkin.getOrDefault(AllHallowsSteveComponentTypes.STENCILS_COMPONENT.get(), PumpkinStencilsComponent.EMPTY);
+            boolean anyNewStencil = false;
+            for (Map.Entry<Integer, Direction> entry : STENCIL_SLOT_FACES.entrySet()) {
+                ItemStack stencilStack = this.container.getItem(entry.getKey());
+                if (!stencilStack.isEmpty() && stencilStack.getItem() instanceof PumpkinStencilItem stencilItem) {
+                    resolvedStencils = resolvedStencils.with(entry.getValue(), stencilItem.stencil);
+                    anyNewStencil = true;
+                }
+            }
+
+            // With no dye and no new stencil, this station has nothing to do to the input pumpkin.
+            if (dyes.isEmpty() && !anyNewStencil) {
                 this.output.setItem(0, ItemStack.EMPTY);
                 return;
             }
@@ -208,6 +237,9 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
 
             ItemStack outputStack = new ItemStack(ModBlocks.DECORATED_PUMPKIN.get());
             outputStack.set(AllHallowsSteveComponentTypes.DYED_COLOR_COMPONENT.get(), new DyedColorComponent(colorInt));
+            if (!resolvedStencils.isEmpty()) {
+                outputStack.set(AllHallowsSteveComponentTypes.STENCILS_COMPONENT.get(), resolvedStencils);
+            }
 
             this.output.setItem(0, outputStack);
         }

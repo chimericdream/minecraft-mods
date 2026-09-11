@@ -4,3 +4,13 @@ accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/mi
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
+
+accessible field net/minecraft/client/renderer/special/SpecialModelRenderers ID_MAPPER Lnet/minecraft/util/ExtraCodecs$LateBoundIdMapper;
+
+# BlockModelGenerators has no public API for registering a composite (tinted model + special
+# renderer) item model, only single-purpose private helpers like registerSimpleTintedItemModel — so
+# DecoratedPumpkinBlockDataGenerator reaches the underlying output directly to register the decorated
+# pumpkin's composite item model (see that class for why this can't just be hand-authored JSON:
+# vanilla's own ItemInfoCollector.finalizeAndValidate always overwrites any item lacking a datagen'd
+# model with a plain fallback, so a hand-authored file would be clobbered on the next datagen run).
+accessible field net/minecraft/client/data/models/BlockModelGenerators itemModelOutput Lnet/minecraft/client/data/models/ItemModelOutput;
