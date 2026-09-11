@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "allhallowssteve:block/carving_station",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "allhallowssteve:block/carving_station"
+    },
+    "facing=south": {
+      "model": "allhallowssteve:block/carving_station",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "allhallowssteve:block/carving_station",
+      "y": 270
+    }
+  }
+}

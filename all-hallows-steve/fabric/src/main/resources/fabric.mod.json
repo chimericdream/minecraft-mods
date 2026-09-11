@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.allhallowssteve.fabric.client.AllHallowsSteveFabricClient"
+        ],
+        "fabric-datagen": [
+            "com.chimericdream.allhallowssteve.fabric.data.ModDataGenerator"
         ]
     },
     "mixins": [

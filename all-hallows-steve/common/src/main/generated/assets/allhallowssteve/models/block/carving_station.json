@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "allhallowssteve:block/carving_station/carving_station_bottom",
+    "front": "allhallowssteve:block/carving_station/carving_station_front",
+    "side": "allhallowssteve:block/carving_station/carving_station_side",
+    "top": "allhallowssteve:block/carving_station/carving_station_top"
+  }
+}
