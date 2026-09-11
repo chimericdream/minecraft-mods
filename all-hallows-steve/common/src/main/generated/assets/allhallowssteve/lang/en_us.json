@@ -3,5 +3,20 @@
   "block.allhallowssteve.carving_station": "Pumpkin Carving Station",
   "block.allhallowssteve.decorated_pumpkin": "Decorated Pumpkin",
   "item.allhallowssteve.carving_station": "Pumpkin Carving Station",
-  "item.allhallowssteve.decorated_pumpkin": "Decorated Pumpkin"
+  "item.allhallowssteve.decorated_pumpkin": "Decorated Pumpkin",
+  "item.allhallowssteve.pumpkin_stencils.blank": "Blank Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.crafter": "Crafter Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.creaking": "Creaking Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.creaking_heart": "Creaking Heart Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.creeper": "Creeper Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.dispenser": "Dispenser Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.dropper": "Dropper Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.heart": "Heart Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.jack_o_lantern": "Jack o'Lantern Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.jigsaw": "Jigsaw Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.lodestone": "Lodestone Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.observer": "Observer Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.spawner": "Spawner Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.structure_data": "Structure Block Carving Stencil",
+  "item.allhallowssteve.pumpkin_stencils.wither_rose": "Wither Rose Carving Stencil"
 }

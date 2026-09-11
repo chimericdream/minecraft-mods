@@ -2,6 +2,7 @@ package com.chimericdream.allhallowssteve;
 
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
+import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -21,6 +22,7 @@ public final class AllHallowsSteveMod {
 
         REGISTRY_HELPER.init();
         ModBlocks.init();
+        ModItems.init();
         AllHallowsSteveComponentTypes.init();
     }
 }

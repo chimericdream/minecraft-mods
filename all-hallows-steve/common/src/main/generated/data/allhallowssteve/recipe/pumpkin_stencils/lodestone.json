@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:paper"
+  ],
+  "result": {
+    "id": "allhallowssteve:pumpkin_stencils/lodestone"
+  }
+}

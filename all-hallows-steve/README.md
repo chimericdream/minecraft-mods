@@ -14,6 +14,9 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 
 * **Pumpkin Carving Station** — craft one from 4 pumpkins and a crafting table. Place a pumpkin in the
   station with up to 3 dyes to recolor it.
+* **Carving Stencils** — craftable from a piece of paper, one for each design: Blank, Crafter, Creaking,
+  Creaking Heart, Creeper, Dispenser, Dropper, Heart, Jack o'Lantern, Jigsaw, Lodestone, Observer,
+  Spawner, Structure Block, and Wither Rose.
 
 ## Notes for Documentation
 

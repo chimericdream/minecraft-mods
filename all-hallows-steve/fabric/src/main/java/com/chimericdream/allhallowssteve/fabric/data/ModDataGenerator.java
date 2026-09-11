@@ -4,6 +4,7 @@ import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.item.PumpkinStencilItemDataGenerator;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -50,6 +51,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                 blockGenerator.configureTranslations(registryLookup, translationBuilder);
             }
 
+            PumpkinStencilItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
+
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
         }
     }
@@ -73,6 +76,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                     for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                         blockGenerator.configureRecipes(registryLookup, exporter, this);
                     }
+
+                    PumpkinStencilItemDataGenerator.configureRecipes(registryLookup, exporter, this);
                 }
             };
         }
@@ -116,6 +121,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureItemModels(itemModelGenerator);
             }
+
+            PumpkinStencilItemDataGenerator.configureItemModels(itemModelGenerator);
         }
 
         @Override
