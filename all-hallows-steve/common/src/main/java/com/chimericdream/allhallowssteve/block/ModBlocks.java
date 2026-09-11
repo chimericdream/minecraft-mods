@@ -1,7 +1,7 @@
 package com.chimericdream.allhallowssteve.block;
 
 import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
-import com.chimericdream.allhallowssteve.block.entity.DyedPumpkinBlockEntity;
+import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -37,13 +37,13 @@ public class ModBlocks {
         () -> new MenuType<>(CarvingStationScreenHandler::new, FeatureFlagSet.of())
     );
 
-    public static final RegistrySupplier<Block> DYED_PUMPKIN = REGISTRY_HELPER.registerWithItem(DyedPumpkinBlock.BLOCK_ID, DyedPumpkinBlock::new, NATURAL_SETTINGS);
+    public static final RegistrySupplier<Block> DECORATED_PUMPKIN = REGISTRY_HELPER.registerWithItem(DecoratedPumpkinBlock.BLOCK_ID, DecoratedPumpkinBlock::new, NATURAL_SETTINGS);
 
-    public static final RegistrySupplier<BlockEntityType<DyedPumpkinBlockEntity>> DYED_PUMPKIN_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
-        DyedPumpkinBlockEntity.ENTITY_ID,
+    public static final RegistrySupplier<BlockEntityType<DecoratedPumpkinBlockEntity>> DECORATED_PUMPKIN_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
+        DecoratedPumpkinBlockEntity.ENTITY_ID,
         () -> new BlockEntityType<>(
-            DyedPumpkinBlockEntity::new,
-            Set.of(DYED_PUMPKIN.get())
+            DecoratedPumpkinBlockEntity::new,
+            Set.of(DECORATED_PUMPKIN.get())
         )
     );
 

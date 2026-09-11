@@ -192,7 +192,7 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
             ColorHelpers.RGB mixed = ColorHelpers.mixColors(currentColor, dyes);
             int colorInt = mixed == null ? DyedColorComponent.DEFAULT_COLOR : mixed.toInt();
 
-            ItemStack outputStack = new ItemStack(ModBlocks.DYED_PUMPKIN.get());
+            ItemStack outputStack = new ItemStack(ModBlocks.DECORATED_PUMPKIN.get());
             outputStack.set(AllHallowsSteveComponentTypes.DYED_COLOR_COMPONENT.get(), new DyedColorComponent(colorInt));
 
             this.output.setItem(0, outputStack);
@@ -242,7 +242,7 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.is(Items.PUMPKIN) || stack.is(ModBlocks.DYED_PUMPKIN.get().asItem());
+            return stack.is(Items.PUMPKIN) || stack.is(ModBlocks.DECORATED_PUMPKIN.get().asItem());
         }
     }
 

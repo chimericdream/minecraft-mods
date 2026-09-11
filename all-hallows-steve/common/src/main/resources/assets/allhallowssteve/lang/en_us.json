@@ -1,7 +1,7 @@
 {
     "block.allhallowssteve.carving_station": "Pumpkin Carving Station",
-    "block.allhallowssteve.dyed_pumpkin": "Dyed Pumpkin",
+    "block.allhallowssteve.decorated_pumpkin": "Decorated Pumpkin",
     "item.allhallowssteve.carving_station": "Pumpkin Carving Station",
-    "item.allhallowssteve.dyed_pumpkin": "Dyed Pumpkin",
+    "item.allhallowssteve.decorated_pumpkin": "Decorated Pumpkin",
     "allhallowssteve.gui/block/carving_station": "Pumpkin Carving Station"
 }

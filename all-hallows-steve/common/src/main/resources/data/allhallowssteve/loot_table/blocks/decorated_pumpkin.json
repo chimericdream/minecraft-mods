@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "function": "minecraft:copy_components",
+                            "include": [
+                                "allhallowssteve:dyed_color"
+                            ],
+                            "source": "block_entity"
+                        }
+                    ],
+                    "name": "allhallowssteve:decorated_pumpkin"
+                }
+            ],
+            "rolls": 1.0
+        }
+    ],
+    "random_sequence": "allhallowssteve:blocks/decorated_pumpkin"
+}
