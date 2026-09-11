@@ -29,7 +29,7 @@ import static com.chimericdream.allhallowssteve.block.ModBlocks.CARVING_STATION_
 public class CarvingStationBlockEntity extends BaseContainerBlockEntity implements MenuProvider, ImplementedInventory {
     public static final Identifier ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/entity/carving_station");
 
-    public static final int INVENTORY_SIZE = 4;
+    public static final int INVENTORY_SIZE = 8;
 
     private final NonNullList<ItemStack> inventory;
     private final ContainerOpenersCounter stateManager;

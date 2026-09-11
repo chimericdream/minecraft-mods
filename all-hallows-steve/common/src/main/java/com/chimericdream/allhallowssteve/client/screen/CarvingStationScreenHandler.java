@@ -7,6 +7,8 @@ import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
+import com.chimericdream.allhallowssteve.item.ModItems;
+import com.chimericdream.allhallowssteve.item.PumpkinStencilItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
@@ -28,9 +30,16 @@ import java.util.List;
 public class CarvingStationScreenHandler extends AbstractContainerMenu {
     public static final Identifier SCREEN_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gui/block/carving_station");
 
-    /** The station's own slots, 0-3: dye slots 0-2, pumpkin slot 3. */
+    /**
+     * The station's own slots, 0-7: dye slots 0-2, pumpkin slot 3, stencil slots 4-7 (the four
+     * arms of the "plus" surrounding the pumpkin slot).
+     */
     public static final int STATION_SLOT_COUNT = CarvingStationBlockEntity.INVENTORY_SIZE;
-    public static final int PUMPKIN_SLOT_INDEX = STATION_SLOT_COUNT - 1;
+    public static final int PUMPKIN_SLOT_INDEX = 3;
+    public static final int STENCIL_SLOT_TOP = 4;
+    public static final int STENCIL_SLOT_LEFT = 5;
+    public static final int STENCIL_SLOT_RIGHT = 6;
+    public static final int STENCIL_SLOT_BOTTOM = 7;
     /** The result slot, which is backed by {@link #output} rather than by the station. */
     public static final int OUTPUT_SLOT_INDEX = STATION_SLOT_COUNT;
     /** Everything from here on belongs to the player's inventory. */
@@ -51,13 +60,18 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
 
         inventory.startOpen(playerInventory.player);
 
-        this.addSlot(new DyeSlot(inventory, output, 0, 38, 17));
-        this.addSlot(new DyeSlot(inventory, output, 1, 38, 35));
-        this.addSlot(new DyeSlot(inventory, output, 2, 38, 53));
+        this.addSlot(new DyeSlot(inventory, output, 0, 8, 17));
+        this.addSlot(new DyeSlot(inventory, output, 1, 8, 35));
+        this.addSlot(new DyeSlot(inventory, output, 2, 8, 53));
 
-        this.addSlot(new PumpkinSlot(inventory, output, PUMPKIN_SLOT_INDEX, 63, 35));
+        this.addSlot(new PumpkinSlot(inventory, output, PUMPKIN_SLOT_INDEX, 62, 35));
 
-        this.addSlot(new OutputSlot(this.inventory, this.output, 121, 35, this::refreshOutput));
+        this.addSlot(new StencilSlot(inventory, output, STENCIL_SLOT_TOP, 62, 17));
+        this.addSlot(new StencilSlot(inventory, output, STENCIL_SLOT_LEFT, 44, 35));
+        this.addSlot(new StencilSlot(inventory, output, STENCIL_SLOT_RIGHT, 80, 35));
+        this.addSlot(new StencilSlot(inventory, output, STENCIL_SLOT_BOTTOM, 62, 53));
+
+        this.addSlot(new OutputSlot(this.inventory, this.output, 148, 35, this::refreshOutput));
 
         refreshOutput();
 
@@ -246,6 +260,17 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
         }
     }
 
+    private static class StencilSlot extends CarvingSlot {
+        public StencilSlot(Container inventory, Container output, int index, int x, int y) {
+            super(inventory, output, index, x, y);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.getItem() instanceof PumpkinStencilItem && !stack.is(ModItems.BLANK_STENCIL.get());
+        }
+    }
+
     private static class OutputSlot extends Slot {
         private final Container input;
         private final Runnable refreshOutput;
@@ -266,7 +291,7 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
             int taken = stack.getCount();
 
             if (taken > 0) {
-                for (int i = 0; i < CarvingStationBlockEntity.INVENTORY_SIZE; i++) {
+                for (int i = 0; i <= PUMPKIN_SLOT_INDEX; i++) {
                     this.input.removeItem(i, taken);
                 }
 
