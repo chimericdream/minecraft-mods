@@ -1,14 +1,15 @@
 package com.chimericdream.allhallowssteve.fabric.block;
 
 import com.chimericdream.allhallowssteve.ModInfo;
+import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.client.color.DecoratedPumpkinItemTintSource;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.fabric.blocks.TranslationUtils;
+import com.chimericdream.lib.fabric.blocks.model.ModelUtils;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
@@ -28,13 +29,15 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import java.util.Optional;
 
 /**
- * The decorated pumpkin has no blockstate properties - it's a single, fully static full-block model
- * whose top/side faces are tintindex-0 so {@link DecoratedPumpkinItemTintSource} (item) and
- * {@link com.chimericdream.allhallowssteve.client.color.DecoratedPumpkinBlockColors} (placed block)
- * can recolor it from the stored {@link DyedColorComponent}. No vanilla {@code ModelTemplates} entry
+ * The decorated pumpkin is a fully static full-block model — no vanilla {@code ModelTemplates} entry
  * bakes a tintindex onto a top/side cube, so this points a custom {@link ModelTemplate} at the
  * hand-authored {@code block/template_decorated_pumpkin} parent (same elements/tintindex layout the
- * hand-written model used to inline directly) instead.
+ * hand-written model used to inline directly) instead, whose top/side faces are tintindex-0 so
+ * {@link DecoratedPumpkinItemTintSource} (item) and
+ * {@link com.chimericdream.allhallowssteve.client.color.DecoratedPumpkinBlockColors} (placed block)
+ * can recolor it from the stored {@link DyedColorComponent}. {@link DecoratedPumpkinBlock#FACING} is
+ * dispatched with chimeric-lib's {@code ModelUtils.registerBlockWithHorizontalFacing} (same rotation
+ * dispatch as vanilla's furnace) so a future stencil overlay has a side to render on.
  */
 public class DecoratedPumpkinBlockDataGenerator implements FabricBlockDataGenerator {
     private static final ModelTemplate TEMPLATE = new ModelTemplate(
@@ -81,9 +84,8 @@ public class DecoratedPumpkinBlockDataGenerator implements FabricBlockDataGenera
             .put(TextureSlot.SIDE, texture("side"));
 
         Identifier modelId = blockStateModelGenerator.createSuffixedVariant(block, "", TEMPLATE, unused -> textures);
-        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
 
-        blockStateModelGenerator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
+        ModelUtils.registerBlockWithHorizontalFacing(blockStateModelGenerator, DecoratedPumpkinBlock.FACING, block, modelId);
         blockStateModelGenerator.registerSimpleTintedItemModel(block, modelId, new DecoratedPumpkinItemTintSource(DyedColorComponent.DEFAULT_COLOR));
     }
 }
