@@ -1,7 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "minecraft:paper"
+    "allhallowssteve:pumpkin_stencils/blank",
+    "minecraft:jack_o_lantern"
   ],
   "result": {
     "id": "allhallowssteve:pumpkin_stencils/jack_o_lantern"

@@ -21,10 +21,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -235,7 +237,11 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
             ColorHelpers.RGB mixed = ColorHelpers.mixColors(currentColor, dyes);
             int colorInt = mixed == null ? DyedColorComponent.DEFAULT_COLOR : mixed.toInt();
 
-            ItemStack outputStack = new ItemStack(ModBlocks.DECORATED_PUMPKIN.get());
+            // A plain pumpkin becomes a (unlit) decorated pumpkin; an already-decorated one (lit or
+            // not) keeps its own block — the station only touches color/stencils, not litness.
+            Block outputBlock = pumpkin.is(Items.PUMPKIN) ? ModBlocks.DECORATED_PUMPKIN.get() : ((BlockItem) pumpkin.getItem()).getBlock();
+
+            ItemStack outputStack = new ItemStack(outputBlock);
             outputStack.set(AllHallowsSteveComponentTypes.DYED_COLOR_COMPONENT.get(), new DyedColorComponent(colorInt));
             if (!resolvedStencils.isEmpty()) {
                 outputStack.set(AllHallowsSteveComponentTypes.STENCILS_COMPONENT.get(), resolvedStencils);
@@ -288,7 +294,7 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.is(Items.PUMPKIN) || stack.is(ModBlocks.DECORATED_PUMPKIN.get().asItem());
+            return stack.is(Items.PUMPKIN) || ModBlocks.isDecoratedPumpkinItem(stack);
         }
     }
 

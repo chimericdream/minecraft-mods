@@ -1,0 +1,24 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "allhallowssteve:block/decorated_pumpkin_lit",
+        "tints": [
+          {
+            "type": "allhallowssteve:decorated_pumpkin",
+            "default": 14712858
+          }
+        ]
+      },
+      {
+        "type": "minecraft:special",
+        "base": "allhallowssteve:block/decorated_pumpkin_lit",
+        "model": {
+          "type": "allhallowssteve:decorated_pumpkin_lit"
+        }
+      }
+    ]
+  }
+}

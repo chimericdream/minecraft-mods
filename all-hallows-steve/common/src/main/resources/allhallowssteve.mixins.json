@@ -6,7 +6,8 @@
     "client": [
     ],
     "mixins": [
-        "AHS$ItemTintSourcesMixin"
+        "AHS$ItemTintSourcesMixin",
+        "AHS$TorchBlockItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -1,7 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "minecraft:paper"
+    "allhallowssteve:pumpkin_stencils/blank",
+    "minecraft:creaking_heart"
   ],
   "result": {
     "id": "allhallowssteve:pumpkin_stencils/creaking_heart"

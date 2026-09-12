@@ -16,10 +16,16 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+
+import java.util.function.Function;
 
 /**
  * The carving station is a plain drop-self block with a facing-only blockstate (same rotation
@@ -39,6 +45,13 @@ public class CarvingStationBlockDataGenerator implements FabricBlockDataGenerato
     }
 
     @Override
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
+        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE)
+            .setReplace(false)
+            .add(block.builtInRegistryHolder().key());
+    }
+
+    @Override
     public void configureBlockLootTables(BlockLootSubProvider generator, HolderLookup.Provider registryLookup) {
         generator.dropSelf(block);
     }
@@ -46,12 +59,14 @@ public class CarvingStationBlockDataGenerator implements FabricBlockDataGenerato
     @Override
     public void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
         generator.shaped(RecipeCategory.DECORATIONS, block)
-            .pattern(" P ")
-            .pattern("PCP")
-            .pattern(" P ")
-            .define('P', Items.PUMPKIN)
+            .pattern("IS")
+            .pattern("PC")
+            .pattern("PP")
+            .define('I', Items.IRON_INGOT)
+            .define('S', Items.SHEARS)
+            .define('P', ItemTags.PLANKS)
             .define('C', Blocks.CRAFTING_TABLE)
-            .unlockedBy(RecipeProvider.getHasName(Items.PUMPKIN), generator.has(Items.PUMPKIN))
+            .unlockedBy(RecipeProvider.getHasName(Items.SHEARS), generator.has(Items.SHEARS))
             .save(exporter);
     }
 

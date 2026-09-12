@@ -2,12 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "C": "minecraft:crafting_table",
-    "P": "minecraft:pumpkin"
+    "I": "minecraft:iron_ingot",
+    "P": "#minecraft:planks",
+    "S": "minecraft:shears"
   },
   "pattern": [
-    " P ",
-    "PCP",
-    " P "
+    "IS",
+    "PC",
+    "PP"
   ],
   "result": {
     "id": "allhallowssteve:carving_station"

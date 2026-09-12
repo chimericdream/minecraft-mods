@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_paper": {
+    "has_pumpkin_stencils/blank": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:paper"
+            "items": "allhallowssteve:pumpkin_stencils/blank"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_paper"
+      "has_pumpkin_stencils/blank"
     ]
   ],
   "rewards": {

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "allhallowssteve:block/decorated_pumpkin_lit_red",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "allhallowssteve:block/decorated_pumpkin_lit_red"
+    },
+    "facing=south": {
+      "model": "allhallowssteve:block/decorated_pumpkin_lit_red",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "allhallowssteve:block/decorated_pumpkin_lit_red",
+      "y": 270
+    }
+  }
+}

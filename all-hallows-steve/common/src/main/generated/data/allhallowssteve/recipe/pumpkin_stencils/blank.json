@@ -1,7 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "minecraft:paper"
+    "minecraft:paper",
+    "minecraft:pumpkin_seeds"
   ],
   "result": {
     "id": "allhallowssteve:pumpkin_stencils/blank"

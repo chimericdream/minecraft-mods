@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "input": "allhallowssteve:decorated_pumpkin",
+  "material": "minecraft:redstone_torch",
+  "result": {
+    "id": "allhallowssteve:decorated_pumpkin_lit_red"
+  }
+}

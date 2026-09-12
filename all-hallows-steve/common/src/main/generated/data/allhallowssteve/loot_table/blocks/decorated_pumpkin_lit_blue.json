@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:survives_explosion"
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "allhallowssteve:dyed_color",
+                "allhallowssteve:pumpkin_stencils"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "allhallowssteve:decorated_pumpkin_lit_blue"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

@@ -2,22 +2,34 @@ package com.chimericdream.allhallowssteve.block;
 
 import com.chimericdream.allhallowssteve.ModInfo;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
+import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
+import com.chimericdream.allhallowssteve.component.type.PumpkinStencilsComponent;
+import com.chimericdream.allhallowssteve.stats.ModStats;
 import com.mojang.serialization.MapCodec;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import org.jetbrains.annotations.NotNull;
 
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
@@ -59,6 +71,58 @@ public class DecoratedPumpkinBlock extends BaseEntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    }
+
+    /**
+     * Converts this pumpkin into the lit variant matching {@code itemStack}'s torch type, carrying
+     * over the stored dye color/stencils. Called from {@code AHS$TorchBlockItemMixin} rather than a
+     * {@code useItemOn} override on this block: {@code ServerPlayerGameMode#useItemOn} skips
+     * {@code BlockState#useItemOn} entirely whenever the player is sneaking with a nonempty hand (its
+     * {@code suppressUsingBlock} check), going straight to the held item's own placement logic
+     * instead — and since lighting is deliberately shift-gated, this block's own {@code useItemOn}
+     * would never actually be reached for this interaction.
+     */
+    public static InteractionResult tryLight(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return InteractionResult.SUCCESS;
+        }
+
+        RegistrySupplier<Block> litVariant;
+        if (itemStack.is(Items.TORCH)) {
+            litVariant = ModBlocks.LIT_DECORATED_PUMPKIN;
+        } else if (itemStack.is(Items.SOUL_TORCH)) {
+            litVariant = ModBlocks.LIT_DECORATED_PUMPKIN_BLUE;
+        } else if (itemStack.is(Items.COPPER_TORCH)) {
+            litVariant = ModBlocks.LIT_DECORATED_PUMPKIN_GREEN;
+        } else if (itemStack.is(Items.REDSTONE_TORCH)) {
+            litVariant = ModBlocks.LIT_DECORATED_PUMPKIN_RED;
+        } else {
+            return InteractionResult.PASS;
+        }
+
+        int color = DyedColorComponent.DEFAULT_COLOR;
+        PumpkinStencilsComponent stencils = PumpkinStencilsComponent.EMPTY;
+        if (serverLevel.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity decorated) {
+            color = decorated.getColor();
+            stencils = decorated.getStencils();
+        }
+
+        serverLevel.setBlock(pos, litVariant.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), Block.UPDATE_ALL);
+
+        if (serverLevel.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity lit) {
+            lit.setColor(color);
+            lit.setStencils(stencils);
+        }
+
+        if (!player.getAbilities().instabuild) {
+            itemStack.shrink(1);
+        }
+
+        serverLevel.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+        serverLevel.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
+
+        return InteractionResult.SUCCESS;
     }
 
     @Override

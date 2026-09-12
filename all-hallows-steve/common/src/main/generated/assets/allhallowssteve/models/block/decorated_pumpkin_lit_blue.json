@@ -1,0 +1,7 @@
+{
+  "parent": "allhallowssteve:block/template_decorated_pumpkin",
+  "textures": {
+    "side": "allhallowssteve:block/decorated_pumpkin/decorated_pumpkin_side",
+    "top": "allhallowssteve:block/decorated_pumpkin/decorated_pumpkin_top"
+  }
+}

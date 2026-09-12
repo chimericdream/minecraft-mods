@@ -1,7 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "minecraft:paper"
+    "allhallowssteve:pumpkin_stencils/blank",
+    "minecraft:iron_ingot"
   ],
   "result": {
     "id": "allhallowssteve:pumpkin_stencils/lodestone"

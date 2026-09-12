@@ -9,4 +9,6 @@ public class DecoratedPumpkinRenderState extends BlockEntityRenderState {
     public Direction facing = Direction.NORTH;
     public PumpkinStencilsComponent stencils = PumpkinStencilsComponent.EMPTY;
     public CardinalLighting cardinalLighting = CardinalLighting.DEFAULT;
+    /** {@code ""} unless this is a {@code LitDecoratedPumpkinBlock}, in which case its overlay suffix. */
+    public String overlaySuffix = "";
 }

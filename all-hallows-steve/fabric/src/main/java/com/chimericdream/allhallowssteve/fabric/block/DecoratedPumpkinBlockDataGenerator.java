@@ -18,7 +18,10 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -29,6 +32,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * The decorated pumpkin's block model is a fully static full-block model — no vanilla
@@ -66,6 +70,13 @@ public class DecoratedPumpkinBlockDataGenerator implements FabricBlockDataGenera
 
     private static Material texture(String suffix) {
         return new Material(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/decorated_pumpkin/decorated_pumpkin_" + suffix));
+    }
+
+    @Override
+    public void configureBlockTags(HolderLookup.Provider registryLookup, Function<TagKey<Block>, TagAppender<Block>> getBuilder) {
+        getBuilder.apply(BlockTags.MINEABLE_WITH_AXE)
+            .setReplace(false)
+            .add(block.builtInRegistryHolder().key());
     }
 
     @Override
@@ -111,7 +122,7 @@ public class DecoratedPumpkinBlockDataGenerator implements FabricBlockDataGenera
                 // identity — the stencil decals rendered at full 1:1 block scale while the sibling
                 // tinted-model layer correctly shrank to item size. Reusing the same block model here
                 // gives both composite layers the identical scale.
-                ItemModelUtils.specialModel(modelId, new DecoratedPumpkinItemRenderer.Unbaked())
+                ItemModelUtils.specialModel(modelId, new DecoratedPumpkinItemRenderer.Unbaked(""))
             )
         );
     }

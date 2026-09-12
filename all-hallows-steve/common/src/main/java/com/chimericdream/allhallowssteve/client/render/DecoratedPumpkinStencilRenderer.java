@@ -29,8 +29,12 @@ public final class DecoratedPumpkinStencilRenderer {
     }
 
     /**
-     * @param facing the block's current {@code FACING} (block form), or {@link Direction#NORTH} — the
-     *               component's own default orientation — for the item form, which has no placement.
+     * @param facing        the block's current {@code FACING} (block form), or {@link Direction#NORTH}
+     *                      — the component's own default orientation — for the item form, which has no
+     *                      placement.
+     * @param overlaySuffix appended to each stencil's texture name — {@code ""} for the plain unlit
+     *                      overlay, or one of {@code LitDecoratedPumpkinBlock}'s {@code "_lit..."}
+     *                      suffixes to render that variant's lit overlay instead.
      */
     public static void submit(
         PoseStack poseStack,
@@ -38,7 +42,8 @@ public final class DecoratedPumpkinStencilRenderer {
         Direction facing,
         PumpkinStencilsComponent stencils,
         CardinalLighting cardinalLighting,
-        int light
+        int light,
+        String overlaySuffix
     ) {
         if (stencils.isEmpty()) {
             return;
@@ -52,7 +57,7 @@ public final class DecoratedPumpkinStencilRenderer {
                     Direction worldFace = rotation.rotate(canonicalFace);
                     float shade = cardinalLighting.byFace(worldFace);
 
-                    QuadEmitter.emitFace(pose, buffer, worldFace, 0f, 0f, 0f, 1f, 1f, 1f, FULL_FACE_UV, 0, sprite(stencil), light, shade);
+                    QuadEmitter.emitFace(pose, buffer, worldFace, 0f, 0f, 0f, 1f, 1f, 1f, FULL_FACE_UV, 0, sprite(stencil, overlaySuffix), light, shade);
                 });
             }
         });
@@ -73,8 +78,8 @@ public final class DecoratedPumpkinStencilRenderer {
         };
     }
 
-    private static TextureAtlasSprite sprite(String stencil) {
-        Identifier texture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/decorated_pumpkin/overlays/" + stencil);
+    private static TextureAtlasSprite sprite(String stencil, String overlaySuffix) {
+        Identifier texture = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/decorated_pumpkin/overlays/" + stencil + overlaySuffix);
         return Minecraft.getInstance().getAtlasManager().get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, texture));
     }
 }
