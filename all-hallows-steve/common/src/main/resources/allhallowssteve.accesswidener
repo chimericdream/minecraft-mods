@@ -14,3 +14,9 @@ accessible field net/minecraft/client/renderer/special/SpecialModelRenderers ID_
 # vanilla's own ItemInfoCollector.finalizeAndValidate always overwrites any item lacking a datagen'd
 # model with a plain fallback, so a hand-authored file would be clobbered on the next datagen run).
 accessible field net/minecraft/client/data/models/BlockModelGenerators itemModelOutput Lnet/minecraft/client/data/models/ItemModelOutput;
+
+# CarvingStationScreen renders the output slot's carved pumpkin as a rotating preview by resolving its
+# own ItemStackRenderState and adding a GuiItemRenderState directly, rather than going through
+# GuiGraphicsExtractor#item (which always bakes ItemDisplayContext.GUI's fixed transform with no way to
+# add our own per-frame rotation on top). guiRenderState has no public accessor for this.
+accessible field net/minecraft/client/gui/GuiGraphicsExtractor guiRenderState Lnet/minecraft/client/renderer/state/gui/GuiRenderState;

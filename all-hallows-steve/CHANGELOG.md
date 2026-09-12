@@ -8,3 +8,4 @@
 * Added Carving Stencils, each craftable from a piece of paper:
   * Blank, Crafter, Creaking, Creaking Heart, Creeper, Dispenser, Dropper, Heart, Jack o'Lantern, Jigsaw, Lodestone, Observer, Spawner, Structure Block, and Wither Rose.
 * The station can now carve pumpkins: place up to four non-blank stencils around the pumpkin to carve them into its four sides. Stencils aren't used up, so the same one can be reused on the next pumpkin.
+* A carved pumpkin in the station's output slot slowly spins in place so you can see every carved side before taking it out.
