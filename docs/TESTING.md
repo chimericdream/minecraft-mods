@@ -96,3 +96,14 @@ For changes that must be seen (models, block colors, in-world GUI, textures), a 
 create-world → build-scene → screenshot → read-PNG workflow exists as the **`mc-visual-smoke-test`**
 Claude Code skill (`.claude/skills/mc-visual-smoke-test/`). It is temporary throwaway code — the skill
 covers the exact 26.2 API calls and the cleanup checklist.
+
+### Who runs it: interactive vs. autonomous
+
+- **Interactive/collaborative sessions** (working live with the user on a feature): default to letting
+  the user do the visual check themselves in-game — they'd rather look at it directly than review a
+  screenshot. Don't launch `mc-visual-smoke-test` unprompted here; ask first, and only run it if they
+  say to (or if they've already told you not to bother, as in this session).
+- **Autonomous work** (overnight runs, explicitly AFK/unattended tasks): run the automated visual smoke
+  test yourself before reporting a rendering change as done — there's no one to look at it live.
+- **Unsure which situation you're in**: pause and ask which they'd prefer. If there's no response for
+  several minutes, proceed with the automated smoke test rather than blocking indefinitely.
