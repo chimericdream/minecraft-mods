@@ -14,7 +14,8 @@
         "teardown:build": "bun ./scripts/revert-fabricmodjson.ts",
         "update:patchoulibooks": "bun ./scripts/update-patchouli-books.ts",
         "update:projectlist": "bun ./scripts/update-projectlist.ts",
-        "update:settingsgradle": "bun ./scripts/update-settingsgradle.ts"
+        "update:settingsgradle": "bun ./scripts/update-settingsgradle.ts",
+        "verify:gametests": "bun ./scripts/verify-gametest-registration.ts"
     },
     "devDependencies": {
         "@types/bun": "1.1.13",

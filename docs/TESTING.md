@@ -60,6 +60,20 @@ fabric-loader-junit runs all tests in one classloader and `apply()` is not idemp
   `chimericlib_test`) with a `main` entrypoint (registers fixtures) + a `fabric-gametest` entrypoint
   (the test classes). This `processResources` does **not** expand `${version}` — use literal values.
 
+### Registration is mandatory and fails silently
+
+A `@GameTest`-annotated method (or a `FabricClientGameTest` implementation, see the
+[visual smoke test skill](../.claude/skills/mc-visual-smoke-test/SKILL.md)) only runs if its fully
+-qualified class name is **also** listed in that mod's test-only `fabric.mod.json`, under the
+`fabric-gametest` (or `fabric-client-gametest`) entrypoint array. A class that compiles fine but isn't
+listed there produces **no error and no failing test** — it's just silently absent from the results,
+which reads as "everything passed."
+
+Run `bun run verify:gametests` after adding, renaming, or removing a `@GameTest` class (or before
+trusting a green `runGameTest` result on a new test) — it cross-checks every mod's `gametest` source set
+against its `fabric.mod.json` and reports any class that's missing from the entrypoint list (or listed
+but no longer exists on disk).
+
 > **Note — hopper-xtreme is the exception.** Its GameTests currently live in the **main** source set
 > (`hopper-xtreme/fabric/src/main/.../test/`) and ship (inert) in the jar. `hopper-xtreme/TEST_PLAN.md`
 > tracks migrating them into an isolated `gametest` source set to match chimeric-lib.

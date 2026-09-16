@@ -21,6 +21,13 @@ port a mod's data generation** (either platform), update that mod's `gradle.prop
 change — add the flag when datagen is newly wired up, remove it if a platform's datagen is deleted. A
 mod with no datagen on either platform has neither flag.
 
+## Testing
+
+- `bun run verify:gametests` — cross-checks every mod's `gametest` source set against its
+  `fabric.mod.json` entrypoints and reports any `@GameTest`/`FabricClientGameTest` class that's missing
+  from the list (it would silently never run) or listed but no longer exists. See
+  [Testing](../../TESTING.md#registration-is-mandatory-and-fails-silently).
+
 ## Project management
 
 - `bun run update:settingsgradle` — regenerate `settings.gradle` from the project list.
