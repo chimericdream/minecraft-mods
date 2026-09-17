@@ -50,7 +50,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
         index = 1
     )
     private int vt$modifyConversionTime(int time) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (config.enableConversionTimeOverride) {
             return config.conversionTime;
@@ -61,7 +61,7 @@ public abstract class VTZombieVillagerEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void vt$onTick(CallbackInfo ci) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (!this.isConverting() || !config.displayConversionTime || this.villagerConversionTime <= 0) {
             return;

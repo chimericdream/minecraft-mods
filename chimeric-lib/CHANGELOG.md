@@ -1,5 +1,20 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added `config/YaclConfig` and `config/YaclConfigScreens` — a shared YACL config wrapper that
+  replaces the hand-written `ConfigClassHandler` boilerplate every mod previously copied. A mod
+  builds its config with `YaclConfig.builder(FooConfig.class, MOD_ID).screen(...).onLoad(...).build()`
+  and calls `.init()` once from its common `init()`; `instance()`/`defaults()`/`load()`/`save()` cover
+  the rest. Config-screen registration is deferred to `YaclConfigScreens`, a registry keyed by mod id,
+  which the platform layers drain at a point guaranteed to run after every mod's own init: on Fabric,
+  chimeric-lib's new `modmenu` entrypoint (`fabric/config/YaclModMenuIntegration`) implements
+  `ModMenuApi#getProvidedConfigScreenFactories()` for every registered config; on NeoForge,
+  `neoforge/config/YaclConfigScreensNeoForge`'s `FMLClientSetupEvent` handler registers an
+  `IConfigScreenFactory` extension point on each consumer mod's `ModContainer`. This is opt-in —
+  chimeric-lib still does not hard-depend on Mod Menu or YACL; a mod that never calls
+  `YaclConfig.builder` needs neither present.
+
 ### 26.2 - 6.5.0
 
 #### New Features

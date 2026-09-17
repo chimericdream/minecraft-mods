@@ -8,6 +8,6 @@ public final class BannerTweaksMod {
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
 
     public static void init() {
-        BannerTweaksConfig.HANDLER.load();
+        BannerTweaksConfig.CONFIG.init();
     }
 }

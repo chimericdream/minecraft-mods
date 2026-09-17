@@ -160,7 +160,7 @@ public class MMLootTables {
     }
 
     public static List<LootPool.Builder> generatePoolbuilders(Identifier id, HolderLookup.Provider wrapperLookup) {
-        MiniblockMerchantsConfig config = MiniblockMerchantsConfig.HANDLER.instance();
+        MiniblockMerchantsConfig config = MiniblockMerchantsConfig.CONFIG.instance();
 
         List<LootPool.Builder> poolBuilders = new ArrayList<>();
 

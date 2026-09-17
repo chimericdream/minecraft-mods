@@ -66,7 +66,7 @@ public final class CampfireSneakingLogic {
     }
 
     public static void tick(Player player) {
-        SneakyTweaksConfig config = SneakyTweaksConfig.HANDLER.instance();
+        SneakyTweaksConfig config = SneakyTweaksConfig.CONFIG.instance();
         int graceTicks = CampfireGraceHolder.getCampfireGraceTicks(player);
 
         int drainPerTick = config.enableCampfireSneaking && player.isCrouching() ? getCampfireDrainPerTick(player) : 0;

@@ -26,7 +26,7 @@ public class GlobalReputationGameTest {
      * GameTests share one process, so leaking config state would bleed into other tests.
      */
     private static void withConfig(boolean globalReputation, boolean badReputation, Runnable body) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
         boolean previousGlobal = config.enableGlobalReputation;
         boolean previousBad = config.enableBadReputation;
 

@@ -32,7 +32,7 @@ public class VTTradeOfferMixin {
             return;
         }
 
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (config.enableMaxTradeOverride) {
             if (config.maxTradesOverrideAmount > -1) {
@@ -51,7 +51,7 @@ public class VTTradeOfferMixin {
             return;
         }
 
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (!config.enableDemandBonus) {
             this.demand = 0;
@@ -60,7 +60,7 @@ public class VTTradeOfferMixin {
 
     @Inject(method = "increaseUses", at = @At("TAIL"))
     public void checkInfiniteUses(CallbackInfo ci) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (config.enableMaxTradeOverride && config.maxTradesOverrideAmount == -1) {
             --this.uses;
@@ -72,7 +72,7 @@ public class VTTradeOfferMixin {
     // below its original cost.
     @Inject(method = "getModifiedCostCount", at = @At("RETURN"), cancellable = true)
     private void vt$capMaxDiscount(ItemCost cost, CallbackInfoReturnable<Integer> cir) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (!config.enableMaxDiscountCap) {
             return;

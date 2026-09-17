@@ -47,6 +47,10 @@ Roughly ordered by how much duplicated code a fix would remove and how many mods
    entirely — see bugs file). No chimeric-lib base class exists yet, despite chimeric-lib's own
    `POTENTIAL_FEATURES.md` already naming "a config sync layer... nearly every mod in the suite with
    server-side config wants this" as a backlog item. **~26 files, single biggest opportunity.**
+   **Resolved 2026-09-17**: chimeric-lib now ships `com.chimericdream.lib.config.YaclConfig` (+
+   `YaclConfigScreens`, a Fabric `modmenu` entrypoint and a NeoForge client-setup registrar); all 9
+   mods migrated to one `CONFIG` field + `CONFIG.init()`, and the 9 `ModMenuIntegration` classes / 8
+   NeoForge registrations were deleted. See §3.1 for details.
 2. **Config sync / networking** — three incompatible strategies for the same "send a payload
    cross-loader" job coexist (Architectury `NetworkManager` in one mod vs. hand-rolled
    `PayloadTypeRegistry`/`RegisterPayloadHandlersEvent` pairs in two more vs. a duplicated
@@ -287,6 +291,18 @@ and a "networking wrapper" as unbuilt backlog items — i.e. items 3.1 and 3.2 b
 gaps, just not yet built or quantified.
 
 ### 3.1 YACL config management — see executive summary #1 for the headline; detail:
+
+> **Resolved 2026-09-17.** Every mod below now declares
+> `public static final YaclConfig<XConfig> CONFIG = YaclConfig.builder(XConfig.class, MOD_ID)…screen(…).build()`
+> and calls `XConfig.CONFIG.init()` from its common `init()`. `init()` loads the file, runs an opt-in
+> `onLoad` validator (Athenaeum's clamping now uses it), and registers the config into
+> `YaclConfigScreens`; chimeric-lib's own Fabric `modmenu` entrypoint
+> (`ModMenuApi#getProvidedConfigScreenFactories`) and NeoForge `FMLClientSetupEvent` handler drain that
+> registry, so no per-mod platform code remains. Registration is deferred on purpose: Fabric does not
+> order `main` entrypoints by `depends`, and chimeric-lib avoids `@ExpectPlatform` (see
+> `PlatformCommandArgumentTypes` javadoc). Config file names were preserved (sneaky-tweaks and
+> beacon-conduit-tweaks pass `.fileName(...)`). miniblock-merchants' 26 repeated option blocks
+> collapsed to a local `chanceOption` helper. The original findings follow for the record.
 
 9 mods (villager-tweaks, beacon-conduit-tweaks, banner-tweaks, flat-bedrock, shulker-stuff,
 miniblock-merchants, athenaeum, better-portal-linking, sneaky-tweaks) each hand-write the identical
@@ -590,7 +606,8 @@ template itself encodes the right convention, not just that existing mods happen
 
 9 mods have a Fabric `ModMenuIntegration`; only 8 have the NeoForge counterpart. `better-portal-linking`
 is the one missing it, despite having a real config and a working Fabric integration — see bugs file
-for the concrete fix.
+for the concrete fix. **Resolved 2026-09-17**: both registrations now happen centrally in chimeric-lib
+(see §3.1), which closed the better-portal-linking gap as a side effect.
 
 ### 6.5 `gradle.properties` naming — 2 mods with opposite-direction `mod_id`/`maven_group` mismatches
 

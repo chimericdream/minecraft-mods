@@ -16,7 +16,7 @@ public class FabricServerNetworking {
     public static void initClient() {
         ClientPlayNetworking.registerGlobalReceiver(
             ServerNetworking.BannerLayerLimitPayload.ID,
-            (payload, context) -> BannerTweaksConfig.HANDLER.instance().maxBannerLayers = payload.getLimit()
+            (payload, context) -> BannerTweaksConfig.CONFIG.instance().maxBannerLayers = payload.getLimit()
         );
     }
 }

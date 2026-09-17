@@ -29,6 +29,8 @@ its constructor only calls `BetterPortalLinkingMod.init()`; there is no `IConfig
 hand-edit the JSON5 file on disk. Every other one of the 9 mods with a YACL config (8 of 9) has this
 NeoForge registration; this is the sole gap. **Fix**: add the registration to the constructor, following
 e.g. `shulker-stuff`'s or `beacon-conduit-tweaks`'s NeoForge class as a template.
+**Resolved 2026-09-17**: config-screen registration moved into chimeric-lib's `YaclConfig` helper
+(both loaders), so the mod gets its NeoForge screen automatically; changelog entry added.
 
 ### A3. Broken `fabric.mod.json`/`neoforge.mods.toml` icon references in `blacklight` and `cobblicious`
 `blacklight/fabric/src/main/resources/fabric.mod.json:15` declares `"icon": "assets/blacklight/icon.png"`

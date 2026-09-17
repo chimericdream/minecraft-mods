@@ -137,7 +137,7 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
 
     @Redirect(method = "updateBase(Lnet/minecraft/world/level/Level;III)I", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z"))
     private static boolean bct$updateLevel(BlockState instance, TagKey<Block> tag, Level world, int x, int y, int z) {
-        BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
+        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
 
         BeaconAccessor entity = bct$beacons.get(new Vec3i(x, y, z));
 
@@ -157,7 +157,7 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
     @SuppressWarnings("ModifyVariableMayUseName")
     @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)V", at = @At(value = "LOAD", ordinal = 0), ordinal = 0)
     private static double bct$modifiedRange(double d, Level world, BlockPos pos, int beaconLevel, @Nullable Holder<MobEffect> primaryEffect, @Nullable Holder<MobEffect> secondaryEffect) {
-        BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
+        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
         BlockEntity entity = world.getBlockEntity(pos);
 
         if (entity instanceof BeaconBlockEntity) {
@@ -174,7 +174,7 @@ public class BCTweaksBeaconMixin extends BlockEntity implements BeaconAccessor {
 
     @Override
     public void bct$resetRange() {
-        BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
+        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
 
         bct$range = config.beaconBaseRange;
     }

@@ -13,7 +13,7 @@ public abstract class VTAgeableMobMixin {
     @Inject(method = "getBabyStartAge", at = @At("RETURN"), cancellable = true)
     private void vt$modifyGrowUpTime(CallbackInfoReturnable<Integer> cir) {
         if ((Object) this instanceof Villager) {
-            VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+            VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
             if (config.enableGrowUpTimeOverride) {
                 cir.setReturnValue(-config.growUpTime);

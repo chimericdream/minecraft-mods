@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 public abstract class VTVillagerMakeLoveMixin {
     @ModifyConstant(method = "breed", constant = @Constant(intValue = -24000))
     private int vt$modifyGrowUpTime(int constant) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (config.enableGrowUpTimeOverride) {
             return -config.growUpTime;

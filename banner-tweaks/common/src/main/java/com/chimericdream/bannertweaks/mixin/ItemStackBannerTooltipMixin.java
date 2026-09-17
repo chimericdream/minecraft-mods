@@ -44,7 +44,7 @@ public class ItemStackBannerTooltipMixin {
             return;
         }
 
-        int max = BannerTweaksConfig.HANDLER.instance().maxBannerLayers;
+        int max = BannerTweaksConfig.CONFIG.instance().maxBannerLayers;
         consumer.accept(Component.literal(patterns.layers().size() + "/" + max + " layers").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* The config screen is now available on NeoForge too (Mods → select Better Portal Linking → Config); previously it only worked on Fabric via Mod Menu.
+
 ### 26.2 - 1.0.0
 
 #### New Features

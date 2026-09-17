@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.chimericdream.sneakytweaks.fabric.client.SneakyTweaksFabricClient"
-        ],
-        "modmenu": [
-            "com.chimericdream.sneakytweaks.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

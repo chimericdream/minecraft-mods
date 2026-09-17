@@ -1,21 +1,15 @@
 package com.chimericdream.bctweaks.config;
 
 import com.chimericdream.bctweaks.ModInfo;
-import com.google.gson.GsonBuilder;
+import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
-import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.DoubleFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import dev.isxander.yacl3.platform.YACLPlatform;
 import java.util.Map;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 
 public class BCTweaksConfig {
     @SerialEntry
@@ -29,21 +23,9 @@ public class BCTweaksConfig {
     @SerialEntry
     public transient Map<String, Double> conduitRangePerBlock = Defaults.CONDUIT_RANGE_PER_BLOCK;
 
-    public static ConfigClassHandler<BCTweaksConfig> HANDLER = ConfigClassHandler.createBuilder(BCTweaksConfig.class)
-        .id(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "config"))
-        .serializer(config -> GsonConfigSerializerBuilder.create(config)
-            .setPath(YACLPlatform.getConfigDir().resolve("beacon-conduit-tweaks.json5"))
-            .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-            .setJson5(true)
-            .build())
-        .build();
-
-    public static void load() {
-        HANDLER.load();
-    }
-
-    public static Screen configScreen(Screen parent) {
-        return YetAnotherConfigLib.create(HANDLER, ((defaults, config, builder) -> builder
+    public static final YaclConfig<BCTweaksConfig> CONFIG = YaclConfig.builder(BCTweaksConfig.class, ModInfo.MOD_ID)
+        .fileName("beacon-conduit-tweaks.json5")
+        .screen((defaults, config, builder) -> builder
             .title(Component.translatable("text.config.bctweaks.title"))
             .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.bctweaks.title"))
@@ -66,8 +48,8 @@ public class BCTweaksConfig {
                     .controller(TickBoxControllerBuilder::create)
                     .build())
                 .build())
-        )).generateScreen(parent);
-    }
+        )
+        .build();
 
     public static class Defaults {
         public static double BEACON_BASE_RANGE = 10.0;
