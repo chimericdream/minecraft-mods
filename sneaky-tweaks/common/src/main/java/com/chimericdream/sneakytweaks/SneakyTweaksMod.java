@@ -20,6 +20,6 @@ public final class SneakyTweaksMod {
 
         REGISTRY_HELPER.init();
 
-        SneakyTweaksConfig.load();
+        SneakyTweaksConfig.CONFIG.init();
     }
 }

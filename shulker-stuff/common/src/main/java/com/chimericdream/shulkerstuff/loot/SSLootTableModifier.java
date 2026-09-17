@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SSLootTableModifier extends LootTableModifier {
     protected void checkVanillaLootTables(Identifier id, List<LootPool.Builder> poolBuilders, HolderLookup.Provider wrapperLookup) {
-        ShulkerStuffConfig config = ShulkerStuffConfig.HANDLER.instance();
+        ShulkerStuffConfig config = ShulkerStuffConfig.CONFIG.instance();
 
         if (BuiltInLootTables.BASTION_TREASURE.identifier().equals(id)) {
             poolBuilders.add(makeWeightedItem(ModItems.PLATED_SHULKER_UPGRADE.get(), config.platedShulkerUpgradeChance));

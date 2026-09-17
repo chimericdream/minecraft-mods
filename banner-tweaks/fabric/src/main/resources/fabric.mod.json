@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.chimericdream.bannertweaks.fabric.client.BannerTweaksFabricClient"
-        ],
-        "modmenu": [
-            "com.chimericdream.bannertweaks.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

@@ -21,7 +21,7 @@ public final class ShulkerStuffMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
-        ShulkerStuffConfig.HANDLER.load();
+        ShulkerStuffConfig.CONFIG.init();
 
         REGISTRY_HELPER.init();
         ModEnchantments.init();

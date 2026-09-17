@@ -16,7 +16,7 @@ public final class CampfireGraceHolderImpl implements CampfireGraceHolder.Provid
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> CAMPFIRE_GRACE_TICKS = ATTACHMENT_TYPES.register(
         "campfire_grace_ticks",
-        () -> AttachmentType.builder(() -> SneakyTweaksConfig.HANDLER.instance().campfireGraceTicks)
+        () -> AttachmentType.builder(() -> SneakyTweaksConfig.CONFIG.instance().campfireGraceTicks)
             .sync(ByteBufCodecs.VAR_INT)
             .build()
     );

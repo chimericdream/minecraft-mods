@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.lib.fabric.client.ChimericLibFabricClient"
+        ],
+        "modmenu": [
+            "com.chimericdream.lib.fabric.config.YaclModMenuIntegration"
         ]
     },
     "mixins": [

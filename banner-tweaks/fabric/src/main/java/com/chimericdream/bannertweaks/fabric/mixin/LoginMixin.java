@@ -16,6 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LoginMixin {
     @Inject(at = @At("TAIL"), method = "Lnet/minecraft/server/players/PlayerList;placeNewPlayer(Lnet/minecraft/network/Connection;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/network/CommonListenerCookie;)V")
     private void syncBannerLayerLimit(Connection connection, ServerPlayer player, CommonListenerCookie clientData, CallbackInfo info) {
-        ServerPlayNetworking.send(player, new ServerNetworking.BannerLayerLimitPayload(BannerTweaksConfig.HANDLER.instance().maxBannerLayers));
+        ServerPlayNetworking.send(player, new ServerNetworking.BannerLayerLimitPayload(BannerTweaksConfig.CONFIG.instance().maxBannerLayers));
     }
 }

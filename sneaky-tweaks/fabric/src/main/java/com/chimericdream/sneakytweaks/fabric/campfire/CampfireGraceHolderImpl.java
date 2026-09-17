@@ -15,7 +15,7 @@ public final class CampfireGraceHolderImpl implements CampfireGraceHolder.Provid
     public static final AttachmentType<Integer> CAMPFIRE_GRACE_TICKS = AttachmentRegistry.create(
         Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "campfire_grace_ticks"),
         builder -> builder
-            .initializer(() -> SneakyTweaksConfig.HANDLER.instance().campfireGraceTicks)
+            .initializer(() -> SneakyTweaksConfig.CONFIG.instance().campfireGraceTicks)
             .syncWith(ByteBufCodecs.VAR_INT, AttachmentSyncPredicate.all())
     );
 

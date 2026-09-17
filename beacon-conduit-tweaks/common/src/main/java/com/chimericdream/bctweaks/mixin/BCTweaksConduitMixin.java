@@ -30,7 +30,7 @@ public class BCTweaksConduitMixin {
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void updateBlocks(CallbackInfo ci) {
-        BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
+        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
 
         if (!config.conduitRangePerBlock.isEmpty()) {
             Set<Block> modifierBlocks = config.conduitRangePerBlock.keySet().stream()
@@ -46,7 +46,7 @@ public class BCTweaksConduitMixin {
     @SuppressWarnings("ModifyVariableMayUseName")
     @ModifyVariable(method = "applyEffects(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)V", at = @At(value = "LOAD", ordinal = 0), ordinal = 1)
     private static int bct$modifiedRange(int _unused, Level world, BlockPos pos, List<BlockPos> activatingBlocks) {
-        BCTweaksConfig config = BCTweaksConfig.HANDLER.instance();
+        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
 
         int i = activatingBlocks.size();
         int j = i / 7 * 16;

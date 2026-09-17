@@ -25,6 +25,6 @@ public class NeoForgeServerNetworking {
     }
 
     public static void receiveBannerLimitConfigPacket(final ServerNetworking.BannerLayerLimitPayload payload, final IPayloadContext context) {
-        BannerTweaksConfig.HANDLER.instance().maxBannerLayers = payload.getLimit();
+        BannerTweaksConfig.CONFIG.instance().maxBannerLayers = payload.getLimit();
     }
 }

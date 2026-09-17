@@ -18,7 +18,7 @@ public class CampfireSneaking {
     private int lastEmberPopSoundPlayed;
 
     public void extractFlameTendrils(final GuiGraphicsExtractor graphics, final Player player, final int vehicleHearts, int yLineAir, final int xRight) {
-        SneakyTweaksConfig config = SneakyTweaksConfig.HANDLER.instance();
+        SneakyTweaksConfig config = SneakyTweaksConfig.CONFIG.instance();
         if (!config.enableCampfireSneaking) {
             return;
         }

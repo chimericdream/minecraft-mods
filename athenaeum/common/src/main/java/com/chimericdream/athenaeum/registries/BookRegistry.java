@@ -150,7 +150,7 @@ public class BookRegistry {
     }
 
     private int getRandomEdition(LootContext context) {
-        AthenaeumConfig config = AthenaeumConfig.HANDLER.instance();
+        AthenaeumConfig config = AthenaeumConfig.CONFIG.instance();
 
         double roll = context.getRandom().nextDouble();
         if (roll <= config.firstEditionChance) {

@@ -14,7 +14,7 @@ public final class MiniblockMerchantsMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
-        MiniblockMerchantsConfig.HANDLER.load();
+        MiniblockMerchantsConfig.CONFIG.init();
 
         ModItems.init();
         ModProfessions.init();

@@ -77,7 +77,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Inject(method = "getPlayerReputation", at = @At("HEAD"), cancellable = true)
     private void injected(Player player, CallbackInfoReturnable<Integer> cir) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         // Neither tweak is on: let vanilla read the player's own gossip, all types included.
         if (!config.enableGlobalReputation && config.enableBadReputation) {
@@ -99,7 +99,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
     // This used to be a TemptGoal, and the better way to do it is probably a task, but I couldn't get that to work
     @Inject(method = "customServerAiStep", at = @At("TAIL"))
     public void vt$mobTick(ServerLevel world, CallbackInfo ci) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
         if (
             this.isNoAi()
                 || this.getLastHurtByMob() != null
@@ -158,7 +158,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void vt_bagTheVillager(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (!this.level().isClientSide()) {
             ItemStack itemStack = player.getItemInHand(hand);
@@ -197,7 +197,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Inject(method = "onReputationEventFrom", at = @At(value = "HEAD"), cancellable = true)
     private void vt_overrideSettingGossip(ReputationEventType interaction, Entity entity, CallbackInfo ci) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
         if (!config.enableGlobalReputation) {
             return;
         }
@@ -220,7 +220,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void vt$onGrowthTick(CallbackInfo ci) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (this.level().isClientSide() || !this.isBaby() || !config.displayGrowUpTime || this.getAge() >= 0) {
             return;

@@ -16,7 +16,7 @@ public final class BetterPortalLinkingMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
-        BetterPortalLinkingConfig.load();
+        BetterPortalLinkingConfig.CONFIG.init();
 
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 

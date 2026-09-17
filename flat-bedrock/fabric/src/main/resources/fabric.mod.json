@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.chimericdream.flatbedrock.fabric.client.FlatBedrockFabricClient"
-        ],
-        "modmenu": [
-            "com.chimericdream.flatbedrock.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

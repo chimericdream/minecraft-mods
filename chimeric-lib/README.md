@@ -39,6 +39,9 @@ For developers, ChimericLib provides shared code across the Architectury `common
 * **Commands** — a small framework (`ChimericCommand`/`ChimericCommands`) for registering commands
   across both loaders without touching Architectury's command event directly. Ships its own first
   command, `/chimericlib blockstate get|set|modify`.
+* **Config** — `YaclConfig`/`YaclConfigScreens`, a shared wrapper around YACL's `ConfigClassHandler`
+  plus automatic Fabric (Mod Menu) and NeoForge config-screen registration, so a mod no longer
+  hand-writes that boilerplate itself. See below.
 * **Armor trims** — `TrimMaterialConfig`, `TrimMaterialRegistryHelper`, and `ArmorTrimAtlasProvider`
   automate generating a custom `trim_material` and its `armor_trims`/`items` atlas overrides, so a mod
   only has to hand-author the palette texture and its own material list. On Fabric, chimeric-lib's own
@@ -46,6 +49,24 @@ For developers, ChimericLib provides shared code across the Architectury `common
   material's icon renders correctly in the inventory too, not just on the worn armor — the Fabric
   equivalent of what NeoForge already does natively. Nothing extra to call for this; it applies
   automatically once a mod's materials are registered.
+
+### Config
+
+`YaclConfig` collapses the hand-written `ConfigClassHandler` + `ModMenuIntegration` + NeoForge
+`IConfigScreenFactory` boilerplate every mod used to duplicate into one field and one `init()` call:
+
+```java
+public static final YaclConfig<FooConfig> CONFIG = YaclConfig.builder(FooConfig.class, ModInfo.MOD_ID)
+    .screen((defaults, config, builder) -> builder.title(...).category(...))
+    .build();
+// in FooMod.init(): FooConfig.CONFIG.init();
+// elsewhere: FooConfig.CONFIG.instance().someField
+```
+
+`.screen(...)` is optional — omit it for a config with no config screen. `.onLoad(hook)` runs a
+post-load validation/clamping hook, and `.fileName(...)` overrides the default `<modId>.json5`. Config
+screens register themselves with Mod Menu (Fabric) and NeoForge automatically; a consuming mod doesn't
+need its own `ModMenuIntegration` or `IConfigScreenFactory` registration anymore.
 
 ## Issues & Suggestions
 
