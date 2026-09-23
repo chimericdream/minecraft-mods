@@ -44,12 +44,12 @@ public final class CrouchBridgeLogic {
     }
 
     public static boolean shouldAllowSteppingOffEdge(Player player) {
-        SneakyTweaksConfig config = SneakyTweaksConfig.HANDLER.instance();
+        SneakyTweaksConfig config = SneakyTweaksConfig.CONFIG.instance();
         return config.enableCrouchBridging && player.isCrouching() && !isLookingDown(player, config);
     }
 
     public static void tick(Player player) {
-        SneakyTweaksConfig config = SneakyTweaksConfig.HANDLER.instance();
+        SneakyTweaksConfig config = SneakyTweaksConfig.CONFIG.instance();
         CrouchBridgeState state = STATES.computeIfAbsent(player, p -> new CrouchBridgeState());
 
         if (!config.enableCrouchBridging || isExemptFromBridging(player)) {

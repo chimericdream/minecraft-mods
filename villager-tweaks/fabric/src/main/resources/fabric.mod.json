@@ -21,10 +21,7 @@
         "main": [
             "com.chimericdream.villagertweaks.fabric.VillagerTweaksFabric"
         ],
-        "client": [],
-        "modmenu": [
-            "com.chimericdream.villagertweaks.fabric.config.ModMenuIntegration"
-        ]
+        "client": []
     },
     "mixins": [
         "villagertweaks.mixins.json"

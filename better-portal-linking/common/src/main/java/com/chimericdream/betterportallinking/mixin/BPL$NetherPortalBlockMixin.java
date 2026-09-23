@@ -38,7 +38,7 @@ public abstract class BPL$NetherPortalBlockMixin {
      */
     @Inject(method = "getPortalDestination", at = @At("HEAD"))
     private void bpl$setEntryAddress(ServerLevel level, Entity entity, BlockPos pos, CallbackInfoReturnable<TeleportTransition> cir) {
-        if (!BetterPortalLinkingConfig.HANDLER.instance().enableAddressLinking) {
+        if (!BetterPortalLinkingConfig.CONFIG.instance().enableAddressLinking) {
             EntryPortalContext.clear();
             return;
         }
@@ -46,7 +46,7 @@ public abstract class BPL$NetherPortalBlockMixin {
         PortalAddress address = PortalAddressLinker.addressOf(level, pos);
         EntryPortalContext.set(address);
 
-        if (address.isEmpty() && BetterPortalLinkingConfig.HANDLER.instance().logLinkingDecisions) {
+        if (address.isEmpty() && BetterPortalLinkingConfig.CONFIG.instance().logLinkingDecisions) {
             BetterPortalLinkingMod.LOGGER.info(
                 "Entry portal at {} has no address blocks on its frame corners; using vanilla portal linking.", pos
             );

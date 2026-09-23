@@ -18,10 +18,7 @@
         "main": [
             "com.chimericdream.bctweaks.fabric.BeaconConduitTweaksFabric"
         ],
-        "client": [],
-        "modmenu": [
-            "com.chimericdream.bctweaks.fabric.config.ModMenuIntegration"
-        ]
+        "client": []
     },
     "mixins": [
         "beaconconduittweaks.mixins.json"

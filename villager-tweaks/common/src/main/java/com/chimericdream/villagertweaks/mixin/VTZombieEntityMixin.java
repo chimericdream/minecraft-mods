@@ -15,7 +15,7 @@ public class VTZombieEntityMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getDifficulty()Lnet/minecraft/world/Difficulty;")
     )
     private Difficulty modifyConversionTime(ServerLevel world) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
 
         if (config.forceVillagerConversion) {
             return Difficulty.HARD;

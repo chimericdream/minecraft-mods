@@ -8,6 +8,6 @@ public final class BeaconConduitTweaksMod {
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
 
     public static void init() {
-        BCTweaksConfig.load();
+        BCTweaksConfig.CONFIG.init();
     }
 }

@@ -16,7 +16,7 @@ public final class AthenaeumMod {
     public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
     public static void init() {
-        AthenaeumConfig.load();
+        AthenaeumConfig.CONFIG.init();
 
         AthenaeumRegistries.init();
         AthenaeumLootFunctionTypes.register();

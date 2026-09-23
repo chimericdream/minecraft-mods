@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.chimericdream.betterportallinking.fabric.client.BetterPortalLinkingFabricClient"
-        ],
-        "modmenu": [
-            "com.chimericdream.betterportallinking.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

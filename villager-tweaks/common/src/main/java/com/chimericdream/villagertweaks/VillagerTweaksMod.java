@@ -17,7 +17,7 @@ public class VillagerTweaksMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(ModInfo.MOD_ID, LOGGER);
 
     public static void init() {
-        VillagerTweaksConfig.load();
+        VillagerTweaksConfig.CONFIG.init();
 
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 

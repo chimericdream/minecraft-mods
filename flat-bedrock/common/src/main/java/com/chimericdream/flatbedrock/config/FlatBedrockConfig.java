@@ -1,19 +1,14 @@
 package com.chimericdream.flatbedrock.config;
 
 import com.chimericdream.flatbedrock.FlatBedrockMod;
-import com.google.gson.GsonBuilder;
+import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
-import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import dev.isxander.yacl3.platform.YACLPlatform;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -38,21 +33,8 @@ public class FlatBedrockConfig {
     @SerialEntry
     public int netherRoofThickness = Defaults.ROOF_THICKNESS;
 
-    public static ConfigClassHandler<FlatBedrockConfig> HANDLER = ConfigClassHandler.createBuilder(FlatBedrockConfig.class)
-        .id(Identifier.fromNamespaceAndPath(FlatBedrockMod.MOD_ID, "config"))
-        .serializer(config -> GsonConfigSerializerBuilder.create(config)
-            .setPath(YACLPlatform.getConfigDir().resolve("flatbedrock.json5"))
-            .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-            .setJson5(true)
-            .build())
-        .build();
-
-    public static void load() {
-        HANDLER.load();
-    }
-
-    public static Screen configScreen(Screen parent) {
-        return YetAnotherConfigLib.create(HANDLER, ((defaults, config, builder) -> builder
+    public static final YaclConfig<FlatBedrockConfig> CONFIG = YaclConfig.builder(FlatBedrockConfig.class, FlatBedrockMod.MOD_ID)
+        .screen((defaults, config, builder) -> builder
             .title(Component.literal("Flat Bedrock Config"))
             .category(ConfigCategory.createBuilder()
                 .name(Component.literal("Overworld"))
@@ -102,8 +84,8 @@ public class FlatBedrockConfig {
                     .controller(StringControllerBuilder::create)
                     .build())
                 .build())
-        )).generateScreen(parent);
-    }
+        )
+        .build();
 
     /**
      * Overworld and Nether share the same "bedrock_floor" gradient name, so an unrecognized (e.g.
@@ -112,7 +94,7 @@ public class FlatBedrockConfig {
      * rather than silently doing nothing.
      */
     public static int resolveFloorThickness(ResourceKey<Level> dimension) {
-        FlatBedrockConfig config = HANDLER.instance();
+        FlatBedrockConfig config = CONFIG.instance();
         return dimension == Level.NETHER ? config.netherFloorThickness : config.overworldFloorThickness;
     }
 
@@ -120,12 +102,12 @@ public class FlatBedrockConfig {
      * Only the Nether has a bedrock roof in vanilla, so roof settings aren't split per-dimension.
      */
     public static int resolveRoofThickness() {
-        FlatBedrockConfig config = HANDLER.instance();
+        FlatBedrockConfig config = CONFIG.instance();
         return config.netherNoRoof ? 0 : config.netherRoofThickness;
     }
 
     public static BlockState resolveReplacementBlockState(ResourceKey<Level> dimension) {
-        FlatBedrockConfig config = HANDLER.instance();
+        FlatBedrockConfig config = CONFIG.instance();
         String blockId = dimension == Level.NETHER ? config.netherReplacementBlock : config.overworldReplacementBlock;
         return resolveBlockState(blockId);
     }

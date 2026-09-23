@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 public class LoomScreenHandlerMixin {
     @ModifyConstant(method = "slotsChanged", constant = @Constant(intValue = 6))
     public int getLimit(int constant) {
-        return BannerTweaksConfig.HANDLER.instance().maxBannerLayers;
+        return BannerTweaksConfig.CONFIG.instance().maxBannerLayers;
     }
 }

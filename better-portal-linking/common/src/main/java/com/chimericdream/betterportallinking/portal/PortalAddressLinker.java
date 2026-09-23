@@ -96,7 +96,7 @@ public final class PortalAddressLinker {
     public static Optional<BlockPos> findBestMatch(
         ServerLevel level, BlockPos target, boolean toNether, WorldBorder border, PortalAddress entry
     ) {
-        if (entry.isEmpty() || !BetterPortalLinkingConfig.HANDLER.instance().enableAddressLinking) {
+        if (entry.isEmpty() || !BetterPortalLinkingConfig.CONFIG.instance().enableAddressLinking) {
             return Optional.empty();
         }
 
@@ -113,7 +113,7 @@ public final class PortalAddressLinker {
             .toList();
 
         if (poiPositions.isEmpty()) {
-            if (BetterPortalLinkingConfig.HANDLER.instance().logLinkingDecisions) {
+            if (BetterPortalLinkingConfig.CONFIG.instance().logLinkingDecisions) {
                 BetterPortalLinkingMod.LOGGER.info(
                     "Entry address {} found no portals within {} blocks of {}; using vanilla portal linking.",
                     entry, radius, target
@@ -149,7 +149,7 @@ public final class PortalAddressLinker {
 
         Optional<BlockPos> result = select(candidates, entry, target);
 
-        if (BetterPortalLinkingConfig.HANDLER.instance().logLinkingDecisions) {
+        if (BetterPortalLinkingConfig.CONFIG.instance().logLinkingDecisions) {
             logDecision(entry, candidates, result);
         }
 

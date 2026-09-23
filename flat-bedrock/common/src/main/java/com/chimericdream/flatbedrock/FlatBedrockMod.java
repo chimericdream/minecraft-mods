@@ -11,6 +11,6 @@ public final class FlatBedrockMod {
     public static void init() {
         LOGGER.info("Let's flatten some bedrock!");
 
-        FlatBedrockConfig.load();
+        FlatBedrockConfig.CONFIG.init();
     }
 }

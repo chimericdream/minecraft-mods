@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.chimericdream.athenaeum.fabric.client.AthenaeumModFabricClient"
-        ],
-        "modmenu": [
-            "com.chimericdream.athenaeum.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [

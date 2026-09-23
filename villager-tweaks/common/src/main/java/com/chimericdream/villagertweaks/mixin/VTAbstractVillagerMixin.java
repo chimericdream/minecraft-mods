@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VTAbstractVillagerMixin implements VT$VillagerAccessor {
     @Inject(method = "canBeLeashed", at = @At("HEAD"), cancellable = true)
     private void vt$allowNitwitLeashing(CallbackInfoReturnable<Boolean> cir) {
-        VillagerTweaksConfig config = VillagerTweaksConfig.HANDLER.instance();
+        VillagerTweaksConfig config = VillagerTweaksConfig.CONFIG.instance();
         VillagerData data = this.getVillagerData();
 
         if (config.enableNitwitLeashing && data != null && data.profession().is(VillagerProfession.NITWIT)) {

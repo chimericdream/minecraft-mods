@@ -17,9 +17,6 @@
     "entrypoints": {
         "main": [
             "com.chimericdream.miniblockmerchants.fabric.MiniblockMerchantsFabric"
-        ],
-        "modmenu": [
-            "com.chimericdream.miniblockmerchants.fabric.config.ModMenuIntegration"
         ]
     },
     "mixins": [
