@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Changes
+
+* The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
+  settings themselves are unchanged.
 
 ### 26.2 - 4.1.0
 
