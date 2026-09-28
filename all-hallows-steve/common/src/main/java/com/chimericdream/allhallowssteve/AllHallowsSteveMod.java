@@ -1,6 +1,7 @@
 package com.chimericdream.allhallowssteve;
 
 import com.chimericdream.allhallowssteve.block.ModBlocks;
+import com.chimericdream.allhallowssteve.block.ModDispenserBehaviors;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.stats.ModStats;
@@ -26,5 +27,15 @@ public final class AllHallowsSteveMod {
         ModItems.init();
         ModStats.init();
         AllHallowsSteveComponentTypes.init();
+    }
+
+    /**
+     * Runs logic that depends on registry objects actually being resolvable via {@code .get()}, and
+     * that writes to vanilla's non-thread-safe dispenser registry. On NeoForge this must run from
+     * {@code FMLCommonSetupEvent#enqueueWork}, not from {@link #init()}; on Fabric, registration is
+     * synchronous, so calling this immediately after {@link #init()} is safe.
+     */
+    public static void postInit() {
+        ModDispenserBehaviors.init();
     }
 }

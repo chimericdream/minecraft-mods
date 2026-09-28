@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
@@ -87,6 +88,24 @@ public class DecoratedPumpkinBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
+        Block litVariant = litVariantFor(itemStack);
+        if (litVariant == null) {
+            return InteractionResult.PASS;
+        }
+
+        light(serverLevel, pos, state, litVariant, player);
+
+        if (!player.getAbilities().instabuild) {
+            itemStack.shrink(1);
+        }
+
+        player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
+
+        return InteractionResult.SUCCESS;
+    }
+
+    /** The {@link LitDecoratedPumpkinBlock} variant {@code itemStack}'s torch type lights this pumpkin into, or {@code null} if it isn't one of the four torches. */
+    public static @Nullable Block litVariantFor(ItemStack itemStack) {
         RegistrySupplier<Block> litVariant;
         if (itemStack.is(Items.TORCH)) {
             litVariant = ModBlocks.LIT_DECORATED_PUMPKIN;
@@ -97,32 +116,34 @@ public class DecoratedPumpkinBlock extends BaseEntityBlock {
         } else if (itemStack.is(Items.REDSTONE_TORCH)) {
             litVariant = ModBlocks.LIT_DECORATED_PUMPKIN_RED;
         } else {
-            return InteractionResult.PASS;
+            return null;
         }
 
+        return litVariant.get();
+    }
+
+    /**
+     * Swaps the unlit pumpkin at {@code pos} for {@code litVariant}, keeping its facing, dye color and
+     * stencils. Shared by the player path ({@link #tryLight}) and the dispenser path (see
+     * {@code ModDispenserBehaviors}); consuming the torch is left to the caller.
+     */
+    public static void light(ServerLevel level, BlockPos pos, BlockState state, Block litVariant, @Nullable Entity cause) {
         int color = DyedColorComponent.DEFAULT_COLOR;
         PumpkinStencilsComponent stencils = PumpkinStencilsComponent.EMPTY;
-        if (serverLevel.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity decorated) {
+        if (level.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity decorated) {
             color = decorated.getColor();
             stencils = decorated.getStencils();
         }
 
-        serverLevel.setBlock(pos, litVariant.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), Block.UPDATE_ALL);
+        level.setBlock(pos, litVariant.defaultBlockState().setValue(FACING, state.getValue(FACING)), Block.UPDATE_ALL);
 
-        if (serverLevel.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity lit) {
+        if (level.getBlockEntity(pos) instanceof DecoratedPumpkinBlockEntity lit) {
             lit.setColor(color);
             lit.setStencils(stencils);
         }
 
-        if (!player.getAbilities().instabuild) {
-            itemStack.shrink(1);
-        }
-
-        serverLevel.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
-        serverLevel.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-        player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
-
-        return InteractionResult.SUCCESS;
+        level.gameEvent(cause, GameEvent.BLOCK_CHANGE, pos);
+        level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
     @Override

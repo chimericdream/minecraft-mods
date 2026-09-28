@@ -18,3 +18,4 @@
   * Redstone Torch — light level 7, Red
   * Lit pumpkins can still be re-dyed and re-carved in the Pumpkin Carving Station.
   * Shear a lit pumpkin to remove the torch and turn it back into a regular decorated pumpkin.
+  * Dispensers can do both: a dispenser with a torch lights the decorated pumpkin in front of it, and one with shears removes the torch. A dispenser won't put a torch into a pumpkin that's already lit.

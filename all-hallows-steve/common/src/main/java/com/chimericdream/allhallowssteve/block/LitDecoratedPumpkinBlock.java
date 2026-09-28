@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
@@ -47,9 +49,9 @@ import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELP
  * Crafted from a plain {@link DecoratedPumpkinBlock} plus this variant's torch item via a
  * {@code TransmuteRecipe} (see {@code LitDecoratedPumpkinBlockDataGenerator}), which carries the input
  * pumpkin's own {@link DyedColorComponent}/{@link PumpkinStencilsComponent} onto the result. Right-
- * clicking with shears reverses that: this block turns back into a plain {@code DecoratedPumpkinBlock}
- * (preserving color/stencils) and drops the torch, mirroring vanilla {@code PumpkinBlock}'s own
- * shears-carve interaction.
+ * clicking with shears (or a dispenser firing shears at it, see {@code ModDispenserBehaviors}) reverses
+ * that: this block turns back into a plain {@code DecoratedPumpkinBlock} (preserving color/stencils)
+ * and drops the torch, mirroring vanilla {@code PumpkinBlock}'s own shears-carve interaction.
  */
 public class LitDecoratedPumpkinBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
@@ -126,8 +128,27 @@ public class LitDecoratedPumpkinBlock extends BaseEntityBlock {
             return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
         }
 
-        if (!(level instanceof ServerLevel)) {
+        if (!(level instanceof ServerLevel serverLevel)) {
             return InteractionResult.SUCCESS;
+        }
+
+        extinguish(serverLevel, pos, state, player);
+
+        itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+        player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
+
+        return InteractionResult.SUCCESS;
+    }
+
+    /**
+     * Reverts the lit pumpkin at {@code pos} to a plain {@code DecoratedPumpkinBlock} (keeping its
+     * facing, dye color and stencils) and drops its torch. Shared by the player shears path
+     * ({@link #useItemOn}) and the dispenser path (see {@code ModDispenserBehaviors}); damaging the
+     * shears is left to the caller.
+     */
+    public static void extinguish(ServerLevel level, BlockPos pos, BlockState state, @Nullable Entity cause) {
+        if (!(state.getBlock() instanceof LitDecoratedPumpkinBlock lit)) {
+            return;
         }
 
         int color = DyedColorComponent.DEFAULT_COLOR;
@@ -144,13 +165,9 @@ public class LitDecoratedPumpkinBlock extends BaseEntityBlock {
             relit.setStencils(stencils);
         }
 
-        Block.popResource(level, pos, new ItemStack(torchItem));
+        Block.popResource(level, pos, new ItemStack(lit.torchItem));
 
-        itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
-        level.gameEvent(player, GameEvent.SHEAR, pos);
+        level.gameEvent(cause, GameEvent.SHEAR, pos);
         level.playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
-        player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
-
-        return InteractionResult.SUCCESS;
     }
 }

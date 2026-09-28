@@ -12,6 +12,7 @@ public final class AllHallowsSteveFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         AllHallowsSteveMod.init();
+        AllHallowsSteveMod.postInit();
 
         LootTableEvents.MODIFY.register((id, tableBuilder, source, wrapperLookup) -> {
             // Only modify built-in loot tables and leave data pack loot tables untouched by checking the source.
