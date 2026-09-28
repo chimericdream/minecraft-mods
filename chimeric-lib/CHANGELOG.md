@@ -14,6 +14,14 @@
   `IConfigScreenFactory` extension point on each consumer mod's `ModContainer`. This is opt-in —
   chimeric-lib still does not hard-depend on Mod Menu or YACL; a mod that never calls
   `YaclConfig.builder` needs neither present.
+* Added `dispenser/DispenserBehaviors` and `dispenser/BlockTargetDispenseBehavior` — a helper for
+  "dispenser uses this item on the block in front of it" that layers over an item's existing
+  dispenser behavior instead of replacing it. `DispenserBehaviors.wrap(item, handler)` captures the
+  item's current `DISPENSER_REGISTRY` entry (or vanilla's per-stack default, via a new
+  `DispenserBlockAccessor` invoker mixin, when it has none) and registers a wrapper whose handler
+  returns `PASS` (run the previous behavior), `SUCCESS` (dispense sound) or `FAIL` (failure click,
+  stack untouched). Also adds `DispenserBehaviors.damageWithoutPlayer` for tools used by a dispenser.
+  Call `wrap` from Fabric's `onInitialize` or NeoForge's `FMLCommonSetupEvent` inside `enqueueWork`.
 
 ### 26.2 - 6.5.0
 

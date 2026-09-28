@@ -101,6 +101,13 @@ wiring the other mods copy (enchantment-numbers-fix next).
   contents, empty case). The stack merging/insertion math described here (component-sensitive
   stacks, max-stack-size edges, Shulker Stuff's builder) is aspirational — that logic does not yet
   live in this class; expand the suite when it lands.
+* **`DispenserBehaviors`** — ✅ done for the registry bookkeeping (`DispenserBehaviorsTest`):
+  `wrap` registers the wrapper and keeps the previous behavior as its fallback, an item with no entry
+  keeps vanilla's per-stack default (via the `DispenserBlockAccessor` invoker), double-wrapping
+  chains newest-first, and the collection overload registers every item. The plain "drop the item"
+  default branch sits behind an item-tag check that can't run headless (tags aren't bound), and
+  `BlockTargetDispenseBehavior#dispense` needs a live `ServerLevel` — both are covered end-to-end by
+  all-hallows-steve's `DispenserPumpkinGameTest` rather than a fixture GameTest here.
 
 ### GameTests — world-coupled pieces (against fixture content)
 
