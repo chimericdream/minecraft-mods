@@ -19,3 +19,4 @@
   * Lit pumpkins can still be re-dyed and re-carved in the Pumpkin Carving Station.
   * Shear a lit pumpkin to remove the torch and turn it back into a regular decorated pumpkin.
   * Dispensers can do both: a dispenser with a torch lights the decorated pumpkin in front of it, and one with shears removes the torch. A dispenser won't put a torch into a pumpkin that's already lit.
+* Vanilla pumpkins work the same way: sneak and use a torch on a carved pumpkin to turn it into a jack o'lantern, or use shears on a jack o'lantern to take the torch back out. Dispensers can do both too. Only regular torches work here, since vanilla only has the one jack o'lantern.

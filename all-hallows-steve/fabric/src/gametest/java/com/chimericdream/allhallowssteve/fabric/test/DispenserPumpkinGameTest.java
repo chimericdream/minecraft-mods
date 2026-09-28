@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarvedPumpkinBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 
@@ -145,6 +146,75 @@ public class DispenserPumpkinGameTest {
         context.runAfterDelay(SETTLE_TICKS, () -> {
             assertDecorationKept(context, ModBlocks.DECORATED_PUMPKIN.get());
             context.assertValueEqual(dispenser.getItem(0).getDamageValue(), 0, "shears damage");
+            context.succeed();
+        });
+    }
+
+    private static void placeVanillaPumpkin(GameTestHelper context, Block block) {
+        context.setBlock(TARGET, block.defaultBlockState().setValue(CarvedPumpkinBlock.FACING, Direction.SOUTH));
+    }
+
+    private static void assertVanillaPumpkin(GameTestHelper context, Block expected) {
+        context.assertBlockPresent(expected, TARGET);
+        context.assertBlockState(
+            TARGET,
+            state -> state.getValue(CarvedPumpkinBlock.FACING) == Direction.SOUTH,
+            state -> Component.literal("pumpkin facing should be preserved, was " + state.getValue(CarvedPumpkinBlock.FACING))
+        );
+    }
+
+    @GameTest(maxTicks = 40)
+    public void torchLightsCarvedPumpkinIntoJackOLantern(GameTestHelper context) {
+        placeVanillaPumpkin(context, Blocks.CARVED_PUMPKIN);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.TORCH, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertVanillaPumpkin(context, Blocks.JACK_O_LANTERN);
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 1, "torches left in the dispenser");
+            context.assertItemEntityNotPresent(Items.TORCH);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void soulTorchAtCarvedPumpkinFallsBackToDropping(GameTestHelper context) {
+        placeVanillaPumpkin(context, Blocks.CARVED_PUMPKIN);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.SOUL_TORCH, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertVanillaPumpkin(context, Blocks.CARVED_PUMPKIN);
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 1, "soul torches left in the dispenser");
+            context.assertItemEntityPresent(Items.SOUL_TORCH);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void torchFailsOnJackOLantern(GameTestHelper context) {
+        placeVanillaPumpkin(context, Blocks.JACK_O_LANTERN);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.TORCH, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertVanillaPumpkin(context, Blocks.JACK_O_LANTERN);
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 2, "torches left in the dispenser");
+            context.assertItemEntityNotPresent(Items.TORCH);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void shearsTurnJackOLanternBackIntoCarvedPumpkin(GameTestHelper context) {
+        placeVanillaPumpkin(context, Blocks.JACK_O_LANTERN);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.SHEARS));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertVanillaPumpkin(context, Blocks.CARVED_PUMPKIN);
+            context.assertItemEntityPresent(Items.TORCH);
+            context.assertValueEqual(dispenser.getItem(0).getDamageValue(), 1, "shears damage");
             context.succeed();
         });
     }

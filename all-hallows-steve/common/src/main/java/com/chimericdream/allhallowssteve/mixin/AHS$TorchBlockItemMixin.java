@@ -1,10 +1,13 @@
 package com.chimericdream.allhallowssteve.mixin;
 
 import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
+import com.chimericdream.allhallowssteve.block.JackOLanterns;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +30,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * {@code REDSTONE_TORCH}) share the same {@code StandingAndWallBlockItem} class (also used by coral
  * fans and mob heads), and that class doesn't override {@code useOn} — so the mixin targets
  * {@code BlockItem} itself and identifies torches by {@code getBlock()} instead.
+ * <p>
+ * The same shift-click also lights a vanilla carved pumpkin into a jack o'lantern (regular torch
+ * only, see {@link JackOLanterns}). It's shift-gated for the same reason: a plain click keeps
+ * vanilla's behavior of placing the torch on the pumpkin's face.
  */
 @Mixin(BlockItem.class)
 abstract public class AHS$TorchBlockItemMixin {
@@ -48,10 +55,24 @@ abstract public class AHS$TorchBlockItemMixin {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
-        if (!(state.getBlock() instanceof DecoratedPumpkinBlock)) {
+        if (state.getBlock() instanceof DecoratedPumpkinBlock) {
+            cir.setReturnValue(DecoratedPumpkinBlock.tryLight(context.getItemInHand(), state, level, pos, player));
             return;
         }
 
-        cir.setReturnValue(DecoratedPumpkinBlock.tryLight(context.getItemInHand(), state, level, pos, player));
+        ItemStack itemStack = context.getItemInHand();
+        if (!JackOLanterns.canLight(state, itemStack)) {
+            return;
+        }
+
+        if (level instanceof ServerLevel serverLevel) {
+            JackOLanterns.light(serverLevel, pos, state, player);
+
+            if (!player.getAbilities().instabuild) {
+                itemStack.shrink(1);
+            }
+        }
+
+        cir.setReturnValue(InteractionResult.SUCCESS);
     }
 }
