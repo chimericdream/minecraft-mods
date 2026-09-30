@@ -7,6 +7,9 @@ doc stops at **ready to build**. Once an idea is ready, building it follows the 
 The four `ideas-*` skills in `.claude/skills/` automate the steps below. This doc is the source of
 truth. If a skill and this doc disagree, the doc wins, and the skill should be updated to match.
 
+Rules that apply to every brainstorm, whatever the mod (what never to propose, and what to always
+favor), live in [`docs/BRAINSTORMING-RULES.md`](BRAINSTORMING-RULES.md).
+
 ## Who decides what
 
 Agents propose; the user decides. In particular, **only the user**:

@@ -39,6 +39,8 @@ One self-contained prompt that works pasted into any assistant with no repo acce
   welcome". Inbox items can be listed as seeds to expand on.
 - Rejected and archived ideas, marked "already decided against, don't re-propose".
 - The identity statement and the tone constraints, verbatim.
+- Every current rule from [`docs/BRAINSTORMING-RULES.md`](../../../docs/BRAINSTORMING-RULES.md), with its
+  ID and one-line "why". Skip rules marked retired.
 - Ask for a spread of ideas, from quick extensions of existing systems to bigger bets, each with a one-
   or two-sentence description. No ranking and no implementation detail needed.
 

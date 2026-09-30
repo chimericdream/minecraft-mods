@@ -47,8 +47,11 @@ exciting. Favor ideas that deepen what the mod already does over ideas that spre
    variant to pick and what to skip). Cross-reference related items by number (`#16`).
 5. `## Honorable mentions`: near-misses worth doing if a related feature gets built.
 6. `## What was cut and why`: every remaining idea from `combined-ideas.md`, grouped by reason, e.g.
-   scope creep (belongs in a different mod), already in vanilla, hard to build for the payoff,
-   off-tone or mechanically odd, too vague to act on.
+   breaks a rule, scope creep (belongs in a different mod), already in vanilla, hard to build for the
+   payoff, off-tone or mechanically odd, too vague to act on. Put ideas that break a rule in
+   [`docs/BRAINSTORMING-RULES.md`](../../../docs/BRAINSTORMING-RULES.md) first, citing the rule ID
+   ("breaks N1"). If an otherwise strong idea would pass with a small change (e.g. adding an opt-out),
+   shortlist the changed version and say what was changed.
 7. `## Suggested first arc`: one short paragraph naming a coherent first set of items, and what follows.
 
 ## Finish
