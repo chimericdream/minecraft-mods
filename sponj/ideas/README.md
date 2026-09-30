@@ -7,7 +7,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 > **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
 >
-> **simple, slightly silly, extremely useful sponges**. Two blocks and a connection bonus — ideas below keep that "one block, one job" spirit.
+> **Simple, slightly silly, extremely useful sponges**. Two blocks and a connection bonus — ideas below keep that "one block, one job" spirit.
 
 ## Active ideas
 

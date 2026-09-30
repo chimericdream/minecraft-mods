@@ -7,7 +7,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 > **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
 >
-> **configurable reach** for beacons and conduits. The natural next step is making the *rest* of their behavior just as configurable, while staying server-side wherever possible.
+> **Configurable reach** for beacons and conduits. The natural next step is making the *rest* of their behavior just as configurable, while staying server-side wherever possible.
 
 ## Active ideas
 

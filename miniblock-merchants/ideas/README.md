@@ -7,7 +7,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 > **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
 >
-> **professions with personality**, each with a themed conversion item found through a specific gameplay activity, trading decorative miniblocks. New ideas should keep that triangle intact: profession theme → discovery method → miniblock catalog.
+> **Professions with personality**, each with a themed conversion item found through a specific gameplay activity, trading decorative miniblocks. New ideas should keep that triangle intact: profession theme → discovery method → miniblock catalog.
 
 ## Active ideas
 
