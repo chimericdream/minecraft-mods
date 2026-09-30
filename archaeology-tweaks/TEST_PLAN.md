@@ -97,7 +97,8 @@ Structure `archtweaks:brushing/single_block` (a 3×3 platform with one suspiciou
 
 * **Brushing simulation helper** — "advance brushable BE at pos by N brush strokes" +
   `assertDustedLevel(pos, n)`. Only this mod needs it today, but a "tag-first brushable" ChimericLib
-  feature is already floated in its POTENTIAL_FEATURES; the helper belongs beside it.
+  feature is already floated in its ideas (`chimeric-lib/ideas/datagen/tag-first-behavior-registry.md`); the
+  helper belongs beside it.
 * **Loot-table resolution assertion** — `assertLootTableExists(server, id)` and
   `rollLootTable(server, id, seed, n)` for datapack-driven mods (shared with Athenaeum, Miniblock
   Merchants).

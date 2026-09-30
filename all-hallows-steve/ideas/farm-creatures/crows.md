@@ -1,12 +1,17 @@
 # Crows
 
 > Shortlist #23 · Tier 3 — Big bets · Effort **L** · Value ★★ · Votes 6 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Ambient birds that perch on fences, peck at crops, and scatter as a flock when you approach. On their
 own they're just atmosphere, but together with the scarecrow (#16) they form a small gameplay loop. A
 full new mob (model, animations, AI, spawning, sounds) is the most expensive part.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

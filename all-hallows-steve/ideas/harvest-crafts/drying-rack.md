@@ -1,11 +1,16 @@
 # Drying rack
 
 > Shortlist #18 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★ · Votes 4 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
 A rack that visibly turns fresh items into dried ones over time: herbs and flowers into bundles (#9), and
 apples into dried apple rings. It works like a slow campfire and pairs well with the harvest decorations.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -1,12 +1,17 @@
 # Cider press
 
 > Shortlist #17 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★ · Votes 9 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Apples in, cider bottles out. Suggested by 9 of 13 brainstorms. Use vanilla apples rather than adding
 orchard trees. Mulled cider (cider + spice or sweet berries) can be the upgraded version. Skip barrel
 aging and multiblocks.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -1,10 +1,20 @@
 # All Hallows Steve — Ideas
 
-Feature ideas being worked out before they're built. Each file below is one active idea, grouped by
-theme. Raw brainstorming sessions are kept in [`brainstorms/`](brainstorms/), one dated folder per
-session.
+Feature ideas for this mod, from first thought to ready to build. The process is described in
+[`docs/FEATURE-WORK.md`](../../docs/FEATURE-WORK.md). Raw brainstorming sessions are kept in
+[`brainstorms/`](brainstorms/), one dated folder per session.
 
-## Carving
+## Identity
+
+> **Draft, needs approval.** Drawn from the tone of the 2026-09-29 brainstorm and shortlist:
+>
+> A pumpkin mod first: dyeing, carving, lighting, and displaying decorated pumpkins, plus the harvest
+> and folklore that surround them. The tone is grounded autumn: quiet, seasonal, and rooted in real
+> harvest and Samhain folklore. It is not campy, not horror, and not a general seasons or farming mod.
+
+## Active ideas
+
+### Carving
 
 - [Candle-lit pumpkins](carving/candle-lit-pumpkins.md) — Light decorated pumpkins with 1–4 candles
   instead of a torch; brightness scales with candle count and the glow takes the candle's color.
@@ -19,13 +29,13 @@ session.
 - [Wearable decorated pumpkins](carving/wearable-decorated-pumpkins.md) — Wear a dyed and carved pumpkin
   with vanilla carved-pumpkin behavior, rendered on players and armor stands.
 
-## Crops
+### Crops
 
 - [White pumpkins and gourd varieties](crops/white-pumpkins-and-gourds.md) — A few new varieties to start:
   white pumpkins for truer dye colors, warty heirlooms, and ornamental gourds.
 - [Tall corn](crops/tall-corn.md) — A 2–3 block tall crop for field mazes, with husks for corn shocks.
 
-## Harvest crafts
+### Harvest crafts
 
 - [Harvest foods](harvest-crafts/harvest-foods.md) — A few well-chosen foods: soul cakes, pumpkin soup,
   and mulled cider.
@@ -38,16 +48,25 @@ session.
 - [Turnip lanterns](harvest-crafts/turnip-lanterns.md) — A small hanging carved-root lantern, after the
   Irish and Scottish tradition that came before pumpkins.
 
-## Farm creatures
+### Farm creatures
 
 - [Scarecrow](farm-creatures/scarecrow.md) — A dressable figure with a pumpkin head that stops crop
   trampling and rabbits eating crops nearby.
 - [Crows](farm-creatures/crows.md) — Ambient birds that perch, peck at crops, and scatter as a flock;
   scarecrows keep them away.
 
-## Folklore
+### Folklore
 
 - [Weathering gravestones + iron fencing](folklore/gravestones-and-iron-fencing.md) — Writable
   headstones that gather moss over time and can be waxed, plus wrought-iron fencing and gates.
 - [Will-o'-the-wisps + buried caches](folklore/will-o-the-wisps.md) — Faint lights in swamps and Pale
   Gardens that sometimes lead to buried caches holding the rarest stencils.
+
+## Inbox
+
+_Empty._ The older, unvoted backlog is in
+[`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/).
+
+## Archive
+
+_Empty._

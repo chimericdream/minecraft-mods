@@ -191,6 +191,7 @@ as an open question below rather than designed further here.
 
 ## Status
 
-Not implemented. Recorded in `POTENTIAL_FEATURES.md` under the 2026-08-25 entry. The currently shipped
+Not implemented. Recorded in the legacy backlog (`ideas/brainstorms/2026-08-25-legacy/potential-features.md`) under the
+2026-08-25 entry. The currently shipped
 Preserving enchantment uses the simpler fixed-default-color design (blockstate boolean only, no block
 entity) described in this doc's introduction.

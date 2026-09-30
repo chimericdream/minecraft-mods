@@ -1,6 +1,7 @@
 # Will-o'-the-wisps + buried caches
 
 > Shortlist #22 · Tier 3 — Big bets · Effort **L** · Value ★★★ · Votes 1 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
@@ -8,6 +9,10 @@ Faint lights that drift through swamps and Pale Gardens at night and retreat as 
 one sometimes leads to a buried cache, a good home for the rarest stencils (#3). It's pure folklore and
 eerie without being horror, and it would be the mod's signature step beyond pumpkins. The cost is a light
 entity with simple AI, particles, and cache generation.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -8,18 +8,9 @@ description: Start a new feature-brainstorming session for one mod — write a s
 Step 1 of the ideas pipeline: **ideas-brainstorm** → `ideas-combine` → `ideas-shortlist` →
 `ideas-promote`. Reference session: `all-hallows-steve/ideas/brainstorms/2026-09-29/`.
 
-## Layout this pipeline maintains
-
-```
-<mod>/ideas/
-  README.md                     active ideas, grouped by theme, one line each (ideas-promote)
-  <theme>/<idea-slug>.md        one file per active idea (ideas-promote)
-  brainstorms/<YYYY-MM-DD>/     one folder per session — never mixed with other sessions
-    prompt.md                   the shared prompt (this skill)
-    agent1.md … agentN.md       raw answers, verbatim (this skill)
-    combined-ideas.md           merged and de-duplicated (ideas-combine)
-    shortlist.md                ranked, user votes on it (ideas-shortlist)
-```
+The process, the `ideas/` layout, and who decides what are defined in
+[`docs/FEATURE-WORK.md`](../../../docs/FEATURE-WORK.md). That doc wins if this skill disagrees with it.
+This skill writes `prompt.md` and `agent1.md` … `agentN.md` into a new `brainstorms/<date>/` folder.
 
 ## 1. Confirm scope
 
@@ -33,9 +24,11 @@ Step 1 of the ideas pipeline: **ideas-brainstorm** → `ideas-combine` → `idea
 Read, don't guess:
 
 - The mod's `README.md` and `CHANGELOG.md` → a short, factual list of **existing features**.
-- `<mod>/ideas/README.md`, if present → **active ideas** already being worked on.
-- The most recent `brainstorms/*/shortlist.md` "What was cut and why" section, if present → themes the
-  user has already rejected.
+- `<mod>/ideas/README.md` → the **identity statement** (if it's still marked Draft, ask the user to
+  confirm it first), the **active ideas**, the **inbox**, and the **archive** (shipped or dropped).
+- Every earlier `brainstorms/*/shortlist.md`, "What was cut and why" and the No votes → themes the user
+  has already rejected. A `*-legacy/` folder that was never shortlisted counts as raw material, not as
+  rejections.
 
 ## 3. Write `prompt.md`
 
@@ -43,8 +36,9 @@ One self-contained prompt that works pasted into any assistant with no repo acce
 
 - One paragraph about the mod and its identity (Minecraft version, what it does today).
 - The existing-features list, and the active ideas marked "already planned, don't repeat — variants
-  welcome".
-- The tone constraints, verbatim from the user.
+  welcome". Inbox items can be listed as seeds to expand on.
+- Rejected and archived ideas, marked "already decided against, don't re-propose".
+- The identity statement and the tone constraints, verbatim.
 - Ask for a spread of ideas, from quick extensions of existing systems to bigger bets, each with a one-
   or two-sentence description. No ranking and no implementation detail needed.
 

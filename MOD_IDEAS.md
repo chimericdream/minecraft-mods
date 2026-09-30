@@ -3,3 +3,7 @@
 * Corner portal linking: mod appears no longer maintained
 * Trinket slots (add to ChimericLib?): slots for shulker box, totem of undying, elytra
 * Anvil tweaks (add to ChimericLib?): make the anvil never too expensive
+
+## Mod template
+
+* Add commented-out code to make it easier to implement data generation

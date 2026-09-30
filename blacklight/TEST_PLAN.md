@@ -16,7 +16,7 @@ Write the real plan alongside the first feature, following the suite conventions
   `fabric/src/main/java/com/chimericdream/blacklight/fabric/test/`, registered under the
   `fabric-gametest` entrypoint in `fabric.mod.json`, with `.snbt` structures under
   `common/src/main/resources/data/blacklight/gametest/structure/`.
-* Use ChimericLib's GameTest helpers (see `chimeric-lib/POTENTIAL_FEATURES.md`) for common fixtures
+* Use ChimericLib's GameTest helpers (see `chimeric-lib/ideas/testing/gametest-harness-helpers.md`) for common fixtures
   before writing bespoke ones.
 
 If the concept involves light/rendering (the name suggests invisible-light or glow mechanics), plan

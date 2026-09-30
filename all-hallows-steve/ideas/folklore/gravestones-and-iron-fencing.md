@@ -1,6 +1,7 @@
 # Weathering gravestones + iron fencing
 
 > Shortlist #19 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★ · Votes 1 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
@@ -8,6 +9,10 @@ Headstones you can write on like signs, which slowly gather moss the way copper 
 waxed, matching #11). Add wrought-iron fencing and gates. It fits the Hallowmas/All Hallows theme
 directly. Keep it decorative only (no graves, no loot) to stay on-tone and avoid clashing with
 death-chest mods.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

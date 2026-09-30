@@ -110,7 +110,8 @@ village or spawned villagers, conversion items from the creative tab.
 * **Registry loop-test scaffolding** — "for every entry of registry R owned by mod M, assert
   predicate P with readable per-entry failures." Used here for professions/trades/textures, in
   Minekea for its hundreds of blocks, and in every content mod.
-* **Villager-profession declarative builder** (already on ChimericLib's POTENTIAL_FEATURES list) —
+* **Villager-profession declarative builder** (already a ChimericLib idea:
+  `chimeric-lib/ideas/suite-patterns/villager-profession-helper.md`) —
   when extracted, its own tests move to chimeric-lib and this mod keeps only data-level tests.
 
 ## Open questions

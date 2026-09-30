@@ -1,12 +1,17 @@
 # Wearable decorated pumpkins
 
 > Shortlist #12 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★★ · Votes 3 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Equip a dyed or carved pumpkin on your head with vanilla carved-pumpkin behavior (enderman safety, the
 vision overlay). The main work is rendering the tinted and stenciled pumpkin on the player and armor
 stand heads. A per-stencil vision overlay is a nice stretch goal; skip the stealth and fuel mechanics.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -1,12 +1,17 @@
 # Harvest bundles and wreaths
 
 > Shortlist #9 · Tier 1 — Quick wins · Effort **S** · Value ★★ · Votes 9 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
 Decorative blocks: corn shocks, wheat sheaves, hanging dried-flower and herb bundles, and a door wreath
 with a few material variants. These are simple models and recipes with no machinery. They're the
 cheapest way to give builders an autumn palette around their pumpkins.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

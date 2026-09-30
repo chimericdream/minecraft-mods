@@ -1,6 +1,7 @@
 # Scarecrow
 
 > Shortlist #16 · Tier 2 — Solid mid-size features · Effort **M–L** · Value ★★★ · Votes 7 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
@@ -8,6 +9,10 @@ The second most-suggested idea. It's an armor-stand-like entity with a (decorate
 be dressed. Give it one clear job so it's more than decoration: **no crop trampling and no rabbits eating
 crops within a radius**, and later it scares off crows (#23). Keep it stationary and without personality,
 as the brainstorms warned. If entity work is too heavy, a static multiblock is a cheaper fallback.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -16,4 +16,6 @@
   (critical bugs) done on unmerged `fix/*` branches; Phase 2+ not started.
 - [UPDATE-PLAN.md](../../../UPDATE-PLAN.md) (repo root) — the Yarn→Mojang + MC 26.2 update runbook
   (migration now complete).
-- Per-mod `TEST_PLAN.md` and `POTENTIAL_FEATURES.md` — testing plans and feature backlogs.
+- [docs/FEATURE-WORK.md](../../FEATURE-WORK.md) — how feature ideas are captured, brainstormed, voted on,
+  and refined until ready to build, for every mod.
+- Per-mod `TEST_PLAN.md` (testing plans) and `ideas/` folders (feature ideas; start at `ideas/README.md`).

@@ -9,12 +9,18 @@ Step 4 of the ideas pipeline: `ideas-brainstorm` → `ideas-combine` → `ideas-
 **ideas-promote**. Reference output: the idea files and `README.md` in `all-hallows-steve/ideas/`.
 
 Idea files are where each idea is iterated on before it's built, so they start as a faithful copy of
-what the shortlist says, not a rewrite.
+what the shortlist says, not a rewrite. The idea-file format, the statuses, and the README sections
+are defined in [`docs/FEATURE-WORK.md`](../../../docs/FEATURE-WORK.md). That doc wins if this skill
+disagrees with it.
 
 ## 1. Pick the items
 
 Every row of the shortlist table whose **My Vote** is **Yes** or **Maybe**, and no other rows. If any
 rows are blank, ask before treating them as No.
+
+**Inbox items:** when the user OKs promoting an inbox bullet straight to an idea file, do the same
+steps without a shortlist. The Description is the user's bullet plus anything they've added in
+conversation, and the header uses the `> Source:` form (see step 3). Remove the bullet from the inbox.
 
 ## 2. Group into theme folders
 
@@ -31,10 +37,15 @@ rows are blank, ask before treating them as No.
 # <Idea name>
 
 > Shortlist #<n> · <Tier> · Effort **<E>** · Value <★> · Votes <v> · My vote **<Yes|Maybe>**
+> Status: **Exploring**
 
 ## Description
 
 <the shortlist's section for this item, copied verbatim>
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 
@@ -53,6 +64,10 @@ the `brainstorms/<date>/agentN.md` files that suggested each variant.
 _None yet._
 ```
 
+When the idea didn't come through a shortlist, replace the shortlist line with
+`> Source: <where it came from, linked> · Status: **Exploring**`, and drop **Brainstorm variants** if
+there aren't any.
+
 If the idea file **already exists** from an earlier session, leave its Description and any notes the
 user has added. Append this session's variants under a new
 `### From brainstorms/<date>` sub-heading in **Brainstorm variants**, with its own citation line.
@@ -61,16 +76,25 @@ user has added. Append this session's variants under a new
 
 - In `shortlist.md`, link each promoted row's Feature cell to its file (`../../<theme>/<slug>.md`), and
   add a line above the table saying linked rows have their own idea files.
-- `<mod>/ideas/README.md` lists **all active ideas**, not any particular shortlist. It has a short intro
-  (points to `brainstorms/` for raw sessions), then one `## <Theme>` section per folder with one entry
-  per idea: `- [Name](<theme>/<slug>.md) — <one-sentence summary>`. Add new ideas and keep it in sync
-  with the folders.
+- `<mod>/ideas/README.md` lists **all active ideas**, not any particular shortlist. Its sections are
+  `## Identity`, `## Active ideas` (one `### <Theme>` per folder, one entry per idea:
+  `- [Name](<theme>/<slug>.md) — <one-sentence summary>`), `## Inbox`, and `## Archive`. Add new ideas
+  and keep the list in sync with the folders. If it still says "No active ideas yet", replace that line.
+  Never edit the Identity statement unless the user asks.
 
 ## Moving an idea between themes
 
 Move the file, then fix every link that points to it (grep for the slug across `ideas/`: the README,
 shortlist rows in every session, and the Related sections of other idea files). Also fix the moved
-file's own relative links, then check that every link resolves.
+file's own relative links, then check that every link resolves. Also search outside `ideas/`: test
+plans, docs, and source comments can link to idea files (chimeric-lib's are referenced by several
+`TEST_PLAN.md` files and `docs/TESTING.md`).
+
+## Retiring an idea (shipped or dropped)
+
+Follow [`docs/FEATURE-WORK.md` → Retiring ideas](../../../docs/FEATURE-WORK.md#retiring-ideas): set the
+final status (with a version, or the user's one-line reason), move the file to `ideas/archive/`, fix
+links as above, and move its README entry from Active ideas to Archive. Only the user drops an idea.
 
 ## Finish
 

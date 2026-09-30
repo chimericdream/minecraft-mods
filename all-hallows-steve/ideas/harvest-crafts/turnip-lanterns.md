@@ -1,12 +1,17 @@
 # Turnip lanterns
 
 > Shortlist #15 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★ · Votes 1 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
 A small hanging carved-root lantern, nodding to the Irish and Scottish tradition that came before
 pumpkins. It has a strong folklore angle, it's cheap-ish (one block, lit/unlit, hanging like a lantern),
 and it gives the mod a small lighting option that isn't a full block.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

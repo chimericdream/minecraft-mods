@@ -11,7 +11,7 @@ mod: **unit tests for the pure helpers, GameTests against test-only fixture cont
 world-coupled pieces, and consumer-mod tests as the integration layer.**
 
 A key decision baked into this plan: chimeric-lib is also the planned home of the suite's **GameTest
-harness helpers** (see `POTENTIAL_FEATURES.md`, "Developer & testing tools" — now expanded with the
+harness helpers** (see `ideas/testing/gametest-harness-helpers.md` — now expanded with the
 specific helpers the other mods' test plans call for). The helpers themselves need tests here, using
 throwaway fixture blocks registered only in the test environment (or in the `playgrounds` sandbox
 project during prototyping).
@@ -127,7 +127,7 @@ source set + published-`testFixtures` structure).
 * **`SimpleSeatEntityGameTest`** — ✅ done (lifecycle). Mock player sits, dismounts, and the seat
   auto-despawns past its 20-tick grace window, leaving **no leaked entities**. Two behaviours the
   earlier draft listed are **deliberately not asserted** because they don't exist yet (known gaps,
-  POTENTIAL_FEATURES "SimpleSeatEntity polish"): freeing the rider when the seat block is broken
+  `ideas/conveniences/simple-seat-entity-polish.md`): freeing the rider when the seat block is broken
   mid-sit, and keeping the dismount position out of walls. Asserting them would only encode the gap;
   add the tests when the safety logic lands.
 * **`LootTableModifierGameTest`** — ✅ done. Subclass injects a guaranteed marker pool into exactly one
@@ -143,7 +143,7 @@ source set + published-`testFixtures` structure).
 
 ### Tests for the GameTest harness helpers themselves
 
-Each helper the suite plans (see `POTENTIAL_FEATURES.md` for the consolidated list — container
+Each helper the suite plans (see `ideas/testing/gametest-harness-helpers.md` for the consolidated list — container
 fill/assert, redstone gate, update detector, mock-player interaction wrappers, villager fixture
 builder, config override fixture, loot-table kit, inventory diffing, entity-absence watcher,
 menu harness, registry loop scaffolding) gets a self-test GameTest here proving it does what it
@@ -155,7 +155,7 @@ documentation for the other mods.
 
 Not applicable in the usual sense — this mod is the *destination* for the helpers collected from
 every other TEST_PLAN.md in the repo. The consolidated, prioritized list lives in
-`POTENTIAL_FEATURES.md` under "Developer & testing tools"; treat the per-mod "ChimericLib helper
+`ideas/testing/gametest-harness-helpers.md`; treat the per-mod "ChimericLib helper
 opportunities" sections as its requirements backlog, and this plan's "helper self-tests" section as
 the acceptance criteria.
 
@@ -178,6 +178,6 @@ the acceptance criteria.
 ## Open questions
 
 * None outstanding for chimeric-lib's own tests. Remaining work is the broader **GameTest harness
-  helper backlog** (POTENTIAL_FEATURES "Developer & testing tools" — redstone gate, update detector,
+  helper backlog** (`ideas/testing/gametest-harness-helpers.md` — redstone gate, update detector,
   villager fixture builder, etc.) and their self-tests; the three helpers shipped so far
   (`GameTestContainers`/`GameTestEntities`/`GameTestMenus`) are the first slice.

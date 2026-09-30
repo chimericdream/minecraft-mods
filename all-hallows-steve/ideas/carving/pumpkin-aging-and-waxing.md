@@ -1,6 +1,7 @@
 # Pumpkin aging + honeycomb waxing
 
 > Shortlist #11 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★★ · Votes 5 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
@@ -9,6 +10,10 @@ and softened carving edges rather than visible rot. Honeycomb waxes a pumpkin at
 same way it works on copper. Because the mod already recolors and re-carves pumpkins in the station, you
 could let the station "restore" a pumpkin, or not, as a deliberate choice. **Make aging opt-in via
 config or very slow by default** so decorative builds don't punish players.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

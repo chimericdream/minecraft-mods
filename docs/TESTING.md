@@ -102,7 +102,7 @@ Consuming them (the root `build.gradle` already wires `test`; a mod's `gametest`
 `common/build.gradle` needs `sourceSets.testFixtures.compileClasspath += sourceSets.main.compileClasspath`.
 
 The GameTest-helper backlog (what to add next, tagged per consumer mod) lives in
-`chimeric-lib/POTENTIAL_FEATURES.md` → "Developer & testing tools".
+`chimeric-lib/ideas/testing/gametest-harness-helpers.md`.
 
 ## Visual smoke tests (rendering)
 

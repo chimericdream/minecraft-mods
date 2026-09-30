@@ -1,12 +1,17 @@
 # Harvest foods
 
 > Shortlist #8 · Tier 1 — Quick wins · Effort **S** · Value ★★ · Votes 7 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
 Two or three well-chosen foods, not a cooking system: **soul cakes** (from the real "souling" tradition),
 **pumpkin soup** (bowl food), and **mulled cider** (see #17 for the full cider version). Standard vanilla-
 tier effects only.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

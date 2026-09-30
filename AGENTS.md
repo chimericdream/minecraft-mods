@@ -29,3 +29,5 @@ it; each category links one level deeper to the specific doc for that topic.
   mods
 - [Releases](docs/agents/releases.md) — versioning/changelog rules, git commit hygiene
 - [Reference](docs/agents/reference.md) — planning docs index, external Minecraft asset reference
+- [Feature work](docs/FEATURE-WORK.md) — how feature ideas are captured, brainstormed, voted on, and
+  refined until ready to build (each mod's `ideas/` folder; the `ideas-*` skills)

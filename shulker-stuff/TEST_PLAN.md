@@ -119,7 +119,7 @@ netherite.
 ## Open questions
 
 * How does a player choose what Void discards (dedicated filter UI? box contents as implicit
-  filter?) — determines the `voidDestroysMatchingPickup` setup. (ChimericLib's POTENTIAL_FEATURES
+  filter?) — determines the `voidDestroysMatchingPickup` setup. (ChimericLib's Item Filter API idea
   notes reusing Hopper X-Treme's filter API here eventually.)
 * Refill's exact trigger (block placement only? any stack shrink?) and multi-box priority order.
 * Config screen must be fixed (Known Issue) before config tests are written — currently all options

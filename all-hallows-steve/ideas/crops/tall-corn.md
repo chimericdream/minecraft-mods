@@ -1,11 +1,16 @@
 # Tall corn
 
 > Shortlist #25 · Tier 3 — Big bets · Effort **M–L** · Value ★★ · Votes 5 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
 A 2–3 block tall crop for field mazes, with husks feeding into corn shocks (#9). It's popular and
 on-theme, but multi-block crops are fiddly, and it pulls the mod toward general farming.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

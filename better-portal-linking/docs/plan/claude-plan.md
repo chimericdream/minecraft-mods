@@ -218,7 +218,7 @@ doesn't, drop it and say so rather than weakening the test.
 ### Wave 4 — docs (1 Sonnet agent)
 
 `README.md` "Current Features", `CHANGELOG.md` under `### Unreleased changes`, and a line or two in
-`POTENTIAL_FEATURES.md` for follow-ups (e.g. placing address blocks on auto-created portals, a
+the mod's `ideas/README.md` inbox for follow-ups (e.g. placing address blocks on auto-created portals, a
 `/portallink debug` command). Player-facing tone: concise and non-technical, per `CLAUDE.md`.
 
 ### Wave 5 — review (1 **Opus** agent, final)

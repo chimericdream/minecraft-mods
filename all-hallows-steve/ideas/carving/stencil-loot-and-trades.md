@@ -1,12 +1,17 @@
 # Stencils as exploration loot and trades
 
 > Shortlist #3 · Tier 1 — Quick wins · Effort **S** · Value ★★ · Votes 3 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Put the rarer new designs in trial chambers, ancient cities, and woodland mansions, and have some sold by
 specific villager professions (cartographer, librarian). This reuses the loot-table pattern already in
 place for the Heart/Jigsaw/Spawner/Structure Block stencils.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

@@ -25,6 +25,6 @@ Conventions: Fabric GameTest classes in
 `fabric/src/main/java/com/chimericdream/cobblicious/fabric/test/`, registered under the
 `fabric-gametest` entrypoint, structures under
 `common/src/main/resources/data/cobblicious/gametest/structure/`. Use ChimericLib's planned
-**block-family datagen/testing helpers** (see `chimeric-lib/POTENTIAL_FEATURES.md`) — this mod is
+**block-family datagen/testing helpers** (see `chimeric-lib/ideas/datagen/block-family-generator.md`) — this mod is
 exactly the "declare a base block, generate the family" case, and a shared "assert family is
 complete" GameTest helper should be built there, not here.

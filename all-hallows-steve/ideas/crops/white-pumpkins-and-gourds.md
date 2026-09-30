@@ -1,6 +1,7 @@
 # White pumpkins and gourd varieties
 
 > Shortlist #13 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★★ · Votes 10 · My vote **Maybe**
+> Status: **Exploring**
 
 ## Description
 
@@ -11,6 +12,10 @@ The most-requested idea overall. Start with two or three varieties rather than t
 
 Each one needs a stem/crop, a block, seeds, and a way to find them (rare seeds from grass or loot). Add
 more varieties only once the pipeline exists.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

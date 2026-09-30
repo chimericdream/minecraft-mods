@@ -1,6 +1,7 @@
 # Candle-lit pumpkins
 
 > Shortlist #1 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes 4 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
@@ -11,6 +12,10 @@ steel. This is an almost direct extension of the existing lit-pumpkin variants a
 
 *Note: Minecraft light has no color, so "tinted" means the glow texture or overlay, the same as the
 current soul/copper/redstone variants.*
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

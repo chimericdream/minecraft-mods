@@ -13,8 +13,8 @@ import net.minecraft.server.level.ServerPlayer;
  * and the entity has lived past its 20-tick grace window, {@link SimpleSeatEntity#tick()} kills it —
  * so a sit/dismount cycle leaves no leaked seat entities.
  *
- * <p>Deliberately not asserted (known gaps, tracked in chimeric-lib POTENTIAL_FEATURES under
- * "SimpleSeatEntity polish"): freeing the rider when the seat block is broken mid-sit, and keeping the
+ * <p>Deliberately not asserted (known gaps, tracked in chimeric-lib's idea file
+ * ideas/conveniences/simple-seat-entity-polish.md): freeing the rider when the seat block is broken mid-sit, and keeping the
  * dismount position out of walls. Those behaviours don't exist yet, so asserting them would only encode
  * the gap rather than test the code.
  */

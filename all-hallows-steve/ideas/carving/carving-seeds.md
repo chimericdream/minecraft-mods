@@ -1,11 +1,16 @@
 # Carving yields seeds, roasted pumpkin seeds
 
 > Shortlist #5 · Tier 1 — Quick wins · Effort **S** · Value ★★ · Votes 5 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Carving a pumpkin at the station returns a few pumpkin seeds. Roast them on a campfire for a small snack.
 It's a small detail, but it makes carving feel physical.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 

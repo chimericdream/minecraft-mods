@@ -10,7 +10,7 @@ Don't invest in a test plan for a sandbox. Instead, two suggestions:
 
 1. **Use this project as the home for testing experiments.** When building ChimericLib's planned
    GameTest harness helpers (fixtures, inventory diffing, update detectors — see
-   `chimeric-lib/POTENTIAL_FEATURES.md` and `chimeric-lib/TEST_PLAN.md`), Playgrounds is the natural
+   `chimeric-lib/ideas/testing/gametest-harness-helpers.md` and `chimeric-lib/TEST_PLAN.md`), Playgrounds is the natural
    place to prototype a helper against a throwaway block before promoting it into the library.
 2. **If Playgrounds ever graduates into a real mod**, write its plan at that point following the
    suite conventions: manual checklist per feature (Fabric + NeoForge), Fabric GameTest classes in

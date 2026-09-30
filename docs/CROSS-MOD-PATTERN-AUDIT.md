@@ -45,7 +45,7 @@ Roughly ordered by how much duplicated code a fix would remove and how many mods
    skeleton, plus 9 near-identical Fabric `ModMenuIntegration` classes and 8 near-identical NeoForge
    config-screen registrations (one mod, `better-portal-linking`, is missing its NeoForge one
    entirely — see bugs file). No chimeric-lib base class exists yet, despite chimeric-lib's own
-   `POTENTIAL_FEATURES.md` already naming "a config sync layer... nearly every mod in the suite with
+   ideas backlog (`chimeric-lib/ideas/`) already naming "a config sync layer... nearly every mod in the suite with
    server-side config wants this" as a backlog item. **~26 files, single biggest opportunity.**
    **Resolved 2026-09-17**: chimeric-lib now ships `com.chimericdream.lib.config.YaclConfig` (+
    `YaclConfigScreens`, a Fabric `modmenu` entrypoint and a NeoForge client-setup registrar); all 9
@@ -63,7 +63,7 @@ Roughly ordered by how much duplicated code a fix would remove and how many mods
 4. **GameTest testFixtures under-adoption.** Only 2 of 8 GameTest-having mods actually consume
    chimeric-lib's shared `GameTestContainers`/`GameTestPlayers` kit, even though at least 3 more
    (minekea, houdini-block, hopper-xtreme) have hand-rolled helpers that duplicate it almost exactly —
-   and chimeric-lib's own `POTENTIAL_FEATURES.md` backlog already names every one of these gaps by
+   and chimeric-lib's own ideas backlog (`chimeric-lib/ideas/`) already names every one of these gaps by
    mod, unprompted.
 5. **`RealNeighborMovingBlockRenderState` + its `createMovingBlock` factory** exist as one class
    duplicated verbatim across 2 mods, plus a helper method duplicated 3x inside one of them. Zero
@@ -286,7 +286,7 @@ registration, well-adopted), `util/ChimericLibParticleUtils.spawnParticleAbove` 
 `inventories/ContainerOpenersCounters` (well-adopted, 2 consumers), `util/ModConfigurable` (per-block
 config wiring, not a YACL/mod-wide config abstraction — there is currently **no** YACL helper in
 chimeric-lib at all), and no networking wrapper despite Architectury's `NetworkManager` being an
-available dependency. chimeric-lib's own `POTENTIAL_FEATURES.md` already names a "config sync layer"
+available dependency. chimeric-lib's own ideas backlog (`chimeric-lib/ideas/`) already names a "config sync layer"
 and a "networking wrapper" as unbuilt backlog items — i.e. items 3.1 and 3.2 below are *known*
 gaps, just not yet built or quantified.
 
@@ -334,7 +334,7 @@ that a `ChimericLibModMenu`/`ChimericLibConfigScreens` helper could collapse to 
   actual send call. `stack-it-up` solves the identical "sync config on join" problem with a single
   Architectury `PlayerEvent.PLAYER_JOIN` call in common code — no mixin, no per-loader duplication.
 
-A chimeric-lib wrapper over `NetworkManager` (already scoped in `POTENTIAL_FEATURES.md`) would let
+A chimeric-lib wrapper over `NetworkManager` (already scoped in `chimeric-lib/ideas/infrastructure/networking-wrapper.md`) would let
 banner-tweaks/minekea/effective-gear delete 6 platform-specific files and 2 duplicated mixins between
 them.
 
@@ -531,8 +531,8 @@ minekea (`placeJar`/`redstone` helpers + inline slot-assertion checks that dupli
 `GameTestPlayers.makeFacingPlayer`'s underlying call), shulker-stuff (a private `Station` record/factory
 for player+block-entity setup), villager-tweaks (a hand-rolled config-save/restore `withConfig` helper),
 and hopper-xtreme (5 separate hand-rolled patterns, already self-documented in its own `TEST_PLAN.md`
-under "ChimericLib helper opportunities"). **chimeric-lib's own `POTENTIAL_FEATURES.md` "Developer &
-testing tools" backlog already names every one of these gaps by consumer mod, unprompted** — a
+under "ChimericLib helper opportunities"). **chimeric-lib's own GameTest-helper backlog
+(`chimeric-lib/ideas/testing/gametest-harness-helpers.md`) already names every one of these gaps by consumer mod, unprompted** — a
 "Config override fixture" tagged for villager-tweaks, "Mock-player interaction wrappers" (partially
 done) with an open `useOn` gap matching houdini-block's need, a "Menu/screen-handler test harness"
 tagged for shulker-stuff by name, and container fill/assert helpers tagged for

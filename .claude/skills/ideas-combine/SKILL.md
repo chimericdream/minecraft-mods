@@ -29,6 +29,7 @@ The goal is a **complete, neutral** merge. Ranking and cutting happen in the nex
   two-sentence descriptions in plain language.
 - If an idea is already an **active idea** in `ideas/README.md`, keep it but mark it
   `(active idea: [name](../../<theme>/<slug>.md))` so ideas-promote can fold new variants into it.
+  Mark ideas that match an archived (shipped or dropped) idea as `(archived: [name](../../archive/<slug>.md))`.
 
 ## Structure of `combined-ideas.md`
 

@@ -1,12 +1,17 @@
 # More stencils with autumn and folklore motifs
 
 > Shortlist #2 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes 5 · My vote **Yes**
+> Status: **Exploring**
 
 ## Description
 
 Oak leaf, wheat sheaf, moth, owl, raven, crescent moon, moon phases, bare tree, a Samhain-style knot,
 plus eerie vanilla designs (warden, sculk shrieker, pale oak). This is mostly pixel art plus
 recipes and datagen, and more designs make every other carving feature better.
+
+## Decisions
+
+_None yet._
 
 ## Brainstorm variants
 
