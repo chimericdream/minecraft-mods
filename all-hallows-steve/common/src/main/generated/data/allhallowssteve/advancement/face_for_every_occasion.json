@@ -1,0 +1,219 @@
+{
+  "parent": "allhallowssteve:rare_cut",
+  "criteria": {
+    "has_pumpkin_stencils_blank": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/blank"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_crafter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/crafter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_creaking": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/creaking"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_creaking_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/creaking_heart"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_creeper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/creeper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_dispenser": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/dispenser"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_dropper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/dropper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/heart"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_jack_o_lantern": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/jack_o_lantern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_jigsaw": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/jigsaw"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_lodestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/lodestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_observer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/observer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_spawner": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/spawner"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_structure_data": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/structure_data"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pumpkin_stencils_wither_rose": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/wither_rose"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.face_for_every_occasion.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "id": "allhallowssteve:pumpkin_stencils/jack_o_lantern"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.face_for_every_occasion.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_pumpkin_stencils_blank"
+    ],
+    [
+      "has_pumpkin_stencils_crafter"
+    ],
+    [
+      "has_pumpkin_stencils_creaking"
+    ],
+    [
+      "has_pumpkin_stencils_creaking_heart"
+    ],
+    [
+      "has_pumpkin_stencils_creeper"
+    ],
+    [
+      "has_pumpkin_stencils_dispenser"
+    ],
+    [
+      "has_pumpkin_stencils_dropper"
+    ],
+    [
+      "has_pumpkin_stencils_heart"
+    ],
+    [
+      "has_pumpkin_stencils_jack_o_lantern"
+    ],
+    [
+      "has_pumpkin_stencils_jigsaw"
+    ],
+    [
+      "has_pumpkin_stencils_lodestone"
+    ],
+    [
+      "has_pumpkin_stencils_observer"
+    ],
+    [
+      "has_pumpkin_stencils_spawner"
+    ],
+    [
+      "has_pumpkin_stencils_structure_data"
+    ],
+    [
+      "has_pumpkin_stencils_wither_rose"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

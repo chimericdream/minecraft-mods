@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:gourd_workshop",
+  "criteria": {
+    "dyed": {
+      "conditions": {
+        "event": "dyed"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.not_just_orange.description"
+    },
+    "icon": {
+      "id": "minecraft:orange_dye"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.not_just_orange.title"
+    }
+  },
+  "requirements": [
+    [
+      "dyed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

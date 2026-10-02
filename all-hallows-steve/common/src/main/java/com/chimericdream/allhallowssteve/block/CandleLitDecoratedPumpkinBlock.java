@@ -1,6 +1,8 @@
 package com.chimericdream.allhallowssteve.block;
 
 import com.chimericdream.allhallowssteve.ModInfo;
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
+import com.chimericdream.allhallowssteve.advancement.PumpkinEvent;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
@@ -191,6 +193,7 @@ public class CandleLitDecoratedPumpkinBlock extends BaseEntityBlock {
 
         if (wasHollow) {
             player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
+            ModTriggers.fire(player, PumpkinEvent.LIT_UNUSUAL);
         }
 
         return InteractionResult.SUCCESS;

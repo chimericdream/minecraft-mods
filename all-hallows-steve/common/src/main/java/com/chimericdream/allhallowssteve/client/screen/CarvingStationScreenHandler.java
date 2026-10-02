@@ -3,6 +3,8 @@ package com.chimericdream.allhallowssteve.client.screen;
 import com.chimericdream.lib.colors.ColorHelpers;
 import com.chimericdream.lib.screen.ScreenHelpers;
 import com.chimericdream.allhallowssteve.ModInfo;
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
+import com.chimericdream.allhallowssteve.advancement.PumpkinEvent;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
@@ -310,6 +312,23 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
     }
 
     private static class OutputSlot extends Slot {
+        /** Tells the advancements what this take did: dyed the pumpkin, carved a stencil into it, or both. */
+        private void fireAdvancements(Player player) {
+            for (int i = 0; i < PUMPKIN_SLOT_INDEX; i++) {
+                if (this.input.getItem(i).get(DataComponents.DYE) != null) {
+                    ModTriggers.fire(player, PumpkinEvent.DYED);
+                    break;
+                }
+            }
+
+            for (int slot : STENCIL_SLOT_FACES.keySet()) {
+                if (this.input.getItem(slot).getItem() instanceof PumpkinStencilItem) {
+                    ModTriggers.fire(player, PumpkinEvent.CARVED);
+                    break;
+                }
+            }
+        }
+
         private final Container input;
         private final Runnable refreshOutput;
 
@@ -327,6 +346,10 @@ public class CarvingStationScreenHandler extends AbstractContainerMenu {
         @Override
         public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
             int taken = stack.getCount();
+
+            if (taken > 0) {
+                fireAdvancements(player);
+            }
 
             if (taken > 0) {
                 for (int i = 0; i <= PUMPKIN_SLOT_INDEX; i++) {

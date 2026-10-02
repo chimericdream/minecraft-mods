@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:root",
+  "criteria": {
+    "crafted_station": {
+      "conditions": {
+        "recipe_id": "allhallowssteve:carving_station"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.gourd_workshop.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:carving_station"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.gourd_workshop.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_station"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

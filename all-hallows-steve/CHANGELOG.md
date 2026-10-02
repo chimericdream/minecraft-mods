@@ -31,4 +31,5 @@
   * In first person you see through the carved openings of your pumpkin's stencil. A pumpkin with no carving on the face you're looking through blocks your view completely.
   * Pick which of the four faces points forward with the new "Turn Worn Pumpkin" key (unbound by default): north, east, south, then west. Your choice is saved, and other players see the pumpkin turn.
   * A new option in the config screen (also reachable from Mod Menu) lowers how much the worn pumpkin blocks your view.
+* Added advancements for the Pumpkin Carving Station, dyeing and carving, wearing decorated pumpkins, lighting them with something other than a regular torch, and collecting stencils. Two are secret, and collecting every stencil awards experience.
 * Vanilla pumpkins work the same way: sneak and use a torch on a carved pumpkin to turn it into a jack o'lantern, or use shears on a jack o'lantern to take the torch back out. Dispensers can do both too. Only regular torches work here, since vanilla only has the one jack o'lantern.

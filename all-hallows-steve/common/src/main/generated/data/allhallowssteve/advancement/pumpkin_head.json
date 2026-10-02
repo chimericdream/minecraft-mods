@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:first_cut",
+  "criteria": {
+    "worn_carved": {
+      "conditions": {
+        "event": "worn_carved"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.pumpkin_head.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:decorated_pumpkin"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.pumpkin_head.title"
+    }
+  },
+  "requirements": [
+    [
+      "worn_carved"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

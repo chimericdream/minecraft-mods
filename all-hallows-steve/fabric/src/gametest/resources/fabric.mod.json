@@ -11,6 +11,7 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
+            "com.chimericdream.allhallowssteve.fabric.test.AdvancementGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.CandlePumpkinGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.DispenserPumpkinGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.PlayerPumpkinGameTest",

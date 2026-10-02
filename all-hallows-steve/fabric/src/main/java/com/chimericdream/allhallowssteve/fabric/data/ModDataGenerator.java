@@ -5,6 +5,7 @@ import com.chimericdream.allhallowssteve.block.LitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.PumpkinContents;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
+import com.chimericdream.allhallowssteve.fabric.advancement.AllHallowsSteveAdvancements;
 import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
@@ -52,6 +53,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(AllHallowsSteveEnglishLangProvider::new);
         pack.addProvider(AllHallowsSteveBlockTagGenerator::new);
         pack.addProvider(AllHallowsSteveItemTagGenerator::new);
+        pack.addProvider(AllHallowsSteveAdvancements::new);
     }
 
     private static class AllHallowsSteveEnglishLangProvider extends FabricLanguageProvider {
@@ -77,6 +79,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add("text.config.allhallowssteve.title", "All Hallows Steve Config");
             translationBuilder.add("text.config.allhallowssteve.option.pumpkinOverlayOpacity", "Worn Pumpkin Vision Overlay");
             translationBuilder.add("text.config.allhallowssteve.option.pumpkinOverlayOpacity.description", "How much a worn decorated pumpkin blocks your view. At 100% an uncarved pumpkin hides everything; lower it to see through.");
+
+            AllHallowsSteveAdvancements.configureTranslations(translationBuilder);
 
             translationBuilder.add(PumpkinContents.EMPTY_KEY, "Empty");
             translationBuilder.add(PumpkinContents.CANDLE_LIT_KEY, "%s candle (lit)");

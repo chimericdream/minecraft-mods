@@ -1,5 +1,7 @@
 package com.chimericdream.allhallowssteve.network;
 
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
+import com.chimericdream.allhallowssteve.advancement.PumpkinEvent;
 import com.chimericdream.allhallowssteve.client.ClientPumpkinFaces;
 import com.chimericdream.allhallowssteve.wearable.PumpkinFaceData;
 import com.chimericdream.allhallowssteve.wearable.PumpkinFaces;
@@ -61,6 +63,7 @@ public final class PumpkinFaceNetworking {
 
         MinecraftServer server = player.level().getServer();
         Direction face = PumpkinFaceData.get(server).cycle(player.getUUID());
+        ModTriggers.fire(player, PumpkinEvent.TURNED);
 
         NetworkManager.sendToPlayers(server.getPlayerList().getPlayers(), new PumpkinFacePayload(player.getUUID(), face));
     }

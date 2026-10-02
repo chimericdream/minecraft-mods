@@ -1,6 +1,8 @@
 package com.chimericdream.allhallowssteve.block;
 
 import com.chimericdream.allhallowssteve.ModInfo;
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
+import com.chimericdream.allhallowssteve.advancement.PumpkinEvent;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
 import com.chimericdream.allhallowssteve.component.type.PumpkinStencilsComponent;
@@ -101,6 +103,10 @@ public class DecoratedPumpkinBlock extends BaseEntityBlock {
         }
 
         player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
+
+        if (!itemStack.is(Items.TORCH)) {
+            ModTriggers.fire(player, PumpkinEvent.LIT_UNUSUAL);
+        }
         PumpkinContents.show(player, level, pos);
 
         return InteractionResult.SUCCESS;

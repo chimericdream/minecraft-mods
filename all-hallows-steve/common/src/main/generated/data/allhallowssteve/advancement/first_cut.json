@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:gourd_workshop",
+  "criteria": {
+    "carved": {
+      "conditions": {
+        "event": "carved"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.first_cut.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:pumpkin_stencils/creeper"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.first_cut.title"
+    }
+  },
+  "requirements": [
+    [
+      "carved"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:pumpkin_head",
+  "criteria": {
+    "turned": {
+      "conditions": {
+        "event": "turned"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.better_side.description"
+    },
+    "icon": {
+      "id": "minecraft:compass"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.better_side.title"
+    }
+  },
+  "requirements": [
+    [
+      "turned"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

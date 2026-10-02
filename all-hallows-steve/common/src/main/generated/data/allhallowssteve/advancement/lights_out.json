@@ -1,0 +1,29 @@
+{
+  "parent": "allhallowssteve:pumpkin_head",
+  "criteria": {
+    "worn_uncarved": {
+      "conditions": {
+        "event": "worn_uncarved"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.lights_out.description"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "minecraft:black_dye"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.lights_out.title"
+    }
+  },
+  "requirements": [
+    [
+      "worn_uncarved"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -11,6 +11,8 @@ class.
 * `DispenserPumpkinGameTest` — the same, driven by dispensers, including candles.
 * `CandlePumpkinGameTest` — candle-lit pumpkins: adding candles, snuffing, relighting, shears, light
   levels, overlay suffixes, drops, and saving and loading.
+* `AdvancementGameTest` — the advancement tab: parents, hidden flags, the experience reward, and that each
+  one is awarded by the event it describes.
 * `PumpkinContentsGameTest` — the contents message for every pumpkin state, and that inspecting changes
   nothing.
 
@@ -55,3 +57,18 @@ NeoForge.
      keeps moving, as with a vanilla carved pumpkin. An armor stand shows the north face.
    * Config screen (Mod Menu, or the config file): the opacity slider goes from 10% to 100% and an
      uncarved pumpkin becomes see-through at the low end.
+4. **Advancements** (open the advancement screen with L; use `/advancement revoke @s everything` to reset)
+   * Pick up a pumpkin: the "All Hallows Steve" tab appears with *It's Pumpkin Season*. Craft a Pumpkin
+     Carving Station: *Gourd Workshop*.
+   * Take a dyed pumpkin from the station: *Not Just Orange*. Take one with a stencil carved in:
+     *First Cut Is the Deepest*. (Both at once awards both.)
+   * Wear a decorated pumpkin with a stencil on any face: *Pumpkin Head*. Press the turn key: *Better Side*.
+   * Wear a decorated pumpkin with nothing carved on any face: *Hey! Who turned out the lights?* It stays
+     out of the tab until earned. A lit pumpkin can't be worn, so it awards nothing.
+   * Light a pumpkin with a soul, copper or redstone torch, or add a candle to a hollow one: *Lit
+     Different*. A regular torch does not; neither does a dispenser doing it.
+   * Pick up the Heart, Jigsaw, Spawner, or Structure Block stencil (`/give`): *Rare Cut*.
+   * Pick up all 15 stencils (`/give`): the hidden *A Face for Every Occasion* toast, and 100 experience
+     points. Missing even Blank leaves it unearned.
+   * Check the toast and chat message for each, on both Fabric and NeoForge (the trigger is registered
+     separately on each).

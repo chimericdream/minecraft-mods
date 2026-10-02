@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:gourd_workshop",
+  "criteria": {
+    "lit_unusual": {
+      "conditions": {
+        "event": "lit_unusual"
+      },
+      "trigger": "allhallowssteve:pumpkin_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.lit_different.description"
+    },
+    "icon": {
+      "id": "minecraft:soul_torch"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.lit_different.title"
+    }
+  },
+  "requirements": [
+    [
+      "lit_unusual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

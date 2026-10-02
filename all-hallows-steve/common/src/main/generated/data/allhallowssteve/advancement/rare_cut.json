@@ -1,0 +1,65 @@
+{
+  "parent": "allhallowssteve:first_cut",
+  "criteria": {
+    "has_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/heart"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_jigsaw": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/jigsaw"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_spawner": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/spawner"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_structure_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:pumpkin_stencils/structure_data"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.rare_cut.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:pumpkin_stencils/heart"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.rare_cut.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_heart",
+      "has_jigsaw",
+      "has_spawner",
+      "has_structure_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
