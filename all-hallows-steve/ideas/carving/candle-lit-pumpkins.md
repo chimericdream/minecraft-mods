@@ -69,8 +69,8 @@ the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 
 - [Wearable decorated pumpkins](wearable-decorated-pumpkins.md) — does a candle-lit pumpkin stay lit on
   your head?
-- [Pumpkin contents message](pumpkin-contents-message.md) — follow-up, built right after this one: tells
-  the player whether a snuffed pumpkin is hollow or holds candles.
+- [Pumpkin contents message](pumpkin-contents-message.md) — follow-up that must be built after this one:
+  tells the player whether a snuffed pumpkin is hollow or holds candles.
 - [Turnip lanterns](../harvest-crafts/turnip-lanterns.md) — another small carved light source.
 
 ## Open questions
