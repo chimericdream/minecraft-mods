@@ -1,6 +1,6 @@
 # Pumpkin contents message
 
-> Source: raised while refining [Candle-lit pumpkins](candle-lit-pumpkins.md), 2026-10-01 · Status: **Ready**
+> Source: raised while refining [Candle-lit pumpkins](candle-lit-pumpkins.md), 2026-10-01 · Status: **Building** — branch `ahs-pumpkin-features`
 > Must be built after Candle-lit pumpkins, never before.
 
 ## Description
@@ -64,3 +64,5 @@ _This idea did not come from a brainstorm._
 ## Open questions
 
 _None._
+
+**Choices made during implementation, to confirm.** The message also appears after a player lights a pumpkin with a torch or shears a torch out (it reads "Empty" afterward), not just after candle changes. The inspect gesture needs an empty main hand as well as sneaking. Messages are sent through `PumpkinContents.messageSink` so tests can record them; in the game it is the normal overlay message.

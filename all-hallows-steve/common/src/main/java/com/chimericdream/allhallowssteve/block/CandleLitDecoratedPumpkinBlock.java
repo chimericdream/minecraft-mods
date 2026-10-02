@@ -58,8 +58,8 @@ import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELP
  * Candle color never affects the glow.
  * <p>
  * Light level is vanilla's candle scale, {@code 3 * candles} (3 / 6 / 9 / 12), and only while lit. A
- * snuffed pumpkin renders with the plain unlit overlay, so the candles are invisible until the
- * contents message (a later idea) says otherwise. Carved overlays for the lit states are named
+ * snuffed pumpkin renders with the plain unlit overlay, so the candles are invisible; the player
+ * learns what is inside from {@link PumpkinContents}. Carved overlays for the lit states are named
  * {@code <stencil>_candlelit_<count>} (see {@link #overlaySuffix}).
  * <p>
  * Interactions:
@@ -69,7 +69,7 @@ import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELP
  *     sneaking player with a nonempty hand never reaches {@link #useItemOn}. A hollow pumpkin lights
  *     with its first candle; adding to a snuffed pumpkin leaves it snuffed.</li>
  *     <li>An empty hand snuffs a lit pumpkin (see {@link #useWithoutItem}); sneaking with an empty hand
- *     is left alone for the contents message.</li>
+ *     only shows what the pumpkin holds (see {@link PumpkinContents}).</li>
  *     <li>Flint and steel relights a snuffed one.</li>
  *     <li>Shears take every candle back out and turn it back into a plain decorated pumpkin,
  *     preserving dye color and stencils.</li>
@@ -187,6 +187,8 @@ public class CandleLitDecoratedPumpkinBlock extends BaseEntityBlock {
             itemStack.shrink(1);
         }
 
+        PumpkinContents.show(player, level, pos);
+
         if (wasHollow) {
             player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
         }
@@ -294,6 +296,7 @@ public class CandleLitDecoratedPumpkinBlock extends BaseEntityBlock {
         if (itemStack.is(Items.SHEARS)) {
             if (level instanceof ServerLevel serverLevel) {
                 removeCandles(serverLevel, pos, state, player);
+                PumpkinContents.show(player, level, pos);
 
                 itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             }
@@ -304,6 +307,7 @@ public class CandleLitDecoratedPumpkinBlock extends BaseEntityBlock {
         if (itemStack.is(Items.FLINT_AND_STEEL) && !state.getValue(LIT)) {
             if (level instanceof ServerLevel serverLevel) {
                 relight(serverLevel, pos, state, player);
+                PumpkinContents.show(player, level, pos);
 
                 itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             }
@@ -314,15 +318,22 @@ public class CandleLitDecoratedPumpkinBlock extends BaseEntityBlock {
         return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
     }
 
-    /** An empty hand snuffs a lit pumpkin. Sneaking is left alone so the contents message can claim it. */
+    /** An empty hand snuffs a lit pumpkin; sneaking with an empty hand only shows what it holds (see {@link PumpkinContents}). */
     @Override
     protected @NotNull InteractionResult useWithoutItem(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull BlockHitResult hitResult) {
-        if (!state.getValue(LIT) || player.isShiftKeyDown()) {
+        if (PumpkinContents.isInspecting(player)) {
+            PumpkinContents.show(player, level, pos);
+
+            return InteractionResult.SUCCESS;
+        }
+
+        if (!state.getValue(LIT) || !player.getMainHandItem().isEmpty()) {
             return InteractionResult.PASS;
         }
 
         if (level instanceof ServerLevel serverLevel) {
             snuff(serverLevel, pos, state, player);
+            PumpkinContents.show(player, level, pos);
         }
 
         return InteractionResult.SUCCESS;

@@ -25,4 +25,5 @@
   * Shear the pumpkin to take all the candles back out, each in its original color. Breaking the pumpkin returns them too.
   * Dispensers can add candles, relight with flint and steel, and shear the candles out. A dispenser won't add a fifth candle.
   * A pumpkin holds either candles or a torch, not both.
+* Sneak with an empty hand on a decorated pumpkin to see what's inside it: nothing, a torch, or candles (and whether they're lit). The same message appears whenever you add, light, snuff, or take out its contents.
 * Vanilla pumpkins work the same way: sneak and use a torch on a carved pumpkin to turn it into a jack o'lantern, or use shears on a jack o'lantern to take the torch back out. Dispensers can do both too. Only regular torches work here, since vanilla only has the one jack o'lantern.

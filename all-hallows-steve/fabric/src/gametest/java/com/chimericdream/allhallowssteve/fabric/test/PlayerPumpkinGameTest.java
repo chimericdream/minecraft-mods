@@ -2,6 +2,7 @@ package com.chimericdream.allhallowssteve.fabric.test;
 
 import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
+import com.chimericdream.allhallowssteve.block.PumpkinContents;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarvedPumpkinBlock;
 
+import java.util.List;
+
 /**
  * Player-side coverage for lighting (shift + torch, via {@code AHS$TorchBlockItemMixin}) and
  * un-lighting (shears) both decorated and vanilla pumpkins. {@link GameTestHelper#useBlock} runs the
@@ -28,6 +31,7 @@ public class PlayerPumpkinGameTest {
     private static final BlockPos TARGET = new BlockPos(2, 2, 2);
 
     private static Player playerHolding(GameTestHelper context, Item item, int count, boolean sneaking) {
+        PumpkinMessageRecorder.install();
         Player player = context.makeMockServerPlayer(GameType.SURVIVAL);
         player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(item, count));
         player.setShiftKeyDown(sneaking);
@@ -49,6 +53,7 @@ public class PlayerPumpkinGameTest {
         context.assertBlockPresent(Blocks.JACK_O_LANTERN, TARGET);
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CarvedPumpkinBlock.FACING), Direction.SOUTH, "jack o'lantern facing");
         context.assertValueEqual(player.getMainHandItem().getCount(), 1, "torches left in hand");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(), "messages sent");
         context.succeed();
     }
 
@@ -85,6 +90,7 @@ public class PlayerPumpkinGameTest {
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CarvedPumpkinBlock.FACING), Direction.SOUTH, "carved pumpkin facing");
         context.assertItemEntityPresent(Items.TORCH);
         context.assertValueEqual(player.getMainHandItem().getDamageValue(), 1, "shears damage");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(), "messages sent");
         context.succeed();
     }
 
@@ -99,6 +105,7 @@ public class PlayerPumpkinGameTest {
         context.assertBlockPresent(ModBlocks.LIT_DECORATED_PUMPKIN_RED.get(), TARGET);
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getColor(), 0x3366CC, "pumpkin color");
         context.assertValueEqual(player.getMainHandItem().getCount(), 1, "torches left in hand");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(Items.REDSTONE_TORCH.getDescriptionId()), "messages sent");
         context.succeed();
     }
 
@@ -114,6 +121,7 @@ public class PlayerPumpkinGameTest {
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getColor(), 0x3366CC, "pumpkin color");
         context.assertItemEntityPresent(Items.TORCH);
         context.assertValueEqual(player.getMainHandItem().getDamageValue(), 1, "shears damage");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.EMPTY_KEY), "messages sent");
         context.succeed();
     }
 }

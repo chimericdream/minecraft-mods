@@ -3,6 +3,7 @@ package com.chimericdream.allhallowssteve.fabric.test;
 import com.chimericdream.allhallowssteve.block.CandleLitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
+import com.chimericdream.allhallowssteve.block.PumpkinContents;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.component.type.PumpkinStencilsComponent;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
@@ -41,6 +42,7 @@ public class CandlePumpkinGameTest {
     }
 
     private static Player playerHolding(GameTestHelper context, ItemStack stack, boolean sneaking) {
+        PumpkinMessageRecorder.install();
         Player player = context.makeMockServerPlayer(GameType.SURVIVAL);
         player.setItemInHand(InteractionHand.MAIN_HAND, stack);
         player.setShiftKeyDown(sneaking);
@@ -91,6 +93,7 @@ public class CandlePumpkinGameTest {
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getCandles(), List.of(red()), "candles held");
         assertDecorationKept(context);
         context.assertValueEqual(player.getMainHandItem().getCount(), 1, "candles left in hand");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.CANDLE_LIT_KEY), "messages sent");
         context.succeed();
     }
 
@@ -116,6 +119,7 @@ public class CandlePumpkinGameTest {
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getCandles(), List.of(red(), Items.CANDLE), "candles held, in order");
         assertDecorationKept(context);
         context.assertValueEqual(player.getMainHandItem().getCount(), 1, "candles left in hand");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.CANDLES_LIT_KEY), "messages sent");
         context.succeed();
     }
 
@@ -128,6 +132,7 @@ public class CandlePumpkinGameTest {
 
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 4, "candle count");
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getCandles().size(), 4, "candles held");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(), "messages sent");
         context.succeed();
     }
 
@@ -190,6 +195,7 @@ public class CandlePumpkinGameTest {
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 2, "candle count");
         context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getCandles(), List.of(red(), Items.CANDLE), "candles held");
         assertDecorationKept(context);
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.CANDLES_SNUFFED_KEY), "messages sent");
         context.succeed();
     }
 
@@ -201,6 +207,7 @@ public class CandlePumpkinGameTest {
         context.useBlock(TARGET, player);
 
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.LIT), true, "lit");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.CANDLE_LIT_KEY), "messages sent");
         context.succeed();
     }
 
@@ -215,6 +222,7 @@ public class CandlePumpkinGameTest {
         context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 2, "candle count");
         context.assertValueEqual(player.getMainHandItem().getDamageValue(), 1, "flint and steel damage");
         assertDecorationKept(context);
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.CANDLES_LIT_KEY), "messages sent");
         context.succeed();
     }
 
@@ -257,6 +265,7 @@ public class CandlePumpkinGameTest {
         context.assertItemEntityPresent(red());
         context.assertItemEntityPresent(Items.CANDLE);
         context.assertValueEqual(player.getMainHandItem().getDamageValue(), 1, "shears damage");
+        context.assertValueEqual(PumpkinMessageRecorder.keys(player), List.of(PumpkinContents.EMPTY_KEY), "messages sent");
         context.succeed();
     }
 

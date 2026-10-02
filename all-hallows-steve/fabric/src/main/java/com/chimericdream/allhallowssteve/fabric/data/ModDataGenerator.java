@@ -3,6 +3,7 @@ package com.chimericdream.allhallowssteve.fabric.data;
 import com.chimericdream.allhallowssteve.block.CandleLitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.LitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
+import com.chimericdream.allhallowssteve.block.PumpkinContents;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
 import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
@@ -67,6 +68,12 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
 
             translationBuilder.add("stat.allhallowssteve.light_decorated_pumpkin", "Lit up decorated pumpkin");
+
+            translationBuilder.add(PumpkinContents.EMPTY_KEY, "Empty");
+            translationBuilder.add(PumpkinContents.CANDLE_LIT_KEY, "%s candle (lit)");
+            translationBuilder.add(PumpkinContents.CANDLES_LIT_KEY, "%s candles (lit)");
+            translationBuilder.add(PumpkinContents.CANDLE_SNUFFED_KEY, "%s candle (snuffed)");
+            translationBuilder.add(PumpkinContents.CANDLES_SNUFFED_KEY, "%s candles (snuffed)");
 
             translationBuilder.add("item.allhallowssteve.decorated_pumpkin.tooltip.color", "Color: %s");
             translationBuilder.add("item.allhallowssteve.decorated_pumpkin.tooltip.stencil", "%s: %s");

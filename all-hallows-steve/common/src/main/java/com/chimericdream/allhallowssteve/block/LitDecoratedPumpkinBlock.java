@@ -133,9 +133,22 @@ public class LitDecoratedPumpkinBlock extends BaseEntityBlock {
         }
 
         extinguish(serverLevel, pos, state, player);
+        PumpkinContents.show(player, level, pos);
 
         itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
         player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
+
+        return InteractionResult.SUCCESS;
+    }
+
+    /** Sneaking with an empty hand shows which torch the pumpkin holds (see {@link PumpkinContents}). */
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull BlockHitResult hitResult) {
+        if (!PumpkinContents.isInspecting(player)) {
+            return InteractionResult.PASS;
+        }
+
+        PumpkinContents.show(player, level, pos);
 
         return InteractionResult.SUCCESS;
     }

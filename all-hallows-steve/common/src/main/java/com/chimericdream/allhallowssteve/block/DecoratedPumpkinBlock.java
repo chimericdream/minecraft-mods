@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -100,6 +101,19 @@ public class DecoratedPumpkinBlock extends BaseEntityBlock {
         }
 
         player.awardStat(ModStats.LIGHT_DECORATED_PUMPKIN);
+        PumpkinContents.show(player, level, pos);
+
+        return InteractionResult.SUCCESS;
+    }
+
+    /** Sneaking with an empty hand shows what the pumpkin holds (see {@link PumpkinContents}); this one is hollow. */
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!PumpkinContents.isInspecting(player)) {
+            return InteractionResult.PASS;
+        }
+
+        PumpkinContents.show(player, level, pos);
 
         return InteractionResult.SUCCESS;
     }
