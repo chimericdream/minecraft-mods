@@ -15,7 +15,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 ### Carving
 
 - [Candle-lit pumpkins](carving/candle-lit-pumpkins.md) — Light decorated pumpkins with 1–4 candles
-  instead of a torch; brightness scales with candle count and the glow takes the candle's color.
+  instead of a torch; brightness matches vanilla candles (light 3 to 12 for 1–4 candles).
+- [Pumpkin contents message](carving/pumpkin-contents-message.md) — An overlay message that tells the
+  player what a decorated pumpkin holds (empty, torch, or candles); follows candle-lit pumpkins.
 - [More stencils](carving/more-stencils.md) — Autumn and folklore motifs (oak leaf, owl, raven, moon
   phases) plus eerie vanilla designs such as the warden and sculk shrieker.
 - [Stencils as exploration loot and trades](carving/stencil-loot-and-trades.md) — Rarer designs found in
