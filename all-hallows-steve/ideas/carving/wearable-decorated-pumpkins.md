@@ -31,11 +31,15 @@ windowsill, fence-post mount) from the brainstorm.
 `textures/block/decorated_pumpkin/overlays/`; the pumpkin-on-a-head rendering is shared with
 [Scarecrow](../farm-creatures/scarecrow.md), so build it in a reusable way. The item needs an
 `Equippable` (head) component, and endermen need the item in the `minecraft:gaze_disguise_equipment`
-tag. The keybind needs a client-to-server packet (and the chosen face stored on the worn item), so it
-uses chimeric-lib / Architectury networking; check what chimeric-lib already offers. Both loaders are
-affected by the render layer, overlay, keybind, and packet hooks, so check Fabric and NeoForge.
+tag. The keybind needs a client-to-server packet, and the chosen face is stored on the player and synced
+to other players. Existing precedents to copy: camel-nostrils' per-loader player/entity attachment
+(`CN$CamelSnoutState` with Fabric and NeoForge implementations) and the keybind-driven payloads in
+minekea (`CyclePainterColorPayload`) and effective-gear (`UseAbilityPayload`). Both loaders are
+affected by the render layer, overlay, keybind, attachment, and packet hooks, so check Fabric and
+NeoForge.
 **Verification:** a visual smoke test of the head rendering (player and armor stand) and of the vision
-overlay for a carved and an uncarved pumpkin, a JUnit test for the face-cycling order, plus manual
+overlay for a carved and an uncarved pumpkin, a JUnit test for the face-cycling order, a GameTest that
+turning the face never changes the pumpkin item (it still stacks with an identical one), plus manual
 steps in `TEST_PLAN.md` for the enderman behavior, the equip / unequip flow, the keybind (including how
 other players see it), and the reduced-overlay option.
 
@@ -57,8 +61,12 @@ other players see it), and the reduced-overlay option.
   creaking from being frozen by your gaze.
 - 2026-10-02 — The overlay shows in first person only, as vanilla's does.
 - 2026-10-02 — The face-cycling key is unbound by default and only works while a decorated pumpkin is
-  worn. The cycle visits all four faces, including uncarved ones. The chosen face is stored on the worn
-  item, so it survives taking the pumpkin off, and is synced to the server so other players see it.
+  worn. The cycle visits all four faces, including uncarved ones.
+- 2026-10-02 — The chosen face is stored on the player, not on the item, so identical pumpkins always
+  stack and nothing has to be cleared when one leaves the head slot. This replaces the earlier ideas
+  that it lives on the worn item (and survives taking it off, or is removed on unequip). The player's
+  choice is synced to other players, applies to whichever decorated pumpkin they wear, and follows the
+  default (north) until they change it. Armor stands always show north.
 - 2026-10-02 — The reduced-overlay option is an opacity slider, from fully opaque (the default) down to a
   faint tint, so even an uncarved pumpkin can be made see-through.
 - 2026-10-02 — Effort re-estimated from M to **L**: head rendering on players and armor stands plus a new
@@ -87,4 +95,10 @@ numbers are the `brainstorms/2026-09-29/agentN.md` files that suggested each var
 
 ## Open questions
 
-_None._ (Whether to limit the slider's lowest value can be decided during implementation.)
+None that change what gets built. Both can be decided during implementation:
+
+- Whether to limit the opacity slider's lowest value.
+- Whether the player's chosen face persists across logins (an attachment normally does) and across
+  death, or resets to north. Proposal: persist it.
+- How a player who starts tracking another player gets that player's current face (the equipment
+  packets that sync the item won't carry it).
