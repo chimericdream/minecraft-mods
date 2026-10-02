@@ -24,11 +24,12 @@ public class AllHallowsSteveClient {
             ModBlocks.LIT_DECORATED_PUMPKIN.get(),
             ModBlocks.LIT_DECORATED_PUMPKIN_BLUE.get(),
             ModBlocks.LIT_DECORATED_PUMPKIN_GREEN.get(),
-            ModBlocks.LIT_DECORATED_PUMPKIN_RED.get()
+            ModBlocks.LIT_DECORATED_PUMPKIN_RED.get(),
+            ModBlocks.CANDLE_LIT_DECORATED_PUMPKIN.get()
         );
 
-        // One BlockEntityType (and so one renderer registration) covers the unlit block and all four
-        // lit variants — see ModBlocks.DECORATED_PUMPKIN_BLOCK_ENTITY's valid-block set.
+        // One BlockEntityType (and so one renderer registration) covers the unlit block, all four
+        // torch-lit variants and the candle variant — see ModBlocks.DECORATED_PUMPKIN_BLOCK_ENTITY's valid-block set.
         BlockEntityRendererRegistry.register(ModBlocks.DECORATED_PUMPKIN_BLOCK_ENTITY.get(), DecoratedPumpkinBlockEntityRenderer::new);
 
         SpecialModelRenderers.ID_MAPPER.put(DecoratedPumpkinBlock.BLOCK_ID, new DecoratedPumpkinItemRenderer.Unbaked("").type());

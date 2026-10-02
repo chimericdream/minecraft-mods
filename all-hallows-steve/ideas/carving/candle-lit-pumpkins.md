@@ -1,13 +1,13 @@
 # Candle-lit pumpkins
 
 > Shortlist #1 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes 4 · My vote **Yes**
-> Status: **Ready**
+> Status: **Building** — branch `ahs-pumpkin-features`
 
 ## Description
 
 Light a decorated pumpkin with 1–4 candles instead of a torch. Each candle adds a step of brightness, in
 four levels that match vanilla candles (light 3, 6, 9, and 12 for 1–4 candles), so a full pumpkin is
-a little dimmer than one lit with a regular torch (14).
+a little dimmer than one lit with a regular torch (15).
 Each of the four levels has its own glow overlay texture, and candle color has no effect on it. Any of
 the 17 vanilla candles can be added, one at a time with shift-click (the same shift-gated flow as
 torches). A pumpkin can hold either candles or a torch, never both. Candles can be added whether the
@@ -38,7 +38,7 @@ and the pumpkin's dye and stencils), plus a visual smoke test of the four overla
 - 2026-10-01 — Decorated pumpkins only. Vanilla carved pumpkins and jack o'lanterns stay torch-only.
 - 2026-10-01 — Breaking the pumpkin returns its candles. No weather snuffing and no burn-down.
 - 2026-10-01 — Light levels match vanilla candles: 3 / 6 / 9 / 12 for 1–4 candles. This replaces the
-  earlier idea that four candles should equal the torch pumpkin (14).
+  earlier idea that four candles should equal the torch pumpkin.
 - 2026-10-01 — Each light level gets its own glow overlay texture (four in all). The user is creating
   the textures.
 - 2026-10-01 — Any vanilla candle can be added, and removed candles keep their color (the block
@@ -79,3 +79,9 @@ the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 
 - **Implementation (decide while building):** one block with candle-count and lit properties versus
   separate blocks like the four torch variants.
+- **Choices made during implementation, to confirm.** Adding a candle to a hollow pumpkin lights it
+  (like a torch), while adding one to a snuffed pumpkin leaves it snuffed. A sneaking empty hand does
+  not snuff (it's reserved for the contents message). The first candle counts toward the "Lit up
+  decorated pumpkin" stat, as a torch does. Flint and steel only relights while the player isn't
+  sneaking (a sneaking player skips the block's own interaction, as with shears). The placeholder
+  overlay textures `{stencil}_candlelit_{1-4}.png` are copies of the `_lit` ones, to be replaced.

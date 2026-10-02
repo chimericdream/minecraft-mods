@@ -57,6 +57,9 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> LIT_DECORATED_PUMPKIN_GREEN = registerLitDecoratedPumpkin(14, "_lit_green", "Green Lit Decorated Pumpkin", Items.COPPER_TORCH);
     public static final RegistrySupplier<Block> LIT_DECORATED_PUMPKIN_RED = registerLitDecoratedPumpkin(7, "_lit_red", "Red Lit Decorated Pumpkin", Items.REDSTONE_TORCH);
 
+    /** The candle variant (see {@link CandleLitDecoratedPumpkinBlock}): one block for every candle count and for lit or snuffed. Deliberately has no item. */
+    public static final RegistrySupplier<Block> CANDLE_LIT_DECORATED_PUMPKIN = REGISTRY_HELPER.registerBlock(CandleLitDecoratedPumpkinBlock.BLOCK_ID, CandleLitDecoratedPumpkinBlock::new);
+
     private static RegistrySupplier<Block> registerLitDecoratedPumpkin(int lightLevel, String overlaySuffix, String displayName, Item torchItem) {
         Identifier blockId = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "decorated_pumpkin" + overlaySuffix);
 
@@ -96,7 +99,8 @@ public class ModBlocks {
                 LIT_DECORATED_PUMPKIN.get(),
                 LIT_DECORATED_PUMPKIN_BLUE.get(),
                 LIT_DECORATED_PUMPKIN_GREEN.get(),
-                LIT_DECORATED_PUMPKIN_RED.get()
+                LIT_DECORATED_PUMPKIN_RED.get(),
+                CANDLE_LIT_DECORATED_PUMPKIN.get()
             )
         )
     );

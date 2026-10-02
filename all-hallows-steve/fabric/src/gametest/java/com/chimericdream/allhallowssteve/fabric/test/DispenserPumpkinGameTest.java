@@ -1,5 +1,6 @@
 package com.chimericdream.allhallowssteve.fabric.test;
 
+import com.chimericdream.allhallowssteve.block.CandleLitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
@@ -18,6 +19,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarvedPumpkinBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * End-to-end coverage for {@code ModDispenserBehaviors} (and, through it, chimeric-lib's
@@ -214,6 +218,115 @@ public class DispenserPumpkinGameTest {
         context.runAfterDelay(SETTLE_TICKS, () -> {
             assertVanillaPumpkin(context, Blocks.CARVED_PUMPKIN);
             context.assertItemEntityPresent(Items.TORCH);
+            context.assertValueEqual(dispenser.getItem(0).getDamageValue(), 1, "shears damage");
+            context.succeed();
+        });
+    }
+
+    private static void placeCandlePumpkin(GameTestHelper context, int candles, boolean lit) {
+        context.setBlock(TARGET, ModBlocks.CANDLE_LIT_DECORATED_PUMPKIN.get().defaultBlockState()
+            .setValue(CandleLitDecoratedPumpkinBlock.FACING, Direction.SOUTH)
+            .setValue(CandleLitDecoratedPumpkinBlock.CANDLES, candles)
+            .setValue(CandleLitDecoratedPumpkinBlock.LIT, lit));
+        DecoratedPumpkinBlockEntity pumpkin = context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class);
+        pumpkin.setColor(COLOR);
+        pumpkin.setStencils(STENCILS);
+        pumpkin.setCandles(Collections.nCopies(candles, Items.CANDLE));
+    }
+
+    @GameTest(maxTicks = 40)
+    public void candleLightsDecoratedPumpkin(GameTestHelper context) {
+        placeDecoratedPumpkin(context, ModBlocks.DECORATED_PUMPKIN.get());
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.DYED_CANDLE.red(), 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertDecorationKept(context, ModBlocks.CANDLE_LIT_DECORATED_PUMPKIN.get());
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 1, "candle count");
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.LIT), true, "lit");
+            context.assertValueEqual(context.getBlockEntity(TARGET, DecoratedPumpkinBlockEntity.class).getCandles(), List.of(Items.DYED_CANDLE.red()), "candles held");
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 1, "candles left in the dispenser");
+            context.assertItemEntityNotPresent(Items.DYED_CANDLE.red());
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void candleAddsToExistingCandles(GameTestHelper context) {
+        placeCandlePumpkin(context, 3, true);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.CANDLE, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 4, "candle count");
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 1, "candles left in the dispenser");
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void candleFailsOnFullPumpkin(GameTestHelper context) {
+        placeCandlePumpkin(context, 4, true);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.CANDLE, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 4, "candle count");
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 2, "candles left in the dispenser");
+            context.assertItemEntityNotPresent(Items.CANDLE);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void candleAtNonPumpkinFallsBackToDropping(GameTestHelper context) {
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.CANDLE, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 1, "candles left in the dispenser");
+            context.assertItemEntityPresent(Items.CANDLE);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void torchFailsOnCandlePumpkin(GameTestHelper context) {
+        placeCandlePumpkin(context, 2, true);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.TORCH, 2));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            context.assertBlockPresent(ModBlocks.CANDLE_LIT_DECORATED_PUMPKIN.get(), TARGET);
+            context.assertValueEqual(dispenser.getItem(0).getCount(), 2, "torches left in the dispenser");
+            context.assertItemEntityNotPresent(Items.TORCH);
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void flintAndSteelRelightsSnuffedCandlePumpkin(GameTestHelper context) {
+        placeCandlePumpkin(context, 2, false);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.FLINT_AND_STEEL));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.LIT), true, "lit");
+            context.assertValueEqual(context.getBlockState(TARGET).getValue(CandleLitDecoratedPumpkinBlock.CANDLES), 2, "candle count");
+            context.assertValueEqual(dispenser.getItem(0).getDamageValue(), 1, "flint and steel damage");
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 40)
+    public void shearsRemoveCandlesFromPumpkin(GameTestHelper context) {
+        placeCandlePumpkin(context, 2, true);
+        DispenserBlockEntity dispenser = placeDispenser(context, new ItemStack(Items.SHEARS));
+        context.pulseRedstone(TRIGGER, 2);
+
+        context.runAfterDelay(SETTLE_TICKS, () -> {
+            assertDecorationKept(context, ModBlocks.DECORATED_PUMPKIN.get());
+            context.assertItemEntityPresent(Items.CANDLE);
             context.assertValueEqual(dispenser.getItem(0).getDamageValue(), 1, "shears damage");
             context.succeed();
         });

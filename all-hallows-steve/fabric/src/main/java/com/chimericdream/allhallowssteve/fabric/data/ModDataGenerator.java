@@ -1,8 +1,10 @@
 package com.chimericdream.allhallowssteve.fabric.data;
 
+import com.chimericdream.allhallowssteve.block.CandleLitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.LitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
+import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.LitDecoratedPumpkinBlockDataGenerator;
@@ -34,7 +36,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_BLUE.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_GREEN.get()),
-        new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_RED.get())
+        new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_RED.get()),
+        new CandleLitDecoratedPumpkinBlockDataGenerator((CandleLitDecoratedPumpkinBlock) ModBlocks.CANDLE_LIT_DECORATED_PUMPKIN.get())
     );
 
     @Override

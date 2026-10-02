@@ -19,4 +19,10 @@
   * Lit pumpkins can still be re-dyed and re-carved in the Pumpkin Carving Station.
   * Shear a lit pumpkin to remove the torch and turn it back into a regular decorated pumpkin.
   * Dispensers can do both: a dispenser with a torch lights the decorated pumpkin in front of it, and one with shears removes the torch. A dispenser won't put a torch into a pumpkin that's already lit.
+* Added candle-lit decorated pumpkins: sneak and use a candle on a decorated pumpkin to light it, then add up to four.
+  * Each candle adds light, the same as vanilla candles: level 3, 6, 9, and 12. Candle color doesn't change the glow, and any candle works.
+  * Use an empty hand to snuff the flame and flint and steel to light it again. The candles stay inside while it's snuffed.
+  * Shear the pumpkin to take all the candles back out, each in its original color. Breaking the pumpkin returns them too.
+  * Dispensers can add candles, relight with flint and steel, and shear the candles out. A dispenser won't add a fifth candle.
+  * A pumpkin holds either candles or a torch, not both.
 * Vanilla pumpkins work the same way: sneak and use a torch on a carved pumpkin to turn it into a jack o'lantern, or use shears on a jack o'lantern to take the torch back out. Dispensers can do both too. Only regular torches work here, since vanilla only has the one jack o'lantern.

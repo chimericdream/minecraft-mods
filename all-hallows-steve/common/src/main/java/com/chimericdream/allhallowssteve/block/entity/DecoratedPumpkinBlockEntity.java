@@ -4,25 +4,34 @@ import com.chimericdream.allhallowssteve.ModInfo;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.component.type.DyedColorComponent;
 import com.chimericdream.allhallowssteve.component.type.PumpkinStencilsComponent;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.chimericdream.allhallowssteve.block.ModBlocks.DECORATED_PUMPKIN_BLOCK_ENTITY;
 
 public class DecoratedPumpkinBlockEntity extends BlockEntity {
     public static final Identifier ENTITY_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/entity/decorated_pumpkin");
 
-    private int color = DyedColorComponent.DEFAULT_COLOR;
+    private static final Codec<List<Item>> CANDLES_CODEC = BuiltInRegistries.ITEM.byNameCodec().listOf();
+
+    private int color =DyedColorComponent.DEFAULT_COLOR;
     private PumpkinStencilsComponent stencils = PumpkinStencilsComponent.EMPTY;
+    private List<Item> candles = new ArrayList<>();
 
     public DecoratedPumpkinBlockEntity(BlockPos pos, BlockState state) {
         super(DECORATED_PUMPKIN_BLOCK_ENTITY.get(), pos, state);
@@ -34,6 +43,16 @@ public class DecoratedPumpkinBlockEntity extends BlockEntity {
 
     public void setColor(int color) {
         this.color = color;
+        setChanged();
+    }
+
+    /** The candles held by a {@code CandleLitDecoratedPumpkinBlock}, in the order they were added; always empty for every other pumpkin block. */
+    public List<Item> getCandles() {
+        return List.copyOf(candles);
+    }
+
+    public void setCandles(List<Item> candles) {
+        this.candles = new ArrayList<>(candles);
         setChanged();
     }
 
@@ -51,6 +70,10 @@ public class DecoratedPumpkinBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.putInt("Color", color);
         output.store("Stencils", PumpkinStencilsComponent.CODEC, stencils);
+
+        if (!candles.isEmpty()) {
+            output.store("Candles", CANDLES_CODEC, candles);
+        }
     }
 
     @Override
@@ -58,6 +81,7 @@ public class DecoratedPumpkinBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         color = input.getIntOr("Color", DyedColorComponent.DEFAULT_COLOR);
         stencils = input.read("Stencils", PumpkinStencilsComponent.CODEC).orElse(PumpkinStencilsComponent.EMPTY);
+        candles = new ArrayList<>(input.read("Candles", CANDLES_CODEC).orElse(List.of()));
     }
 
     /**

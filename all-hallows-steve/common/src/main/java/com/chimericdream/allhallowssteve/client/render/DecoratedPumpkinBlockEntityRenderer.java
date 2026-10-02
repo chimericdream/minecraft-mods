@@ -1,5 +1,6 @@
 package com.chimericdream.allhallowssteve.client.render;
 
+import com.chimericdream.allhallowssteve.block.CandleLitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.DecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.LitDecoratedPumpkinBlock;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
@@ -41,12 +42,19 @@ public class DecoratedPumpkinBlockEntityRenderer implements BlockEntityRenderer<
     ) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, tickProgress, cameraPos, crumblingOverlay);
 
+        // CandleLitDecoratedPumpkinBlock.FACING is the same vanilla property, so this covers it too.
         state.facing = blockEntity.getBlockState().getValue(DecoratedPumpkinBlock.FACING);
         state.stencils = blockEntity.getStencils();
         state.cardinalLighting = blockEntity.getLevel() instanceof ClientLevel level ? level.cardinalLighting() : CardinalLighting.DEFAULT;
 
         Block block = blockEntity.getBlockState().getBlock();
-        state.overlaySuffix = block instanceof LitDecoratedPumpkinBlock lit ? lit.overlaySuffix : "";
+        if (block instanceof LitDecoratedPumpkinBlock lit) {
+            state.overlaySuffix = lit.overlaySuffix;
+        } else if (block instanceof CandleLitDecoratedPumpkinBlock) {
+            state.overlaySuffix = CandleLitDecoratedPumpkinBlock.overlaySuffix(blockEntity.getBlockState());
+        } else {
+            state.overlaySuffix = "";
+        }
     }
 
     @Override

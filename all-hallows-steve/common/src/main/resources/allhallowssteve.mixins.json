@@ -6,6 +6,7 @@
     "client": [
     ],
     "mixins": [
+        "AHS$CandleBlockItemMixin",
         "AHS$ItemTintSourcesMixin",
         "AHS$ShearsItemMixin",
         "AHS$TorchBlockItemMixin"

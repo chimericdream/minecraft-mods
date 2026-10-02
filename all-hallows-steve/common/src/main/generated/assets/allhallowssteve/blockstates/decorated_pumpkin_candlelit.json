@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "candles=1,facing=east,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=1,facing=east,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=1,facing=north,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=1,facing=north,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=1,facing=south,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=1,facing=south,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=1,facing=west,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=1,facing=west,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=2,facing=east,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=2,facing=east,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=2,facing=north,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=2,facing=north,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=2,facing=south,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=2,facing=south,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=2,facing=west,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=2,facing=west,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=3,facing=east,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=3,facing=east,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=3,facing=north,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=3,facing=north,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=3,facing=south,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=3,facing=south,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=3,facing=west,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=3,facing=west,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=4,facing=east,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=4,facing=east,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 90
+    },
+    "candles=4,facing=north,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=4,facing=north,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit"
+    },
+    "candles=4,facing=south,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=4,facing=south,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 180
+    },
+    "candles=4,facing=west,lit=false": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    },
+    "candles=4,facing=west,lit=true": {
+      "model": "allhallowssteve:block/decorated_pumpkin_candlelit",
+      "y": 270
+    }
+  }
+}
