@@ -18,6 +18,8 @@ public class AllHallowsSteveClient {
     public static void onInitializeClient() {
         MenuScreens.register(ModBlocks.CARVING_STATION_SCREEN_HANDLER.get(), CarvingStationScreen::new);
 
+        PumpkinKeybindings.init();
+
         ColorHandlerRegistry.registerBlockColors(
             DecoratedPumpkinBlockColors.TINT_SOURCE,
             ModBlocks.DECORATED_PUMPKIN.get(),

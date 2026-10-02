@@ -26,4 +26,9 @@
   * Dispensers can add candles, relight with flint and steel, and shear the candles out. A dispenser won't add a fifth candle.
   * A pumpkin holds either candles or a torch, not both.
 * Sneak with an empty hand on a decorated pumpkin to see what's inside it: nothing, a torch, or candles (and whether they're lit). The same message appears whenever you add, light, snuff, or take out its contents.
+* Decorated pumpkins can be worn on your head, like a carved pumpkin (put one in the helmet slot; right-clicking still places it). Lit pumpkins can't be worn.
+  * Other players and armor stands see the dyed, carved pumpkin on your head, and endermen won't be angered when you look at them.
+  * In first person you see through the carved openings of your pumpkin's stencil. A pumpkin with no carving on the face you're looking through blocks your view completely.
+  * Pick which of the four faces points forward with the new "Turn Worn Pumpkin" key (unbound by default): north, east, south, then west. Your choice is saved, and other players see the pumpkin turn.
+  * A new option in the config screen (also reachable from Mod Menu) lowers how much the worn pumpkin blocks your view.
 * Vanilla pumpkins work the same way: sneak and use a torch on a carved pumpkin to turn it into a jack o'lantern, or use shears on a jack o'lantern to take the torch back out. Dispensers can do both too. Only regular torches work here, since vanilla only has the one jack o'lantern.

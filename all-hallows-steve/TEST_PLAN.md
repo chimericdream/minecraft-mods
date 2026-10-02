@@ -40,4 +40,18 @@ NeoForge.
      candle pumpkin: "N candle(s) (lit)" or "(snuffed)". Nothing about the pumpkin changes.
    * The same message appears after you add a candle, snuff, relight, light with a torch, or shear.
    * A dispenser doing any of those shows no message.
-3. **Wearable decorated pumpkins** — _to be written when that idea is built._
+3. **Wearable decorated pumpkins**
+   * Put a decorated pumpkin on your head from the inventory. Right-clicking it places it instead. A lit
+     pumpkin (torch or candle) can't go in the helmet slot.
+   * In first person, the screen is covered in the pumpkin's color with the stencil's shape cut out to see
+     through. With no stencil on the front face the screen is fully covered. Switch to third person and
+     the overlay goes away.
+   * Bind "Turn Worn Pumpkin" (Controls, All Hallows Steve) and press it: the front face goes north, east,
+     south, west. The overlay and the pumpkin on your head both follow. With no pumpkin on, it does nothing.
+   * Log out and in: the chosen face is remembered. With a second player watching, they see your pumpkin
+     turn, and see the right face when they join after you.
+   * The pumpkin item itself never changes: two identical pumpkins still stack after you turned one.
+   * Endermen: looking at one while wearing a pumpkin does not anger it. A creaking you are looking at
+     keeps moving, as with a vanilla carved pumpkin. An armor stand shows the north face.
+   * Config screen (Mod Menu, or the config file): the opacity slider goes from 10% to 100% and an
+     uncarved pumpkin becomes see-through at the low end.

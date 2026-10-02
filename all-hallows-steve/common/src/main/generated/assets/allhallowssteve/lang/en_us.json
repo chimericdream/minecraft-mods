@@ -34,10 +34,15 @@
   "item.allhallowssteve.pumpkin_stencils.spawner": "Spawner Carving Stencil",
   "item.allhallowssteve.pumpkin_stencils.structure_data": "Structure Block Carving Stencil",
   "item.allhallowssteve.pumpkin_stencils.wither_rose": "Wither Rose Carving Stencil",
+  "key.allhallowssteve.cycle_pumpkin_face": "Turn Worn Pumpkin",
+  "key.category.allhallowssteve.keybinds": "All Hallows Steve",
   "message.allhallowssteve.pumpkin_contents.candle.lit": "%s candle (lit)",
   "message.allhallowssteve.pumpkin_contents.candle.snuffed": "%s candle (snuffed)",
   "message.allhallowssteve.pumpkin_contents.candles.lit": "%s candles (lit)",
   "message.allhallowssteve.pumpkin_contents.candles.snuffed": "%s candles (snuffed)",
   "message.allhallowssteve.pumpkin_contents.empty": "Empty",
-  "stat.allhallowssteve.light_decorated_pumpkin": "Lit up decorated pumpkin"
+  "stat.allhallowssteve.light_decorated_pumpkin": "Lit up decorated pumpkin",
+  "text.config.allhallowssteve.option.pumpkinOverlayOpacity": "Worn Pumpkin Vision Overlay",
+  "text.config.allhallowssteve.option.pumpkinOverlayOpacity.description": "How much a worn decorated pumpkin blocks your view. At 100% an uncarved pumpkin hides everything; lower it to see through.",
+  "text.config.allhallowssteve.title": "All Hallows Steve Config"
 }

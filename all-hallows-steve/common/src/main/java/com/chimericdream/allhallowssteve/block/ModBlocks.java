@@ -5,16 +5,20 @@ import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
 import com.chimericdream.allhallowssteve.item.DecoratedPumpkinBlockItem;
+import com.chimericdream.allhallowssteve.wearable.PumpkinFaces;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -47,7 +51,23 @@ public class ModBlocks {
         () -> new MenuType<>(CarvingStationScreenHandler::new, FeatureFlagSet.of())
     );
 
-    public static final RegistrySupplier<Block> DECORATED_PUMPKIN = registerDecoratedPumpkinVariant(DecoratedPumpkinBlock.BLOCK_ID, DecoratedPumpkinBlock::new, NATURAL_SETTINGS);
+    /**
+     * The unlit decorated pumpkin is the only wearable one, with the same head-slot behavior as vanilla's
+     * carved pumpkin (it can't be swapped onto the head by right-clicking, since right-clicking places
+     * it). Its camera overlay is the dynamic per-stencil one from {@code WornPumpkinOverlay}.
+     */
+    @SuppressWarnings("UnstableApiUsage")
+    private static final Item.Properties WEARABLE_SETTINGS = new Item.Properties()
+        .arch$tab(CreativeModeTabs.NATURAL_BLOCKS)
+        .component(
+            DataComponents.EQUIPPABLE,
+            Equippable.builder(EquipmentSlot.HEAD)
+                .setSwappable(false)
+                .setCameraOverlay(PumpkinFaces.CAMERA_OVERLAY)
+                .build()
+        );
+
+    public static final RegistrySupplier<Block> DECORATED_PUMPKIN = registerDecoratedPumpkinVariant(DecoratedPumpkinBlock.BLOCK_ID, DecoratedPumpkinBlock::new, WEARABLE_SETTINGS);
 
     /** The four lit variants (see {@link LitDecoratedPumpkinBlock}), one per torch color. */
     public static final List<RegistrySupplier<Block>> LIT_DECORATED_PUMPKINS = new ArrayList<>();

@@ -1,7 +1,7 @@
 # Wearable decorated pumpkins
 
 > Shortlist #12 · Tier 2 — Solid mid-size features · Effort **L** (was M, see Decisions) · Value ★★★ · Votes 3 · My vote **Yes**
-> Status: **Ready**
+> Status: **Building** — branch `ahs-pumpkin-features`
 
 ## Description
 
@@ -102,3 +102,15 @@ None that change what gets built. Both can be decided during implementation:
   death, or resets to north. Proposal: persist it.
 - How a player who starts tracking another player gets that player's current face (the equipment
   packets that sync the item won't carry it).
+- **Choices made during implementation, to confirm.**
+  - The vision overlay is stretched over the whole screen, like vanilla's own pumpkin blur, so the
+    openings look wider on a wide screen. It reuses vanilla's first-person-only camera-overlay slot.
+  - The covered part of the overlay is the pumpkin's dye color darkened a little (85%), and the opacity
+    slider runs from 10% to 100% (default 100%), so even an uncarved pumpkin can be made see-through.
+  - The item is equippable like vanilla's carved pumpkin (not swappable by right-click, so right-click
+    still places it). Dispensers can equip it, and the creaking behavior comes with the same tag.
+  - The face lives in world data (saved with the world, so it survives logging out) and is sent to every
+    player, rather than to players tracking someone. A client draws a head pumpkin by putting a temporary
+    face marker on a copy of the stack, so the real item never changes.
+  - Armor stands and any non-player always show the north face. The key is unbound by default and lives
+    in a new "All Hallows Steve" controls category.

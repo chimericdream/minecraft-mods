@@ -2,6 +2,8 @@ package com.chimericdream.allhallowssteve;
 
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.ModDispenserBehaviors;
+import com.chimericdream.allhallowssteve.config.AllHallowsSteveConfig;
+import com.chimericdream.allhallowssteve.network.PumpkinFaceNetworking;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.stats.ModStats;
@@ -23,10 +25,12 @@ public final class AllHallowsSteveMod {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
         REGISTRY_HELPER.init();
+        AllHallowsSteveConfig.CONFIG.init();
         ModBlocks.init();
         ModItems.init();
         ModStats.init();
         AllHallowsSteveComponentTypes.init();
+        PumpkinFaceNetworking.init();
     }
 
     /**

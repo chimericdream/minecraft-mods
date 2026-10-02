@@ -25,6 +25,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.ItemTags;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(AllHallowsSteveRecipeProvider::new);
         pack.addProvider(AllHallowsSteveEnglishLangProvider::new);
         pack.addProvider(AllHallowsSteveBlockTagGenerator::new);
+        pack.addProvider(AllHallowsSteveItemTagGenerator::new);
     }
 
     private static class AllHallowsSteveEnglishLangProvider extends FabricLanguageProvider {
@@ -68,6 +70,13 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
 
             translationBuilder.add("stat.allhallowssteve.light_decorated_pumpkin", "Lit up decorated pumpkin");
+
+            translationBuilder.add("key.allhallowssteve.cycle_pumpkin_face", "Turn Worn Pumpkin");
+            translationBuilder.add("key.category.allhallowssteve.keybinds", "All Hallows Steve");
+
+            translationBuilder.add("text.config.allhallowssteve.title", "All Hallows Steve Config");
+            translationBuilder.add("text.config.allhallowssteve.option.pumpkinOverlayOpacity", "Worn Pumpkin Vision Overlay");
+            translationBuilder.add("text.config.allhallowssteve.option.pumpkinOverlayOpacity.description", "How much a worn decorated pumpkin blocks your view. At 100% an uncarved pumpkin hides everything; lower it to see through.");
 
             translationBuilder.add(PumpkinContents.EMPTY_KEY, "Empty");
             translationBuilder.add(PumpkinContents.CANDLE_LIT_KEY, "%s candle (lit)");
@@ -125,6 +134,20 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureBlockTags(registryLookup, this::builder);
             }
+        }
+    }
+
+    /** Only the unlit decorated pumpkin disguises its wearer from endermen and creakings, like vanilla's carved pumpkin. */
+    private static class AllHallowsSteveItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
+        public AllHallowsSteveItemTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider registryLookup) {
+            builder(ItemTags.GAZE_DISGUISE_EQUIPMENT)
+                .setReplace(false)
+                .add(ModBlocks.DECORATED_PUMPKIN.get().asItem().builtInRegistryHolder().key());
         }
     }
 

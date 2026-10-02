@@ -16,6 +16,11 @@ public class AllHallowsSteveComponentTypes {
         () -> DataComponentType.<PumpkinStencilsComponent>builder().persistent(PumpkinStencilsComponent.CODEC).build()
     );
 
+    public static final RegistrySupplier<DataComponentType<WornFaceComponent>> WORN_FACE_COMPONENT = REGISTRY_HELPER.CUSTOM_COMPONENTS.register(
+        WornFaceComponent.COMPONENT_ID,
+        () -> DataComponentType.<WornFaceComponent>builder().persistent(WornFaceComponent.CODEC).build()
+    );
+
     public static void init() {
     }
 }
