@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > Any vanilla behavior that could plausibly be gated on `Player#isCrouching` is fair game. Vanilla already treats sneaking as a "be careful / be polite / be unnoticed" flag in a handful of places; this mod's job is finding everywhere else that logic could have applied and didn't. Not every idea below needs to be sensible — a few are here purely because "unified sneaking theory" was too funny not to chase to its logical, slightly ridiculous conclusion.
 
 ## Active ideas

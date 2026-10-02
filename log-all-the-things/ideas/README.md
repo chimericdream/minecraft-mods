@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > Generalize vanilla's waterlogging mechanic to other fluids/materials.
 
 ## Active ideas

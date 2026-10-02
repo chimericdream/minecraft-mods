@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > **Small, configurable fixes for real villager headaches** — trading halls, breeders, curing, and moving villagers around. Every idea below should stay a toggle, not a system.
 
 ## Active ideas

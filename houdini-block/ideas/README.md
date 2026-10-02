@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > **Update suppression as a tool** — for redstone engineers, technical players, and clean builders. The stage-magic naming (Houdini) is a gift; lean into it.
 
 ## Active ideas

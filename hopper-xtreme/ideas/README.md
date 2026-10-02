@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > Everything stays **recognizably "hopper"** — speed tiers, directions, and filtering. New ideas should slot into that grid rather than invent a new machine.
 
 ## Active ideas

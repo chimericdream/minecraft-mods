@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > Give players a **simple, in-world way to control where portals link**, without turning it into a whole redstone-adjacent system. Every idea below should stay optional and stay out of the way for anyone who doesn't decorate their portals.
 
 ## Active ideas

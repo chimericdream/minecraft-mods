@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its `mod_description`:
->
 > Get content from the next update on the current version!
 
 ## Active ideas

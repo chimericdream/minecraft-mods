@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > An accurate, convenient way to **test how an attack performs against a specific mob or mob category**. The dummy binds the real vanilla mob (immobilized) rather than faking its model, so combat math (armor, enchantment category bonuses, resistances) is correct for free — everything below should preserve that.
 
 ## Active ideas

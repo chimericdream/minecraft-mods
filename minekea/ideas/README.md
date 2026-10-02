@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > **Functional, decorative furniture "some assembly required"** — storage that displays, furniture you can use, and finishing touches for every room. Ideas are grouped by room, IKEA-showroom style.
 
 ## Active ideas

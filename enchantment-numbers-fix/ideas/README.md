@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its `mod_description`:
->
 > Simple mod that converts enchantment levels above 10 to Roman numerals instead of their decimal version.
 
 ## Active ideas

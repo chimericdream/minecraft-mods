@@ -5,8 +5,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
 > A **predictable floor (and roof)**. It should stay a worldgen tweak — small, boring in the best way, and server-side only.
 
 ## Active ideas
