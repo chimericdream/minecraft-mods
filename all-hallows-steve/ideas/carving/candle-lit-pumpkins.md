@@ -50,6 +50,8 @@ and the pumpkin's dye and stencils), plus a visual smoke test of the four overla
 - 2026-10-01 — A snuffed pumpkin uses the plain unlit overlay, even when it holds candles. Telling a
   hollow pumpkin from one with candles is handled by [Pumpkin contents message](pumpkin-contents-message.md),
   built right after this idea.
+- 2026-10-02 — Candle-lit pumpkins can't be worn. Settled in the wearable-pumpkins idea (only unlit
+  decorated pumpkins are wearable).
 - 2026-10-01 — Overlay textures are named `{stencil}_candlelit_{count}.png` (count 1–4), with one per
   stencil per count. Underscores, to match the existing overlays (`creeper_lit_blue.png`).
 
@@ -67,15 +69,13 @@ the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 
 ## Related
 
-- [Wearable decorated pumpkins](wearable-decorated-pumpkins.md) — does a candle-lit pumpkin stay lit on
-  your head?
+- [Wearable decorated pumpkins](wearable-decorated-pumpkins.md) — lit pumpkins, candle-lit included, are
+  not wearable.
 - [Pumpkin contents message](pumpkin-contents-message.md) — follow-up that must be built after this one:
   tells the player whether a snuffed pumpkin is hollow or holds candles.
 - [Turnip lanterns](../harvest-crafts/turnip-lanterns.md) — another small carved light source.
 
 ## Open questions
 
-- **Wearing it.** Deferred to [Wearable decorated pumpkins](wearable-decorated-pumpkins.md): does a
-  candle-lit pumpkin stay lit on your head?
 - **Implementation (decide while building):** one block with candle-count and lit properties versus
   separate blocks like the four torch variants.

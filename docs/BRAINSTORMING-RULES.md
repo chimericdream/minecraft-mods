@@ -43,3 +43,8 @@ reason.
   (difficulty, economy, progression, mob behavior), it needs a config option to turn it off or tune it.
   *Why:* servers and modpacks balance things differently, and a hard-coded change can rule a mod out
   of a pack. *(Added 2026-09-29)*
+- **A3. Always keep accessibility in mind.** A feature shouldn't depend on one sense, one input method,
+  or one level of ability. Anything that blocks or distorts the view, relies on color or sound alone,
+  or needs precise timing or input needs an alternative or a setting to reduce it.
+  *Why:* a mod should be playable by everyone who installs it, and it is far cheaper to design for
+  this up front than to patch it in later. *(Added 2026-10-02)*
