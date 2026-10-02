@@ -24,7 +24,7 @@ tone.
 
 ### Drafts to approve
 
-- [ ] **[All Hallows Steve](all-hallows-steve/ideas/README.md)** (from the 2026-09-29 brainstorm): A pumpkin mod first: dyeing, carving, lighting, and displaying decorated pumpkins, plus the harvest and folklore that surround them. The tone is grounded autumn: quiet, seasonal, and rooted in real harvest and Samhain folklore. It is not campy, not horror, and not a general seasons or farming mod.
+- [x] **[All Hallows Steve](all-hallows-steve/ideas/README.md)** (from the 2026-09-29 brainstorm): A pumpkin mod first: dyeing, carving, lighting, and displaying decorated pumpkins, plus the harvest and folklore that surround them. The tone is grounded autumn: quiet, seasonal, and rooted in real harvest and Samhain folklore. It is not campy, not horror, and not a general seasons or farming mod.
 - [ ] **[Archaeology Tweaks](archaeology-tweaks/ideas/README.md)** (from its mod description): Small, vanilla-friendly tweaks to Minecraft's archaeology system.
 - [ ] **[Artificial Heart](artificial-heart/ideas/README.md)** (from its legacy backlog): **"all the atmosphere, none of the side effects"** — tamed, decorative versions of blocks whose vanilla behavior gets in the way of building. Every idea below follows that pitch.
 - [ ] **[Athenaeum](athenaeum/ideas/README.md)** (from its mod description): This mod adds a variety of custom written books and related content to the game.
@@ -33,7 +33,7 @@ tone.
 - [ ] **[Better Portal Linking](better-portal-linking/ideas/README.md)** (from its legacy backlog): Give players a **simple, in-world way to control where portals link**, without turning it into a whole redstone-adjacent system. Every idea below should stay optional and stay out of the way for anyone who doesn't decorate their portals.
 - [ ] **[Better Target Dummies](better-target-dummies/ideas/README.md)** (from its legacy backlog): An accurate, convenient way to **test how an attack performs against a specific mob or mob category**. The dummy binds the real vanilla mob (immobilized) rather than faking its model, so combat math (armor, enchantment category bonuses, resistances) is correct for free — everything below should preserve that.
 - [ ] **[But What About...?](but-what-about/ideas/README.md)** (from its mod description): When Mojang adds new blocks to the game, but leaves some out, this mod fills in the gaps.
-- [ ] **[Camel Nostrils](camel-nostrils/ideas/README.md)** (from its legacy backlog): Absurdity of the highest order, sourced from random suggestions by our non-Minecraft-playing spouses.
+- [x] **[Camel Nostrils](camel-nostrils/ideas/README.md)** (from its legacy backlog): Absurdity of the highest order, sourced from random suggestions by our non-Minecraft-playing spouses.
 - [ ] **[ChimericLib](chimeric-lib/ideas/README.md)** (from its legacy backlog): ChimericLib is developer-facing plumbing: shared systems that multiple mods in the suite would otherwise each reinvent. Several are extracted from patterns that already exist in individual mods.
 - [ ] **[Effective Gear](effective-gear/ideas/README.md)** (from its legacy backlog): Small quality-of-life tweaks and bonuses for player armor, weapons, and tools.
 - [ ] **[Enchantment Numbers Fix](enchantment-numbers-fix/ideas/README.md)** (from its mod description): Simple mod that converts enchantment levels above 10 to Roman numerals instead of their decimal version.

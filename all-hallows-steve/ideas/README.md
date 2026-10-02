@@ -6,11 +6,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Drawn from the tone of the 2026-09-29 brainstorm and shortlist:
->
-> A pumpkin mod first: dyeing, carving, lighting, and displaying decorated pumpkins, plus the harvest
-> and folklore that surround them. The tone is grounded autumn: quiet, seasonal, and rooted in real
-> harvest and Samhain folklore. It is not campy, not horror, and not a general seasons or farming mod.
+> An autumn/harvest/festival mod. Started with dyeing, carving, lighting, and displaying decorated pumpkins.
+> The tone is grounded autumn: quiet, seasonal, and rooted in real harvest and Samhain folklore. Minimally
+> campy, not horror, and not a general seasons or farming mod.
 
 ## Active ideas
 
