@@ -62,6 +62,11 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Will-o'-the-wisps + buried caches](folklore/will-o-the-wisps.md) — Faint lights in swamps and Pale
   Gardens that sometimes lead to buried caches holding the rarest stencils.
 
+### Progression
+
+- [Advancements](progression/advancements.md) — A tab of quiet, funny advancements for the carving
+  station, dyeing, carving, wearing and lighting pumpkins.
+
 ## Inbox
 
 _Empty._ The older, unvoted backlog is in
