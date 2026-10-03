@@ -69,6 +69,25 @@ own entity-renderer map construction — and it does **not** apply to Architectu
 `minekea/neoforge/.../MinekeaNeoForge.java` constructor (the original instance of this pattern) and
 `camel-nostrils/neoforge/.../CamelNostrilsNeoForge.java` constructor.
 
+## Keybinds must register in the NeoForge mod constructor, not a lifecycle event
+
+A `KeyMapping` registered via Architectury's `KeyMappingRegistry.register(...)` from
+`FMLClientSetupEvent` (or any other lifecycle hook) never appears in the Controls screen on NeoForge,
+even though it works on Fabric. No error is logged beyond a late-registration warning.
+
+**Root cause**: Architectury only hands its queued key mappings to NeoForge from a
+`RegisterKeyMappingsEvent` listener, and that event fires **before** `FMLClientSetupEvent`. Anything
+registered after it falls into Architectury's late-registration path, which does not get the key into
+the Controls screen. Note that a `static {}` initializer that calls `register(...)` (as effective-gear's
+`Keybindings` did) is only as early as the first class load, so the trigger point is what matters.
+
+**Fix**: call the keybind class's `init()` (which does the `register(...)`) directly in the platform mod
+class's **constructor**, guarded by `FMLEnvironment.getDist() == Dist.CLIENT`. On Fabric,
+`ClientModInitializer.onInitializeClient()` is early enough. Reference implementations:
+`all-hallows-steve/neoforge/.../AllHallowsSteveNeoForge.java` and
+`effective-gear/neoforge/.../EffectiveGearNeoForge.java` constructors. Client tick handlers that
+`consumeClick()` the key can still register wherever they like.
+
 ## NeoForge's event-hook patches restructure vanilla method bodies into differently-numbered lambdas
 
 A `@Redirect`/`@Inject` mixin whose `method =` and `@At(target = ...)` were derived from vanilla/Fabric
