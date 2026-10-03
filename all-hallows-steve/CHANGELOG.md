@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0
+
 #### New Features
 
 * Added the Pumpkin Carving Station. Craft one from an iron ingot, shears, a crafting table, and some planks.
