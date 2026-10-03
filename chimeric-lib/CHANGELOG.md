@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 6.6.0
+
 #### New Features
 
 * Added `config/YaclConfig` and `config/YaclConfigScreens` — a shared YACL config wrapper that
