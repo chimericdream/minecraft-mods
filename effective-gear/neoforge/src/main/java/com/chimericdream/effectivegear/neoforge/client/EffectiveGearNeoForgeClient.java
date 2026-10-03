@@ -15,7 +15,6 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 public class EffectiveGearNeoForgeClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        Keybindings.init();
         PreservingBlockColors.init();
     }
 

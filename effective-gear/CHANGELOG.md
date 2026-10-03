@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fixed the "Use Trim Ability" key not appearing in the Controls screen on NeoForge.
+
 ### 26.2 - 1.3.0
 
 #### New Features
