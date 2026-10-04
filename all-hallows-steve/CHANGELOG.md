@@ -1,5 +1,12 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.1
+
+#### Bug Fixes
+
+* Fixed the overlay textures for candlelit pumpkins
+
+
 ### 26.2 - 1.0.0
 
 #### New Features
