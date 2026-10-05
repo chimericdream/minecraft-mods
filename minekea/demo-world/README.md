@@ -64,7 +64,7 @@ a new block never silently disappears (see `canonical()` in §5).
 1. Put it in a datapack:
    ```
    <world>/datapacks/minekea_demo/
-     pack.mcmeta                              {"pack":{"pack_format":<your version>,"description":"Minekea demo"}}
+     pack.mcmeta                              {"pack":{"min_format":<your min version>, "max_format":<your max version>,"description":"Minekea demo"}}
      data/minekea/function/build.mcfunction   ← copy demo_build.mcfunction here
    ```
    (`functions` with an `s` on MC < 1.21.)
