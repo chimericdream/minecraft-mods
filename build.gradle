@@ -61,6 +61,15 @@ subprojects {
 
         maven { url 'https://maven.blamejared.com' }
 
+        // Transitive dependency of YACL (NeoForge)
+        maven {
+            name = 'Kotlin for Forge'
+            url = 'https://thedarkcolour.github.io/KotlinForForge/'
+            content {
+                includeGroup 'thedarkcolour'
+            }
+        }
+
         maven {
             name = 'NeoForged'
             url = 'https://maven.neoforged.net/releases'
