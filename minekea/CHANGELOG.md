@@ -5,6 +5,7 @@
 * Fixed the ancient and doom lanterns sharing the end lantern's recipe; they now use an echo shard and
   crimson fungus.
 * Fixed the iron nugget pouch being registered with a gold nugget ingredient.
+* Fixed the vanilla barrel and bookshelf recipe overrides not being applied.
 
 ### 26.2 - 10.1.0
 
