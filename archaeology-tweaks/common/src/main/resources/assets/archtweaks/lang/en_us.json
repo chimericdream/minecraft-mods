@@ -1,5 +1,6 @@
 {
     "enchantment.archtweaks.gentle_touch": "Gentle Touch",
+    "enchantment.archtweaks.gentle_touch.desc": "Gives a chance to get a second drop when brushing a suspicious block.",
     "block.archtweaks.suspicious_clay": "Suspicious Clay",
     "item.archtweaks.suspicious_clay": "Suspicious Clay",
     "block.archtweaks.suspicious_dirt": "Suspicious Dirt",
