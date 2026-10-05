@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Changes
+
+* Preserving now shows a description in the enchanting tooltip.
+
 #### Bug Fixes
 
 * Fixed the "Use Trim Ability" key not appearing in the Controls screen on NeoForge.

@@ -2,6 +2,8 @@
 
 #### Changes
 
+* Deep Storage, Refill, Vacuum, and Void now show descriptions in the enchanting tooltip.
+* Deep Storage is labeled "[Not Yet Implemented]" since it does not do anything yet.
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
   settings themselves are unchanged.
 
