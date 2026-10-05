@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+* Nugget bags are now called nugget pouches, and are crafted from a 2x2 of nuggets.
+* Added a recipe for the honey bucket: 3 honey bottles + 1 bucket (the bottles are returned empty).
+* Fixed the ancient and doom lanterns sharing the end lantern's recipe; they now use an echo shard and
+  crimson fungus.
+* Fixed the iron nugget pouch being registered with a gold nugget ingredient.
 
 ### 26.2 - 10.1.0
 
