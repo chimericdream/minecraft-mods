@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": "minecraft:iron_nugget",
-    "P": "minecraft:ender_pearl",
+    "P": "minecraft:crimson_fungus",
     "T": "minecraft:torch"
   },
   "pattern": [
