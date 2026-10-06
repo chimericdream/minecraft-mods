@@ -1,0 +1,7 @@
+{
+    "item.opus.book": "Opus Book",
+    "key.opus.open_guide": "Open the Opus Guide",
+    "key.categories.opus": "Opus",
+    "opus.book.missing": "Book '%s' was not found",
+    "opus.book.search": "Search"
+}

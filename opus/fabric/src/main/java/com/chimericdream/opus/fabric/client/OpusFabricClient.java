@@ -1,10 +1,11 @@
 package com.chimericdream.opus.fabric.client;
 
+import com.chimericdream.opus.client.OpusClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class OpusFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+        OpusClient.init();
     }
 }
