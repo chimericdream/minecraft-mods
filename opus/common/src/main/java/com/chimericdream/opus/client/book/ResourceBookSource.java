@@ -13,7 +13,7 @@ import java.util.Optional;
 
 /**
  * Serves one language folder of one book out of the client resource manager, so pages can be overridden or added
- * by any resource pack: {@code assets/<namespace>/books/<book>/<lang>/...}.
+ * by any resource pack: {@code assets/<namespace>/opus-books/<book>/<lang>/...}.
  *
  * <p>Compiles against 26.2; not yet run in game. {@code listResources(String, Predicate)} returning a map of {@code Resource}s
  * is taken from athenaeum's {@code AthenaeumReloadListener}.
@@ -23,7 +23,7 @@ public final class ResourceBookSource implements BookSource {
     private final String namespace;
     private final String root;
 
-    /** @param root resource path of the language folder, e.g. {@code books/guide/en_us} (no trailing slash) */
+    /** @param root resource path of the language folder, e.g. {@code opus-books/guide/en_us} (no trailing slash) */
     public ResourceBookSource(ResourceManager manager, String namespace, String root) {
         this.manager = manager;
         this.namespace = namespace;

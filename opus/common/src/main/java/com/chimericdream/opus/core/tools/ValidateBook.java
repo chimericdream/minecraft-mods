@@ -80,11 +80,11 @@ public final class ValidateBook {
         return diagnostics.hasErrors() ? 1 : 0;
     }
 
-    /** {@code .../assets/<ns>/books/<name>} becomes {@code ns:name}; anything else is {@code local:<name>}. */
+    /** {@code .../assets/<ns>/opus-books/<name>} becomes {@code ns:name}; anything else is {@code local:<name>}. */
     private static String bookId(Path dir) {
         Path abs = dir.toAbsolutePath().normalize();
         Path parent = abs.getParent();
-        if (parent != null && parent.getFileName() != null && parent.getFileName().toString().equals("books")
+        if (parent != null && parent.getFileName() != null && parent.getFileName().toString().equals("opus-books")
             && parent.getParent() != null && parent.getParent().getFileName() != null) {
             return parent.getParent().getFileName() + ":" + abs.getFileName();
         }

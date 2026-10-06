@@ -34,13 +34,13 @@ positions are window pixels, so at GUI scale 2 a logical coordinate is doubled.
 They only need JDK 21+, commonmark 0.30.0 (core, gfm-tables, gfm-strikethrough, task-list-items), SnakeYAML 2.7 and
 JUnit 5 on the classpath: compile `common/src/main/java/com/chimericdream/opus/core` and
 `fabric/src/test/java`, then run the JUnit console launcher. `ValidateBookTest` finds the guide through the
-relative path `common/src/main/resources/assets/opus/books/guide`, so run from `opus/`.
+relative path `common/src/main/resources/assets/opus/opus-books/guide`, so run from `opus/`.
 
 ## Decisions taken for you (reconsider freely)
 
 These were assumed approved under "assume I agree with the recommended approach". None breaks another mod.
 
-- **Resource-pack content** (`assets/<ns>/books/<book>/<lang>/…`), client-side; the mod is "client required, server optional".
+- **Resource-pack content** (`assets/<ns>/opus-books/<book>/<lang>/…`), client-side; the mod is "client required, server optional".
 - **Scrolling single column + sidebar table of contents**, not paged spreads.
 - **Own document model** between commonmark and layout/rendering, so the parser library can change.
 - **Custom syntax**: widgets are fenced blocks (` ```recipe `, ` ```item `, ` ```entity `) with a YAML body; inline icons are `![](item:ns:id)`; links use `item:`/`book:` schemes; callouts are `> [!NOTE]`. No `:::` containers yet.

@@ -58,7 +58,7 @@ opus/common/src/main/java/com/chimericdream/opus/
 ```
 
 Flow in game: `OpusReloadListener` (client resources) -> `BookRepository.reload` -> for each
-`assets/<ns>/books/<name>/book.yml`: `ResourceBookSource` (language folder layered over the default language) ->
+`assets/<ns>/opus-books/<name>/book.yml`: `ResourceBookSource` (language folder layered over the default language) ->
 `BookLoader.load` -> `Book`. `BookScreen` lays a page out with `LayoutEngine` + `MinecraftTextMetrics` and
 `BookRenderer`/`BookWidgets` draw the resulting `Element`s.
 
@@ -79,7 +79,7 @@ Flow in game: `OpusReloadListener` (client resources) -> `BookRepository.reload`
 - Fenced block labels in `WidgetTypes` are widgets; every other label is a code block. A new widget needs:
   a label in `WidgetTypes`, a spec parser + `WidgetSpecs.validate` case, a `WidgetSizer` size, a `BookWidgets`
   draw case, a parser test, a layout test, and a section in the bundled guide.
-- The bundled guide (`assets/opus/books/guide`) must stay at 0 errors / 0 warnings (`ValidateBookTest`). It
+- The bundled guide (`assets/opus/opus-books/guide`) must stay at 0 errors / 0 warnings (`ValidateBookTest`). It
   currently documents some things that are only planned (the `since` badge, locked-page behaviour, image
   support is noted as unsupported); keep it honest as features land or fail.
 

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidateBookTest {
-    private static final String GUIDE = "assets/opus/books/guide";
+    private static final String GUIDE = "assets/opus/opus-books/guide";
 
     private static Path guideDir() {
         for (String prefix : List.of("common/src/main/resources/", "../common/src/main/resources/", "opus/common/src/main/resources/")) {

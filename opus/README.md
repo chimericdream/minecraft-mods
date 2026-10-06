@@ -26,9 +26,9 @@ chapter.
 
 ## Notes for Documentation
 
-Books live in `assets/<namespace>/books/<book>/`. The bundled **Opus Guide** (press F7, or use the Opus Book
+Books live in `assets/<namespace>/opus-books/<book>/`. The bundled **Opus Guide** (press F7, or use the Opus Book
 item) explains every feature and is itself written as an Opus book; its source is in
-`common/src/main/resources/assets/opus/books/guide`.
+`common/src/main/resources/assets/opus/opus-books/guide`.
 
 Check a book from the command line with `com.chimericdream.opus.core.tools.ValidateBook <book-folder>`.
 

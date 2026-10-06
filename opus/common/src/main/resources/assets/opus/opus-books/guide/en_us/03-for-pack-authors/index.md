@@ -4,7 +4,7 @@ icon: item:minecraft:bookshelf
 ---
 ## Shipping a book
 
-Put the book folder in a resource pack at `assets/<namespace>/books/<book>/`. Give players the book item with
+Put the book folder in a resource pack at `assets/<namespace>/opus-books/<book>/`. Give players the book item with
 the `opus:book_id` component set to your book's id, or let them open it from a key.
 
 ## Translating

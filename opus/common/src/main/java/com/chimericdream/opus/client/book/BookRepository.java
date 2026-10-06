@@ -43,8 +43,8 @@ public final class BookRepository {
 
         String language = Minecraft.getInstance().getLanguageManager().getSelected();
 
-        // Every books/<name>/book.yml marks a book. Namespaces are separate books even with the same <name>.
-        manager.listResources("books", id -> id.getPath().endsWith("/book.yml")).forEach((id, resource) -> {
+        // Every opus-books/<name>/book.yml marks a book. Namespaces are separate books even with the same <name>.
+        manager.listResources("opus-books", id -> id.getPath().endsWith("/book.yml")).forEach((id, resource) -> {
             String[] parts = id.getPath().split("/");
             if (parts.length != 3) {
                 return;
@@ -55,7 +55,7 @@ public final class BookRepository {
             Diagnostics diagnostics = new Diagnostics();
 
             BookMeta meta = BookMeta.parse(readText(resource), name, diagnostics);
-            String root = "books/" + name;
+            String root = "opus-books/" + name;
             BookSource primary = new ResourceBookSource(manager, id.getNamespace(), root + "/" + language);
             BookSource fallback = new ResourceBookSource(manager, id.getNamespace(), root + "/" + meta.defaultLanguage());
 

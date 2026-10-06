@@ -8,7 +8,7 @@ files in a resource pack, and the folders become chapters and the files become p
 
 > [!TIP] You are reading one
 > This guide is itself an Opus book. Its source is the plain `.md` files you can see in the mod's
-> `assets/opus/books/guide` folder, and every example here is shown twice: first as the text you write, then as
+> `assets/opus/opus-books/guide` folder, and every example here is shown twice: first as the text you write, then as
 > the page it produces.
 
 ## Where to go next

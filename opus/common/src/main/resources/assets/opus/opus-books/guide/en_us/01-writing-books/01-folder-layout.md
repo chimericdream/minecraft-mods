@@ -2,10 +2,10 @@
 title: Folder layout
 tags: [basics, structure]
 ---
-A book lives in `assets/<namespace>/books/<book>/`:
+A book lives in `assets/<namespace>/opus-books/<book>/`:
 
 `````text
-books/field-guide/
+opus-books/field-guide/
   book.yml                 settings shared by every language
   en_us/
     index.md               the book's home page
