@@ -27,6 +27,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Tag pages and bookmarks](reader/tag-pages-and-bookmarks.md) — A generated Tags page, tag chips under titles, and per-book bookmarks.
 - [Pages unlocked by advancements](reader/advancement-gating.md) — Wire `requires:` to the client's advancement progress (a stub today).
 - [Images and texture icons](reader/images-and-textures.md) — Draw texture images in pages and `texture:` icons in the table of contents.
+- [Search that finds recipes, items and mobs](reader/search-widgets-and-code.md) — Index widget contents (by display name, not just id) so "hopper" finds the page that crafts one.
 - [Expand and collapse all chapters](reader/expand-collapse-all.md) — Sidebar controls to open or close every chapter at once, and maybe an accordion mode.
 - [Deep nesting and long titles in the sidebar](reader/deep-nesting-and-long-titles.md) — What the sidebar does when a book nests deeper or has longer names than it fits: indent caps, wrapping, drill-down, validator warning.
 
