@@ -2,8 +2,8 @@
 title: Links
 tags: [basics, reference]
 ---
-
-Links use ordinary Markdown syntax, so they also work in a Markdown preview while you write.
+Links use ordinary Markdown syntax, so they also work in a Markdown preview while you write. A link that points
+nowhere is reported when the book loads, so you find out before your players do.
 
 | Destination | Goes to |
 |:------------|:--------|
@@ -15,9 +15,36 @@ Links use ordinary Markdown syntax, so they also work in a Markdown preview whil
 | `book:mymod:other-book/some/page` | A page in another book. |
 | `https://example.com` | A web page, after asking the player. |
 
-A link that points nowhere is reported when the book loads, so you find out before your players do.
+Hover a link to see where it goes: pages show their file name, items show their name.
+
+`````markdown
+* [The next page in this folder](02-frontmatter.md)
+* [A heading on another page](03-markdown.md#callouts)
+* [A page in another chapter](../02-widgets/index.md)
+* [A heading on this page](#inline-icons)
+* [A web page](https://example.com)
+* [A game item](item:minecraft:diamond)
+* [A page in another book](book:mymod:field-guide/machines/hoppers)
+`````
+
+Renders as:
+
+* [The next page in this folder](02-frontmatter.md)
+* [A heading on another page](03-markdown.md#callouts)
+* [A page in another chapter](../02-widgets/index.md)
+* [A heading on this page](#inline-icons)
+* [A web page](https://example.com)
+* [A game item](item:minecraft:diamond)
+* [A page in another book](book:mymod:field-guide/machines/hoppers)
 
 ## Inline icons
 
-An image whose address starts with `item:` is drawn as a small icon in the text:
-`![Hopper](item:minecraft:hopper)`.
+An image whose address starts with `item:` is drawn as a small icon in the text.
+
+`````markdown
+A hopper ![Hopper](item:minecraft:hopper) and a chest ![Chest](item:minecraft:chest) drawn inline with the text.
+`````
+
+Renders as:
+
+A hopper ![Hopper](item:minecraft:hopper) and a chest ![Chest](item:minecraft:chest) drawn inline with the text.

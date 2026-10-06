@@ -14,7 +14,8 @@
 
 ## Decisions
 
-_None yet._
+- 2026-10-06 — Recipe ids will be supported. The lookup rule: if an id is present, fetch the recipe and its output from the server; if found, render it; if not found, fall back to the inline definition.
+- 2026-10-06 — Until the lookup exists, the optional `recipe:` id is accepted, validated and ignored, and the guide's examples include it (marked as unused). A block with only an id shows an empty panel titled with the id.
 
 ## Brainstorm variants
 
