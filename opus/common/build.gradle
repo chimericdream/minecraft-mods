@@ -17,3 +17,16 @@ dependencies {
     implementation "org.commonmark:commonmark-ext-task-list-items:${project.commonmark_version}"
     implementation "org.yaml:snakeyaml:${project.snakeyaml_version}"
 }
+
+// Checks the books this mod ships (broken links, bad frontmatter, invalid widgets); errors fail the build.
+tasks.register('validateBooks', JavaExec) {
+    group = 'verification'
+    description = 'Validates every Opus book under src/main/resources'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.chimericdream.opus.core.tools.ValidateBook'
+    args = [file('src/main/resources').absolutePath]
+}
+
+tasks.named('check') {
+    dependsOn 'validateBooks'
+}

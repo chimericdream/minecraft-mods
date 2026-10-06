@@ -9,20 +9,33 @@ import com.chimericdream.opus.core.book.BookSource;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
- * Command-line book checker: loads a book folder exactly as the game would and prints every problem.
+ * Command-line book checker: loads a book exactly as the game would and prints every problem.
  *
  * <pre>
- * java -cp ... com.chimericdream.opus.core.tools.ValidateBook &lt;book-dir&gt; [--lang=en_us]
+ * java -jar opus.jar [--validate] &lt;path&gt; [--lang=en_us]
  * </pre>
  *
- * {@code book-dir} is the folder holding {@code book.yml} and the per-language folders. Exits with status 1
- * when any error (not warning) is found, so it can gate a build.
+ * {@code path} can be a single book folder (the one holding {@code book.yml} and the per-language folders), or any
+ * folder above one (a resource pack, a mod's resources, a whole project): every {@code assets/<ns>/opus-books/<name>}
+ * book found beneath it is checked. Exits with status 1 when any error (not warning) is found, so it can gate a build.
  */
 public final class ValidateBook {
+    private static final int MAX_SEARCH_DEPTH = 8;
+    private static final Set<String> SKIPPED_FOLDERS = Set.of(".git", ".gradle", "build", "node_modules", "run");
+
     private ValidateBook() {
     }
 
@@ -36,16 +49,62 @@ public final class ValidateBook {
         for (String arg : args) {
             if (arg.startsWith("--lang=")) {
                 lang = arg.substring("--lang=".length());
+            } else if (arg.equals("--validate") || (arg.equals("validate") && dir == null)) {
+                continue;
             } else if (dir == null) {
                 dir = Path.of(arg);
             }
         }
 
         if (dir == null || !Files.isDirectory(dir)) {
-            err.println("usage: ValidateBook <book-dir> [--lang=en_us]");
+            err.println("usage: java -jar opus.jar [--validate] <path> [--lang=en_us]");
             return 2;
         }
 
+        List<Path> books = findBooks(dir);
+        int status = 0;
+        for (Path book : books) {
+            status = Math.max(status, validate(book, lang, out, err));
+        }
+
+        return status;
+    }
+
+    /** A folder with {@code book.yml} is one book; otherwise look for {@code opus-books/*}; otherwise assume it is a book. */
+    static List<Path> findBooks(Path dir) {
+        if (Files.exists(dir.resolve(BookMeta.FILE_NAME))) {
+            return List.of(dir);
+        }
+
+        List<Path> found = new ArrayList<>();
+        try {
+            Files.walkFileTree(dir, EnumSet.noneOf(FileVisitOption.class), MAX_SEARCH_DEPTH, new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult preVisitDirectory(Path d, BasicFileAttributes attrs) throws IOException {
+                    Path name = d.getFileName();
+                    if (!d.equals(dir) && name != null && SKIPPED_FOLDERS.contains(name.toString())) {
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
+
+                    if (name != null && name.toString().equals("opus-books")) {
+                        try (Stream<Path> children = Files.list(d)) {
+                            children.filter(Files::isDirectory).sorted().forEach(found::add);
+                        }
+
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
+
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            // fall through to treating the folder as a book; validate() reports what is wrong with it
+        }
+
+        return found.isEmpty() ? List.of(dir) : found;
+    }
+
+    private static int validate(Path dir, String lang, PrintStream out, PrintStream err) {
         Diagnostics diagnostics = new Diagnostics();
         String folder = dir.toAbsolutePath().normalize().getFileName().toString();
         BookMeta meta = BookMeta.empty(folder);

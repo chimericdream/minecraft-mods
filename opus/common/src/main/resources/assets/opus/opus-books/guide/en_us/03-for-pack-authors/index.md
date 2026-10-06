@@ -17,6 +17,29 @@ shown in the default language.
 Run the validator on the book folder. It loads the book the way the game does and lists broken links, bad
 frontmatter and invalid widgets, and exits with an error status when something is wrong.
 
+### Running the validator
+
+You only need Java 25 and the Opus jar from your mods folder (or from the download page). Point it at your book, your
+resource pack, or your mod's resources folder:
+
+```
+java -jar opus-<version>.jar path/to/your/pack
+```
+
+If the path holds `assets/<namespace>/opus-books/<book>` folders, every book inside is checked. You can also point
+it straight at one book folder (the one with `book.yml` in it). `--validate` is accepted before the path if you
+find it reads better.
+
+- **Language:** it checks the book's default language. Add `--lang=de_de` to check another one; missing pages fall
+  back to the default language, just like in the game.
+- **Output:** one line per problem, errors and warnings, followed by a summary per book with the chapter, page, tag,
+  error and warning counts.
+- **Exit status:** `0` when there are no errors (warnings are fine), `1` when there are errors, and `2` when the
+  folder can't be found or read. That makes it safe to use as a gate in a build or CI job.
+
+Fix the errors first, then clear the warnings. A book that finishes with `0 errors, 0 warnings` will load cleanly
+in the game.
+
 ## Reloading
 
 While the game is running, press <kbd>F3</kbd>+<kbd>T</kbd> to reload resource packs and see your edits.

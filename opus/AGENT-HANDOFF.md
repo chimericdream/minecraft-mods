@@ -53,7 +53,7 @@ opus/common/src/main/java/com/chimericdream/opus/
                            LinkTarget, SearchIndex, IconRef, BookMeta (book.yml)
     layout/                LayoutEngine (Document + width -> positioned Elements), Layout, Element,
                            TextMetrics (renderer supplies), WidgetSizer, LayoutConfig
-    tools/ValidateBook     CLI used by tests and (eventually) CI
+    tools/ValidateBook     CLI: the jar's Main-Class (`java -jar opus.jar <path>`), used by tests and `:opus:common:validateBooks`
   client/, item/, component/, OpusMod   Minecraft-facing; NEVER COMPILED (see below)
 ```
 

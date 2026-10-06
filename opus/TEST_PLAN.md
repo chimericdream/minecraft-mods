@@ -17,7 +17,7 @@ No Minecraft bootstrap is needed.
 | `RecipePanelTest` | the vanilla-style recipe panel geometry: slot counts and positions per recipe type, nothing overlapping or outside the panel |
 | `BookLoaderTest` | folder → chapter/page tree, ids, ordering, titles, tags, language fallback, link resolution, broken links, search |
 | `LayoutEngineTest` | wrapping, headings, lists, quotes, callouts, code, tables, widget boxes, link hit-testing |
-| `ValidateBookTest` | the CLI, and that the bundled guide stays free of errors and warnings |
+| `ValidateBookTest` | the CLI (incl. finding books beneath a pack folder), and that the bundled guide stays free of errors and warnings |
 
 When adding syntax or a widget, add the parser test and the layout test with it.
 

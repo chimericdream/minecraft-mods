@@ -30,7 +30,7 @@ Books live in `assets/<namespace>/opus-books/<book>/`. The bundled **Opus Guide*
 item) explains every feature and is itself written as an Opus book; its source is in
 `common/src/main/resources/assets/opus/opus-books/guide`.
 
-Check a book from the command line with `com.chimericdream.opus.core.tools.ValidateBook <book-folder>`.
+Check your books from the command line with `java -jar opus-<version>.jar <path>`. The path can be a book folder, a resource pack, or a mod's resources folder.
 
 ## Issues & Suggestions
 

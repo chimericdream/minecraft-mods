@@ -14,7 +14,7 @@ Run `ValidateBook` from Gradle (a `validateBooks` task) and a Bun script so CI f
 
 ## Decisions
 
-_None yet._
+- 2026-10-06: Gradle half done. `:opus:common:validateBooks` runs on `check`; the shipped jars declare `Main-Class` so authors run `java -jar opus.jar <path>`. Still open: a Bun script / CI job.
 
 ## Brainstorm variants
 

@@ -94,4 +94,24 @@ class ValidateBookTest {
         assertEquals(2, run(dir.resolve("does-not-exist").toString()).status());
         assertEquals(2, run(dir.toString()).status(), "a folder with no book files");
     }
+
+    @Test
+    void findsEveryBookBeneathAPackFolder(@TempDir Path dir) throws IOException {
+        write(dir, "assets/one/opus-books/alpha/en_us/index.md", "Hello\n");
+        write(dir, "assets/two/opus-books/beta/en_us/index.md", "[bad](missing.md)\n");
+
+        Result r = run(dir.toString());
+
+        assertEquals(1, r.status(), r.out());
+        assertTrue(r.out().contains("one:alpha"), r.out());
+        assertTrue(r.out().contains("two:beta"), r.out());
+    }
+
+    @Test
+    void acceptsTheValidateKeyword(@TempDir Path dir) throws IOException {
+        write(dir, "assets/one/opus-books/alpha/en_us/index.md", "Hello\n");
+
+        assertEquals(0, run("--validate", dir.toString()).status());
+        assertEquals(0, run("validate", dir.toString()).status());
+    }
 }

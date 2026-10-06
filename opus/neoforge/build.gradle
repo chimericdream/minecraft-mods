@@ -48,6 +48,10 @@ dependencies {
 }
 
 shadowJar {
+    // Makes the shipped jar runnable for authors: java -jar opus.jar <book-or-pack-folder>
+    manifest {
+        attributes 'Main-Class': 'com.chimericdream.opus.core.tools.ValidateBook'
+    }
     relocate 'org.commonmark', 'com.chimericdream.opus.shadow.commonmark'
     relocate 'org.yaml.snakeyaml', 'com.chimericdream.opus.shadow.snakeyaml'
     exclude 'module-info.class'

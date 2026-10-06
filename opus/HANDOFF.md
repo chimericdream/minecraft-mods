@@ -58,7 +58,7 @@ These were assumed approved under "assume I agree with the recommended approach"
 
 - Recipe by id (server sync), live entity rendering, multiblock previews, tags/bookmarks UI, images, advancement gating (stub returns "unlocked"), accessibility settings, skins. Each is a file in `ideas/`.
 - The Markdown Manual screenshot you sent (icon tabs down the left, a centred item image, a hover tooltip with the target file name) is not reproduced exactly: the sidebar is a text table of contents with search, and the link tooltip does show the target's file name. Chapter-icon tabs would be a skin/layout option.
-- A Gradle task for `ValidateBook` (see `ideas/authoring/build-time-validation.md`).
+- CI wiring (a Bun script) for `ValidateBook`; the Gradle `validateBooks` task is done (see `ideas/authoring/build-time-validation.md`).
 
 ## Repo bookkeeping
 
