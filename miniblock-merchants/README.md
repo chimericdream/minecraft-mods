@@ -365,7 +365,7 @@ Fine Thread<br />
 
 ### Current
 
-* 25 new professions which trade a wide variety of miniblocks useful for decorating any build you can come up with
+* 26 new professions which trade a wide variety of miniblocks useful for decorating any build you can come up with
 * Fully configurable drop chances for each individual conversion item
 * Automatically convert villagers from the Miniblock Traders datapack to the corresponding profession in the Miniblock Merchants mod
 
