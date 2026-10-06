@@ -1,6 +1,7 @@
 package com.chimericdream.opus.client.screen;
 
 import com.chimericdream.opus.client.OpusClient;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.chimericdream.opus.core.book.Book;
 import com.chimericdream.opus.core.book.BookNode;
 import com.chimericdream.opus.core.book.IconRef;
@@ -25,7 +26,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The reading screen: a table of contents sidebar (with search) on the left and one scrolling page on the
@@ -47,7 +47,16 @@ public class BookScreen extends Screen {
     private static final int SCROLLBAR_WIDTH = 4;
     private static final int TOC_ROW = 18;
 
+    /** Long lines are hard to read, so the text column never gets wider than about this many characters. */
+    private static final int MAX_COLUMN_CHARS = 100;
+    private static final String CRUMB_SEPARATOR = "  >  ";
+    private static final String CRUMB_ELLIPSIS = "...";
+
     private record TocEntry(BookNode node, int depth) {
+    }
+
+    /** A clickable breadcrumb as last drawn, in screen coordinates. */
+    private record Crumb(BookNode node, int x, int width) {
     }
 
     private final Book book;
@@ -65,8 +74,11 @@ public class BookScreen extends Screen {
 
     private BookRenderer renderer;
     private EditBox search;
+    private Button clearSearch;
     private Button previous;
     private Button next;
+    private Button backButton;
+    private List<Crumb> crumbs = List.of();
 
     private int panelX;
     private int panelY;
@@ -74,6 +86,8 @@ public class BookScreen extends Screen {
     private int panelH;
     private int contentX;
     private int contentW;
+    private int columnX;
+    private int columnW;
     private int viewTop;
     private int viewHeight;
 
@@ -101,22 +115,45 @@ public class BookScreen extends Screen {
         viewTop = panelY + HEADER_HEIGHT;
         viewHeight = panelH - HEADER_HEIGHT - FOOTER_HEIGHT;
 
+        // The text column is capped for readability and centred in the space beside the sidebar.
+        int available = contentW - SCROLLBAR_WIDTH - 2;
+        columnW = Math.min(available, MAX_COLUMN_CHARS * font.width("0"));
+        columnX = contentX + (available - columnW) / 2;
+
         renderer = new BookRenderer(font, theme);
         toc = buildToc();
 
-        search = addRenderableWidget(new EditBox(font, panelX + 4, panelY + 4, SIDEBAR_WIDTH - 8, 14, Component.empty()));
+        int searchWidth = SIDEBAR_WIDTH - 8 - 16;
+        search = addRenderableWidget(new EditBox(font, panelX + 4, panelY + 4, searchWidth, 14, Component.empty()));
         search.setHint(Component.translatable("opus.book.search").withStyle(EditBox.SEARCH_HINT_STYLE));
         search.setResponder(query -> {
             hits = book.search(query);
             tocScroll = 0;
+            if (clearSearch != null) {
+                clearSearch.active = !query.isEmpty();
+            }
         });
 
+        clearSearch = addRenderableWidget(Button.builder(Component.literal("x"), b -> clearSearch())
+            .bounds(panelX + 4 + searchWidth + 2, panelY + 4, 14, 14).build());
+        clearSearch.active = false;
+
+        int footerY = panelY + panelH - FOOTER_HEIGHT + 2;
+        int backWidth = 50;
         previous = addRenderableWidget(Button.builder(Component.literal("<"), b -> step(-1))
-            .bounds(contentX, panelY + panelH - FOOTER_HEIGHT + 2, 20, 18).build());
+            .bounds(columnX, footerY, 20, 18).build());
+        backButton = addRenderableWidget(Button.builder(Component.translatable("opus.book.back"), b -> back())
+            .bounds(columnX + (columnW - backWidth) / 2, footerY, backWidth, 18).build());
         next = addRenderableWidget(Button.builder(Component.literal(">"), b -> step(1))
-            .bounds(contentX + contentW - 20, panelY + panelH - FOOTER_HEIGHT + 2, 20, 18).build());
+            .bounds(columnX + columnW - 20, footerY, 20, 18).build());
 
         relayout();
+    }
+
+    /** Empties the search box and returns focus to it, like the clear button in other mods' search fields. */
+    private void clearSearch() {
+        search.setValue("");
+        setFocused(search);
     }
 
     // ---- navigation ----
@@ -166,7 +203,7 @@ public class BookScreen extends Screen {
         }
 
         LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.DEFAULT);
-        layout = engine.layoutPage(current.title(), current.document(), contentW - SCROLLBAR_WIDTH - 2);
+        layout = engine.layoutPage(current.title(), current.document(), columnW);
 
         if (pendingAnchor != null) {
             scroll = layout.anchorY(pendingAnchor).orElse(0);
@@ -177,6 +214,7 @@ public class BookScreen extends Screen {
         if (previous != null) {
             previous.active = indexInToc(current) > 0;
             next.active = indexInToc(current) >= 0 && indexInToc(current) < toc.size() - 1;
+            backButton.active = !backStack.isEmpty();
         }
     }
 
@@ -233,7 +271,7 @@ public class BookScreen extends Screen {
         g.fill(panelX, panelY, panelX + SIDEBAR_WIDTH, panelY + panelH, theme.sidebar());
 
         drawSidebar(g, mouseX, mouseY);
-        drawHeader(g);
+        drawHeader(g, mouseX, mouseY);
         drawContent(g, mouseX, mouseY);
     }
 
@@ -274,15 +312,66 @@ public class BookScreen extends Screen {
         g.disableScissor();
     }
 
-    private void drawHeader(GuiGraphicsExtractor g) {
-        String crumbs = book.breadcrumb(current).stream().map(BookNode::title).collect(Collectors.joining("  >  "));
-        String clipped = font.plainSubstrByWidth(crumbs, contentW);
-        g.text(font, Component.literal(clipped), contentX, panelY + (HEADER_HEIGHT - font.lineHeight) / 2, theme.muted(), false);
+    /**
+     * Draws the breadcrumb trail in the muted text colour (not link blue); every crumb except the current page
+     * can be clicked, and shows an underline while hovered. When the trail is too wide the front is shortened
+     * to "...".
+     */
+    private void drawHeader(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+        List<BookNode> chain = book.breadcrumb(current);
+        int separatorWidth = font.width(CRUMB_SEPARATOR);
+        int reserve = font.width(CRUMB_ELLIPSIS) + separatorWidth;
+
+        // Keep as many trailing crumbs as fit.
+        int start = chain.size();
+        int used = 0;
+        while (start > 0) {
+            int width = font.width(chain.get(start - 1).title());
+            int add = used == 0 ? width : width + separatorWidth;
+            int needed = used + add + (start - 1 > 0 ? reserve : 0);
+            if (used > 0 && needed > columnW) {
+                break;
+            }
+            used += add;
+            start--;
+        }
+
+        int textY = panelY + (HEADER_HEIGHT - font.lineHeight) / 2;
+        boolean inBand = mouseY >= panelY && mouseY < panelY + HEADER_HEIGHT;
+        int x = columnX;
+        List<Crumb> drawn = new ArrayList<>();
+
+        if (start > 0) {
+            g.text(font, Component.literal(CRUMB_ELLIPSIS + CRUMB_SEPARATOR), x, textY, theme.muted(), false);
+            x += reserve;
+        }
+
+        for (int i = start; i < chain.size(); i++) {
+            BookNode node = chain.get(i);
+            boolean last = i == chain.size() - 1;
+            String title = last ? font.plainSubstrByWidth(node.title(), Math.max(1, columnX + columnW - x)) : node.title();
+            int width = font.width(title);
+
+            boolean clickable = !last;
+            boolean hovered = clickable && inBand && mouseX >= x && mouseX < x + width;
+            g.text(font, MinecraftTextMetrics.component(title, com.chimericdream.opus.core.model.Style.PLAIN, hovered), x, textY, theme.muted(), false);
+            if (clickable) {
+                drawn.add(new Crumb(node, x, width));
+            }
+
+            x += width;
+            if (!last) {
+                g.text(font, Component.literal(CRUMB_SEPARATOR), x, textY, theme.muted(), false);
+                x += separatorWidth;
+            }
+        }
+
+        crumbs = drawn;
     }
 
     private void drawContent(GuiGraphicsExtractor g, int mouseX, int mouseY) {
         g.enableScissor(contentX, viewTop, contentX + contentW, viewTop + viewHeight);
-        renderer.draw(g, layout, contentX, viewTop, scroll, viewHeight, mouseX, mouseY);
+        renderer.draw(g, layout, columnX, viewTop, scroll, viewHeight, mouseX, mouseY);
         g.disableScissor();
 
         if (layout.height() > viewHeight) {
@@ -302,7 +391,7 @@ public class BookScreen extends Screen {
             return;
         }
 
-        layout.interactiveAt(mouseX - contentX, mouseY - viewTop + scroll).ifPresent(element -> {
+        layout.interactiveAt(mouseX - columnX, mouseY - viewTop + scroll).ifPresent(element -> {
             String link = switch (element) {
                 case Element.Text t -> t.link();
                 case Element.Icon icon -> icon.link();
@@ -335,15 +424,30 @@ public class BookScreen extends Screen {
 
     @Override
     public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+        double x = event.x();
+        double y = event.y();
+
+        // Right-clicking the search box clears it (a common convention in other mods' text fields).
+        if (event.button() == InputConstants.MOUSE_BUTTON_RIGHT && search.isMouseOver(x, y)) {
+            clearSearch();
+            return true;
+        }
+
         if (super.mouseClicked(event, doubleClick)) {
             return true;
         }
 
-        double x = event.x();
-        double y = event.y();
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && y >= panelY && y < panelY + HEADER_HEIGHT) {
+            for (Crumb crumb : crumbs) {
+                if (x >= crumb.x() && x < crumb.x() + crumb.width()) {
+                    navigate(crumb.node(), null, true);
+                    return true;
+                }
+            }
+        }
 
         if (inContent(x, y)) {
-            layout.linkAt((int) x - contentX, (int) y - viewTop + scroll).ifPresent(element -> {
+            layout.linkAt((int) x - columnX, (int) y - viewTop + scroll).ifPresent(element -> {
                 String destination = element instanceof Element.Text t ? t.link() : ((Element.Icon) element).link();
                 follow(destination);
             });
