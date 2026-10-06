@@ -13,5 +13,6 @@
     "shulkerstuff.gui/block/dye_station": "Shulker Dyeing Station",
     "text.config.shulkerstuff.title": "Shulker Stuff Config",
     "text.config.shulkerstuff.option.platedShulkerUpgradeChance": "Plated Shulker Upgrade Chance (1 in x)",
-    "shulkerstuff.tooltip.upgrades.plated": "Netherite Plated"
+    "shulkerstuff.tooltip.upgrades.plated": "Netherite Plated",
+    "shulkerstuff.message.vacuum_stacked": "Vacuum can't be used on stacked shulker boxes"
 }

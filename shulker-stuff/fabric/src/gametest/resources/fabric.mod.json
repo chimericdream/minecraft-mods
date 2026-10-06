@@ -11,7 +11,9 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
-            "com.chimericdream.shulkerstuff.fabric.test.DyeStationGameTest"
+            "com.chimericdream.shulkerstuff.fabric.test.DyeStationGameTest",
+            "com.chimericdream.shulkerstuff.fabric.test.VacuumEnchantmentGameTest",
+            "com.chimericdream.shulkerstuff.fabric.test.RefillEnchantmentGameTest"
         ]
     },
     "depends": {

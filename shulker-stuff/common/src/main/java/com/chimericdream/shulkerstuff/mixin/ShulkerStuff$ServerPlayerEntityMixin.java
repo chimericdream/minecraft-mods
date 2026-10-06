@@ -6,7 +6,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,9 +18,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.OptionalInt;
 
 /**
  * Many thanks and credit to the author of the Enchanted Shulkers mod, from whose code this is derived.
@@ -38,9 +34,6 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
 
     @Unique
     private ItemStack ss$previousOffHandStack = ItemStack.EMPTY;
-
-    @Unique
-    private boolean ss$hasOpenScreen = false;
 
     @Inject(method = "doTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;tick()V"))
     @Unique
@@ -59,7 +52,7 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
         boolean usedLastOffHandItem = !this.ss$previousOffHandStack.isEmpty() && currentOffStack.isEmpty() && !didSwapHands;
 
         boolean canRefill = !(
-            this.ss$hasOpenScreen
+            player.containerMenu != player.inventoryMenu
                 || player.isCreative()
                 || didChangeSlots
                 || didSwapHands
@@ -67,31 +60,15 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
 
         if (canRefill) {
             if (usedLastMainHandItem) {
-                ss$refillSlot(currentSlot);
+                ss$refillSlot(currentSlot, this.ss$previousMainHandStack);
             } else if (usedLastOffHandItem) {
-                ss$refillSlot(EquipmentSlot.OFFHAND.getId()); // might also be getIndex()... check this
+                ss$refillSlot(Inventory.SLOT_OFFHAND, this.ss$previousOffHandStack);
             }
         }
 
         this.ss$previousSlot = currentSlot;
         this.ss$previousMainHandStack = currentMainStack.copy();
         this.ss$previousOffHandStack = currentOffStack.copy();
-    }
-
-    @Inject(method = "openMenu", at = @At("TAIL"))
-    @Unique
-    private void ss$openHandledScreen(CallbackInfoReturnable<OptionalInt> cir) {
-        OptionalInt result = cir.getReturnValue();
-
-        if (result.isPresent()) {
-            this.ss$hasOpenScreen = true;
-        }
-    }
-
-    @Inject(method = "closeContainer", at = @At("TAIL"))
-    @Unique
-    private void ss$closeHandledScreen(CallbackInfo ci) {
-        this.ss$hasOpenScreen = false;
     }
 
     @Unique
@@ -102,7 +79,7 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
     }
 
     @Unique
-    private void ss$refillSlot(int slot) {
+    private void ss$refillSlot(int slot, ItemStack usedStack) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         Inventory inventory = player.getInventory();
         Registry<Enchantment> registry = this.ss$getEnchantmentRegistry();
@@ -120,7 +97,7 @@ public class ShulkerStuff$ServerPlayerEntityMixin {
             ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
             ContainerComponentBuilder builder = new ContainerComponentBuilder(contents);
 
-            ItemStack refillingStack = builder.getFirstMatchingStack(this.ss$previousMainHandStack);
+            ItemStack refillingStack = builder.getFirstMatchingStack(usedStack);
 
             if (!refillingStack.isEmpty()) {
                 inventory.setItem(slot, refillingStack);

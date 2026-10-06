@@ -1,5 +1,14 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fix a duplication bug with the Vacuum enchantment when shulker boxes are stackable (e.g. using Carpet
+  Mod). Vacuum now skips stacked shulker boxes and shows a notice above the hotbar (at most once every
+  5 seconds).
+* Fix the Refill enchantment stopping after you open any container or menu. It now works again without
+  needing to relog.
+* Fix the Refill enchantment not refilling the offhand.
+
 #### Changes
 
 * Deep Storage, Refill, Vacuum, and Void now show descriptions in the enchanting tooltip.
