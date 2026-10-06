@@ -10,17 +10,20 @@ public class ModItemDataGenerators {
     public static final List<ItemDataGeneratorGroup> ITEM_GROUPS = new ArrayList<>();
 
     public static final CropItemDataGenerators CROP_ITEMS;
+    public static final HoneyBucketItemsDataGenerator HONEY_BUCKET_ITEMS;
     public static final NuggetBagItemsDataGenerator NUGGET_BAG_ITEMS;
     public static final ToolItemsDataGenerators TOOL_ITEMS;
     public static final WaxItemsDataGenerator WAX_ITEMS;
 
     static {
         CROP_ITEMS = new CropItemDataGenerators();
+        HONEY_BUCKET_ITEMS = new HoneyBucketItemsDataGenerator();
         NUGGET_BAG_ITEMS = new NuggetBagItemsDataGenerator();
         TOOL_ITEMS = new ToolItemsDataGenerators();
         WAX_ITEMS = new WaxItemsDataGenerator();
 
         ITEM_GROUPS.add(CROP_ITEMS);
+        ITEM_GROUPS.add(HONEY_BUCKET_ITEMS);
         ITEM_GROUPS.add(NUGGET_BAG_ITEMS);
         ITEM_GROUPS.add(TOOL_ITEMS);
         ITEM_GROUPS.add(WAX_ITEMS);

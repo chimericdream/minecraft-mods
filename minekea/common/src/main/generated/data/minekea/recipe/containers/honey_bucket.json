@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:honey_bottle",
+    "minecraft:honey_bottle",
+    "minecraft:honey_bottle",
+    "minecraft:bucket"
+  ],
+  "result": {
+    "id": "minekea:containers/honey_bucket"
+  }
+}

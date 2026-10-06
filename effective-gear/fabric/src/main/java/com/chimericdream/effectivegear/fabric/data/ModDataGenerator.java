@@ -52,6 +52,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add("key.effectivegear.abilities.use", "Use Trim Ability");
 
             translationBuilder.add("enchantment.effectivegear.preserving", "Preserving");
+            translationBuilder.add("enchantment.effectivegear.preserving.desc", "Leaf blocks broken with these shears keep their color when dropped.");
             translationBuilder.add("item.effectivegear.preserving.tooltip", "Color Preserved");
 
             translationBuilder.add("advancements.effectivegear.root.title", "Effective Gear");

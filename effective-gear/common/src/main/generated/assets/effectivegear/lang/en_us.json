@@ -4,6 +4,7 @@
   "advancements.effectivegear.root.desc": "Small quality-of-life tweaks and bonuses for your armor, weapons, and tools",
   "advancements.effectivegear.root.title": "Effective Gear",
   "enchantment.effectivegear.preserving": "Preserving",
+  "enchantment.effectivegear.preserving.desc": "Leaf blocks broken with these shears keep their color when dropped.",
   "item.effectivegear.preserving.tooltip": "Color Preserved",
   "key.category.effectivegear.keybinds": "Effective Gear",
   "key.effectivegear.abilities.use": "Use Trim Ability",

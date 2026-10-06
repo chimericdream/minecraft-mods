@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Changes
+
+* Gentle Touch now shows a description in the enchanting tooltip.
+
 ### 26.2 - 4.3.0
 
 #### New Features

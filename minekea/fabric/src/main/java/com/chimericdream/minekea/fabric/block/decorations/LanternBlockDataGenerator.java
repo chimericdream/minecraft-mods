@@ -40,7 +40,7 @@ public class LanternBlockDataGenerator extends ChimericLibBlockDataGenerator {
             .pattern("#P#")
             .pattern("#T#")
             .define('#', Items.IRON_NUGGET)
-            .define('P', Items.ENDER_PEARL)
+            .define('P', ingredient)
             .define('T', Items.TORCH)
             .unlockedBy(RecipeProvider.getHasName(Items.IRON_NUGGET),
                 generator.has(Items.IRON_NUGGET))

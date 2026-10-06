@@ -44,3 +44,7 @@ node_modules
 
 # decompiled source cache (see .claude/skills/mc-source-decompile)
 .sources/
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json

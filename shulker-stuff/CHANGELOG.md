@@ -1,7 +1,18 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fix a duplication bug with the Vacuum enchantment when shulker boxes are stackable (e.g. using Carpet
+  Mod). Vacuum now skips stacked shulker boxes and shows a notice above the hotbar (at most once every
+  5 seconds).
+* Fix the Refill enchantment stopping after you open any container or menu. It now works again without
+  needing to relog.
+* Fix the Refill enchantment not refilling the offhand.
+
 #### Changes
 
+* Deep Storage, Refill, Vacuum, and Void now show descriptions in the enchanting tooltip.
+* Deep Storage is labeled "[Not Yet Implemented]" since it does not do anything yet.
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
   settings themselves are unchanged.
 

@@ -1,13 +1,18 @@
 {
     "block.shulkerstuff.dye_station": "Shulker Dyeing Station",
-    "enchantment.shulkerstuff.deep_storage": "Deep Storage",
+    "enchantment.shulkerstuff.deep_storage": "Deep Storage [Not Yet Implemented]",
+    "enchantment.shulkerstuff.deep_storage.desc": "[Not Yet Implemented] Adds extra rows to the shulker box, one more for each level of the enchantment.",
     "enchantment.shulkerstuff.refill": "Refill",
+    "enchantment.shulkerstuff.refill.desc": "Refills your hand with a matching stack from the shulker box when the one you're holding runs out.",
     "enchantment.shulkerstuff.vacuum": "Vacuum",
+    "enchantment.shulkerstuff.vacuum.desc": "Picked-up items that match something already in the shulker box go straight into it. Level II collects any item that fits.",
     "enchantment.shulkerstuff.void": "Void",
+    "enchantment.shulkerstuff.void.desc": "Destroys picked-up items that match something already in the shulker box.",
     "item.shulkerstuff.dye_station": "Shulker Dyeing Station",
     "item.shulkerstuff.plated_shulker_upgrade_smithing_template": "Plated Shulker Upgrade",
     "shulkerstuff.gui/block/dye_station": "Shulker Dyeing Station",
     "text.config.shulkerstuff.title": "Shulker Stuff Config",
     "text.config.shulkerstuff.option.platedShulkerUpgradeChance": "Plated Shulker Upgrade Chance (1 in x)",
-    "shulkerstuff.tooltip.upgrades.plated": "Netherite Plated"
+    "shulkerstuff.tooltip.upgrades.plated": "Netherite Plated",
+    "shulkerstuff.message.vacuum_stacked": "Vacuum can't be used on stacked shulker boxes"
 }

@@ -45,6 +45,7 @@ public class ModDataGenerator {
             add("key.effectivegear.abilities.use", "Use Trim Ability");
 
             add("enchantment.effectivegear.preserving", "Preserving");
+            add("enchantment.effectivegear.preserving.desc", "Leaf blocks broken with these shears keep their color when dropped.");
             add("item.effectivegear.preserving.tooltip", "Color Preserved");
 
             add("advancements.effectivegear.root.title", "Effective Gear");
