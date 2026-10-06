@@ -40,7 +40,9 @@ import java.util.List;
  */
 public class BookScreen extends Screen {
     private static final int MARGIN = 8;
-    private static final int SIDEBAR_WIDTH = 124;
+    /** The sidebar is this wide on a roomy screen and shrinks to a quarter of the panel on a small one. */
+    private static final int SIDEBAR_MAX_WIDTH = 124;
+    private static final int SIDEBAR_MIN_WIDTH = 90;
     private static final int PAD = 8;
     private static final int HEADER_HEIGHT = 22;
     private static final int FOOTER_HEIGHT = 24;
@@ -84,6 +86,7 @@ public class BookScreen extends Screen {
     private int panelY;
     private int panelW;
     private int panelH;
+    private int sidebarW;
     private int contentX;
     private int contentW;
     private int columnX;
@@ -110,8 +113,9 @@ public class BookScreen extends Screen {
         panelY = MARGIN;
         panelW = width - 2 * MARGIN;
         panelH = height - 2 * MARGIN;
-        contentX = panelX + SIDEBAR_WIDTH + PAD;
-        contentW = panelW - SIDEBAR_WIDTH - 2 * PAD;
+        sidebarW = Math.max(SIDEBAR_MIN_WIDTH, Math.min(SIDEBAR_MAX_WIDTH, panelW / 4));
+        contentX = panelX + sidebarW + PAD;
+        contentW = panelW - sidebarW - 2 * PAD;
         viewTop = panelY + HEADER_HEIGHT;
         viewHeight = panelH - HEADER_HEIGHT - FOOTER_HEIGHT;
 
@@ -123,7 +127,7 @@ public class BookScreen extends Screen {
         renderer = new BookRenderer(font, theme);
         toc = buildToc();
 
-        int searchWidth = SIDEBAR_WIDTH - 8 - 16;
+        int searchWidth = sidebarW - 8 - 16;
         search = addRenderableWidget(new EditBox(font, panelX + 4, panelY + 4, searchWidth, 14, Component.empty()));
         search.setHint(Component.translatable("opus.book.search").withStyle(EditBox.SEARCH_HINT_STYLE));
         search.setResponder(query -> {
@@ -268,7 +272,7 @@ public class BookScreen extends Screen {
 
         g.fill(panelX - 2, panelY - 2, panelX + panelW + 2, panelY + panelH + 2, theme.border());
         g.fill(panelX, panelY, panelX + panelW, panelY + panelH, theme.page());
-        g.fill(panelX, panelY, panelX + SIDEBAR_WIDTH, panelY + panelH, theme.sidebar());
+        g.fill(panelX, panelY, panelX + sidebarW, panelY + panelH, theme.sidebar());
 
         drawSidebar(g, mouseX, mouseY);
         drawHeader(g, mouseX, mouseY);
@@ -278,7 +282,7 @@ public class BookScreen extends Screen {
     private void drawSidebar(GuiGraphicsExtractor g, int mouseX, int mouseY) {
         int top = panelY + 22;
         int bottom = panelY + panelH - 4;
-        g.enableScissor(panelX, top, panelX + SIDEBAR_WIDTH, bottom);
+        g.enableScissor(panelX, top, panelX + sidebarW, bottom);
 
         boolean searching = !search.getValue().isBlank();
         int count = searching ? hits.size() : toc.size();
@@ -291,10 +295,10 @@ public class BookScreen extends Screen {
             BookNode node = searching ? hits.get(i).node() : toc.get(i).node();
             int depth = searching ? 0 : toc.get(i).depth();
             boolean selected = node == current;
-            boolean hovered = mouseX >= panelX && mouseX < panelX + SIDEBAR_WIDTH && mouseY >= y && mouseY < y + TOC_ROW && mouseY >= top && mouseY < bottom;
+            boolean hovered = mouseX >= panelX && mouseX < panelX + sidebarW && mouseY >= y && mouseY < y + TOC_ROW && mouseY >= top && mouseY < bottom;
 
             if (selected || hovered) {
-                g.fill(panelX, y, panelX + SIDEBAR_WIDTH, y + TOC_ROW, selected ? theme.sidebarSelected() : 0x22000000);
+                g.fill(panelX, y, panelX + sidebarW, y + TOC_ROW, selected ? theme.sidebarSelected() : 0x22000000);
             }
 
             int x = panelX + 4 + Math.min(depth, 4) * 6;
@@ -305,7 +309,7 @@ public class BookScreen extends Screen {
             }
             // TODO(icons): IconRef.Kind.TEXTURE - draw the texture with blit once a loader for it exists.
 
-            String title = font.plainSubstrByWidth(node.title(), panelX + SIDEBAR_WIDTH - x - 4);
+            String title = font.plainSubstrByWidth(node.title(), panelX + sidebarW - x - 4);
             g.text(font, Component.literal(title), x, y + (TOC_ROW - font.lineHeight) / 2, theme.ink(), false);
         }
 
@@ -419,7 +423,7 @@ public class BookScreen extends Screen {
     }
 
     private boolean inSidebar(double x, double y) {
-        return x >= panelX && x < panelX + SIDEBAR_WIDTH && y >= panelY + 22 && y < panelY + panelH;
+        return x >= panelX && x < panelX + sidebarW && y >= panelY + 22 && y < panelY + panelH;
     }
 
     @Override

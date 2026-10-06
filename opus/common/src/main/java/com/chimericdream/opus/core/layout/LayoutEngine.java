@@ -290,7 +290,33 @@ public final class LayoutEngine {
             return widths;
         }
 
-        // Too wide: share the space in proportion to natural width, never narrower than a few characters.
+        // Too wide. If every column can at least hold its longest word, wrap at word boundaries: start each
+        // column at that minimum and share what is left in proportion to how much more each would like.
+        int[] longest = new int[cols];
+        int longestSum = 0;
+        for (List<List<Inline>> row : rows) {
+            for (int c = 0; c < row.size(); c++) {
+                longest[c] = Math.max(longest[c], longestWord(row.get(c), Style.PLAIN));
+            }
+        }
+        for (int c = 0; c < cols; c++) {
+            longest[c] = Math.max(longest[c], 1);
+            longestSum += longest[c];
+        }
+        if (longestSum <= available) {
+            long wanted = 0;
+            for (int c = 0; c < cols; c++) {
+                wanted += Math.max(0, natural[c] - longest[c]);
+            }
+            int spare = available - longestSum;
+            for (int c = 0; c < cols; c++) {
+                long extra = wanted == 0 ? 0 : spare * (long) Math.max(0, natural[c] - longest[c]) / wanted;
+                widths[c] = longest[c] + (int) extra;
+            }
+            return widths;
+        }
+
+        // Not even the longest words fit: share the space in proportion to natural width and let words break.
         int min = Math.min(metrics.width("mmmm", Style.PLAIN), available / cols);
         for (int c = 0; c < cols; c++) {
             widths[c] = Math.max(min, (int) ((long) natural[c] * available / sum));
@@ -315,6 +341,29 @@ public final class LayoutEngine {
         }
 
         return widths;
+    }
+
+    /** Width of the widest unbreakable word, which is the narrowest a cell can be without splitting a word. */
+    private int longestWord(List<Inline> inlines, Style base) {
+        int longest = 0;
+        for (Inline inline : inlines) {
+            switch (inline) {
+                case Inline.Text t -> {
+                    for (String word : t.text().split("\\s+")) {
+                        if (!word.isEmpty()) {
+                            longest = Math.max(longest, metrics.width(word, merge(base, t.style())));
+                        }
+                    }
+                }
+                case Inline.Link l -> longest = Math.max(longest, longestWord(l.children(), base));
+                case Inline.Icon i -> longest = Math.max(longest, cfg.iconSize());
+                case Inline.Image i -> longest = Math.max(longest, cfg.iconSize());
+                case Inline.LineBreak b -> {
+                }
+            }
+        }
+
+        return longest;
     }
 
     private int naturalWidth(List<Inline> inlines, Style base) {

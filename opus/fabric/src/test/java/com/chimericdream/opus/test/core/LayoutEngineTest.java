@@ -284,6 +284,22 @@ class LayoutEngineTest {
     }
 
     @Test
+    void narrowTablesWrapAtWordBoundariesInsteadOfSplittingWords() {
+        // 130px: the natural width is far too wide, but every column can still hold its longest word.
+        Layout l = layout("| Key | Used by | Meaning |\n|---|---|---|\n| recipe | all | Optional recipe id. See the list |\n", 130);
+
+        List<String> texts = texts(l).stream().map(Element.Text::text).toList();
+        assertTrue(texts.contains("Key"), texts.toString());
+        assertTrue(texts.contains("recipe"), "a word must not be split: " + texts);
+        assertTrue(texts.contains("Meaning"), texts.toString());
+        assertTrue(texts.stream().anyMatch(t -> t.startsWith("Optional")), texts.toString());
+        assertTrue(texts.stream().noneMatch(t -> t.length() == 1 && Character.isLetter(t.charAt(0))), "no one-letter fragments: " + texts);
+
+        int right = l.elements().stream().mapToInt(e -> e.x() + e.width()).max().orElseThrow();
+        assertTrue(right <= 130, "table must stay inside the column, was " + right);
+    }
+
+    @Test
     void recipeWidgetIsReservedCenteredSpace() {
         Layout l = layout("```recipe\npattern: [\"A\"]\nkey: { A: stone }\nresult: stick\n```\n", 200);
 

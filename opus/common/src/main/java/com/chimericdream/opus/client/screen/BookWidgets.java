@@ -148,7 +148,8 @@ final class BookWidgets {
         // shows how GuiItemRenderState is queued for items and is the best starting point. Until then, a labelled
         // placeholder keeps the layout honest.
         g.fill(x, y, x + box.width(), y + box.height(), theme.codeBackground());
-        g.text(font, Component.literal(spec.id()), x + 4, y + 4, theme.muted(), false);
+        String label = spec.id().startsWith("minecraft:") ? spec.id().substring("minecraft:".length()) : spec.id();
+        g.text(font, Component.literal(font.plainSubstrByWidth(label, Math.max(1, box.width() - 8))), x + 4, y + 4, theme.muted(), false);
     }
 
     // ---- vanilla-style pieces ----
@@ -179,13 +180,13 @@ final class BookWidgets {
         }
     }
 
-    /** The empty fuel gauge: three short wavy lines, like the vanilla furnace's unlit flame. */
+    /** The empty fuel gauge: three continuous wavy lines, like the vanilla furnace's unlit flame. */
     private void drawFlame(GuiGraphicsExtractor g, int x, int y) {
         for (int column = 0; column < 3; column++) {
             int cx = x + 1 + column * 5;
             for (int row = 0; row < 4; row++) {
                 int offset = (row + column) % 2;
-                g.fill(cx + offset, y + 1 + row * 3, cx + offset + 2, y + 3 + row * 3, GAUGE);
+                g.fill(cx + offset, y + 1 + row * 3, cx + offset + 2, y + 4 + row * 3, GAUGE);
             }
         }
     }
