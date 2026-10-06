@@ -1,0 +1,7 @@
+architectury {
+    common project(':opus').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/opus.accesswidener")
+}
