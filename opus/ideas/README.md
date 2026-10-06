@@ -22,7 +22,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Reader
 
-- [Live mob and multiblock previews](reader/entity-and-multiblock-widgets.md) — Replace the `entity` placeholder with a rotating live mob and add a rotatable `multiblock` widget.
+- [Live mob previews](reader/live-mob-previews.md) — Replace the `entity` placeholder with a rotating live mob.
+- [Multiblock previews](reader/multiblock-previews.md) — A rotatable `multiblock` widget that shows a small structure from a list of layers.
 - [Reader accessibility](reader/accessibility.md) — Text scale, high-contrast theme, keyboard navigation and narrator support (rule A3).
 - [Tag pages and bookmarks](reader/tag-pages-and-bookmarks.md) — A generated Tags page, tag chips under titles, and per-book bookmarks.
 - [Pages unlocked by advancements](reader/advancement-gating.md) — Wire `requires:` to the client's advancement progress (a stub today).
