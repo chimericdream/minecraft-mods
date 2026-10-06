@@ -20,6 +20,6 @@ files in a resource pack, and the folders become chapters and the files become p
 
 ## Finding your way around
 
-Use the contents on the left, or type in the search box above it. Right-click the search box (or use the **x**
-button) to clear it. The path at the top of the page is clickable, and the **Back**, **<** and **>** buttons at
+Use the contents on the left (click an arrow to open or close a chapter), or type in the search box above it.
+Right-click the search box (or use the **x** button) to clear it. The path at the top of the page is clickable, and the **Back**, **<** and **>** buttons at
 the bottom go back, to the previous page and to the next page.

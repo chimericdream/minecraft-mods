@@ -20,10 +20,36 @@ books/field-guide/
 ## Rules
 
 * A **folder** is a chapter; its `index.md` is the chapter's own page.
-* A **file** is a page. A folder without an `index.md` still works and gets a title made from its name.
+* A **file** is a page. A folder without an `index.md` still works: it gets a title made from its name and an automatic page listing what is inside it.
 * Files and folders starting with `_` or `.` are ignored, which is handy for drafts.
 * Each language gets its own folder (`en_us`, `de_de`, ...). Missing pages fall back to the book's default
   language.
+
+## Nesting chapters
+
+Chapters can nest as deeply as you like: a folder inside a folder is a sub-chapter. A folder with no `index.md`
+works as a plain grouping, titled from its folder name.
+
+`````text
+en_us/
+  05-redstone/
+    index.md                       Chapter 5: Redstone
+    01-vanilla-changes/
+      index.md                     5.1 Changes to vanilla mechanics
+      comparators.md               a page
+      observers.md
+    02-new-mechanics/
+      index.md                     5.2 New mechanics
+      pulse-gate.md
+      advanced/                    no index.md: still a sub-chapter, titled "Advanced", with an automatic contents page
+        clock.md
+`````
+
+In the contents on the left, chapters have an arrow. They start **closed**, so a book with hundreds of pages
+stays easy to scan: click the arrow to open or close a chapter, or click its name to read its page and open it.
+Opening a page by any route (a link, a search result, **<** / **>**, a breadcrumb) opens the chapters above it so
+you can see where you are. The **<** and **>** buttons always walk through every page in order, whether or not
+its chapter is open.
 
 ## Ordering
 
