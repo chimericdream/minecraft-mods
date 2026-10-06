@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -72,6 +73,21 @@ class RecipeSpecTest {
 
         assertEquals(RecipeSpec.Kind.BY_ID, r.kind());
         assertEquals("minecraft:hopper", r.recipeId());
+    }
+
+    @Test
+    void anInlineRecipeKeepsAnOptionalIdForTheFutureServerLookup() throws Exception {
+        RecipeSpec r = parse("recipe: hopper\npattern: [\"I I\", \"ICI\", \" I \"]\nkey: { I: iron_ingot, C: chest }\nresult: hopper\n");
+
+        assertEquals(RecipeSpec.Kind.CRAFTING_SHAPED, r.kind(), "an id never replaces the inline definition");
+        assertEquals("minecraft:hopper", r.recipeId());
+        assertEquals("minecraft:hopper", r.result());
+
+        RecipeSpec smelt = parse("recipe: minecraft:iron_ingot_from_smelting_iron_ore\ntype: smelting\ningredient: iron_ore\nresult: iron_ingot\n");
+        assertEquals(RecipeSpec.Kind.SMELTING, smelt.kind());
+        assertEquals("minecraft:iron_ingot_from_smelting_iron_ore", smelt.recipeId());
+
+        assertNull(parse("pattern: [\"A\"]\nkey: { A: stone }\nresult: stick\n").recipeId(), "no id when none is given");
     }
 
     @Test

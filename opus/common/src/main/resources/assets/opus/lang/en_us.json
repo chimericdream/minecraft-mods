@@ -4,5 +4,8 @@
     "key.categories.opus": "Opus",
     "opus.book.missing": "Book '%s' was not found",
     "opus.book.back": "Back",
-    "opus.book.search": "Search"
+    "opus.book.search": "Search",
+    "opus.recipe.shapeless": "(Shapeless)",
+    "opus.recipe.cooking_time": "%ss",
+    "opus.recipe.experience": "%s XP"
 }

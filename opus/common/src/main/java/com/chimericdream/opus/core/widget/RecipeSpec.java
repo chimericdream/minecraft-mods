@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * An inline recipe definition from a {@code recipe} widget block. This is "tier 1": the page describes the recipe
- * itself, so no server data is needed. A block that only has {@code recipe: <id>} parses to {@link Kind#BY_ID},
- * which a future server-sync tier resolves to a real recipe.
+ * A recipe widget block. The page can describe the recipe itself ("tier 1": no server data needed), name a recipe
+ * by id, or both:
  *
  * <pre>
+ * recipe: minecraft:hopper     # optional id; PLANNED, currently unused
  * type: crafting_shaped        # optional when 'pattern' is present
  * pattern: ["I I", "ICI", " I "]
  * key: { I: minecraft:iron_ingot, C: minecraft:chest }
@@ -20,9 +20,15 @@ import java.util.Set;
  * count: 1
  * </pre>
  *
- * @param grid   crafting: 9 cells (row-major 3x3, top-left aligned); smithing: template, base, addition;
- *               otherwise a single input cell
- * @param result {@code null} only for {@link Kind#BY_ID}
+ * <p>The planned lookup rule, not implemented yet: if an id is present, ask the server for that recipe and draw
+ * what it returns; if the server does not have it, fall back to the inline definition. A block with only an id
+ * parses to {@link Kind#BY_ID} and has nothing to fall back to. Until the lookup exists the id is kept but ignored,
+ * so books can already include it.
+ *
+ * @param recipeId the optional recipe id, normalised to {@code namespace:path}; {@code null} when absent
+ * @param grid     crafting: 9 cells (row-major 3x3, top-left aligned); smithing: template, base, addition;
+ *                 otherwise a single input cell
+ * @param result   {@code null} only for {@link Kind#BY_ID}
  */
 public record RecipeSpec(
     Kind kind,
@@ -71,7 +77,7 @@ public record RecipeSpec(
             throw new SpecException("'count' must be between 1 and 99");
         }
 
-        return switch (kind) {
+        RecipeSpec inline = switch (kind) {
             case CRAFTING_SHAPED -> shaped(props, result, count);
             case CRAFTING_SHAPELESS -> shapeless(props, result, count);
             case SMELTING, BLASTING, SMOKING, CAMPFIRE_COOKING -> new RecipeSpec(
@@ -93,6 +99,13 @@ public record RecipeSpec(
             );
             case BY_ID -> throw new SpecException("recipe needs either 'recipe: <id>' or an inline definition");
         };
+
+        return byId == null ? inline : inline.withRecipeId(Ids.normalize(String.valueOf(byId)));
+    }
+
+    /** The same recipe carrying the given id (used when a block has both an id and an inline definition). */
+    public RecipeSpec withRecipeId(String id) {
+        return new RecipeSpec(kind, id, grid, patternWidth, patternHeight, result, count, cookingTime, experience);
     }
 
     private static Kind kindOf(Map<String, Object> props) throws SpecException {

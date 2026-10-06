@@ -1,6 +1,7 @@
 package com.chimericdream.opus.core.layout;
 
 import com.chimericdream.opus.core.model.Block;
+import com.chimericdream.opus.core.widget.RecipePanel;
 import com.chimericdream.opus.core.widget.RecipeSpec;
 import com.chimericdream.opus.core.widget.SpecException;
 import com.chimericdream.opus.core.widget.WidgetSpecs;
@@ -40,11 +41,9 @@ public interface WidgetSizer {
         }
     };
 
+    /** A recipe fills exactly the vanilla-style GUI panel described by {@link RecipePanel}. */
     private static Size recipe(RecipeSpec spec) {
-        return switch (spec.kind()) {
-            case CRAFTING_SHAPED, CRAFTING_SHAPELESS, BY_ID -> new Size(3 * SLOT + 28 + SLOT, 3 * SLOT);
-            case SMITHING -> new Size(3 * SLOT + 28 + SLOT, 2 * SLOT);
-            default -> new Size(SLOT + 28 + SLOT, 2 * SLOT);
-        };
+        RecipePanel panel = RecipePanel.of(spec);
+        return new Size(panel.width(), panel.height());
     }
 }

@@ -288,10 +288,10 @@ class LayoutEngineTest {
         Layout l = layout("```recipe\npattern: [\"A\"]\nkey: { A: stone }\nresult: stick\n```\n", 200);
 
         Element.WidgetBox box = l.elements().stream().filter(e -> e instanceof Element.WidgetBox).map(e -> (Element.WidgetBox) e).findFirst().orElseThrow();
-        assertEquals(100, box.width());
-        assertEquals(54, box.height());
-        assertEquals(50, box.x(), "centred in 200px");
-        assertEquals(54, l.height());
+        assertEquals(132, box.width(), "the vanilla-style crafting panel");
+        assertEquals(76, box.height());
+        assertEquals(34, box.x(), "centred in 200px");
+        assertEquals(76, l.height());
         assertEquals(box, l.interactiveAt(box.x() + 1, box.y() + 1).orElseThrow());
     }
 

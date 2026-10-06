@@ -2,6 +2,7 @@ package com.chimericdream.opus.client.screen;
 
 import com.chimericdream.opus.core.layout.Element;
 import com.chimericdream.opus.core.layout.WidgetSizer;
+import com.chimericdream.opus.core.widget.RecipePanel;
 import com.chimericdream.opus.core.widget.RecipeSpec;
 import com.chimericdream.opus.core.widget.SpecException;
 import com.chimericdream.opus.core.widget.WidgetSpecs;
@@ -9,20 +10,34 @@ import com.chimericdream.opus.core.widget.WidgetTypes;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
- * Draws recipe, item and entity widgets inside the boxes {@link WidgetSizer#DEFAULT} reserves for them: 18px
- * slots, a 28px arrow gutter, then the result slot.
+ * Draws recipe, item and entity widgets inside the boxes {@link WidgetSizer#DEFAULT} reserves for them. Recipes
+ * are drawn on a grey panel that imitates the vanilla GUI for that recipe type (crafting table, furnace,
+ * smithing table, ...); the positions all come from {@link RecipePanel}, which the layout engine also uses to
+ * reserve the space.
  *
- * <p>Compiles against 26.2; not yet run in game. The {@code item}, {@code itemDecorations} and {@code setTooltipForNextFrame}
- * signatures are guesses based on how the other mods call {@code GuiGraphicsExtractor}.
+ * <p>Compiles against 26.2; not yet run in game. The panel is drawn with plain fills in the vanilla colours
+ * rather than vanilla textures, so it looks right without depending on texture coordinates.
  */
 final class BookWidgets {
     private static final int SLOT = WidgetSizer.SLOT;
+
+    private static final int PANEL_BLACK = 0xFF000000;
+    private static final int PANEL_BODY = 0xFFC6C6C6;
+    private static final int PANEL_LIGHT = 0xFFFFFFFF;
+    private static final int PANEL_SHADOW = 0xFF555555;
+    private static final int SLOT_BODY = 0xFF8B8B8B;
+    private static final int SLOT_SHADOW = 0xFF373737;
+    private static final int GAUGE = 0xFF9C9C9C;
+    private static final int TITLE_COLOR = 0xFF404040;
+    private static final int FOOTER_COLOR = 0xFF606060;
 
     private final Font font;
     private final BookTheme theme;
@@ -47,43 +62,81 @@ final class BookWidgets {
         }
     }
 
+    // ---- recipes ----
+
     private void recipe(GuiGraphicsExtractor g, RecipeSpec spec, int x, int y, int mouseX, int mouseY) {
-        if (spec.kind() == RecipeSpec.Kind.BY_ID) {
-            // TODO(tier 2): resolve by id once recipes are synced from the server.
-            g.text(font, Component.literal("recipe: " + spec.recipeId()), x, y, theme.muted(), false);
-            return;
-        }
+        // TODO(tier 2): when spec.recipeId() is set, ask the server for that recipe first and draw what it returns,
+        // falling back to this inline definition if the server does not have it. The id is parsed but unused today.
+        RecipePanel panel = RecipePanel.of(spec);
 
-        boolean crafting = spec.kind() == RecipeSpec.Kind.CRAFTING_SHAPED || spec.kind() == RecipeSpec.Kind.CRAFTING_SHAPELESS;
-        int cols = crafting ? 3 : spec.grid().size();
-        int rows = crafting ? 3 : 1;
-        int gridWidth = cols * SLOT;
-        int gridHeight = rows * SLOT;
-        int rowOffset = crafting ? 0 : (SLOT / 2);
+        drawPanel(g, x, y, panel.width(), panel.height());
+        g.text(font, title(panel), x + RecipePanel.PAD, y + RecipePanel.TITLE_Y, TITLE_COLOR, false);
 
-        for (int i = 0; i < spec.grid().size(); i++) {
-            int sx = x + (i % cols) * SLOT;
-            int sy = y + rowOffset + (i / cols) * SLOT;
-            slot(g, sx, sy);
-            RecipeSpec.Ingredient ingredient = spec.grid().get(i);
-            if (!ingredient.isEmpty()) {
-                stackSlot(g, cycle(ingredient.alternatives()), 1, sx, sy, mouseX, mouseY);
+        for (RecipePanel.Slot slot : panel.slots()) {
+            int sx = x + slot.x();
+            int sy = y + slot.y();
+            drawSlot(g, sx, sy, slot.size());
+
+            ItemStack stack = null;
+            if (slot.source() == RecipePanel.RESULT) {
+                if (spec.result() != null) {
+                    stack = ItemLookup.stack(spec.result(), spec.count());
+                }
+            } else if (slot.source() >= 0 && slot.source() < spec.grid().size()) {
+                RecipeSpec.Ingredient ingredient = spec.grid().get(slot.source());
+                if (!ingredient.isEmpty()) {
+                    stack = ItemLookup.stack(cycle(ingredient.alternatives()), 1);
+                }
+            }
+
+            if (stack != null) {
+                drawStack(g, stack, sx, sy, slot.size(), mouseX, mouseY);
             }
         }
 
-        int arrowX = x + gridWidth + 6;
-        int arrowY = y + rowOffset + (crafting ? gridHeight / 2 : SLOT / 2) - font.lineHeight / 2;
-        g.text(font, Component.literal("→"), arrowX, arrowY, theme.ink(), false);
-
-        int resultX = x + gridWidth + 28;
-        int resultY = y + rowOffset + (crafting ? SLOT : 0);
-        slot(g, resultX, resultY);
-        stackSlot(g, spec.result(), spec.count(), resultX, resultY, mouseX, mouseY);
+        drawArrow(g, x + panel.arrow().x(), y + panel.arrow().y());
+        if (panel.flame() != null) {
+            drawFlame(g, x + panel.flame().x(), y + panel.flame().y());
+        }
+        if (panel.footerY() >= 0) {
+            g.text(font, footer(panel), x + RecipePanel.PAD, y + panel.footerY(), FOOTER_COLOR, false);
+        }
     }
 
+    private MutableComponent title(RecipePanel panel) {
+        MutableComponent title = panel.literalTitle() != null
+            ? Component.literal(panel.literalTitle())
+            : Component.translatable(panel.titleKey());
+
+        if (panel.shapeless()) {
+            title = title.append(Component.literal(" ")).append(Component.translatable("opus.recipe.shapeless"));
+        }
+
+        return title;
+    }
+
+    private MutableComponent footer(RecipePanel panel) {
+        MutableComponent line = Component.empty();
+        if (panel.cookingTime() != null) {
+            int ticks = panel.cookingTime();
+            String seconds = ticks % 20 == 0 ? Integer.toString(ticks / 20) : String.format(Locale.ROOT, "%.1f", ticks / 20.0);
+            line.append(Component.translatable("opus.recipe.cooking_time", seconds));
+        }
+        if (panel.experience() != null) {
+            if (panel.cookingTime() != null) {
+                line.append(Component.literal(" · "));
+            }
+            line.append(Component.translatable("opus.recipe.experience", String.format(Locale.ROOT, "%s", panel.experience())));
+        }
+
+        return line;
+    }
+
+    // ---- items and mobs ----
+
     private void item(GuiGraphicsExtractor g, WidgetSpecs.ItemSpec spec, int x, int y, int mouseX, int mouseY) {
-        slot(g, x, y);
-        stackSlot(g, spec.id(), spec.count(), x, y, mouseX, mouseY);
+        drawSlot(g, x, y, SLOT);
+        drawStack(g, ItemLookup.stack(spec.id(), spec.count()), x, y, SLOT, mouseX, mouseY);
         if (spec.label() != null) {
             g.text(font, Component.literal(spec.label()), x + SLOT + 4, y + (SLOT - font.lineHeight) / 2, theme.ink(), false);
         }
@@ -98,19 +151,52 @@ final class BookWidgets {
         g.text(font, Component.literal(spec.id()), x + 4, y + 4, theme.muted(), false);
     }
 
-    private void slot(GuiGraphicsExtractor g, int x, int y) {
-        g.fill(x, y, x + SLOT, y + SLOT, 0xFF373737);
-        g.fill(x + 1, y + 1, x + SLOT, y + SLOT, 0xFFFFFFFF);
-        g.fill(x + 1, y + 1, x + SLOT - 1, y + SLOT - 1, 0xFF8B8B8B);
+    // ---- vanilla-style pieces ----
+
+    /** The grey container panel: black outline with clipped corners, white top/left and dark bottom/right bevel. */
+    private void drawPanel(GuiGraphicsExtractor g, int x, int y, int w, int h) {
+        g.fill(x + 1, y, x + w - 1, y + h, PANEL_BLACK);
+        g.fill(x, y + 1, x + w, y + h - 1, PANEL_BLACK);
+        g.fill(x + 3, y + 3, x + w - 3, y + h - 3, PANEL_BODY);
+        g.fill(x + 1, y + 1, x + w - 2, y + 3, PANEL_LIGHT);
+        g.fill(x + 1, y + 1, x + 3, y + h - 2, PANEL_LIGHT);
+        g.fill(x + 2, y + h - 3, x + w - 1, y + h - 1, PANEL_SHADOW);
+        g.fill(x + w - 3, y + 2, x + w - 1, y + h - 1, PANEL_SHADOW);
     }
 
-    private void stackSlot(GuiGraphicsExtractor g, String id, int count, int x, int y, int mouseX, int mouseY) {
-        ItemStack stack = ItemLookup.stack(id, count);
-        g.item(stack, x + 1, y + 1);
-        if (count > 1) {
-            g.itemDecorations(font, stack, x + 1, y + 1);
+    /** A recessed slot: dark top/left edge, white bottom/right edge, mid-grey inside. */
+    private void drawSlot(GuiGraphicsExtractor g, int x, int y, int size) {
+        g.fill(x, y, x + size, y + size, SLOT_SHADOW);
+        g.fill(x + 1, y + 1, x + size, y + size, PANEL_LIGHT);
+        g.fill(x + 1, y + 1, x + size - 1, y + size - 1, SLOT_BODY);
+    }
+
+    /** The empty progress arrow: a 14x5 shaft and an 8px triangular head, in the slot grey. */
+    private void drawArrow(GuiGraphicsExtractor g, int x, int y) {
+        g.fill(x, y + 5, x + 14, y + 10, SLOT_BODY);
+        for (int i = 0; i < 8; i++) {
+            g.fill(x + 14 + i, y + i, x + 15 + i, y + RecipePanel.ARROW_H - i, SLOT_BODY);
         }
-        if (mouseX >= x && mouseX < x + SLOT && mouseY >= y && mouseY < y + SLOT) {
+    }
+
+    /** The empty fuel gauge: three short wavy lines, like the vanilla furnace's unlit flame. */
+    private void drawFlame(GuiGraphicsExtractor g, int x, int y) {
+        for (int column = 0; column < 3; column++) {
+            int cx = x + 1 + column * 5;
+            for (int row = 0; row < 4; row++) {
+                int offset = (row + column) % 2;
+                g.fill(cx + offset, y + 1 + row * 3, cx + offset + 2, y + 3 + row * 3, GAUGE);
+            }
+        }
+    }
+
+    private void drawStack(GuiGraphicsExtractor g, ItemStack stack, int slotX, int slotY, int slotSize, int mouseX, int mouseY) {
+        int inset = (slotSize - 16) / 2;
+        g.item(stack, slotX + inset, slotY + inset);
+        if (stack.getCount() > 1) {
+            g.itemDecorations(font, stack, slotX + inset, slotY + inset);
+        }
+        if (mouseX >= slotX && mouseX < slotX + slotSize && mouseY >= slotY && mouseY < slotY + slotSize) {
             g.setTooltipForNextFrame(font, stack.getHoverName(), mouseX, mouseY);
         }
     }
