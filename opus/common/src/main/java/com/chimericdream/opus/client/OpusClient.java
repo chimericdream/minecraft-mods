@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
  * Client entry point shared by both loaders (called from the Fabric client initializer and NeoForge's
  * {@code FMLClientSetupEvent}).
  *
- * <p>UNVERIFIED: never compiled. {@code ClientTickEvent.CLIENT_POST} is Architectury's loader-neutral tick hook
+ * <p>Compiles against 26.2; not yet run in game. {@code ClientTickEvent.CLIENT_POST} is Architectury's loader-neutral tick hook
  * (the other mods register their tick handlers per loader instead).
  */
 public final class OpusClient {
@@ -50,6 +50,6 @@ public final class OpusClient {
             return;
         }
 
-        minecraft.setScreen(new BookScreen(book, pageId));
+        minecraft.setScreenAndShow(new BookScreen(book, pageId));
     }
 }

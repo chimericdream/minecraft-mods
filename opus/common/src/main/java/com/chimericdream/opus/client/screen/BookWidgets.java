@@ -6,10 +6,10 @@ import com.chimericdream.opus.core.widget.RecipeSpec;
 import com.chimericdream.opus.core.widget.SpecException;
 import com.chimericdream.opus.core.widget.WidgetSpecs;
 import com.chimericdream.opus.core.widget.WidgetTypes;
-import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * Draws recipe, item and entity widgets inside the boxes {@link WidgetSizer#DEFAULT} reserves for them: 18px
  * slots, a 28px arrow gutter, then the result slot.
  *
- * <p>UNVERIFIED: never compiled. The {@code item}, {@code itemDecorations} and {@code setTooltipForNextFrame}
+ * <p>Compiles against 26.2; not yet run in game. The {@code item}, {@code itemDecorations} and {@code setTooltipForNextFrame}
  * signatures are guesses based on how the other mods call {@code GuiGraphicsExtractor}.
  */
 final class BookWidgets {
