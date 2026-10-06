@@ -8,15 +8,24 @@ the items below are done.
 
 | Layer | Status |
 |---|---|
-| `core/` (frontmatter, Markdown → document model, book loading, links, tags, search, layout engine, recipe/widget specs, `ValidateBook`) | **Written and tested.** 78 JUnit tests pass under Gradle (`./gradlew :opus:fabric:test`) and earlier under plain `javac`/JUnit. |
-| `client/`, `item/`, `component/`, `OpusMod`, loader client entry points | **Compiles** for common, Fabric and NeoForge. The first build found only three errors (`net.minecraft.Util` is now `net.minecraft.util.Util`; `Minecraft#setScreen` is `setScreenAndShow`), so the other GUI API guesses were right. **Not yet run in game.** |
+| `core/` (frontmatter, Markdown → document model, book loading, links, tags, search, layout engine, recipe panels/specs, `ValidateBook`) | **Written and tested.** 89 JUnit tests pass under Gradle (`./gradlew :opus:fabric:test`). |
+| `client/`, `item/`, `component/`, `OpusMod`, loader client entry points | **Compiles** for common, Fabric and NeoForge, and the **book screen has been seen running on Fabric** through a temporary headless client game test (see below). |
 | Gradle wiring (`common/fabric/neoforge build.gradle`, `gradle.properties`) | **Verified** for `shadowJar` on both loaders: commonmark and SnakeYAML are bundled and fully relocated to `com.chimericdream.opus.shadow.*` (no unrelocated `org/commonmark` or `org/yaml`, no `module-info`), and the bytecode references the relocated packages. NeoForge's *dev runtime* handling (`forgeRuntimeLibrary`) is untested until a NeoForge `runClient`. |
-| In-game behaviour | **Never seen.** |
+| In-game behaviour | **Fabric, headless:** at 1920x1080 / GUI scale 2 and 1280x720 / GUI scale 3 the guide opens and navigates; text column cap, clickable breadcrumbs, Back/`<`/`>`, sidebar and search (including the clear button and right-click clear), link and item tooltips, all recipe panels, item widgets and tables were checked from screenshots. **Not yet checked:** NeoForge, a dedicated server, the item and F7 key in a real world, live window resize, and a person actually reading it. |
+
+## What the headless check was
+
+A temporary `FabricClientGameTest` (deleted afterwards, as `mc-visual-smoke-test` requires) created a world, resized the
+window, called `OpusClient.openBook("opus:guide", page)`, and used `getInput()` (`scroll`, `setCursorPos`,
+`pressMouse`, `typeChars`, `pressKey`) plus `takeScreenshot`. It needs `opus/fabric/src/gametest/java/...` and a
+`gametest/resources/fabric.mod.json` with a `fabric-client-gametest` entrypoint, and runs with
+`./gradlew :opus:fabric:runClientGameTest`; the exit-time `Watchdog` crash is the known harmless one. Cursor
+positions are window pixels, so at GUI scale 2 a logical coordinate is doubled.
 
 ## First steps
 
-1. ~~`./gradlew :opus:common:compileJava`~~ Done. `:opus:fabric:test`, `:opus:neoforge:compileJava` and both `shadowJar` tasks also pass.
-2. `./gradlew :opus:fabric:runClient` — go through `TEST_PLAN.md`. Likely trouble spots, since these are the parts the compiler cannot judge: the book screen's drawing happens in `extractBackground` on purpose (see its Javadoc), so check that the search box and buttons draw on top of the book; scissoring and scaled heading text; the `opus:book` item model and name.
+1. ~~`./gradlew :opus:common:compileJava`~~ Done, along with tests, `:opus:neoforge:compileJava` and both `shadowJar` tasks.
+2. Walk `TEST_PLAN.md` by hand once on Fabric (`./gradlew :opus:fabric:runClient`), especially the in-world parts the headless check skipped: the `opus:book` item and F7.
 3. NeoForge dev run (`:opus:neoforge:runClient`): the libraries use `forgeRuntimeLibrary(implementation(...))` in `neoforge/build.gradle` (pattern from the root build for the quiltmc parsers). If NeoForge cannot see commonmark/SnakeYAML in dev, that is where to look.
 4. Check the resulting jars load on a dedicated server (nothing client-only is touched at startup except `OpusClient`, reached only from client entry points).
 
