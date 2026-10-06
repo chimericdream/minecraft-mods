@@ -6,6 +6,7 @@ import com.chimericdream.opus.core.markdown.MarkdownParser;
 import com.chimericdream.opus.core.model.Block;
 import com.chimericdream.opus.core.model.Document;
 import com.chimericdream.opus.core.model.Inline;
+import com.chimericdream.opus.core.model.Style;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -77,9 +78,39 @@ public final class BookLoader {
                 .thenComparing(n -> n.sourceName().toLowerCase(Locale.ROOT))
         );
 
+        chapters.values().forEach(BookLoader::listContentsIfNoPage);
+
         Book book = new Book(bookId, meta, root, diagnostics);
         book.validateLinks(diagnostics);
         return book;
+    }
+
+    /**
+     * A folder with no {@code index.md} still gets a page: a list of what is inside it, linked, so selecting the
+     * chapter is never a dead end. (Search ignores these generated pages.)
+     */
+    private static void listContentsIfNoPage(BookNode chapter) {
+        if (chapter.sourcePath() != null) {
+            return;
+        }
+
+        List<Block.ListItem> items = new ArrayList<>();
+        for (BookNode child : chapter.children()) {
+            if (child.hidden()) {
+                continue;
+            }
+
+            List<Inline> line = new ArrayList<>();
+            line.add(new Inline.Link("/" + child.id(), null, List.of(new Inline.Text(child.title(), Style.PLAIN)), 0));
+            if (child.summary() != null && !child.summary().isBlank()) {
+                line.add(new Inline.Text(" - " + child.summary(), Style.PLAIN));
+            }
+            items.add(new Block.ListItem(null, List.of(new Block.Paragraph(line))));
+        }
+
+        if (!items.isEmpty()) {
+            chapter.setDocument(new Document(List.of(new Block.ListBlock(false, 1, items))));
+        }
     }
 
     /** Files or folders starting with {@code _} or {@code .} are drafts/private and never loaded. */

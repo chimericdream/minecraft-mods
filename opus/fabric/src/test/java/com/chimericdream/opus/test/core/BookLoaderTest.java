@@ -9,6 +9,8 @@ import com.chimericdream.opus.core.book.BookNode;
 import com.chimericdream.opus.core.book.BookSource;
 import com.chimericdream.opus.core.book.IconRef;
 import com.chimericdream.opus.core.book.LinkTarget;
+import com.chimericdream.opus.core.model.Block;
+import com.chimericdream.opus.core.model.Inline;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -132,6 +134,64 @@ class BookLoaderTest {
         Book book = load(sample());
 
         assertEquals(List.of("", "machines", "machines/hoppers"), book.breadcrumb(book.find("machines/hoppers")).stream().map(BookNode::id).toList());
+    }
+
+    @Test
+    void chaptersNestToAnyDepth() {
+        // "Chapter 5: Redstone" with two sub-chapters, one of which nests further and has no index of its own.
+        Book book = load(new BookSource.MapSource()
+            .with("05-redstone/index.md", "---\ntitle: Redstone\n---\nIntro\n")
+            .with("05-redstone/01-vanilla-changes/index.md", "---\ntitle: Changes to vanilla mechanics\n---\nx\n")
+            .with("05-redstone/01-vanilla-changes/comparators.md", "# Comparators\n\nSee [the pulse gate](../02-new-mechanics/pulse-gate.md).\n")
+            .with("05-redstone/01-vanilla-changes/observers.md", "Observers\n")
+            .with("05-redstone/02-new-mechanics/index.md", "---\ntitle: New mechanics\n---\ny\n")
+            .with("05-redstone/02-new-mechanics/pulse-gate.md", "# Pulse gate\n\nBack to [comparators](../01-vanilla-changes/comparators).\n")
+            .with("05-redstone/02-new-mechanics/advanced/circuits/clock.md", "# Clock\n\nUp to [Redstone](/05-redstone/index.md).\n"));
+
+        assertTrue(diag.all().isEmpty(), "every cross-level link resolves: " + diag.all());
+
+        BookNode redstone = book.find("redstone");
+        assertEquals(List.of("redstone/vanilla-changes", "redstone/new-mechanics"), redstone.children().stream().map(BookNode::id).toList());
+        assertEquals(List.of("redstone/vanilla-changes/comparators", "redstone/vanilla-changes/observers"),
+            book.find("redstone/vanilla-changes").children().stream().map(BookNode::id).toList());
+
+        BookNode clock = book.find("redstone/new-mechanics/advanced/circuits/clock");
+        assertNotNull(clock);
+        assertEquals(
+            List.of("Test Book", "Redstone", "New mechanics", "Advanced", "Circuits", "Clock"),
+            book.breadcrumb(clock).stream().map(BookNode::title).toList(),
+            "folders without an index.md still become chapters, with names made from the folder"
+        );
+        assertTrue(book.find("redstone/new-mechanics/advanced").isChapter());
+        assertNull(book.find("redstone/new-mechanics/advanced").sourcePath());
+    }
+
+    @Test
+    void aFolderWithoutAnIndexGetsAGeneratedContentsPage() {
+        Book book = load(new BookSource.MapSource()
+            .with("tools/01-saw.md", "---\nsummary: Cuts things.\n---\n# Saw\n\nx\n")
+            .with("tools/02-hammer.md", "# Hammer\n\ny\n")
+            .with("tools/secret.md", "---\nhidden: true\n---\nz\n"));
+
+        assertTrue(diag.all().isEmpty(), "the generated links resolve: " + diag.all());
+
+        BookNode tools = book.find("tools");
+        assertNull(tools.sourcePath(), "there is still no file behind it");
+        Block.ListBlock list = assertInstanceOf(Block.ListBlock.class, tools.document().blocks().get(0));
+        assertEquals(2, list.items().size(), "hidden pages are not listed");
+
+        Block.Paragraph first = (Block.Paragraph) list.items().get(0).blocks().get(0);
+        Inline.Link link = (Inline.Link) first.content().get(0);
+        assertEquals("/tools/saw", link.destination());
+        assertEquals("Saw", Inline.plainText(link.children()));
+        assertEquals(" - Cuts things.", Inline.plainText(first.content().subList(1, 2)));
+        assertEquals(new LinkTarget.Page(book.find("tools/saw"), null), book.resolve(tools, link.destination()));
+
+        // The book's home page is generated the same way when there is no root index.md.
+        assertInstanceOf(Block.ListBlock.class, book.root().document().blocks().get(0));
+
+        // Generated pages only repeat titles, so search does not return them.
+        assertEquals(List.of("tools/hammer"), book.search("hammer").stream().map(h -> h.node().id()).toList());
     }
 
     @Test

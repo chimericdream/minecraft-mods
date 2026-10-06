@@ -28,12 +28,16 @@ public final class SearchIndex {
 
     SearchIndex(List<BookNode> nodes) {
         for (BookNode node : nodes) {
+            // A folder's generated contents page only repeats its children's titles; do not index it.
+            boolean authored = node.sourcePath() != null;
             StringBuilder headings = new StringBuilder();
-            for (Block.Heading h : node.document().headings()) {
-                headings.append(Inline.plainText(h.content())).append(' ');
+            if (authored) {
+                for (Block.Heading h : node.document().headings()) {
+                    headings.append(Inline.plainText(h.content())).append(' ');
+                }
             }
 
-            String bodyText = node.document().plainText();
+            String bodyText = authored ? node.document().plainText() : "";
             entries.add(new Entry(
                 node,
                 tokens(node.title() + " " + String.join(" ", node.aliases())),

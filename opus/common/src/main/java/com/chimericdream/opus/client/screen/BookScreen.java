@@ -25,7 +25,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The reading screen: a table of contents sidebar (with search) on the left and one scrolling page on the
@@ -41,13 +45,17 @@ import java.util.List;
 public class BookScreen extends Screen {
     private static final int MARGIN = 8;
     /** The sidebar is this wide on a roomy screen and shrinks to a quarter of the panel on a small one. */
-    private static final int SIDEBAR_MAX_WIDTH = 124;
+    private static final int SIDEBAR_MAX_WIDTH = 136;
     private static final int SIDEBAR_MIN_WIDTH = 90;
     private static final int PAD = 8;
     private static final int HEADER_HEIGHT = 22;
     private static final int FOOTER_HEIGHT = 24;
     private static final int SCROLLBAR_WIDTH = 4;
     private static final int TOC_ROW = 18;
+    private static final int ARROW_SIZE = 9;
+    private static final int ARROW_GUTTER = 11;
+    private static final int INDENT = 6;
+    private static final int MAX_INDENT_DEPTH = 8;
 
     /** Long lines are hard to read, so the text column never gets wider than about this many characters. */
     private static final int MAX_COLUMN_CHARS = 100;
@@ -71,6 +79,14 @@ public class BookScreen extends Screen {
     private int tocScroll;
     private final Deque<BookNode> backStack = new ArrayDeque<>();
 
+    /** Which chapters are open in the sidebar, per book id. Chapters start closed and stay as the player left them. */
+    private static final Map<String, Set<String>> EXPANDED = new HashMap<>();
+
+    private final Set<String> expanded;
+
+    /** Every listed page in reading order, whether or not its chapter is open; previous/next follow this. */
+    private List<BookNode> reading = List.of();
+    /** The rows the sidebar currently shows: closed chapters hide their contents. */
     private List<TocEntry> toc = List.of();
     private List<SearchIndex.Hit> hits = List.of();
 
@@ -105,6 +121,8 @@ public class BookScreen extends Screen {
             }
         }
         this.current = start;
+        this.expanded = EXPANDED.computeIfAbsent(book.id(), id -> new HashSet<>());
+        reveal(start);
     }
 
     @Override
@@ -125,7 +143,9 @@ public class BookScreen extends Screen {
         columnX = contentX + (available - columnW) / 2;
 
         renderer = new BookRenderer(font, theme);
+        reading = buildReading();
         toc = buildToc();
+        scrollTocToCurrent();
 
         int searchWidth = sidebarW - 8 - 16;
         search = addRenderableWidget(new EditBox(font, panelX + 4, panelY + 4, searchWidth, 14, Component.empty()));
@@ -170,6 +190,11 @@ public class BookScreen extends Screen {
         current = node;
         pendingAnchor = anchor;
         scroll = 0;
+
+        // Make sure the page being read is visible in the sidebar, whichever way we got here.
+        reveal(node);
+        toc = buildToc();
+        scrollTocToCurrent();
         relayout();
     }
 
@@ -181,10 +206,9 @@ public class BookScreen extends Screen {
 
     /** Previous/next page in reading order, skipping hidden pages. */
     private void step(int delta) {
-        List<BookNode> order = book.nodes().stream().filter(n -> toc.stream().anyMatch(e -> e.node() == n)).toList();
-        int index = order.indexOf(current) + delta;
-        if (index >= 0 && index < order.size()) {
-            navigate(order.get(index), null, true);
+        int index = reading.indexOf(current) + delta;
+        if (index >= 0 && index < reading.size()) {
+            navigate(reading.get(index), null, true);
         }
     }
 
@@ -216,20 +240,11 @@ public class BookScreen extends Screen {
         clampScroll();
 
         if (previous != null) {
-            previous.active = indexInToc(current) > 0;
-            next.active = indexInToc(current) >= 0 && indexInToc(current) < toc.size() - 1;
+            int index = reading.indexOf(current);
+            previous.active = index > 0;
+            next.active = index >= 0 && index < reading.size() - 1;
             backButton.active = !backStack.isEmpty();
         }
-    }
-
-    private int indexInToc(BookNode node) {
-        for (int i = 0; i < toc.size(); i++) {
-            if (toc.get(i).node() == node) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 
     private void clampScroll() {
@@ -238,6 +253,32 @@ public class BookScreen extends Screen {
 
     // ---- table of contents ----
 
+    /** Hidden and still-locked pages are not listed anywhere in the sidebar. */
+    private boolean listed(BookNode node) {
+        return !node.hidden() && node.isUnlocked(this::advancementDone);
+    }
+
+    /** A chapter the sidebar can open or close: it has at least one listed page or sub-chapter. The book itself never closes. */
+    private boolean expandable(BookNode node) {
+        return node != book.root() && node.children().stream().anyMatch(this::listed);
+    }
+
+    private List<BookNode> buildReading() {
+        List<BookNode> out = new ArrayList<>();
+        collectReading(book.root(), out);
+        return out;
+    }
+
+    private void collectReading(BookNode node, List<BookNode> out) {
+        if (!listed(node)) {
+            return;
+        }
+
+        out.add(node);
+        node.children().forEach(child -> collectReading(child, out));
+    }
+
+    /** The sidebar rows: the whole tree, except that the contents of closed chapters are skipped. */
     private List<TocEntry> buildToc() {
         List<TocEntry> out = new ArrayList<>();
         collect(book.root(), 0, out);
@@ -245,12 +286,52 @@ public class BookScreen extends Screen {
     }
 
     private void collect(BookNode node, int depth, List<TocEntry> out) {
-        if (node.hidden() || !node.isUnlocked(this::advancementDone)) {
+        if (!listed(node)) {
             return;
         }
 
         out.add(new TocEntry(node, depth));
-        node.children().forEach(child -> collect(child, depth + 1, out));
+        if (node == book.root() || expanded.contains(node.id())) {
+            node.children().forEach(child -> collect(child, depth + 1, out));
+        }
+    }
+
+    /** Opens every chapter above {@code node}, and {@code node} itself when it is a chapter with contents. */
+    private void reveal(BookNode node) {
+        for (BookNode ancestor = node.parent(); ancestor != null; ancestor = ancestor.parent()) {
+            if (ancestor != book.root()) {
+                expanded.add(ancestor.id());
+            }
+        }
+        if (expandable(node)) {
+            expanded.add(node.id());
+        }
+    }
+
+    private void toggle(BookNode chapter) {
+        if (!expanded.remove(chapter.id())) {
+            expanded.add(chapter.id());
+        }
+
+        toc = buildToc();
+        int rows = toc.size() * TOC_ROW;
+        tocScroll = Math.max(0, Math.min(tocScroll, Math.max(0, rows - (panelH - 26))));
+    }
+
+    /** Scrolls the sidebar the least amount needed to bring the current page's row into view. */
+    private void scrollTocToCurrent() {
+        int viewport = panelH - 26;
+        for (int i = 0; i < toc.size(); i++) {
+            if (toc.get(i).node() == current) {
+                int top = i * TOC_ROW;
+                if (top < tocScroll) {
+                    tocScroll = top;
+                } else if (top + TOC_ROW > tocScroll + viewport) {
+                    tocScroll = top + TOC_ROW - viewport;
+                }
+                return;
+            }
+        }
     }
 
     /**
@@ -286,6 +367,7 @@ public class BookScreen extends Screen {
 
         boolean searching = !search.getValue().isBlank();
         int count = searching ? hits.size() : toc.size();
+        BookNode holder = visibleHolderOfCurrent();
         for (int i = 0; i < count; i++) {
             int y = top + i * TOC_ROW - tocScroll;
             if (y + TOC_ROW < top || y > bottom) {
@@ -295,13 +377,27 @@ public class BookScreen extends Screen {
             BookNode node = searching ? hits.get(i).node() : toc.get(i).node();
             int depth = searching ? 0 : toc.get(i).depth();
             boolean selected = node == current;
+            boolean holdsCurrent = !searching && !selected && node == holder;
             boolean hovered = mouseX >= panelX && mouseX < panelX + sidebarW && mouseY >= y && mouseY < y + TOC_ROW && mouseY >= top && mouseY < bottom;
 
-            if (selected || hovered) {
-                g.fill(panelX, y, panelX + sidebarW, y + TOC_ROW, selected ? theme.sidebarSelected() : 0x22000000);
+            if (selected || holdsCurrent || hovered) {
+                // A closed chapter that contains the page being read gets a softer version of the selection colour.
+                int fill = selected ? theme.sidebarSelected()
+                    : holdsCurrent ? (theme.sidebarSelected() & 0x00FFFFFF) | 0x80000000
+                    : 0x22000000;
+                g.fill(panelX, y, panelX + sidebarW, y + TOC_ROW, fill);
             }
 
-            int x = panelX + 4 + Math.min(depth, 4) * 6;
+            int x = panelX + 4;
+            if (!searching && depth > 0) {
+                // Every row below the book itself gets an arrow gutter so titles line up; only chapters draw an arrow.
+                int ax = arrowX(depth);
+                if (expandable(node)) {
+                    drawArrow(g, ax, y + (TOC_ROW - ARROW_SIZE) / 2, expanded.contains(node.id()));
+                }
+                x = ax + ARROW_GUTTER;
+            }
+
             IconRef icon = node.icon();
             if (icon != null && icon.kind() == IconRef.Kind.ITEM) {
                 g.item(ItemLookup.stack(icon.id(), 1), x, y + 1);
@@ -309,11 +405,46 @@ public class BookScreen extends Screen {
             }
             // TODO(icons): IconRef.Kind.TEXTURE - draw the texture with blit once a loader for it exists.
 
-            String title = font.plainSubstrByWidth(node.title(), panelX + sidebarW - x - 4);
+            int room = panelX + sidebarW - x - 4;
+            String title = font.plainSubstrByWidth(node.title(), room);
             g.text(font, Component.literal(title), x, y + (TOC_ROW - font.lineHeight) / 2, theme.ink(), false);
+
+            // A title that did not fit shows in full while the row is hovered.
+            if (hovered && !title.equals(node.title())) {
+                g.setTooltipForNextFrame(font, Component.literal(node.title()), mouseX, mouseY);
+            }
         }
 
         g.disableScissor();
+    }
+
+    /** The page being read if it has a row in the sidebar, otherwise the nearest chapter above it that does. */
+    private BookNode visibleHolderOfCurrent() {
+        for (BookNode node = current; node != null; node = node.parent()) {
+            for (TocEntry entry : toc) {
+                if (entry.node() == node) {
+                    return node;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /** x of the arrow gutter for a row at {@code depth} (1 = a top-level chapter or page); deep nesting stops indenting. */
+    private int arrowX(int depth) {
+        return panelX + 4 + (Math.min(depth, MAX_INDENT_DEPTH) - 1) * INDENT;
+    }
+
+    /** A small solid triangle: pointing down when the chapter is open, right when it is closed. */
+    private void drawArrow(GuiGraphicsExtractor g, int x, int y, boolean open) {
+        for (int i = 0; i < 5; i++) {
+            if (open) {
+                g.fill(x + i, y + 2 + i, x + ARROW_SIZE - i, y + 3 + i, theme.ink());
+            } else {
+                g.fill(x + 2 + i, y + i, x + 3 + i, y + ARROW_SIZE - i, theme.ink());
+            }
+        }
     }
 
     /**
@@ -463,6 +594,16 @@ public class BookScreen extends Screen {
             boolean searching = !search.getValue().isBlank();
             if (row >= 0 && row < (searching ? hits.size() : toc.size())) {
                 BookNode node = searching ? hits.get(row).node() : toc.get(row).node();
+
+                // The arrow only opens or closes; the rest of the row goes to the page (which also opens it).
+                if (!searching && expandable(node)) {
+                    int ax = arrowX(toc.get(row).depth());
+                    if (x >= ax - 2 && x < ax + ARROW_GUTTER) {
+                        toggle(node);
+                        return true;
+                    }
+                }
+
                 navigate(node, null, true);
             }
             return true;
