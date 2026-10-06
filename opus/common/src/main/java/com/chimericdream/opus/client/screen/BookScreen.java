@@ -91,6 +91,7 @@ public class BookScreen extends Screen {
     private List<SearchIndex.Hit> hits = List.of();
 
     private BookRenderer renderer;
+    private final MobPreviews mobs = new MobPreviews();
     private EditBox search;
     private Button clearSearch;
     private Button previous;
@@ -142,7 +143,7 @@ public class BookScreen extends Screen {
         columnW = Math.min(available, MAX_COLUMN_CHARS * font.width("0"));
         columnX = contentX + (available - columnW) / 2;
 
-        renderer = new BookRenderer(font, theme);
+        renderer = new BookRenderer(font, theme, mobs);
         reading = buildReading();
         toc = buildToc();
         scrollTocToCurrent();
@@ -230,7 +231,7 @@ public class BookScreen extends Screen {
             return;
         }
 
-        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.DEFAULT);
+        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.withMobs(mobs::bounds));
         layout = engine.layoutPage(current.title(), current.document(), columnW);
 
         if (pendingAnchor != null) {

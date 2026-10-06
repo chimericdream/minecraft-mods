@@ -7,12 +7,18 @@ import com.chimericdream.opus.core.widget.RecipeSpec;
 import com.chimericdream.opus.core.widget.SpecException;
 import com.chimericdream.opus.core.widget.WidgetSpecs;
 import com.chimericdream.opus.core.widget.WidgetTypes;
+import com.chimericdream.opus.core.widget.MobFit;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Util;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,10 +47,12 @@ final class BookWidgets {
 
     private final Font font;
     private final BookTheme theme;
+    private final MobPreviews mobs;
 
-    BookWidgets(Font font, BookTheme theme) {
+    BookWidgets(Font font, BookTheme theme, MobPreviews mobs) {
         this.font = font;
         this.theme = theme;
+        this.mobs = mobs;
     }
 
     void draw(GuiGraphicsExtractor g, Element.WidgetBox box, int x, int y, int mouseX, int mouseY) {
@@ -52,7 +60,7 @@ final class BookWidgets {
             switch (box.widget().type()) {
                 case WidgetTypes.RECIPE -> recipe(g, RecipeSpec.parse(box.widget().props()), x, y, mouseX, mouseY);
                 case WidgetTypes.ITEM -> item(g, WidgetSpecs.ItemSpec.parse(box.widget().props()), x, y, mouseX, mouseY);
-                case WidgetTypes.ENTITY -> entity(g, WidgetSpecs.EntitySpec.parse(box.widget().props()), box, x, y);
+                case WidgetTypes.ENTITY -> entity(g, WidgetSpecs.EntitySpec.parse(box.widget().props()), box, x, y, mouseX, mouseY);
                 default -> {
                 }
             }
@@ -142,14 +150,54 @@ final class BookWidgets {
         }
     }
 
-    private void entity(GuiGraphicsExtractor g, WidgetSpecs.EntitySpec spec, Element.WidgetBox box, int x, int y) {
-        // TODO(entity): render the live entity. In 26.x entities draw through render states, so this needs the
-        // 26.2 equivalent of InventoryScreen.renderEntityInInventory; all-hallows-steve's CarvingStationScreen
-        // shows how GuiItemRenderState is queued for items and is the best starting point. Until then, a labelled
-        // placeholder keeps the layout honest.
+    private void entity(GuiGraphicsExtractor g, WidgetSpecs.EntitySpec spec, Element.WidgetBox box, int x, int y, int mouseX, int mouseY) {
+        MobPreviews.Preview preview = mobs.preview(spec.id());
+        if (preview == null) {
+            placeholder(g, spec, box, x, y, mouseX, mouseY, mobs.failure(spec.id()));
+            return;
+        }
+
+        LivingEntity mob = preview.entity();
+        MobFit.Result fit = MobFit.fit(preview.bounds(), spec.scale(), box.width());
+
+        // Idle pose facing the viewer, turning once every 12 seconds; the tick count drives idle animations.
+        long now = Util.getMillis();
+        mob.tickCount = (int) (now / 50);
+        mob.setYRot(180f);
+        mob.yRotO = 180f;
+        mob.setXRot(0f);
+        mob.xRotO = 0f;
+        mob.yBodyRot = 180f;
+        mob.yBodyRotO = 180f;
+        mob.yHeadRot = 180f;
+        mob.yHeadRotO = 180f;
+
+        float angle = (now % 12000L) / 12000f * (float) (2 * Math.PI);
+        Quaternionf rotation = new Quaternionf().rotateZ((float) Math.PI).rotateY(angle);
+        Vector3f translation = new Vector3f(0f, mob.getBbHeight() / 2f + 0.0625f * mob.getScale(), 0f);
+
+        EntityRenderState state = Minecraft.getInstance().getEntityRenderDispatcher().extractEntity(mob, 1f);
+        g.entity(state, fit.pixelsPerBlock(), translation, rotation, null, x, y, x + box.width(), y + box.height());
+
+        if (mouseX >= x && mouseX < x + box.width() && mouseY >= y && mouseY < y + box.height()) {
+            Component name = spec.label() != null ? Component.literal(spec.label()) : mob.getName();
+            g.setTooltipForNextFrame(font, name, mouseX, mouseY);
+        }
+    }
+
+    /** Shown for anything that can't be drawn live: the id, plus why when there is a reason. */
+    private void placeholder(GuiGraphicsExtractor g, WidgetSpecs.EntitySpec spec, Element.WidgetBox box, int x, int y, int mouseX, int mouseY, String reason) {
         g.fill(x, y, x + box.width(), y + box.height(), theme.codeBackground());
         String label = spec.id().startsWith("minecraft:") ? spec.id().substring("minecraft:".length()) : spec.id();
-        g.text(font, Component.literal(font.plainSubstrByWidth(label, Math.max(1, box.width() - 8))), x + 4, y + 4, theme.muted(), false);
+        int textWidth = Math.max(1, box.width() - 8);
+        g.text(font, Component.literal(font.plainSubstrByWidth(label, textWidth)), x + 4, y + 4, theme.muted(), false);
+
+        if (reason != null) {
+            g.text(font, Component.literal(font.plainSubstrByWidth(reason, textWidth)), x + 4, y + 4 + font.lineHeight + 2, theme.muted(), false);
+            if (mouseX >= x && mouseX < x + box.width() && mouseY >= y && mouseY < y + box.height()) {
+                g.setTooltipForNextFrame(font, Component.literal(label + ": " + reason), mouseX, mouseY);
+            }
+        }
     }
 
     // ---- vanilla-style pieces ----

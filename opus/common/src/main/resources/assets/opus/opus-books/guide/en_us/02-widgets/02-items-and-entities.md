@@ -38,7 +38,9 @@ minecraft:golden_apple
 
 ## Mobs
 
-Shows a mob. For now this is a labelled placeholder; a live, rotating preview is planned.
+Shows a live mob that turns slowly in an idle pose. The box is sized to fit the mob, so a tall mob gets a tall box and a bat or ghast gets a square one. `scale` makes the mob bigger or smaller than that fit (default `1`). Hover it to see its name, or your `label`.
+
+Only living mobs can be shown. Anything else (an arrow, a boat), or a mob that can't be created, shows a labelled placeholder with a short reason instead. Mobs always have their default look; there are no variants, colours or equipment.
 
 `````markdown
 ```entity

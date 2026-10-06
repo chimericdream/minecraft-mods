@@ -20,10 +20,10 @@ final class BookRenderer {
     private final BookTheme theme;
     private final BookWidgets widgets;
 
-    BookRenderer(Font font, BookTheme theme) {
+    BookRenderer(Font font, BookTheme theme, MobPreviews mobs) {
         this.font = font;
         this.theme = theme;
-        this.widgets = new BookWidgets(font, theme);
+        this.widgets = new BookWidgets(font, theme, mobs);
     }
 
     /**

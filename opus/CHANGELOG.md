@@ -6,3 +6,4 @@
 - Added the Opus Book item and an "Open the Opus Guide" key (default F7).
 - Added the Opus Guide, a book that explains how to write books.
 - Added a book checker: run `java -jar opus-<version>.jar <folder>` to list broken links, bad frontmatter and invalid widgets in every book under a folder.
+- The mob widget now shows a live, slowly turning mob in a box sized to fit it.
