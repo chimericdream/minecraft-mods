@@ -6,7 +6,7 @@ import com.chimericdream.opus.core.layout.Element;
  * Colours for the book screen (ARGB). A parchment look by default, close to the Markdown Manual screenshot.
  * Later this should come from {@code book.yml} / a resource-pack texture so books can be skinned.
  *
- * <p>UNVERIFIED: never compiled (plain data, so low risk).
+ * <p>Compiles against 26.2; not yet run in game (plain data, so low risk).
  */
 public record BookTheme(
     int border,

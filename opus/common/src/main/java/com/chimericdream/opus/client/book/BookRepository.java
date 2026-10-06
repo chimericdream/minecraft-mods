@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Every book found in the loaded resource packs, rebuilt on each resource reload (so F3+T picks up edits and
  * a language change swaps translations).
  *
- * <p>UNVERIFIED: never compiled. {@code LanguageManager#getSelected()} returning the language code string is
+ * <p>Compiles against 26.2; not yet run in game. {@code LanguageManager#getSelected()} returning the language code string is
  * an assumption; check against the 26.2 sources.
  */
 public final class BookRepository {

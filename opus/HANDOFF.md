@@ -1,33 +1,24 @@
 # Opus — handoff notes
 
-Written at the end of the first overnight session (2026-10-06) so work can continue on a machine that can
-reach the Fabric / Architectury / NeoForge Maven hosts. Delete this file once the items below are done.
+Written at the end of the first overnight session (2026-10-06), when the sandbox could not reach the Fabric /
+Architectury / NeoForge Maven hosts, and updated after the first real build on the laptop. Delete this file once
+the items below are done.
 
 ## State of things
 
 | Layer | Status |
 |---|---|
-| `core/` (frontmatter, Markdown → document model, book loading, links, tags, search, layout engine, recipe/widget specs, `ValidateBook`) | **Written and tested.** 78 JUnit tests passed, compiled with plain `javac` (`--release 21 -Xlint:all`, no warnings) and run with the JUnit console launcher against commonmark 0.30.0 and SnakeYAML 2.7. |
-| `client/`, `item/`, `component/`, `OpusMod`, loader client entry points | **Never compiled.** The sandbox could not reach `maven.fabricmc.net`, `maven.architectury.dev` or `maven.neoforged.net` (blocked by the network policy), so Minecraft was unavailable. Written from the patterns in other mods (see below), then syntax-checked only (javac with the missing-class errors filtered out: no syntax errors, no misuse of the core API). |
-| Gradle wiring (`common/fabric/neoforge build.gradle`, `gradle.properties`) | **Never run.** Follows the root `build.gradle` patterns. |
+| `core/` (frontmatter, Markdown → document model, book loading, links, tags, search, layout engine, recipe/widget specs, `ValidateBook`) | **Written and tested.** 78 JUnit tests pass under Gradle (`./gradlew :opus:fabric:test`) and earlier under plain `javac`/JUnit. |
+| `client/`, `item/`, `component/`, `OpusMod`, loader client entry points | **Compiles** for common, Fabric and NeoForge. The first build found only three errors (`net.minecraft.Util` is now `net.minecraft.util.Util`; `Minecraft#setScreen` is `setScreenAndShow`), so the other GUI API guesses were right. **Not yet run in game.** |
+| Gradle wiring (`common/fabric/neoforge build.gradle`, `gradle.properties`) | **Verified** for `shadowJar` on both loaders: commonmark and SnakeYAML are bundled and fully relocated to `com.chimericdream.opus.shadow.*` (no unrelocated `org/commonmark` or `org/yaml`, no `module-info`), and the bytecode references the relocated packages. NeoForge's *dev runtime* handling (`forgeRuntimeLibrary`) is untested until a NeoForge `runClient`. |
 | In-game behaviour | **Never seen.** |
-
-Everything in `core/` is free of Minecraft types, so it should compile unchanged under
-Gradle's `release = 25`.
 
 ## First steps
 
-1. `./gradlew :opus:common:compileJava` and fix what breaks. Expected trouble spots, most likely first:
-   - `client/screen/BookRenderer.java`, `BookWidgets.java`: `GuiGraphicsExtractor` signatures: `text(font, comp, x, y, color, boolean dropShadow)`, `item(stack, x, y)`, `itemDecorations(font, stack, x, y)`, `setTooltipForNextFrame(font, Component, x, y)`, `pose()` as a `Matrix3x2fStack` with `pushMatrix/translate/scale/popMatrix`, `enableScissor/disableScissor`, `fill`. Reference for what is known to exist: better-target-dummies `MobPickerScreen` (`text(font, comp, x, y, color)`), all-hallows-steve `CarvingStationScreen` (`pose()`, `item`), minekea `BlockPainterScreen` (`blit`, `extractBackground`).
-   - `client/screen/BookScreen.java`: `mouseScrolled(double, double, double, double)`, `MouseButtonEvent#x()/y()`, `KeyEvent#key()`, `Button.builder(...).bounds(...).build()`, `EditBox.SEARCH_HINT_STYLE`, `ConfirmLinkScreen.confirmLinkNow(Screen, String)`, `Font#plainSubstrByWidth`, `Button#active`. Drawing is done in `extractBackground` on purpose (see its Javadoc).
-   - `client/book/BookRepository.java`: `LanguageManager#getSelected()` (returns the language code?).
-   - `client/screen/ItemLookup.java`: `BuiltInRegistries.ITEM.getValue(Identifier)`, `Identifier.tryParse`.
-   - `client/OpusClient.java`: Architectury `ClientTickEvent.CLIENT_POST`.
-   - `item/OpusBookItem.java`: copied from hopper-xtreme's `HopperItemFilterItem`; likely fine.
-2. `./gradlew :opus:fabric:test` — the 78 tests should pass under Gradle too.
-3. `./gradlew :opus:fabric:runClient` — go through `TEST_PLAN.md`.
-4. NeoForge dev run: the libraries use `forgeRuntimeLibrary(implementation(...))` in `neoforge/build.gradle` (pattern from the root build for the quiltmc parsers). If NeoForge cannot see commonmark/SnakeYAML in dev, that is where to look. Also confirm `./gradlew :opus:fabric:shadowJar` relocates (`com.chimericdream.opus.shadow.*`).
-5. Check the resulting jars load on a dedicated server (nothing client-only is touched at startup except `OpusClient`, reached only from client entry points).
+1. ~~`./gradlew :opus:common:compileJava`~~ Done. `:opus:fabric:test`, `:opus:neoforge:compileJava` and both `shadowJar` tasks also pass.
+2. `./gradlew :opus:fabric:runClient` — go through `TEST_PLAN.md`. Likely trouble spots, since these are the parts the compiler cannot judge: the book screen's drawing happens in `extractBackground` on purpose (see its Javadoc), so check that the search box and buttons draw on top of the book; scissoring and scaled heading text; the `opus:book` item model and name.
+3. NeoForge dev run (`:opus:neoforge:runClient`): the libraries use `forgeRuntimeLibrary(implementation(...))` in `neoforge/build.gradle` (pattern from the root build for the quiltmc parsers). If NeoForge cannot see commonmark/SnakeYAML in dev, that is where to look.
+4. Check the resulting jars load on a dedicated server (nothing client-only is touched at startup except `OpusClient`, reached only from client entry points).
 
 ## Running the core tests without Gradle
 

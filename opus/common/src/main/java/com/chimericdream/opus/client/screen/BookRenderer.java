@@ -11,7 +11,7 @@ import net.minecraft.network.chat.MutableComponent;
  * Draws a {@link Layout} into a scrolled viewport. Everything here is a direct translation of the layout
  * engine's elements; no layout decisions are made at draw time.
  *
- * <p>UNVERIFIED: never compiled. Drawing calls ({@code fill}, {@code text}, {@code item}, {@code pose()}
+ * <p>Compiles against 26.2; not yet run in game. Drawing calls ({@code fill}, {@code text}, {@code item}, {@code pose()}
  * matrix ops, scissor) follow the 26.2 {@code GuiGraphicsExtractor} usage seen in minekea, all-hallows-steve
  * and better-target-dummies, but several signatures are best guesses - see the notes inline.
  */

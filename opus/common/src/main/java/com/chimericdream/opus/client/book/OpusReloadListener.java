@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Reloads {@link BookRepository} whenever client resources reload.
  *
- * <p>UNVERIFIED: never compiled. Structure copied from athenaeum's {@code AthenaeumReloadListener}, with
+ * <p>Compiles against 26.2; not yet run in game. Structure copied from athenaeum's {@code AthenaeumReloadListener}, with
  * {@code PackType.CLIENT_RESOURCES} because books live under {@code assets/}.
  */
 public class OpusReloadListener implements ResourceManagerReloadListener {

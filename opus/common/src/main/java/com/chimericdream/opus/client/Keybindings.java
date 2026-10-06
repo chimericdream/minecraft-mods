@@ -6,7 +6,7 @@ import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
 
-/** UNVERIFIED: never compiled. Copied from minekea's {@code Keybindings}. */
+/** Compiles against 26.2; not yet run in game. Copied from minekea's {@code Keybindings}. */
 public class Keybindings {
     public static final KeyMapping OPEN_GUIDE = new KeyMapping(
         "key.opus.open_guide",

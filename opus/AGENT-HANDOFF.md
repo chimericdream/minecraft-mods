@@ -85,10 +85,17 @@ Flow in game: `OpusReloadListener` (client resources) -> `BookRepository.reload`
 
 ## What is and isn't verified
 
-Verified: all of `core/` (78 tests) via plain `javac`/JUnit. **Not** verified: every file under `client/`,
-`item/`, `component/`, `OpusMod`, both loader client entry points, the Gradle edits, and any in-game behaviour.
-The previous session had no access to the Fabric/Architectury/NeoForge Maven hosts. The per-file `UNVERIFIED`
-Javadoc names the exact guesses. API facts that *are* confirmed (copied from working code in this repo):
+Verified with a real Gradle build on the laptop (2026-10-06): everything compiles for common, Fabric and NeoForge;
+all 78 core tests pass under Gradle; both `shadowJar`s bundle commonmark/SnakeYAML fully relocated. The first build
+needed only two fixes in the Minecraft-facing code: `net.minecraft.Util` is `net.minecraft.util.Util`, and
+`Minecraft#setScreen` is `Minecraft#setScreenAndShow` in 26.2.
+
+**Still not verified: any in-game behaviour** (screen drawing and input, reload listener, item and keybind,
+NeoForge dev runtime, dedicated-server startup). Compiling only proves the signatures exist. To check a 26.2
+signature, `javap` the Loom-cached jar instead of guessing, e.g.
+`javap -cp .gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-*/26.2/*.jar net.minecraft.client.Minecraft`
+(several hashed variants exist; pick the newest), or use the `mc-source-decompile` skill. API facts that were
+confirmed by copying working code in this repo:
 
 | Fact | Where it is used in the repo |
 |---|---|
@@ -102,7 +109,9 @@ Javadoc names the exact guesses. API facts that *are* confirmed (copied from wor
 | Networking: `NetworkManager.registerReceiver(c2s()/s2c(), ID, CODEC, handler)` once from common init | `all-hallows-steve/.../PumpkinFaceNetworking.java` |
 | NeoForge dev needs plain jars via `forgeRuntimeLibrary(runtimeOnly(...))` | root `build.gradle` |
 
-## Running things in a restricted sandbox
+## Running things in a restricted sandbox (only if you are in one again)
+
+The first session ran in such a sandbox; on the laptop none of this applies (`.\gradlew.bat` works).
 
 - `./gradlew` was not executable: use `sh ./gradlew`. Gradle also needs the plugin/Maven hosts; check them first:
   `curl -s -o /dev/null -w '%{http_code}\n' https://maven.fabricmc.net/` (and architectury / neoforged). Maven
@@ -126,15 +135,16 @@ java -jar $JU execute --class-path "out:$CP" --scan-class-path out
 
 ## Suggested order of work
 
-1. Get `:opus:common:compileJava` green (see `HANDOFF.md` for the likely trouble spots), then `:opus:fabric:test`.
-2. `runClient`, walk `TEST_PLAN.md`, fix what breaks. Use `mc-visual-smoke-test` to capture the book screen for
-   review; check against the Markdown Manual look the user described.
-3. NeoForge dev run + shadow jar relocation check; dedicated-server startup check.
+1. ~~Get the build green~~ Done: compile, tests and shadow jars all pass.
+2. `runClient` (Fabric), walk `TEST_PLAN.md`, fix what breaks. In a live session ask the user before running
+   `mc-visual-smoke-test` (their preference); it can capture the book screen to compare with the Markdown Manual
+   look they described.
+3. NeoForge dev run; dedicated-server startup check.
 4. Once it opens: advancement gating (`BookScreen#advancementDone` is a stub), then live window resize
    (`BookScreen` re-lays out in `init`; confirm it survives `resize`), then recipe by id (server sync) and the
    entity widget; the rest are in `ideas/`.
-5. Remove `UNVERIFIED` headers as each file is confirmed; update `CHANGELOG.md` accurately; delete both
-   handoff files and the `planning-docs.md` entry that points to them.
+5. Update `CHANGELOG.md` accurately once features are confirmed in game; delete both handoff files and the
+   `planning-docs.md` entry that points to them.
 
 ## Known rough edges (not bugs found by tests, just things to look at)
 

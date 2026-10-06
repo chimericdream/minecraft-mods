@@ -5,7 +5,7 @@ import net.minecraft.world.item.Item;
 
 import static com.chimericdream.opus.OpusMod.REGISTRY_HELPER;
 
-/** UNVERIFIED: never compiled. */
+/** Compiles against 26.2; not yet run in game. */
 public class OpusItems {
     public static final RegistrySupplier<Item> BOOK = REGISTRY_HELPER.registerItem(OpusBookItem.ITEM_ID, OpusBookItem::new);
 

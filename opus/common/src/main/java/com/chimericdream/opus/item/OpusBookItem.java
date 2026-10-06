@@ -20,7 +20,7 @@ import static com.chimericdream.opus.OpusMod.REGISTRY_HELPER;
  * A generic book: right-click opens whichever book its {@link BookIdComponent} names (the bundled guide when
  * unset). The screen itself is client-only; the server never needs to know a book was opened.
  *
- * <p>UNVERIFIED: never compiled. Properties/use() follow hopper-xtreme's {@code HopperItemFilterItem}.
+ * <p>Compiles against 26.2; not yet run in game. Properties/use() follow hopper-xtreme's {@code HopperItemFilterItem}.
  */
 public class OpusBookItem extends Item {
     public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "book");

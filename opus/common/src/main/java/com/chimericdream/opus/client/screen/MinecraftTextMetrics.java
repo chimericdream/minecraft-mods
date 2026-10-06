@@ -9,7 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 /**
  * Measures text with the game's font so the layout engine wraps exactly where the renderer will draw.
  *
- * <p>UNVERIFIED: never compiled. {@code Font#width(Component)} and {@code lineHeight} are used the same way in
+ * <p>Compiles against 26.2; not yet run in game. {@code Font#width(Component)} and {@code lineHeight} are used the same way in
  * better-target-dummies' {@code MobPickerScreen}.
  */
 final class MinecraftTextMetrics implements TextMetrics {

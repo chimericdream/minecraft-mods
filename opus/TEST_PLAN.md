@@ -22,8 +22,8 @@ When adding syntax or a widget, add the parser test and the layout test with it.
 
 ## Manual (in game)
 
-Written before the Minecraft-facing layer had ever been compiled, so run the whole list once on Fabric
-and once on NeoForge.
+The Minecraft-facing layer compiles but had never been run in game when this list was written, so run the
+whole list once on Fabric and once on NeoForge.
 
 Setup: new creative world, `/give @s opus:book`.
 

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * right, with back-history and previous/next buttons. All text flow comes from {@link LayoutEngine}; this class
  * only owns geometry, input and navigation.
  *
- * <p>UNVERIFIED: never compiled. Input handlers use the {@code MouseButtonEvent}/{@code KeyEvent} signatures
+ * <p>Compiles against 26.2; not yet run in game. Input handlers use the {@code MouseButtonEvent}/{@code KeyEvent} signatures
  * seen in better-target-dummies' {@code MobPickerScreen}; {@code mouseScrolled}, {@code Button.builder},
  * {@code EditBox} and {@code ConfirmLinkScreen.confirmLinkNow} are standard but unchecked against 26.2. Drawing is
  * done in {@code extractBackground} (a hook the other mods' screens already override) so the widgets the base

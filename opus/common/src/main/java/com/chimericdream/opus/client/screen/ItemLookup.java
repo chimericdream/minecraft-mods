@@ -9,7 +9,7 @@ import net.minecraft.world.item.Items;
 /**
  * Turns the id strings found in books into stacks to draw.
  *
- * <p>UNVERIFIED: never compiled. {@code Registry#getValue(Identifier)} is the 1.21.2+ name for the old
+ * <p>Compiles against 26.2; not yet run in game. {@code Registry#getValue(Identifier)} is the 1.21.2+ name for the old
  * {@code get(ResourceLocation)}; confirm against 26.2. Tags ({@code #ns:name}) are not resolved yet - see the
  * TODO below for the sketch.
  */
