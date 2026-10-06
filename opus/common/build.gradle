@@ -5,3 +5,15 @@ architectury {
 loom {
     accessWidenerPath = file("src/main/resources/opus.accesswidener")
 }
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.commonmark:commonmark:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-gfm-tables:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-gfm-strikethrough:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-task-list-items:${project.commonmark_version}"
+    implementation "org.yaml:snakeyaml:${project.snakeyaml_version}"
+}

@@ -14,3 +14,30 @@ dependencies {
     common(project(path: ':opus:common')) { transitive false }
     shadowBundle project(path: ':opus:common', configuration: 'transformProductionFabric')
 }
+
+// UNVERIFIED (written without network access to the Gradle plugin/Maven hosts): bundles the Markdown/YAML
+// parsers into the shipped jar, relocated so they cannot clash with another mod bundling its own copy.
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.commonmark:commonmark:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-gfm-tables:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-gfm-strikethrough:${project.commonmark_version}"
+    implementation "org.commonmark:commonmark-ext-task-list-items:${project.commonmark_version}"
+    implementation "org.yaml:snakeyaml:${project.snakeyaml_version}"
+
+    shadowBundle "org.commonmark:commonmark:${project.commonmark_version}"
+    shadowBundle "org.commonmark:commonmark-ext-gfm-tables:${project.commonmark_version}"
+    shadowBundle "org.commonmark:commonmark-ext-gfm-strikethrough:${project.commonmark_version}"
+    shadowBundle "org.commonmark:commonmark-ext-task-list-items:${project.commonmark_version}"
+    shadowBundle "org.yaml:snakeyaml:${project.snakeyaml_version}"
+}
+
+shadowJar {
+    relocate 'org.commonmark', 'com.chimericdream.opus.shadow.commonmark'
+    relocate 'org.yaml.snakeyaml', 'com.chimericdream.opus.shadow.snakeyaml'
+    exclude 'module-info.class'
+    exclude 'META-INF/versions/**/module-info.class'
+}
