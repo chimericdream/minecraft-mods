@@ -66,6 +66,8 @@ final class MobPreviews {
 
     private static final String NO_WORLD = "needs a world to be loaded";
 
+    private static int nextId = 1;
+
     private static Object create(String id) {
         Identifier identifier = id == null ? null : Identifier.tryParse(id);
         if (identifier == null || !BuiltInRegistries.ENTITY_TYPE.containsKey(identifier)) {
@@ -91,6 +93,9 @@ final class MobPreviews {
         if (!(entity instanceof LivingEntity living)) {
             return new Failure("not a living mob");
         }
+
+        // Render-state extraction reads the id, and 0 means "not assigned" (this entity never joins a level).
+        living.setId(nextId++);
 
         return new Preview(living, new MobFit.Bounds(living.getBbWidth(), living.getBbHeight()));
     }
