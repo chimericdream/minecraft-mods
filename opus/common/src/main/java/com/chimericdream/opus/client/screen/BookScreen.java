@@ -515,4 +515,25 @@ public class BookScreen extends Screen {
     public boolean isPauseScreen() {
         return false;
     }
+
+    /**
+     * Resizing rebuilds every widget and re-wraps the page for the new width. Without this, whatever was typed in
+     * the search box would be lost and the page would jump, so keep the query and the reading position (as a
+     * fraction of the page, since the page height changes with the width).
+     */
+    @Override
+    public void resize(int width, int height) {
+        String query = search == null ? "" : search.getValue();
+        boolean searchFocused = search != null && search.isFocused();
+        double fraction = layout == null || layout.height() <= viewHeight ? 0 : scroll / (double) (layout.height() - viewHeight);
+
+        super.resize(width, height);
+
+        search.setValue(query);
+        if (searchFocused) {
+            setFocused(search);
+        }
+        scroll = (int) Math.round(fraction * Math.max(0, layout.height() - viewHeight));
+        clampScroll();
+    }
 }
