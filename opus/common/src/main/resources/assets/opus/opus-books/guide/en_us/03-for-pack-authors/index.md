@@ -4,8 +4,21 @@ icon: item:minecraft:bookshelf
 ---
 ## Shipping a book
 
-Put the book folder in a resource pack at `assets/<namespace>/opus-books/<book>/`. Give players the book item with
-the `opus:book_id` component set to your book's id, or let them open it from a key.
+Put the book folder in a resource pack at `assets/<namespace>/opus-books/<book>/`. The book's id is
+`<namespace>:<book>`, so `assets/pannotia/opus-books/pannotia/` is the book `pannotia:pannotia`.
+
+The item is `opus:book`. Give players one with the `opus:book_id` component set to your book's id:
+
+```
+/give @s opus:book[opus:book_id={book_id:"pannotia:pannotia"}]
+```
+
+The component is an object with a `book_id` field, not a bare string. The same value works in loot tables, recipe
+results and functions. Players can also open the default guide from a key.
+
+The resource pack has to be enabled on the client. If the book isn't found, the item shows
+"Book '<id>' was not found": check that the pack is active in the resource pack menu and that the id matches the
+folder names.
 
 ## Translating
 

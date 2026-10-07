@@ -1,5 +1,11 @@
 ### Unreleased changes
 
+### 26.2 - 1.1.0-beta.0
+
+#### Documentation
+
+- The "For pack authors" page of the Opus Guide now names the book item (`opus:book`) and shows how to give a player a specific book with `/give`.
+
 ### 26.2 - 1.0.1
 
 #### Bug Fixes
