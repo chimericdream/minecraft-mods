@@ -1,7 +1,7 @@
 # Live mob previews
 
 > Source: initial design discussion, 2026-10-06 (split from "Live mob and multiblock previews") · Effort **M** · Value ★★★
-> Status: **Ready**
+> Status: **Shipped** in 1.0.0-beta.0
 
 ## Description
 
@@ -16,7 +16,7 @@ What the player sees:
 - If a mob can't be created on the client (typically another mod's entity), the placeholder is shown with a short note or tooltip saying why, and the problem is logged once.
 - The mob always has its default spawn appearance. Baby, variant, colour, equipment and custom names are not configurable.
 
-**Out of scope:** dragging or any other interaction beyond the auto-rotate, mob variants or NBT, and multiblock previews (see [multiblock previews](multiblock-previews.md)).
+**Out of scope:** dragging or any other interaction beyond the auto-rotate, mob variants or NBT, and multiblock previews (see [multiblock previews](../reader/multiblock-previews.md)).
 
 **Dependencies:** 26.2 entity/GUI render-state APIs (read the decompiled sources with the `mc-source-decompile` skill). `BookWidgets.entity` has a TODO pointing at all-hallows-steve's `CarvingStationScreen` as a reference. Dynamic box size touches `WidgetSizer` (a client-supplied lookup callback).
 **Verification:** Visual smoke test (`mc-visual-smoke-test`) of a page with a tall mob, a wide mob and a cubic mob.
@@ -42,8 +42,8 @@ _None yet._
 
 ## Related
 
-- [Multiblock previews](multiblock-previews.md) — the other half of the original idea; shares the "rotate a 3D thing in a GUI box" problem.
-- [Search that finds recipes, items and mobs](search-widgets-and-code.md) — indexes entity widgets by display name.
+- [Multiblock previews](../reader/multiblock-previews.md) — the other half of the original idea; shares the "rotate a 3D thing in a GUI box" problem.
+- [Search that finds recipes, items and mobs](../reader/search-widgets-and-code.md) — indexes entity widgets by display name.
 
 ## Open questions
 

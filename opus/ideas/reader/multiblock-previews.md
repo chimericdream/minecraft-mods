@@ -9,7 +9,7 @@ A new `multiblock` widget shows a small rotatable structure built from a list of
 
 **Out of scope:** interacting with the preview beyond rotating it, and animating block entities.
 
-**Dependencies:** 26.2 GUI render-state APIs (read the decompiled sources with the `mc-source-decompile` skill). Likely shares rotation/camera code with [live mob previews](live-mob-previews.md), so build that first.
+**Dependencies:** 26.2 GUI render-state APIs (read the decompiled sources with the `mc-source-decompile` skill). Likely shares rotation/camera code with [live mob previews](../archive/live-mob-previews.md), so build that first.
 **Verification:** Visual smoke test (`mc-visual-smoke-test`) of a page with the widget.
 
 ## Decisions
@@ -22,7 +22,7 @@ _None yet._
 
 ## Related
 
-- [Live mob previews](live-mob-previews.md) — the other half of the original idea.
+- [Live mob previews](../archive/live-mob-previews.md) — the other half of the original idea.
 
 ## Open questions
 

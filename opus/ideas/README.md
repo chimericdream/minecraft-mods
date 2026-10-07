@@ -22,7 +22,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Reader
 
-- [Live mob previews](reader/live-mob-previews.md) — Replace the `entity` placeholder with a rotating live mob.
 - [Multiblock previews](reader/multiblock-previews.md) — A rotatable `multiblock` widget that shows a small structure from a list of layers.
 - [Reader accessibility](reader/accessibility.md) — Text scale, high-contrast theme, keyboard navigation and narrator support (rule A3).
 - [Tag pages and bookmarks](reader/tag-pages-and-bookmarks.md) — A generated Tags page, tag chips under titles, and per-book bookmarks.
@@ -43,4 +42,4 @@ _Empty._
 
 ## Archive
 
-_Empty._
+- [Live mob previews](archive/live-mob-previews.md) — Shipped in 1.0.0-beta.0: the `entity` widget draws a live, rotating mob, all at one shared scale.
