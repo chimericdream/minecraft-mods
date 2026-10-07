@@ -19,6 +19,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Validate books in the build](authoring/build-time-validation.md) — Run the book validator from Gradle and CI so broken links and bad widgets fail the build.
 - [Tabs, accordions and other containers](authoring/container-directives-and-tabs.md) — `:::tabs` / `:::details` containers for pages that outgrow callouts.
 - [Book skins and themes](authoring/book-skins.md) — Colours and textures chosen per book from `book.yml`, restylable by resource packs.
+- [Book item texture](authoring/book-item-texture.md) — An optional `texture` key in `book.yml` gives each book its own item icon.
 
 ### Reader
 
@@ -35,6 +36,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 - [Recipe viewer integration (EMI/JEI/REI)](integration/recipe-viewer-integration.md) — Open recipe widgets in whichever recipe viewer is installed.
 - [Open-in-guide from items](integration/open-in-guide-hooks.md) — A tooltip line and key that open the book page documenting the hovered item.
+- [Player-usable give command](integration/player-give-command.md) — `/opus give <book>` for players without op, with a config option to turn it off.
 
 ## Inbox
 
