@@ -32,6 +32,8 @@ What the player sees:
 - 2026-10-06 — Box width and height are multiples of 16 px; aspect ratios fall out of that rather than a separate square threshold. The mob's own dimensions are not snapped to 16; the box is sized to the mob plus a little padding on all four sides.
 - 2026-10-06 — A mob that fails to construct falls back to the placeholder, is logged to the client log, and shows a note (tooltip or caption, depending on length) explaining the problem.
 - 2026-10-06 — Minimum and maximum box sizes, and how the mob rounds up to the box, are settled during implementation.
+- 2026-10-06 — (Superseded after in-game testing; see the next entry.) Dynamic per-mob boxes and per-mob auto-fit.
+- 2026-10-06 — All mobs draw at one shared scale anchored on the villager (57 GUI px per block at GUI scale 4; other GUI scales keep the same physical size), so mobs on a page keep their relative sizes. The box is the villager's box and grows in 16 px steps only when a mob won't fit; `scale` multiplies the shared scale.
 - 2026-10-06 — Rotation speed and start angle are left to the implementer.
 
 ## Brainstorm variants

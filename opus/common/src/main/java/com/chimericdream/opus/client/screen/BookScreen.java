@@ -231,7 +231,7 @@ public class BookScreen extends Screen {
             return;
         }
 
-        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.withMobs(mobs::bounds));
+        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.withMobs(mobs::bounds, () -> minecraft.getWindow().getGuiScale()));
         layout = engine.layoutPage(current.title(), current.document(), columnW);
 
         if (pendingAnchor != null) {

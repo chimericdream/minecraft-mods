@@ -4,9 +4,13 @@ package com.chimericdream.opus.core.widget;
  * Sizes the box for a live mob preview and works out how big to draw the mob inside it. Pure maths, so the layout
  * engine and the renderer get the same answer from the same inputs.
  *
- * <p>The mob is first fitted to a comfortable maximum area and then multiplied by the widget's {@code scale}. The box
- * is that size plus padding on all four sides, rounded up to a multiple of 16 px, so tall mobs get tall boxes and
- * roughly cubic mobs get square ones. The mob itself is not snapped to anything.
+ * <p>Every mob is drawn at the same scale, so mobs on one page keep their real proportions relative to each other.
+ * That scale is anchored on the villager: at GUI scale {@value #REFERENCE_GUI_SCALE} a block is
+ * {@value #REFERENCE_PIXELS_PER_BLOCK} GUI pixels, and other GUI scales keep the mob the same physical size on screen.
+ * The widget's {@code scale} multiplies that.
+ *
+ * <p>The box starts at the villager's box and only grows (in steps of 16 px) when a bigger mob wouldn't fit. It
+ * never exceeds the room the page has; a mob that is still too big for that is shrunk to fit.
  */
 public final class MobFit {
     /** Box sides are multiples of this. */
@@ -14,10 +18,11 @@ public final class MobFit {
     /** Space between the mob and the box edge, on every side. */
     public static final int PAD = 4;
 
-    static final int MIN_BOX = 32;
-    static final int MAX_BOX = 192;
-    private static final int MAX_INNER_WIDTH = 80;
-    private static final int MAX_INNER_HEIGHT = 112;
+    public static final int REFERENCE_GUI_SCALE = 4;
+    public static final int REFERENCE_PIXELS_PER_BLOCK = 57;
+
+    private static final int MAX_BOX_HEIGHT = 512;
+    private static final Bounds VILLAGER = new Bounds(0.6f, 1.95f);
 
     /** A mob's collision box, in blocks. */
     public record Bounds(float width, float height) {
@@ -30,25 +35,40 @@ public final class MobFit {
     private MobFit() {
     }
 
-    public static Result fit(Bounds bounds, float scale, int availableWidth) {
-        // Models stick out past the collision box (a villager's folded arms) and a turning mob sweeps a circle, so
-        // leave extra width or the box clips it mid-turn.
-        float footprint = bounds.width() * 1.4f;
-        float h = Math.max(Math.max(bounds.height(), footprint), 0.1f);
-        float w = Math.max(Math.max(footprint, h * 0.6f), 0.1f);
+    public static Result fit(Bounds bounds, float scale, int availableWidth, int guiScale) {
+        float pixelsPerBlock = (float) REFERENCE_PIXELS_PER_BLOCK * REFERENCE_GUI_SCALE / Math.max(1, guiScale) * scale;
+        int maxWidth = Math.max(STEP, floorStep(availableWidth));
 
-        float pixelsPerBlock = Math.min(MAX_INNER_WIDTH / w, MAX_INNER_HEIGHT / h) * scale;
+        int[] reference = boxFor(VILLAGER, pixelsPerBlock);
+        int[] mob = boxFor(bounds, pixelsPerBlock);
 
-        int maxWidth = Math.max(STEP, Math.min(MAX_BOX, floorStep(availableWidth)));
-        int minWidth = Math.min(MIN_BOX, maxWidth);
+        int boxWidth = Math.min(maxWidth, Math.max(reference[0], mob[0]));
+        int boxHeight = Math.min(MAX_BOX_HEIGHT, Math.max(reference[1], mob[1]));
 
-        int boxWidth = clamp(ceilStep(w * pixelsPerBlock + 2 * PAD), minWidth, maxWidth);
-        int boxHeight = clamp(ceilStep(h * pixelsPerBlock + 2 * PAD), MIN_BOX, MAX_BOX);
-
+        float w = footprint(bounds)[0];
+        float h = footprint(bounds)[1];
         // The box may have been clamped, so make sure the mob still fits.
         pixelsPerBlock = Math.min(pixelsPerBlock, Math.min((boxWidth - 2 * PAD) / w, (boxHeight - 2 * PAD) / h));
 
         return new Result(boxWidth, boxHeight, pixelsPerBlock);
+    }
+
+    /**
+     * Room a mob needs: models stick out past the collision box (a villager's folded arms) and a turning mob sweeps
+     * a circle, so width is padded, and a cubic mob's height is padded to match so its box stays square.
+     */
+    private static float[] footprint(Bounds bounds) {
+        float widened = bounds.width() * 1.4f;
+        float h = Math.max(Math.max(bounds.height(), widened), 0.1f);
+        float w = Math.max(Math.max(widened, h * 0.6f), 0.1f);
+
+        return new float[]{w, h};
+    }
+
+    private static int[] boxFor(Bounds bounds, float pixelsPerBlock) {
+        float[] size = footprint(bounds);
+
+        return new int[]{ceilStep(size[0] * pixelsPerBlock + 2 * PAD), ceilStep(size[1] * pixelsPerBlock + 2 * PAD)};
     }
 
     private static int ceilStep(float value) {
@@ -57,9 +77,5 @@ public final class MobFit {
 
     private static int floorStep(int value) {
         return value / STEP * STEP;
-    }
-
-    private static int clamp(int value, int min, int max) {
-        return Math.max(min, Math.min(max, value));
     }
 }

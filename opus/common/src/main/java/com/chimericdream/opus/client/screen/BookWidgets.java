@@ -158,7 +158,7 @@ final class BookWidgets {
         }
 
         LivingEntity mob = preview.entity();
-        MobFit.Result fit = MobFit.fit(preview.bounds(), spec.scale(), box.width());
+        MobFit.Result fit = MobFit.fit(preview.bounds(), spec.scale(), box.width(), Minecraft.getInstance().getWindow().getGuiScale());
 
         // Idle pose facing the viewer, turning once every 12 seconds; the tick count drives idle animations.
         long now = Util.getMillis();

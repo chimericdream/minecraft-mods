@@ -9,6 +9,7 @@ import com.chimericdream.opus.core.widget.WidgetSpecs;
 import com.chimericdream.opus.core.widget.WidgetTypes;
 
 import java.util.function.Function;
+import java.util.function.IntSupplier;
 
 /**
  * Decides how much room a widget needs. The renderer must draw each widget inside the size reported here.
@@ -23,14 +24,14 @@ public interface WidgetSizer {
     int SLOT = 18;
 
     /** Sizes that match the vanilla-style widget drawing in the client renderer. */
-    WidgetSizer DEFAULT = withMobs(id -> null);
+    WidgetSizer DEFAULT = withMobs(id -> null, () -> MobFit.REFERENCE_GUI_SCALE);
 
     /**
      * Like {@link #DEFAULT}, but an {@code entity} widget gets a box shaped like its mob. {@code mobs} maps a
      * normalised entity id to the mob's collision box, or {@code null} when the mob can't be previewed live (the
-     * widget then keeps the old fixed-size placeholder box).
+     * widget then keeps the old fixed-size placeholder box). {@code guiScale} is the player's GUI scale setting.
      */
-    static WidgetSizer withMobs(Function<String, MobFit.Bounds> mobs) {
+    static WidgetSizer withMobs(Function<String, MobFit.Bounds> mobs, IntSupplier guiScale) {
         return (widget, available) -> {
             try {
                 return switch (widget.type()) {
@@ -43,7 +44,7 @@ public interface WidgetSizer {
                         WidgetSpecs.EntitySpec spec = WidgetSpecs.EntitySpec.parse(widget.props());
                         MobFit.Bounds bounds = mobs.apply(spec.id());
                         if (bounds != null) {
-                            MobFit.Result fit = MobFit.fit(bounds, spec.scale(), available);
+                            MobFit.Result fit = MobFit.fit(bounds, spec.scale(), available, guiScale.getAsInt());
                             yield new Size(fit.width(), fit.height());
                         }
 
