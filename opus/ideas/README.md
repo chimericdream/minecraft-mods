@@ -36,11 +36,11 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 - [Recipe viewer integration (EMI/JEI/REI)](integration/recipe-viewer-integration.md) — Open recipe widgets in whichever recipe viewer is installed.
 - [Open-in-guide from items](integration/open-in-guide-hooks.md) — A tooltip line and key that open the book page documenting the hovered item.
-- [Player-usable give command](integration/player-give-command.md) — `/opus give <book>` for players without op, with a config option to turn it off.
+- [Player-usable give command](integration/player-give-command.md) — `/opus give [<book>]` for players without op, with a config option to make it ops-only.
 
 ## Inbox
 
-_Empty._
+- Troubleshooting section in the built-in Opus Guide (e.g. a malformed default id in `opus-guides.json`, books that show "not found"). Raised while refining [the give command](integration/player-give-command.md).
 
 ## Archive
 
