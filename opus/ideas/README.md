@@ -19,7 +19,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Validate books in the build](authoring/build-time-validation.md) — Run the book validator from Gradle and CI so broken links and bad widgets fail the build.
 - [Tabs, accordions and other containers](authoring/container-directives-and-tabs.md) — `:::tabs` / `:::details` containers for pages that outgrow callouts.
 - [Book skins and themes](authoring/book-skins.md) — Colours and textures chosen per book from `book.yml`, restylable by resource packs.
-- [Book item texture](authoring/book-item-texture.md) — An optional `texture` key in `book.yml` gives each book its own item icon.
+- [Book item texture](authoring/book-item-texture.md) — Optional `texture` and `model` keys in `book.yml` give each book its own item look.
 
 ### Reader
 
