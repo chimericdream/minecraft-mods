@@ -10,7 +10,7 @@ you build or test — **no `bun run publish:lib` needed** during development. `m
 removed from the resolution repositories, so a stale published jar cannot shadow your source. The
 wiring (why it depends on both `:common` and the platform project, the settings.gradle hoist +
 `evaluationDependsOnChildren()` that orders configuration) is documented in
-`../../../DEPENDENCY-PLAN.md`.
+`../../history/DEPENDENCY-PLAN.md`.
 
 `bun run publish:lib` is now **release-only**: it publishes chimeric-lib for *external* consumers, not
 for the edit→build loop in this repo.

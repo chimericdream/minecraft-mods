@@ -42,8 +42,9 @@ Each mod keeps all of its feature ideas in its own `ideas/` folder:
 `all-hallows-steve/ideas/` is the reference example. New mods get an `ideas/README.md` from the
 `scripts/init-mod.sh` template.
 
-- **Ideas for mods that don't exist yet** go in `MOD_IDEAS.md` at the repo root, along with notes on
-  the mod template. When a mod is scaffolded, move its entry into the new mod's `ideas/README.md` inbox.
+- **Ideas for mods that don't exist yet** are filed as GitHub Issues labeled `ideas` (and `enhancement`).
+  When a mod is scaffolded, move the issue's content into the new mod's `ideas/README.md` inbox and close
+  the issue.
 - **Don't keep ideas anywhere else**: not in a mod's `README.md` or `CHANGELOG.md`, not in new root-level
   lists, and not in a `POTENTIAL_FEATURES.md` (retired; see [Legacy backlogs](#legacy-backlogs)).
 - **Build plans are not ideas.** Documents like `hopper-xtreme/REFACTOR-3.1-PLAN.md` describe *how* to

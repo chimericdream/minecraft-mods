@@ -61,7 +61,7 @@ session or a later one) is instant.
 ## Notes
 
 - ChimericLib is currently an **in-build `project()` dependency** in this repo (see `CLAUDE.md` /
-  `DEPENDENCY-PLAN.md`), so its real source is already on disk under `chimeric-lib/` — never decompile
+  `docs/history/DEPENDENCY-PLAN.md`), so its real source is already on disk under `chimeric-lib/` — never decompile
   it. The `.sources/chimericlib/...` path in the example above is for the hypothetical purposes only.
 - This cache is local-machine convenience only (gitignored, not reproducible-build input) — if a
   version's decompile looks stale or wrong, delete that version's subdirectory and redo it rather than

@@ -10,7 +10,7 @@ There is **no publish loop**. chimeric-lib is resolved as an in-build **`project
 every consumer mod *and* by chimeric-lib's own `test`/`gametest` source sets, so editing chimeric-lib
 source recompiles straight into whatever you build or test — no `bun run publish:lib`, no `~/.m2`.
 `mavenLocal()` has been removed from the resolution repositories, so a stale published jar can no
-longer shadow your source (it structurally cannot happen). See `DEPENDENCY-PLAN.md` for the wiring
+longer shadow your source (it structurally cannot happen). See `docs/history/DEPENDENCY-PLAN.md` for the wiring
 (`build.gradle` chimeric-lib block, the settings.gradle hoist + `evaluationDependsOnChildren()`).
 
 `bun run publish:lib` still exists, but only for **releasing** chimeric-lib to maven-local / GitHub
