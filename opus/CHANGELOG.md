@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+- Fixed the Opus Guide (and any other book) failing to open on NeoForge with "Book 'opus:guide' was not found".
+
 ### 26.2 - 1.0.0
 
 Initial release.
