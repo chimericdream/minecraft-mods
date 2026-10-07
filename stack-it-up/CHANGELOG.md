@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fixed a crash caused by items that take damage (shields, tools, armor) being given a stack size above 1.
+  These items now always stay unstackable, even if an old config lists them.
+
 ### 26.2 - 1.0.0
 
 #### New Features

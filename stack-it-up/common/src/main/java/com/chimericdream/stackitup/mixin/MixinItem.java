@@ -44,6 +44,12 @@ public abstract class MixinItem implements IItemMaxCount {
     public void setMaxCount(int i) {
         ensureVanillaMaxCountCaptured();
         Item self = (Item) (Object) this;
+        // As of 26.2, a damageable item with a max stack size above 1 fails component validation
+        // ("Item cannot be both damageable and stackable") and crashes the game. Damageable items
+        // therefore can never be stacked, whatever the config or command asks for.
+        if (self.components().has(DataComponents.MAX_DAMAGE)) {
+            i = Math.min(i, getVanillaMaxCount());
+        }
         DataComponentMap.Builder builder = DataComponentMap.builder().addAll(self.components());
         builder.set(DataComponents.MAX_STACK_SIZE, i);
         self.builtInRegistryHolder().bindComponents(builder.build());
