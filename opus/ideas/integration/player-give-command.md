@@ -9,10 +9,10 @@ A command that hands the running player a book, usable by anyone, with no op lev
 
 **Shape:** `/opus give [<book>]` gives the executing player one `opus:book` with `opus:book_id` set to `<book>`.
 
-- `<book>` is a resource id (`namespace:path`), parsed with vanilla's identifier argument type, so a malformed id gets vanilla's own "Invalid ID" error. Omitting it gives the default guide, `opus:opus` unless the config changes it.
+- `<book>` is a resource id (`namespace:path`), parsed with vanilla's identifier argument type, so a malformed id gets vanilla's own "Invalid ID" error. Omitting it gives the default guide, `opus:guide` unless the config changes it.
 - The server does not know which books are installed (books are client-only resource-pack assets), so it checks only that the id is well formed. An id that matches no book gives a book that opens the reader's existing "not found" overlay.
 - There is no tab-completion of book ids in this version.
-- A new config file (a small JSON file, no Mod Menu screen) is named `opus-guides.json`, is read and enforced on the server only, and has two options: restrict the command to ops, and the default guide id (`opus:opus`). When set, the command stays registered but requires permission level 2, so admins keep a shortcut. By default the command is available to everyone (permission level 0).
+- A new config file (a small JSON file, no Mod Menu screen) is named `opus-guides.json`, is read and enforced on the server only, and has two options: restrict the command to ops, and the default guide id (`opus:guide`). When set, the command stays registered but requires permission level 2, so admins keep a shortcut. By default the command is available to everyone (permission level 0).
 
 **Out of scope:** giving books to other players (`/give` covers that for ops), any rule limiting how many copies a player can take, validating ids against installed books, tab-completion of book ids, and other `/opus` subcommands (the root is chosen so they have a home later).
 
@@ -27,10 +27,10 @@ A command that hands the running player a book, usable by anyone, with no op lev
 - 2026-10-07 — The config option makes the command ops-only (permission level 2); it does not unregister it.
 - 2026-10-07 — The config is a plain JSON file named `opus-guides`, not YACL.
 - 2026-10-07 — The config is read and enforced server-side only: the ops-only check is the command's permission requirement, so a client's own config or modified client can't bypass it.
-- 2026-10-07 — Omitting `<book>` gives the default guide. Its id is configurable and defaults to `opus:opus`.
+- 2026-10-07 — Omitting `<book>` gives the default guide. Its id is configurable and defaults to `opus:guide`.
 - 2026-10-07 — A malformed id gets vanilla's identifier-argument parse error, with no custom chat message.
 - 2026-10-07 — The config lives at `config/opus-guides.json` (the server's `config/` folder on a dedicated server, the integrated server's in single player).
-- 2026-10-07 — If the configured default id is malformed, log a warning and fall back to `opus:opus`.
+- 2026-10-07 — If the configured default id is malformed, log a warning and fall back to `opus:guide`.
 - 2026-10-07 — The config is read on every command run, so edits apply without a restart. A missing or invalid file falls back to the defaults with a warning, never an error.
 
 ## Brainstorm variants
