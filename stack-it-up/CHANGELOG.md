@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.1
+
 #### Bug Fixes
 
 * Fixed a crash caused by items that take damage (shields, tools, armor) being given a stack size above 1.
