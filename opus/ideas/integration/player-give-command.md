@@ -1,7 +1,7 @@
 # Player-usable give command
 
 > Source: user request, 2026-10-07 · Effort **M** · Value ★★
-> Status: **Building** (implemented on `main`, uncommitted; ops-only test and dedicated-server check still to do)
+> Status: **Building** (implemented in `ea63f3859` with Fabric GameTests; dedicated-server manual check and a NeoForge test run still to do)
 
 ## Description
 
