@@ -41,3 +41,9 @@ Setup: new creative world, `/give @s opus:book`.
 8. **Reload** — edit a page in a resource pack, F3+T: the change appears. A page with a broken link logs one error with file and line, and the book still opens.
 9. **Language** — switch to a language with no translation: the English pages show. Add `de_de/index.md` and switch: only that page changes.
 10. **Dedicated server** — the mod loads on a server without errors (no client classes touched).
+
+## `/opus give` (manual)
+
+- On a dedicated server, as a non-op: `/opus give` gives the guide; `/opus give mymod:x` gives a book with that id; `/opus give Bad Id` errors.
+- Set `"opsOnly": true` in `config/opus-guides.json` (no restart): a non-op no longer sees or can run the command; an op still can.
+- Set `"defaultGuide"` to another id: `/opus give` uses it. A malformed id logs a warning and falls back to `opus:guide`.

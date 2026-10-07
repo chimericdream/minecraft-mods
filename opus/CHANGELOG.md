@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### New Features
+
+- New `/opus give [<book>]` command that gives you a book, with no operator permission needed. Leave out the book to get the Opus Guide. Server owners can restrict it to operators (and change the default book) in `config/opus-guides.json`.
+
 ### 26.2 - 1.1.0-beta.0
 
 #### Documentation

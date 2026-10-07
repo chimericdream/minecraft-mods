@@ -1,7 +1,7 @@
 # Player-usable give command
 
 > Source: user request, 2026-10-07 · Effort **M** · Value ★★
-> Status: **Ready**
+> Status: **Building** (implemented on `main`, uncommitted; ops-only test and dedicated-server check still to do)
 
 ## Description
 

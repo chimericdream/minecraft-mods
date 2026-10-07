@@ -2,6 +2,7 @@
     "item.opus.book": "Opus Book",
     "key.opus.open_guide": "Open the Opus Guide",
     "key.categories.opus": "Opus",
+    "opus.command.give": "Gave you the book '%s'",
     "opus.book.missing": "Book '%s' was not found",
     "opus.book.back": "Back",
     "opus.book.search": "Search",

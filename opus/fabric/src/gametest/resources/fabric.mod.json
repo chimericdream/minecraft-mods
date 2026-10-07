@@ -1,0 +1,25 @@
+{
+    "schemaVersion": 1,
+    "id": "opus_test",
+    "version": "1.0.0",
+    "name": "Opus GameTest",
+    "description": "Test-only GameTests for Opus. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.opus.fabric.test.GiveCommandGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "opus": "*"
+    }
+}
