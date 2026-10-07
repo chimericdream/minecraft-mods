@@ -7,6 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntitySpawnRequest;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -82,7 +83,8 @@ final class MobPreviews {
         EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.getValue(identifier);
         Entity entity;
         try {
-            entity = type.create(level, EntitySpawnReason.LOAD);
+            entity = // ignoreChecks: otherwise the type refuses to exist when its spawn rules fail, e.g. monsters on Peaceful.
+            type.create(level, new EntitySpawnRequest(EntitySpawnReason.LOAD, true));
         } catch (Throwable t) {
             return new Failure("could not be created (" + t.getClass().getSimpleName() + ")");
         }

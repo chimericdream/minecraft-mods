@@ -31,8 +31,11 @@ public final class MobFit {
     }
 
     public static Result fit(Bounds bounds, float scale, int availableWidth) {
-        float w = Math.max(bounds.width(), 0.1f);
-        float h = Math.max(bounds.height(), 0.1f);
+        // Models stick out past the collision box (a villager's folded arms) and a turning mob sweeps a circle, so
+        // leave extra width or the box clips it mid-turn.
+        float footprint = bounds.width() * 1.4f;
+        float h = Math.max(Math.max(bounds.height(), footprint), 0.1f);
+        float w = Math.max(Math.max(footprint, h * 0.6f), 0.1f);
 
         float pixelsPerBlock = Math.min(MAX_INNER_WIDTH / w, MAX_INNER_HEIGHT / h) * scale;
 
