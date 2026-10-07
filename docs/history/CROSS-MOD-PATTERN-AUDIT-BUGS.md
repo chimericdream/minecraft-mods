@@ -1,9 +1,14 @@
 # Cross-mod pattern audit — bugs & discrepancies (2026-09-08)
 
+> **Archived 2026-10-07.** Open findings from this audit are now tracked as GitHub Issues (#114-#127,
+> labels `tech-debt` / `bug` / `meta`). Resolved: YACL config consolidation (2026-09-17), the
+> better-portal-linking NeoForge config screen (A2), and the `minecraft_compat` drift in the four
+> scaffolds (A4). This file is kept as a reference for what was already consistent and why.
+
 Companion to `docs/CROSS-MOD-PATTERN-AUDIT.md`. Everything here was found incidentally while cataloging
 style/pattern differences across the monorepo (see that doc for scope/method) — these are concrete,
 independently-actionable issues rather than style preferences. Grouped by how confident the finding is,
-most-actionable first. **Not committed** — working document, delete or commit deliberately once triaged.
+most-actionable first. 
 
 ---
 

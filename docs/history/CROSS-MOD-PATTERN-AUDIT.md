@@ -1,12 +1,15 @@
 # Cross-mod pattern audit (2026-09-08)
 
+> **Archived 2026-10-07.** Open findings from this audit are now tracked as GitHub Issues (#114-#127,
+> labels `tech-debt` / `bug` / `meta`). Resolved: YACL config consolidation (2026-09-17), the
+> better-portal-linking NeoForge config screen (A2), and the `minecraft_compat` drift in the four
+> scaffolds (A4). This file is kept as a reference for what was already consistent and why.
+
 **Purpose**: a catalog of places where the same kind of thing — a mixin, a datagen provider, a config
 screen, a raycast, a renderer, a test — is implemented a different way in different mods (or even
 within the same mod), gathered as raw material for a standardization pass and for deciding what should
 move into `chimeric-lib`. This is not itself a plan or a set of recommendations to execute blindly —
 it's the "longer list to trim down" the audit was asked for.
-
-**Not committed** — this is a working document; delete or commit it deliberately once acted on.
 
 **Scope**: originally all 27 mods active per `settings.gradle`'s `projectList` at the time of this audit
 (archaeology-tweaks, artificial-heart, athenaeum, banner-tweaks, beacon-conduit-tweaks,

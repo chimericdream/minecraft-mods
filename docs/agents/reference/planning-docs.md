@@ -6,6 +6,9 @@
   testFixtures).
 - [docs/history/DEPENDENCY-PLAN.md](../../history/DEPENDENCY-PLAN.md) — how chimeric-lib came to be wired
   as an in-build project dependency (no publish loop). Finished; kept for the rationale.
+- [docs/history/CROSS-MOD-PATTERN-AUDIT.md](../../history/CROSS-MOD-PATTERN-AUDIT.md) (+ `-BUGS`) — the
+  2026-09 audit of how mixins, datagen, rendering, tests, and registration differ across mods; open
+  findings are GitHub Issues labeled `tech-debt`. Useful as a record of what was already consistent.
 - [docs/MC-26.2-NOTES.md](../../MC-26.2-NOTES.md) — MC 26.2 port gotchas: datagen component binding,
   API renames, reading decompiled vanilla source, the shutdown-watchdog false crash, and
   build/datagen/GameTest tasks that hang after finishing.
