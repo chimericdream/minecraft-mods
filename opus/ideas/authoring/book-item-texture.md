@@ -1,7 +1,7 @@
 # Book item texture
 
 > Source: user request, 2026-10-07 · Effort **L** · Value ★★
-> Status: **Ready**
+> Status: **Implemented**
 
 ## Description
 

@@ -128,6 +128,8 @@ public final class ValidateBook {
             return 2;
         }
 
+        checkItemLook(dir, meta, diagnostics);
+
         Book book = BookLoader.load(bookId(dir), BookSource.layered(primary, fallback), meta, diagnostics);
 
         diagnostics.all().forEach(d -> out.println(d));
@@ -137,6 +139,46 @@ public final class ValidateBook {
             book.id(), chapters, pages, book.tags().size(), diagnostics.errorCount(), diagnostics.warningCount());
 
         return diagnostics.hasErrors() ? 1 : 0;
+    }
+
+    /**
+     * Warns when {@code texture} or {@code model} in book.yml points at nothing. The files can only be located when the
+     * book sits at {@code .../assets/<ns>/opus-books/<name>}; any other layout is skipped.
+     */
+    static void checkItemLook(Path dir, BookMeta meta, Diagnostics diagnostics) {
+        Path abs = dir.toAbsolutePath().normalize();
+        Path books = abs.getParent();
+        Path assets = books == null || books.getParent() == null ? null : books.getParent().getParent();
+        boolean inPack = books != null && books.getFileName() != null && books.getFileName().toString().equals("opus-books")
+            && assets != null && assets.getFileName() != null && assets.getFileName().toString().equals("assets");
+
+        String model = meta.model();
+        if (model != null) {
+            String[] id = splitId(model);
+            if (id == null || (inPack && !Files.exists(assets.resolve(id[0]).resolve("models").resolve(id[1] + ".json")))) {
+                diagnostics.warn(BookMeta.FILE_NAME, 0, "model '" + model + "' was not found (expected models/<path>.json); the default book look is used");
+            }
+        }
+
+        String texture = meta.texture();
+        if (texture != null) {
+            String[] id = splitId(texture);
+            if (id == null || !id[1].startsWith("item/")) {
+                diagnostics.warn(BookMeta.FILE_NAME, 0, "texture '" + texture + "' must be an id under textures/item/, like ns:item/name; the default book look is used");
+            } else if (inPack && !Files.exists(assets.resolve(id[0]).resolve("textures").resolve(id[1] + ".png"))) {
+                diagnostics.warn(BookMeta.FILE_NAME, 0, "texture '" + texture + "' was not found (expected textures/<path>.png); the default book look is used");
+            }
+        }
+    }
+
+    /** {@code ns:path} (namespace optional, defaulting to minecraft) as {@code [ns, path]}; null when malformed. */
+    private static String[] splitId(String raw) {
+        String s = raw.trim();
+        int colon = s.indexOf(':');
+        String ns = colon < 0 ? "minecraft" : s.substring(0, colon);
+        String path = colon < 0 ? s : s.substring(colon + 1);
+
+        return ns.isEmpty() || path.isEmpty() || path.contains("..") ? null : new String[]{ns, path};
     }
 
     /** {@code .../assets/<ns>/opus-books/<name>} becomes {@code ns:name}; anything else is {@code local:<name>}. */

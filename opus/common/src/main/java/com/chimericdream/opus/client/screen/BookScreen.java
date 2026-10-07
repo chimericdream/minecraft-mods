@@ -2,6 +2,8 @@ package com.chimericdream.opus.client.screen;
 
 import com.chimericdream.opus.client.OpusClient;
 import com.mojang.blaze3d.platform.InputConstants;
+import com.chimericdream.opus.component.BookIdComponent;
+import com.chimericdream.opus.component.OpusComponentTypes;
 import com.chimericdream.opus.core.book.Book;
 import com.chimericdream.opus.core.book.BookNode;
 import com.chimericdream.opus.core.book.IconRef;
@@ -12,6 +14,7 @@ import com.chimericdream.opus.core.layout.Layout;
 import com.chimericdream.opus.core.layout.LayoutConfig;
 import com.chimericdream.opus.core.layout.LayoutEngine;
 import com.chimericdream.opus.core.layout.WidgetSizer;
+import com.chimericdream.opus.item.OpusItems;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -20,6 +23,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayDeque;
@@ -402,6 +406,13 @@ public class BookScreen extends Screen {
             IconRef icon = node.icon();
             if (icon != null && icon.kind() == IconRef.Kind.ITEM) {
                 g.item(ItemLookup.stack(icon.id(), 1), x, y + 1);
+                x += 18;
+            }
+            else if (icon == null && node == book.root()) {
+                // No explicit icon: show the book's own item, which carries its texture/model from book.yml.
+                ItemStack stack = new ItemStack(OpusItems.BOOK.get());
+                stack.set(OpusComponentTypes.BOOK_ID.get(), new BookIdComponent(book.id()));
+                g.item(stack, x, y + 1);
                 x += 18;
             }
             // TODO(icons): IconRef.Kind.TEXTURE - draw the texture with blit once a loader for it exists.

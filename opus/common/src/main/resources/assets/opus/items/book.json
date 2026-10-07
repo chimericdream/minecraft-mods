@@ -1,6 +1,5 @@
 {
     "model": {
-        "type": "minecraft:model",
-        "model": "opus:item/book"
+        "type": "opus:book"
     }
 }

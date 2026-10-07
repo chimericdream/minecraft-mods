@@ -16,7 +16,7 @@ public record BookMeta(String title, String icon, String description, String def
     public static final String FILE_NAME = "book.yml";
     public static final String DEFAULT_LANGUAGE = "en_us";
 
-    private static final Set<String> KNOWN_KEYS = Set.of("title", "icon", "description", "default_language");
+    private static final Set<String> KNOWN_KEYS = Set.of("title", "icon", "description", "default_language", "texture", "model");
 
     public static BookMeta empty(String fallbackTitle) {
         return new BookMeta(fallbackTitle, null, null, DEFAULT_LANGUAGE, new LinkedHashMap<>());
@@ -45,6 +45,16 @@ public record BookMeta(String title, String icon, String description, String def
             str(data.get("default_language"), DEFAULT_LANGUAGE),
             data
         );
+    }
+
+    /** Optional item texture id (under {@code textures/item/}) for this book's item. */
+    public String texture() {
+        return str(raw.get("texture"), null);
+    }
+
+    /** Optional item model file id for this book's item; wins over {@link #texture()}. */
+    public String model() {
+        return str(raw.get("model"), null);
     }
 
     private static String str(Object value, String fallback) {

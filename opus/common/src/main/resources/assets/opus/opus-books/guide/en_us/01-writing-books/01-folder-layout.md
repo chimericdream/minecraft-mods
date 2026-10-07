@@ -80,4 +80,19 @@ description: Everything about my machines.
 default_language: en_us
 `````
 
+### Giving the book item its own look
+
+Every book is the same `opus:book` item, so by default they all look alike. Two optional keys change that:
+
+`````yaml
+texture: yourpack:item/field_guide
+model: yourpack:item/field_guide
+`````
+
+- `texture` is a PNG at `assets/yourpack/textures/item/field_guide.png`. The book is drawn as a flat item with it.
+- `model` is a model file at `assets/yourpack/models/item/field_guide.json`, for when you want more control. If both are set, `model` wins.
+- If the file can't be found, the book keeps the normal icon. Run the validator to catch a typo.
+
+It applies to every copy of the book, however it was obtained, and shows as the book's icon in its contents list unless you set `icon` yourself.
+
 Keys other than these produce a warning when the book loads, so typos are caught.

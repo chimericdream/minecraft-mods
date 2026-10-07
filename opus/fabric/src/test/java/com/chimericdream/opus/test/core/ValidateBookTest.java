@@ -114,4 +114,30 @@ class ValidateBookTest {
         assertEquals(0, run("--validate", dir.toString()).status());
         assertEquals(0, run("validate", dir.toString()).status());
     }
+
+    @Test
+    void itemLookKeysWarnWhenTheirFilesAreMissing(@TempDir Path dir) throws IOException {
+        Path book = dir.resolve("assets/pk/opus-books/b");
+        write(book, "book.yml", "title: B\ntexture: pk:item/gone\nmodel: pk:item/also_gone\n");
+        write(book, "en_us/index.md", "# Home\n");
+
+        Result r = run(book.toString());
+
+        assertEquals(0, r.status(), r.out());
+        assertTrue(r.out().contains("model 'pk:item/also_gone' was not found"), r.out());
+        assertTrue(r.out().contains("texture 'pk:item/gone' was not found"), r.out());
+    }
+
+    @Test
+    void itemLookKeysPassWhenFilesExistAndTextureMustLiveUnderItem(@TempDir Path dir) throws IOException {
+        Path book = dir.resolve("assets/pk/opus-books/b");
+        write(book, "book.yml", "title: B\ntexture: pk:item/cover\n");
+        write(book, "en_us/index.md", "# Home\n");
+        write(dir, "assets/pk/textures/item/cover.png", "x");
+
+        assertTrue(run(book.toString()).out().contains("0 errors, 0 warnings"));
+
+        write(book, "book.yml", "title: B\ntexture: pk:block/cover\n");
+        assertTrue(run(book.toString()).out().contains("must be an id under textures/item/"));
+    }
 }
