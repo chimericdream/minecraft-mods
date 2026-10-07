@@ -19,7 +19,7 @@ public final class MobFit {
     public static final int PAD = 4;
 
     public static final int REFERENCE_GUI_SCALE = 4;
-    public static final int REFERENCE_PIXELS_PER_BLOCK = 57;
+    public static final int REFERENCE_PIXELS_PER_BLOCK = 64;
 
     private static final int MAX_BOX_HEIGHT = 512;
     private static final Bounds VILLAGER = new Bounds(0.6f, 1.95f);
