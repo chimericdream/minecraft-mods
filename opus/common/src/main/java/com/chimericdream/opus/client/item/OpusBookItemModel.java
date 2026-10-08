@@ -116,8 +116,13 @@ public final class OpusBookItemModel implements ItemModel {
                 .addLast(new TextureSlots.Data.Builder().addTexture("layer0", new Material(texture)).addReference("particle", "layer0").build())
                 .resolve(texture::toString);
 
-            QuadCollection quads = generated.bakeTopGeometry(slots, baker, BlockModelRotation.IDENTITY);
-            ModelRenderProperties properties = ModelRenderProperties.fromResolvedModel(baker, generated, slots);
+            // ResolvedModel.bakeTopGeometry (IDENTITY) and resolveParticleMaterial memoize on the shared item/generated
+            // model and ignore the slots passed later, so every book after the first would reuse the first book's sprite.
+            QuadCollection quads = generated.getTopGeometry().bake(slots, baker, BlockModelRotation.IDENTITY, generated);
+            ModelRenderProperties properties = new ModelRenderProperties(
+                generated.getTopGuiLight().lightLikeBlock(),
+                ResolvedModel.resolveParticleMaterial(slots, baker, generated),
+                generated.getTopTransforms());
 
             return new FlatItemModel(quads, properties, transformation);
         }
