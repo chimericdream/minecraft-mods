@@ -28,7 +28,7 @@ whole list once on Fabric and once on NeoForge.
 
 Setup: new creative world, `/give @s opus:book`.
 
-1. **Opens** — right-click the Opus Book: the guide opens. F7 opens it too. `/give @s opus:book[opus:book_id="opus:nope"]` shows a "not found" overlay, not a crash.
+1. **Opens** — right-click the Opus Book: the guide opens. F7 opens it too. `/give @s opus:book[opus:book_id="opus:nope"]` shows a "not found" screen, not a crash. Its **Open troubleshooting** button opens the guide on "A book says 'not found'", and **Close** returns to where you were.
 2. **Navigation** — click chapters and pages in the sidebar; the **Back** button (and Backspace) returns to the previous page and is greyed out when there is nothing to go back to; the `<` / `>` buttons step through pages; PageUp/PageDown/Home/End and the mouse wheel scroll; the sidebar scrolls separately.
 3. **Search** — type `recipe`: the sidebar lists matching pages, best matches first. Both the **x** button and a right-click inside the box clear it and restore the contents; the **x** is greyed out when the box is empty.
 3a. **Breadcrumbs** — the path at the top stays in the muted text colour. Every part except the current page is clickable and underlines on hover; clicking one jumps there and adds to the back history. On a narrow window the front of a long path is shortened to `...`.

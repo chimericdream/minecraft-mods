@@ -3,12 +3,12 @@ package com.chimericdream.opus.client;
 import com.chimericdream.opus.OpusMod;
 import com.chimericdream.opus.client.book.BookRepository;
 import com.chimericdream.opus.client.book.OpusReloadListener;
+import com.chimericdream.opus.client.screen.BookMissingScreen;
 import com.chimericdream.opus.client.screen.BookScreen;
 import com.chimericdream.opus.core.book.Book;
 import com.chimericdream.opus.item.OpusBookItem;
 import dev.architectury.event.events.client.ClientTickEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 
 /**
  * Client entry point shared by both loaders (called from the Fabric client initializer and NeoForge's
@@ -18,6 +18,9 @@ import net.minecraft.network.chat.Component;
  * (the other mods register their tick handlers per loader instead).
  */
 public final class OpusClient {
+    /** The Opus Guide page that explains a "not found" book. */
+    private static final String TROUBLESHOOTING_PAGE = "troubleshooting/book-not-found";
+
     private OpusClient() {
     }
 
@@ -32,7 +35,7 @@ public final class OpusClient {
         });
     }
 
-    /** Opens {@code bookId} at its home page, or tells the player the book is missing. */
+    /** Opens {@code bookId} at its home page, or shows a screen saying the book is missing. */
     public static void openBook(String bookId) {
         openBook(bookId, null);
     }
@@ -43,10 +46,9 @@ public final class OpusClient {
         Book book = BookRepository.get(bookId);
 
         if (book == null) {
-            if (minecraft.player != null) {
-                minecraft.player.sendOverlayMessage(Component.translatable("opus.book.missing", bookId));
-            }
             OpusMod.LOGGER.warn("Tried to open unknown book '{}'", bookId);
+            boolean guideAvailable = BookRepository.get(OpusBookItem.DEFAULT_BOOK) != null;
+            minecraft.setScreenAndShow(new BookMissingScreen(minecraft.gui.screen(), bookId, guideAvailable ? OpusBookItem.DEFAULT_BOOK : null, TROUBLESHOOTING_PAGE));
             return;
         }
 

@@ -4,6 +4,8 @@
     "key.categories.opus": "Opus",
     "opus.command.give": "Gave you the book '%s'",
     "opus.book.missing": "Book '%s' was not found",
+    "opus.book.missing.help": "Open troubleshooting",
+    "opus.book.missing.close": "Close",
     "opus.book.back": "Back",
     "opus.book.search": "Search",
     "opus.recipe.shapeless": "(Shapeless)",

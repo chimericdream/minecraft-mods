@@ -16,9 +16,9 @@ The item is `opus:book`. Give players one with the `opus:book_id` component set 
 The component is an object with a `book_id` field, not a bare string. The same value works in loot tables, recipe
 results and functions. Players can also open the default guide from a key.
 
-The resource pack has to be enabled on the client. If the book isn't found, the item shows
-"Book '<id>' was not found": check that the pack is active in the resource pack menu and that the id matches the
-folder names.
+The resource pack has to be enabled on the client. If the book isn't found, you see
+"Book '<id>' was not found": see [A book says "not found"](../04-troubleshooting/01-book-not-found.md) for the
+causes and fixes.
 
 ## Translating
 

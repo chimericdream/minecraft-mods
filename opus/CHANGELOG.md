@@ -5,9 +5,11 @@
 - New `/opus give [<book>]` command that gives you a book, with no operator permission needed. Leave out the book to get the Opus Guide. Server owners can restrict it to operators (and change the default book) in `config/opus-guides.json`.
 - Books can have their own item look. Add `texture: yourpack:item/my_book` (a PNG under `textures/item/`) or `model: yourpack:item/my_book` (a model file) to `book.yml`, and that book's item uses it everywhere, including in the book's own contents list.
 - A book's item now shows the book's `title` as its name and its `description` in the tooltip, instead of just "Opus Book".
+- Opening a book that can't be found now shows a small screen with an "Open troubleshooting" button, instead of a brief message on the action bar.
 
 #### Documentation
 
+- The Opus Guide has a new Troubleshooting chapter. It explains what to check when a book says "not found" and what to do when `opus-guides.json` seems to be ignored.
 - The "For pack authors" page of the Opus Guide now names the book item (`opus:book`) and shows how to give a player a specific book with `/give`.
 
 ### 26.2 - 1.0.1

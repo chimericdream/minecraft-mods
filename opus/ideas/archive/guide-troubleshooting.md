@@ -1,7 +1,7 @@
 # Guide troubleshooting chapter
 
 > Source: inbox note, 2026-10-07, raised while refining [the give command](../archive/player-give-command.md) · Effort **M** · Value ★★
-> Status: **Ready**
+> Status: **Shipped** in 1.1.0
 
 ## Description
 
@@ -14,21 +14,21 @@ First version covers two symptom groups:
 
 Each entry is written as symptom, likely cause, fix, in the guide's plain tone. Non-technical wording where the reader isn't a developer, with the validator named as the first tool to reach for.
 
-- The "not found" overlay (`opus.book.missing`) gets a link that opens the chapter's "not found" page in the default guide. If the default guide itself is the missing book, there is nothing to open, so the link is left out.
+- Opening a missing book shows a small screen (replacing the old action-bar message, which cannot hold a link) with the "Book '<id>' was not found" message, an **Open troubleshooting** button that opens the chapter's "not found" page in the default guide, and a **Close** button that returns to the previous screen. If the default guide itself is the missing book, or is not installed, there is nothing to open, so the troubleshooting button is left out.
 
 **Out of scope for the first version:** player-facing troubleshooting, books that load but look wrong (missing item texture or model, broken links, widgets), and reload and cache problems. Any of these can become a later page in the same chapter.
 
-**Dependencies:** [Player-usable give command](../archive/player-give-command.md), shipped in 1.1.0, whose `opus-guides.json` behaviour one page documents. No chimeric-lib or loader-specific work: the overlay is common client code.
-**Verification:** Run the book validator on the guide (`0 errors, 0 warnings`), and open the chapter in game to check it renders and the links work. Check the overlay link by opening a missing book (`/give @s opus:book[opus:book_id={book_id:"opus:nope"}]`) and clicking it. Add a line to `TEST_PLAN.md` if the guide's pages are listed there.
+**Dependencies:** [Player-usable give command](../archive/player-give-command.md), shipped in 1.1.0, whose `opus-guides.json` behaviour one page documents. No chimeric-lib or loader-specific work: the screen is common client code.
+**Verification:** Run the book validator on the guide (`0 errors, 0 warnings`), and open the chapter in game to check it renders and the links work. Check the screen by opening a missing book (`/give @s opus:book[opus:book_id={book_id:"opus:nope"}]`): the button opens the chapter, and Close returns to the previous screen. Add a line to `TEST_PLAN.md` if the guide's pages are listed there.
 
 ## Decisions
 
 - 2026-10-08 — Troubleshooting is a new top-level chapter in the Opus Guide, not a section of "For pack authors" or an appendix.
 - 2026-10-08 — The audience is pack authors and server admins, not players.
 - 2026-10-08 — The first version covers "not found" books and `opus-guides.json` problems only.
-- 2026-10-08 — The "not found" overlay links to the troubleshooting chapter.
+- 2026-10-08 — The "not found" message links to the troubleshooting chapter. The old message was action-bar text, which cannot be clicked, so it is replaced by a small screen with an **Open troubleshooting** button (chosen over a clickable chat message, which would need a client command on both loaders).
 - 2026-10-08 — No pointer from the guide's front page; being a top-level item in the main nav is enough.
-- 2026-10-08 — Effort re-estimated from S to M: the overlay needs a clickable link that opens a page in another book, on top of the guide pages.
+- 2026-10-08 — Effort re-estimated from S to M: the new "not found" screen opens a page in another book, on top of the guide pages.
 
 ## Brainstorm variants
 
@@ -37,7 +37,7 @@ _None yet._
 ## Related
 
 - [Player-usable give command](../archive/player-give-command.md) — defines the `opus-guides.json` behaviour this chapter documents.
-- [Validate books in the build](build-time-validation.md) — the validator is the first fix to suggest for broken books.
+- [Validate books in the build](../authoring/build-time-validation.md) — the validator is the first fix to suggest for broken books.
 
 ## Open questions
 
