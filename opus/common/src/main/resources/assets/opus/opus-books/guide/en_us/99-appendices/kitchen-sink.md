@@ -261,7 +261,7 @@ A hopper ![Hopper](item:minecraft:hopper) and a chest ![Chest](item:minecraft:ch
 
 ## Recipes
 
-Each recipe includes the optional `recipe:` id, which is not used yet. See [recipe ids](../02-widgets/recipes.md#recipe-ids-planned).
+Each recipe includes the optional `recipe:` id, which is not used yet. See [recipe ids](../02-widgets/01-recipes.md#recipe-ids-planned).
 
 ### Crafting
 

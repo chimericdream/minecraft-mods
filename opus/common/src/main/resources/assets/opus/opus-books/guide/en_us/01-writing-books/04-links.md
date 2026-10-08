@@ -17,6 +17,11 @@ nowhere is reported when the book loads, so you find out before your players do.
 
 Hover a link to see where it goes: pages show their file name, items show their name.
 
+> [!TIP] Numeric prefixes are optional in links
+> A file named `02-frontmatter.md` can be linked as `02-frontmatter.md` or `frontmatter.md`; both reach the same
+> page. Opus accepts either, but other Markdown viewers (GitHub, your editor's preview) only follow links that
+> match the real file name. If your book is also read outside the game, include the prefix in your links.
+
 `````markdown
 * [The next page in this folder](02-frontmatter.md)
 * [A heading on another page](03-markdown.md#callouts)

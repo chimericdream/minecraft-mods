@@ -11,6 +11,8 @@
 
 - The Opus Guide has a new Troubleshooting chapter. It explains what to check when a book says "not found" and what to do when `opus-guides.json` seems to be ignored.
 - The "For pack authors" page of the Opus Guide now names the book item (`opus:book`) and shows how to give a player a specific book with `/give`.
+- The Links page of the Opus Guide now explains that the number at the start of a file name is optional in links, and that other Markdown viewers need it.
+- Fixed a few links in the Opus Guide that stopped working when the guide was read outside the game, such as on GitHub.
 
 ### 26.2 - 1.0.1
 
