@@ -1,7 +1,7 @@
 # Book item texture
 
 > Source: user request, 2026-10-07 · Effort **L** · Value ★★
-> Status: **Implemented**
+> Status: **Shipped** in 1.1.0
 
 ## Description
 
@@ -18,7 +18,7 @@ texture: pannotia:item/guide_book
 - The look is resolved from the stack's `opus:book_id`, so a book given by `/give`, a loot table or a recipe looks right with no extra setup.
 - The same look is the book's icon everywhere Opus shows it, including the reader's own UI, by drawing the book's item stack. An `icon` set explicitly in `book.yml` still wins in the reader.
 
-**Out of scope:** animated textures, and changing the book's in-hand pose. Screen and panel styling belongs to [book skins](book-skins.md).
+**Out of scope:** animated textures, and changing the book's in-hand pose. Screen and panel styling belongs to [book skins](../authoring/book-skins.md).
 
 **Dependencies:** `BookMeta` (add `texture` and `model` to `KNOWN_KEYS`), a custom item model type registered on both loaders (see Decisions), a small scanner for the two keys that doesn't depend on `BookRepository` (see Decisions), and the validator's file checks.
 **Verification:** JUnit for parsing and the validator warning on a missing texture or model; a visual smoke test with books using `texture`, `model` and neither.
@@ -41,9 +41,9 @@ _None yet._
 
 ## Related
 
-- [Book skins and themes](book-skins.md) — `texture` here is the item's icon only; skins restyle the reader. The `book.yml` key naming should be chosen together.
+- [Book skins and themes](../authoring/book-skins.md) — `texture` here is the item's icon only; skins restyle the reader. The `book.yml` key naming should be chosen together.
 - [Images and texture icons](../reader/images-and-textures.md) — shares the "texture id in the pack" resolution and the missing-texture handling.
-- [Player-usable give command](../integration/player-give-command.md) — gives players the book that carries this texture.
+- [Player-usable give command](player-give-command.md) — gives players the book that carries this texture.
 
 ## Open questions
 

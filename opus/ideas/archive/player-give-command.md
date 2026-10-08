@@ -1,7 +1,7 @@
 # Player-usable give command
 
 > Source: user request, 2026-10-07 · Effort **M** · Value ★★
-> Status: **Building** (implemented in `ea63f3859` with Fabric GameTests; dedicated-server manual check and a NeoForge test run still to do)
+> Status: **Shipped** in 1.1.0
 
 ## Description
 
@@ -39,8 +39,8 @@ _None yet._
 
 ## Related
 
-- [Open-in-guide from items](open-in-guide-hooks.md) — also a way into the books, from the other direction.
-- [Book item texture](../authoring/book-item-texture.md) — the book a player receives can look different per book.
+- [Open-in-guide from items](../integration/open-in-guide-hooks.md) — also a way into the books, from the other direction.
+- [Book item texture](book-item-texture.md) — the book a player receives can look different per book.
 - [Look recipes up by id](../authoring/server-recipe-lookup.md) — a server-to-client sync that could be reused if book ids ever need to be known server-side.
 
 ## Open questions

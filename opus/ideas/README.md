@@ -17,9 +17,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Look recipes up by id](authoring/server-recipe-lookup.md) — `recipe: minecraft:hopper` resolves to the real recipe through a small server sync; inline recipes stay the fallback.
 - [Patchouli to Opus converter](authoring/patchouli-migration-tool.md) — Turn a Patchouli book into Markdown so hopper-xtreme and minekea can move over without rewriting their docs.
 - [Validate books in the build](authoring/build-time-validation.md) — Run the book validator from Gradle and CI so broken links and bad widgets fail the build.
+- [Guide troubleshooting chapter](authoring/guide-troubleshooting.md) — A Troubleshooting chapter in the Opus Guide for pack authors and admins: "not found" books and `opus-guides.json` problems.
 - [Tabs, accordions and other containers](authoring/container-directives-and-tabs.md) — `:::tabs` / `:::details` containers for pages that outgrow callouts.
 - [Book skins and themes](authoring/book-skins.md) — Colours and textures chosen per book from `book.yml`, restylable by resource packs.
-- [Book item texture](authoring/book-item-texture.md) — Optional `texture` and `model` keys in `book.yml` give each book its own item look.
 
 ### Reader
 
@@ -36,12 +36,13 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 - [Recipe viewer integration (EMI/JEI/REI)](integration/recipe-viewer-integration.md) — Open recipe widgets in whichever recipe viewer is installed.
 - [Open-in-guide from items](integration/open-in-guide-hooks.md) — A tooltip line and key that open the book page documenting the hovered item.
-- [Player-usable give command](integration/player-give-command.md) — `/opus give [<book>]` for players without op, with a config option to make it ops-only.
 
 ## Inbox
 
-- Troubleshooting section in the built-in Opus Guide (e.g. a malformed default id in `opus-guides.json`, books that show "not found"). Raised while refining [the give command](integration/player-give-command.md).
+_Empty._
 
 ## Archive
 
-- [Live mob previews](archive/live-mob-previews.md) — Shipped in 1.0.0-beta.0: the `entity` widget draws a live, rotating mob, all at one shared scale.
+- [Player-usable give command](archive/player-give-command.md) — Shipped in 1.1.0: `/opus give [<book>]` for players without op, with an `opus-guides.json` option to make it ops-only.
+- [Book item texture](archive/book-item-texture.md) — Shipped in 1.1.0: optional `texture` and `model` keys in `book.yml` give each book its own item look.
+- [Live mob previews](archive/live-mob-previews.md) — Shipped in 1.0.0: the `entity` widget draws a live, rotating mob, all at one shared scale.
