@@ -1,7 +1,7 @@
 # Live mob previews
 
 > Source: initial design discussion, 2026-10-06 (split from "Live mob and multiblock previews") · Effort **M** · Value ★★★
-> Status: **Shipped** in 1.0.0-beta.0
+> Status: **Shipped** in 1.0.0
 
 ## Description
 
