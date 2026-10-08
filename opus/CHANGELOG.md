@@ -4,6 +4,7 @@
 
 - New `/opus give [<book>]` command that gives you a book, with no operator permission needed. Leave out the book to get the Opus Guide. Server owners can restrict it to operators (and change the default book) in `config/opus-guides.json`.
 - Books can have their own item look. Add `texture: yourpack:item/my_book` (a PNG under `textures/item/`) or `model: yourpack:item/my_book` (a model file) to `book.yml`, and that book's item uses it everywhere, including in the book's own contents list.
+- A book's item now shows the book's `title` as its name and its `description` in the tooltip, instead of just "Opus Book".
 
 #### Documentation
 

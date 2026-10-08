@@ -2,8 +2,12 @@ package com.chimericdream.opus.item;
 
 import com.chimericdream.opus.ModInfo;
 import com.chimericdream.opus.client.OpusClient;
+import com.chimericdream.opus.client.book.BookRepository;
 import com.chimericdream.opus.component.BookIdComponent;
 import com.chimericdream.opus.component.OpusComponentTypes;
+import com.chimericdream.opus.core.book.Book;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,8 +15,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+
+import java.util.function.Consumer;
 
 import static com.chimericdream.opus.OpusMod.REGISTRY_HELPER;
 
@@ -54,5 +63,42 @@ public class OpusBookItem extends Item {
         }
 
         return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
+    }
+
+    @Override
+    public @NonNull Component getName(final @NonNull ItemStack itemStack) {
+        Book book = lookup(itemStack);
+        if (book == null || book.meta().title() == null || book.meta().title().isBlank()) {
+            return super.getName(itemStack);
+        }
+
+        return Component.literal(book.meta().title());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void appendHoverText(
+        final @NonNull ItemStack itemStack,
+        final @NonNull TooltipContext context,
+        final @NonNull TooltipDisplay display,
+        final @NonNull Consumer<Component> builder,
+        final @NonNull TooltipFlag flag
+    ) {
+        Book book = lookup(itemStack);
+        if (book != null && book.meta().description() != null && !book.meta().description().isBlank()) {
+            builder.accept(Component.literal(book.meta().description()).withStyle(ChatFormatting.GRAY));
+        }
+    }
+
+    /**
+     * Book data lives in client resource packs, so this is null on a dedicated server (and before the first reload).
+     */
+    private static Book lookup(ItemStack stack) {
+        try {
+            BookIdComponent id = stack.getOrDefault(OpusComponentTypes.BOOK_ID.get(), new BookIdComponent(DEFAULT_BOOK));
+            return BookRepository.get(id.bookId());
+        } catch (Exception | LinkageError e) {
+            return null;
+        }
     }
 }
