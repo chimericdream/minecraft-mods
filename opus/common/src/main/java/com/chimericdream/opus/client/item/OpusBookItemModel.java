@@ -33,7 +33,8 @@ import java.util.Optional;
 /**
  * Item model type {@code opus:book}: picks a model per stack from its {@code opus:book_id}, using the
  * {@code texture}/{@code model} keys of that book's {@code book.yml}. Stacks of books without either key, or whose
- * files are missing, get the default {@code opus:item/book} look.
+ * files are missing, get the default {@code opus:item/book} look; stacks whose book id matches no installed book
+ * get the {@code opus:item/book_invalid} look.
  */
 public final class OpusBookItemModel implements ItemModel {
     public static final Identifier ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "book");
@@ -41,11 +42,15 @@ public final class OpusBookItemModel implements ItemModel {
     private static final Identifier DEFAULT_MODEL = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "item/book");
     private static final Identifier GENERATED_MODEL = Identifier.withDefaultNamespace("item/generated");
 
+    private static final Identifier INVALID_TEXTURE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "item/book_invalid");
+
     private final ItemModel fallback;
+    private final ItemModel invalid;
     private final Map<String, ItemModel> perBook;
 
-    private OpusBookItemModel(ItemModel fallback, Map<String, ItemModel> perBook) {
+    private OpusBookItemModel(ItemModel fallback, ItemModel invalid, Map<String, ItemModel> perBook) {
         this.fallback = fallback;
+        this.invalid = invalid;
         this.perBook = perBook;
     }
 
@@ -53,7 +58,7 @@ public final class OpusBookItemModel implements ItemModel {
     public void update(ItemStackRenderState output, ItemStack item, ItemModelResolver resolver, ItemDisplayContext displayContext,
                        @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
         BookIdComponent book = item.get(OpusComponentTypes.BOOK_ID.get());
-        ItemModel model = book == null ? fallback : perBook.getOrDefault(book.bookId(), fallback);
+        ItemModel model = book == null ? fallback : perBook.getOrDefault(book.bookId(), invalid);
 
         output.appendModelIdentityElement(this);
         model.update(output, item, resolver, displayContext, level, owner, seed);
@@ -99,9 +104,9 @@ public final class OpusBookItemModel implements ItemModel {
             Map<String, ItemModel> perBook = new Object2ObjectOpenHashMap<>();
             looks().forEach((bookId, look) -> perBook.put(bookId.toString(), look.model() != null
                 ? bakeModel(look.model(), context, transformation)
-                : bakeTexture(look.texture(), context, transformation)));
+                : look.texture() != null ? bakeTexture(look.texture(), context, transformation) : fallback));
 
-            return new OpusBookItemModel(fallback, perBook);
+            return new OpusBookItemModel(fallback, bakeTexture(INVALID_TEXTURE, context, transformation), perBook);
         }
 
         private static ItemModel bakeModel(Identifier model, ItemModel.BakingContext context, Matrix4fc transformation) {

@@ -35,10 +35,9 @@ public final class BookLookScanner {
             Identifier bookId = Identifier.fromNamespaceAndPath(id.getNamespace(), parts[1]);
             BookMeta meta = BookMeta.parse(readText(resource), parts[1], new Diagnostics());
 
+            // A book with no custom look still gets an entry, so the item model can tell it apart from an unknown book id.
             BookLook look = resolve(manager, meta.texture(), meta.model());
-            if (look != null) {
-                looks.put(bookId, look);
-            }
+            looks.put(bookId, look != null ? look : BookLook.DEFAULT);
         });
 
         return looks;

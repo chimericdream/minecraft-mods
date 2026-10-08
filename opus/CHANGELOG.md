@@ -6,6 +6,7 @@
 - Books can have their own item look. Add `texture: yourpack:item/my_book` (a PNG under `textures/item/`) or `model: yourpack:item/my_book` (a model file) to `book.yml`, and that book's item uses it everywhere, including in the book's own contents list.
 - A book's item now shows the book's `title` as its name and its `description` in the tooltip, instead of just "Opus Book".
 - Opening a book that can't be found now shows a small screen with an "Open troubleshooting" button, instead of a brief message on the action bar.
+- A book item whose book can't be found now has its own icon (a grey book with a yellow !) instead of looking like a plain book.
 
 #### Documentation
 
