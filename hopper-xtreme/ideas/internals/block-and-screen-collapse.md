@@ -1,6 +1,6 @@
 # Block and screen collapse (refactor 3.1, step 4)
 
-> Source: step 4 of [`REFACTOR-3.1-PLAN.md`](../../REFACTOR-3.1-PLAN.md), code-review plan item 3.1 · Effort **M** · Status: **Exploring**
+> Source: step 4 of code-review plan item 3.1 (the block-entity extraction) · Effort **M** · Status: **Exploring**
 
 ## Description
 
@@ -82,7 +82,7 @@ _None. This came from a build plan, not a brainstorm._
 
 ## Related
 
-- Code-review plan item 3.1 (block-entity extraction, already applied): [`REFACTOR-3.1-PLAN.md`](../../REFACTOR-3.1-PLAN.md).
+- Code-review plan item 3.1's block-entity extraction (steps 1–3) is already applied; see `AbstractXtremeHopperBlockEntity`.
 
 ## Open questions
 

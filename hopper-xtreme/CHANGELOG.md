@@ -88,8 +88,7 @@
 * Updated to Minecraft 26.1.2 / Architectury 20.0.7, built against official Mojang mappings.
 * The six block-entity classes — roughly 3,700 lines of ~80% identical copies of a vanilla-hopper fork —
   were collapsed into a shared base-class hierarchy, a net reduction of about 3,250 lines. Behavior is
-  unchanged; the hupper and multi-hupper `UP` pull geometry is preserved verbatim. The deferred
-  block/screen-handler collapse is documented in `REFACTOR-3.1-PLAN.md`.
+  unchanged; the hupper and multi-hupper `UP` pull geometry is preserved verbatim.
 * The Wrench is now a thin subclass of ChimericLib's `AbstractWrenchItem`. Its recipe, tooltip and
   behavior are unchanged.
 * Simplified `HopperItemFilterItem.use` and `FilterSlot.mayPlace`, which carried redundant nested

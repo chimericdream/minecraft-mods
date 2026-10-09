@@ -47,7 +47,7 @@ Each mod keeps all of its feature ideas in its own `ideas/` folder:
   the issue.
 - **Don't keep ideas anywhere else**: not in a mod's `README.md` or `CHANGELOG.md`, not in new root-level
   lists, and not in a `POTENTIAL_FEATURES.md` (retired; see [Legacy backlogs](#legacy-backlogs)).
-- **Build plans are not ideas.** Documents like `hopper-xtreme/REFACTOR-3.1-PLAN.md` describe *how* to
+- **Build plans are not ideas.** Refactor or migration plans describe *how* to
   build something already decided. They belong to implementation and live wherever that work does.
 
 ## The mod's identity statement
