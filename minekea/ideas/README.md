@@ -9,11 +9,15 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Boundary with But What About...?
 
-Blocks that finish a vanilla block family (stairs, slabs, walls, and cracked, chiseled, or mossy
-variants of vanilla blocks) belong in [But What About...?](../../but-what-about/ideas/README.md), and
-some of Minekea's existing ones will likely move there. Minekea keeps furniture and its own original
-blocks. See that mod's identity section for the migration plan. Moving blocks adds a required
-dependency on But What About... to Minekea.
+Blocks that finish a vanilla block family (stairs, slabs, walls, and the cracked, chiseled, or mossy
+variants vanilla already has for sibling blocks) belong in
+[But What About...?](../../but-what-about/ideas/README.md), and some of Minekea's existing ones will
+likely move there. Extended sets (new kinds of moss, mossy versions of stones that never had one) go
+to its addon, Cobblicious. Minekea keeps furniture and its own original blocks, and is being pared
+down over the next few major versions.
+
+See But What About...?'s identity section for the migration plan. Moving blocks adds a required
+dependency on the destination mod to Minekea.
 
 ## Active ideas
 

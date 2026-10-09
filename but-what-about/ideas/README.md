@@ -15,6 +15,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 Minekea overlaps with this mod. Anything that finishes a vanilla block family belongs here, so some
 of Minekea's blocks will move over time. Minekea keeps furniture and its own original blocks.
+Blocks that extend vanilla's sets without completing them (new kinds of moss, mossy versions of stones
+that never had one) belong in the addon, Cobblicious, which requires this mod. Its Minekea migrations
+use the same plan below.
 
 Moving a block between mods is a breaking change, so it follows
 [`docs/BLOCK-MIGRATION.md`](../../docs/BLOCK-MIGRATION.md):
