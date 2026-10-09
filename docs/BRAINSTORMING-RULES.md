@@ -48,3 +48,12 @@ reason.
   or needs precise timing or input needs an alternative or a setting to reduce it.
   *Why:* a mod should be playable by everyone who installs it, and it is far cheaper to design for
   this up front than to patch it in later. *(Added 2026-10-02)*
+- **A4. Always consider whether a feature or value should be configurable.** For every feature,
+  number, and toggle an idea introduces, say whether it should be a config option. Fundamental values
+  that define what the thing *is* (e.g. the tick cooldown of Hopper X-Treme's tiered hoppers) can stay
+  fixed. Values that are a matter of taste or play style (e.g. the settings in Villager Tweaks) should
+  be configurable. When an idea leaves something fixed, note why. A2 still applies on top: balance-affecting
+  mechanics must be configurable no matter what.
+  *Why:* players, servers, and modpacks differ, and deciding up front what is tunable is cheaper than
+  adding options after complaints. Not everything should be a knob, though. Too many options make a mod
+  harder to understand and test. *(Added 2026-10-09)*
