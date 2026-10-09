@@ -14,7 +14,8 @@ question; see the idea file's open questions after promotion.
 
 ## Decisions
 
-_None yet._
+- 2026-10-09 — Trigger is the click position: an empty-hand right-click on the left half of the dummy's
+  face rotates counter-clockwise, and the right half keeps today's clockwise rotation.
 
 ## Brainstorm variants
 
@@ -25,8 +26,10 @@ From [`brainstorms/2026-08-24-legacy/potential-features.md`](../brainstorms/2026
 
 ## Related
 
-- [Mob equipment](mob-equipment.md) — also needs a new interaction, so the gestures should be chosen together
+- [Mob equipment](mob-equipment.md) — its gestures were chosen alongside this one; the clear-binding change frees sneak + empty-hand
 
 ## Open questions
 
-- Which gesture triggers counter-clockwise rotation?
+- Left and right are as the player sees the face. Does the middle of the face need a dead zone, or is a
+  clean 50/50 split fine? (Can be decided during implementation.)
+- The README and the empty-hand message should teach this, since the gesture is not self-evident.
