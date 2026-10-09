@@ -9,7 +9,11 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
+### Internals
+
+- [Block and screen collapse](internals/block-and-screen-collapse.md) — Finish the hopper de-duplication: shared block-entity plumbing for the block classes, and shared filtered screen handlers/screens.
+
+The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
 waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
 
 ## Inbox
