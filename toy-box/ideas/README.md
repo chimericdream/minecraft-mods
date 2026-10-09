@@ -5,9 +5,10 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its `mod_description`:
->
-> Creeper-in-a-box, talking villager dolls, and other such toys and decorative items
+**Toys that look good on a shelf and do something when you play with them.** Creeper-in-a-box, talking villager
+dolls, and other playthings and collectibles, each with a small interaction or sound. They're mostly items and
+blocks, and the occasional toy mob is possible. Toys are meant to charm rather than to power up, so they don't
+feed into progression. Vehicles and minigames are out.
 
 ## Active ideas
 
