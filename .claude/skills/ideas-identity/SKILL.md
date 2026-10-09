@@ -73,9 +73,6 @@ On approval:
    issue labeled `ideas` and `enhancement`, as `docs/FEATURE-WORK.md` says, with why it exists, the
    scope, and open questions. Confirm before filing. The issue title style is
    `New mod idea: <Name>`.
-4. **Migration-era tracker (delete this step when done).** While the checklist issue "Approve each mod's
-   ideas identity statement" is open, tick that mod's entry in its body (edit the line with the new
-   statement, via `gh issue edit --body-file`). When every entry is ticked, remove this step.
 
 Don't push unless asked.
 

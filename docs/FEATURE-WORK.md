@@ -170,9 +170,7 @@ brainstorms) and in a root `ideas.md` (the user's own older notes). Both were re
   `<mod>/ideas/brainstorms/<date>-legacy/` (as `potential-features.md` and `ideas-md.md`), dated by the
   backlog's last commit. Nothing in them has been voted on. When work on a mod starts, run
   `ideas-shortlist` against its legacy folder, the same as a normal session.
-- Each mod's `ideas/README.md` has a **draft** identity statement, lifted from its backlog or its
-  `mod_description`, waiting for the user's approval. Three mods (blacklight, cobblicious, playgrounds)
-  don't have one yet.
+- Every mod's `ideas/README.md` now has an approved identity statement.
 - **chimeric-lib is the exception.** Its backlog was already treated as a working list, especially the
   GameTest helper backlog, so its items became idea files straight away. The docs, test plans, and
   source comments that referenced the backlog now point at those files.
