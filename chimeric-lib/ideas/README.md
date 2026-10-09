@@ -7,10 +7,11 @@ because other docs and test plans already treat that backlog as a working list.
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
-> ChimericLib is developer-facing plumbing: shared systems that multiple mods in the suite would otherwise
-> each reinvent. Several are extracted from patterns that already exist in individual mods.
+**Shared plumbing for the chimericdream suite.** Systems, helpers, and building blocks that more than one of
+these mods would otherwise each reinvent: registration, datagen, config, commands, inventories, testing, and a
+few shared blocks and entities. Much of it is extracted from patterns that already exist in individual mods. It
+is built for this suite, so other mods may depend on it but the API is shaped and versioned for these mods. It
+adds nothing a player would install it for, and what it does add exists to be used by other mods.
 
 ## Active ideas
 
