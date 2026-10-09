@@ -9,8 +9,24 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-18-legacy/`](brainstorms/2026-08-18-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+### Addressing
+
+- [Auto-labeled new portals](addressing/auto-labeled-new-portals.md) — Stamp a newly generated exit
+  portal's corners with the entry portal's address; off by default.
+
+### Troubleshooting
+
+- [`/portallink debug` command](troubleshooting/portallink-debug-command.md) — Print the entry address and
+  scored candidates for a player's last transit.
+- [Arrival cue](troubleshooting/arrival-cue.md) — A subtle particle and/or sound at the destination when an
+  address, not vanilla, picked the exit.
+- [Address preview](troubleshooting/address-preview.md) — Sneak and use an empty hand on a portal frame to
+  see which corner blocks it reads.
+
+### Progression
+
+- [First-link advancement](progression/first-link-advancement.md) — One advancement for the first
+  transit routed by address.
 
 ## Inbox
 
