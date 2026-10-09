@@ -33,12 +33,24 @@ Behavior:
 - **Feedback.** The normal heart particles on each fed animal, and green bonemeal ("happy villager")
   particles above the trough.
 - **Redstone.** No redstone interaction for now.
+- **Configurable.** The numbers above are defaults, and players and server operators can change them in
+  the mod's config, within these limits:
+  - Enabled: an on/off kill switch for the whole feature (default on). When off, troughs still store
+    food but never feed animals.
+  - Horizontal radius: 1–16 blocks (default 5).
+  - Vertical radius: 0–8 blocks (default 2).
+  - Check interval: at least 1 second (default 10).
+  - Animal cap: at least 2 (default 24).
+
+  JD Crafte has no config yet, so this adds its first one, using chimeric-lib's
+  `YaclConfig` as the other mods do. The trough logic runs on the server, so the server's values apply
+  and nothing needs syncing to clients.
 
 Vanilla pairing and baby spawning take over once the animals are in love mode. The trough's `level` and
 `food` blockstate already track its contents, so it empties visibly as it works.
 
 **Out of scope (for now):** redstone control, feeding babies to speed up growth, healing animals,
-attracting animals toward the trough, wolves, cats and other species, and enchanted golden apples, and
+attracting animals toward the trough, wolves, cats and other species, enchanted golden apples, and
 any other new foods beyond golden carrots and golden apples.
 
 ## Decisions
@@ -56,6 +68,10 @@ any other new foods beyond golden carrots and golden apples.
   provides the textures for both.
 - 2026-10-09 — The 24-animal cap counts every supported-species animal in range, babies and adults alike,
   not just species the stored food could breed.
+- 2026-10-09 — The radius, vertical range, check interval, and animal cap are configurable by players
+  and server operators, with the values above as defaults.
+- 2026-10-09 — The config adds an on/off kill switch for the whole feature, and limits the values:
+  horizontal radius 1–16, vertical radius 0–8, interval at least 1 second, animal cap at least 2.
 - 2026-10-09 — Enchanted golden apples are not accepted.
 - 2026-10-09 — Models, lang strings, and datagen for the new foods are handled during implementation.
 - 2026-10-09 — One pair is fed per check.
@@ -81,8 +97,9 @@ _None yet._
   The ChimericLib [interval and area helpers](../../../chimeric-lib/ideas/conveniences/block-entity-interval-and-area-helpers.md)
   are optional and come afterwards, by extracting from this work. No loader-specific work.
 - **Verification:** GameTests for pairing, the cooldown exclusion, the 24-animal cap, babies counted but
-  not fed, and one pair per check; a manual check of the heart and bonemeal particles for the mod's
-  `TEST_PLAN.md`.
+  not fed, and one pair per check; config tests that changed values take effect, out-of-range values are
+  clamped, and the kill switch stops feeding; a manual check of the heart and bonemeal particles for the
+  mod's `TEST_PLAN.md`.
 
 ## Open questions
 
