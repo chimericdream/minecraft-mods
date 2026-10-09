@@ -25,7 +25,7 @@ tone.
 ### Drafts to approve
 
 - [x] **[All Hallows Steve](all-hallows-steve/ideas/README.md)** (from the 2026-09-29 brainstorm): A pumpkin mod first: dyeing, carving, lighting, and displaying decorated pumpkins, plus the harvest and folklore that surround them. The tone is grounded autumn: quiet, seasonal, and rooted in real harvest and Samhain folklore. It is not campy, not horror, and not a general seasons or farming mod.
-- [ ] **[Archaeology Tweaks](archaeology-tweaks/ideas/README.md)** (from its mod description): Small, vanilla-friendly tweaks to Minecraft's archaeology system.
+- [x] **[Archaeology Tweaks](archaeology-tweaks/ideas/README.md)**: **The whole archaeology system, kept vanilla-friendly.** Extends vanilla's brush-and-reveal loop through items, enchantments, loot, pottery, trades, advancements, and worldgen. All blocks move to a future "Archaeology Tweaks++" addon.
 - [ ] **[Artificial Heart](artificial-heart/ideas/README.md)** (from its legacy backlog): **"all the atmosphere, none of the side effects"** — tamed, decorative versions of blocks whose vanilla behavior gets in the way of building. Every idea below follows that pitch.
 - [ ] **[Athenaeum](athenaeum/ideas/README.md)** (from its mod description): This mod adds a variety of custom written books and related content to the game.
 - [ ] **[Banner Tweaks](banner-tweaks/ideas/README.md)** (from its legacy backlog): Vanilla-friendly fixes for the rough edges around **making, copying, and displaying elaborate banners**. Everything below stays inside that lane — no new banner "content," just fewer walls.
