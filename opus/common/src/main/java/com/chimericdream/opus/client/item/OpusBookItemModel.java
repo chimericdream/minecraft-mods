@@ -77,10 +77,16 @@ public final class OpusBookItemModel implements ItemModel {
         private Map<Identifier, BookLook> looks() {
             Map<Identifier, BookLook> current = looks;
             if (current == null) {
-                // The manager being reloaded is the one Minecraft holds while the reload runs.
-                current = BookLookScanner.scan(Minecraft.getInstance().getResourceManager());
-                looks = current;
+                current = rescan();
             }
+
+            return current;
+        }
+
+        private Map<Identifier, BookLook> rescan() {
+            // The manager being reloaded is the one Minecraft holds while the reload runs.
+            Map<Identifier, BookLook> current = BookLookScanner.scan(Minecraft.getInstance().getResourceManager());
+            looks = current;
 
             return current;
         }
@@ -90,7 +96,9 @@ public final class OpusBookItemModel implements ItemModel {
             resolver.markDependency(DEFAULT_MODEL);
             resolver.markDependency(GENERATED_MODEL);
 
-            for (BookLook look : looks().values()) {
+            // MapCodec.unit(Supplier) hands out one shared instance, so this object outlives resource reloads. Resolving
+            // dependencies is the first step of every model bake, so rescan here rather than trusting the cached looks.
+            for (BookLook look : rescan().values()) {
                 if (look.model() != null) {
                     resolver.markDependency(look.model());
                 }
