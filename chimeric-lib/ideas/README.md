@@ -64,6 +64,9 @@ because other docs and test plans already treat that backlog as a working list.
   dismounting, and multi-seat blocks.
 - [Sound and particle helpers](conveniences/sound-particle-helpers.md) — One-liners for playing sounds and
   particles at a block on both sides.
+- [Block-entity interval and area helpers](conveniences/block-entity-interval-and-area-helpers.md) — An
+  every-N-ticks ticker, an area entity scan, and a feed-an-animal helper; first consumer is the JD Crafte
+  feeding trough.
 
 ## Inbox
 

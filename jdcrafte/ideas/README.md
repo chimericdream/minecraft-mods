@@ -11,7 +11,12 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-09-02-legacy/`](brainstorms/2026-09-02-legacy/),
+### Animals
+
+- [Feeding trough breeding](animals/feeding-trough-breeding.md) — The trough puts nearby animals in love
+  mode when it holds food they like, so pens breed without hand-feeding.
+
+The rest of the legacy backlog is in [`brainstorms/2026-09-02-legacy/`](brainstorms/2026-09-02-legacy/),
 waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
 
 ## Inbox
