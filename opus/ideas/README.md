@@ -5,10 +5,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Markdown-driven in-game documentation: a book is a folder of Markdown files, with
-> no Java and no JSON, in the spirit of Patchouli. The tone is a plain, readable reference that feels at home in
-> Minecraft but stays out of the way of the pack author's own voice. Not a lore or story mod, and not a general
-> wiki or recipe viewer.
+**Markdown-driven in-game documentation.** A book is a folder of Markdown files, with no Java and no JSON, in
+the spirit of Patchouli. The tone is a plain, readable reference that feels at home in Minecraft but stays out
+of the way of the pack author's own voice. Not a lore or story mod, and not a general wiki or recipe viewer.
 
 ## Active ideas
 
