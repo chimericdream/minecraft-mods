@@ -36,12 +36,14 @@ Moving a block between mods is a breaking change, so it follows
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+- Flesh out more block families: walls, stairs, slabs, and cracked, chiseled, and mossy versions.
+- Consider migrating some content from Minekea (see the Minekea boundary section above).
+
+_(Legacy backlog, kept verbatim: [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/).)_
 
 ## Archive
 

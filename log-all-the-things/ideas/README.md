@@ -20,13 +20,15 @@ Sponj also deals with fluids, from a different direction.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-30-legacy/`](brainstorms/2026-08-30-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+_Empty._ The older, unvoted backlog is in
+[`brainstorms/2026-08-30-legacy/`](brainstorms/2026-08-30-legacy/).
 
 ## Archive
 
-_Empty._
+- [Lava-logging](archive/lava-logging.md): Shipped in 26.2-1.0.0.
+- [Window-logging](archive/window-logging.md): Shipped in 26.2-1.0.0.
+- [Carpet-logging](archive/carpet-logging.md): Shipped in 26.2-1.0.0.

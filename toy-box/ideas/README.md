@@ -12,12 +12,12 @@ feed into progression. Vehicles and minigames are out.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-15-legacy/`](brainstorms/2026-08-15-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+_Empty._ The older, unvoted backlog is in
+[`brainstorms/2026-08-15-legacy/`](brainstorms/2026-08-15-legacy/).
 
 ## Archive
 

@@ -25,12 +25,14 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+- More block variants: mossy, cracked, chiseled, pillar, and smooth.
+- Mossy warped and crimson variants (moved here from But What About...?, since new kinds of moss belong to this mod).
+
+_(Legacy backlog, kept verbatim: [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/).)_
 
 ## Archive
 

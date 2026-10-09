@@ -12,12 +12,12 @@ mod for that area, not here.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+_Empty._ The older, unvoted backlog is in
+[`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/).
 
 ## Archive
 

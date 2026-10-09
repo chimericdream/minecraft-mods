@@ -11,12 +11,15 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-20-legacy/`](brainstorms/2026-08-20-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+- **Bag o' Clams**: a new food item, sometimes dropped by... something still to be decided.
+- **Big bad of weird**: just a bundle, named "Big bad of weird". When dropped, it has a chance of containing camel snout, bag o' clams, or other items from this mod, because reasons. Rare drop from witches. First one earns the advancement "Maybe don't look inside...".
+- **Feed cows random stuff for random milks**: apple milk, chocolate milk (cocoa beans), carrot milk, potato milk, wart milk (nether wart), and so on.
+
+_(Legacy backlog, kept verbatim: [`brainstorms/2026-08-20-legacy/`](brainstorms/2026-08-20-legacy/).)_
 
 ## Archive
 

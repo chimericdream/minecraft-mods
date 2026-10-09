@@ -14,12 +14,15 @@ mechanic when the idea is right.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+- An alternative glowstone block that emits ultraviolet light, blocking mob spawns without lighting up the area.
+- The ability to imbue blocks with UV dust (or similar) so they emit UV light like the block above.
+- A wearable item that lets the player see blocks imbued with UV light.
+
+_(Legacy backlog, kept verbatim: [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/).)_
 
 ## Archive
 

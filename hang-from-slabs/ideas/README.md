@@ -12,12 +12,14 @@ with no new blocks, items, or recipes. It starts with vanilla blocks and leaves 
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+No active ideas yet.
 
 ## Inbox
 
-_Empty._
+- Allow lanterns to be hung from under a top slab.
+- Allow hanging signs under top slabs.
+
+_(Legacy backlog, kept verbatim: [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/).)_
 
 ## Archive
 
