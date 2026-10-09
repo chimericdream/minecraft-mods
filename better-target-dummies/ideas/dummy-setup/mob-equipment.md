@@ -28,8 +28,9 @@ config needed (A4), since it is what the feature is. Gestures are decided; see D
   body, legs, feet, main hand, off hand.
 - 2026-10-09 — In the sequential fallback, an item goes to the first *empty* slot it can legally occupy,
   so a second sword lands in the off hand.
-- 2026-10-09 — Sneak + empty-hand click with no slot targeted removes gear in sequence, one piece per
-  click, taking the first occupied slot in the same order (head, body, legs, feet, main hand, off hand).
+- 2026-10-09 — Sneak + empty-hand click with no slot targeted removes gear in reverse sequence, one piece
+  per click, taking the first occupied slot in the order off hand, main hand, feet, legs, body, head.
+- 2026-10-09 — A slot is targeted the way armor stands do it, by the height of the click on the mob.
 - 2026-10-09 — Equipment is stored on the block entity, so it survives power cycles.
 
 ## Brainstorm variants
@@ -42,6 +43,7 @@ None. This idea was added by the user during voting, so it is not in the legacy 
 
 ## Open questions
 
-- How is a slot "targeted"? Candidate: armor-stand style, by the height of the click on the mob. It needs
-  right-clicks on the bound mob itself to be intercepted. Can be settled during implementation, and since
-  targeting is an enhancement, the sequential fallback works without it.
+- Armor stands have a fixed humanoid shape, but bound mobs vary in height and build. How are the click-height
+  bands scaled to each mob's bounding box, and how are the hands reached? Settle during implementation; the
+  fallback works for any mob in the meantime. This needs right-clicks on the bound mob itself to be
+  intercepted.
