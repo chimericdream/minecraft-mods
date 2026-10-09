@@ -6,17 +6,44 @@ _AllStackable, reborn for Fabric and NeoForge in the 26.x+ era._
 
 ## Introduction
 
+Choose how many of each item fit in a single stack. Stack sizes are set per world with the `/stackitup` command
+(or by editing the world's config file), and the mod takes care of the places where larger stacks would normally
+cause trouble, such as furnaces, dispensers, anvils, cauldrons, jukeboxes, and horse inventories.
+
 ### Minecraft Versions
 
 * 26.2: Supported
 
 ### Current Features
 
+* **Per-item stack sizes** — set any item's maximum stack size, or change a whole group of items at once (for
+  example, every item that normally stacks to 16).
+* **Works with containers** — larger stacks behave correctly in furnaces, dispensers, anvils, cauldrons, and
+  more.
+* **Safe items stay safe** — tools, armor, and other items that take damage always stay unstackable.
+* **Synced to players** — the server's stack sizes are sent to clients so what you see matches what the server
+  allows.
+* **Global config** — save your stack sizes as a global config and have new worlds start with them.
+
+> The mod doesn't change any stack sizes until you configure them, so a fresh install plays like vanilla.
+
+### Commands
+
+Run `/stackitup help` in game for the full list. The most useful ones:
+
+* `/stackitup set <item> <count>` — set an item's stack size.
+* `/stackitup set hand` — set the size for the item you're holding.
+* `/stackitup show all` — list every item you've changed.
+* `/stackitup reset <item>` / `/stackitup reset all` — put items back to vanilla.
+
+Commands need operator permission by default. To let everyone use them, change `permissionLevel` from 4 to 0 in
+the world's config file.
+
 ## Notes for Documentation
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you find, or to suggest another vanilla behavior that ought to care whether you're sneaking.
+Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you find or suggest new features.
 
 ## Credits
 
