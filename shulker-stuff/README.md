@@ -45,14 +45,6 @@ box is protected from explosions and fire both as an item and when placed.
   blocks.
 * Inventory and player-interaction tweaks supporting the enchantment behaviors above.
 
-## ⚠️ Known Issue (functionality review)
-
-The in-game config screen (`ShulkerStuffConfig`) currently exposes a long list of drop-chance options
-(*Ancient Shell chance*, *Wagyu Beef chance*, *Budding Cactus chance*, and so on) that belong to the **Miniblock
-Merchants** mod, not to shulker boxes. These appear to have been copied in by mistake and do not correspond to any
-Shulker Stuff feature. They should be replaced with real options (e.g. enchantment tuning) or removed before
-release.
-
 ## Notes for Documentation
 
 For in-game documentation, the three player-facing systems are: **enchantments** (Refill, Vacuum, Void), the
