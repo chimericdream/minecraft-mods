@@ -6,40 +6,18 @@
 
 ## Introduction
 
-This mod adds cobbled and mossy variants of a number of Minecraft's natural stone-type blocks, as well as slabs, stairs, walls, etc.
+This mod is still in the planning stage. It will be an addon to But What About... that adds extended
+block sets: mossy variants of stones that don't have one, new kinds of moss, and the stairs, slabs,
+walls, and variants that go with them.
 
-### Minecraft Versions
-
-* 1.21.x: supported
-* < 1.21: not planned
-
-### Current Features
-
-* Generates custom written books, driven by datapacks
-* Adds books to loot tables for stronghold libraries and woodland mansions
-
-### Planned Features
-
-* More books!
-* Add books to loot tables for other structures, including modded structures
-* Additional metadata for books, such as genre
-* Custom blocks/items
-* New villager type
-* Book catalog
-* Advancements
-* Additional configuration options to control which books can be generated
+See the [`ideas`](ideas/README.md) folder for what it's meant to be and where it's headed. "Cobblicious"
+is a working name and will probably change.
 
 ## Issues & Suggestions
 
 Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you
 find.
 
-## Credits
-
-The initial concept for this mod came from a datapack called [Babel](https://github.com/JiFish/babel), with some planned
-features inspired by the [Bibliocraft](https://www.bibliocraftmod.com/wiki/) mod.
-
 ## License
 
-This mod is released under the MIT
-license. [The full text of the license can be found here.](https://github.com/chimericdream/cobblicious-mod/blob/main/LICENSE)
+This mod is released under the MIT license. [The full text of the license can be found here.](./LICENSE)
