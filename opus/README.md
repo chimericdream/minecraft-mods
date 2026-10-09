@@ -1,6 +1,6 @@
 # Opus (Fabric/NeoForge)
 
-![Version: 1.0.0-beta.0](https://img.shields.io/badge/version-1.0.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: optional](https://img.shields.io/badge/server-optional-4caf50?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/version-1.1.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: optional](https://img.shields.io/badge/server-optional-4caf50?style=flat-square)
 
 _Opus is a library mod intended for mod and pack developers to create highly customizable in-game guidebooks using nothing but Markdown._
 
@@ -22,11 +22,12 @@ chapter.
 * Links between pages that are checked when the book loads
 * Recipe, item, and mob widgets written as fenced blocks
 * Translations that fall back to the book's default language
+* Custom item looks, names, and tooltips for each book, plus a `/opus give` command to hand out books
 * A validator that finds broken links and bad widgets before your players do
 
 ## Notes for Documentation
 
-Books live in `assets/<namespace>/opus-books/<book>/`. The bundled **Opus Guide** (use the Opus Book item, or bind
+Books live in `assets/<namespace>/opus-books/<book>/`. The bundled **Opus Guide** (use the Opus Book item, `/opus give`, or bind
 the "Open the Opus Guide" key in Controls) explains every feature and is itself written as an Opus book; its source is in
 `common/src/main/resources/assets/opus/opus-books/guide`.
 
