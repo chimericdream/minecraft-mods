@@ -6,9 +6,10 @@ _One-stop shop for all your farming and agricultural needs!_
 
 ## Introduction
 
-JD Crafte is about the quieter side of a Minecraft farm — the troughs, fences, and weathervanes
-that make a homestead feel lived-in rather than just functional. Nothing here is essential to
-surviving the game; it's all the rustic dressing that makes a farm worth showing off.
+JD Crafte is everything a working farm needs, plus everything that makes it feel like home. It
+leans toward the business of farming (producing, breeding, storing, and selling), and it's also
+where the homestead lives: gardens, rustic decor, and the troughs, trellises, and weathervanes that
+make a farm look lived-in.
 
 ### Minecraft Versions
 

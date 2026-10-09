@@ -5,9 +5,10 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its `mod_description`:
->
-> One-stop shop for all your farming and agricultural needs!
+> **Everything a working farm needs, plus everything that makes it feel like home.** JD Crafte leans
+> toward the business of farming: producing, breeding, storing, and selling. It's also where the
+> homestead lives, with gardens, rustic decor, and the details that make a farm look lived-in. Ideas
+> should make a farm *run* better or *look* better, and the best ones do both.
 
 ## Active ideas
 
