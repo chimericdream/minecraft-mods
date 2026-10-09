@@ -5,9 +5,10 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
-> **Configurable reach** for beacons and conduits. The natural next step is making the *rest* of their behavior just as configurable, while staying server-side wherever possible.
+> **Beacons and conduits, your way.** Beacon & Conduit Tweaks starts from making their reach and
+> behavior configurable, and extends to anything beacons and conduits do: effects, payments, beams, and
+> new mechanics such as inverted beacons or redirectable beams. Everything should be tunable, and new
+> behavior should be toggleable so a server can run a near-vanilla setup.
 
 ## Active ideas
 
