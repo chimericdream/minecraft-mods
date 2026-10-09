@@ -24,8 +24,9 @@ This skill writes `prompt.md` and `agent1.md` … `agentN.md` into a new `brains
 Read, don't guess:
 
 - The mod's `README.md` and `CHANGELOG.md` → a short, factual list of **existing features**.
-- `<mod>/ideas/README.md` → the **identity statement** (if it's still marked Draft, ask the user to
-  confirm it first), the **active ideas**, the **inbox**, and the **archive** (shipped or dropped).
+- `<mod>/ideas/README.md` → the **identity statement** (if it's still marked Draft, stop and run
+  `ideas-identity` with the user first), the **active ideas**, the **inbox**, and the **archive**
+  (shipped or dropped).
 - Every earlier `brainstorms/*/shortlist.md`, "What was cut and why" and the No votes → themes the user
   has already rejected. A `*-legacy/` folder that was never shortlisted counts as raw material, not as
   rejections.

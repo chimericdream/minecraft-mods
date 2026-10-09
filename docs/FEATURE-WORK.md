@@ -155,6 +155,7 @@ Brainstorm prompts list archived ideas so the same ground isn't covered again un
 
 | Skill | Does |
 |---|---|
+| `ideas-identity` | Interviews the user, drafts, and writes a mod's identity statement, including addon/sibling boundary notes |
 | `ideas-brainstorm` | Writes `prompt.md` and collects answers from subagents or pasted from other assistants |
 | `ideas-combine` | Merges one session's answers into `combined-ideas.md` |
 | `ideas-shortlist` | Scores and ranks the ideas into `shortlist.md`, then waits for the user's votes |
