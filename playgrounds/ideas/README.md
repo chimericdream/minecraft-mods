@@ -5,7 +5,10 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Not written yet.** The mod has no identity statement or usable description to draft one from.
+**Playground equipment you can actually play on.** Swings that swing, slides you slide down, seesaws that tilt,
+climbing frames, and the other pieces of a real playground. The point is the movement and fun of using them,
+not just how they look. They're built as outdoor, large-scale structures, so they stay clear of toys and indoor
+furniture. It stays vanilla-friendly and additive.
 
 ## Active ideas
 
