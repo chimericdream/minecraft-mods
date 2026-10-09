@@ -8,6 +8,7 @@
 - Opening a book that can't be found now shows a small screen with an "Open troubleshooting" button, instead of a brief message on the action bar.
 - A book item whose book can't be found now has its own icon (a grey book with a yellow !) instead of looking like a plain book.
 - Books that don't set their own `texture` or `model` now use a maroon Opus book icon instead of the vanilla book.
+- The "Open the Opus Guide" key is no longer bound to F7 by default. You can still set a key for it in Controls.
 
 #### Documentation
 

@@ -11,7 +11,7 @@ public class Keybindings {
     public static final KeyMapping OPEN_GUIDE = new KeyMapping(
         "key.opus.open_guide",
         InputConstants.Type.KEYSYM,
-        InputConstants.KEY_F7,
+        InputConstants.UNKNOWN.getValue(),
         KeyMapping.Category.register(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "keybinds"))
     );
 
