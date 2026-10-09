@@ -26,6 +26,11 @@ config needed (A4), since it is what the feature is. Gestures are decided; see D
 - 2026-10-09 — Slot targeting is a progressive enhancement. If the player is targeting a specific slot,
   the item goes there, following normal equipment rules. Otherwise the slots are tried in sequence: head,
   body, legs, feet, main hand, off hand.
+- 2026-10-09 — In the sequential fallback, an item goes to the first *empty* slot it can legally occupy,
+  so a second sword lands in the off hand.
+- 2026-10-09 — Sneak + empty-hand click with no slot targeted removes gear in sequence, one piece per
+  click, taking the first occupied slot in the same order (head, body, legs, feet, main hand, off hand).
+- 2026-10-09 — Equipment is stored on the block entity, so it survives power cycles.
 
 ## Brainstorm variants
 
@@ -40,9 +45,3 @@ None. This idea was added by the user during voting, so it is not in the legacy 
 - How is a slot "targeted"? Candidate: armor-stand style, by the height of the click on the mob. It needs
   right-clicks on the bound mob itself to be intercepted. Can be settled during implementation, and since
   targeting is an enhancement, the sequential fallback works without it.
-- In the sequential fallback, does an item go to the first slot it can legally occupy, whether or not that
-  slot is full (swapping the old piece back to the player), or the first *empty* legal slot, so a second
-  sword lands in the off hand?
-- When sneak + empty-hand clicking without targeting a slot, does removal also follow a sequence, or do
-  nothing?
-- Is the equipment held in the block entity so it survives power cycles? (Recommended; confirm.)
