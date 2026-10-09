@@ -5,9 +5,12 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Identity
 
-> **Draft, needs approval.** Lifted from its legacy `POTENTIAL_FEATURES.md`:
->
-> Vanilla-friendly fixes for the rough edges around **making, copying, and displaying elaborate banners**. Everything below stays inside that lane — no new banner "content," just fewer walls.
+> **Banners, end to end.** Banner Tweaks makes banners easier to make, copy, display, and place: more
+> layers, a better loom, shareable designs, new shapes, and new ways to hang them. It stays
+> vanilla-friendly, so ideas should feel like a natural extension of what banners already are.
+> Generated banners at structures are in scope only if the results reliably look good. A random pile of
+> patterns doesn't qualify, so any such idea has to explain how it avoids ugly output (curated
+> templates, constrained palettes and pattern rules, or hand-authored sets).
 
 ## Active ideas
 
