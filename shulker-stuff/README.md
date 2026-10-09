@@ -35,8 +35,9 @@ GUI.
 
 ### Netherite Plating
 
-A **Plated Shulker Upgrade** smithing template lets you apply **Netherite Plating** to a shulker box, marked in the
-tooltip as *"Netherite Plated."* Like other netherite gear, this is intended to make the box more durable/resistant.
+A **Plated Shulker Upgrade** smithing template (found in bastion treasure chests) lets you combine a shulker box
+with a netherite ingot to give it **Netherite Plating**, marked in the tooltip as *"Netherite Plated."* A plated
+box is protected from explosions and fire both as an item and when placed.
 
 ### Rendering & QoL tweaks
 

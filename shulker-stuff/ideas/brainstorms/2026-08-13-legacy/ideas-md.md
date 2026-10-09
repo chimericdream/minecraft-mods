@@ -3,6 +3,12 @@
 Copied verbatim from this mod's section of the repo-root `ideas.md` when it was retired (see
 [`docs/FEATURE-WORK.md`](../../../../docs/FEATURE-WORK.md)).
 
+> **Outdated upgrade notes.** The "Hardened" and "Plated" upgrades below are from an older version of the
+> mod. Hardened (and its template) was removed in the 26.1.2 release. What ships now is a single **Plated**
+> upgrade (a netherite ingot plus the Plated Shulker Upgrade smithing template, found in bastion treasure).
+> It absorbs both older ideas: the placed box resists explosions, and the item form is resistant to fire and
+> explosions. The checkboxes are left as the originals.
+
 #### Shulker Stuff
 
 * [x] Make shulkers behave more like bundles
