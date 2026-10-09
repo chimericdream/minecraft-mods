@@ -6,10 +6,9 @@ _Everything a working farm needs, plus everything that makes it feel like home._
 
 ## Introduction
 
-JD Crafte is everything a working farm needs, plus everything that makes it feel like home. It
-leans toward the business of farming (producing, breeding, storing, and selling), and it's also
-where the homestead lives: gardens, rustic decor, and the troughs, trellises, and weathervanes that
-make a farm look lived-in.
+JD Crafte leans toward the business of farming (producing, breeding, storing,
+and selling), but it's also where the homestead lives: gardens, rustic decor,
+and the troughs, trellises, and weathervanes that make a farm look lived-in.
 
 ### Minecraft Versions
 
