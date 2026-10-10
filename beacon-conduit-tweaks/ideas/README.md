@@ -8,7 +8,9 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 > **Beacons and conduits, your way.** Beacon & Conduit Tweaks starts from making their reach and
 > behavior configurable, and extends to anything beacons and conduits do: effects, payments, beams, and
 > new mechanics such as inverted beacons or redirectable beams. Everything should be tunable, and new
-> behavior should be toggleable so a server can run a near-vanilla setup.
+> behavior should be toggleable so a server can run a near-vanilla setup. The mod may also add new
+> blocks where that is cleaner than changing the vanilla ones, such as an "advanced" beacon with more
+> powerful effects or a "tainted" beacon for negative effects.
 
 ## Active ideas
 
