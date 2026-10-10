@@ -29,8 +29,47 @@ core one.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-26-legacy/`](brainstorms/2026-08-26-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-26-legacy/shortlist.md`](brainstorms/2026-08-26-legacy/shortlist.md). Ideas that
+need new blocks are listed there under "Addon ideas" and are not active here.
+
+### Pottery
+
+- [Craftable pottery sherds](pottery/craftable-pottery-sherds.md) — Copy a sherd like a smithing
+  template, with a crafting recipe and no workstation.
+- [Pottery sherds for the special banner patterns](pottery/banner-pattern-sherds.md) — A sherd for each
+  special banner pattern.
+- [New sherd designs for the mod's materials](pottery/material-sherd-designs.md) — Sherds tied to blocks
+  the mod already has, such as soul sand.
+
+### Brushes
+
+- [Brush tiers](brushes/brush-tiers.md) — Copper, gold, diamond and netherite brushes with different
+  speed and durability.
+- ["Keen Eye" enchantment](brushes/keen-eye-enchantment.md) — Nearby suspicious blocks shimmer while a
+  brush with it is held.
+
+### Loot and trades
+
+- [Depth-tiered loot](loot-and-trades/depth-tiered-loot.md) — Deeper suspicious blocks roll a rarer loot
+  table.
+- [Wandering traders sell brushes and suspicious blocks](loot-and-trades/trader-brushes-and-blocks.md) — A
+  renewable way to seed your own dig sites.
+
+### Dig sites
+
+- [Buried dig sites around vanilla structures](dig-sites/buried-dig-sites.md) — Clusters of suspicious
+  blocks around a skeleton, fossil or ruin.
+- [Torn map fragments](dig-sites/torn-map-fragments.md) — Combine fragments to find a nearby dig site.
+
+### Progression
+
+- [Field Journal](progression/field-journal.md) — Records every unique artifact you've brushed up.
+
+### Configuration
+
+- [Brushing speed and loot multipliers](configuration/brushing-multipliers.md) — Global multipliers for
+  brush speed and loot generosity.
 
 ## Inbox
 
