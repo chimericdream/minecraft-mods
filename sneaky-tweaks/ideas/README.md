@@ -9,8 +9,41 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-09-02-legacy/`](brainstorms/2026-09-02-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+The legacy backlog was shortlisted in
+[`brainstorms/2026-09-02-legacy/shortlist.md`](brainstorms/2026-09-02-legacy/shortlist.md).
+
+### Careful footing
+
+- [Tip-toe through cacti](careful-footing/tip-toe-through-cacti.md) — Sneaking into a cactus skips the
+  damage tick, like the berry bush.
+- [No slipping on ice](careful-footing/no-slipping-on-ice.md) — Crouching on ice removes the sliding,
+  trading speed for control.
+
+### Stealth utility
+
+- [No accidental pickups](stealth-utility/no-accidental-pickups.md) — Sneaking stops the automatic item
+  and XP-orb vacuum.
+
+### Mob courtesy
+
+- [Cats and foxes don't bolt](mob-courtesy/cats-and-foxes-dont-bolt.md) — Sneaking near them is treated
+  like holding a trust-building item.
+
+### Cosmetic
+
+- [Golems bow](cosmetic/golems-bow.md) — Iron and snow golems dip toward the ground as you sneak past.
+- [The enderman solidarity clause](cosmetic/enderman-solidarity.md) — A nearby enderman crouches when you
+  crouch.
+
+### Configuration
+
+- ["Bit tolerance" presets](configuration/bit-tolerance-presets.md) — A top-level config dropdown
+  (Vanilla+ / Full Bit / Chaos) that bulk-enables features by how straight-faced they are.
+
+### Progression
+
+- ["Uncomfortable Silence" advancement](progression/uncomfortable-silence-advancement.md) — A joke
+  advancement for cumulative time spent sneaking.
 
 ## Inbox
 

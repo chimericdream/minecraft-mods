@@ -12,8 +12,38 @@ they can matter. They never outclass vanilla's own progression.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-25-legacy/`](brainstorms/2026-08-25-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-25-legacy/shortlist.md`](brainstorms/2026-08-25-legacy/shortlist.md).
+
+### Trim materials
+
+- [Glowstone trim material](trim-materials/glowstone-trim-material.md) — A full set grants immunity to
+  blindness and darkness.
+- [Ghast tear trim material](trim-materials/ghast-tear-trim-material.md) — Ghasts stop targeting you
+  while you wear the full set.
+- [Phantom membrane trim material](trim-materials/phantom-membrane-trim-material.md) — Phantoms ignore
+  you while you wear the full set.
+- [Snow trim material](trim-materials/snow-trim-material.md) — Freezing immunity and powder-snow
+  walking for any armor type.
+- [Blue ice trim material](trim-materials/blue-ice-trim-material.md) — A sibling to snow; the bonus is
+  still to be decided.
+- [Totem of undying trim material](trim-materials/totem-trim-material.md) — Survive lethal damage once,
+  then recharge on a long cooldown.
+
+### Trim bonuses
+
+- [Mixed-material bonus](trim-bonuses/mixed-material-bonus.md) — A small universal bonus for wearing four
+  different trim materials at once.
+
+### Enchantments
+
+- [Preserving: capture the exact biome tint](enchantments/preserving-biome-tint.md) — Mined leaves
+  remember the exact biome tint they had, not just the default color.
+
+### Wielded gear
+
+- [Wielded-gear trims (weapons and tools)](wielded-gear/wielded-gear-trims.md) — A parallel trim system
+  for swords and tools, with bonuses gated on wielding.
 
 ## Inbox
 

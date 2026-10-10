@@ -69,8 +69,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Inbox
 
-_Empty._ The older, unvoted backlog is in
-[`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/).
+_Empty._ The older backlog in [`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/) is
+covered by the active ideas above.
 
 ## Archive
 

@@ -17,13 +17,20 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Feeding trough breeding](animals/feeding-trough-breeding.md) — The trough puts nearby animals in love
   mode when it holds food they like, so pens breed without hand-feeding.
 
-The rest of the legacy backlog is in [`brainstorms/2026-09-02-legacy/`](brainstorms/2026-09-02-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
-
 ## Inbox
 
-_Empty._
+Folded in from the old backlog in [`brainstorms/2026-09-02-legacy/`](brainstorms/2026-09-02-legacy/), de-duplicated:
 
+- Fancy farmland: grows crops faster, hydrates itself, and can't be trampled.
+- Irrigation minecart: speeds up crop growth along its route.
+- Farming minecarts, such as a "combine" that harvests.
+- A horse-drawn cart for hauling goods.
+- Crates for storage.
+- Rustic furniture.
+- Farm-themed decorations, including a candlestick and a wall sconce.
+- Fertilizers.
+- More crops, more animals, and a farmer villager profession (each still a question mark).
+- Farm world generation (still a question mark).
 ## Archive
 
 _Empty._
