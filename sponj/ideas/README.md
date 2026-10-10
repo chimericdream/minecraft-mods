@@ -23,8 +23,39 @@ Both mods deal with fluids, but from different directions.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-13-legacy/shortlist.md`](brainstorms/2026-08-13-legacy/shortlist.md).
+
+### Drying loop
+
+- [Make wet lava sponjes safe to smelt in stacks](drying-loop/stackable-wet-lava-sponj.md) — Makes the wet
+  lava sponj unstackable, so the dry sponj always comes back.
+- [Squeezing a wet sponj](drying-loop/squeezing-wet-sponj.md) — A glass bottle on a wet sponj gives a
+  water bottle and leaves a dry sponj.
+- [Drying rack](drying-loop/drying-rack.md) — A block that dries wet sponjes, faster over a campfire and
+  instantly over soul fire.
+
+### Sponj types
+
+- [Snow sponj](sponj-types/snow-sponj.md) — Absorbs powder snow and snow layers, then comes back as a cold
+  wet sponj.
+
+### Automation
+
+- [Dispensers place sponjes](automation/dispensers-place-sponjes.md) — A dispenser placing a sponj soaks up
+  liquid immediately.
+
+### Configuration
+
+- [Configurable radius and budget](configuration/radius-and-budget-config.md) — Base radius, per-sponj
+  bonus, block budget and cap become config options.
+
+### Flavor
+
+- [Squishy sounds](flavor/squishy-sounds.md) — Custom squish sounds for placing, breaking and walking on
+  sponj blocks.
+- [Sponj golem](flavor/sponj-golem.md) — A silly golem that soaks up puddles and wrings itself out over
+  farmland.
 
 ## Inbox
 
