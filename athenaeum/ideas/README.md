@@ -26,8 +26,34 @@ be a separate sibling mod, not a rewrite of this one.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+### Books
+
+- [Genre metadata](books/genre-metadata.md) — Set, show and filter by a book's genre.
+- [More books](books/more-books.md) — New collections in new genres.
+- [Book series](books/book-series.md) — Multi-volume sets spread across structures.
+- [Longer books](books/longer-books.md) — Long works split across volumes.
+
+### Loot
+
+- [Wider loot placement](loot/wider-loot-placement.md) — Books in more vanilla structures.
+- [Modded-structure loot hook](loot/modded-structure-hook.md) — Tag-driven books in any structure's loot.
+
+### Configuration
+
+- [Generation controls](configuration/generation-controls.md) — Toggles and lists for what generates where.
+
+### Progression
+
+- [Collector advancements](progression/collector-advancements.md) — Advancements for collecting books.
+
+### Flavor
+
+- [Regional flavor](flavor/regional-flavor.md) — Biome-aware book choice.
+- [Marginalia](flavor/marginalia.md) — Occasional notes in the margins.
+
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-13-legacy/shortlist.md`](brainstorms/2026-08-13-legacy/shortlist.md). Ideas for the
+sibling library mod are tracked in GitHub issues #129–#135 and are not active here.
 
 ## Inbox
 
