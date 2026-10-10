@@ -14,8 +14,33 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-13-legacy/shortlist.md`](brainstorms/2026-08-13-legacy/shortlist.md).
+
+### Mechanics
+
+- [Creaking eye](mechanics/creaking-eye.md) — A block that emits a redstone signal when you look at it.
+- [Poseable creaking statue](mechanics/poseable-creaking-statue.md) — A creaking-shaped decoration you can
+  pose, like an armor stand.
+
+### Conversion
+
+- [Un-taming](conversion/un-taming.md) — Convert a decorative variant back to the vanilla block with a
+  different tool.
+
+### Heart controls
+
+- [Light-level dial](heart-controls/light-level-dial.md) — Cycle the Detached Creaking Heart's light from
+  0 to 15.
+- [Comparator support](heart-controls/comparator-support.md) — The Detached Creaking Heart outputs a
+  configurable comparator signal.
+- [Heartbeat toggle](heart-controls/heartbeat-toggle.md) — An optional, purely cosmetic pulse of the
+  heart's glow.
+
+### Progression
+
+- ["Garden Variety" advancement](progression/garden-variety-advancement.md) — Collect every decorative
+  variant the mod adds.
 
 ## Inbox
 
