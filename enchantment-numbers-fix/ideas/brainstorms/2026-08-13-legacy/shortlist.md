@@ -27,7 +27,7 @@ has no config today (one mixin, `ENFEnchantmentMixin`, and a Roman-numeral helpe
 covers **display-layer** ideas only, which are cheap and safe to add or remove at any time. Your own notes
 also contain a different kind of idea: gameplay changes that need the server (new enchantments,
 compatibility overrides, enchanting-table changes). Those don't fit this identity and are in
-[Beyond the current identity](#beyond-the-current-identity-needs-your-decision) below, with a question.
+[Beyond the current identity](#beyond-the-current-identity-moved-to-a-separate-mod) below, with a question.
 Ideas that change behavior need a config toggle (A2), and each item says what else should be tunable (A4).
 Most of the list needs a config, so budget for the mod's first config screen.
 
@@ -117,28 +117,21 @@ can choose native numerals or decimal. It's driven by the language files, so tra
 **Recommendation:** only if there is a request from translators. It would be a small addition once
 the style option exists.
 
-## Beyond the current identity (needs your decision)
+## Beyond the current identity (moved to a separate mod)
 
 These are from your notes. They are real gameplay features that need the server, so they conflict with
 this mod's identity sentence and with the agent note's non-goals ("no gameplay changes, no server
 requirement... the moment an idea needs the server, it belongs in a different mod"). They aren't
-ranked. The first item in your notes, "Rename", is the clue that you may want a bigger mod.
+ranked. Decision: they move to a separate mod, tracked in [#137](https://github.com/chimericdream/minecraft-mods/issues/137), and this mod stays a client-side display fix with its identity widened to "enchantment and effect levels".
 
-- Rename the mod.
+- Rename the mod (it may become more of a "Tooltip Tweaks" mod; see your note below).
 - Add some new enchantments.
 - Override which items can be enchanted with which enchantments.
 - Allow previously incompatible enchantments to be combined, with some still disabled by default (Silk
   Touch and Fortune, Riptide and Loyalty, Riptide and Channeling).
 - Allow non-solid blocks between bookshelves and the enchanting table (inspired by the Enchanter Fix mod).
 
-**Question:** should these live in this mod after a rename and an identity rewrite, or in a separate
-gameplay mod (for example "Enchantment Tweaks") while this one stays a tiny client-side display fix?
-My recommendation is the separate mod. This mod's charm is being tiny, safe to add or remove at any time,
-and not needed on the server. Putting server-side rules in it would end all three. If you decide on a
-rename, run `ideas-identity` to rewrite the statement, then these can be brainstormed and shortlisted
-properly.
-
-**Answer:** Not right now. At most, I might rename it and make it more of a "Tooltip Tweaks" mod.
+**Your note:** Not right now. At most, I might rename it and make it more of a "Tooltip Tweaks" mod.
 
 ## What was cut and why
 

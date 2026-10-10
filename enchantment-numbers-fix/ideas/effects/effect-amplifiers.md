@@ -15,7 +15,7 @@ levels". Share the threshold and style options from #1 and #2.
 
 ## Decisions
 
-- Stretches the identity to "enchantment and effect levels"; the identity statement has not been changed yet and needs your OK (`ideas-identity`).
+- Stretches the identity to "enchantment and effect levels". The identity statement has been widened to match.
 
 ## Related
 
