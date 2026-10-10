@@ -9,8 +9,45 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+### Catalog
+
+- [More miniblocks](catalog/more-miniblocks.md) — New miniblocks for existing professions.
+- [Collector's Ledger](catalog/collectors-ledger.md) — Track which miniblocks you own.
+- [Completion rewards](catalog/completion-rewards.md) — A master trade for finishing a catalog.
+
+### Professions
+
+- [Endologist profession](professions/endologist.md) — End miniblocks.
+- [Spelunker profession](professions/spelunker.md) — Deep-dark and cave miniblocks.
+- [Trailblazer profession](professions/trailblazer.md) — Trial chamber miniblocks.
+- [Paleontologist profession](professions/paleontologist.md) — Fossil and bone miniblocks.
+- [Musician profession](professions/musician.md) — Jukebox and instrument miniblocks.
+- [Meteorologist profession](professions/meteorologist.md) — Weather miniblocks.
+
+### Discovery
+
+- [Wandering Peddler](discovery/wandering-peddler.md) — A rare traveling seller with a sample of every catalog.
+
+### Structures
+
+- [Profession shops](structures/profession-shops.md) — Shared market-stall structures, including out-of-village ones.
+- [Modded-structure support](structures/modded-structure-support.md) — Merchants in other mods' structures.
+
+### Decor
+
+- [Decorative job blocks](decor/decorative-job-blocks.md) — Themed placeable blocks per profession.
+
+### Configuration
+
+- [Per-profession enable toggles](configuration/profession-toggles.md) — Run a subset of professions.
+- [Data-driven trade tables](configuration/data-driven-trade-tables.md) — Adjust trades with a datapack.
+
+### Integrations
+
+- [Head-drop datapack sample](integrations/head-drop-datapack-sample.md) — Wire heads to head-drop mods.
+
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-13-legacy/shortlist.md`](brainstorms/2026-08-13-legacy/shortlist.md).
 
 ## Inbox
 
