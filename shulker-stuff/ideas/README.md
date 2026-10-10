@@ -12,8 +12,40 @@ they are, and every change is an opt-in extra.
 
 ## Active ideas
 
-No active ideas yet. The legacy backlog is in [`brainstorms/2026-08-13-legacy/`](brainstorms/2026-08-13-legacy/),
-waiting to be shortlisted and voted on (`ideas-shortlist`) when work on this mod starts.
+### Enchantments
+
+- [Deep Storage enchantment](enchantments/deep-storage.md) — Extra rows of storage per level.
+- [Soulbound enchantment](enchantments/soulbound.md) — Plated boxes stay with you on death.
+
+### Handling
+
+- [Open-in-hand](handling/open-in-hand.md) — Open a box without placing it.
+- [Quick-deposit](handling/quick-deposit.md) — Dump matching items into a container.
+
+### Dyeing
+
+- [Undye slot](dyeing/undye-slot.md) — Return a box to default purple.
+- [Banner patterns on shulker boxes](dyeing/banner-patterns.md) — Emboss a pattern on the lid.
+
+### Plating
+
+- [Netherite Plating, concretized](plating/plating-concretized.md) — Define and document what plating protects.
+
+### Display
+
+- [Scrollable tooltip preview](display/scrollable-tooltip-preview.md) — A richer contents preview.
+- [Nameplates above named boxes](display/nameplates.md) — Show a box's name above it.
+
+### Drops
+
+- [Shulker Pearl](drops/shulker-pearl.md) — A rare shulker drop for recipes.
+
+### Progression
+
+- [Shulker advancements](progression/shulker-advancements.md) — Pack Rat, Interior Decorator and Turtle Power.
+
+The legacy backlog was shortlisted in
+[`brainstorms/2026-08-13-legacy/shortlist.md`](brainstorms/2026-08-13-legacy/shortlist.md).
 
 ## Inbox
 
