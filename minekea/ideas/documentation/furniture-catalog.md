@@ -11,11 +11,12 @@ accurate. Low value until the block count is stable, since the mod is being pare
 
 ## Decisions
 
-- Vote note: **Yes, but Opus.** Kept verbatim; clarify what this means (for example, who builds it).
+- Vote note: **Yes, but Opus.** The catalog will be built with your Opus mod, not Patchouli. The Description above still talks about Patchouli and its optional dependency; treat that part as superseded.
+- Generating the catalog from the block list (datagen) still applies, so it stays accurate.
 
 ## Related
 
-_None yet._
+- [Opus](../../../opus/ideas/README.md) — the mod the catalog will be built with.
 
 ## Open questions
 
