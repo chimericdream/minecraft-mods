@@ -13,16 +13,17 @@ import net.minecraft.world.entity.player.Inventory;
 public class CiderPressScreen extends AbstractContainerScreen<CiderPressScreenHandler> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "textures/gui/block/cider_press.png");
 
-    // The filled-in progress arrow and fuel bar sit to the right of the panel in the same texture.
-    private static final int ARROW_X = 80;
-    private static final int ARROW_Y = 35;
-    private static final int ARROW_WIDTH = 24;
-    private static final int ARROW_HEIGHT = 17;
+    // The filled-in progress arrow and fuel bar sit to the right of the panel in the same texture. Each
+    // sprite includes a one-pixel shadow row under the outline it fills.
+    private static final int ARROW_X = 81;
+    private static final int ARROW_Y = 36;
+    private static final int ARROW_WIDTH = 22;
+    private static final int ARROW_HEIGHT = 16;
     private static final int ARROW_U = 176;
     private static final int ARROW_V = 0;
 
-    private static final int FUEL_X = 17;
-    private static final int FUEL_Y = 56;
+    private static final int FUEL_X = 16;
+    private static final int FUEL_Y = 55;
     private static final int FUEL_WIDTH = 18;
     private static final int FUEL_HEIGHT = 4;
     private static final int FUEL_U = 176;
