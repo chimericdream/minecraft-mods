@@ -36,3 +36,11 @@ mod with no datagen on either platform has neither flag.
   [access wideners](../gotchas/access-wideners.md) for why this is build-time-only, and never invoke it
   standalone outside `prebuild`/`bun run build`).
 - `bun run update:patchoulibooks` — update Patchouli documentation books.
+- `bun run dashboard` — generate `dashboard/dist/index.html` (gitignored): mod versions/icons, ideas
+  pipeline status, and open GitHub issues/PRs mapped to mods. Flags: `--open` (launch in browser),
+  `--refresh` (bypass the 5-minute GitHub cache). Also renders each mod's README/CHANGELOG/TEST_PLAN and
+  everything under `ideas/` to HTML (`scripts/dashboard/docs.ts`) with a table of contents, collapsible
+  sections, in-page search, and sortable/filterable tables; links between docs are rewritten.
+  Also writes `dashboard/dist/ideas.html`: one sortable/filterable table of every active idea
+  (parsed from each idea file's `>` header; state is kept in the URL hash so views can be bookmarked). Sections live in `scripts/dashboard/render.ts`
+  (`SECTIONS`); remove one there to drop it. Needs `gh` authenticated.
