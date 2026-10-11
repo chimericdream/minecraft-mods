@@ -91,5 +91,5 @@ NeoForge.
    * Pomace: throw it in a composter (it adds a layer sometimes); feed it to a pig to breed it. Hurt a
      pig, cow, sheep, or horse (fall damage works) and feed it pomace: it heals a heart and the pomace is
      used up, in creative too without using it up. A healthy cow ignores it. A wolf never takes it.
-   * Check the textures look right. They're placeholders for now. Repeat on Fabric and NeoForge (the
+   * Check the textures look right. The GUI is still a generated placeholder. Repeat on Fabric and NeoForge (the
      NeoForge composter value comes from a data map).
