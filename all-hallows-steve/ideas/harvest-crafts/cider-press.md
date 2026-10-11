@@ -1,7 +1,7 @@
 # Cider press
 
 > Shortlist #17 · Tier 2 — Solid mid-size features · Effort **L** (re-estimated 2026-10-11) · Value ★★ · Votes 9 · My vote **Yes**
-> Status: **Ready**
+> Status: **Building**
 
 ## Description
 
