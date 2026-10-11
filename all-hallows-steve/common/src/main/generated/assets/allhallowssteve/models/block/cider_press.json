@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "allhallowssteve:block/cider_press/cider_press_bottom",
+    "front": "allhallowssteve:block/cider_press/cider_press_front",
+    "side": "allhallowssteve:block/cider_press/cider_press_side",
+    "top": "allhallowssteve:block/cider_press/cider_press_top"
+  }
+}

@@ -1,5 +1,12 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Cider Press. Craft one from an iron ingot, two sticks, a barrel, and three planks.
+  * Put in 3 apples and a glass bottle, plus charcoal, coal, or blaze powder for fuel, and after a short press you get a bottle of cider and some pomace. Hoppers can feed it and empty it.
+  * Cider is a drink that restores hunger and gives back the empty bottle.
+  * Pomace can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
+
 ### 26.2 - 1.0.1
 
 #### Bug Fixes

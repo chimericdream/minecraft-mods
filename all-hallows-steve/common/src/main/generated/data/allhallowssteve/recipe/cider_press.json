@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:barrel",
+    "I": "minecraft:iron_ingot",
+    "P": "#minecraft:planks",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    " I ",
+    "SBS",
+    "PPP"
+  ],
+  "result": {
+    "id": "allhallowssteve:cider_press"
+  }
+}

@@ -7,6 +7,8 @@ import com.chimericdream.allhallowssteve.config.AllHallowsSteveConfig;
 import com.chimericdream.allhallowssteve.network.PumpkinFaceNetworking;
 import com.chimericdream.allhallowssteve.component.type.AllHallowsSteveComponentTypes;
 import com.chimericdream.allhallowssteve.item.ModItems;
+import com.chimericdream.allhallowssteve.item.PomaceFeeding;
+import net.minecraft.world.level.block.ComposterBlock;
 import com.chimericdream.allhallowssteve.stats.ModStats;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
@@ -33,6 +35,7 @@ public final class AllHallowsSteveMod {
         AllHallowsSteveComponentTypes.init();
         ModTriggers.init();
         PumpkinFaceNetworking.init();
+        PomaceFeeding.init();
     }
 
     /**
@@ -43,5 +46,7 @@ public final class AllHallowsSteveMod {
      */
     public static void postInit() {
         ModDispenserBehaviors.init();
+
+        ComposterBlock.COMPOSTABLES.put(ModItems.POMACE.get(), 0.5F);
     }
 }

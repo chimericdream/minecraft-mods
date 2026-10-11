@@ -15,6 +15,9 @@ class.
   one is awarded by the event it describes.
 * `PumpkinContentsGameTest` — the contents message for every pumpkin state, and that inspecting changes
   nothing.
+* `CiderPressGameTest` — the cider press: a timed pressing's outputs, fuel charges, what stops it (too few
+  apples, no bottle, no fuel, a full output, pulling the apples out), the hopper slot rules, and pomace's
+  tags, composting, and healing of injured livestock.
 
 Mock players have no network connection, so `PumpkinContents.messageSink` is swapped for a recorder in
 tests (`PumpkinMessageRecorder`). What really appears above the hotbar needs the manual pass below.
@@ -72,3 +75,21 @@ NeoForge.
      points. Missing even Blank leaves it unearned.
    * Check the toast and chat message for each, on both Fabric and NeoForge (the trigger is registered
      separately on each).
+5. **Cider press** (give yourself apples, glass bottles, charcoal, coal, and blaze powder)
+   * Craft the press from an iron ingot, two sticks, a barrel, and three planks. Place it: the spout is on
+     the face toward you, and it turns with the placement direction.
+   * Right-click it: the GUI shows a fruit slot, a bottle slot, a fuel slot with a small bar under it, a
+     cider slot and a pomace slot. Only apples, bottles, and fuel go into their slots; the two outputs take
+     nothing. Shift-clicking sends each item to the right slot.
+   * Put in 3 apples, a bottle, and charcoal: the fuel bar fills and the arrow fills over about 10
+     seconds, then one cider and one pomace appear. Blaze powder fills the bar fully (20 pressings),
+     charcoal and coal 8. With fewer than 3 apples, no bottle, or no fuel, nothing starts.
+   * Drink the cider: it restores hunger like a snack, has no effect, and leaves an empty glass bottle.
+   * A hopper above feeds apples, bottles, and fuel; a hopper below or beside takes the cider and
+     pomace. A hopper beside it never pulls out the apples or the fuel. A comparator reads the contents.
+   * Break the press with items inside: everything drops. It mines faster with an axe.
+   * Pomace: throw it in a composter (it adds a layer sometimes); feed it to a pig to breed it. Hurt a
+     pig, cow, sheep, or horse (fall damage works) and feed it pomace: it heals a heart and the pomace is
+     used up, in creative too without using it up. A healthy cow ignores it. A wolf never takes it.
+   * Check the textures look right. They're placeholders for now. Repeat on Fabric and NeoForge (the
+     NeoForge composter value comes from a data map).

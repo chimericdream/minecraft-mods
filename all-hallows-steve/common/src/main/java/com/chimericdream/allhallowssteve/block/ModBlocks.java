@@ -2,8 +2,10 @@ package com.chimericdream.allhallowssteve.block;
 
 import com.chimericdream.allhallowssteve.ModInfo;
 import com.chimericdream.allhallowssteve.block.entity.CarvingStationBlockEntity;
+import com.chimericdream.allhallowssteve.block.entity.CiderPressBlockEntity;
 import com.chimericdream.allhallowssteve.block.entity.DecoratedPumpkinBlockEntity;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandler;
+import com.chimericdream.allhallowssteve.client.screen.CiderPressScreenHandler;
 import com.chimericdream.allhallowssteve.item.DecoratedPumpkinBlockItem;
 import com.chimericdream.allhallowssteve.wearable.PumpkinFaces;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -49,6 +51,21 @@ public class ModBlocks {
     public static final RegistrySupplier<MenuType<CarvingStationScreenHandler>> CARVING_STATION_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
         CarvingStationScreenHandler.SCREEN_ID,
         () -> new MenuType<>(CarvingStationScreenHandler::new, FeatureFlagSet.of())
+    );
+
+    public static final RegistrySupplier<Block> CIDER_PRESS = REGISTRY_HELPER.registerWithItem(CiderPressBlock.BLOCK_ID, CiderPressBlock::new, FUNCTIONAL_SETTINGS);
+
+    public static final RegistrySupplier<BlockEntityType<CiderPressBlockEntity>> CIDER_PRESS_BLOCK_ENTITY = REGISTRY_HELPER.registerBlockEntity(
+        CiderPressBlockEntity.ENTITY_ID,
+        () -> new BlockEntityType<>(
+            CiderPressBlockEntity::new,
+            Set.of(CIDER_PRESS.get())
+        )
+    );
+
+    public static final RegistrySupplier<MenuType<CiderPressScreenHandler>> CIDER_PRESS_SCREEN_HANDLER = REGISTRY_HELPER.registerScreenHandler(
+        CiderPressScreenHandler.SCREEN_ID,
+        () -> new MenuType<>(CiderPressScreenHandler::new, FeatureFlagSet.of())
     );
 
     /**

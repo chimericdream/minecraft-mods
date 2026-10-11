@@ -1,7 +1,13 @@
 package com.chimericdream.allhallowssteve.item;
 
+import com.chimericdream.allhallowssteve.ModInfo;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Consumables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +32,35 @@ public class ModItems {
     public static final RegistrySupplier<Item> SPAWNER_STENCIL = registerStencil("spawner", "Spawner");
     public static final RegistrySupplier<Item> STRUCTURE_BLOCK_STENCIL = registerStencil("structure_data", "Structure Block");
     public static final RegistrySupplier<Item> WITHER_ROSE_STENCIL = registerStencil("wither_rose", "Wither Rose");
+
+    public static final Identifier CIDER_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "cider");
+    public static final Identifier POMACE_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "pomace");
+
+    /** A bottle of pressed apple juice: food only, no effects, and it gives the glass bottle back. */
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Item> CIDER = REGISTRY_HELPER.registerItem(
+        CIDER_ID,
+        () -> new Item(
+            new Item.Properties()
+                .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
+                .setId(REGISTRY_HELPER.makeItemRegistryKey(CIDER_ID))
+                .craftRemainder(Items.GLASS_BOTTLE)
+                .food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).build(), Consumables.DEFAULT_DRINK)
+                .usingConvertsTo(Items.GLASS_BOTTLE)
+                .stacksTo(16)
+        )
+    );
+
+    /** What is left after pressing: compost, fertilizer, pig food, and a little healing for livestock (see {@code PomaceFeeding}). */
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Item> POMACE = REGISTRY_HELPER.registerItem(
+        POMACE_ID,
+        () -> new Item(
+            new Item.Properties()
+                .arch$tab(CreativeModeTabs.INGREDIENTS)
+                .setId(REGISTRY_HELPER.makeItemRegistryKey(POMACE_ID))
+        )
+    );
 
     private static RegistrySupplier<Item> registerStencil(String stencil, String stencilName) {
         return registerStencil(stencil, stencilName, PumpkinStencilItem.DEFAULT_STACK_SIZE);

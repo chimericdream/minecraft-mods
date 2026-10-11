@@ -7,6 +7,7 @@ import com.chimericdream.allhallowssteve.client.color.DecoratedPumpkinBlockColor
 import com.chimericdream.allhallowssteve.client.render.DecoratedPumpkinBlockEntityRenderer;
 import com.chimericdream.allhallowssteve.client.render.DecoratedPumpkinItemRenderer;
 import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreen;
+import com.chimericdream.allhallowssteve.client.screen.CiderPressScreen;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 public class AllHallowsSteveClient {
     public static void onInitializeClient() {
         MenuScreens.register(ModBlocks.CARVING_STATION_SCREEN_HANDLER.get(), CarvingStationScreen::new);
+        MenuScreens.register(ModBlocks.CIDER_PRESS_SCREEN_HANDLER.get(), CiderPressScreen::new);
 
         ColorHandlerRegistry.registerBlockColors(
             DecoratedPumpkinBlockColors.TINT_SOURCE,

@@ -8,9 +8,14 @@ import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandl
 import com.chimericdream.allhallowssteve.fabric.advancement.AllHallowsSteveAdvancements;
 import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.block.CiderPressBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.LitDecoratedPumpkinBlockDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.item.CiderItemDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.item.PumpkinStencilItemDataGenerator;
+import com.chimericdream.allhallowssteve.item.ModItems;
+import com.chimericdream.allhallowssteve.client.screen.CiderPressScreenHandler;
+import com.chimericdream.allhallowssteve.tag.ModTags;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -24,9 +29,13 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -35,6 +44,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModDataGenerator implements DataGeneratorEntrypoint {
     private static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = List.of(
         new CarvingStationBlockDataGenerator(ModBlocks.CARVING_STATION.get()),
+        new CiderPressBlockDataGenerator(ModBlocks.CIDER_PRESS.get()),
         new DecoratedPumpkinBlockDataGenerator(ModBlocks.DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_BLUE.get()),
@@ -53,6 +63,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(AllHallowsSteveEnglishLangProvider::new);
         pack.addProvider(AllHallowsSteveBlockTagGenerator::new);
         pack.addProvider(AllHallowsSteveItemTagGenerator::new);
+        pack.addProvider(AllHallowsSteveEntityTypeTagGenerator::new);
         pack.addProvider(AllHallowsSteveAdvancements::new);
     }
 
@@ -68,8 +79,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             }
 
             PumpkinStencilItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
+            CiderItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
 
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
+            translationBuilder.add(CiderPressScreenHandler.SCREEN_ID, "Cider Press");
 
             translationBuilder.add("stat.allhallowssteve.light_decorated_pumpkin", "Lit up decorated pumpkin");
 
@@ -141,7 +154,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    /** Only the unlit decorated pumpkin disguises its wearer from endermen and creakings, like vanilla's carved pumpkin. */
+    /**
+     * The unlit decorated pumpkin disguises its wearer from endermen and creakings, like vanilla's
+     * carved pumpkin. The rest are the cider press's tags: what it presses and burns, and what pomace is.
+     */
     private static class AllHallowsSteveItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
         public AllHallowsSteveItemTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
@@ -152,6 +168,44 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             builder(ItemTags.GAZE_DISGUISE_EQUIPMENT)
                 .setReplace(false)
                 .add(ModBlocks.DECORATED_PUMPKIN.get().asItem().builtInRegistryHolder().key());
+
+            builder(ModTags.CIDER_PRESS_PRESSABLE)
+                .setReplace(false)
+                .add(Items.APPLE.builtInRegistryHolder().key());
+
+            builder(ModTags.CIDER_PRESS_FUEL)
+                .setReplace(false)
+                .add(Items.CHARCOAL.builtInRegistryHolder().key())
+                .add(Items.COAL.builtInRegistryHolder().key())
+                .add(Items.BLAZE_POWDER.builtInRegistryHolder().key());
+
+            builder(ModTags.FERTILIZERS)
+                .setReplace(false)
+                .add(ModItems.POMACE.get().builtInRegistryHolder().key());
+
+            builder(ItemTags.PIG_FOOD)
+                .setReplace(false)
+                .add(ModItems.POMACE.get().builtInRegistryHolder().key());
+        }
+    }
+
+    /** The livestock that heal a little when fed pomace: cows, sheep, pigs, and the living horse-likes. */
+    private static class AllHallowsSteveEntityTypeTagGenerator extends FabricTagsProvider<EntityType<?>> {
+        public AllHallowsSteveEntityTypeTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            super(output, Registries.ENTITY_TYPE, registriesFuture);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider registryLookup) {
+            builder(ModTags.POMACE_FEEDABLE)
+                .setReplace(false)
+                .add(EntityTypes.COW.builtInRegistryHolder().key())
+                .add(EntityTypes.MOOSHROOM.builtInRegistryHolder().key())
+                .add(EntityTypes.SHEEP.builtInRegistryHolder().key())
+                .add(EntityTypes.PIG.builtInRegistryHolder().key())
+                .add(EntityTypes.HORSE.builtInRegistryHolder().key())
+                .add(EntityTypes.DONKEY.builtInRegistryHolder().key())
+                .add(EntityTypes.MULE.builtInRegistryHolder().key());
         }
     }
 
@@ -190,6 +244,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             }
 
             PumpkinStencilItemDataGenerator.configureItemModels(itemModelGenerator);
+            CiderItemDataGenerator.configureItemModels(itemModelGenerator);
         }
 
         @Override
