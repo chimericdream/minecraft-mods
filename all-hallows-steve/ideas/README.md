@@ -35,8 +35,11 @@ Feature ideas for this mod, from first thought to ready to build. The process is
   and mulled cider.
 - [Harvest bundles and wreaths](harvest-crafts/harvest-bundles-and-wreaths.md) — Decorative corn shocks,
   wheat sheaves, dried-flower and herb bundles, and door wreaths.
-- [Cider press](harvest-crafts/cider-press.md) — Press vanilla apples into cider, with mulled cider as
-  the upgrade.
+- [Cider press](harvest-crafts/cider-press.md) — A fueled barrel-style press that turns vanilla apples
+  into cider and pomace.
+- [Spices](harvest-crafts/spices.md) — Cinnamon (stripped from logs), cloves and nutmeg (smelted), for
+  mulling and other uses.
+- [Mulling](harvest-crafts/mulling.md) — Turns cider and spices into mulled cider as a small mechanic.
 - [Drying rack](harvest-crafts/drying-rack.md) — Visibly dries herbs, flowers, and apples over time into
   bundles and dried food.
 - [Turnip lanterns](harvest-crafts/turnip-lanterns.md) — A small hanging carved-root lantern, after the
@@ -58,7 +61,13 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Inbox
 
-_Empty._ The older backlog in [`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/) is
+- Spice dyes: an expanded autumn dye palette (burnt sienna, ochre, russet, amber) using spices; see
+  [Spices](harvest-crafts/spices.md) and brainstorm "Expanded autumn dye palette" [9, 10].
+- Spice candles: scented candles with a mild "comfort" effect, such as slightly reduced monster spawning
+  nearby; brainstorm "Spice candles" [5].
+- A more complex, distinctive model for the cider press (e.g. a wooden screw press), as a later upgrade.
+
+The older backlog in [`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/) is
 covered by the active ideas above.
 
 ## Archive

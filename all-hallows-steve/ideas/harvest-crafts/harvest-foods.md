@@ -6,8 +6,8 @@
 ## Description
 
 Two or three well-chosen foods, not a cooking system: **soul cakes** (from the real "souling" tradition),
-**pumpkin soup** (bowl food), and **mulled cider** (see #17 for the full cider version). Standard vanilla-
-tier effects only.
+**pumpkin soup** (bowl food), and **mulled cider** (now its own idea; see [Mulling](mulling.md), built on
+the [Cider press](cider-press.md) and [Spices](spices.md)). Standard vanilla-tier effects only.
 
 ## Decisions
 
@@ -28,7 +28,9 @@ are the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 
 ## Related
 
-- [Cider press](cider-press.md) — mulled cider (#17).
+- [Cider press](cider-press.md) — makes the plain cider (#17).
+- [Mulling](mulling.md) — owns mulled cider; it is no longer part of this idea's scope.
+- [Spices](spices.md) — possible ingredients for soul cakes and other foods.
 - [Carving yields seeds](../carving/carving-seeds.md) — roasted pumpkin seeds.
 - [Drying rack](drying-rack.md) — dried apple rings.
 
