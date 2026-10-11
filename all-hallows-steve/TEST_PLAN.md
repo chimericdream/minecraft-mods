@@ -18,6 +18,8 @@ class.
 * `CiderPressGameTest` — the cider press: a timed pressing's outputs, fuel charges, what stops it (too few
   apples, no bottle, no fuel, a full output, pulling the apples out), the hopper slot rules, and pomace's
   tags, composting, and healing of injured livestock.
+* `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
+  smelting and smoking recipes for cloves and nutmeg.
 
 Mock players have no network connection, so `PumpkinContents.messageSink` is swapped for a recorder in
 tests (`PumpkinMessageRecorder`). What really appears above the hotbar needs the manual pass below.
@@ -93,3 +95,12 @@ NeoForge.
      used up, in creative too without using it up. A healthy cow ignores it. A wolf never takes it.
    * Check the textures look right, and that the arrow and fuel bar fill cleanly over their outlines. Repeat on Fabric and NeoForge (the
      NeoForge composter value comes from a data map).
+6. **Spices** (use `/give` for items; repeat on Fabric and NeoForge)
+   * Strip cherry, mangrove, and jungle logs and woods with an axe: about one in four drops a cinnamon.
+     Oak, spruce, birch, acacia, dark oak, and pale oak never do. Scraping copper and removing wax do not.
+   * Smelt a dandelion, poppy, azure bluet, cornflower, or oxeye daisy in a furnace and a smoker: each gives
+     one cloves (the smoker is twice as fast). A wither rose gives nothing. The campfire does not cook them.
+   * Smelt cocoa beans in a furnace and a smoker: one nutmeg.
+   * Farmer villager: level one up to Journeyman (level 3). Their offers can include 1 emerald for 2 nutmeg.
+     It is one of the Journeyman offers, so not every farmer has it; check a few.
+   * All three items show in the Ingredients creative tab with their own icons.

@@ -26,6 +26,15 @@ mixin) on Fabric and NeoForge. Mulling builds on this.
 **Verified by:** a GameTest for the stripping drop and the smelting recipes, plus a manual check of the
 trade in `TEST_PLAN.md`.
 
+## Implementation notes
+
+- 2026-10-11 — Built on `feat/all-hallows-steve-spices`. Cinnamon drop chance is 25% (`Spices.CINNAMON_STRIP_CHANCE`),
+  hooked by `AHS$AxeItemMixin` (common, so both loaders). Smelting 200 ticks, smoking 100. Clove flower tag:
+  dandelion, poppy, blue orchid, allium, azure bluet, the four tulips, oxeye daisy, cornflower, lily of the
+  valley (no wither rose). The farmer trade is a data-driven `villager_trade` added to the vanilla
+  `farmer/level_3` trade tag, so it is one of the pool of Journeyman offers rather than guaranteed.
+  Textures are first-pass placeholders. Not yet built: spices in harvest foods (soul cakes), which waits on that idea.
+
 ## Decisions
 
 - 2026-10-11 â€” The set is three items: cinnamon, cloves, nutmeg.

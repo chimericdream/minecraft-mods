@@ -16,18 +16,24 @@ import com.chimericdream.allhallowssteve.fabric.item.PumpkinStencilItemDataGener
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.client.screen.CiderPressScreenHandler;
 import com.chimericdream.allhallowssteve.tag.ModTags;
+import com.chimericdream.allhallowssteve.fabric.item.SpiceItemDataGenerator;
+import com.chimericdream.allhallowssteve.villager.ModVillagerTrades;
+import com.chimericdream.allhallowssteve.tags.AHSTags;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -36,6 +42,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -65,6 +73,28 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(AllHallowsSteveItemTagGenerator::new);
         pack.addProvider(AllHallowsSteveEntityTypeTagGenerator::new);
         pack.addProvider(AllHallowsSteveAdvancements::new);
+        pack.addProvider(AllHallowsSteveVillagerTradeProvider::new);
+    }
+
+    @Override
+    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+        registryBuilder.add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap);
+    }
+
+    private static class AllHallowsSteveVillagerTradeProvider extends FabricDynamicRegistryProvider {
+        AllHallowsSteveVillagerTradeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(HolderLookup.Provider registries, Entries entries) {
+            entries.add(ModVillagerTrades.FARMER_EMERALD_NUTMEG, registries.lookupOrThrow(Registries.VILLAGER_TRADE).getOrThrow(ModVillagerTrades.FARMER_EMERALD_NUTMEG).value());
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "AllHallowsSteveVillagerTrades";
+        }
     }
 
     private static class AllHallowsSteveEnglishLangProvider extends FabricLanguageProvider {
@@ -80,6 +110,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
             PumpkinStencilItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
             CiderItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
+            SpiceItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
 
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
             translationBuilder.add(CiderPressScreenHandler.SCREEN_ID, "Cider Press");
@@ -131,6 +162,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
                     }
 
                     PumpkinStencilItemDataGenerator.configureRecipes(registryLookup, exporter, this);
+                    SpiceItemDataGenerator.configureRecipes(registryLookup, exporter, this);
                 }
             };
         }
@@ -150,6 +182,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
         protected void addTags(HolderLookup.Provider registryLookup) {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureBlockTags(registryLookup, this::builder);
+            }
+
+            var cinnamonStrippables = builder(AHSTags.CINNAMON_STRIPPABLES).setReplace(false);
+            for (Block block : SpiceItemDataGenerator.CINNAMON_STRIPPABLES) {
+                cinnamonStrippables.add(block.builtInRegistryHolder().key());
             }
         }
     }
@@ -186,6 +223,11 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             builder(ItemTags.PIG_FOOD)
                 .setReplace(false)
                 .add(ModItems.POMACE.get().builtInRegistryHolder().key());
+
+            var cloveFlowers = builder(AHSTags.CLOVE_FLOWERS).setReplace(false);
+            for (Item flower : SpiceItemDataGenerator.CLOVE_FLOWERS) {
+                cloveFlowers.add(flower.builtInRegistryHolder().key());
+            }
         }
     }
 
@@ -245,6 +287,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
             PumpkinStencilItemDataGenerator.configureItemModels(itemModelGenerator);
             CiderItemDataGenerator.configureItemModels(itemModelGenerator);
+            SpiceItemDataGenerator.configureItemModels(itemModelGenerator);
         }
 
         @Override

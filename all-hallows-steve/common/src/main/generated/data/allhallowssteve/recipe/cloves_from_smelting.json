@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "experience": 0.1,
+  "ingredient": "#allhallowssteve:clove_flowers",
+  "result": {
+    "id": "allhallowssteve:cloves"
+  }
+}

@@ -17,6 +17,7 @@
             "com.chimericdream.allhallowssteve.fabric.test.DispenserPumpkinGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.PlayerPumpkinGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.PumpkinContentsGameTest",
+            "com.chimericdream.allhallowssteve.fabric.test.SpiceGameTest",
             "com.chimericdream.allhallowssteve.fabric.test.WearablePumpkinGameTest"
         ]
     },

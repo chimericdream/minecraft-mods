@@ -6,6 +6,10 @@
   * Put in 3 apples and a glass bottle, plus charcoal, coal, or blaze powder for fuel, and after a short press you get a bottle of cider and some pomace. Hoppers can feed it and empty it.
   * Cider is a drink that restores hunger and gives back the empty bottle.
   * Pomace can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
+* Added three spices: cinnamon, cloves, and nutmeg.
+  * Cinnamon sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.
+  * Smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker to get cloves.
+  * Smelt cocoa beans in a furnace or smoker to get nutmeg. Journeyman farmers also sell it: 1 emerald for 2 nutmeg.
 
 ### 26.2 - 1.0.1
 

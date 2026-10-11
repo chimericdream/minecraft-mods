@@ -17,6 +17,10 @@ import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELP
 public class ModItems {
     public static final List<RegistrySupplier<Item>> PUMPKIN_STENCIL_ITEMS = new ArrayList<>();
 
+    public static final RegistrySupplier<Item> CINNAMON = registerSpice("cinnamon");
+    public static final RegistrySupplier<Item> CLOVES = registerSpice("cloves");
+    public static final RegistrySupplier<Item> NUTMEG = registerSpice("nutmeg");
+
     public static final RegistrySupplier<Item> BLANK_STENCIL = registerStencil("blank", "Blank", 64);
     public static final RegistrySupplier<Item> CRAFTER_STENCIL = registerStencil("crafter", "Crafter");
     public static final RegistrySupplier<Item> CREAKING_STENCIL = registerStencil("creaking", "Creaking");
@@ -61,6 +65,13 @@ public class ModItems {
                 .setId(REGISTRY_HELPER.makeItemRegistryKey(POMACE_ID))
         )
     );
+
+    @SuppressWarnings("UnstableApiUsage")
+    private static RegistrySupplier<Item> registerSpice(String name) {
+        Identifier id = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+
+        return REGISTRY_HELPER.registerItem(id, () -> new Item(new Item.Properties().arch$tab(CreativeModeTabs.INGREDIENTS).setId(REGISTRY_HELPER.makeItemRegistryKey(id))));
+    }
 
     private static RegistrySupplier<Item> registerStencil(String stencil, String stencilName) {
         return registerStencil(stencil, stencilName, PumpkinStencilItem.DEFAULT_STACK_SIZE);
