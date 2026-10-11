@@ -35,13 +35,27 @@ public abstract class MixinItem implements IItemMaxCount {
         }
     }
 
+    // Some items (e.g. ones another mod registers late, or placeholder items synced from a server)
+    // can still have unbound components when we're asked to reset/modify every item. Touching
+    // components() on those throws, which aborts Minecraft.disconnect() and hangs the client.
+    @Unique
+    private boolean componentsBound() {
+        return ((Item) (Object) this).builtInRegistryHolder().areComponentsBound();
+    }
+
     @Override
     public void revert() {
+        if (!componentsBound()) {
+            return;
+        }
         setMaxCount(getVanillaMaxCount());
     }
 
     @Override
     public void setMaxCount(int i) {
+        if (!componentsBound()) {
+            return;
+        }
         ensureVanillaMaxCountCaptured();
         Item self = (Item) (Object) this;
         // As of 26.2, a damageable item with a max stack size above 1 fails component validation
@@ -57,6 +71,9 @@ public abstract class MixinItem implements IItemMaxCount {
 
     @Override
     public int getVanillaMaxCount() {
+        if (!vanillaMaxCountCaptured && !componentsBound()) {
+            return ItemsHelper.ItemMaxCount;
+        }
         ensureVanillaMaxCountCaptured();
         return vanillaMaxCount;
     }
@@ -69,6 +86,10 @@ public abstract class MixinItem implements IItemMaxCount {
 
     @Inject(method = "getDefaultMaxStackSize", at = @At("HEAD"), cancellable = true)
     private void injectGetMaxCount(CallbackInfoReturnable<Integer> cir) {
+        if (!componentsBound()) {
+            cir.setReturnValue(ItemsHelper.ItemMaxCount);
+            return;
+        }
         cir.setReturnValue(((Item) (Object) this).components().getOrDefault(DataComponents.MAX_STACK_SIZE, ItemsHelper.ItemMaxCount));
     }
 
