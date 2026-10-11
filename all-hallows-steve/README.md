@@ -45,6 +45,12 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   **Pomace** — can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
 *   **Hoppers** — can feed the press and empty it.
 
+**Spices** — cinnamon, cloves, and nutmeg, for cooking.
+
+*   **Cinnamon** — sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.
+*   **Cloves** — smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker.
+*   **Nutmeg** — smelt cocoa beans in a furnace or smoker, or buy it from a Journeyman farmer for 1 emerald for 2 nutmeg.
+
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. Two are secret.
 
 ## Notes for Documentation
