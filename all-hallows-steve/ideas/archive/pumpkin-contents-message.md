@@ -1,6 +1,6 @@
 # Pumpkin contents message
 
-> Source: raised while refining [Candle-lit pumpkins](candle-lit-pumpkins.md), 2026-10-01 · Status: **Building** — branch `ahs-pumpkin-features`
+> Source: raised while refining [Candle-lit pumpkins](candle-lit-pumpkins.md), 2026-10-01 · Status: **Shipped** in 26.2-1.0.0
 > Must be built after Candle-lit pumpkins, never before.
 
 ## Description

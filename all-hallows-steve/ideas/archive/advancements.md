@@ -1,6 +1,6 @@
 # Advancements
 
-> Source: requested directly by the user, 2026-10-02 · Status: **Building** — branch `ahs-advancements`
+> Source: requested directly by the user, 2026-10-02 · Status: **Shipped** in 26.2-1.0.0
 
 ## Description
 
@@ -72,8 +72,8 @@ _This idea did not come from a brainstorm._
 
 ## Related
 
-- [Candle-lit pumpkins](../carving/candle-lit-pumpkins.md) — the candle half of *Lit Different*.
-- [Wearable decorated pumpkins](../carving/wearable-decorated-pumpkins.md) — the wearing advancements
+- [Candle-lit pumpkins](candle-lit-pumpkins.md) — the candle half of *Lit Different*.
+- [Wearable decorated pumpkins](../archive/wearable-decorated-pumpkins.md) — the wearing advancements
   and *Better Side*.
 - [Stencils as exploration loot and trades](../carving/stencil-loot-and-trades.md) — *Rare Cut*, and the
   full set gets harder or easier as loot changes.

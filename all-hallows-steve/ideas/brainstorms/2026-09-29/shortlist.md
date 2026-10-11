@@ -29,7 +29,7 @@ it's built. Those files live at the top of `ideas/`, grouped by theme: `carving/
 | #  | Feature                                     | Effort | Value | Votes | My Vote |
 |----|---------------------------------------------|:------:|:-----:|:-----:|:---:|
 |    | **Tier 1 — Quick wins**                     |        |       |       |   |
-| 1  | [Candle-lit pumpkins](../../carving/candle-lit-pumpkins.md) |   S    |  ★★★  |   4   | Yes |
+| 1  | [Candle-lit pumpkins](../../archive/candle-lit-pumpkins.md) |   S    |  ★★★  |   4   | Yes |
 | 2  | [More stencils (autumn/folklore motifs)](../../carving/more-stencils.md) |   S    |  ★★★  |   5   | Yes |
 | 3  | [Stencils as exploration loot and trades](../../carving/stencil-loot-and-trades.md) |   S    |  ★★   |   3   | Yes |
 | 4  | Stencil copying                             |   S    |  ★★   |   2   | No |
@@ -41,7 +41,7 @@ it's built. Those files live at the top of `ideas/`, grouped by theme: `carving/
 | 10 | Autumn-colored leaf litter + rake           |  S–M   |  ★★   |  10   | No |
 |    | **Tier 2 — Solid mid-size features**        |        |       |       |   |
 | 11 | [Pumpkin aging + honeycomb waxing](../../carving/pumpkin-aging-and-waxing.md) |   M    |  ★★★  |   5   | Yes |
-| 12 | [Wearable decorated pumpkins](../../carving/wearable-decorated-pumpkins.md) |   M    |  ★★★  |   3   | Yes |
+| 12 | [Wearable decorated pumpkins](../../archive/wearable-decorated-pumpkins.md) |   M    |  ★★★  |   3   | Yes |
 | 13 | [White pumpkins and gourd varieties](../../crops/white-pumpkins-and-gourds.md) |   M    |  ★★★  |  10   | Maybe |
 | 14 | Hanging / wall-mounted pumpkins             |   M    |  ★★   |   4   | No |
 | 15 | [Turnip lanterns](../../harvest-crafts/turnip-lanterns.md) |   M    |  ★★   |   1   | Maybe |

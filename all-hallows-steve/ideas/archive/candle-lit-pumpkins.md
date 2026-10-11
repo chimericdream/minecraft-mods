@@ -1,7 +1,7 @@
 # Candle-lit pumpkins
 
 > Shortlist #1 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes 4 · My vote **Yes**
-> Status: **Building** — branch `ahs-pumpkin-features`
+> Status: **Shipped** in 26.2-1.0.0
 
 ## Description
 

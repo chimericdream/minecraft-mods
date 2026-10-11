@@ -14,10 +14,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Carving
 
-- [Candle-lit pumpkins](carving/candle-lit-pumpkins.md) — Light decorated pumpkins with 1–4 candles
-  instead of a torch; brightness matches vanilla candles (light 3 to 12 for 1–4 candles).
-- [Pumpkin contents message](carving/pumpkin-contents-message.md) — An overlay message that tells the
-  player what a decorated pumpkin holds (empty, torch, or candles); follows candle-lit pumpkins.
 - [More stencils](carving/more-stencils.md) — Autumn and folklore motifs (oak leaf, owl, raven, moon
   phases) plus eerie vanilla designs such as the warden and sculk shrieker.
 - [Stencils as exploration loot and trades](carving/stencil-loot-and-trades.md) — Rarer designs found in
@@ -26,8 +22,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
   campfire into a small snack.
 - [Pumpkin aging + honeycomb waxing](carving/pumpkin-aging-and-waxing.md) — Placed pumpkins slowly soften
   through a few stages; honeycomb locks the current stage, like copper.
-- [Wearable decorated pumpkins](carving/wearable-decorated-pumpkins.md) — Wear a dyed and carved pumpkin
-  with vanilla carved-pumpkin behavior, rendered on players and armor stands.
 
 ### Crops
 
@@ -62,11 +56,6 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 - [Will-o'-the-wisps + buried caches](folklore/will-o-the-wisps.md) — Faint lights in swamps and Pale
   Gardens that sometimes lead to buried caches holding the rarest stencils.
 
-### Progression
-
-- [Advancements](progression/advancements.md) — A tab of quiet, funny advancements for the carving
-  station, dyeing, carving, wearing and lighting pumpkins.
-
 ## Inbox
 
 _Empty._ The older backlog in [`brainstorms/2026-09-10-legacy/`](brainstorms/2026-09-10-legacy/) is
@@ -74,4 +63,7 @@ covered by the active ideas above.
 
 ## Archive
 
-_Empty._
+- [Candle-lit pumpkins](archive/candle-lit-pumpkins.md) — Shipped in 26.2-1.0.0.
+- [Wearable decorated pumpkins](archive/wearable-decorated-pumpkins.md) — Shipped in 26.2-1.0.0.
+- [Pumpkin contents message](archive/pumpkin-contents-message.md) — Shipped in 26.2-1.0.0.
+- [Advancements](archive/advancements.md) — Shipped in 26.2-1.0.0.

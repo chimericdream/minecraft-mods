@@ -1,7 +1,7 @@
 # Wearable decorated pumpkins
 
 > Shortlist #12 · Tier 2 — Solid mid-size features · Effort **L** (was M, see Decisions) · Value ★★★ · Votes 3 · My vote **Yes**
-> Status: **Building** — branch `ahs-pumpkin-features`
+> Status: **Shipped** in 26.2-1.0.0
 
 ## Description
 

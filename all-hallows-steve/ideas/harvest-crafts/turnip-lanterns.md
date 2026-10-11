@@ -23,7 +23,7 @@ Bracketed numbers are the `brainstorms/2026-09-29/agentN.md` files that suggeste
 
 ## Related
 
-- [Candle-lit pumpkins](../carving/candle-lit-pumpkins.md) — another light-source variant.
+- [Candle-lit pumpkins](../archive/candle-lit-pumpkins.md) — another light-source variant.
 - [White pumpkins and gourd varieties](../crops/white-pumpkins-and-gourds.md) — small carvable gourds.
 
 ## Open questions

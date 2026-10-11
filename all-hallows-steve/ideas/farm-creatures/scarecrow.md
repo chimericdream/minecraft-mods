@@ -31,7 +31,7 @@ are the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 ## Related
 
 - [Crows](crows.md) — the other half of the gameplay loop.
-- [Wearable decorated pumpkins](../carving/wearable-decorated-pumpkins.md) — shares the pumpkin-head
+- [Wearable decorated pumpkins](../archive/wearable-decorated-pumpkins.md) — shares the pumpkin-head
   rendering.
 - [Tall corn](../crops/tall-corn.md)
 
