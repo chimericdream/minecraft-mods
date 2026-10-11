@@ -1,5 +1,11 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.2
+
+#### Bug Fixes
+
+* Fixed the game freezing with an error when joining a multiplayer server.
+
 ### 26.2 - 1.0.1
 
 #### Bug Fixes
