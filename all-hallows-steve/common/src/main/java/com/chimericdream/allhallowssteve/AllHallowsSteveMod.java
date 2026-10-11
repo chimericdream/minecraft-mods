@@ -47,6 +47,6 @@ public final class AllHallowsSteveMod {
     public static void postInit() {
         ModDispenserBehaviors.init();
 
-        ComposterBlock.COMPOSTABLES.put(ModItems.POMACE.get(), 0.5F);
+        ComposterBlock.COMPOSTABLES.put(ModItems.POMACE.get(), 0.65F);
     }
 }
