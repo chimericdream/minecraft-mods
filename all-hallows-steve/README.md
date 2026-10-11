@@ -1,6 +1,6 @@
 # All Hallows Steve (Fabric/NeoForge)
 
-![Version: 1.0.1](https://img.shields.io/badge/version-1.0.1-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.1.0-beta.0](https://img.shields.io/badge/version-1.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Halloween-themed blocks, items, and pumpkin dyeing._
 
@@ -38,6 +38,12 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   In first person you see through the carved openings. An uncarved face blocks your view completely.
 *   Choose which side faces forward with the "Turn Worn Pumpkin" key (unbound by default).
 *   A config option (also available through Mod Menu) lowers how much the worn pumpkin blocks your view.
+
+**Cider Press** — craft one from an iron ingot, two sticks, a barrel, and three planks. Put in 3 apples, a glass bottle, and some fuel (charcoal or coal gives 8 pressings, blaze powder gives 20), and after a short press you get a bottle of cider and a piece of pomace.
+
+*   **Cider** — a drink that restores hunger and gives you the empty bottle back.
+*   **Pomace** — can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
+*   **Hoppers** — can feed the press and empty it.
 
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. Two are secret.
 
