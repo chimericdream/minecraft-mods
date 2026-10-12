@@ -45,7 +45,7 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   **Pomace** — can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
 *   **Hoppers** — can feed the press and empty it.
 
-**Spices** — cinnamon, cloves, and nutmeg, for cooking.
+**Spices** — cinnamon, cloves, and nutmeg, used to make mulled cider.
 
 *   **Cinnamon** — sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.
 *   **Cloves** — smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker.
@@ -53,7 +53,7 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 
 **Mulled Cider** — pour 3 bottles of cider into a cauldron, add spices by right-clicking it with them (each kind once), and set it over a lit campfire or soul campfire. After about 30 seconds it turns into mulled cider; use empty glass bottles to ladle out 3 servings.
 
-*   **Cinnamon** adds more hunger, **cloves** add more saturation, and **nutmeg** adds a little of both. All three together is best.
+*   **Cinnamon** adds more hunger, **cloves** add more saturation, and **nutmeg** adds a little of both. All three together is best. Each serving's tooltip lists the spices in it.
 *   If the fire goes out, the simmer starts over but the spices stay.
 
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. Two are secret.
