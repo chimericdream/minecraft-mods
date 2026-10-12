@@ -39,6 +39,23 @@ cauldron needs extending.
 **Verified by:** a GameTest for the fill, spice, simmer, ladle, and fire-out reset flow, plus a visual
 smoke test for the cauldron rendering and a `TEST_PLAN.md` entry.
 
+## Implementation notes
+
+- 2026-10-11 — Built on `feat/all-hallows-steve-mulling`. Two blocks, `cider_cauldron` and
+  `mulled_cider_cauldron`, both extend vanilla's `LayeredCauldronBlock` (like Minekea's honey cauldron) with
+  their own interaction dispatchers; an access widener opens `CauldronInteraction.Dispatcher.put`. They have
+  no items and drop a plain cauldron.
+- State is all block-state, no block entity: `level` (1–3), `cinnamon`/`cloves`/`nutmeg` booleans, and on the
+  cider block a `simmer` counter (0–4). A scheduled tick every 120 ticks (6 s) checks for a lit
+  `#minecraft:campfires` block below: heated adds a step, and the step after `simmer` 4 (30 s total) swaps
+  in the mulled block; unheated resets `simmer` to 0. Taking a serving out also resets it.
+- Mulled cider is one item (`mulled_cider`); each ladled serving carries its own `FOOD` component from
+  `MulledCider.food`. Base 5 hunger / 0.3 saturation modifier; cinnamon +2 hunger, cloves +0.25 modifier,
+  nutmeg +1 hunger and +0.1 modifier. Fully spiced is 8 hunger.
+- Cauldron models and blockstates are hand-authored (vanilla `template_cauldron_*`, amber and darker
+  red-brown content textures); colours do not show which spices went in.
+- Not yet checked: how the cauldrons actually look in game (rendering, particles). See `TEST_PLAN.md` § 7.
+
 ## Decisions
 
 - 2026-10-11 — Mulling is explored as a mechanic, not just a crafting recipe.

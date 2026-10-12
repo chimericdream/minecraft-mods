@@ -38,6 +38,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> WITHER_ROSE_STENCIL = registerStencil("wither_rose", "Wither Rose");
 
     public static final Identifier CIDER_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "cider");
+    public static final Identifier MULLED_CIDER_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "mulled_cider");
     public static final Identifier POMACE_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "pomace");
 
     /** A bottle of pressed apple juice: food only, no effects, and it gives the glass bottle back. */
@@ -50,6 +51,24 @@ public class ModItems {
                 .setId(REGISTRY_HELPER.makeItemRegistryKey(CIDER_ID))
                 .craftRemainder(Items.GLASS_BOTTLE)
                 .food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).build(), Consumables.DEFAULT_DRINK)
+                .usingConvertsTo(Items.GLASS_BOTTLE)
+                .stacksTo(16)
+        )
+    );
+
+    /**
+     * A hot bottle of mulled cider. The food values here are the unspiced ones; the cauldron overrides them
+     * per serving from the spices that went in (see {@link MulledCider}).
+     */
+    @SuppressWarnings("UnstableApiUsage")
+    public static final RegistrySupplier<Item> MULLED_CIDER = REGISTRY_HELPER.registerItem(
+        MULLED_CIDER_ID,
+        () -> new Item(
+            new Item.Properties()
+                .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
+                .setId(REGISTRY_HELPER.makeItemRegistryKey(MULLED_CIDER_ID))
+                .craftRemainder(Items.GLASS_BOTTLE)
+                .food(MulledCider.food(false, false, false), Consumables.DEFAULT_DRINK)
                 .usingConvertsTo(Items.GLASS_BOTTLE)
                 .stacksTo(16)
         )

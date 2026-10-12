@@ -51,6 +51,11 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   **Cloves** — smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker.
 *   **Nutmeg** — smelt cocoa beans in a furnace or smoker, or buy it from a Journeyman farmer for 1 emerald for 2 nutmeg.
 
+**Mulled Cider** — pour 3 bottles of cider into a cauldron, add spices by right-clicking it with them (each kind once), and set it over a lit campfire or soul campfire. After about 30 seconds it turns into mulled cider; use empty glass bottles to ladle out 3 servings.
+
+*   **Cinnamon** adds more hunger, **cloves** add more saturation, and **nutmeg** adds a little of both. All three together is best.
+*   If the fire goes out, the simmer starts over but the spices stay.
+
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. Two are secret.
 
 ## Notes for Documentation
@@ -73,7 +78,7 @@ according to the permissions outlined by the artist and the license.
 
 * Pumpkin stencil overlays, base texture ([part_paper_vellum.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_paper_vellum.png))
 * Cider press, top ([device_barrel_ends.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_ends.png)), bottom ([device_barrel_feet.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_feet.png)), and sides and front ([device_barrel_sides.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_sides.png); the front has a spout added)
-* Cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); the liquid color was changed)
+* Cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); the liquid color was changed), and mulled cider (the same texture, recolored again)
 * Pomace ([material_blob_organic_biomass.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_blob_organic_biomass.png))
 * Cinnamon ([part_rod_generic_bark.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_rod_generic_bark.png); recolored and edited)
 * Nutmeg ([seeds_generic_nuts.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_nuts.png))

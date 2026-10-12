@@ -20,6 +20,10 @@ class.
   tags, composting, and healing of injured livestock.
 * `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
   smelting and smoking recipes for cloves and nutmeg.
+* `MullingGameTest` — cider filling a cauldron one level per bottle, taking cider back out, spices (full
+  cauldron only, once each), the simmer (driven by calling the cauldron's `tick` directly) including no
+  heat and the fire going out, and ladling servings. The rendering, particles, and sounds need the manual
+  pass below.
 
 Mock players have no network connection, so `PumpkinContents.messageSink` is swapped for a recorder in
 tests (`PumpkinMessageRecorder`). What really appears above the hotbar needs the manual pass below.
@@ -104,3 +108,14 @@ NeoForge.
    * Farmer villager: level one up to Journeyman (level 3). Their offers can include 1 emerald for 2 nutmeg.
      It is one of the Journeyman offers, so not every farmer has it; check a few.
    * All three items show in the Ingredients creative tab with their own icons.
+7. **Mulling** (use `/give` for items; repeat on Fabric and NeoForge)
+   * Right-click an empty cauldron with a cider bottle three times: each adds a level, shows amber cider, and
+     gives back a glass bottle. A fourth does nothing. An empty bottle takes a serving back out.
+   * Right-click a full cider cauldron with cinnamon, cloves, and nutmeg: each is used up once; a second of
+     the same does nothing. A part-full cauldron refuses spices.
+   * Put the full cauldron over a lit campfire (and again over a lit soul campfire): bubbles appear, and after
+     about 30 seconds it turns darker with steam. Over an unlit campfire or no fire, nothing happens.
+   * Put the fire out mid-simmer: bubbles stop. Relight it: the simmer starts over, spices still there.
+   * Ladle three servings with empty bottles: the cauldron empties to a plain one. Eat a serving: more hunger
+     with cinnamon, more saturation with cloves. Check the cauldron is not touched by hoppers or dispensers.
+   * Breaking either cauldron drops a plain cauldron. Pick-block gives a plain cauldron.

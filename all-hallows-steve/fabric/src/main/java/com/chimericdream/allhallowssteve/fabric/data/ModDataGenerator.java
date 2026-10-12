@@ -8,6 +8,7 @@ import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandl
 import com.chimericdream.allhallowssteve.fabric.advancement.AllHallowsSteveAdvancements;
 import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.block.CiderCauldronBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CiderPressBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.LitDecoratedPumpkinBlockDataGenerator;
@@ -53,6 +54,8 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     private static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = List.of(
         new CarvingStationBlockDataGenerator(ModBlocks.CARVING_STATION.get()),
         new CiderPressBlockDataGenerator(ModBlocks.CIDER_PRESS.get()),
+        new CiderCauldronBlockDataGenerator(ModBlocks.CIDER_CAULDRON.get(), "Cider Cauldron"),
+        new CiderCauldronBlockDataGenerator(ModBlocks.MULLED_CIDER_CAULDRON.get(), "Mulled Cider Cauldron"),
         new DecoratedPumpkinBlockDataGenerator(ModBlocks.DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_BLUE.get()),

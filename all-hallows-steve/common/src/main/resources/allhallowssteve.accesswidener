@@ -20,3 +20,7 @@ accessible field net/minecraft/client/data/models/BlockModelGenerators itemModel
 # GuiGraphicsExtractor#item (which always bakes ItemDisplayContext.GUI's fixed transform with no way to
 # add our own per-frame rotation on top). guiRenderState has no public accessor for this.
 accessible field net/minecraft/client/gui/GuiGraphicsExtractor guiRenderState Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
+
+# Cider and mulled-cider cauldrons build their own CauldronInteraction.Dispatcher; as of 26.1 its put() is
+# package-private, so mods can't register item interactions without widening it.
+accessible method net/minecraft/core/cauldron/CauldronInteraction$Dispatcher put (Lnet/minecraft/world/item/Item;Lnet/minecraft/core/cauldron/CauldronInteraction;)V
