@@ -147,3 +147,8 @@ NeoForge.
    * Craft apple pie (apple, sugar, apple over wheat, wheat, wheat); a swapped layout does nothing. Craft spiced pumpkin
      pie from a pumpkin pie and mulling spices. Eat both and compare against vanilla pumpkin pie.
    * All nine items show in the Food & Drinks creative tab with their own icons.
+
+1. **Guide book**
+   * Craft a book and a pumpkin: you get the All Hallows Steve Guide. `/opus give allhallowssteve:guide` gives the same book.
+   * Open it: the carving station chapter shows its screenshots, recipes show on crafting panels, and clicking a screenshot enlarges it.
+   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.

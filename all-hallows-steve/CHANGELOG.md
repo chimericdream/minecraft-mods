@@ -2,6 +2,8 @@
 
 #### New Features
 
+* Added the All Hallows Steve Guide, an in-game book with screenshots covering pumpkins, cider, spices, and harvest foods. Craft one from a book and a pumpkin, or use `/opus give allhallowssteve:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
 * Added harvest foods:
   * Soul cakes: craft wheat, sugar, and an egg for 2 cakes. Adding one spice makes a cake with a short effect, 30 seconds: cloves give Absorption, cinnamon gives Luck, and nutmeg gives Night Vision. Adding mulling spices makes a spiced soul cake with all three.
   * Pumpkin soup: a pumpkin, a bowl, and a carrot or potato.
