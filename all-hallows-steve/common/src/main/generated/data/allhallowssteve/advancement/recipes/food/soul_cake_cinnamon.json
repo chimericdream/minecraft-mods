@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cinnamon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:cinnamon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:egg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "allhallowssteve:soul_cake_cinnamon"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_egg",
+      "has_cinnamon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "allhallowssteve:soul_cake_cinnamon"
+    ]
+  }
+}

@@ -2,6 +2,12 @@
 
 #### New Features
 
+* Added harvest foods:
+  * Soul cakes: craft wheat, sugar, and an egg for 2 cakes. Adding one spice makes a cake with a short effect, 30 seconds: cloves give Absorption, cinnamon gives Luck, and nutmeg gives Night Vision. Adding mulling spices makes a spiced soul cake with all three.
+  * Pumpkin soup: a pumpkin, a bowl, and a carrot or potato.
+  * Roasted pumpkin seeds: cook pumpkin seeds in a furnace, smoker, or campfire.
+  * Apple pie: apple, sugar, and apple over three wheat.
+  * Spiced pumpkin pie: a pumpkin pie and mulling spices.
 * Added eleven advancements for the cider press, spices, juices, and mulled drinks, in the same tab as the pumpkin ones. Drinking every kind of mulled drink earns the secret *Season's Drinkings* and some experience.
 * Added the Cider Press. Craft one from an iron ingot, two sticks, a barrel, and three planks.
   * Put in 3 apples and a glass bottle, plus charcoal, coal, or blaze powder for fuel, and after a short press you get a bottle of apple cider and some pomace. Hoppers can feed it and empty it.

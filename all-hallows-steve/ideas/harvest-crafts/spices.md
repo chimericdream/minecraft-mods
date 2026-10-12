@@ -34,7 +34,7 @@ trade in `TEST_PLAN.md`.
   dandelion, poppy, blue orchid, allium, azure bluet, the four tulips, oxeye daisy, cornflower, lily of the
   valley (no wither rose). The farmer trade is a data-driven `villager_trade` added to the vanilla
   `farmer/level_3` trade tag, so it is one of the pool of Journeyman offers rather than guaranteed.
-  Cinnamon (recolored bark rod) and nutmeg textures come from unused-textures (credited in the README); the cloves texture is a first-pass placeholder. The mulling spices texture (a cheesecloth sachet with a red tie) is a hand-drawn first pass too. Not yet built: spices in harvest foods (soul cakes), which waits on that idea.
+  Cinnamon (recolored bark rod) and nutmeg textures come from unused-textures (credited in the README); the cloves texture is a first-pass placeholder. The mulling spices texture (a cheesecloth sachet with a red tie) is a hand-drawn first pass too. Spices in harvest foods (soul cakes) are built; see [Harvest foods](harvest-foods.md).
 
 ## Decisions
 

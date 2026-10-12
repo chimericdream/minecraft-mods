@@ -60,6 +60,14 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   Every serving restores 8 hunger.
 *   If the fire goes out, the simmer starts over but the spices stay.
 
+**Harvest Foods** — a few autumn foods, all in the Food & Drinks tab.
+
+*   **Soul Cake** — craft wheat, sugar, and an egg for 2 cakes. Add one spice before crafting for a cake with a short effect (30 seconds each): cloves give Absorption, cinnamon gives Luck, nutmeg gives Night Vision. Add mulling spices for a *Spiced Soul Cake* with all three.
+*   **Pumpkin Soup** — a pumpkin, a bowl, and a carrot or potato. Gives the bowl back.
+*   **Roasted Pumpkin Seeds** — cook pumpkin seeds in a furnace, smoker, or campfire.
+*   **Apple Pie** — apple, sugar, and apple over three wheat.
+*   **Spiced Pumpkin Pie** — a pumpkin pie and mulling spices, crafted together. A bigger meal than plain pumpkin pie.
+
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. A second branch covers the cider press, pomace, spices, juices, and mulled drinks, ending in the secret *Season's Drinkings*. Three in all are secret.
 
 ## Notes for Documentation
@@ -86,6 +94,10 @@ according to the permissions outlined by the artist and the license.
 * Pomace ([material_blob_organic_biomass.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_blob_organic_biomass.png))
 * Cinnamon ([part_rod_generic_bark.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_rod_generic_bark.png); recolored and edited)
 * Nutmeg ([seeds_generic_nuts.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_nuts.png))
+* Soul cakes ([food_hardtack.png](https://github.com/malcolmriley/unused-textures/blob/master/items/food_hardtack.png); a different topping added for each spice)
+* Pumpkin soup ([food_stew_sweetpod.png](https://github.com/malcolmriley/unused-textures/blob/master/items/food_stew_sweetpod.png); recolored)
+* Roasted pumpkin seeds ([seeds_generic_gourd.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_gourd.png))
+* Apple pie and spiced pumpkin pie ([part_mould.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_mould.png); recolored and edited)
 
 ## License
 

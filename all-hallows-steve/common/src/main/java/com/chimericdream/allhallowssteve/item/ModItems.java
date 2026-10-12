@@ -3,6 +3,7 @@ package com.chimericdream.allhallowssteve.item;
 import com.chimericdream.allhallowssteve.ModInfo;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -22,6 +23,33 @@ public class ModItems {
     public static final RegistrySupplier<Item> NUTMEG = registerSpice("nutmeg");
     /** One of each spice, crafted together; this is what goes into a cider cauldron. */
     public static final RegistrySupplier<Item> MULLING_SPICES = registerSpice("mulling_spices");
+
+    public static final RegistrySupplier<Item> SOUL_CAKE = registerSoulCake("soul_cake", List.of());
+    public static final RegistrySupplier<Item> SOUL_CAKE_CLOVES = registerSoulCake("soul_cake_cloves", List.of(HarvestFoods.CLOVES_EFFECT));
+    public static final RegistrySupplier<Item> SOUL_CAKE_CINNAMON = registerSoulCake("soul_cake_cinnamon", List.of(HarvestFoods.CINNAMON_EFFECT));
+    public static final RegistrySupplier<Item> SOUL_CAKE_NUTMEG = registerSoulCake("soul_cake_nutmeg", List.of(HarvestFoods.NUTMEG_EFFECT));
+    /** Made with the mulling spices sachet: all three spice effects. */
+    public static final RegistrySupplier<Item> SOUL_CAKE_SPICED = registerSoulCake(
+        "soul_cake_spiced",
+        List.of(HarvestFoods.CLOVES_EFFECT, HarvestFoods.CINNAMON_EFFECT, HarvestFoods.NUTMEG_EFFECT)
+    );
+
+    public static final RegistrySupplier<Item> PUMPKIN_SOUP = registerFood(
+        "pumpkin_soup",
+        new Item.Properties().food(HarvestFoods.pumpkinSoup(), Consumables.DEFAULT_FOOD).usingConvertsTo(Items.BOWL).stacksTo(1)
+    );
+    public static final RegistrySupplier<Item> ROASTED_PUMPKIN_SEEDS = registerFood(
+        "roasted_pumpkin_seeds",
+        new Item.Properties().food(HarvestFoods.roastedPumpkinSeeds(), Consumables.DEFAULT_FOOD)
+    );
+    public static final RegistrySupplier<Item> APPLE_PIE = registerFood(
+        "apple_pie",
+        new Item.Properties().food(HarvestFoods.applePie(), Consumables.DEFAULT_FOOD)
+    );
+    public static final RegistrySupplier<Item> SPICED_PUMPKIN_PIE = registerFood(
+        "spiced_pumpkin_pie",
+        new Item.Properties().food(HarvestFoods.spicedPumpkinPie(), Consumables.DEFAULT_FOOD)
+    );
 
     public static final RegistrySupplier<Item> BLANK_STENCIL = registerStencil("blank", "Blank", 64);
     public static final RegistrySupplier<Item> CRAFTER_STENCIL = registerStencil("crafter", "Crafter");
@@ -130,6 +158,24 @@ public class ModItems {
                     .usingConvertsTo(Items.GLASS_BOTTLE)
                     .stacksTo(16)
             )
+        );
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    private static RegistrySupplier<Item> registerFood(String name, Item.Properties properties) {
+        Identifier id = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+
+        return REGISTRY_HELPER.registerItem(
+            id,
+            () -> new Item(properties.arch$tab(CreativeModeTabs.FOOD_AND_DRINKS).setId(REGISTRY_HELPER.makeItemRegistryKey(id)))
+        );
+    }
+
+    /** Every soul cake has the same food values; the spices only add effects. */
+    private static RegistrySupplier<Item> registerSoulCake(String name, List<MobEffectInstance> effects) {
+        return registerFood(
+            name,
+            new Item.Properties().food(HarvestFoods.soulCake(), HarvestFoods.soulCakeConsumable(effects))
         );
     }
 

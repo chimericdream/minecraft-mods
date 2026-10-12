@@ -21,6 +21,10 @@ class.
   tags, composting, and healing of injured livestock.
 * `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
   smelting and smoking recipes for cloves and nutmeg, and the mulling spices crafting recipe.
+* `HarvestFoodGameTest` — the soul cake recipes (a batch of 2, one spice or the sachet picks the variant, two loose
+  spices or a missing base ingredient make nothing), pumpkin soup, apple pie, spiced pumpkin pie, roasting seeds in the
+  furnace, smoker, and campfire, that every food has food values, and the spiced soul cakes' 30 second effects (eaten by
+  a cow, since mock players have no connection to send effect packets over).
 * `MullingGameTest` — apple cider filling a cauldron one level per bottle, taking it back out, mulling spices (full
   cauldron only, once), the simmer (driven by calling the cauldron's `tick` directly) including no
   heat and the fire going out, and ladling servings, for apple cider and both berry juices (which also must not mix). The rendering, particles, and sounds need the manual
@@ -133,3 +137,13 @@ NeoForge.
    * Repeat the pour, spice, simmer, and ladle steps with sweet berry juice (red) and glow berry juice (gold): each
      gets its own cauldron color and its own mulled drink. A different juice poured into a part-full cauldron does nothing.
    * Breaking either cauldron drops a plain cauldron. Pick-block gives a plain cauldron.
+8. **Harvest foods** (use `/give` for items; repeat on Fabric and NeoForge)
+   * Craft wheat, sugar, and an egg: 2 soul cakes. Add cloves, cinnamon, nutmeg, or mulling spices to get a different
+     cake; the textures differ slightly (plain, studs, red dust, brown flecks, a mix). Two loose spices do nothing.
+   * Eat each spiced cake: cloves give Absorption, cinnamon gives Luck, nutmeg gives Night Vision, mulling spices give
+     all three, each for 30 seconds. The plain cake gives no effect. None of them show an effect tooltip.
+   * Pumpkin soup (pumpkin, bowl, carrot or potato) gives the bowl back and does not stack. Beetroot does not work.
+   * Cook pumpkin seeds in a furnace, a smoker (twice as fast), and a campfire: roasted pumpkin seeds.
+   * Craft apple pie (apple, sugar, apple over wheat, wheat, wheat); a swapped layout does nothing. Craft spiced pumpkin
+     pie from a pumpkin pie and mulling spices. Eat both and compare against vanilla pumpkin pie.
+   * All nine items show in the Food & Drinks creative tab with their own icons.

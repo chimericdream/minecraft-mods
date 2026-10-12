@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "minecraft:apple",
+    "S": "minecraft:sugar",
+    "W": "minecraft:wheat"
+  },
+  "pattern": [
+    "ASA",
+    "WWW"
+  ],
+  "result": {
+    "id": "allhallowssteve:apple_pie"
+  }
+}

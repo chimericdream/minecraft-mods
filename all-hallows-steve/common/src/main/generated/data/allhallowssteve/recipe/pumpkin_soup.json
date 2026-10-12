@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:pumpkin",
+    "minecraft:bowl",
+    [
+      "minecraft:carrot",
+      "minecraft:potato"
+    ]
+  ],
+  "result": {
+    "id": "allhallowssteve:pumpkin_soup"
+  }
+}
