@@ -12,6 +12,7 @@
   * Smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker to get cloves.
   * Smelt cocoa beans in a furnace or smoker to get nutmeg. Journeyman farmers also sell it: 1 emerald for 2 nutmeg.
 * Added mulling spices. Craft one cinnamon, one cloves, and one nutmeg together.
+* Added mulled sweet berry juice and mulled glow berry juice. Sweet berry juice and glow berry juice go into a cauldron and mull the same way as apple cider (3 bottles, mulling spices, a lit campfire, about 30 seconds). Different juices can't be mixed in one cauldron.
 * Added mulled apple cider. Pour 3 bottles of apple cider into a cauldron, right-click it with mulling spices, and put it over a lit campfire or soul campfire. It only starts simmering once the spices are in. After about 30 seconds it becomes mulled apple cider. Use empty glass bottles to ladle it out.
   * Each serving restores 8 hunger. If the fire goes out, the simmer starts over but the spices stay.
 

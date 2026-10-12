@@ -1,9 +1,7 @@
 package com.chimericdream.allhallowssteve.block;
 
-import com.chimericdream.allhallowssteve.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -29,13 +27,11 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
 /**
- * A cauldron of cider. A full one with mulling spices added, above a lit campfire, simmers for about 30 seconds and turns into a
- * {@link MulledAppleCiderCauldronBlock}, keeping whatever spices were added. If the fire goes out, the
+ * A cauldron of cider or berry juice. A full one with mulling spices added, above a lit campfire, simmers for about 30 seconds and turns into a
+ * {@link MulledJuiceCauldronBlock} of the same drink, keeping whatever spices were added. If the fire goes out, the
  * simmer progress resets but the spices stay.
  */
-public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
-    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "apple_cider_cauldron");
-
+public class JuiceCauldronBlock extends LayeredCauldronBlock {
     /** Simmer steps done so far; one more heated step after this value finishes the batch. */
     public static final int MAX_SIMMER = 4;
     public static final IntegerProperty SIMMER = IntegerProperty.create("simmer", 0, MAX_SIMMER);
@@ -43,21 +39,21 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
     /** Ticks per simmer step: 5 steps of 6 seconds is about 30 seconds. */
     public static final int TICK_INTERVAL = 120;
 
-    public AppleCiderCauldronBlock(BlockBehaviour.Properties settings) {
-        this();
-    }
+    private final JuiceCauldronType type;
 
-    public AppleCiderCauldronBlock() {
+    public JuiceCauldronBlock(JuiceCauldronType type) {
         super(
             Biome.Precipitation.NONE,
-            AppleCiderCauldrons.CIDER_BEHAVIORS,
-            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID))
+            type.behaviors(),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(type.cauldronId()))
         );
+
+        this.type = type;
 
         this.registerDefaultState(
             this.stateDefinition.any()
                 .setValue(LEVEL, 1)
-                .setValue(AppleCiderCauldrons.SPICED, false)
+                .setValue(JuiceCauldrons.SPICED, false)
                 .setValue(SIMMER, 0)
         );
     }
@@ -65,7 +61,7 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(AppleCiderCauldrons.SPICED, SIMMER);
+        builder.add(JuiceCauldrons.SPICED, SIMMER);
     }
 
     /** Whether a lit campfire (or soul campfire) sits directly under the cauldron. */
@@ -87,7 +83,7 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
         super.tick(state, level, pos, random);
 
         // No simmering until the mulling spices are in, whatever is under the cauldron.
-        if (!isFull(state) || !state.getValue(AppleCiderCauldrons.SPICED)) {
+        if (!isFull(state) || !state.getValue(JuiceCauldrons.SPICED)) {
             return;
         }
 
@@ -100,7 +96,7 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
         } else if (simmer >= MAX_SIMMER) {
             level.setBlockAndUpdate(
                 pos,
-                ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get().defaultBlockState()
+                this.type.mulledCauldron().get().defaultBlockState()
                     .setValue(LEVEL, state.getValue(LEVEL))
             );
             level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 0.8F);

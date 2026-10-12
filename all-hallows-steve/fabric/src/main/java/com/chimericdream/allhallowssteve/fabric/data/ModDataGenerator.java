@@ -8,7 +8,7 @@ import com.chimericdream.allhallowssteve.client.screen.CarvingStationScreenHandl
 import com.chimericdream.allhallowssteve.fabric.advancement.AllHallowsSteveAdvancements;
 import com.chimericdream.allhallowssteve.fabric.block.CandleLitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CarvingStationBlockDataGenerator;
-import com.chimericdream.allhallowssteve.fabric.block.AppleCiderCauldronBlockDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.block.JuiceCauldronBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.CiderPressBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.LitDecoratedPumpkinBlockDataGenerator;
@@ -54,8 +54,12 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     private static final List<FabricBlockDataGenerator> BLOCK_GENERATORS = List.of(
         new CarvingStationBlockDataGenerator(ModBlocks.CARVING_STATION.get()),
         new CiderPressBlockDataGenerator(ModBlocks.CIDER_PRESS.get()),
-        new AppleCiderCauldronBlockDataGenerator(ModBlocks.APPLE_CIDER_CAULDRON.get(), "Apple Cider Cauldron"),
-        new AppleCiderCauldronBlockDataGenerator(ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get(), "Mulled Apple Cider Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.APPLE_CIDER_CAULDRON.get(), "Apple Cider Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get(), "Mulled Apple Cider Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.SWEET_BERRY_JUICE_CAULDRON.get(), "Sweet Berry Juice Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.MULLED_SWEET_BERRY_JUICE_CAULDRON.get(), "Mulled Sweet Berry Juice Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.GLOW_BERRY_JUICE_CAULDRON.get(), "Glow Berry Juice Cauldron"),
+        new JuiceCauldronBlockDataGenerator(ModBlocks.MULLED_GLOW_BERRY_JUICE_CAULDRON.get(), "Mulled Glow Berry Juice Cauldron"),
         new DecoratedPumpkinBlockDataGenerator(ModBlocks.DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN.get()),
         new LitDecoratedPumpkinBlockDataGenerator((LitDecoratedPumpkinBlock) ModBlocks.LIT_DECORATED_PUMPKIN_BLUE.get()),

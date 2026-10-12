@@ -68,9 +68,13 @@ public class ModBlocks {
         () -> new MenuType<>(CiderPressScreenHandler::new, FeatureFlagSet.of())
     );
 
-    /** The apple cider and mulled apple cider cauldrons deliberately have no items; a vanilla cauldron turns into one when apple cider is poured in. */
-    public static final RegistrySupplier<Block> APPLE_CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(AppleCiderCauldronBlock.BLOCK_ID, AppleCiderCauldronBlock::new);
-    public static final RegistrySupplier<Block> MULLED_APPLE_CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(MulledAppleCiderCauldronBlock.BLOCK_ID, MulledAppleCiderCauldronBlock::new);
+    /** The juice cauldrons deliberately have no items; a vanilla cauldron turns into one when its juice is poured in. */
+    public static final RegistrySupplier<Block> APPLE_CIDER_CAULDRON = registerCauldron(JuiceCauldronType.APPLE_CIDER, false);
+    public static final RegistrySupplier<Block> MULLED_APPLE_CIDER_CAULDRON = registerCauldron(JuiceCauldronType.APPLE_CIDER, true);
+    public static final RegistrySupplier<Block> SWEET_BERRY_JUICE_CAULDRON = registerCauldron(JuiceCauldronType.SWEET_BERRY_JUICE, false);
+    public static final RegistrySupplier<Block> MULLED_SWEET_BERRY_JUICE_CAULDRON = registerCauldron(JuiceCauldronType.SWEET_BERRY_JUICE, true);
+    public static final RegistrySupplier<Block> GLOW_BERRY_JUICE_CAULDRON = registerCauldron(JuiceCauldronType.GLOW_BERRY_JUICE, false);
+    public static final RegistrySupplier<Block> MULLED_GLOW_BERRY_JUICE_CAULDRON = registerCauldron(JuiceCauldronType.GLOW_BERRY_JUICE, true);
 
     /**
      * The unlit decorated pumpkin is the only wearable one, with the same head-slot behavior as vanilla's
@@ -159,6 +163,12 @@ public class ModBlocks {
         }
 
         return false;
+    }
+
+    private static RegistrySupplier<Block> registerCauldron(JuiceCauldronType type, boolean mulled) {
+        return mulled
+            ? REGISTRY_HELPER.registerBlock(type.mulledCauldronId(), () -> new MulledJuiceCauldronBlock(type))
+            : REGISTRY_HELPER.registerBlock(type.cauldronId(), () -> new JuiceCauldronBlock(type));
     }
 
     public static void init() {

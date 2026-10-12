@@ -13,15 +13,15 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.Function;
 
 /**
- * The cider and mulled-cider cauldrons have no items of their own, so breaking one drops a plain cauldron.
+ * The cider, berry juice, and mulled cauldrons have no items of their own, so breaking one drops a plain cauldron.
  * Their blockstates and models are hand-authored in resources (like Minekea's honey cauldron) since they
  * reuse vanilla's cauldron templates with a different fluid texture.
  */
-public class AppleCiderCauldronBlockDataGenerator implements FabricBlockDataGenerator {
+public class JuiceCauldronBlockDataGenerator implements FabricBlockDataGenerator {
     protected final Block block;
     private final String name;
 
-    public AppleCiderCauldronBlockDataGenerator(Block block, String name) {
+    public JuiceCauldronBlockDataGenerator(Block block, String name) {
         this.block = block;
         this.name = name;
     }

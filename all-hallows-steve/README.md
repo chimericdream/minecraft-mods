@@ -55,6 +55,8 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 
 **Mulled Apple Cider** — pour 3 bottles of apple cider into a cauldron, add mulling spices by right-clicking it with them (once per batch), and set it over a lit campfire or soul campfire. It won't start simmering until the spices are in. After about 30 seconds it turns into mulled apple cider; use empty glass bottles to ladle out 3 servings.
 
+**Mulled Sweet Berry Juice** and **Mulled Glow Berry Juice** — sweet berry juice and glow berry juice go in a cauldron and mull exactly the same way, each in its own cauldron and with its own mulled drink. Different juices can't be mixed in one cauldron.
+
 *   Every serving restores 8 hunger.
 *   If the fire goes out, the simmer starts over but the spices stay.
 

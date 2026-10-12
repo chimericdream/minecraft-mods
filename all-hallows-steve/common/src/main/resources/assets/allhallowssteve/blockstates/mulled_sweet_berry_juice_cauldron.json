@@ -1,0 +1,28 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "level": "1"
+            },
+            "apply": {
+                "model": "allhallowssteve:block/mulled_sweet_berry_juice_cauldron/level1"
+            }
+        },
+        {
+            "when": {
+                "level": "2"
+            },
+            "apply": {
+                "model": "allhallowssteve:block/mulled_sweet_berry_juice_cauldron/level2"
+            }
+        },
+        {
+            "when": {
+                "level": "3"
+            },
+            "apply": {
+                "model": "allhallowssteve:block/mulled_sweet_berry_juice_cauldron/full"
+            }
+        }
+    ]
+}

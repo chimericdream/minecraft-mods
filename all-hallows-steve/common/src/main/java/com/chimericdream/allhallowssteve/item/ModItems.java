@@ -65,7 +65,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> GLOW_BERRY_JUICE = registerJuice("glow_berry_juice");
 
     /**
-     * A hot bottle of mulled cider. There is only one kind; its food values live in {@link MulledAppleCider}.
+     * A hot bottle of mulled cider. Every mulled drink has the same food values, which live in {@link MulledJuice}.
      */
     @SuppressWarnings("UnstableApiUsage")
     public static final RegistrySupplier<Item> MULLED_APPLE_CIDER = REGISTRY_HELPER.registerItem(
@@ -75,11 +75,14 @@ public class ModItems {
                 .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
                 .setId(REGISTRY_HELPER.makeItemRegistryKey(MULLED_APPLE_CIDER_ID))
                 .craftRemainder(Items.GLASS_BOTTLE)
-                .food(MulledAppleCider.food(), Consumables.DEFAULT_DRINK)
+                .food(MulledJuice.food(), Consumables.DEFAULT_DRINK)
                 .usingConvertsTo(Items.GLASS_BOTTLE)
                 .stacksTo(16)
         )
     );
+
+    public static final RegistrySupplier<Item> MULLED_SWEET_BERRY_JUICE = registerMulledJuice("mulled_sweet_berry_juice");
+    public static final RegistrySupplier<Item> MULLED_GLOW_BERRY_JUICE = registerMulledJuice("mulled_glow_berry_juice");
 
     /** What is left after pressing: compost, fertilizer, pig food, and a little healing for livestock (see {@code PomaceFeeding}). */
     @SuppressWarnings("UnstableApiUsage")
@@ -105,6 +108,25 @@ public class ModItems {
                     .setId(REGISTRY_HELPER.makeItemRegistryKey(id))
                     .craftRemainder(Items.GLASS_BOTTLE)
                     .food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).build(), Consumables.DEFAULT_DRINK)
+                    .usingConvertsTo(Items.GLASS_BOTTLE)
+                    .stacksTo(16)
+            )
+        );
+    }
+
+    /** A hot bottle of mulled berry juice: the same food values and bottle handling as mulled apple cider. */
+    @SuppressWarnings("UnstableApiUsage")
+    private static RegistrySupplier<Item> registerMulledJuice(String name) {
+        Identifier id = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+
+        return REGISTRY_HELPER.registerItem(
+            id,
+            () -> new Item(
+                new Item.Properties()
+                    .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
+                    .setId(REGISTRY_HELPER.makeItemRegistryKey(id))
+                    .craftRemainder(Items.GLASS_BOTTLE)
+                    .food(MulledJuice.food(), Consumables.DEFAULT_DRINK)
                     .usingConvertsTo(Items.GLASS_BOTTLE)
                     .stacksTo(16)
             )

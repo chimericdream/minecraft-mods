@@ -1,9 +1,7 @@
 package com.chimericdream.allhallowssteve.block;
 
-import com.chimericdream.allhallowssteve.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
@@ -20,19 +18,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
-/** A finished batch of mulled cider. It stays hot until emptied; every serving is the same mulled apple cider. */
-public class MulledAppleCiderCauldronBlock extends LayeredCauldronBlock {
-    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "mulled_apple_cider_cauldron");
-
-    public MulledAppleCiderCauldronBlock(BlockBehaviour.Properties settings) {
-        this();
-    }
-
-    public MulledAppleCiderCauldronBlock() {
+/** A finished batch of mulled cider or juice. It stays hot until emptied; every serving is the same mulled drink. */
+public class MulledJuiceCauldronBlock extends LayeredCauldronBlock {
+    public MulledJuiceCauldronBlock(JuiceCauldronType type) {
         super(
             Biome.Precipitation.NONE,
-            AppleCiderCauldrons.MULLED_BEHAVIORS,
-            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID))
+            type.mulledBehaviors(),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(type.mulledCauldronId()))
         );
 
         this.registerDefaultState(

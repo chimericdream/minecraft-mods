@@ -45,7 +45,7 @@ smoke test for the cauldron rendering and a `TEST_PLAN.md` entry.
   `simmer` counter (0–4). A scheduled tick every 120 ticks (6 s) checks for a lit
   `#minecraft:campfires` block below: heated adds a step, and the step after `simmer` 4 (30 s total) swaps
   in the mulled block; unheated resets `simmer` to 0. Taking a serving out also resets it.
-- Mulled cider is one item (`mulled_cider`); the item carries the food values (`MulledAppleCider.food`). 8 hunger / 0.65 saturation modifier, the same as the old cinnamon + cloves + nutmeg
+- Mulled cider is one item (`mulled_cider`); the item carries the food values (`MulledJuice.food`). 8 hunger / 0.65 saturation modifier, the same as the old cinnamon + cloves + nutmeg
   batch.
 - Cauldron models and blockstates are hand-authored (vanilla `template_cauldron_*`, amber and darker
   red-brown content textures); colours do not show whether spices went in.

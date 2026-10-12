@@ -13,7 +13,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 /**
- * Cider, berry juices, and pomace from the press, plus the mulled cider ladled out of a cauldron. Every bottled
+ * Cider, berry juices, and pomace from the press, plus the mulled drinks ladled out of a cauldron. Every bottled
  * drink shares one bottle texture with a separate liquid overlay that is tinted per item; pomace uses a plain
  * flat item model.
  */
@@ -26,12 +26,16 @@ public class CiderItemDataGenerator {
     private static final int MULLED_APPLE_CIDER_TINT = 0xFFCE6840;
     private static final int SWEET_BERRY_TINT = 0xFFE63A5A;
     private static final int GLOW_BERRY_TINT = 0xFFFFE24A;
+    private static final int MULLED_SWEET_BERRY_TINT = 0xFFBA1F3A;
+    private static final int MULLED_GLOW_BERRY_TINT = 0xFFD9A838;
 
     public static void configureItemModels(ItemModelGenerators itemModelGenerator) {
         generateTintedDrink(itemModelGenerator, ModItems.APPLE_CIDER.get(), APPLE_CIDER_TINT);
         generateTintedDrink(itemModelGenerator, ModItems.MULLED_APPLE_CIDER.get(), MULLED_APPLE_CIDER_TINT);
         generateTintedDrink(itemModelGenerator, ModItems.SWEET_BERRY_JUICE.get(), SWEET_BERRY_TINT);
         generateTintedDrink(itemModelGenerator, ModItems.GLOW_BERRY_JUICE.get(), GLOW_BERRY_TINT);
+        generateTintedDrink(itemModelGenerator, ModItems.MULLED_SWEET_BERRY_JUICE.get(), MULLED_SWEET_BERRY_TINT);
+        generateTintedDrink(itemModelGenerator, ModItems.MULLED_GLOW_BERRY_JUICE.get(), MULLED_GLOW_BERRY_TINT);
         itemModelGenerator.generateFlatItem(ModItems.POMACE.get(), ModelTemplates.FLAT_ITEM);
     }
 
@@ -54,6 +58,8 @@ public class CiderItemDataGenerator {
         translationBuilder.add(ModItems.SWEET_BERRY_JUICE.get(), "Sweet Berry Juice");
         translationBuilder.add(ModItems.GLOW_BERRY_JUICE.get(), "Glow Berry Juice");
         translationBuilder.add(ModItems.MULLED_APPLE_CIDER.get(), "Mulled Apple Cider");
+        translationBuilder.add(ModItems.MULLED_SWEET_BERRY_JUICE.get(), "Mulled Sweet Berry Juice");
+        translationBuilder.add(ModItems.MULLED_GLOW_BERRY_JUICE.get(), "Mulled Glow Berry Juice");
         translationBuilder.add(ModItems.POMACE.get(), "Pomace");
     }
 }

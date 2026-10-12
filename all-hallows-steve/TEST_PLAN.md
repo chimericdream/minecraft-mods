@@ -23,7 +23,7 @@ class.
   smelting and smoking recipes for cloves and nutmeg, and the mulling spices crafting recipe.
 * `MullingGameTest` — apple cider filling a cauldron one level per bottle, taking it back out, mulling spices (full
   cauldron only, once), the simmer (driven by calling the cauldron's `tick` directly) including no
-  heat and the fire going out, and ladling servings. The rendering, particles, and sounds need the manual
+  heat and the fire going out, and ladling servings, for apple cider and both berry juices (which also must not mix). The rendering, particles, and sounds need the manual
   pass below.
 
 Mock players have no network connection, so `PumpkinContents.messageSink` is swapped for a recorder in
@@ -124,4 +124,6 @@ NeoForge.
    * Put the fire out mid-simmer: bubbles stop. Relight it: the simmer starts over, spices still there.
    * Ladle three servings with empty bottles: the cauldron empties to a plain one. Eat a serving: it restores 8
      hunger and has no tooltip. Check the cauldron is not touched by hoppers or dispensers.
+   * Repeat the pour, spice, simmer, and ladle steps with sweet berry juice (red) and glow berry juice (gold): each
+     gets its own cauldron color and its own mulled drink. A different juice poured into a part-full cauldron does nothing.
    * Breaking either cauldron drops a plain cauldron. Pick-block gives a plain cauldron.
