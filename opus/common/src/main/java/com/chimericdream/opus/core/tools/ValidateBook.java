@@ -6,6 +6,8 @@ import com.chimericdream.opus.core.book.BookLoader;
 import com.chimericdream.opus.core.book.BookMeta;
 import com.chimericdream.opus.core.book.BookNode;
 import com.chimericdream.opus.core.book.BookSource;
+import com.chimericdream.opus.core.book.IconRef;
+import com.chimericdream.opus.core.model.Inline;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -17,6 +19,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -131,6 +134,7 @@ public final class ValidateBook {
         checkItemLook(dir, meta, diagnostics);
 
         Book book = BookLoader.load(bookId(dir), BookSource.layered(primary, fallback), meta, diagnostics);
+        checkTextures(dir, book, diagnostics);
 
         diagnostics.all().forEach(d -> out.println(d));
         int pages = (int) book.nodes().stream().filter(n -> n.kind() == BookNode.Kind.PAGE).count();
@@ -167,6 +171,47 @@ public final class ValidateBook {
                 diagnostics.warn(BookMeta.FILE_NAME, 0, "texture '" + texture + "' must be an id under textures/item/, like ns:item/name; the default book look is used");
             } else if (inPack && !Files.exists(assets.resolve(id[0]).resolve("textures").resolve(id[1] + ".png"))) {
                 diagnostics.warn(BookMeta.FILE_NAME, 0, "texture '" + texture + "' was not found (expected textures/<path>.png); the default book look is used");
+            }
+        }
+    }
+
+    /**
+     * Warns about every {@code texture:} image and icon whose PNG isn't in the pack. Like {@link #checkItemLook}, the
+     * files can only be located when the book sits at {@code .../assets/<ns>/opus-books/<name>}. A texture in a namespace
+     * that has no folder under {@code assets/} (vanilla, or another mod) can't be checked and is skipped.
+     */
+    static void checkTextures(Path dir, Book book, Diagnostics diagnostics) {
+        Path abs = dir.toAbsolutePath().normalize();
+        Path books = abs.getParent();
+        Path assets = books == null || books.getParent() == null ? null : books.getParent().getParent();
+        boolean inPack = books != null && books.getFileName() != null && books.getFileName().toString().equals("opus-books")
+            && assets != null && assets.getFileName() != null && assets.getFileName().toString().equals("assets");
+        if (!inPack) {
+            return;
+        }
+
+        for (BookNode node : book.nodes()) {
+            String where = node.sourcePath() != null ? node.sourcePath() : node.id();
+            Set<String> seen = new LinkedHashSet<>();
+
+            IconRef icon = node.icon();
+            if (icon != null && icon.kind() == IconRef.Kind.TEXTURE) {
+                seen.add(icon.id());
+            }
+            node.document().forEachInline(inline -> {
+                if (inline instanceof Inline.Texture t) {
+                    seen.add(t.id());
+                }
+            });
+
+            for (String id : seen) {
+                String[] parts = splitId(id);
+                if (parts == null) {
+                    diagnostics.warn(where, 0, "texture '" + id + "' is not a valid id; expected ns:path");
+                } else if (Files.isDirectory(assets.resolve(parts[0]))
+                    && !Files.exists(assets.resolve(parts[0]).resolve("textures").resolve(parts[1] + ".png"))) {
+                    diagnostics.warn(where, 0, "texture '" + id + "' was not found (expected textures/" + parts[1] + ".png); a placeholder is shown instead");
+                }
             }
         }
     }

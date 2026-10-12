@@ -18,7 +18,7 @@ Your Markdown starts here.
 | Key | Meaning |
 |:----|:--------|
 | `title` | Page title. Defaults to a leading `# Heading`, then to the file name. |
-| `icon` | `item:namespace:id`, or `texture:namespace:path`. Shown in the contents. Item icons work today; texture icons are planned. |
+| `icon` | `item:namespace:id`, or `texture:namespace:path`. Shown in the contents. A texture icon is drawn at icon size, fitted to the square. |
 | `order` | Sort position among siblings; lower comes first. |
 | `tags` | Lists the page on the book's tag pages and in search. |
 | `summary` | One line shown under the title in listings and in search. |

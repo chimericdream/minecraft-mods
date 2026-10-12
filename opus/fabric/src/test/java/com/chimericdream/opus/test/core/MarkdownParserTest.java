@@ -74,6 +74,81 @@ class MarkdownParserTest {
     }
 
     @Test
+    void aTextureImageAloneInItsParagraphIsABlockOfImages() {
+        Document doc = parse("![A hopper chain](texture:yourpack:gui/hopper_chain)\n");
+
+        Block.Images images = assertInstanceOf(Block.Images.class, doc.blocks().get(0));
+        assertEquals(1, images.images().size());
+        Inline.Texture t = images.images().get(0);
+        assertEquals("yourpack:gui/hopper_chain", t.id());
+        assertEquals("A hopper chain", t.alt());
+        assertEquals(0, t.width());
+        assertNull(t.align());
+    }
+
+    @Test
+    void textureNamespaceDefaultsToMinecraft() {
+        Block.Images images = (Block.Images) parse("![](texture:gui/foo)\n").blocks().get(0);
+
+        assertEquals("minecraft:gui/foo", images.images().get(0).id());
+    }
+
+    @Test
+    void widthAndAlignAttributesAreReadAndRemovedFromTheText() {
+        Diagnostics d = new Diagnostics();
+        Block.Images images = (Block.Images) parse("![a](texture:ns:p){width=64 align=right}\n", d).blocks().get(0);
+
+        Inline.Texture t = images.images().get(0);
+        assertEquals(64, t.width());
+        assertEquals(Block.Align.RIGHT, t.align());
+        assertEquals(0, d.warningCount());
+    }
+
+    @Test
+    void textAfterTheAttributesIsKept() {
+        Block.Paragraph p = (Block.Paragraph) parse("a ![x](texture:ns:p){width=8} and more\n").blocks().get(0);
+
+        assertInstanceOf(Inline.Texture.class, p.content().get(1));
+        assertEquals(8, ((Inline.Texture) p.content().get(1)).width());
+        assertEquals(" and more", ((Inline.Text) p.content().get(2)).text());
+    }
+
+    @Test
+    void imagesSeparatedByWhitespaceFormOneRowAndTheFirstAlignWins() {
+        Block.Images images = (Block.Images) parse("![a](texture:ns:a){align=left} ![b](texture:ns:b)\n![c](texture:ns:c)\n").blocks().get(0);
+
+        assertEquals(List.of("ns:a", "ns:b", "ns:c"), images.images().stream().map(Inline.Texture::id).toList());
+        assertEquals(Block.Align.LEFT, images.images().get(0).align());
+    }
+
+    @Test
+    void anImageInsideTextStaysInline() {
+        Block.Paragraph p = (Block.Paragraph) parse("Press ![](texture:ns:key) to go.\n").blocks().get(0);
+
+        assertInstanceOf(Inline.Texture.class, p.content().get(1));
+    }
+
+    @Test
+    void anImageNextToAnItemIconIsNotABlockOfImages() {
+        assertInstanceOf(Block.Paragraph.class, parse("![](texture:ns:a) ![](item:minecraft:diamond)\n").blocks().get(0));
+    }
+
+    @Test
+    void badImageAttributesWarnAndAreIgnored() {
+        Diagnostics d = new Diagnostics();
+        Block.Images images = (Block.Images) parse("![a](texture:ns:p){width=wide align=middle colour=red}\n", d).blocks().get(0);
+
+        assertEquals(0, images.images().get(0).width());
+        assertNull(images.images().get(0).align());
+        assertEquals(3, d.warningCount());
+    }
+
+    @Test
+    void imagesAreSearchableByTheirAltText() {
+        assertTrue(parse("![Hopper chain diagram](texture:ns:p)\n").plainText().contains("Hopper chain diagram"));
+    }
+
+    @Test
     void bulletOrderedAndTaskLists() {
         Document doc = parse("- one\n- two\n\n3. three\n4. four\n\n- [x] done\n- [ ] todo\n");
 

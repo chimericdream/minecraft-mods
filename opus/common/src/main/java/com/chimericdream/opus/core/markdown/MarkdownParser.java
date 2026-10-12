@@ -76,6 +76,10 @@ public final class MarkdownParser {
     private static final Pattern CALLOUT_MARKER = Pattern.compile("^\\[!([A-Za-z]+)]\\s*(.*)$");
     private static final Pattern EXPLICIT_ANCHOR = Pattern.compile("\\s*\\{#([A-Za-z0-9_\\-:.]+)}\\s*$");
     private static final Set<String> ICON_SCHEMES = Set.of("item", "block", "entity");
+    private static final String TEXTURE_SCHEME = "texture:";
+    /** {@code {width=64 align=right}} directly after an image. */
+    private static final Pattern IMAGE_ATTRIBUTES = Pattern.compile("^\\{([^{}]*)}");
+    private static final int MAX_IMAGE_WIDTH = 4096;
 
     private MarkdownParser() {
     }
@@ -129,7 +133,7 @@ public final class MarkdownParser {
             if (node instanceof Heading h) {
                 out.add(heading(h));
             } else if (node instanceof Paragraph p) {
-                out.add(new Block.Paragraph(inlines(p, Style.PLAIN)));
+                out.add(paragraph(inlines(p, Style.PLAIN)));
             } else if (node instanceof BulletList l) {
                 out.add(list(l, false, 1));
             } else if (node instanceof OrderedList l) {
@@ -148,6 +152,20 @@ public final class MarkdownParser {
                 diagnostics.warn(path, lineOf(node), "raw HTML is not supported and was ignored");
             }
             // Link reference definitions and anything unknown render nothing.
+        }
+
+        /** A paragraph made only of texture images (and the whitespace between them) is a block of images. */
+        private static Block paragraph(List<Inline> content) {
+            List<Inline.Texture> images = new ArrayList<>();
+            for (Inline inline : content) {
+                if (inline instanceof Inline.Texture t) {
+                    images.add(t);
+                } else if (!(inline instanceof Inline.LineBreak) && !(inline instanceof Inline.Text text && text.text().isBlank())) {
+                    return new Block.Paragraph(content);
+                }
+            }
+
+            return images.isEmpty() ? new Block.Paragraph(content) : new Block.Images(images);
         }
 
         private Block.Heading heading(Heading h) {
@@ -335,6 +353,15 @@ public final class MarkdownParser {
         List<Inline> inlines(Node parent, Style style) {
             List<Inline> out = new ArrayList<>();
             for (Node n = parent.getFirstChild(); n != null; n = n.getNext()) {
+                if (n instanceof Image img && isTexture(img)) {
+                    Text next = n.getNext() instanceof Text t ? t : null;
+                    out.add(texture(img, next));
+                    if (next != null && next.getLiteral().isEmpty()) {
+                        n = next;
+                    }
+                    continue;
+                }
+
                 convertInline(n, style, out);
             }
 
@@ -367,6 +394,68 @@ public final class MarkdownParser {
             } else {
                 out.addAll(inlines(node, style));
             }
+        }
+
+        private static boolean isTexture(Image img) {
+            return img.getDestination() != null && img.getDestination().startsWith(TEXTURE_SCHEME);
+        }
+
+        /**
+         * Builds a texture image, reading an optional {@code {width=N align=left|center|right}} from the start of the
+         * text right after it ({@code next}, or {@code null}). The attributes are cut out of {@code next}, which keeps
+         * whatever text followed them.
+         */
+        private Inline texture(Image img, Text next) {
+            int width = 0;
+            Block.Align align = null;
+
+            Matcher m = next == null ? null : IMAGE_ATTRIBUTES.matcher(next.getLiteral());
+            if (m != null && m.find()) {
+                for (String pair : m.group(1).trim().split("\\s+")) {
+                    if (pair.isEmpty()) {
+                        continue;
+                    }
+
+                    int eq = pair.indexOf('=');
+                    String key = eq < 0 ? pair : pair.substring(0, eq);
+                    String value = eq < 0 ? "" : pair.substring(eq + 1);
+                    switch (key) {
+                        case "width" -> {
+                            try {
+                                width = Integer.parseInt(value);
+                            } catch (NumberFormatException e) {
+                                width = 0;
+                            }
+                            if (width < 1 || width > MAX_IMAGE_WIDTH) {
+                                diagnostics.warn(path, lineOf(img), "image width '" + value + "' must be a whole number from 1 to " + MAX_IMAGE_WIDTH + "; the texture's own size is used");
+                                width = 0;
+                            }
+                        }
+                        case "align" -> {
+                            align = switch (value) {
+                                case "left" -> Block.Align.LEFT;
+                                case "center" -> Block.Align.CENTER;
+                                case "right" -> Block.Align.RIGHT;
+                                default -> null;
+                            };
+                            if (align == null) {
+                                diagnostics.warn(path, lineOf(img), "image align '" + value + "' must be left, center or right");
+                            }
+                        }
+                        default -> diagnostics.warn(path, lineOf(img), "unknown image attribute '" + key + "' (expected width or align)");
+                    }
+                }
+
+                next.setLiteral(next.getLiteral().substring(m.end()));
+            }
+
+            String alt = Inline.plainText(inlines(img, Style.PLAIN));
+            String id = img.getDestination().substring(TEXTURE_SCHEME.length()).strip();
+            if (!id.contains(":")) {
+                id = "minecraft:" + id;
+            }
+
+            return new Inline.Texture(id, alt, width, align);
         }
 
         private Inline image(Image img) {

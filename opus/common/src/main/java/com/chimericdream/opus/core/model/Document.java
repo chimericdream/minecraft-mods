@@ -34,6 +34,7 @@ public record Document(List<Block> blocks) {
                     sb.append('\n');
                 }
                 case Block.Callout c -> sb.append(c.title()).append('\n');
+                case Block.Images i -> sb.append(Inline.plainText(List.copyOf(i.images()))).append('\n');
                 default -> {
                 }
             }
@@ -47,6 +48,7 @@ public record Document(List<Block> blocks) {
             switch (b) {
                 case Block.Heading h -> visitInlines(h.content(), visitor);
                 case Block.Paragraph p -> visitInlines(p.content(), visitor);
+                case Block.Images i -> visitInlines(List.copyOf(i.images()), visitor);
                 case Block.Table t -> {
                     t.header().forEach(c -> visitInlines(c, visitor));
                     t.rows().forEach(r -> r.forEach(c -> visitInlines(c, visitor)));

@@ -1,6 +1,7 @@
 package com.chimericdream.opus.client.book;
 
 import com.chimericdream.opus.ModInfo;
+import com.chimericdream.opus.client.screen.ImageTextures;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
@@ -23,6 +24,7 @@ public class OpusReloadListener implements ResourceManagerReloadListener {
 
     @Override
     public void onResourceManagerReload(@NotNull ResourceManager manager) {
+        ImageTextures.clear();
         BookRepository.reload(manager);
     }
 

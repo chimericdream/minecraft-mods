@@ -10,6 +10,7 @@ import com.chimericdream.opus.core.book.IconRef;
 import com.chimericdream.opus.core.book.LinkTarget;
 import com.chimericdream.opus.core.book.SearchIndex;
 import com.chimericdream.opus.core.layout.Element;
+import com.chimericdream.opus.core.layout.ImageSizer;
 import com.chimericdream.opus.core.layout.Layout;
 import com.chimericdream.opus.core.layout.LayoutConfig;
 import com.chimericdream.opus.core.layout.LayoutEngine;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -48,6 +50,9 @@ import java.util.Set;
  */
 public class BookScreen extends Screen {
     private static final int MARGIN = 8;
+    /** Space kept clear around an enlarged image, and the biggest whole-number zoom it gets. */
+    private static final int ENLARGED_MARGIN = 20;
+    private static final float ENLARGED_MAX_SCALE = 8f;
     /** The sidebar is this wide on a roomy screen and shrinks to a quarter of the panel on a small one. */
     private static final int SIDEBAR_MAX_WIDTH = 136;
     private static final int SIDEBAR_MIN_WIDTH = 90;
@@ -95,6 +100,8 @@ public class BookScreen extends Screen {
     private List<SearchIndex.Hit> hits = List.of();
 
     private BookRenderer renderer;
+    /** The image shown full-size over the page after a click, or null. Any click or key closes it. */
+    private Element.Image enlarged;
     private final MobPreviews mobs = new MobPreviews();
     private EditBox search;
     private Button clearSearch;
@@ -195,6 +202,7 @@ public class BookScreen extends Screen {
         current = node;
         pendingAnchor = anchor;
         scroll = 0;
+        enlarged = null;
 
         // Make sure the page being read is visible in the sidebar, whichever way we got here.
         reveal(node);
@@ -235,7 +243,7 @@ public class BookScreen extends Screen {
             return;
         }
 
-        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.withMobs(mobs::bounds, () -> minecraft.getWindow().getGuiScale()));
+        LayoutEngine engine = new LayoutEngine(new MinecraftTextMetrics(font), LayoutConfig.defaults(), WidgetSizer.withMobs(mobs::bounds, () -> minecraft.getWindow().getGuiScale()), ImageTextures.sizer());
         layout = engine.layoutPage(current.title(), current.document(), columnW);
 
         if (pendingAnchor != null) {
@@ -365,6 +373,43 @@ public class BookScreen extends Screen {
         drawContent(g, mouseX, mouseY);
     }
 
+    @Override
+    public void extractRenderState(@NotNull GuiGraphicsExtractor g, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(g, mouseX, mouseY, delta);
+
+        if (enlarged != null) {
+            drawEnlarged(g);
+        }
+    }
+
+    /** Dims the screen and shows the clicked image as large as fits, in whole-number steps up from its own size. */
+    private void drawEnlarged(GuiGraphicsExtractor g) {
+        g.fill(0, 0, width, height, 0xD0000000);
+
+        ImageSizer.Size size = ImageTextures.measure(enlarged.id());
+        if (size == null) {
+            enlarged = null;
+            return;
+        }
+
+        boolean caption = enlarged.alt() != null && !enlarged.alt().isBlank();
+        int maxW = width - 2 * ENLARGED_MARGIN;
+        int maxH = height - 2 * ENLARGED_MARGIN - (caption ? font.lineHeight + 4 : 0);
+        float fit = Math.min(maxW / (float) size.width(), maxH / (float) size.height());
+        float scale = fit >= 1f ? Math.min((float) Math.floor(fit), ENLARGED_MAX_SCALE) : fit;
+        int w = Math.max(1, Math.round(size.width() * scale));
+        int h = Math.max(1, Math.round(size.height() * scale));
+
+        int x = (width - w) / 2;
+        int y = (height - h - (caption ? font.lineHeight + 4 : 0)) / 2;
+        ImageTextures.draw(g, enlarged.id(), x, y, w, h);
+
+        if (caption) {
+            String text = font.plainSubstrByWidth(enlarged.alt().strip(), width - 2 * ENLARGED_MARGIN);
+            g.text(font, Component.literal(text), (width - font.width(text)) / 2, y + h + 4, 0xFFFFFFFF, true);
+        }
+    }
+
     private void drawSidebar(GuiGraphicsExtractor g, int mouseX, int mouseY) {
         int top = panelY + 22;
         int bottom = panelY + panelH - 4;
@@ -415,7 +460,10 @@ public class BookScreen extends Screen {
                 g.item(stack, x, y + 1);
                 x += 18;
             }
-            // TODO(icons): IconRef.Kind.TEXTURE - draw the texture with blit once a loader for it exists.
+            else if (icon != null && icon.kind() == IconRef.Kind.TEXTURE && ImageTextures.measure(icon.id()) != null) {
+                ImageTextures.drawFitted(g, icon.id(), x, y + 1, 16);
+                x += 18;
+            }
 
             int room = panelX + sidebarW - x - 4;
             String title = font.plainSubstrByWidth(node.title(), room);
@@ -534,11 +582,18 @@ public class BookScreen extends Screen {
 
     /** Link targets show where they go (the page's file name, like Markdown Manual); items show their name. */
     private void drawTooltip(GuiGraphicsExtractor g, int mouseX, int mouseY) {
-        if (!inContent(mouseX, mouseY)) {
+        if (enlarged != null || !inContent(mouseX, mouseY)) {
             return;
         }
 
         layout.interactiveAt(mouseX - columnX, mouseY - viewTop + scroll).ifPresent(element -> {
+            if (element instanceof Element.Image image) {
+                if (!image.missing()) {
+                    g.setTooltipForNextFrame(font, Component.translatable("opus.book.enlarge"), mouseX, mouseY);
+                }
+                return;
+            }
+
             String link = switch (element) {
                 case Element.Text t -> t.link();
                 case Element.Icon icon -> icon.link();
@@ -574,6 +629,12 @@ public class BookScreen extends Screen {
         double x = event.x();
         double y = event.y();
 
+        // An enlarged image takes the first click, wherever it lands, and closes.
+        if (enlarged != null) {
+            enlarged = null;
+            return true;
+        }
+
         // Right-clicking the search box clears it (a common convention in other mods' text fields).
         if (event.button() == InputConstants.MOUSE_BUTTON_RIGHT && search.isMouseOver(x, y)) {
             clearSearch();
@@ -594,6 +655,14 @@ public class BookScreen extends Screen {
         }
 
         if (inContent(x, y)) {
+            if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
+                Optional<Element.Image> image = layout.imageAt((int) x - columnX, (int) y - viewTop + scroll);
+                if (image.isPresent()) {
+                    enlarged = image.get();
+                    return true;
+                }
+            }
+
             layout.linkAt((int) x - columnX, (int) y - viewTop + scroll).ifPresent(element -> {
                 String destination = element instanceof Element.Text t ? t.link() : ((Element.Icon) element).link();
                 follow(destination);
@@ -626,6 +695,10 @@ public class BookScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (enlarged != null) {
+            return true;
+        }
+
         if (inSidebar(mouseX, mouseY)) {
             int rows = search.getValue().isBlank() ? toc.size() : hits.size();
             int max = Math.max(0, rows * TOC_ROW - (panelH - 26));
@@ -640,6 +713,12 @@ public class BookScreen extends Screen {
 
     @Override
     public boolean keyPressed(@NotNull KeyEvent event) {
+        // Any key closes an enlarged image (Esc included) instead of doing what it normally does.
+        if (enlarged != null) {
+            enlarged = null;
+            return true;
+        }
+
         // Typing in the search box wins over navigation shortcuts.
         if (search.isFocused()) {
             return super.keyPressed(event);
