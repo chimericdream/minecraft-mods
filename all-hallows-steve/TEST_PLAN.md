@@ -95,7 +95,7 @@ NeoForge.
      pomace. A hopper beside it never pulls out the apples or the fuel. A comparator reads the contents.
    * Break the press with items inside: everything drops. It mines faster with an axe.
    * Pomace: throw it in a composter (it adds a layer sometimes); feed it to a pig to breed it. Hurt a
-     pig, cow, sheep, or horse (fall damage works) and feed it pomace: it heals a heart and the pomace is
+     pig, cow, sheep, or horse (fall damage works) and feed it pomace: it heals a heart with green sparkles around it, and the pomace is
      used up, in creative too without using it up. A healthy cow ignores it. A wolf never takes it.
    * Check the textures look right, and that the arrow and fuel bar fill cleanly over their outlines. Repeat on Fabric and NeoForge (the
      NeoForge composter value comes from a data map).

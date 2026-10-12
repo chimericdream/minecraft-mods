@@ -3,6 +3,8 @@ package com.chimericdream.allhallowssteve.item;
 import com.chimericdream.allhallowssteve.tag.ModTags;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.InteractionEvent;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +43,11 @@ public class PomaceFeeding {
 
         animal.heal(HEAL_AMOUNT);
         animal.level().playSound(null, animal.blockPosition(), SoundEvents.GENERIC_EAT.value(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+
+        if (animal.level() instanceof ServerLevel serverLevel) {
+            // Green sparkles rather than hearts, so healing doesn't read as breeding.
+            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, animal.getX(), animal.getY(0.6), animal.getZ(), 7, animal.getBbWidth() * 0.4, animal.getBbHeight() * 0.3, animal.getBbWidth() * 0.4, 0.0);
+        }
 
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
