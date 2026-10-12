@@ -5,12 +5,12 @@
 
 ## Description
 
-Carving a pumpkin at the station returns a few pumpkin seeds. Roast them on a campfire for a small snack.
-It's a small detail, but it makes carving feel physical.
+Carving a pumpkin at the station returns a few pumpkin seeds. It's a small detail, but it makes carving
+feel physical. Roasting the seeds into a snack is part of [Harvest foods](../harvest-crafts/harvest-foods.md).
 
 ## Decisions
 
-_None yet._
+- 2026-10-12 — The roasted-seeds snack moved to Harvest foods; this idea only covers carving returning seeds.
 
 ## Brainstorm variants
 

@@ -18,8 +18,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
   phases) plus eerie vanilla designs such as the warden and sculk shrieker.
 - [Stencils as exploration loot and trades](carving/stencil-loot-and-trades.md) — Rarer designs found in
   structures and sold by specific villager professions.
-- [Carving yields seeds](carving/carving-seeds.md) — Carving returns pumpkin seeds, which roast on a
-  campfire into a small snack.
+- [Carving yields seeds](carving/carving-seeds.md) — Carving returns pumpkin seeds (roasting them is in
+  Harvest foods).
 - [Pumpkin aging + honeycomb waxing](carving/pumpkin-aging-and-waxing.md) — Placed pumpkins slowly soften
   through a few stages; honeycomb locks the current stage, like copper.
 
@@ -31,8 +31,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Harvest crafts
 
-- [Harvest foods](harvest-crafts/harvest-foods.md) — A few well-chosen foods: soul cakes, pumpkin soup,
-  and mulled cider.
+- [Harvest foods](harvest-crafts/harvest-foods.md) — A few well-chosen foods: spice-effect soul cakes,
+  pumpkin soup, roasted seeds, apple pie, and spiced pumpkin pie.
 - [Harvest bundles and wreaths](harvest-crafts/harvest-bundles-and-wreaths.md) — Decorative corn shocks,
   wheat sheaves, dried-flower and herb bundles, and door wreaths.
 - [Cider press](harvest-crafts/cider-press.md) — A fueled barrel-style press that turns vanilla apples
