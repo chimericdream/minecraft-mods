@@ -1,7 +1,7 @@
 # Images and texture icons
 
 > Source: initial design discussion, 2026-10-06 · Effort **L** (re-estimated 2026-10-12: new block element, texture loading, enlarge overlay) · Value ★★
-> Status: **Building** on branch `feat/opus-images-and-textures`
+> Status: **Shipped** in 1.2.0
 
 ## Description
 
@@ -48,10 +48,10 @@ _None yet._
 
 ## Related
 
-- [Book item texture](../archive/book-item-texture.md) — shares the "texture id in the pack" resolution and the missing-texture handling. Its `texture` key is limited to `textures/item/` because of the item atlas; this idea is not, so it needs its own loading path.
-- [Reader accessibility](accessibility.md) — alt text is the caption and the narrator text, so keep alt required in the guide's advice.
+- [Book item texture](book-item-texture.md) — shares the "texture id in the pack" resolution and the missing-texture handling. Its `texture` key is limited to `textures/item/` because of the item atlas; this idea is not, so it needs its own loading path.
+- [Reader accessibility](../reader/accessibility.md) — alt text is the caption and the narrator text, so keep alt required in the guide's advice.
 - [Book skins and themes](../authoring/book-skins.md) — skin textures may reuse the same texture loader.
-- [Deep nesting and long titles in the sidebar](deep-nesting-and-long-titles.md) — texture chapter icons take the same icon slot, so they must respect the same width limits.
+- [Deep nesting and long titles in the sidebar](../reader/deep-nesting-and-long-titles.md) — texture chapter icons take the same icon slot, so they must respect the same width limits.
 
 ## Open questions
 

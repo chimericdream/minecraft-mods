@@ -42,7 +42,7 @@ _None yet._
 ## Related
 
 - [Book skins and themes](../authoring/book-skins.md) — `texture` here is the item's icon only; skins restyle the reader. The `book.yml` key naming should be chosen together.
-- [Images and texture icons](../reader/images-and-textures.md) — shares the "texture id in the pack" resolution and the missing-texture handling.
+- [Images and texture icons](images-and-textures.md) — shares the "texture id in the pack" resolution and the missing-texture handling.
 - [Player-usable give command](player-give-command.md) — gives players the book that carries this texture.
 
 ## Open questions

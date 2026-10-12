@@ -25,7 +25,6 @@ of the way of the pack author's own voice. Not a lore or story mod, and not a ge
 - [Reader accessibility](reader/accessibility.md) — Text scale, high-contrast theme, keyboard navigation and narrator support (rule A3).
 - [Tag pages and bookmarks](reader/tag-pages-and-bookmarks.md) — A generated Tags page, tag chips under titles, and per-book bookmarks.
 - [Pages unlocked by advancements](reader/advancement-gating.md) — Wire `requires:` to the client's advancement progress (a stub today).
-- [Images and texture icons](reader/images-and-textures.md) — Draw texture images in pages and `texture:` icons in the table of contents.
 - [Search that finds recipes, items and mobs](reader/search-widgets-and-code.md) — Index widget contents (by display name, not just id) so "hopper" finds the page that crafts one.
 - [Expand and collapse all chapters](reader/expand-collapse-all.md) — Sidebar controls to open or close every chapter at once, and maybe an accordion mode.
 - [Deep nesting and long titles in the sidebar](reader/deep-nesting-and-long-titles.md) — What the sidebar does when a book nests deeper or has longer names than it fits: indent caps, wrapping, drill-down, validator warning.
@@ -42,6 +41,7 @@ _Empty._
 ## Archive
 
 - [Guide troubleshooting chapter](archive/guide-troubleshooting.md) — Shipped in 1.1.0: a Troubleshooting chapter in the Opus Guide, and a "not found" screen that links to it.
+- [Images and texture icons](archive/images-and-textures.md) — Shipped in 1.2.0: `texture:` images as blocks, rows and inline icons in pages, and texture chapter icons.
 - [Player-usable give command](archive/player-give-command.md) — Shipped in 1.1.0: `/opus give [<book>]` for players without op, with an `opus-guides.json` option to make it ops-only.
 - [Book item texture](archive/book-item-texture.md) — Shipped in 1.1.0: optional `texture` and `model` keys in `book.yml` give each book its own item look.
 - [Live mob previews](archive/live-mob-previews.md) — Shipped in 1.0.0: the `entity` widget draws a live, rotating mob, all at one shared scale.
