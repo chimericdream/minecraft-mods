@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.2.0
+
 #### New Features
 
 - Books can now show pictures. `![Caption](texture:yourpack:gui/diagram)` draws a PNG from a resource pack, centred on its own line, with the caption under it. Add `{width=64}` to set its size and `align=left` or `align=right` to move it. Pictures placed next to each other sit side by side. Click a picture to see it full size.
