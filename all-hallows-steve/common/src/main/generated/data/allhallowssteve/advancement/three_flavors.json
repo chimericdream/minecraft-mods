@@ -1,0 +1,52 @@
+{
+  "parent": "allhallowssteve:fresh_pressed",
+  "criteria": {
+    "drank_apple_cider": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:apple_cider"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_glow_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:glow_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_sweet_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:sweet_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.three_flavors.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:glow_berry_juice"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.three_flavors.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_apple_cider"
+    ],
+    [
+      "drank_sweet_berry_juice"
+    ],
+    [
+      "drank_glow_berry_juice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

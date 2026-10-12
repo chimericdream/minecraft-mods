@@ -1,0 +1,57 @@
+{
+  "parent": "allhallowssteve:hot_cider_weather",
+  "criteria": {
+    "drank_mulled_apple_cider": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_apple_cider"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_mulled_glow_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_glow_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_mulled_sweet_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_sweet_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.seasons_drinkings.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "id": "allhallowssteve:mulled_sweet_berry_juice"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.seasons_drinkings.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_mulled_apple_cider"
+    ],
+    [
+      "drank_mulled_sweet_berry_juice"
+    ],
+    [
+      "drank_mulled_glow_berry_juice"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

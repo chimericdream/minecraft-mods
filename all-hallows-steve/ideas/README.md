@@ -39,6 +39,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
   into cider and pomace.
 - [Spices](harvest-crafts/spices.md) — Cinnamon (stripped from logs), cloves and nutmeg (smelted), for
   mulling and other uses.
+- [Cider and spice advancements](harvest-crafts/cider-advancements.md) — A second advancement branch for the press, pomace, spices, juices, and mulled drinks.
 - [Mulling](harvest-crafts/mulling.md) — Turns cider and spices into mulled cider as a small mechanic.
 - [Drying rack](harvest-crafts/drying-rack.md) — Visibly dries herbs, flowers, and apples over time into
   bundles and dried food.

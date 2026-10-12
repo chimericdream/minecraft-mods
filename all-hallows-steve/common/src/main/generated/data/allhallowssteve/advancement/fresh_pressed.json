@@ -1,0 +1,54 @@
+{
+  "parent": "allhallowssteve:pressing_matters",
+  "criteria": {
+    "has_apple_cider": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:apple_cider"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glow_berry_juice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:glow_berry_juice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sweet_berry_juice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:sweet_berry_juice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.fresh_pressed.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:apple_cider"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.fresh_pressed.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_apple_cider",
+      "has_sweet_berry_juice",
+      "has_glow_berry_juice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

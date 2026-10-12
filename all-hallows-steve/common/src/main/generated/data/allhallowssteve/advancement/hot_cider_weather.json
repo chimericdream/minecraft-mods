@@ -1,0 +1,48 @@
+{
+  "parent": "allhallowssteve:ladle_it_on",
+  "criteria": {
+    "drank_mulled_apple_cider": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_apple_cider"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_mulled_glow_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_glow_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "drank_mulled_sweet_berry_juice": {
+      "conditions": {
+        "item": {
+          "items": "allhallowssteve:mulled_sweet_berry_juice"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.hot_cider_weather.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:mulled_apple_cider"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.hot_cider_weather.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_mulled_apple_cider",
+      "drank_mulled_sweet_berry_juice",
+      "drank_mulled_glow_berry_juice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

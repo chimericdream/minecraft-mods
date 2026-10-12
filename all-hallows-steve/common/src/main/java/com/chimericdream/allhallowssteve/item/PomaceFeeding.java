@@ -1,5 +1,6 @@
 package com.chimericdream.allhallowssteve.item;
 
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
 import com.chimericdream.allhallowssteve.tag.ModTags;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.InteractionEvent;
@@ -42,6 +43,7 @@ public class PomaceFeeding {
         }
 
         animal.heal(HEAL_AMOUNT);
+        ModTriggers.firePomaceHealed(player);
         animal.level().playSound(null, animal.blockPosition(), SoundEvents.GENERIC_EAT.value(), SoundSource.NEUTRAL, 1.0F, 1.0F);
 
         if (animal.level() instanceof ServerLevel serverLevel) {

@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:mulling_it_over",
+  "criteria": {
+    "filled": {
+      "conditions": {
+        "event": "cauldron_filled"
+      },
+      "trigger": "allhallowssteve:cider_event"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.big_batch.description"
+    },
+    "icon": {
+      "id": "minecraft:cauldron"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.big_batch.title"
+    }
+  },
+  "requirements": [
+    [
+      "filled"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

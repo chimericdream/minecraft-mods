@@ -1,6 +1,7 @@
 package com.chimericdream.allhallowssteve.fabric.test;
 
 import com.chimericdream.allhallowssteve.ModInfo;
+import com.chimericdream.allhallowssteve.advancement.CiderEvent;
 import com.chimericdream.allhallowssteve.advancement.ModTriggers;
 import com.chimericdream.allhallowssteve.advancement.PumpkinEvent;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
@@ -74,16 +75,27 @@ public class AdvancementGameTest {
 
     @GameTest
     public void everyAdvancementLoadsWithTheRightParent(GameTestHelper context) {
-        Map<String, String> parents = Map.of(
-            "gourd_workshop", "root",
-            "not_just_orange", "gourd_workshop",
-            "first_cut", "gourd_workshop",
-            "pumpkin_head", "first_cut",
-            "lights_out", "pumpkin_head",
-            "better_side", "pumpkin_head",
-            "rare_cut", "first_cut",
-            "face_for_every_occasion", "rare_cut",
-            "lit_different", "gourd_workshop"
+        Map<String, String> parents = Map.ofEntries(
+            Map.entry("gourd_workshop", "root"),
+            Map.entry("not_just_orange", "gourd_workshop"),
+            Map.entry("first_cut", "gourd_workshop"),
+            Map.entry("pumpkin_head", "first_cut"),
+            Map.entry("lights_out", "pumpkin_head"),
+            Map.entry("better_side", "pumpkin_head"),
+            Map.entry("rare_cut", "first_cut"),
+            Map.entry("face_for_every_occasion", "rare_cut"),
+            Map.entry("lit_different", "gourd_workshop"),
+            Map.entry("pressing_matters", "root"),
+            Map.entry("fresh_pressed", "pressing_matters"),
+            Map.entry("berry_good", "fresh_pressed"),
+            Map.entry("three_flavors", "fresh_pressed"),
+            Map.entry("waste_not", "pressing_matters"),
+            Map.entry("spice_up_your_life", "root"),
+            Map.entry("mulling_it_over", "spice_up_your_life"),
+            Map.entry("big_batch", "mulling_it_over"),
+            Map.entry("ladle_it_on", "big_batch"),
+            Map.entry("hot_cider_weather", "ladle_it_on"),
+            Map.entry("seasons_drinkings", "hot_cider_weather")
         );
 
         context.assertTrue(advancement(context, "root").value().parent().isEmpty(), Component.literal("root should have no parent"));
@@ -96,15 +108,18 @@ public class AdvancementGameTest {
     }
 
     @GameTest
-    public void onlyTheTwoSecretOnesAreHiddenAndOnlyTheFullSetIsAChallengeWithExperience(GameTestHelper context) {
-        for (String id : new String[]{"root", "gourd_workshop", "not_just_orange", "first_cut", "pumpkin_head", "lights_out", "better_side", "rare_cut", "face_for_every_occasion", "lit_different"}) {
+    public void onlyTheThreeSecretOnesAreHiddenAndOnlyTheTwoChallengesPayExperience(GameTestHelper context) {
+        for (String id : new String[]{"root", "gourd_workshop", "not_just_orange", "first_cut", "pumpkin_head", "lights_out", "better_side", "rare_cut", "face_for_every_occasion", "lit_different",
+            "pressing_matters", "fresh_pressed", "berry_good", "three_flavors", "waste_not", "spice_up_your_life", "mulling_it_over",
+            "big_batch", "ladle_it_on", "hot_cider_weather", "seasons_drinkings"}) {
             var advancement = advancement(context, id).value();
             var display = advancement.display().orElseThrow();
-            boolean secret = id.equals("lights_out") || id.equals("face_for_every_occasion");
+            boolean secret = id.equals("lights_out") || id.equals("face_for_every_occasion") || id.equals("seasons_drinkings");
+            boolean challenge = id.equals("face_for_every_occasion") || id.equals("seasons_drinkings");
 
             context.assertValueEqual(display.isHidden(), secret, id + " hidden");
-            context.assertValueEqual(display.getType() == AdvancementType.CHALLENGE, id.equals("face_for_every_occasion"), id + " is a challenge");
-            context.assertValueEqual(advancement.rewards().experience(), id.equals("face_for_every_occasion") ? 100 : 0, id + " experience");
+            context.assertValueEqual(display.getType() == AdvancementType.CHALLENGE, challenge, id + " is a challenge");
+            context.assertValueEqual(advancement.rewards().experience(), challenge ? 100 : 0, id + " experience");
         }
 
         context.succeed();
@@ -218,6 +233,89 @@ public class AdvancementGameTest {
         }
 
         assertDone(context, player, "face_for_every_occasion", false);
+        context.succeed();
+    }
+
+    private static void drink(ServerPlayer player, Item drink) {
+        CriteriaTriggers.CONSUME_ITEM.trigger(player, new ItemStack(drink));
+    }
+
+    @GameTest
+    public void aPressedJuiceInTheInventoryAwardsFreshPressedAndBerryGoodForBerries(GameTestHelper context) {
+        ServerPlayer player = player(context);
+
+        pickUp(player, new ItemStack(ModItems.APPLE_CIDER.get()));
+        assertDone(context, player, "fresh_pressed", true);
+        assertDone(context, player, "berry_good", false);
+
+        pickUp(player, new ItemStack(ModItems.GLOW_BERRY_JUICE.get()));
+        assertDone(context, player, "berry_good", true);
+        context.succeed();
+    }
+
+    @GameTest
+    public void threeFlavorsNeedsAllThreePlainDrinks(GameTestHelper context) {
+        ServerPlayer player = player(context);
+
+        drink(player, ModItems.APPLE_CIDER.get());
+        drink(player, ModItems.SWEET_BERRY_JUICE.get());
+        assertDone(context, player, "three_flavors", false);
+
+        drink(player, ModItems.GLOW_BERRY_JUICE.get());
+        assertDone(context, player, "three_flavors", true);
+        context.succeed();
+    }
+
+    @GameTest
+    public void feedingPomaceAndFillingACauldronAreAwardedByTheirEvents(GameTestHelper context) {
+        ServerPlayer player = player(context);
+
+        ModTriggers.firePomaceHealed(player);
+        assertDone(context, player, "waste_not", true);
+        assertDone(context, player, "big_batch", false);
+
+        ModTriggers.fire(player, CiderEvent.CAULDRON_FILLED);
+        assertDone(context, player, "big_batch", true);
+        context.succeed();
+    }
+
+    @GameTest
+    public void anySpiceStartsTheSpiceBranchButMullingSpicesDoNot(GameTestHelper context) {
+        ServerPlayer player = player(context);
+
+        pickUp(player, new ItemStack(ModItems.MULLING_SPICES.get()));
+        assertDone(context, player, "spice_up_your_life", false);
+
+        pickUp(player, new ItemStack(ModItems.NUTMEG.get()));
+        assertDone(context, player, "spice_up_your_life", true);
+        context.succeed();
+    }
+
+    @GameTest
+    public void ladlingAndDrinkingAnyMulledDrinkAreAwardedButNotTheSet(GameTestHelper context) {
+        ServerPlayer player = player(context);
+
+        pickUp(player, new ItemStack(ModItems.MULLED_GLOW_BERRY_JUICE.get()));
+        assertDone(context, player, "ladle_it_on", true);
+
+        drink(player, ModItems.MULLED_APPLE_CIDER.get());
+        assertDone(context, player, "hot_cider_weather", true);
+        assertDone(context, player, "seasons_drinkings", false);
+        context.succeed();
+    }
+
+    @GameTest
+    public void everyMulledDrinkCompletesSeasonsDrinkingsAndPaysOut(GameTestHelper context) {
+        ServerPlayer player = player(context);
+        int before = player.totalExperience;
+
+        drink(player, ModItems.MULLED_APPLE_CIDER.get());
+        drink(player, ModItems.MULLED_SWEET_BERRY_JUICE.get());
+        assertDone(context, player, "seasons_drinkings", false);
+
+        drink(player, ModItems.MULLED_GLOW_BERRY_JUICE.get());
+        assertDone(context, player, "seasons_drinkings", true);
+        context.assertValueEqual(player.totalExperience - before, 100, "experience from Season's Drinkings");
         context.succeed();
     }
 }

@@ -1,5 +1,7 @@
 package com.chimericdream.allhallowssteve.block;
 
+import com.chimericdream.allhallowssteve.advancement.ModTriggers;
+import com.chimericdream.allhallowssteve.advancement.CiderEvent;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -70,6 +72,7 @@ public final class JuiceCauldrons {
             level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
 
             if (next.getValue(LayeredCauldronBlock.LEVEL) == LayeredCauldronBlock.MAX_FILL_LEVEL) {
+                ModTriggers.fire(player, CiderEvent.CAULDRON_FILLED);
                 level.scheduleTick(pos, next.getBlock(), JuiceCauldronBlock.TICK_INTERVAL);
             }
         }

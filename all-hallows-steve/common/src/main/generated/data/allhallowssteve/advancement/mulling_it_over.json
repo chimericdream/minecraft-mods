@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:spice_up_your_life",
+  "criteria": {
+    "crafted_mulling_spices": {
+      "conditions": {
+        "recipe_id": "allhallowssteve:mulling_spices"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.mulling_it_over.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:mulling_spices"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.mulling_it_over.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_mulling_spices"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

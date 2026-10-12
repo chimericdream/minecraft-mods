@@ -2,6 +2,7 @@
 
 #### New Features
 
+* Added eleven advancements for the cider press, spices, juices, and mulled drinks, in the same tab as the pumpkin ones. Drinking every kind of mulled drink earns the secret *Season's Drinkings* and some experience.
 * Added the Cider Press. Craft one from an iron ingot, two sticks, a barrel, and three planks.
   * Put in 3 apples and a glass bottle, plus charcoal, coal, or blaze powder for fuel, and after a short press you get a bottle of apple cider and some pomace. Hoppers can feed it and empty it.
   * Apple cider is a drink that restores hunger and gives back the empty bottle.

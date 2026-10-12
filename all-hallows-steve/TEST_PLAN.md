@@ -82,6 +82,12 @@ NeoForge.
      points. Missing even Blank leaves it unearned.
    * Check the toast and chat message for each, on both Fabric and NeoForge (the trigger is registered
      separately on each).
+   * Cider branch (from the root): craft a Cider Press for *Pressing Matters*; get any apple cider or berry juice
+     for *Fresh Pressed*, and a sweet or glow berry juice for *Berry Good*; drink all three plain drinks for *Three
+     Flavors*; heal a hurt animal with pomace for *Waste Not*. Pick up cinnamon, cloves, or nutmeg (not mulling
+     spices) for *Spice Up Your Life*, craft mulling spices for *Mulling It Over*, pour the third bottle into a
+     cauldron for *Big Batch*, ladle a serving for *Ladle It On*, drink any mulled drink for *Hot Cider Weather*.
+     Drinking all three mulled drinks awards the hidden *Season's Drinkings* and 100 experience points.
 5. **Cider press** (give yourself apples, glass bottles, charcoal, coal, and blaze powder)
    * Craft the press from an iron ingot, two sticks, a barrel, and three planks. Place it: the spout is on
      the face toward you, and it turns with the placement direction.

@@ -1,0 +1,54 @@
+{
+  "parent": "allhallowssteve:root",
+  "criteria": {
+    "has_cinnamon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:cinnamon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_cloves": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:cloves"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_nutmeg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:nutmeg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.spice_up_your_life.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:cinnamon"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.spice_up_your_life.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_cinnamon",
+      "has_cloves",
+      "has_nutmeg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "allhallowssteve:root",
+  "criteria": {
+    "crafted_press": {
+      "conditions": {
+        "recipe_id": "allhallowssteve:cider_press"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.pressing_matters.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:cider_press"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.pressing_matters.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_press"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

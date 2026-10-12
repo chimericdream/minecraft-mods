@@ -1,0 +1,25 @@
+{
+  "parent": "allhallowssteve:pressing_matters",
+  "criteria": {
+    "healed": {
+      "trigger": "allhallowssteve:pomace_healed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.allhallowssteve.waste_not.description"
+    },
+    "icon": {
+      "id": "allhallowssteve:pomace"
+    },
+    "title": {
+      "translate": "advancements.allhallowssteve.waste_not.title"
+    }
+  },
+  "requirements": [
+    [
+      "healed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

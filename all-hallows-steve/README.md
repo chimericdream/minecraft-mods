@@ -60,7 +60,7 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   Every serving restores 8 hunger.
 *   If the fire goes out, the simmer starts over but the spices stay.
 
-**Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. Two are secret.
+**Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. A second branch covers the cider press, pomace, spices, juices, and mulled drinks, ending in the secret *Season's Drinkings*. Three in all are secret.
 
 ## Notes for Documentation
 

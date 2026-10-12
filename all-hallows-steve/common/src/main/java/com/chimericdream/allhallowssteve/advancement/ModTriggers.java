@@ -26,6 +26,16 @@ public final class ModTriggers {
         PumpkinEventTrigger::new
     );
 
+    public static final RegistrySupplier<CiderEventTrigger> CIDER_EVENT = TRIGGERS.register(
+        Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "cider_event"),
+        CiderEventTrigger::new
+    );
+
+    public static final RegistrySupplier<PomaceHealedTrigger> POMACE_HEALED = TRIGGERS.register(
+        Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "pomace_healed"),
+        PomaceHealedTrigger::new
+    );
+
     /** How often, in ticks, the worn pumpkin is checked. Cheap, and quick enough that nobody notices the delay. */
     private static final int WORN_CHECK_INTERVAL = 10;
 
@@ -43,6 +53,30 @@ public final class ModTriggers {
         if (player instanceof ServerPlayer serverPlayer) {
             PUMPKIN_EVENT.get().trigger(serverPlayer, event);
         }
+    }
+
+    /** Fires the cider {@code event} for {@code player}, with the same rules as the pumpkin one. */
+    public static void fire(Player player, CiderEvent event) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            CIDER_EVENT.get().trigger(serverPlayer, event);
+        }
+    }
+
+    /** Fires the "healed an animal with pomace" trigger for {@code player}. */
+    public static void firePomaceHealed(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            POMACE_HEALED.get().trigger(serverPlayer);
+        }
+    }
+
+    /** A criterion that completes when the cider {@code event} fires. Used by the advancement datagen. */
+    public static Criterion<CiderEventTrigger.TriggerInstance> criterion(CiderEvent event) {
+        return CIDER_EVENT.get().createCriterion(new CiderEventTrigger.TriggerInstance(Optional.empty(), event));
+    }
+
+    /** A criterion that completes when an animal is healed with pomace. */
+    public static Criterion<PomaceHealedTrigger.TriggerInstance> pomaceHealedCriterion() {
+        return POMACE_HEALED.get().createCriterion(new PomaceHealedTrigger.TriggerInstance(Optional.empty()));
     }
 
     /** A criterion that completes when {@code event} fires. Used by the advancement datagen. */
