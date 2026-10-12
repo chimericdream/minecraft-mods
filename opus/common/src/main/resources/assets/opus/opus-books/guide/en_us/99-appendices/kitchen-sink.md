@@ -259,6 +259,66 @@ Renders as:
 
 A hopper ![Hopper](item:minecraft:hopper) and a chest ![Chest](item:minecraft:chest) drawn inline with the text.
 
+## Images
+
+See [images](../01-writing-books/03-markdown.md#images) for the address form. Click a block image to see it larger.
+
+### Block image
+
+`````markdown
+![The Opus book](texture:opus:item/book){width=64}
+`````
+
+Renders as:
+
+![The Opus book](texture:opus:item/book){width=64}
+
+### Inline image
+
+`````markdown
+An image inside a line of text is icon-sized: ![the Opus book](texture:opus:item/book) here.
+`````
+
+Renders as:
+
+An image inside a line of text is icon-sized: ![the Opus book](texture:opus:item/book) here.
+
+### Alignment
+
+`````markdown
+![Left](texture:opus:item/book){width=32 align=left}
+
+![Right](texture:opus:item/book){width=32 align=right}
+`````
+
+Renders as:
+
+![Left](texture:opus:item/book){width=32 align=left}
+
+![Right](texture:opus:item/book){width=32 align=right}
+
+### Side by side
+
+`````markdown
+![Book](texture:opus:item/book){width=48}
+![Guide](texture:opus:item/opus_guide){width=48}
+![Not found](texture:opus:item/book_invalid){width=48}
+`````
+
+Renders as:
+
+![Book](texture:opus:item/book){width=48}
+![Guide](texture:opus:item/opus_guide){width=48}
+![Not found](texture:opus:item/book_invalid){width=48}
+
+### Missing texture
+
+`````markdown
+![No such file](texture:opus:item/does_not_exist)
+`````
+
+The page shows a labelled box (and the validator warns), so this example is not rendered here.
+
 ## Recipes
 
 Each recipe includes the optional `recipe:` id, which is not used yet. See [recipe ids](../02-widgets/01-recipes.md#recipe-ids-planned).
