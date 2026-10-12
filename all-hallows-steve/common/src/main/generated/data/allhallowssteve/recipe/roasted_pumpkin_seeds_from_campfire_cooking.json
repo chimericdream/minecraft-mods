@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.1,
+  "ingredient": "minecraft:pumpkin_seeds",
+  "result": {
+    "id": "allhallowssteve:roasted_pumpkin_seeds"
+  }
+}

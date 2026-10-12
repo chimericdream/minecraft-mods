@@ -13,6 +13,7 @@ import com.chimericdream.allhallowssteve.fabric.block.CiderPressBlockDataGenerat
 import com.chimericdream.allhallowssteve.fabric.block.DecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.block.LitDecoratedPumpkinBlockDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.item.CiderItemDataGenerator;
+import com.chimericdream.allhallowssteve.fabric.item.HarvestFoodItemDataGenerator;
 import com.chimericdream.allhallowssteve.fabric.item.PumpkinStencilItemDataGenerator;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.client.screen.CiderPressScreenHandler;
@@ -118,6 +119,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             PumpkinStencilItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
             CiderItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
             SpiceItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
+            HarvestFoodItemDataGenerator.configureTranslations(registryLookup, translationBuilder);
 
             translationBuilder.add(CarvingStationScreenHandler.SCREEN_ID, "Pumpkin Carving Station");
             translationBuilder.add(CiderPressScreenHandler.SCREEN_ID, "Cider Press");
@@ -170,6 +172,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
                     PumpkinStencilItemDataGenerator.configureRecipes(registryLookup, exporter, this);
                     SpiceItemDataGenerator.configureRecipes(registryLookup, exporter, this);
+                    HarvestFoodItemDataGenerator.configureRecipes(registryLookup, exporter, this);
                 }
             };
         }
@@ -297,6 +300,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             PumpkinStencilItemDataGenerator.configureItemModels(itemModelGenerator);
             CiderItemDataGenerator.configureItemModels(itemModelGenerator);
             SpiceItemDataGenerator.configureItemModels(itemModelGenerator);
+            HarvestFoodItemDataGenerator.configureItemModels(itemModelGenerator);
         }
 
         @Override
