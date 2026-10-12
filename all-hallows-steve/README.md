@@ -80,7 +80,7 @@ according to the permissions outlined by the artist and the license.
 
 * Pumpkin stencil overlays, base texture ([part_paper_vellum.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_paper_vellum.png))
 * Cider press, top ([device_barrel_ends.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_ends.png)), bottom ([device_barrel_feet.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_feet.png)), and sides and front ([device_barrel_sides.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_sides.png); the front has a spout added)
-* Apple cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); split into an untinted bottle and a tinted liquid layer, shared by apple cider, mulled apple cider, sweet berry juice, and glow berry juice
+* Apple cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); split into an untinted bottle and a tinted liquid layer, shared by apple cider, mulled apple cider, sweet berry juice, and glow berry juice)
 * Pomace ([material_blob_organic_biomass.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_blob_organic_biomass.png))
 * Cinnamon ([part_rod_generic_bark.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_rod_generic_bark.png); recolored and edited)
 * Nutmeg ([seeds_generic_nuts.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_nuts.png))
