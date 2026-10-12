@@ -8,7 +8,7 @@
 
 #### Documentation
 
-- The Writing books chapter of the Opus Guide now has an Images section.
+- The Writing books chapter of the Opus Guide now has an Images section, and the Kitchen sink page shows each kind of picture.
 
 ### 26.2 - 1.1.0
 

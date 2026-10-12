@@ -21,6 +21,7 @@ chapter.
 * YAML frontmatter for titles, icons, ordering, tags, hidden pages, and advancement-gated pages
 * Links between pages that are checked when the book loads
 * Recipe, item, and mob widgets written as fenced blocks
+* Pictures from resource-pack textures, as centred blocks, side-by-side rows, or inline icons, with captions and click-to-enlarge, plus texture chapter icons
 * Translations that fall back to the book's default language
 * Custom item looks, names, and tooltips for each book, plus a `/opus give` command to hand out books
 * A validator that finds broken links and bad widgets before your players do
