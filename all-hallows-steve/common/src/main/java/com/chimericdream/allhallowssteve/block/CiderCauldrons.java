@@ -1,6 +1,6 @@
 package com.chimericdream.allhallowssteve.block;
 
-import com.chimericdream.allhallowssteve.item.MulledCider;
+import com.chimericdream.allhallowssteve.item.MulledAppleCider;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -38,7 +38,7 @@ public final class CiderCauldrons {
 
     /** Registers the item interactions. Needs the registry objects, so it runs from {@code postInit}. */
     public static void init() {
-        Item cider = ModItems.CIDER.get();
+        Item cider = ModItems.APPLE_CIDER.get();
 
         CauldronInteractions.EMPTY.put(cider, CiderCauldrons::fillEmptyCauldron);
         CIDER_BEHAVIORS.put(cider, CiderCauldrons::addCider);
@@ -85,7 +85,7 @@ public final class CiderCauldrons {
 
     private static InteractionResult takeCider(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
         if (!level.isClientSide()) {
-            swapForBottle(player, hand, stack, new ItemStack(ModItems.CIDER.get()));
+            swapForBottle(player, hand, stack, new ItemStack(ModItems.APPLE_CIDER.get()));
             lowerLevel(state, level, pos);
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
@@ -96,7 +96,7 @@ public final class CiderCauldrons {
 
     private static InteractionResult ladle(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
         if (!level.isClientSide()) {
-            ItemStack serving = MulledCider.serving(state.getValue(CINNAMON), state.getValue(CLOVES), state.getValue(NUTMEG));
+            ItemStack serving = MulledAppleCider.serving(state.getValue(CINNAMON), state.getValue(CLOVES), state.getValue(NUTMEG));
 
             swapForBottle(player, hand, stack, serving);
             lowerLevel(state, level, pos);

@@ -204,7 +204,7 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
             return false;
         }
 
-        return hasRoomFor(this.inventory.get(SLOT_CIDER), ModItems.CIDER.get())
+        return hasRoomFor(this.inventory.get(SLOT_CIDER), ModItems.APPLE_CIDER.get())
             && hasRoomFor(this.inventory.get(SLOT_POMACE), ModItems.POMACE.get());
     }
 
@@ -224,7 +224,7 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
     private void finishPress(Level level, BlockPos pos) {
         this.inventory.get(SLOT_FRUIT).shrink(APPLES_PER_PRESS);
         this.inventory.get(SLOT_BOTTLE).shrink(1);
-        this.addOutput(SLOT_CIDER, ModItems.CIDER.get());
+        this.addOutput(SLOT_CIDER, ModItems.APPLE_CIDER.get());
         this.addOutput(SLOT_POMACE, ModItems.POMACE.get());
 
         level.playSound(null, pos, SoundEvents.COMPOSTER_FILL_SUCCESS, SoundSource.BLOCKS, 1.0F, 1.0F);

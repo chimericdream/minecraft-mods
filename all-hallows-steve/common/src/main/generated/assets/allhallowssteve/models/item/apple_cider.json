@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "allhallowssteve:item/cider"
+    "layer0": "allhallowssteve:item/apple_cider"
   }
 }

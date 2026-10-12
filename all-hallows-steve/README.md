@@ -39,19 +39,19 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   Choose which side faces forward with the "Turn Worn Pumpkin" key (unbound by default).
 *   A config option (also available through Mod Menu) lowers how much the worn pumpkin blocks your view.
 
-**Cider Press** — craft one from an iron ingot, two sticks, a barrel, and three planks. Put in 3 apples, a glass bottle, and some fuel (charcoal or coal gives 8 pressings, blaze powder gives 20), and after a short press you get a bottle of cider and a piece of pomace.
+**Cider Press** — craft one from an iron ingot, two sticks, a barrel, and three planks. Put in 3 apples, a glass bottle, and some fuel (charcoal or coal gives 8 pressings, blaze powder gives 20), and after a short press you get a bottle of apple cider and a piece of pomace.
 
-*   **Cider** — a drink that restores hunger and gives you the empty bottle back.
+*   **Apple Cider** — a drink that restores hunger and gives you the empty bottle back.
 *   **Pomace** — can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
 *   **Hoppers** — can feed the press and empty it.
 
-**Spices** — cinnamon, cloves, and nutmeg, used to make mulled cider.
+**Spices** — cinnamon, cloves, and nutmeg, used to make mulled apple cider.
 
 *   **Cinnamon** — sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.
 *   **Cloves** — smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker.
 *   **Nutmeg** — smelt cocoa beans in a furnace or smoker, or buy it from a Journeyman farmer for 1 emerald for 2 nutmeg.
 
-**Mulled Cider** — pour 3 bottles of cider into a cauldron, add spices by right-clicking it with them (each kind once), and set it over a lit campfire or soul campfire. After about 30 seconds it turns into mulled cider; use empty glass bottles to ladle out 3 servings.
+**Mulled Apple Cider** — pour 3 bottles of apple cider into a cauldron, add spices by right-clicking it with them (each kind once), and set it over a lit campfire or soul campfire. After about 30 seconds it turns into mulled apple cider; use empty glass bottles to ladle out 3 servings.
 
 *   **Cinnamon** adds more hunger, **cloves** add more saturation, and **nutmeg** adds a little of both. All three together is best. Each serving's tooltip lists the spices in it.
 *   If the fire goes out, the simmer starts over but the spices stay.
@@ -78,7 +78,7 @@ according to the permissions outlined by the artist and the license.
 
 * Pumpkin stencil overlays, base texture ([part_paper_vellum.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_paper_vellum.png))
 * Cider press, top ([device_barrel_ends.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_ends.png)), bottom ([device_barrel_feet.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_feet.png)), and sides and front ([device_barrel_sides.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_sides.png); the front has a spout added)
-* Cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); the liquid color was changed), and mulled cider (the same texture, recolored again)
+* Apple cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); the liquid color was changed), and mulled apple cider (the same texture, recolored again)
 * Pomace ([material_blob_organic_biomass.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_blob_organic_biomass.png))
 * Cinnamon ([part_rod_generic_bark.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_rod_generic_bark.png); recolored and edited)
 * Nutmeg ([seeds_generic_nuts.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_nuts.png))

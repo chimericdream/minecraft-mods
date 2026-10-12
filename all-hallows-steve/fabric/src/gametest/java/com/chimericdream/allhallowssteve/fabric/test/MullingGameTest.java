@@ -4,7 +4,7 @@ import com.chimericdream.allhallowssteve.block.CiderCauldronBlock;
 import com.chimericdream.allhallowssteve.block.CiderCauldrons;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.item.ModItems;
-import com.chimericdream.allhallowssteve.item.MulledCider;
+import com.chimericdream.allhallowssteve.item.MulledAppleCider;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -74,7 +74,7 @@ public class MullingGameTest {
 
     private static void fillWithCider(GameTestHelper context, Player player) {
         for (int i = 0; i < 3; i++) {
-            use(context, player, new ItemStack(ModItems.CIDER.get()));
+            use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         }
     }
 
@@ -110,14 +110,14 @@ public class MullingGameTest {
         context.setBlock(CAULDRON, Blocks.CAULDRON.defaultBlockState());
         Player player = player(context, ItemStack.EMPTY);
 
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         context.assertTrue(isCider(context) && level(context) == 1, "one bottle gives level 1");
 
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         context.assertTrue(isCider(context) && level(context) == 3, "three bottles give a full cauldron");
 
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         context.assertTrue(level(context) == 3, "a fourth bottle is not accepted");
 
         context.assertValueEqual(player.getInventory().countItem(Items.GLASS_BOTTLE), 3, "empty bottles returned");
@@ -136,7 +136,7 @@ public class MullingGameTest {
         use(context, player, new ItemStack(Items.GLASS_BOTTLE));
         use(context, player, new ItemStack(Items.GLASS_BOTTLE));
         context.assertBlockPresent(Blocks.CAULDRON, CAULDRON);
-        context.assertValueEqual(player.getInventory().countItem(ModItems.CIDER.get()), 3, "cider bottles taken");
+        context.assertValueEqual(player.getInventory().countItem(ModItems.APPLE_CIDER.get()), 3, "cider bottles taken");
         context.succeed();
     }
 
@@ -145,14 +145,14 @@ public class MullingGameTest {
         context.setBlock(CAULDRON, Blocks.CAULDRON.defaultBlockState());
         Player player = player(context, ItemStack.EMPTY);
 
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         ItemStack cinnamon = new ItemStack(ModItems.CINNAMON.get(), 2);
         use(context, player, cinnamon);
         context.assertFalse(state(context).getValue(CiderCauldrons.CINNAMON), "no spice in a part-full cauldron");
         context.assertValueEqual(cinnamon.getCount(), 2, "cinnamon kept");
 
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
-        use(context, player, new ItemStack(ModItems.CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
+        use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         use(context, player, cinnamon);
         context.assertTrue(state(context).getValue(CiderCauldrons.CINNAMON), "cinnamon added");
         context.assertValueEqual(cinnamon.getCount(), 1, "one cinnamon used");
@@ -243,14 +243,14 @@ public class MullingGameTest {
         }
 
         context.assertBlockPresent(Blocks.CAULDRON, CAULDRON);
-        context.assertValueEqual(player.getInventory().countItem(ModItems.MULLED_CIDER.get()), 3, "servings taken");
+        context.assertValueEqual(player.getInventory().countItem(ModItems.MULLED_APPLE_CIDER.get()), 3, "servings taken");
 
         FoodProperties food = player.getInventory().getNonEquipmentItems().stream()
-            .filter(stack -> stack.is(ModItems.MULLED_CIDER.get()))
+            .filter(stack -> stack.is(ModItems.MULLED_APPLE_CIDER.get()))
             .findFirst()
             .map(stack -> stack.get(DataComponents.FOOD))
             .orElse(null);
-        FoodProperties full = MulledCider.food(true, true, true);
+        FoodProperties full = MulledAppleCider.food(true, true, true);
 
         context.assertTrue(food != null && food.nutrition() == full.nutrition(), "serving carries the fully spiced food values");
         context.succeed();
@@ -265,23 +265,23 @@ public class MullingGameTest {
 
     @GameTest
     public void servingsListTheirSpicesInAFixedOrder(GameTestHelper context) {
-        context.assertTrue(MulledCider.serving(false, false, false).getOrDefault(DataComponents.LORE, ItemLore.EMPTY).lines().isEmpty(), "no tooltip without spices");
+        context.assertTrue(MulledAppleCider.serving(false, false, false).getOrDefault(DataComponents.LORE, ItemLore.EMPTY).lines().isEmpty(), "no tooltip without spices");
 
         // The order comes from the booleans, not from the order the spices were added to the cauldron.
-        String all = spices(MulledCider.serving(true, true, true).get(DataComponents.LORE));
+        String all = spices(MulledAppleCider.serving(true, true, true).get(DataComponents.LORE));
         context.assertTrue(all.indexOf("cinnamon") < all.indexOf("cloves") && all.indexOf("cloves") < all.indexOf("nutmeg"), "cinnamon, cloves, nutmeg: " + all);
 
-        String two = spices(MulledCider.serving(false, true, true).get(DataComponents.LORE));
+        String two = spices(MulledAppleCider.serving(false, true, true).get(DataComponents.LORE));
         context.assertTrue(two.contains("cloves") && two.contains("nutmeg") && !two.contains("cinnamon"), "only the spices used: " + two);
         context.succeed();
     }
 
     @GameTest
     public void eachSpiceHasItsOwnMix(GameTestHelper context) {
-        FoodProperties plain = MulledCider.food(false, false, false);
-        FoodProperties cinnamon = MulledCider.food(true, false, false);
-        FoodProperties cloves = MulledCider.food(false, true, false);
-        FoodProperties nutmeg = MulledCider.food(false, false, true);
+        FoodProperties plain = MulledAppleCider.food(false, false, false);
+        FoodProperties cinnamon = MulledAppleCider.food(true, false, false);
+        FoodProperties cloves = MulledAppleCider.food(false, true, false);
+        FoodProperties nutmeg = MulledAppleCider.food(false, false, true);
 
         context.assertTrue(cinnamon.nutrition() > nutmeg.nutrition() && nutmeg.nutrition() > plain.nutrition(), "cinnamon gives the most hunger");
         context.assertValueEqual(cloves.nutrition(), plain.nutrition(), "cloves leave hunger alone");

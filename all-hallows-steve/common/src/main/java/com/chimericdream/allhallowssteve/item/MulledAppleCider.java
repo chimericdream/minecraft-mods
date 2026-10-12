@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Food values for a serving of mulled cider. Spices only change the food value, never add effects. */
-public final class MulledCider {
+public final class MulledAppleCider {
     public static final int BASE_NUTRITION = 5;
     public static final float BASE_SATURATION_MODIFIER = 0.3F;
 
@@ -25,9 +25,9 @@ public final class MulledCider {
     public static final int NUTMEG_NUTRITION = 1;
     public static final float NUTMEG_SATURATION_MODIFIER = 0.1F;
 
-    public static final String SPICES_TOOLTIP_KEY = "item.allhallowssteve.mulled_cider.tooltip.spices";
+    public static final String SPICES_TOOLTIP_KEY = "item.allhallowssteve.mulled_apple_cider.tooltip.spices";
 
-    private MulledCider() {
+    private MulledAppleCider() {
     }
 
     public static FoodProperties food(boolean cinnamon, boolean cloves, boolean nutmeg) {
@@ -84,7 +84,7 @@ public final class MulledCider {
     }
 
     public static ItemStack serving(boolean cinnamon, boolean cloves, boolean nutmeg) {
-        ItemStack stack = new ItemStack(ModItems.MULLED_CIDER.get());
+        ItemStack stack = new ItemStack(ModItems.MULLED_APPLE_CIDER.get());
 
         stack.set(DataComponents.FOOD, food(cinnamon, cloves, nutmeg));
 

@@ -20,7 +20,7 @@ class.
   tags, composting, and healing of injured livestock.
 * `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
   smelting and smoking recipes for cloves and nutmeg.
-* `MullingGameTest` — cider filling a cauldron one level per bottle, taking cider back out, spices (full
+* `MullingGameTest` — apple cider filling a cauldron one level per bottle, taking it back out, spices (full
   cauldron only, once each), the simmer (driven by calling the cauldron's `tick` directly) including no
   heat and the fire going out, and ladling servings. The rendering, particles, and sounds need the manual
   pass below.
@@ -88,10 +88,10 @@ NeoForge.
      cider slot and a pomace slot. Only apples, bottles, and fuel go into their slots; the two outputs take
      nothing. Shift-clicking sends each item to the right slot.
    * Put in 3 apples, a bottle, and charcoal: the fuel bar fills and the arrow fills over about 10
-     seconds, then one cider and one pomace appear. Blaze powder fills the bar fully (20 pressings),
+     seconds, then one apple cider and one pomace appear. Blaze powder fills the bar fully (20 pressings),
      charcoal and coal 8. With fewer than 3 apples, no bottle, or no fuel, nothing starts.
-   * Drink the cider: it restores hunger like a snack, has no effect, and leaves an empty glass bottle.
-   * A hopper above feeds apples, bottles, and fuel; a hopper below or beside takes the cider and
+   * Drink the apple cider: it restores hunger like a snack, has no effect, and leaves an empty glass bottle.
+   * A hopper above feeds apples, bottles, and fuel; a hopper below or beside takes the apple cider and
      pomace. A hopper beside it never pulls out the apples or the fuel. A comparator reads the contents.
    * Break the press with items inside: everything drops. It mines faster with an axe.
    * Pomace: throw it in a composter (it adds a layer sometimes); feed it to a pig to breed it. Hurt a
@@ -109,7 +109,7 @@ NeoForge.
      It is one of the Journeyman offers, so not every farmer has it; check a few.
    * All three items show in the Ingredients creative tab with their own icons.
 7. **Mulling** (use `/give` for items; repeat on Fabric and NeoForge)
-   * Right-click an empty cauldron with a cider bottle three times: each adds a level, shows amber cider, and
+   * Right-click an empty cauldron with an apple cider bottle three times: each adds a level, shows amber cider, and
      gives back a glass bottle. A fourth does nothing. An empty bottle takes a serving back out.
    * Right-click a full cider cauldron with cinnamon, cloves, and nutmeg: each is used up once; a second of
      the same does nothing. A part-full cauldron refuses spices.

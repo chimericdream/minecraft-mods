@@ -57,7 +57,7 @@ public class CiderPressGameTest {
         context.runAfterDelay(PRESS_TICKS, () -> {
             ItemStack cider = press.getItem(CiderPressBlockEntity.SLOT_CIDER);
             ItemStack pomace = press.getItem(CiderPressBlockEntity.SLOT_POMACE);
-            context.assertTrue(cider.is(ModItems.CIDER.get()) && cider.getCount() == 1, "one cider in the output, got " + cider);
+            context.assertTrue(cider.is(ModItems.APPLE_CIDER.get()) && cider.getCount() == 1, "one cider in the output, got " + cider);
             context.assertTrue(pomace.is(ModItems.POMACE.get()) && pomace.getCount() == 1, "one pomace in the output, got " + pomace);
             context.assertTrue(press.getItem(CiderPressBlockEntity.SLOT_FRUIT).isEmpty(), "apples are used up");
             context.assertTrue(press.getItem(CiderPressBlockEntity.SLOT_BOTTLE).isEmpty(), "bottle is used up");
@@ -115,7 +115,7 @@ public class CiderPressGameTest {
     @GameTest(maxTicks = 60)
     public void fullOutputBlocksPressing(GameTestHelper context) {
         CiderPressBlockEntity press = loadedPress(context, 3, 1, new ItemStack(Items.CHARCOAL));
-        press.setItem(CiderPressBlockEntity.SLOT_CIDER, new ItemStack(ModItems.CIDER.get(), ModItems.CIDER.get().getDefaultMaxStackSize()));
+        press.setItem(CiderPressBlockEntity.SLOT_CIDER, new ItemStack(ModItems.APPLE_CIDER.get(), ModItems.APPLE_CIDER.get().getDefaultMaxStackSize()));
 
         context.runAfterDelay(30, () -> {
             context.assertValueEqual(press.getPressTime(), 0, "press time with a full cider slot");
@@ -144,7 +144,7 @@ public class CiderPressGameTest {
         CiderPressBlockEntity press = placePress(context);
         ItemStack apples = new ItemStack(Items.APPLE);
         ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
-        ItemStack cider = new ItemStack(ModItems.CIDER.get());
+        ItemStack cider = new ItemStack(ModItems.APPLE_CIDER.get());
 
         for (Direction side : new Direction[]{Direction.UP, Direction.NORTH, Direction.EAST}) {
             context.assertTrue(press.canPlaceItemThroughFace(CiderPressBlockEntity.SLOT_FRUIT, apples, side), "apples go in from " + side);
