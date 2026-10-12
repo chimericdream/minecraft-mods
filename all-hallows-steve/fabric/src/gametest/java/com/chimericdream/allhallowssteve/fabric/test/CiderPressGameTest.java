@@ -42,8 +42,12 @@ public class CiderPressGameTest {
     }
 
     private static CiderPressBlockEntity loadedPress(GameTestHelper context, int apples, int bottles, ItemStack fuel) {
+        return loadedPress(context, new ItemStack(Items.APPLE, apples), bottles, fuel);
+    }
+
+    private static CiderPressBlockEntity loadedPress(GameTestHelper context, ItemStack fruit, int bottles, ItemStack fuel) {
         CiderPressBlockEntity press = placePress(context);
-        press.setItem(CiderPressBlockEntity.SLOT_FRUIT, new ItemStack(Items.APPLE, apples));
+        press.setItem(CiderPressBlockEntity.SLOT_FRUIT, fruit);
         press.setItem(CiderPressBlockEntity.SLOT_BOTTLE, new ItemStack(Items.GLASS_BOTTLE, bottles));
         press.setItem(CiderPressBlockEntity.SLOT_FUEL, fuel);
 
@@ -65,6 +69,56 @@ public class CiderPressGameTest {
             context.assertValueEqual(press.getFuel(), CiderPressBlockEntity.CHARCOAL_CHARGES - 1, "charges left after one pressing");
             context.succeed();
         });
+    }
+
+    @GameTest(maxTicks = 300)
+    public void sweetBerriesMakeSweetBerryJuiceAndPomace(GameTestHelper context) {
+        CiderPressBlockEntity press = loadedPress(context, new ItemStack(Items.SWEET_BERRIES, 3), 1, new ItemStack(Items.CHARCOAL));
+
+        context.runAfterDelay(PRESS_TICKS, () -> {
+            ItemStack juice = press.getItem(CiderPressBlockEntity.SLOT_CIDER);
+            ItemStack pomace = press.getItem(CiderPressBlockEntity.SLOT_POMACE);
+            context.assertTrue(juice.is(ModItems.SWEET_BERRY_JUICE.get()) && juice.getCount() == 1, "one sweet berry juice in the output, got " + juice);
+            context.assertTrue(pomace.is(ModItems.POMACE.get()) && pomace.getCount() == 1, "one pomace in the output, got " + pomace);
+            context.assertTrue(press.getItem(CiderPressBlockEntity.SLOT_FRUIT).isEmpty(), "berries are used up");
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 300)
+    public void glowBerriesMakeGlowBerryJuiceAndPomace(GameTestHelper context) {
+        CiderPressBlockEntity press = loadedPress(context, new ItemStack(Items.GLOW_BERRIES, 3), 1, new ItemStack(Items.CHARCOAL));
+
+        context.runAfterDelay(PRESS_TICKS, () -> {
+            ItemStack juice = press.getItem(CiderPressBlockEntity.SLOT_CIDER);
+            ItemStack pomace = press.getItem(CiderPressBlockEntity.SLOT_POMACE);
+            context.assertTrue(juice.is(ModItems.GLOW_BERRY_JUICE.get()) && juice.getCount() == 1, "one glow berry juice in the output, got " + juice);
+            context.assertTrue(pomace.is(ModItems.POMACE.get()) && pomace.getCount() == 1, "one pomace in the output, got " + pomace);
+            context.assertTrue(press.getItem(CiderPressBlockEntity.SLOT_FRUIT).isEmpty(), "berries are used up");
+            context.succeed();
+        });
+    }
+
+    @GameTest(maxTicks = 60)
+    public void aDifferentJuiceInTheOutputBlocksPressing(GameTestHelper context) {
+        CiderPressBlockEntity press = loadedPress(context, new ItemStack(Items.SWEET_BERRIES, 3), 1, new ItemStack(Items.CHARCOAL));
+        press.setItem(CiderPressBlockEntity.SLOT_CIDER, new ItemStack(ModItems.APPLE_CIDER.get()));
+
+        context.runAfterDelay(30, () -> {
+            context.assertValueEqual(press.getPressTime(), 0, "press time with another juice in the output");
+            context.assertValueEqual(press.getItem(CiderPressBlockEntity.SLOT_FRUIT).getCount(), 3, "berries left");
+            context.succeed();
+        });
+    }
+
+    @GameTest
+    public void berriesGoInTheFruitSlot(GameTestHelper context) {
+        CiderPressBlockEntity press = placePress(context);
+
+        context.assertTrue(press.canPlaceItemThroughFace(CiderPressBlockEntity.SLOT_FRUIT, new ItemStack(Items.SWEET_BERRIES), Direction.UP), "sweet berries go in");
+        context.assertTrue(press.canPlaceItemThroughFace(CiderPressBlockEntity.SLOT_FRUIT, new ItemStack(Items.GLOW_BERRIES), Direction.UP), "glow berries go in");
+        context.assertTrue(CiderPressBlockEntity.juiceFor(new ItemStack(Items.CARROT)) == null, "carrots make no juice");
+        context.succeed();
     }
 
     @GameTest(maxTicks = 300)

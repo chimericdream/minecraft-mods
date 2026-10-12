@@ -42,6 +42,7 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 **Cider Press** — craft one from an iron ingot, two sticks, a barrel, and three planks. Put in 3 apples, a glass bottle, and some fuel (charcoal or coal gives 8 pressings, blaze powder gives 20), and after a short press you get a bottle of apple cider and a piece of pomace.
 
 *   **Apple Cider** — a drink that restores hunger and gives you the empty bottle back.
+*   **Sweet Berry Juice** and **Glow Berry Juice** — press 3 sweet berries or 3 glow berries instead of apples. They drink the same as apple cider, and pomace comes out too.
 *   **Pomace** — can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little.
 *   **Hoppers** — can feed the press and empty it.
 
@@ -79,7 +80,7 @@ according to the permissions outlined by the artist and the license.
 
 * Pumpkin stencil overlays, base texture ([part_paper_vellum.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_paper_vellum.png))
 * Cider press, top ([device_barrel_ends.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_ends.png)), bottom ([device_barrel_feet.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_feet.png)), and sides and front ([device_barrel_sides.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_barrel_sides.png); the front has a spout added)
-* Apple cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); the liquid color was changed), and mulled apple cider (the same texture, recolored again)
+* Apple cider ([bottle_fluid_oil.png](https://github.com/malcolmriley/unused-textures/blob/master/items/bottle_fluid_oil.png); split into an untinted bottle and a tinted liquid layer, shared by apple cider, mulled apple cider, sweet berry juice, and glow berry juice
 * Pomace ([material_blob_organic_biomass.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_blob_organic_biomass.png))
 * Cinnamon ([part_rod_generic_bark.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_rod_generic_bark.png); recolored and edited)
 * Nutmeg ([seeds_generic_nuts.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_nuts.png))

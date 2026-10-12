@@ -16,7 +16,8 @@ class.
 * `PumpkinContentsGameTest` — the contents message for every pumpkin state, and that inspecting changes
   nothing.
 * `CiderPressGameTest` — the cider press: a timed pressing's outputs, fuel charges, what stops it (too few
-  apples, no bottle, no fuel, a full output, pulling the apples out), the hopper slot rules, and pomace's
+  apples, no bottle, no fuel, a full output, a different juice in the output, pulling the apples out), pressing sweet and glow berries, the hopper
+  slot rules, and pomace's
   tags, composting, and healing of injured livestock.
 * `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
   smelting and smoking recipes for cloves and nutmeg, and the mulling spices crafting recipe.
@@ -90,6 +91,9 @@ NeoForge.
    * Put in 3 apples, a bottle, and charcoal: the fuel bar fills and the arrow fills over about 10
      seconds, then one apple cider and one pomace appear. Blaze powder fills the bar fully (20 pressings),
      charcoal and coal 8. With fewer than 3 apples, no bottle, or no fuel, nothing starts.
+   * Press 3 sweet berries and 3 glow berries (each with a bottle): you get sweet berry juice (red tint) and glow berry
+     juice (gold tint), each with one pomace. Berries only go in the fruit slot, and a different juice sitting in
+     the output slot stops the next press until it is emptied. Check both juice textures look right.
    * Drink the apple cider: it restores hunger like a snack, has no effect, and leaves an empty glass bottle.
    * A hopper above feeds apples, bottles, and fuel; a hopper below or beside takes the apple cider and
      pomace. A hopper beside it never pulls out the apples or the fuel. A comparator reads the contents.

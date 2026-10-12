@@ -24,3 +24,8 @@ accessible field net/minecraft/client/gui/GuiGraphicsExtractor guiRenderState Ln
 # Cider and mulled-cider cauldrons build their own CauldronInteraction.Dispatcher; as of 26.1 its put() is
 # package-private, so mods can't register item interactions without widening it.
 accessible method net/minecraft/core/cauldron/CauldronInteraction$Dispatcher put (Lnet/minecraft/world/item/Item;Lnet/minecraft/core/cauldron/CauldronInteraction;)V
+
+# The bottled drinks share one bottle texture and a liquid overlay tinted per item, which needs the item model output
+# (for the tinted item definition) and the model output (for the two-layer model).
+accessible field net/minecraft/client/data/models/ItemModelGenerators itemModelOutput Lnet/minecraft/client/data/models/ItemModelOutput;
+accessible field net/minecraft/client/data/models/ItemModelGenerators modelOutput Ljava/util/function/BiConsumer;

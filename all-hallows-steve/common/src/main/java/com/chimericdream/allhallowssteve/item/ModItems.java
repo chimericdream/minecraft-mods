@@ -58,6 +58,12 @@ public class ModItems {
         )
     );
 
+    /** Pressed sweet berries. The liquid is tinted red (see {@code CiderItemDataGenerator}). */
+    public static final RegistrySupplier<Item> SWEET_BERRY_JUICE = registerJuice("sweet_berry_juice");
+
+    /** Pressed glow berries. The liquid is tinted gold (see {@code CiderItemDataGenerator}). */
+    public static final RegistrySupplier<Item> GLOW_BERRY_JUICE = registerJuice("glow_berry_juice");
+
     /**
      * A hot bottle of mulled cider. There is only one kind; its food values live in {@link MulledAppleCider}.
      */
@@ -85,6 +91,25 @@ public class ModItems {
                 .setId(REGISTRY_HELPER.makeItemRegistryKey(POMACE_ID))
         )
     );
+
+    /** A bottle of pressed berry juice: the same food values and bottle handling as apple cider. */
+    @SuppressWarnings("UnstableApiUsage")
+    private static RegistrySupplier<Item> registerJuice(String name) {
+        Identifier id = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, name);
+
+        return REGISTRY_HELPER.registerItem(
+            id,
+            () -> new Item(
+                new Item.Properties()
+                    .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
+                    .setId(REGISTRY_HELPER.makeItemRegistryKey(id))
+                    .craftRemainder(Items.GLASS_BOTTLE)
+                    .food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).build(), Consumables.DEFAULT_DRINK)
+                    .usingConvertsTo(Items.GLASS_BOTTLE)
+                    .stacksTo(16)
+            )
+        );
+    }
 
     @SuppressWarnings("UnstableApiUsage")
     private static RegistrySupplier<Item> registerSpice(String name) {

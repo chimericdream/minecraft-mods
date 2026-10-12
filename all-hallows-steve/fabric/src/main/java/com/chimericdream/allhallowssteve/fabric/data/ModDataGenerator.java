@@ -211,7 +211,9 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
             builder(ModTags.CIDER_PRESS_PRESSABLE)
                 .setReplace(false)
-                .add(Items.APPLE.builtInRegistryHolder().key());
+                .add(Items.APPLE.builtInRegistryHolder().key())
+                .add(Items.SWEET_BERRIES.builtInRegistryHolder().key())
+                .add(Items.GLOW_BERRIES.builtInRegistryHolder().key());
 
             builder(ModTags.CIDER_PRESS_FUEL)
                 .setReplace(false)

@@ -5,6 +5,7 @@
 * Added the Cider Press. Craft one from an iron ingot, two sticks, a barrel, and three planks.
   * Put in 3 apples and a glass bottle, plus charcoal, coal, or blaze powder for fuel, and after a short press you get a bottle of apple cider and some pomace. Hoppers can feed it and empty it.
   * Apple cider is a drink that restores hunger and gives back the empty bottle.
+  * The press also takes 3 sweet berries or 3 glow berries and turns them into sweet berry juice or glow berry juice, with pomace as a byproduct too. The juices drink just like apple cider.
   * Pomace can be composted, used as fertilizer, and fed to pigs to breed them. Feeding it to a hurt pig, cow, sheep, or horse heals them a little, with green sparkles.
 * Added three spices: cinnamon, cloves, and nutmeg.
   * Cinnamon sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.

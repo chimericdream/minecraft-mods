@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 
 public class ModTags {
-    /** What the cider press accepts in its fruit slot. Just apples to start, but a tag so packs can add to it. */
+    /** What the cider press accepts in its fruit slot. Apples, sweet berries, and glow berries; a tag so packs can add to it (the press only knows juices for those three). */
     public static final TagKey<Item> CIDER_PRESS_PRESSABLE = item("cider_press_pressable");
 
     /** What the cider press accepts in its fuel slot. See {@code CiderPressBlockEntity#fuelCharges} for how many pressings each gives. */

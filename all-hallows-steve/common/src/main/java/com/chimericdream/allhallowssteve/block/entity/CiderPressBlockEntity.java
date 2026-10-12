@@ -30,8 +30,8 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Works like a brewing stand: put fruit and glass bottles in, add fuel (which is stored as charges),
- * and a timed press turns {@value #APPLES_PER_PRESS} apples and one bottle into a bottle of cider plus
- * a piece of pomace. Hoppers can feed the inputs from any side but the bottom and empty the outputs
+ * and a timed press turns {@value #FRUIT_PER_PRESS} apples, sweet berries, or glow berries and one bottle
+ * into a bottle of cider or juice plus a piece of pomace. Hoppers can feed the inputs from any side but the bottom and empty the outputs
  * from the sides and the bottom.
  */
 public class CiderPressBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
@@ -44,7 +44,7 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
     public static final int SLOT_POMACE = 4;
     public static final int INVENTORY_SIZE = 5;
 
-    public static final int APPLES_PER_PRESS = 3;
+    public static final int FRUIT_PER_PRESS = 3;
     /** Ticks for one pressing. */
     public static final int PRESS_TIME = 200;
 
@@ -94,6 +94,19 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
 
     public CiderPressBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.CIDER_PRESS_BLOCK_ENTITY.get(), pos, state);
+    }
+
+    /** The bottle a pressing of {@code fruit} makes, or null if the press can't use it. */
+    public static @Nullable Item juiceFor(ItemStack fruit) {
+        if (fruit.is(Items.APPLE)) {
+            return ModItems.APPLE_CIDER.get();
+        }
+
+        if (fruit.is(Items.SWEET_BERRIES)) {
+            return ModItems.SWEET_BERRY_JUICE.get();
+        }
+
+        return fruit.is(Items.GLOW_BERRIES) ? ModItems.GLOW_BERRY_JUICE.get() : null;
     }
 
     /** How many pressings one of {@code stack} adds, or 0 if it isn't fuel. */
@@ -196,15 +209,16 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
         return slot == SLOT_CIDER || slot == SLOT_POMACE;
     }
 
-    /** Whether one pressing could start now: enough fruit and a bottle in, and room in both outputs. */
+    /** Whether one pressing could start now: enough fruit and a bottle in, and room for its juice and pomace. */
     private boolean canPress() {
         ItemStack fruit = this.inventory.get(SLOT_FRUIT);
         ItemStack bottle = this.inventory.get(SLOT_BOTTLE);
-        if (fruit.getCount() < APPLES_PER_PRESS || !fruit.is(ModTags.CIDER_PRESS_PRESSABLE) || bottle.isEmpty()) {
+        Item juice = juiceFor(fruit);
+        if (juice == null || fruit.getCount() < FRUIT_PER_PRESS || !fruit.is(ModTags.CIDER_PRESS_PRESSABLE) || bottle.isEmpty()) {
             return false;
         }
 
-        return hasRoomFor(this.inventory.get(SLOT_CIDER), ModItems.APPLE_CIDER.get())
+        return hasRoomFor(this.inventory.get(SLOT_CIDER), juice)
             && hasRoomFor(this.inventory.get(SLOT_POMACE), ModItems.POMACE.get());
     }
 
@@ -222,9 +236,11 @@ public class CiderPressBlockEntity extends BaseContainerBlockEntity implements W
     }
 
     private void finishPress(Level level, BlockPos pos) {
-        this.inventory.get(SLOT_FRUIT).shrink(APPLES_PER_PRESS);
+        ItemStack fruit = this.inventory.get(SLOT_FRUIT);
+        Item juice = juiceFor(fruit);
+        fruit.shrink(FRUIT_PER_PRESS);
         this.inventory.get(SLOT_BOTTLE).shrink(1);
-        this.addOutput(SLOT_CIDER, ModItems.APPLE_CIDER.get());
+        this.addOutput(SLOT_CIDER, juice);
         this.addOutput(SLOT_POMACE, ModItems.POMACE.get());
 
         level.playSound(null, pos, SoundEvents.COMPOSTER_FILL_SUCCESS, SoundSource.BLOCKS, 1.0F, 1.0F);
