@@ -1,7 +1,7 @@
 # Images and texture icons
 
 > Source: initial design discussion, 2026-10-06 · Effort **L** (re-estimated 2026-10-12: new block element, texture loading, enlarge overlay) · Value ★★
-> Status: **Ready**
+> Status: **Building** on branch `feat/opus-images-and-textures`
 
 ## Description
 
@@ -16,7 +16,7 @@ Draw texture images in pages and `texture:` chapter icons in the table of conten
 - **Position decides inline or block.**
   - An image alone in its paragraph is a **block**: centred in the column, scaled down to fit and never scaled up, with the layout reserving its height up front.
   - An image inside a line of text stays **inline** at icon size, like `item:` icons.
-- **Side by side.** Several images in a paragraph with no text between them form one **row**. The row is laid out as a single block with a small fixed gap, so images share a baseline, wrap to a new row when they don't fit, and are aligned as a group by the first image's `align=`. Each image keeps its own caption.
+- **Side by side.** Several images in a paragraph with no text between them form one **row**. The row is laid out as a single block with a small fixed gap, so images are top-aligned, wrap to a new row when they don't fit, and are aligned as a group by the first image's `align=`. Each image keeps its own caption.
 - **`{width=N}`** sets an image's width in book pixels, in the same attribute style as heading ids. Height follows the aspect ratio. Never wider than the column.
 - **`align=left|center|right`** positions a block image or a row in the column. Default is center.
 - **Caption:** a block image's alt text is drawn under it as a muted caption. An image with empty alt has no caption.

@@ -50,6 +50,7 @@ final class BookRenderer {
                 case Element.Rect r -> drawRect(g, r, x, y);
                 case Element.Text t -> drawText(g, t, x, y, element.contains(localMouseX, localMouseY));
                 case Element.Icon icon -> drawIcon(g, icon, x, y);
+                case Element.Image image -> drawImage(g, image, x, y);
                 case Element.WidgetBox box -> widgets.draw(g, box, x, y, mouseX, mouseY);
             }
         }
@@ -88,11 +89,36 @@ final class BookRenderer {
     private void drawIcon(GuiGraphicsExtractor g, Element.Icon icon, int x, int y) {
         // Blocks and items share ids for nearly everything; entities have no item form, so they show a spawn
         // egg-less placeholder for now (TODO: render the entity or its spawn egg).
+        if (icon.kind().equals("texture")) {
+            ImageTextures.drawFitted(g, icon.id(), x, y, icon.width());
+            return;
+        }
+
         if (icon.kind().equals("entity")) {
             g.text(font, Component.literal("?"), x + 5, y + 4, theme.muted(), false);
             return;
         }
 
         g.item(ItemLookup.stack(icon.id(), 1), x, y);
+    }
+
+    /** A found image is drawn at its laid-out size; a missing one becomes a labelled box so the gap is obvious. */
+    private void drawImage(GuiGraphicsExtractor g, Element.Image image, int x, int y) {
+        if (!image.missing()) {
+            ImageTextures.draw(g, image.id(), x, y, image.width(), image.height());
+            return;
+        }
+
+        int w = image.width();
+        int h = image.height();
+        int border = theme.tableBorder();
+        g.fill(x, y, x + w, y + h, theme.codeBackground());
+        g.fill(x, y, x + w, y + 1, border);
+        g.fill(x, y + h - 1, x + w, y + h, border);
+        g.fill(x, y, x + 1, y + h, border);
+        g.fill(x + w - 1, y, x + w, y + h, border);
+
+        String label = font.plainSubstrByWidth("missing: " + image.id(), w - 6);
+        g.text(font, Component.literal(label), x + 3, y + (h - font.lineHeight) / 2, theme.textColor(Element.TextRole.ERROR), false);
     }
 }

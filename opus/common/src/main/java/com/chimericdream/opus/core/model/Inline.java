@@ -18,8 +18,16 @@ public sealed interface Inline {
     record Icon(String kind, String id, String alt) implements Inline {
     }
 
-    /** A regular image reference (resource location of a texture). */
+    /** A regular image reference that Opus doesn't know how to draw; shown as its alt text. */
     record Image(String source, String alt) implements Inline {
+    }
+
+    /**
+     * {@code ![alt](texture:ns:path){width=64 align=right}} - a resource-pack texture. {@code id} is {@code ns:path}
+     * relative to {@code textures/}, without {@code .png}. {@code width} is in book pixels, or 0 for the texture's own
+     * size. {@code align} is {@code null} unless the author set it.
+     */
+    record Texture(String id, String alt, int width, Block.Align align) implements Inline {
     }
 
     /** A soft break renders as a space; a hard break always starts a new line. */
@@ -39,6 +47,7 @@ public sealed interface Inline {
                 case Link l -> appendPlainText(l.children(), sb);
                 case Icon i -> sb.append(i.alt() == null ? "" : i.alt());
                 case Image i -> sb.append(i.alt() == null ? "" : i.alt());
+                case Texture t -> sb.append(t.alt() == null ? "" : t.alt());
                 case LineBreak b -> sb.append(' ');
             }
         }

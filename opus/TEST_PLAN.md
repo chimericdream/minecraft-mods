@@ -12,12 +12,12 @@ No Minecraft bootstrap is needed.
 | Class | Covers |
 |---|---|
 | `FrontmatterTest` | the `---` block, line numbers, BOM/CRLF, bad YAML, comma or list tags |
-| `MarkdownParserTest` | inline styles, links, icons, lists, task items, callouts, tables, code, widgets, heading anchors |
+| `MarkdownParserTest` | inline styles, links, icons, texture images (`{width}`/`align`, rows, bad attributes), lists, task items, callouts, tables, code, widgets, heading anchors |
 | `RecipeSpecTest` | every recipe type, each validation error message, and the optional recipe id kept alongside an inline definition |
 | `RecipePanelTest` | the vanilla-style recipe panel geometry: slot counts and positions per recipe type, nothing overlapping or outside the panel |
 | `BookLoaderTest` | folder → chapter/page tree, ids, ordering, titles, tags, language fallback, link resolution, broken links, search |
-| `LayoutEngineTest` | wrapping, headings, lists, quotes, callouts, code, tables, widget boxes, link hit-testing |
-| `ValidateBookTest` | the CLI (incl. finding books beneath a pack folder), and that the bundled guide stays free of errors and warnings |
+| `LayoutEngineTest` | wrapping, headings, lists, quotes, callouts, code, tables, widget boxes, link hit-testing, texture images (scaling, captions, rows, alignment, missing textures) |
+| `ValidateBookTest` | the CLI (incl. finding books beneath a pack folder), missing `texture:` warnings, and that the bundled guide stays free of errors and warnings |
 
 When adding syntax or a widget, add the parser test and the layout test with it.
 
@@ -41,6 +41,7 @@ Setup: new creative world, `/give @s opus:book`.
 8. **Reload** — edit a page in a resource pack, F3+T: the change appears. A page with a broken link logs one error with file and line, and the book still opens.
 9. **Language** — switch to a language with no translation: the English pages show. Add `de_de/index.md` and switch: only that page changes.
 10. **Dedicated server** — the mod loads on a server without errors (no client classes touched).
+11. **Images** — on the Images section of "Writing books" (Opus Guide): the 64-wide book image is centred with its caption under it; hovering it shows "Click to enlarge"; clicking dims the screen and shows it larger (whole-number zoom, crisp pixels) with the caption under it; any click, any key (including Esc) or changing page closes it, and scrolling is ignored while it is open. The small inline image sits in the line of text; the three-image row sits side by side, centred, and wraps to a second row in a narrow window without anything running past the column. In a book of your own: `align=left`/`right` move a row; a `texture:` address with a typo shows a labelled "missing:" box (not clickable, no tooltip) and an inline one shows `[alt]`; `icon: texture:ns:path` in a chapter's front matter draws the picture in the contents; F3+T after replacing a PNG shows the new picture and size.
 
 ## `/opus give` (manual)
 

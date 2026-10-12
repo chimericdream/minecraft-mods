@@ -46,6 +46,30 @@ class ValidateBookTest {
     }
 
     @Test
+    void missingTexturesAreWarnedAboutWhenTheBookSitsInAPack(@TempDir Path dir) throws IOException {
+        Path book = dir.resolve("assets/mypack/opus-books/b");
+        write(book, "book.yml", "title: B\n");
+        write(book, "en_us/index.md", """
+            # Home
+
+            ![ok](texture:mypack:gui/there)
+            ![gone](texture:mypack:gui/gone)
+            ![vanilla](texture:minecraft:block/stone)
+            text ![inline gone](texture:mypack:gui/inline_gone) text
+            """);
+        write(dir, "assets/mypack/textures/gui/there.png", "png");
+
+        Result r = run(dir.toString());
+
+        assertEquals(0, r.status(), r.out());
+        assertTrue(r.out().contains("texture 'mypack:gui/gone' was not found"), r.out());
+        assertTrue(r.out().contains("texture 'mypack:gui/inline_gone' was not found"), r.out());
+        assertTrue(!r.out().contains("gui/there"), r.out());
+        assertTrue(!r.out().contains("block/stone"), r.out());
+        assertTrue(r.out().contains("2 warnings"), r.out());
+    }
+
+    @Test
     void theBundledGuideBookIsClean() {
         Result r = run(guideDir().toString());
 

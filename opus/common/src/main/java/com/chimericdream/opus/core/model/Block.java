@@ -41,6 +41,13 @@ public sealed interface Block {
     }
 
     /**
+     * One or more texture images that make up a paragraph by themselves: drawn as a block, side by side when they
+     * fit. The first image's {@code align} positions the whole row.
+     */
+    record Images(List<Inline.Texture> images) implements Block {
+    }
+
+    /**
      * A fenced block with a registered widget type ({@code recipe}, {@code item}, ...). {@code props} is the
      * parsed YAML body. {@code error} is non-null when the body could not be parsed or failed validation; the
      * renderer shows the message instead of the widget.

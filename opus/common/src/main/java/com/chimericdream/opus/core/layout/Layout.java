@@ -36,11 +36,22 @@ public record Layout(List<Element> elements, int height, Map<String, Integer> an
             if (!e.contains(px, py)) {
                 continue;
             }
-            if (e instanceof Element.Icon || e instanceof Element.WidgetBox) {
+            if (e instanceof Element.Icon || e instanceof Element.WidgetBox || e instanceof Element.Image) {
                 return Optional.of(e);
             }
             if (e instanceof Element.Text t && t.link() != null) {
                 return Optional.of(e);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    /** The found (not missing) block image under the point, if any; clicking it enlarges it. */
+    public Optional<Element.Image> imageAt(int px, int py) {
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            if (elements.get(i) instanceof Element.Image image && !image.missing() && image.contains(px, py)) {
+                return Optional.of(image);
             }
         }
 

@@ -8,6 +8,7 @@
     "opus.book.missing.close": "Close",
     "opus.book.back": "Back",
     "opus.book.search": "Search",
+    "opus.book.enlarge": "Click to enlarge",
     "opus.recipe.shapeless": "(Shapeless)",
     "opus.recipe.cooking_time": "%ss",
     "opus.recipe.experience": "%s XP"

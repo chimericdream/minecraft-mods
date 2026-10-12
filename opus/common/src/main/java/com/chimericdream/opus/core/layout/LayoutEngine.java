@@ -18,14 +18,30 @@ import java.util.Map;
 public final class LayoutEngine {
     private static final String[] BULLETS = {"•", "-"};
 
+    /** Space between images that share a row, and between wrapped rows. */
+    private static final int IMAGE_GAP = 4;
+    /** Size of the box drawn in place of a texture that couldn't be found. */
+    private static final int MISSING_WIDTH = 96;
+    private static final int MISSING_HEIGHT = 32;
+    /** Gap between an image and its caption. */
+    private static final int CAPTION_GAP = 2;
+    /** A caption wider than its image may widen the image's cell up to this many pixels before it wraps. */
+    private static final int CAPTION_MAX_CELL = 96;
+
     private final TextMetrics metrics;
     private final LayoutConfig cfg;
     private final WidgetSizer sizer;
+    private final ImageSizer images;
 
     public LayoutEngine(TextMetrics metrics, LayoutConfig cfg, WidgetSizer sizer) {
+        this(metrics, cfg, sizer, ImageSizer.NONE);
+    }
+
+    public LayoutEngine(TextMetrics metrics, LayoutConfig cfg, WidgetSizer sizer, ImageSizer images) {
         this.metrics = metrics;
         this.cfg = cfg;
         this.sizer = sizer;
+        this.images = images;
     }
 
     public Layout layout(Document doc, int width) {
@@ -80,6 +96,7 @@ public final class LayoutEngine {
             }
             case Block.Table t -> table(t, x, y, w, out);
             case Block.Widget wd -> widget(wd, x, y, w, out);
+            case Block.Images im -> images(im, x, y, w, out);
         };
     }
 
@@ -201,6 +218,94 @@ public final class LayoutEngine {
         int bx = x + Math.max(0, (w - size.width()) / 2);
         out.elements.add(new Element.WidgetBox(bx, y, size.width(), size.height(), widget));
         return y + size.height();
+    }
+
+    // ---- images ----
+
+    /** One image of a row: its drawn size, and the cell (image plus caption) it sits in. */
+    private record ImageCell(Inline.Texture texture, boolean missing, int imageW, int imageH, int cellW, String caption) {
+    }
+
+    /**
+     * Lays out a block of texture images. They go left to right with a small gap and wrap to a new row when the next
+     * one doesn't fit; every row is positioned as a group by the first image's {@code align} (centred by default).
+     * Images are never wider than the column, and each keeps its caption under it. Images in a row are top-aligned.
+     */
+    private int images(Block.Images block, int x, int y, int w, Out out) {
+        Block.Align align = block.images().get(0).align() == null ? Block.Align.CENTER : block.images().get(0).align();
+
+        List<ImageCell> cells = new ArrayList<>();
+        for (Inline.Texture texture : block.images()) {
+            cells.add(imageCell(texture, w));
+        }
+
+        int i = 0;
+        while (i < cells.size()) {
+            int end = i;
+            int rowW = 0;
+            while (end < cells.size() && (end == i || rowW + IMAGE_GAP + cells.get(end).cellW() <= w)) {
+                rowW += (end == i ? 0 : IMAGE_GAP) + cells.get(end).cellW();
+                end++;
+            }
+
+            if (i > 0) {
+                y += IMAGE_GAP;
+            }
+
+            int cx = x + switch (align) {
+                case LEFT -> 0;
+                case CENTER -> Math.max(0, (w - rowW) / 2);
+                case RIGHT -> Math.max(0, w - rowW);
+            };
+
+            int rowBottom = y;
+            for (int c = i; c < end; c++) {
+                ImageCell cell = cells.get(c);
+                Inline.Texture t = cell.texture();
+                out.elements.add(new Element.Image(cx + (cell.cellW() - cell.imageW()) / 2, y, cell.imageW(), cell.imageH(), t.id(), t.alt(), cell.missing()));
+
+                int bottom = y + cell.imageH();
+                if (cell.caption() != null) {
+                    bottom = inlines(List.of(new Inline.Text(cell.caption(), Style.PLAIN)), cx, bottom + CAPTION_GAP, cell.cellW(),
+                        Element.TextRole.MUTED, 1f, Style.PLAIN, Block.Align.CENTER, out);
+                }
+
+                rowBottom = Math.max(rowBottom, bottom);
+                cx += cell.cellW() + IMAGE_GAP;
+            }
+
+            y = rowBottom;
+            i = end;
+        }
+
+        return y;
+    }
+
+    private ImageCell imageCell(Inline.Texture texture, int w) {
+        ImageSizer.Size natural = images.measure(texture.id());
+        boolean missing = natural == null || natural.width() < 1 || natural.height() < 1;
+
+        int imageW;
+        int imageH;
+        if (missing) {
+            imageW = Math.min(w, MISSING_WIDTH);
+            imageH = MISSING_HEIGHT;
+        } else {
+            imageW = texture.width() > 0 ? texture.width() : natural.width();
+            imageH = Math.max(1, Math.round(natural.height() * (imageW / (float) natural.width())));
+            if (imageW > w) {
+                imageH = Math.max(1, Math.round(imageH * (w / (float) imageW)));
+                imageW = w;
+            }
+        }
+
+        String caption = texture.alt() == null || texture.alt().isBlank() ? null : texture.alt().strip();
+        int cellW = imageW;
+        if (caption != null) {
+            cellW = Math.max(imageW, Math.min(metrics.width(caption, Style.PLAIN), Math.min(CAPTION_MAX_CELL, w)));
+        }
+
+        return new ImageCell(texture, missing, imageW, imageH, cellW, caption);
     }
 
     // ---- tables ----
@@ -358,6 +463,7 @@ public final class LayoutEngine {
                 case Inline.Link l -> longest = Math.max(longest, longestWord(l.children(), base));
                 case Inline.Icon i -> longest = Math.max(longest, cfg.iconSize());
                 case Inline.Image i -> longest = Math.max(longest, cfg.iconSize());
+                case Inline.Texture t -> longest = Math.max(longest, cfg.iconSize());
                 case Inline.LineBreak b -> {
                 }
             }
@@ -374,6 +480,7 @@ public final class LayoutEngine {
                 case Inline.Link l -> width += naturalWidth(l.children(), base);
                 case Inline.Icon i -> width += cfg.iconSize();
                 case Inline.Image i -> width += cfg.iconSize();
+                case Inline.Texture t -> width += cfg.iconSize();
                 case Inline.LineBreak b -> width += metrics.width(" ", base);
             }
         }
@@ -433,6 +540,14 @@ public final class LayoutEngine {
                 case Inline.Link l -> flatten(l.children(), base, role, l.destination(), out);
                 case Inline.Icon i -> out.add(new Piece(PieceKind.ICON, i.alt(), base, role, link, i.kind(), i.id()));
                 case Inline.Image i -> splitWords("[" + (i.alt() == null || i.alt().isBlank() ? "image" : i.alt()) + "]", base, Element.TextRole.MUTED, link, out);
+                case Inline.Texture t -> {
+                    // An image inside a line of text is an icon-sized glyph; one that can't be found shows its alt text.
+                    if (images.measure(t.id()) == null) {
+                        splitWords("[" + (t.alt() == null || t.alt().isBlank() ? "image" : t.alt()) + "]", base, Element.TextRole.MUTED, link, out);
+                    } else {
+                        out.add(new Piece(PieceKind.ICON, t.alt(), base, role, link, "texture", t.id()));
+                    }
+                }
                 case Inline.LineBreak b -> out.add(b.hard()
                     ? new Piece(PieceKind.BREAK, "", base, role, null, null, null)
                     : new Piece(PieceKind.SPACE, " ", base, role, link, null, null));

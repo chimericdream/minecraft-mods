@@ -2,6 +2,7 @@ package com.chimericdream.opus.test.core;
 
 import com.chimericdream.opus.core.Diagnostics;
 import com.chimericdream.opus.core.layout.Element;
+import com.chimericdream.opus.core.layout.ImageSizer;
 import com.chimericdream.opus.core.layout.Layout;
 import com.chimericdream.opus.core.layout.LayoutConfig;
 import com.chimericdream.opus.core.layout.LayoutEngine;
@@ -356,5 +357,150 @@ class LayoutEngineTest {
         }
         assertFalse(l.elements().isEmpty());
         assertInstanceOf(Element.Text.class, l.elements().stream().filter(e -> e instanceof Element.Text).findFirst().orElseThrow());
+    }
+
+    // ---- texture images ----
+
+    /** {@code t:a} is 32x16, {@code t:big} is 400x200, anything else is missing. */
+    private static final ImageSizer SIZES = id -> switch (id) {
+        case "t:a" -> new ImageSizer.Size(32, 16);
+        case "t:big" -> new ImageSizer.Size(400, 200);
+        default -> null;
+    };
+
+    private final LayoutEngine imageEngine = new LayoutEngine(FIXED, LayoutConfig.defaults(), WidgetSizer.DEFAULT, SIZES);
+
+    private Layout imageLayout(String md, int width) {
+        return imageEngine.layout(MarkdownParser.parse(md, "t.md", 1, new Diagnostics()), width);
+    }
+
+    private static List<Element.Image> images(Layout l) {
+        return l.elements().stream().filter(e -> e instanceof Element.Image).map(e -> (Element.Image) e).toList();
+    }
+
+    @Test
+    void aLoneImageIsACentredBlockAtItsOwnSize() {
+        Layout l = imageLayout("![](texture:t:a)\n", 100);
+
+        Element.Image image = images(l).get(0);
+        assertEquals(34, image.x());
+        assertEquals(0, image.y());
+        assertEquals(32, image.width());
+        assertEquals(16, image.height());
+        assertFalse(image.missing());
+        assertEquals(16, l.height());
+    }
+
+    @Test
+    void anImageWiderThanTheColumnScalesDownButNeverUp() {
+        Element.Image big = images(imageLayout("![](texture:t:big)\n", 100)).get(0);
+        assertEquals(100, big.width());
+        assertEquals(50, big.height());
+
+        Element.Image small = images(imageLayout("![](texture:t:a)\n", 500)).get(0);
+        assertEquals(32, small.width());
+    }
+
+    @Test
+    void widthAttributeSetsTheSizeKeepingProportionsAndIsCappedToTheColumn() {
+        Element.Image wide = images(imageLayout("![](texture:t:a){width=64}\n", 100)).get(0);
+        assertEquals(64, wide.width());
+        assertEquals(32, wide.height());
+
+        Element.Image capped = images(imageLayout("![](texture:t:a){width=300}\n", 100)).get(0);
+        assertEquals(100, capped.width());
+        assertEquals(50, capped.height());
+    }
+
+    @Test
+    void altTextIsACaptionCentredUnderTheImage() {
+        Layout l = imageLayout("![hi](texture:t:a)\n", 100);
+
+        Element.Image image = images(l).get(0);
+        Element.Text caption = texts(l).get(0);
+        assertEquals("hi", caption.text());
+        assertEquals(Element.TextRole.MUTED, caption.role());
+        assertEquals(image.y() + image.height() + 2, caption.y());
+        // the caption is narrower than the image, so it sits inside the image's span
+        assertTrue(caption.x() >= image.x() && caption.x() + caption.width() <= image.x() + image.width());
+        assertEquals(16 + 2 + 8, l.height());
+    }
+
+    @Test
+    void imagesInOneParagraphShareARowAndAreCentredAsAGroup() {
+        Layout l = imageLayout("![](texture:t:a) ![](texture:t:a)\n", 100);
+
+        List<Element.Image> row = images(l);
+        assertEquals(2, row.size());
+        // 32 + 4 + 32 = 68 wide, centred in 100
+        assertEquals(16, row.get(0).x());
+        assertEquals(52, row.get(1).x());
+        assertEquals(row.get(0).y(), row.get(1).y());
+        assertEquals(16, l.height());
+    }
+
+    @Test
+    void aRowWrapsWhenTheNextImageDoesNotFit() {
+        Layout l = imageLayout("![](texture:t:a){width=40 align=left}\n![](texture:t:a){width=40}\n![](texture:t:a){width=40}\n", 100);
+
+        List<Element.Image> all = images(l);
+        assertEquals(3, all.size());
+        assertEquals(0, all.get(0).x());
+        assertEquals(44, all.get(1).x());
+        assertEquals(0, all.get(2).y() - 24 - all.get(0).y());
+        assertEquals(0, all.get(2).x());
+        assertEquals(24 + 20, l.height());
+    }
+
+    @Test
+    void alignFromTheFirstImagePositionsTheWholeRow() {
+        List<Element.Image> right = images(imageLayout("![](texture:t:a){align=right} ![](texture:t:a)\n", 100));
+        assertEquals(100 - 68, right.get(0).x());
+        assertEquals(100 - 32, right.get(1).x());
+
+        List<Element.Image> left = images(imageLayout("![](texture:t:a){align=left}\n", 100));
+        assertEquals(0, left.get(0).x());
+    }
+
+    @Test
+    void aMissingTextureGetsALabelledPlaceholderBox() {
+        Layout l = imageLayout("![nope](texture:t:gone)\n", 200);
+
+        Element.Image image = images(l).get(0);
+        assertTrue(image.missing());
+        assertEquals(96, image.width());
+        assertEquals(32, image.height());
+        assertEquals("t:gone", image.id());
+        assertTrue(imageEngine.layout(MarkdownParser.parse("![nope](texture:t:gone)\n", "t.md", 1, new Diagnostics()), 50)
+            .elements().stream().anyMatch(e -> e instanceof Element.Image i && i.width() == 50));
+    }
+
+    @Test
+    void anImageInsideTextIsAnIconSizedGlyph() {
+        Layout l = imageLayout("see ![x](texture:t:a) here\n", 200);
+
+        Element.Icon icon = l.elements().stream().filter(e -> e instanceof Element.Icon).map(e -> (Element.Icon) e).findFirst().orElseThrow();
+        assertEquals("texture", icon.kind());
+        assertEquals("t:a", icon.id());
+        assertEquals(16, icon.width());
+        assertTrue(images(l).isEmpty());
+    }
+
+    @Test
+    void aMissingInlineImageFallsBackToItsAltText() {
+        Layout l = imageLayout("see ![the pic](texture:t:gone) here\n", 200);
+
+        assertTrue(texts(l).stream().anyMatch(t -> t.text().contains("[the pic]")));
+        assertTrue(l.elements().stream().noneMatch(e -> e instanceof Element.Icon || e instanceof Element.Image));
+    }
+
+    @Test
+    void onlyFoundBlockImagesCanBeClickedToEnlarge() {
+        Layout l = imageLayout("![](texture:t:a)\n\n![](texture:t:gone)\n", 100);
+
+        Element.Image found = images(l).get(0);
+        Element.Image missing = images(l).get(1);
+        assertTrue(l.imageAt(found.x() + 1, found.y() + 1).isPresent());
+        assertTrue(l.imageAt(missing.x() + 1, missing.y() + 1).isEmpty());
     }
 }

@@ -230,7 +230,51 @@ Above the rule.
 
 Below the rule.
 
+## Images
+
+A `texture:` image draws a PNG from a resource pack. The address is `texture:namespace:path`, where the path is relative to `textures/` and has no `.png`, the same form as the `texture` key in `book.yml`. `texture:yourpack:gui/diagram` is the file `assets/yourpack/textures/gui/diagram.png`.
+
+An image on its own line is a block, centred in the column. It is drawn at the texture's own size, scaled down to fit a narrow window and never scaled up. The alt text is shown under it as a caption, and clicking the image opens it full size.
+
+`````markdown
+![The Opus book](texture:opus:item/book){width=64}
+`````
+
+Renders as:
+
+![The Opus book](texture:opus:item/book){width=64}
+
+An image in the middle of a line of text is drawn small, like an item icon: ![the Opus book](texture:opus:item/book) here.
+
+### Size and alignment
+
+Add `{width=N}` right after an image to set its width in pixels. The height follows the texture's proportions, and the image is never wider than the column. Add `align=left`, `align=center` or `align=right` to position a block image. Put both in the same braces.
+
+`````markdown
+![](texture:opus:item/book){width=32 align=right}
+`````
+
+### Side by side
+
+Images that sit in one paragraph with only spaces or line breaks between them make a row. The row is positioned as a group by the first image's `align`, each image keeps its own caption, and the row wraps to a second line when it doesn't fit.
+
+`````markdown
+![Book](texture:opus:item/book){width=48}
+![Guide](texture:opus:item/opus_guide){width=48}
+![Not found](texture:opus:item/book_invalid){width=48}
+`````
+
+Renders as:
+
+![Book](texture:opus:item/book){width=48}
+![Guide](texture:opus:item/opus_guide){width=48}
+![Not found](texture:opus:item/book_invalid){width=48}
+
+### Missing textures
+
+If the texture can't be found, the page shows a labelled box in its place instead of failing, and the validator warns about it. Check the namespace and path, and that the file really is a PNG under `textures/`.
+
 ## Not supported
 
-Raw HTML is ignored with a warning. Images other than item icons are not drawn yet; see
-[links](04-links.md#inline-icons) for the icon syntax.
+Raw HTML is ignored with a warning. Animated and remote images are not supported. An image with any address other than `item:`, `block:`, `entity:` or `texture:` shows its alt text. See
+[links](04-links.md#inline-icons) for the item icon syntax.

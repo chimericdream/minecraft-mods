@@ -1,5 +1,15 @@
 ### Unreleased changes
 
+#### New Features
+
+- Books can now show pictures. `![Caption](texture:yourpack:gui/diagram)` draws a PNG from a resource pack, centred on its own line, with the caption under it. Add `{width=64}` to set its size and `align=left` or `align=right` to move it. Pictures placed next to each other sit side by side. Click a picture to see it full size.
+- Chapters can use a picture as their icon with `icon: texture:yourpack:gui/diagram`.
+- A picture whose file can't be found shows a labelled box instead of nothing, and the validator warns about it.
+
+#### Documentation
+
+- The Writing books chapter of the Opus Guide now has an Images section.
+
 ### 26.2 - 1.1.0
 
 #### New Features

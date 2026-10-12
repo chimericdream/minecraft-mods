@@ -54,6 +54,14 @@ public sealed interface Element {
     record Icon(int x, int y, int width, int height, String kind, String id, String link) implements Element {
     }
 
+    /**
+     * A texture image drawn as a block, scaled to {@code width} x {@code height}. When {@code missing} is true the
+     * texture couldn't be found, and the renderer draws a labelled placeholder (using {@code alt} and {@code id})
+     * instead. Found images can be clicked to enlarge.
+     */
+    record Image(int x, int y, int width, int height, String id, String alt, boolean missing) implements Element {
+    }
+
     /** Space reserved for a widget the renderer draws (recipe, item, entity). */
     record WidgetBox(int x, int y, int width, int height, Block.Widget widget) implements Element {
     }
