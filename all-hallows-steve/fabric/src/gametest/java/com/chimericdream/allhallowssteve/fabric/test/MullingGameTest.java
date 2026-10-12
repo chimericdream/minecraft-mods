@@ -1,7 +1,7 @@
 package com.chimericdream.allhallowssteve.fabric.test;
 
-import com.chimericdream.allhallowssteve.block.CiderCauldronBlock;
-import com.chimericdream.allhallowssteve.block.CiderCauldrons;
+import com.chimericdream.allhallowssteve.block.AppleCiderCauldronBlock;
+import com.chimericdream.allhallowssteve.block.AppleCiderCauldrons;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import com.chimericdream.allhallowssteve.item.MulledAppleCider;
@@ -94,11 +94,11 @@ public class MullingGameTest {
     }
 
     private static boolean isCider(GameTestHelper context) {
-        return state(context).is(ModBlocks.CIDER_CAULDRON.get());
+        return state(context).is(ModBlocks.APPLE_CIDER_CAULDRON.get());
     }
 
     private static boolean isMulled(GameTestHelper context) {
-        return state(context).is(ModBlocks.MULLED_CIDER_CAULDRON.get());
+        return state(context).is(ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get());
     }
 
     private static int level(GameTestHelper context) {
@@ -148,13 +148,13 @@ public class MullingGameTest {
         use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         ItemStack cinnamon = new ItemStack(ModItems.CINNAMON.get(), 2);
         use(context, player, cinnamon);
-        context.assertFalse(state(context).getValue(CiderCauldrons.CINNAMON), "no spice in a part-full cauldron");
+        context.assertFalse(state(context).getValue(AppleCiderCauldrons.CINNAMON), "no spice in a part-full cauldron");
         context.assertValueEqual(cinnamon.getCount(), 2, "cinnamon kept");
 
         use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         use(context, player, new ItemStack(ModItems.APPLE_CIDER.get()));
         use(context, player, cinnamon);
-        context.assertTrue(state(context).getValue(CiderCauldrons.CINNAMON), "cinnamon added");
+        context.assertTrue(state(context).getValue(AppleCiderCauldrons.CINNAMON), "cinnamon added");
         context.assertValueEqual(cinnamon.getCount(), 1, "one cinnamon used");
 
         use(context, player, cinnamon);
@@ -163,7 +163,7 @@ public class MullingGameTest {
         use(context, player, new ItemStack(ModItems.CLOVES.get()));
         use(context, player, new ItemStack(ModItems.NUTMEG.get()));
         BlockState state = state(context);
-        context.assertTrue(state.getValue(CiderCauldrons.CLOVES) && state.getValue(CiderCauldrons.NUTMEG), "cloves and nutmeg added");
+        context.assertTrue(state.getValue(AppleCiderCauldrons.CLOVES) && state.getValue(AppleCiderCauldrons.NUTMEG), "cloves and nutmeg added");
         context.succeed();
     }
 
@@ -176,15 +176,15 @@ public class MullingGameTest {
         fillWithCider(context, player);
         use(context, player, new ItemStack(ModItems.CLOVES.get()));
 
-        tick(context, CiderCauldronBlock.MAX_SIMMER);
+        tick(context, AppleCiderCauldronBlock.MAX_SIMMER);
         context.assertTrue(isCider(context), "still cider before the last step");
-        context.assertValueEqual(state(context).getValue(CiderCauldronBlock.SIMMER), CiderCauldronBlock.MAX_SIMMER, "simmer progress");
+        context.assertValueEqual(state(context).getValue(AppleCiderCauldronBlock.SIMMER), AppleCiderCauldronBlock.MAX_SIMMER, "simmer progress");
 
         tick(context, 1);
         context.assertTrue(isMulled(context), "mulled after the last step");
         context.assertTrue(level(context) == 3, "level kept");
-        context.assertTrue(state(context).getValue(CiderCauldrons.CLOVES), "spices kept");
-        context.assertFalse(state(context).getValue(CiderCauldrons.CINNAMON), "unadded spices stay out");
+        context.assertTrue(state(context).getValue(AppleCiderCauldrons.CLOVES), "spices kept");
+        context.assertFalse(state(context).getValue(AppleCiderCauldrons.CINNAMON), "unadded spices stay out");
         context.succeed();
     }
 
@@ -196,11 +196,11 @@ public class MullingGameTest {
         fillWithCider(context, player);
         tick(context, 10);
 
-        context.assertTrue(isCider(context) && state(context).getValue(CiderCauldronBlock.SIMMER) == 0, "no progress without heat");
+        context.assertTrue(isCider(context) && state(context).getValue(AppleCiderCauldronBlock.SIMMER) == 0, "no progress without heat");
 
         lightFire(context, false);
         tick(context, 10);
-        context.assertTrue(isCider(context) && state(context).getValue(CiderCauldronBlock.SIMMER) == 0, "no progress over an unlit campfire");
+        context.assertTrue(isCider(context) && state(context).getValue(AppleCiderCauldronBlock.SIMMER) == 0, "no progress over an unlit campfire");
         context.succeed();
     }
 
@@ -213,15 +213,15 @@ public class MullingGameTest {
         fillWithCider(context, player);
         use(context, player, new ItemStack(ModItems.NUTMEG.get()));
         tick(context, 3);
-        context.assertValueEqual(state(context).getValue(CiderCauldronBlock.SIMMER), 3, "progress before the fire goes out");
+        context.assertValueEqual(state(context).getValue(AppleCiderCauldronBlock.SIMMER), 3, "progress before the fire goes out");
 
         lightFire(context, false);
         tick(context, 1);
-        context.assertValueEqual(state(context).getValue(CiderCauldronBlock.SIMMER), 0, "progress reset");
-        context.assertTrue(state(context).getValue(CiderCauldrons.NUTMEG), "spices kept");
+        context.assertValueEqual(state(context).getValue(AppleCiderCauldronBlock.SIMMER), 0, "progress reset");
+        context.assertTrue(state(context).getValue(AppleCiderCauldrons.NUTMEG), "spices kept");
 
         lightFire(context, true);
-        tick(context, CiderCauldronBlock.MAX_SIMMER + 1);
+        tick(context, AppleCiderCauldronBlock.MAX_SIMMER + 1);
         context.assertTrue(isMulled(context), "a relit fire starts the simmer over");
         context.succeed();
     }
@@ -230,11 +230,11 @@ public class MullingGameTest {
     public void ladlingMulledCiderGivesServingsAndEmptiesTheCauldron(GameTestHelper context) {
         context.setBlock(
             CAULDRON,
-            ModBlocks.MULLED_CIDER_CAULDRON.get().defaultBlockState()
+            ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get().defaultBlockState()
                 .setValue(LayeredCauldronBlock.LEVEL, 3)
-                .setValue(CiderCauldrons.CINNAMON, true)
-                .setValue(CiderCauldrons.CLOVES, true)
-                .setValue(CiderCauldrons.NUTMEG, true)
+                .setValue(AppleCiderCauldrons.CINNAMON, true)
+                .setValue(AppleCiderCauldrons.CLOVES, true)
+                .setValue(AppleCiderCauldrons.NUTMEG, true)
         );
         Player player = player(context, ItemStack.EMPTY);
 

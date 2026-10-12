@@ -17,11 +17,11 @@ import java.util.function.Function;
  * Their blockstates and models are hand-authored in resources (like Minekea's honey cauldron) since they
  * reuse vanilla's cauldron templates with a different fluid texture.
  */
-public class CiderCauldronBlockDataGenerator implements FabricBlockDataGenerator {
+public class AppleCiderCauldronBlockDataGenerator implements FabricBlockDataGenerator {
     protected final Block block;
     private final String name;
 
-    public CiderCauldronBlockDataGenerator(Block block, String name) {
+    public AppleCiderCauldronBlockDataGenerator(Block block, String name) {
         this.block = block;
         this.name = name;
     }

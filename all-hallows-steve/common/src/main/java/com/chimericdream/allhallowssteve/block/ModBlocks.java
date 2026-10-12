@@ -68,9 +68,9 @@ public class ModBlocks {
         () -> new MenuType<>(CiderPressScreenHandler::new, FeatureFlagSet.of())
     );
 
-    /** The cider and mulled-cider cauldrons deliberately have no items; a vanilla cauldron turns into one when cider is poured in. */
-    public static final RegistrySupplier<Block> CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(CiderCauldronBlock.BLOCK_ID, CiderCauldronBlock::new);
-    public static final RegistrySupplier<Block> MULLED_CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(MulledCiderCauldronBlock.BLOCK_ID, MulledCiderCauldronBlock::new);
+    /** The apple cider and mulled apple cider cauldrons deliberately have no items; a vanilla cauldron turns into one when apple cider is poured in. */
+    public static final RegistrySupplier<Block> APPLE_CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(AppleCiderCauldronBlock.BLOCK_ID, AppleCiderCauldronBlock::new);
+    public static final RegistrySupplier<Block> MULLED_APPLE_CIDER_CAULDRON = REGISTRY_HELPER.registerBlock(MulledAppleCiderCauldronBlock.BLOCK_ID, MulledAppleCiderCauldronBlock::new);
 
     /**
      * The unlit decorated pumpkin is the only wearable one, with the same head-slot behavior as vanilla's

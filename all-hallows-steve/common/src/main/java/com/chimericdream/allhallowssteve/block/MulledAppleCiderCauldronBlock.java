@@ -23,33 +23,33 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
 /** A finished batch of mulled cider. It stays hot until emptied; the spices added while it was cider set what each serving gives. */
-public class MulledCiderCauldronBlock extends LayeredCauldronBlock {
-    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "mulled_cider_cauldron");
+public class MulledAppleCiderCauldronBlock extends LayeredCauldronBlock {
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "mulled_apple_cider_cauldron");
 
-    public MulledCiderCauldronBlock(BlockBehaviour.Properties settings) {
+    public MulledAppleCiderCauldronBlock(BlockBehaviour.Properties settings) {
         this();
     }
 
-    public MulledCiderCauldronBlock() {
+    public MulledAppleCiderCauldronBlock() {
         super(
             Biome.Precipitation.NONE,
-            CiderCauldrons.MULLED_BEHAVIORS,
+            AppleCiderCauldrons.MULLED_BEHAVIORS,
             BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID))
         );
 
         this.registerDefaultState(
             this.stateDefinition.any()
                 .setValue(LEVEL, 1)
-                .setValue(CiderCauldrons.CINNAMON, false)
-                .setValue(CiderCauldrons.CLOVES, false)
-                .setValue(CiderCauldrons.NUTMEG, false)
+                .setValue(AppleCiderCauldrons.CINNAMON, false)
+                .setValue(AppleCiderCauldrons.CLOVES, false)
+                .setValue(AppleCiderCauldrons.NUTMEG, false)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(CiderCauldrons.CINNAMON, CiderCauldrons.CLOVES, CiderCauldrons.NUTMEG);
+        builder.add(AppleCiderCauldrons.CINNAMON, AppleCiderCauldrons.CLOVES, AppleCiderCauldrons.NUTMEG);
     }
 
     @Override

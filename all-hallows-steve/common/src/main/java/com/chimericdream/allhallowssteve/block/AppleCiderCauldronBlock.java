@@ -30,11 +30,11 @@ import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELP
 
 /**
  * A cauldron of cider. A full one above a lit campfire simmers for about 30 seconds and turns into a
- * {@link MulledCiderCauldronBlock}, keeping whatever spices were added. If the fire goes out, the
+ * {@link MulledAppleCiderCauldronBlock}, keeping whatever spices were added. If the fire goes out, the
  * simmer progress resets but the spices stay.
  */
-public class CiderCauldronBlock extends LayeredCauldronBlock {
-    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "cider_cauldron");
+public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
+    public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "apple_cider_cauldron");
 
     /** Simmer steps done so far; one more heated step after this value finishes the batch. */
     public static final int MAX_SIMMER = 4;
@@ -43,23 +43,23 @@ public class CiderCauldronBlock extends LayeredCauldronBlock {
     /** Ticks per simmer step: 5 steps of 6 seconds is about 30 seconds. */
     public static final int TICK_INTERVAL = 120;
 
-    public CiderCauldronBlock(BlockBehaviour.Properties settings) {
+    public AppleCiderCauldronBlock(BlockBehaviour.Properties settings) {
         this();
     }
 
-    public CiderCauldronBlock() {
+    public AppleCiderCauldronBlock() {
         super(
             Biome.Precipitation.NONE,
-            CiderCauldrons.CIDER_BEHAVIORS,
+            AppleCiderCauldrons.CIDER_BEHAVIORS,
             BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).setId(REGISTRY_HELPER.makeBlockRegistryKey(BLOCK_ID))
         );
 
         this.registerDefaultState(
             this.stateDefinition.any()
                 .setValue(LEVEL, 1)
-                .setValue(CiderCauldrons.CINNAMON, false)
-                .setValue(CiderCauldrons.CLOVES, false)
-                .setValue(CiderCauldrons.NUTMEG, false)
+                .setValue(AppleCiderCauldrons.CINNAMON, false)
+                .setValue(AppleCiderCauldrons.CLOVES, false)
+                .setValue(AppleCiderCauldrons.NUTMEG, false)
                 .setValue(SIMMER, 0)
         );
     }
@@ -67,7 +67,7 @@ public class CiderCauldronBlock extends LayeredCauldronBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(CiderCauldrons.CINNAMON, CiderCauldrons.CLOVES, CiderCauldrons.NUTMEG, SIMMER);
+        builder.add(AppleCiderCauldrons.CINNAMON, AppleCiderCauldrons.CLOVES, AppleCiderCauldrons.NUTMEG, SIMMER);
     }
 
     /** Whether a lit campfire (or soul campfire) sits directly under the cauldron. */
@@ -101,11 +101,11 @@ public class CiderCauldronBlock extends LayeredCauldronBlock {
         } else if (simmer >= MAX_SIMMER) {
             level.setBlockAndUpdate(
                 pos,
-                ModBlocks.MULLED_CIDER_CAULDRON.get().defaultBlockState()
+                ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get().defaultBlockState()
                     .setValue(LEVEL, state.getValue(LEVEL))
-                    .setValue(CiderCauldrons.CINNAMON, state.getValue(CiderCauldrons.CINNAMON))
-                    .setValue(CiderCauldrons.CLOVES, state.getValue(CiderCauldrons.CLOVES))
-                    .setValue(CiderCauldrons.NUTMEG, state.getValue(CiderCauldrons.NUTMEG))
+                    .setValue(AppleCiderCauldrons.CINNAMON, state.getValue(AppleCiderCauldrons.CINNAMON))
+                    .setValue(AppleCiderCauldrons.CLOVES, state.getValue(AppleCiderCauldrons.CLOVES))
+                    .setValue(AppleCiderCauldrons.NUTMEG, state.getValue(AppleCiderCauldrons.NUTMEG))
             );
             level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 0.8F);
 

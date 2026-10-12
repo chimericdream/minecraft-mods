@@ -5,7 +5,7 @@
                 "level": "1"
             },
             "apply": {
-                "model": "allhallowssteve:block/mulled_cider_cauldron/level1"
+                "model": "allhallowssteve:block/mulled_apple_cider_cauldron/level1"
             }
         },
         {
@@ -13,7 +13,7 @@
                 "level": "2"
             },
             "apply": {
-                "model": "allhallowssteve:block/mulled_cider_cauldron/level2"
+                "model": "allhallowssteve:block/mulled_apple_cider_cauldron/level2"
             }
         },
         {
@@ -21,7 +21,7 @@
                 "level": "3"
             },
             "apply": {
-                "model": "allhallowssteve:block/mulled_cider_cauldron/full"
+                "model": "allhallowssteve:block/mulled_apple_cider_cauldron/full"
             }
         }
     ]

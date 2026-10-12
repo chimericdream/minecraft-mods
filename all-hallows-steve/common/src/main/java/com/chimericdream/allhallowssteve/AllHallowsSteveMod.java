@@ -1,7 +1,7 @@
 package com.chimericdream.allhallowssteve;
 
 import com.chimericdream.allhallowssteve.advancement.ModTriggers;
-import com.chimericdream.allhallowssteve.block.CiderCauldrons;
+import com.chimericdream.allhallowssteve.block.AppleCiderCauldrons;
 import com.chimericdream.allhallowssteve.block.ModBlocks;
 import com.chimericdream.allhallowssteve.block.ModDispenserBehaviors;
 import com.chimericdream.allhallowssteve.config.AllHallowsSteveConfig;
@@ -47,7 +47,7 @@ public final class AllHallowsSteveMod {
      */
     public static void postInit() {
         ModDispenserBehaviors.init();
-        CiderCauldrons.init();
+        AppleCiderCauldrons.init();
 
         ComposterBlock.COMPOSTABLES.put(ModItems.POMACE.get(), 0.65F);
     }
