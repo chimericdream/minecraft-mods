@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
 /**
- * A cauldron of cider. A full one above a lit campfire simmers for about 30 seconds and turns into a
+ * A cauldron of cider. A full one with mulling spices added, above a lit campfire, simmers for about 30 seconds and turns into a
  * {@link MulledAppleCiderCauldronBlock}, keeping whatever spices were added. If the fire goes out, the
  * simmer progress resets but the spices stay.
  */
@@ -57,9 +57,7 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
         this.registerDefaultState(
             this.stateDefinition.any()
                 .setValue(LEVEL, 1)
-                .setValue(AppleCiderCauldrons.CINNAMON, false)
-                .setValue(AppleCiderCauldrons.CLOVES, false)
-                .setValue(AppleCiderCauldrons.NUTMEG, false)
+                .setValue(AppleCiderCauldrons.SPICED, false)
                 .setValue(SIMMER, 0)
         );
     }
@@ -67,7 +65,7 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(AppleCiderCauldrons.CINNAMON, AppleCiderCauldrons.CLOVES, AppleCiderCauldrons.NUTMEG, SIMMER);
+        builder.add(AppleCiderCauldrons.SPICED, SIMMER);
     }
 
     /** Whether a lit campfire (or soul campfire) sits directly under the cauldron. */
@@ -88,7 +86,8 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
 
-        if (!isFull(state)) {
+        // No simmering until the mulling spices are in, whatever is under the cauldron.
+        if (!isFull(state) || !state.getValue(AppleCiderCauldrons.SPICED)) {
             return;
         }
 
@@ -103,9 +102,6 @@ public class AppleCiderCauldronBlock extends LayeredCauldronBlock {
                 pos,
                 ModBlocks.MULLED_APPLE_CIDER_CAULDRON.get().defaultBlockState()
                     .setValue(LEVEL, state.getValue(LEVEL))
-                    .setValue(AppleCiderCauldrons.CINNAMON, state.getValue(AppleCiderCauldrons.CINNAMON))
-                    .setValue(AppleCiderCauldrons.CLOVES, state.getValue(AppleCiderCauldrons.CLOVES))
-                    .setValue(AppleCiderCauldrons.NUTMEG, state.getValue(AppleCiderCauldrons.NUTMEG))
             );
             level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 0.8F);
 

@@ -20,6 +20,8 @@ public class ModItems {
     public static final RegistrySupplier<Item> CINNAMON = registerSpice("cinnamon");
     public static final RegistrySupplier<Item> CLOVES = registerSpice("cloves");
     public static final RegistrySupplier<Item> NUTMEG = registerSpice("nutmeg");
+    /** One of each spice, crafted together; this is what goes into a cider cauldron. */
+    public static final RegistrySupplier<Item> MULLING_SPICES = registerSpice("mulling_spices");
 
     public static final RegistrySupplier<Item> BLANK_STENCIL = registerStencil("blank", "Blank", 64);
     public static final RegistrySupplier<Item> CRAFTER_STENCIL = registerStencil("crafter", "Crafter");
@@ -57,8 +59,7 @@ public class ModItems {
     );
 
     /**
-     * A hot bottle of mulled cider. The food values here are the unspiced ones; the cauldron overrides them
-     * per serving from the spices that went in (see {@link MulledAppleCider}).
+     * A hot bottle of mulled cider. There is only one kind; its food values live in {@link MulledAppleCider}.
      */
     @SuppressWarnings("UnstableApiUsage")
     public static final RegistrySupplier<Item> MULLED_APPLE_CIDER = REGISTRY_HELPER.registerItem(
@@ -68,7 +69,7 @@ public class ModItems {
                 .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
                 .setId(REGISTRY_HELPER.makeItemRegistryKey(MULLED_APPLE_CIDER_ID))
                 .craftRemainder(Items.GLASS_BOTTLE)
-                .food(MulledAppleCider.food(false, false, false), Consumables.DEFAULT_DRINK)
+                .food(MulledAppleCider.food(), Consumables.DEFAULT_DRINK)
                 .usingConvertsTo(Items.GLASS_BOTTLE)
                 .stacksTo(16)
         )

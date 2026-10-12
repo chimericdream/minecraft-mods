@@ -1,6 +1,5 @@
 package com.chimericdream.allhallowssteve.block;
 
-import com.chimericdream.allhallowssteve.item.MulledAppleCider;
 import com.chimericdream.allhallowssteve.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -22,13 +21,12 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 /**
- * The hand interactions for the cider and mulled-cider cauldrons: pouring cider in, adding spices,
+ * The hand interactions for the cider and mulled-cider cauldrons: pouring cider in, adding mulling spices,
  * ladling out with a glass bottle. Hoppers and dispensers never touch these, same as vanilla cauldrons.
  */
 public final class AppleCiderCauldrons {
-    public static final BooleanProperty CINNAMON = BooleanProperty.create("cinnamon");
-    public static final BooleanProperty CLOVES = BooleanProperty.create("cloves");
-    public static final BooleanProperty NUTMEG = BooleanProperty.create("nutmeg");
+    /** Whether mulling spices have been added to this batch. */
+    public static final BooleanProperty SPICED = BooleanProperty.create("spiced");
 
     public static final CauldronInteraction.Dispatcher CIDER_BEHAVIORS = new CauldronInteraction.Dispatcher();
     public static final CauldronInteraction.Dispatcher MULLED_BEHAVIORS = new CauldronInteraction.Dispatcher();
@@ -44,9 +42,7 @@ public final class AppleCiderCauldrons {
         CIDER_BEHAVIORS.put(cider, AppleCiderCauldrons::addCider);
         CIDER_BEHAVIORS.put(Items.GLASS_BOTTLE, AppleCiderCauldrons::takeCider);
 
-        CIDER_BEHAVIORS.put(ModItems.CINNAMON.get(), spice(CINNAMON));
-        CIDER_BEHAVIORS.put(ModItems.CLOVES.get(), spice(CLOVES));
-        CIDER_BEHAVIORS.put(ModItems.NUTMEG.get(), spice(NUTMEG));
+        CIDER_BEHAVIORS.put(ModItems.MULLING_SPICES.get(), AppleCiderCauldrons::addSpices);
 
         MULLED_BEHAVIORS.put(Items.GLASS_BOTTLE, AppleCiderCauldrons::ladle);
     }
@@ -96,9 +92,7 @@ public final class AppleCiderCauldrons {
 
     private static InteractionResult ladle(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
         if (!level.isClientSide()) {
-            ItemStack serving = MulledAppleCider.serving(state.getValue(CINNAMON), state.getValue(CLOVES), state.getValue(NUTMEG));
-
-            swapForBottle(player, hand, stack, serving);
+            swapForBottle(player, hand, stack, new ItemStack(ModItems.MULLED_APPLE_CIDER.get()));
             lowerLevel(state, level, pos);
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
@@ -107,22 +101,22 @@ public final class AppleCiderCauldrons {
         return InteractionResult.SUCCESS;
     }
 
-    private static CauldronInteraction spice(BooleanProperty property) {
-        return (state, level, pos, player, hand, stack) -> {
-            if (state.getValue(LayeredCauldronBlock.LEVEL) < LayeredCauldronBlock.MAX_FILL_LEVEL || state.getValue(property)) {
-                return InteractionResult.TRY_WITH_EMPTY_HAND;
-            }
+    private static InteractionResult addSpices(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        if (state.getValue(LayeredCauldronBlock.LEVEL) < LayeredCauldronBlock.MAX_FILL_LEVEL || state.getValue(SPICED)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
 
-            if (!level.isClientSide()) {
-                stack.consume(1, player);
-                level.setBlockAndUpdate(pos, state.setValue(property, true));
-                level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
-                player.awardStat(Stats.USE_CAULDRON);
-            }
+        if (!level.isClientSide()) {
+            stack.consume(1, player);
+            BlockState next = state.setValue(SPICED, true);
+            level.setBlockAndUpdate(pos, next);
+            level.scheduleTick(pos, next.getBlock(), AppleCiderCauldronBlock.TICK_INTERVAL);
+            level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+            player.awardStat(Stats.USE_CAULDRON);
+        }
 
-            return InteractionResult.SUCCESS;
-        };
+        return InteractionResult.SUCCESS;
     }
 
     private static void swapForBottle(Player player, InteractionHand hand, ItemStack used, ItemStack result) {

@@ -10,9 +10,9 @@
   * Cinnamon sometimes drops when you strip a cherry, mangrove, or jungle log with an axe.
   * Smelt a small flower (dandelion, poppy, azure bluet, cornflower, oxeye daisy, and more) in a furnace or smoker to get cloves.
   * Smelt cocoa beans in a furnace or smoker to get nutmeg. Journeyman farmers also sell it: 1 emerald for 2 nutmeg.
-* Added mulled apple cider. Pour 3 bottles of apple cider into a cauldron, right-click it with cinnamon, cloves, and/or nutmeg (each once), and put it over a lit campfire or soul campfire. After about 30 seconds it becomes mulled apple cider. Use empty glass bottles to ladle it out.
-  * Each serving's tooltip lists the spices that went into it.
-  * Cinnamon adds more hunger, cloves add more saturation, and nutmeg adds a little of both. If the fire goes out, the simmer starts over but the spices stay.
+* Added mulling spices. Craft one cinnamon, one cloves, and one nutmeg together.
+* Added mulled apple cider. Pour 3 bottles of apple cider into a cauldron, right-click it with mulling spices, and put it over a lit campfire or soul campfire. It only starts simmering once the spices are in. After about 30 seconds it becomes mulled apple cider. Use empty glass bottles to ladle it out.
+  * Each serving restores 8 hunger. If the fire goes out, the simmer starts over but the spices stay.
 
 ### 26.2 - 1.0.1
 

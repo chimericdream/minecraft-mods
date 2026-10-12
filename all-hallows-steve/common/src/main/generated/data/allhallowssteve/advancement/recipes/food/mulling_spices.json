@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cinnamon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:cinnamon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_cloves": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:cloves"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_nutmeg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "allhallowssteve:nutmeg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "allhallowssteve:mulling_spices"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cinnamon",
+      "has_cloves",
+      "has_nutmeg"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "allhallowssteve:mulling_spices"
+    ]
+  }
+}

@@ -14,6 +14,7 @@ needs a new plant or block; each comes from an existing source, so the mod stays
   poppy, azure bluet, cornflower, oxeye daisy, and similar), 1 flower to 1 clove.
 - **Nutmeg** comes from smelting cocoa beans in a furnace or smoker, and is also sold by farmer villagers
   at Journeyman level (1 emerald for 2 nutmeg).
+- One of each is crafted (shapeless) into **mulling spices**, the item [Mulling](mulling.md) actually uses.
 - Beyond mulling, spices are optional ingredients in [Harvest foods](harvest-foods.md) (e.g. soul cakes).
   Dye and scented-candle uses are tracked as separate ideas in the README inbox, not specified here.
 
@@ -33,7 +34,7 @@ trade in `TEST_PLAN.md`.
   dandelion, poppy, blue orchid, allium, azure bluet, the four tulips, oxeye daisy, cornflower, lily of the
   valley (no wither rose). The farmer trade is a data-driven `villager_trade` added to the vanilla
   `farmer/level_3` trade tag, so it is one of the pool of Journeyman offers rather than guaranteed.
-  Cinnamon (recolored bark rod) and nutmeg textures come from unused-textures (credited in the README); the cloves texture is a first-pass placeholder. Not yet built: spices in harvest foods (soul cakes), which waits on that idea.
+  Cinnamon (recolored bark rod) and nutmeg textures come from unused-textures (credited in the README); the cloves texture is a first-pass placeholder. The mulling spices texture (a cheesecloth sachet with a red tie) is a hand-drawn first pass too. Not yet built: spices in harvest foods (soul cakes), which waits on that idea.
 
 ## Decisions
 

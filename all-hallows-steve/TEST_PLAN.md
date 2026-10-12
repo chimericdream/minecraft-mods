@@ -19,9 +19,9 @@ class.
   apples, no bottle, no fuel, a full output, pulling the apples out), the hopper slot rules, and pomace's
   tags, composting, and healing of injured livestock.
 * `SpiceGameTest` — the cinnamon drop when stripping (directly, and through a real axe use), and the
-  smelting and smoking recipes for cloves and nutmeg.
-* `MullingGameTest` — apple cider filling a cauldron one level per bottle, taking it back out, spices (full
-  cauldron only, once each), the simmer (driven by calling the cauldron's `tick` directly) including no
+  smelting and smoking recipes for cloves and nutmeg, and the mulling spices crafting recipe.
+* `MullingGameTest` — apple cider filling a cauldron one level per bottle, taking it back out, mulling spices (full
+  cauldron only, once), the simmer (driven by calling the cauldron's `tick` directly) including no
   heat and the fire going out, and ladling servings. The rendering, particles, and sounds need the manual
   pass below.
 
@@ -107,15 +107,17 @@ NeoForge.
    * Smelt cocoa beans in a furnace and a smoker: one nutmeg.
    * Farmer villager: level one up to Journeyman (level 3). Their offers can include 1 emerald for 2 nutmeg.
      It is one of the Journeyman offers, so not every farmer has it; check a few.
-   * All three items show in the Ingredients creative tab with their own icons.
+   * Craft one cinnamon, one cloves, and one nutmeg (shapeless) into one mulling spices. Two of the three do nothing.
+   * All four items show in the Ingredients creative tab with their own icons.
 7. **Mulling** (use `/give` for items; repeat on Fabric and NeoForge)
    * Right-click an empty cauldron with an apple cider bottle three times: each adds a level, shows amber cider, and
      gives back a glass bottle. A fourth does nothing. An empty bottle takes a serving back out.
-   * Right-click a full cider cauldron with cinnamon, cloves, and nutmeg: each is used up once; a second of
-     the same does nothing. A part-full cauldron refuses spices.
+   * Right-click a full cider cauldron with mulling spices: one is used up; a second does nothing. A part-full
+     cauldron refuses them, and so does a loose cinnamon, cloves, or nutmeg.
+   * A full cider cauldron over a lit campfire does nothing until the mulling spices go in; adding them starts the simmer.
    * Put the full cauldron over a lit campfire (and again over a lit soul campfire): bubbles appear, and after
      about 30 seconds it turns darker with steam. Over an unlit campfire or no fire, nothing happens.
    * Put the fire out mid-simmer: bubbles stop. Relight it: the simmer starts over, spices still there.
-   * Ladle three servings with empty bottles: the cauldron empties to a plain one. Eat a serving: more hunger
-     with cinnamon, more saturation with cloves. Check the cauldron is not touched by hoppers or dispensers.
+   * Ladle three servings with empty bottles: the cauldron empties to a plain one. Eat a serving: it restores 8
+     hunger and has no tooltip. Check the cauldron is not touched by hoppers or dispensers.
    * Breaking either cauldron drops a plain cauldron. Pick-block gives a plain cauldron.

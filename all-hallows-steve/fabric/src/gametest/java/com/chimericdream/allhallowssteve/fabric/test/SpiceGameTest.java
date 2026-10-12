@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Coverage for the spices: the cinnamon drop from stripping (both {@link Spices#onStrip} directly, for
  * a deterministic chance, and through a real axe use, for the {@code AHS$AxeItemMixin} hook) and the
- * smelting and smoking recipes for cloves and nutmeg. The farmer trade is covered by the manual steps
+ * smelting and smoking recipes for cloves and nutmeg, and the mulling spices crafting recipe. The farmer trade is covered by the manual steps
  * in {@code TEST_PLAN.md}.
  */
 @SuppressWarnings("unused")
@@ -129,6 +130,30 @@ public class SpiceGameTest {
     public void cocoaBeansCookIntoNutmeg(GameTestHelper context) {
         assertCooks(context, RecipeType.SMELTING, Items.COCOA_BEANS, ModItems.NUTMEG.get());
         assertCooks(context, RecipeType.SMOKING, Items.COCOA_BEANS, ModItems.NUTMEG.get());
+        context.succeed();
+    }
+
+    @GameTest
+    public void oneOfEachSpiceCraftsMullingSpices(GameTestHelper context) {
+        CraftingInput input = CraftingInput.of(3, 1, List.of(
+            new ItemStack(ModItems.NUTMEG.get()),
+            new ItemStack(ModItems.CINNAMON.get()),
+            new ItemStack(ModItems.CLOVES.get())
+        ));
+        ItemStack result = context.getLevel().getServer().getRecipeManager()
+            .getRecipeFor(RecipeType.CRAFTING, input, context.getLevel())
+            .map(holder -> holder.value().assemble(input))
+            .orElse(ItemStack.EMPTY);
+
+        context.assertValueEqual(result.getItem(), ModItems.MULLING_SPICES.get(), "mulling spices from one of each");
+
+        CraftingInput partial = CraftingInput.of(2, 1, List.of(new ItemStack(ModItems.NUTMEG.get()), new ItemStack(ModItems.CINNAMON.get())));
+        boolean craftable = context.getLevel().getServer().getRecipeManager()
+            .getRecipeFor(RecipeType.CRAFTING, partial, context.getLevel())
+            .map(holder -> holder.value().assemble(partial).is(ModItems.MULLING_SPICES.get()))
+            .orElse(false);
+
+        context.assertFalse(craftable, "mulling spices from only two spices");
         context.succeed();
     }
 }

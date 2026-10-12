@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "allhallowssteve:cinnamon",
+    "allhallowssteve:cloves",
+    "allhallowssteve:nutmeg"
+  ],
+  "result": {
+    "id": "allhallowssteve:mulling_spices"
+  }
+}

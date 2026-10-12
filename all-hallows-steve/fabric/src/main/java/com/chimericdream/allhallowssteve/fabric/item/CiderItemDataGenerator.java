@@ -1,7 +1,6 @@
 package com.chimericdream.allhallowssteve.fabric.item;
 
 import com.chimericdream.allhallowssteve.item.ModItems;
-import com.chimericdream.allhallowssteve.item.MulledAppleCider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -18,7 +17,6 @@ public class CiderItemDataGenerator {
     public static void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.APPLE_CIDER.get(), "Apple Cider");
         translationBuilder.add(ModItems.MULLED_APPLE_CIDER.get(), "Mulled Apple Cider");
-        translationBuilder.add(MulledAppleCider.SPICES_TOOLTIP_KEY, "Spices: %s");
         translationBuilder.add(ModItems.POMACE.get(), "Pomace");
     }
 }

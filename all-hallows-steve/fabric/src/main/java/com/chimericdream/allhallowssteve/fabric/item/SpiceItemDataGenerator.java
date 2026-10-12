@@ -10,6 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -58,6 +59,7 @@ public class SpiceItemDataGenerator {
         itemModelGenerator.generateFlatItem(ModItems.CINNAMON.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(ModItems.CLOVES.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(ModItems.NUTMEG.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(ModItems.MULLING_SPICES.get(), ModelTemplates.FLAT_ITEM);
     }
 
     public static void configureRecipes(HolderLookup.Provider registryLookup, RecipeOutput exporter, RecipeProvider generator) {
@@ -80,11 +82,21 @@ public class SpiceItemDataGenerator {
         SimpleCookingRecipeBuilder.smoking(cocoa, RecipeCategory.FOOD, ModItems.NUTMEG.get(), SMELT_XP, SMOKE_TIME)
             .unlockedBy(RecipeProvider.getHasName(Items.COCOA_BEANS), generator.has(Items.COCOA_BEANS))
             .save(exporter, smoking.apply("nutmeg"));
+
+        ShapelessRecipeBuilder.shapeless(registryLookup.lookupOrThrow(Registries.ITEM), RecipeCategory.FOOD, ModItems.MULLING_SPICES.get())
+            .requires(ModItems.CINNAMON.get())
+            .requires(ModItems.CLOVES.get())
+            .requires(ModItems.NUTMEG.get())
+            .unlockedBy("has_cinnamon", generator.has(ModItems.CINNAMON.get()))
+            .unlockedBy("has_cloves", generator.has(ModItems.CLOVES.get()))
+            .unlockedBy("has_nutmeg", generator.has(ModItems.NUTMEG.get()))
+            .save(exporter);
     }
 
     public static void configureTranslations(HolderLookup.Provider registryLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.CINNAMON.get(), "Cinnamon");
         translationBuilder.add(ModItems.CLOVES.get(), "Cloves");
         translationBuilder.add(ModItems.NUTMEG.get(), "Nutmeg");
+        translationBuilder.add(ModItems.MULLING_SPICES.get(), "Mulling Spices");
     }
 }

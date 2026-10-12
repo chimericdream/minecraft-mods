@@ -17,13 +17,9 @@ cider, which the player ladles out into glass bottles.
 - **Simmer:** Starts only on a full (3-level) cider cauldron, so a batch is always 3 servings. It takes
   about 30 seconds, with steam and bubbles. If the fire goes out, progress resets, but the added spices
   are kept. Once done, the mulled cider stays hot until emptied. Nothing is ever wasted.
-- **Spices** are added by right-clicking a full cider cauldron with the spice item. Each spice type can be
-  added once per batch (up to three), and they apply to every serving in it. They only change food value, not
-  status effects, and each spice has a different mix:
-  - **Cinnamon:** more hunger points.
-  - **Cloves:** more saturation.
-  - **Nutmeg:** a smaller bump to both.
-  - Using one of each is the best overall. Exact numbers are for implementation.
+- **Mulling spices** are crafted from one cinnamon, one cloves, and one nutmeg, and added by right-clicking a
+  full cider cauldron with the item. They are required: the simmer never starts without them, even over a lit
+  campfire. There is only one kind of mulled cider (8 hunger, no status effects).
 - **Hand-only:** Hoppers and dispensers do not interact with the cauldron, like vanilla cauldrons.
 - Built after both [Cider press](cider-press.md) and [Spices](spices.md). Plain [cider](cider-press.md)
   still has no effect.
@@ -45,15 +41,14 @@ smoke test for the cauldron rendering and a `TEST_PLAN.md` entry.
   `mulled_cider_cauldron`, both extend vanilla's `LayeredCauldronBlock` (like Minekea's honey cauldron) with
   their own interaction dispatchers; an access widener opens `CauldronInteraction.Dispatcher.put`. They have
   no items and drop a plain cauldron.
-- State is all block-state, no block entity: `level` (1–3), `cinnamon`/`cloves`/`nutmeg` booleans, and on the
-  cider block a `simmer` counter (0–4). A scheduled tick every 120 ticks (6 s) checks for a lit
+- State is all block-state, no block entity: `level` (1–3), and on the cider block a `spiced` boolean and a
+  `simmer` counter (0–4). A scheduled tick every 120 ticks (6 s) checks for a lit
   `#minecraft:campfires` block below: heated adds a step, and the step after `simmer` 4 (30 s total) swaps
   in the mulled block; unheated resets `simmer` to 0. Taking a serving out also resets it.
-- Mulled cider is one item (`mulled_cider`); each ladled serving carries its own `FOOD` component from
-  `MulledCider.food`. Base 5 hunger / 0.3 saturation modifier; cinnamon +2 hunger, cloves +0.25 modifier,
-  nutmeg +1 hunger and +0.1 modifier. Fully spiced is 8 hunger.
+- Mulled cider is one item (`mulled_cider`); the item carries the food values (`MulledAppleCider.food`). 8 hunger / 0.65 saturation modifier, the same as the old cinnamon + cloves + nutmeg
+  batch.
 - Cauldron models and blockstates are hand-authored (vanilla `template_cauldron_*`, amber and darker
-  red-brown content textures); colours do not show which spices went in.
+  red-brown content textures); colours do not show whether spices went in.
 - Not yet checked: how the cauldrons actually look in game (rendering, particles). See `TEST_PLAN.md` § 7.
 
 ## Decisions
@@ -62,9 +57,12 @@ smoke test for the cauldron rendering and a `TEST_PLAN.md` entry.
 - 2026-10-11 — Built after the cider press and Spices.
 - 2026-10-11 — Mulling happens by simmering cider in a cauldron, not at a crafting table, furnace, or new
   pot block.
-- 2026-10-11 — Spices are food-value perks only (no status effects), and combining spices stacks them.
-- 2026-10-11 — Each spice has a different mix: cinnamon more hunger, cloves more saturation, nutmeg a
-  smaller bump to both.
+- 2026-10-11 — Spices are food-value perks only (no status effects).
+- 2026-10-11 — Superseded: each spice had a different mix and stacked.
+- 2026-10-11 — Mulling spices are required to start the simmer, so there is no plain mulled cider and no
+  tooltip on servings.
+- 2026-10-11 — Replaced the mix-and-match spices with one crafted mulling spices item (one each of cinnamon,
+  cloves, and nutmeg), worth what all three used to give.
 - 2026-10-11 — The cauldron has 3 levels; 1 cider bottle = 1 level. Spices are added per batch and apply
   to all servings.
 - 2026-10-11 — Simmering takes about 30 seconds, mulled cider stays hot, and nothing is ever wasted.
@@ -72,7 +70,7 @@ smoke test for the cauldron rendering and a `TEST_PLAN.md` entry.
 - 2026-10-11 — Cider is shown with new cauldron blocks (3 levels each), not a block entity on the vanilla
   cauldron.
 - 2026-10-11 — The cauldron is hand-only: no hoppers or dispensers.
-- 2026-10-11 — Spices are added by right-clicking with the item; each type once per batch (max three).
+- 2026-10-11 — Mulling spices are added by right-clicking with the item, once per batch.
 - 2026-10-11 — Mulling starts only on a full cider cauldron (3 levels), so batches are always 3 servings.
 - 2026-10-11 — If the fire goes out mid-simmer, progress resets and the added spices are kept.
 
@@ -92,5 +90,5 @@ From [combined-ideas § 5](../brainstorms/2026-09-29/combined-ideas.md#5-orchard
 
 - Exact hunger and saturation numbers for plain cider, mulled cider, and each spice. (Can be tuned in
   implementation.)
-- Do the cauldron colours or particles show which spices went in? (Cosmetic; can be decided in
+- Do the cauldron colours or particles show whether spices went in? (Cosmetic; can be decided in
   implementation.)

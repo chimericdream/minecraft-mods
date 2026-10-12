@@ -13,16 +13,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 
 import static com.chimericdream.allhallowssteve.AllHallowsSteveMod.REGISTRY_HELPER;
 
-/** A finished batch of mulled cider. It stays hot until emptied; the spices added while it was cider set what each serving gives. */
+/** A finished batch of mulled cider. It stays hot until emptied; every serving is the same mulled apple cider. */
 public class MulledAppleCiderCauldronBlock extends LayeredCauldronBlock {
     public static final Identifier BLOCK_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "mulled_apple_cider_cauldron");
 
@@ -40,16 +38,7 @@ public class MulledAppleCiderCauldronBlock extends LayeredCauldronBlock {
         this.registerDefaultState(
             this.stateDefinition.any()
                 .setValue(LEVEL, 1)
-                .setValue(AppleCiderCauldrons.CINNAMON, false)
-                .setValue(AppleCiderCauldrons.CLOVES, false)
-                .setValue(AppleCiderCauldrons.NUTMEG, false)
         );
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(AppleCiderCauldrons.CINNAMON, AppleCiderCauldrons.CLOVES, AppleCiderCauldrons.NUTMEG);
     }
 
     @Override
