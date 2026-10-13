@@ -98,6 +98,7 @@ according to the permissions outlined by the artist and the license.
 * Pumpkin soup ([food_stew_sweetpod.png](https://github.com/malcolmriley/unused-textures/blob/master/items/food_stew_sweetpod.png); recolored)
 * Roasted pumpkin seeds ([seeds_generic_gourd.png](https://github.com/malcolmriley/unused-textures/blob/master/items/seeds_generic_gourd.png))
 * Apple pie and spiced pumpkin pie ([part_mould.png](https://github.com/malcolmriley/unused-textures/blob/master/items/part_mould.png); recolored and edited)
+* Guide book icon ([material_crystal_ender_big.png](https://github.com/malcolmriley/unused-textures/blob/master/items/material_crystal_ender_big.png), reshaped into a pumpkin, and [book_grimoire_abyssal.png](https://github.com/malcolmriley/unused-textures/blob/master/items/book_grimoire_abyssal.png); combined and edited)
 
 ## License
 
