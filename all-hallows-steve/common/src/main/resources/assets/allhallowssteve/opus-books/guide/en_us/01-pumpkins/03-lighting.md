@@ -17,6 +17,8 @@ glow:
 
 Shear a lit pumpkin to get the torch back.
 
+![Pumpkins lit with a torch, a soul torch, a copper torch, and a redstone torch, left to right](texture:allhallowssteve:gui/guide/lit_variants){width=400}
+
 ## Candles
 
 Sneak and use a candle on a decorated pumpkin, then add up to four. Each candle adds light (3, 6, 9, 12).
