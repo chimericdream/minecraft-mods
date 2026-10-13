@@ -28,6 +28,8 @@ Sneak and use a candle on a decorated pumpkin, then add up to four. Each candle 
 > [!NOTE]
 > A pumpkin holds either candles or a torch, not both.
 
+![An unlit pumpkin, then one to four candles, then a torch: the glow grows with each light](texture:allhallowssteve:gui/guide/candle_lighting){width=400}
+
 ## Plain pumpkins and dispensers
 
 Use a torch on a carved pumpkin to make a jack o'lantern, or shears on a jack o'lantern to take the torch back out.
