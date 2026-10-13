@@ -36,7 +36,7 @@ it's built. Those files live at the top of `ideas/`, grouped by theme: `carving/
 | 5  | [Carving yields seeds, roasted pumpkin seeds](../../carving/carving-seeds.md) |   S    |  ★★   |   5   | Yes |
 | 6  | Stencil-dependent light level               |   S    |  ★★   |   3   | No |
 | 7  | Moth particles around lit pumpkins          |   S    |  ★★   |   2   | No |
-| 8  | [Harvest foods (soul cakes, soup, cider)](../../harvest-crafts/harvest-foods.md) |   S    |  ★★   |   7   | Maybe |
+| 8  | [Harvest foods (soul cakes, soup, cider)](../../archive/harvest-foods.md) |   S    |  ★★   |   7   | Maybe |
 | 9  | [Harvest bundles and wreaths](../../harvest-crafts/harvest-bundles-and-wreaths.md) |   S    |  ★★   |   9   | Maybe |
 | 10 | Autumn-colored leaf litter + rake           |  S–M   |  ★★   |  10   | No |
 |    | **Tier 2 — Solid mid-size features**        |        |       |       |   |
@@ -46,7 +46,7 @@ it's built. Those files live at the top of `ideas/`, grouped by theme: `carving/
 | 14 | Hanging / wall-mounted pumpkins             |   M    |  ★★   |   4   | No |
 | 15 | [Turnip lanterns](../../harvest-crafts/turnip-lanterns.md) |   M    |  ★★   |   1   | Maybe |
 | 16 | [Scarecrow](../../farm-creatures/scarecrow.md)    |  M–L   |  ★★★  |   7   | Yes |
-| 17 | [Cider press](../../harvest-crafts/cider-press.md) |   M    |  ★★   |   9   | Yes |
+| 17 | [Cider press](../../archive/cider-press.md) |   M    |  ★★   |   9   | Yes |
 | 18 | [Drying rack](../../harvest-crafts/drying-rack.md) |   M    |  ★★   |   4   | Maybe |
 | 19 | [Weathering gravestones + iron fencing](../../folklore/gravestones-and-iron-fencing.md) |   M    |  ★★   |   1   | Yes |
 | 20 | Wind chimes                                 |  S–M   |   ★   |   3   | No |

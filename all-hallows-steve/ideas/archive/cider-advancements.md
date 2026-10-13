@@ -1,6 +1,6 @@
 # Cider and spice advancements
 
-> Source: requested directly by the user, 2026-10-12 · Status: **Building**
+> Source: requested directly by the user, 2026-10-12 · Status: **Shipped** in 26.2-1.1.0
 
 ## Description
 

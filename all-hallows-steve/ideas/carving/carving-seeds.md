@@ -6,7 +6,7 @@
 ## Description
 
 Carving a pumpkin at the station returns a few pumpkin seeds. It's a small detail, but it makes carving
-feel physical. Roasting the seeds into a snack is part of [Harvest foods](../harvest-crafts/harvest-foods.md).
+feel physical. Roasting the seeds into a snack is part of [Harvest foods](../archive/harvest-foods.md).
 
 ## Decisions
 
@@ -25,7 +25,7 @@ Bracketed numbers are the `brainstorms/2026-09-29/agentN.md` files that suggeste
 
 ## Related
 
-- [Harvest foods](../harvest-crafts/harvest-foods.md) — roasted seeds sit alongside the other snacks.
+- [Harvest foods](../archive/harvest-foods.md) — roasted seeds sit alongside the other snacks.
 
 ## Open questions
 

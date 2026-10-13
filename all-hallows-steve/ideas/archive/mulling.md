@@ -1,6 +1,6 @@
 # Mulling
 
-> Effort **L** (re-estimated 2026-10-11) · Status: **Building**
+> Effort **L** (re-estimated 2026-10-11) · Status: **Shipped** in 26.2-1.1.0
 > Source: split from [Cider press](cider-press.md) on 2026-10-11 (brainstorm variant "Mulled or spiced cider" [7, 11, 13] in
 > [combined-ideas § 5](../brainstorms/2026-09-29/combined-ideas.md#5-orchards-food--drink))
 

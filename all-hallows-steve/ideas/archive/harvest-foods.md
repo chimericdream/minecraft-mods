@@ -1,7 +1,7 @@
 # Harvest foods
 
 > Shortlist #8 · Tier 1 — Quick wins · Effort **M** (re-estimated 2026-10-12) · Value ★★ · Votes 7 · My vote **Maybe**
-> Status: **Building** (branch `feat/all-hallows-steve-harvest-foods`)
+> Status: **Shipped** in 26.2-1.1.0
 
 ## Description
 

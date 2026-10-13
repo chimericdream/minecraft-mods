@@ -23,7 +23,7 @@ are the `brainstorms/2026-09-29/agentN.md` files that suggested each variant.
 ## Related
 
 - [Harvest bundles and wreaths](harvest-bundles-and-wreaths.md) — the dried output (#9).
-- [Harvest foods](harvest-foods.md) — dried apple rings.
+- [Harvest foods](../archive/harvest-foods.md) — dried apple rings.
 - [Tall corn](../crops/tall-corn.md) — corn husks.
 
 ## Open questions

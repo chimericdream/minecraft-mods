@@ -31,16 +31,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Harvest crafts
 
-- [Harvest foods](harvest-crafts/harvest-foods.md) — A few well-chosen foods: spice-effect soul cakes,
-  pumpkin soup, roasted seeds, apple pie, and spiced pumpkin pie.
 - [Harvest bundles and wreaths](harvest-crafts/harvest-bundles-and-wreaths.md) — Decorative corn shocks,
   wheat sheaves, dried-flower and herb bundles, and door wreaths.
-- [Cider press](harvest-crafts/cider-press.md) — A fueled barrel-style press that turns vanilla apples
-  into cider and pomace.
-- [Spices](harvest-crafts/spices.md) — Cinnamon (stripped from logs), cloves and nutmeg (smelted), for
-  mulling and other uses.
-- [Cider and spice advancements](harvest-crafts/cider-advancements.md) — A second advancement branch for the press, pomace, spices, juices, and mulled drinks.
-- [Mulling](harvest-crafts/mulling.md) — Turns cider and spices into mulled cider as a small mechanic.
 - [Drying rack](harvest-crafts/drying-rack.md) — Visibly dries herbs, flowers, and apples over time into
   bundles and dried food.
 - [Turnip lanterns](harvest-crafts/turnip-lanterns.md) — A small hanging carved-root lantern, after the
@@ -77,3 +69,8 @@ covered by the active ideas above.
 - [Wearable decorated pumpkins](archive/wearable-decorated-pumpkins.md) — Shipped in 26.2-1.0.0.
 - [Pumpkin contents message](archive/pumpkin-contents-message.md) — Shipped in 26.2-1.0.0.
 - [Advancements](archive/advancements.md) — Shipped in 26.2-1.0.0.
+- [Harvest foods](archive/harvest-foods.md) — Shipped in 26.2-1.1.0.
+- [Cider press](archive/cider-press.md) — Shipped in 26.2-1.1.0.
+- [Spices](archive/spices.md) — Shipped in 26.2-1.1.0.
+- [Mulling](archive/mulling.md) — Shipped in 26.2-1.1.0.
+- [Cider and spice advancements](archive/cider-advancements.md) — Shipped in 26.2-1.1.0.
