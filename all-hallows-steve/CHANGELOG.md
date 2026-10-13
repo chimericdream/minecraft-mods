@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.1.0
+
 #### New Features
 
 * Added the All Hallows Steve Guide, an in-game book with screenshots covering pumpkins, cider, spices, and harvest foods. Craft one from a book and a pumpkin, or use `/opus give allhallowssteve:guide`.
