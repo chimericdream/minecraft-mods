@@ -55,7 +55,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 ## Inbox
 
 - Spice dyes: an expanded autumn dye palette (burnt sienna, ochre, russet, amber) using spices; see
-  [Spices](harvest-crafts/spices.md) and brainstorm "Expanded autumn dye palette" [9, 10].
+  [Spices](archive/spices.md) and brainstorm "Expanded autumn dye palette" [9, 10].
 - Spice candles: scented candles with a mild "comfort" effect, such as slightly reduced monster spawning
   nearby; brainstorm "Spice candles" [5].
 - A more complex, distinctive model for the cider press (e.g. a wooden screw press), as a later upgrade.
