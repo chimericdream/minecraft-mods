@@ -9,6 +9,10 @@ tags: [cider, spices]
 4. After about 30 seconds it turns into mulled apple cider.
 5. Use empty glass bottles to ladle out 3 servings.
 
+![A cauldron of cider simmering after the spices go in](texture:allhallowssteve:gui/guide/mulling_process){width=400}
+
+![Finished mulled drinks steaming over campfires](texture:allhallowssteve:gui/guide/mulled_drinks){width=400}
+
 > [!NOTE]
 > The cauldron won't start simmering until the spices are in. If the fire goes out, the simmer starts over but the
 > spices stay.
