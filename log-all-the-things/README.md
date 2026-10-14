@@ -1,6 +1,6 @@
 # Log All the Things! (Fabric/NeoForge)
 
-![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.1.0-beta.0](https://img.shields.io/badge/version-1.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Water-logging behavior, but for lava, carpet, and glass panes too._
 
@@ -24,6 +24,8 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
 * **Snow-logging** — right-click a slab, plain stairs, wall, fence, chain, bars, or glass pane with
   snow to build it up in layers. Mine just the snow to pop it back out (requires a shovel), or mine
   the solid part to break the whole thing.
+* **In-game guide** — craft a book and a lava bucket (or run `/opus give logallthethings:guide`) to get
+  a guide book covering all of the above. Requires the Opus mod.
 
 ## Notes for Documentation
 
