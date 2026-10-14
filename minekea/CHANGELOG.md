@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 10.2.0
+
 * Nugget bags are now called nugget pouches, and are crafted from a 2x2 of nuggets.
 * Added a recipe for the honey bucket: 3 honey bottles + 1 bucket (the bottles are returned empty).
 * Fixed the ancient and doom lanterns sharing the end lantern's recipe; they now use an echo shard and
