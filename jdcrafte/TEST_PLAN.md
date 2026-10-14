@@ -29,3 +29,11 @@ Conventions: Fabric GameTest classes in
 `common/src/main/resources/data/jdcrafte/gametest/structure/`. Animal-and-crop fixtures ("spawn N
 cows in pen", "advance crop to stage X") are prime candidates for ChimericLib's GameTest helper
 collection rather than living here.
+
+## Guide book
+
+1. **Guide book**
+   * Craft a book and wheat: you get the JD Crafte Guide. `/opus give jdcrafte:guide` gives the same book.
+   * Open it: the four pages (feeding trough, weathervane, trellises, Home Sweet Hrmmm) show their recipes on crafting
+     panels, and the recipes match what the crafting table accepts.
+   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.

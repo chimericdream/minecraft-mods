@@ -2,6 +2,8 @@
 
 #### New Features
 
+* Added the JD Crafte Guide, an in-game book covering the feeding trough, weathervane, trellises, and Home Sweet Hrmmm plaque. Craft one from a book and wheat, or use `/opus give jdcrafte:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
 * Added the feeding trough, a block that fills up as feed (wheat, beetroot, carrots, potatoes, or
   wheat seeds) is added. Right-click with feed in hand to fill it, or shift-right-click with an
   empty hand to take feed back out.
