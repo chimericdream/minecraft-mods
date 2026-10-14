@@ -66,12 +66,17 @@ NeoForge coverage).
    `RedstoneWireBlockMixin`: verify wire connects/points at hoppers as intended.
 8. **Wrench** — every advertised wrench interaction on hoppers; wrench on non-mod blocks does
    nothing harmful.
-9. **Creative tabs, recipes, Patchouli book** — all four tabs populated; every block craftable per
+9. **Creative tabs, recipes, guide book** — all four tabs populated; every block craftable per
    recipes (datagen: `XtremeHopperRecipeGenerator`); loot tables drop the right block with
    components intact.
 10. **Deprecated block sweep** — place each remaining `filtered_*` block variant (not just golden);
     all convert correctly. Loading a pre-4.0 world save with filtered hoppers is the real-world
     case — keep one such save as a fixture if available.
+11. **Guide book** (Fabric and NeoForge) — craft a book and a hopper: you get the Hopper X-Treme Guide, and
+    `/opus give hopperxtreme:guide` gives the same book. A brand-new world hands one over on first join (the
+    `grant_book_on_first_join` advancement). Open it: every chapter lists its pages, recipes draw on crafting and
+    smithing panels, the filter screenshots show (click to enlarge), and the cross-page links work. With Opus
+    older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
 
 ## Recommended additional automated tests (gaps)
 

@@ -1,7 +1,0 @@
-{
-    "name": "Tools",
-    "description": "So many tools...",
-    "icon": "hopperxtreme:tools/wrench",
-    "flag": "hopperxtreme:wrench_enabled",
-    "sortnum": 6
-}

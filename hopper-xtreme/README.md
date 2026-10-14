@@ -1,6 +1,6 @@
 # Hopper X-Treme (Fabric/NeoForge)
 
-![Version: 4.1.0](https://img.shields.io/badge/version-4.1.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 4.2.0-beta.0](https://img.shields.io/badge/version-4.2.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Upgrade your hoppers!_
 
@@ -63,6 +63,12 @@ managed with two items:
 * **Diamond Hopper Item Filter** — works exactly like the standard filter, but holds up to ten filter entries.
   Crafted by upgrading a Hopper Item Filter with a diamond.
 * **Wrench** — a tool for configuring/adjusting hoppers.
+
+### In-game guide
+
+The Hopper X-Treme Guide walks you through every hopper, with recipes and screenshots. Craft one from a book and a
+hopper, or use `/opus give hopperxtreme:guide`. A new world also gives you one the first time you join. The guide is
+provided by the Opus mod, which is required.
 
 ### Creative tabs
 

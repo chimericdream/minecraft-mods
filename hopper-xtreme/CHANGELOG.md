@@ -1,5 +1,18 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Hopper X-Treme Guide, an in-game book covering every hopper, multi-hopper, hupper, glazed hopper, and
+  item filter, with recipes and screenshots. Craft one from a book and a hopper, or use
+  `/opus give hopperxtreme:guide`. New players still get a copy the first time they join a world.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
+
+#### Other Changes
+
+* The guide moved from Patchouli to Opus, and Patchouli is no longer used. Your old Hopper X-Treme Manual (the
+  Patchouli book) stops working, and its recipe is gone. Craft a new guide from a book and a hopper. Players who
+  already received a book on joining will not get a second one automatically.
+
 ### 26.2 - 4.1.0
 
 #### New Features
