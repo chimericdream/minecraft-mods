@@ -25,7 +25,7 @@ contraptions, "update suppression" tricks, and clean building.
   * **Prevent all** — suppresses updates on both place and break.
   * **Replace block** — suppresses updates whenever the block is placed or replaced, useful for swapping the block
     in and out of an existing structure without side effects.
-* **An in-game guide book** (the Houdini Block Guide, powered by the Opus mod). Craft one from a book and an eye of
+* **An in-game guide book** (the Houdini Block Guide; optional, needs the Opus mod 1.2.0 or newer). Craft one from a book and an eye of
   ender.
 
 ## Notes for Documentation

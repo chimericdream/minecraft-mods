@@ -53,7 +53,8 @@ redstone lamp circuit. Repeat the full pass on Fabric and NeoForge.
 9. **Guide book**
    * Craft a book and an eye of ender: you get the Houdini Block Guide. `/opus give houdiniblock:guide` gives the same book.
    * Open it: the recipe page shows the crafting grid, and the mode names match the in-game tooltip.
-   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+   * Without Opus installed, the game starts normally, the mod works, and there is no guide recipe in the recipe book or crafting (nothing logs a recipe parse error about `opus:book`).
+   * With Opus older than 1.2.0 installed, the game refuses to start (the version range is still enforced).
 
 ## Recommended automated tests
 
