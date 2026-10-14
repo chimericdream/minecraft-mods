@@ -1,6 +1,6 @@
 # Archaeology Tweaks (Fabric/NeoForge)
 
-![Version: 4.3.0-beta.0](https://img.shields.io/badge/version-4.3.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 4.4.0-beta.0](https://img.shields.io/badge/version-4.4.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Small, vanilla-friendly tweaks to Minecraft's archaeology system._
 
@@ -35,6 +35,8 @@ whatever loot has been assigned to it.
 * Adds advancements for using a brush for the first time, collecting every pottery sherd, brushing a
   suspicious block in the Nether, and getting a second drop via the Gentle Touch enchantment
 * Wandering traders have a 20% chance of selling a random pottery sherd for 8 emeralds and a brick.
+* Includes an in-game guide book (powered by Opus). Craft one from a book and a brush, or use
+  `/opus give archtweaks:guide`.
 
 ## Notes for Documentation
 

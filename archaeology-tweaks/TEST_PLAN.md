@@ -51,6 +51,11 @@ pass.
 9. **Client rendering** — `ATBrushableBlockEntityRenderer`: the partially-revealed item renders
    inside the block at the correct dusting stages; check on Fabric and NeoForge (renderer
    registration is per-loader).
+10. **Guide book** — craft a book and a brush: you get the Archaeology Tweaks Guide.
+    `/opus give archtweaks:guide` gives the same book. Open it and check every page (the loot and
+    "where they generate" tables, the Gentle Touch chances, the hiding-items steps) against the real
+    game. With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the
+    problem.
 
 ## Recommended automated tests
 
