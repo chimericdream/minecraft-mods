@@ -60,7 +60,7 @@ minecarts.
 
 ### Guide book
 
-An in-game guide book (provided by the Opus mod, which is required) explains the Bagged
+An in-game guide book (optional; needs the Opus mod 1.2.0 or newer) explains the Bagged
 Villager and every setting. Craft one from a book and an emerald, or use `/opus give villagertweaks:guide`.
 
 ### Configuration

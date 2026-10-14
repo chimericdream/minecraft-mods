@@ -2,8 +2,7 @@
 
 #### New Features
 
-* Added the Villager Tweaks Guide, an in-game book covering the Bagged Villager and every setting. Craft one from a book and an emerald, or use `/opus give villagertweaks:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+* Added the Villager Tweaks Guide, an in-game book covering the Bagged Villager and every setting. Craft one from a book and an emerald, or use `/opus give villagertweaks:guide`. Install the optional Opus mod (1.2.0 or newer) to get it.
 
 #### Changes
 

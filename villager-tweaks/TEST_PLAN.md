@@ -74,7 +74,7 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
     Misc sections and persist.
 13. **Guide book** — craft a book and an emerald: you get the Villager Tweaks Guide. `/opus give villagertweaks:guide`
     gives the same book. Open it: every page renders, links work, and the Bagged Villager item widgets show.
-    With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+    Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log). With Opus older than 1.2.0 installed, the game refuses to start.
 
 ## Recommended automated tests
 
