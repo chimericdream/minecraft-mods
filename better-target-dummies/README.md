@@ -39,7 +39,7 @@ _Craft a target dummy block that can take on the skin of any mob, so you can tes
 * Right-click with a different spawn egg (or a re-picked Dummy Spawn Egg) at any time to swap the
   bound mob.
 * **In-game guide.** Craft a book and a target block to get the Better Target Dummies Guide, or use
-  `/opus give bettertargetdummies:guide`. Requires Opus 1.2.0 or newer.
+  `/opus give bettertargetdummies:guide`. Optional; needs the Opus mod 1.2.0 or newer.
 
 ## Issues & Suggestions
 
