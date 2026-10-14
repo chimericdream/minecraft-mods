@@ -6,6 +6,7 @@
 
 #### Changes
 
+* The config screen now has **Beacon Range / Block** and **Conduit Range / Block** lists, one `block_id=range` entry per line. Previously these could only be changed by editing the config file. Conduit changes need a game restart.
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
   settings themselves are unchanged.
 

@@ -37,7 +37,7 @@ Other beacon base blocks add nothing. Since a pyramid has many blocks, a netheri
 further than an iron one.
 
 > [!NOTE]
-> These are the defaults. You can change them in the config file; see [Configuration](../03-configuration/index.md#per-block-ranges-config-file-only).
+> These are the defaults. You can change them on the config screen; see [Configuration](../03-configuration/index.md#per-block-ranges).
 
 ## Tips
 

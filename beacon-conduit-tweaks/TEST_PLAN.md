@@ -5,8 +5,8 @@ This server-side mod makes beacon and conduit effect ranges configurable via two
 `config/beacon-conduit-tweaks.json5`): `beaconBaseRange` (default 10), `beaconRangePerLevel`
 (default 10), a per-block bonus map `beaconRangePerBlock` (defaults: diamond/emerald 0.5,
 netherite 2.0, iron/gold 0), `conduitAddVanillaRange` (default true), and `conduitRangePerBlock`.
-Note the per-block maps are marked `transient` in the config class — they currently are **not
-user-editable via the config file**, which the tests should make visible (see Open questions).
+Both per-block maps are saved in the config file and editable on the config screen as lists of
+`block_id=range` lines (invalid lines are dropped on save).
 
 ## Test conventions
 
@@ -46,7 +46,10 @@ watching the effect icon.
    behavior.
 7. **Config screen** — via Mod Menu (Fabric): change values, save, confirm they persist to
    `beacon-conduit-tweaks.json5` and take effect without a full game restart (or document that a
-   world reload is needed).
+   world reload is needed). Also open the **Beacon Range / Block** and **Conduit Range / Block**
+   lists: the beacon list shows the five default lines; add, edit, and remove lines, add a bad line
+   (`nonsense`), save, and confirm the bad line is dropped and the rest persist to the file. A
+   conduit entry takes effect after a restart.
 8. **Beacon UI & activation regressions** — beam renders, payment item consumed, effects selectable;
    pyramid detection unchanged (the mixin should only touch range, not validity).
 
@@ -86,8 +89,8 @@ include the beacon with its effect pre-selected via block entity NBT).
 
 ### Config serialization test
 
-* Round-trip `BCTweaksConfig` through its GSON serializer and assert which fields survive. This will
-  immediately flag the `transient` per-block maps issue and prevent regressions once fixed.
+* Round-trip `BCTweaksConfig` through its GSON serializer and assert that all five fields survive,
+  including both per-block maps. Also cover `toLines` / `fromLines` (sorted output, bad lines skipped).
 
 ## ChimericLib helper opportunities
 
@@ -102,10 +105,6 @@ include the beacon with its effect pre-selected via block entity NBT).
 
 ## Open questions
 
-* The `transient` keyword on `beaconRangePerBlock` / `conduitRangePerBlock` means those maps never
-  serialize — is per-block tuning meant to be user-facing yet, or code-only defaults? README's table
-  implies configurable. The serialization test will fail until this is resolved; write it to encode
-  the intended behavior.
 * Exact beacon range formula (does per-level replace or add to vanilla's `10 + level*10`?) —
   document it in the mixin when implementing tests so manual and automated expectations agree.
 

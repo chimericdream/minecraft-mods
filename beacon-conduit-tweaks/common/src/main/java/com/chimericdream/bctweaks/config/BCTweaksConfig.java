@@ -3,13 +3,21 @@ package com.chimericdream.bctweaks.config;
 import com.chimericdream.bctweaks.ModInfo;
 import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
+import dev.isxander.yacl3.api.ListOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.controller.DoubleFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class BCTweaksConfig {
     @SerialEntry
@@ -19,9 +27,9 @@ public class BCTweaksConfig {
     @SerialEntry
     public boolean conduitAddVanillaRange = Defaults.CONDUIT_ADD_VANILLA_RANGE;
     @SerialEntry
-    public transient Map<String, Double> beaconRangePerBlock = Defaults.BEACON_RANGE_PER_BLOCK;
+    public Map<String, Double> beaconRangePerBlock = Defaults.BEACON_RANGE_PER_BLOCK;
     @SerialEntry
-    public transient Map<String, Double> conduitRangePerBlock = Defaults.CONDUIT_RANGE_PER_BLOCK;
+    public Map<String, Double> conduitRangePerBlock = Defaults.CONDUIT_RANGE_PER_BLOCK;
 
     public static final YaclConfig<BCTweaksConfig> CONFIG = YaclConfig.builder(BCTweaksConfig.class, ModInfo.MOD_ID)
         .fileName("beacon-conduit-tweaks.json5")
@@ -47,9 +55,75 @@ public class BCTweaksConfig {
                     .binding(Defaults.CONDUIT_ADD_VANILLA_RANGE, () -> config.conduitAddVanillaRange, newVal -> config.conduitAddVanillaRange = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .group(rangeList(
+                    "beaconRangePerBlock",
+                    Defaults.BEACON_RANGE_PER_BLOCK,
+                    () -> config.beaconRangePerBlock,
+                    newVal -> config.beaconRangePerBlock = newVal
+                ))
+                .group(rangeList(
+                    "conduitRangePerBlock",
+                    Defaults.CONDUIT_RANGE_PER_BLOCK,
+                    () -> config.conduitRangePerBlock,
+                    newVal -> config.conduitRangePerBlock = newVal
+                ))
                 .build())
         )
         .build();
+
+    /**
+     * YACL has no map control, so a per-block map is edited as a list of {@code block_id=range} lines.
+     * Lines that don't parse are dropped when the screen is saved.
+     */
+    private static ListOption<String> rangeList(
+        String field,
+        Map<String, Double> defaults,
+        Supplier<Map<String, Double>> getter,
+        Consumer<Map<String, Double>> setter
+    ) {
+        return ListOption.<String>createBuilder()
+            .name(Component.translatable("text.config.bctweaks.option." + field))
+            .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option." + field + ".description")))
+            .binding(
+                toLines(defaults),
+                () -> toLines(getter.get()),
+                lines -> setter.accept(fromLines(lines))
+            )
+            .controller(StringControllerBuilder::create)
+            .initial("minecraft:stone=0.0")
+            .collapsed(true)
+            .build();
+    }
+
+    static List<String> toLines(Map<String, Double> map) {
+        List<String> lines = new ArrayList<>();
+        map.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach(entry -> lines.add(entry.getKey() + "=" + entry.getValue()));
+        return lines;
+    }
+
+    static Map<String, Double> fromLines(List<String> lines) {
+        Map<String, Double> map = new LinkedHashMap<>();
+        for (String line : lines) {
+            int split = line.lastIndexOf('=');
+            if (split < 1) {
+                continue;
+            }
+
+            String id = line.substring(0, split).trim();
+            if (Identifier.tryParse(id) == null) {
+                continue;
+            }
+
+            try {
+                map.put(id, Double.parseDouble(line.substring(split + 1).trim()));
+            } catch (NumberFormatException ignored) {
+                // not a number: skip the line
+            }
+        }
+        return map;
+    }
 
     public static class Defaults {
         public static double BEACON_BASE_RANGE = 10.0;
