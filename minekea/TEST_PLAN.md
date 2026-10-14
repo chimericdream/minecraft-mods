@@ -51,8 +51,10 @@ Too large for a full per-block pass; do a **per-family** pass on Fabric plus a N
 13. **Tools** — wrench (beam connections + whatever else it rotates/toggles), random block placer
     (places a random block from its configured set?), block painter (repaints without breaking —
     verify contents/state preserved on paintable targets).
-14. **Creative tabs & Patchouli book** — every family present and organized; book entries match
-    (the repo has a patchouli update script — verify output loads).
+14. **Creative tabs & guide book** — every family present and organized. Craft a book and an iron ingot: you get the
+    Minekea Catalogue (`/opus give minekea:guide` gives the same book). Open it: every chapter's recipes show on crafting
+    panels, screenshots show and enlarge on click, and the content matches the game (tools, crates, jars). A new world
+    gives the catalogue on first join. With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus.
 15. **Network packets** — whatever the two `network` classes carry (likely tool/GUI sync):
     exercise the corresponding feature on a **dedicated server**, not just single-player.
 

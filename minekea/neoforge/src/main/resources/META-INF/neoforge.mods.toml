@@ -49,9 +49,9 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "patchouli"
-type = "optional"
-versionRange = "[${patchouli_compat},)"
+modId = "opus"
+type = "required"
+versionRange = "[${opus_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 

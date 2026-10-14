@@ -1,5 +1,14 @@
 ### Unreleased changes
 
+#### New Features
+
+* The Minekea Catalogue guide book now uses Opus instead of Patchouli. Craft one from a book and an iron ingot, or use `/opus give minekea:guide`. It is rewritten to match the current mod, with more blocks and tools covered, and new players still get one on first join.
+* Opus 1.2.0 or newer is now required (it provides the guide book). Patchouli is no longer used.
+
+#### Changes
+
+* Existing Patchouli catalogues no longer work; craft a new one.
+
 ### 26.2 - 10.2.0
 
 * Nugget bags are now called nugget pouches, and are crafted from a 2x2 of nuggets.

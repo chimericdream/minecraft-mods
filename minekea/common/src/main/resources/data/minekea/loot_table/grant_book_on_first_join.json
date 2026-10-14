@@ -6,12 +6,14 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "patchouli:guide_book",
+                    "name": "opus:book",
                     "functions": [
                         {
                             "function": "minecraft:set_components",
                             "components": {
-                                "patchouli:book": "minekea:minekea_catalogue"
+                                "opus:book_id": {
+                                    "book_id": "minekea:guide"
+                                }
                             }
                         }
                     ]

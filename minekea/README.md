@@ -1,10 +1,10 @@
 # Minekea (Fabric/NeoForge)
 
-![Version: 10.1.0-beta.0](https://img.shields.io/badge/version-10.1.0--beta.0-blueviolet?style=flat-square)
+![Version: 10.3.0-beta.0](https://img.shields.io/badge/version-10.3.0--beta.0-blueviolet?style=flat-square)
 
 ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&labelColor=565656) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square&labelColor=565656) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square&labelColor=565656) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square&labelColor=565656)
 
-[![Architectury required](https://img.shields.io/badge/Architectury%20API-required-565656?style=flat-square&labelColor=fa5f1f)](https://www.curseforge.com/minecraft/mc-mods/architectury-api) [![ChimericLib required](https://img.shields.io/badge/ChimericLib-required-565656?style=flat-square&labelColor=2f0e48)](https://www.curseforge.com/minecraft/mc-mods/chimericlib)
+[![Architectury required](https://img.shields.io/badge/Architectury%20API-required-565656?style=flat-square&labelColor=fa5f1f)](https://www.curseforge.com/minecraft/mc-mods/architectury-api) [![ChimericLib required](https://img.shields.io/badge/ChimericLib-required-565656?style=flat-square&labelColor=2f0e48)](https://www.curseforge.com/minecraft/mc-mods/chimericlib) ![Opus required](https://img.shields.io/badge/Opus-required-565656?style=flat-square&labelColor=7a1f2b)
 
 _Simple, functional, decorative blocks for all your building and storage needs (some assembly required)_
 
@@ -19,6 +19,7 @@ This mod contains a wide variety of functional and decorative furniture blocks f
 
 ### Current Features
 
+* An in-game guide, the Minekea Catalogue, powered by Opus (craft a book and an iron ingot)
 * Variant bookshelves in all wood types
 * Secret doors and trapdoors in all bookshelf types
 * Storage crates in all wood types which can store as much as a double chest
