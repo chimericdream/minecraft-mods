@@ -4,6 +4,7 @@ import com.chimericdream.lib.blocks.BlockConfig;
 import com.chimericdream.minekea.ModInfo;
 import com.chimericdream.minekea.client.screen.crate.DoubleCrateScreenHandler;
 import com.chimericdream.minekea.entity.block.containers.CrateBlockEntity;
+import com.chimericdream.minekea.entity.block.containers.WorldlyCrateContainer;
 import com.mojang.serialization.MapCodec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,11 +22,14 @@ import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -48,7 +52,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static com.chimericdream.minekea.MinekeaMod.REGISTRY_HELPER;
 
-public class CrateBlock extends BaseEntityBlock {
+public class CrateBlock extends BaseEntityBlock implements WorldlyContainerHolder {
     public static final MapCodec<CrateBlock> CODEC = simpleCodec(CrateBlock::new);
 
     public static final Integer ROW_COUNT = 6;
@@ -369,6 +373,19 @@ public class CrateBlock extends BaseEntityBlock {
     @Nullable
     protected MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
         return this.getBlockEntitySource(state, world, pos).apply(SCREEN_RETRIEVER).orElse(null);
+    }
+
+    @Override
+    public @NotNull WorldlyContainer getContainer(BlockState state, LevelAccessor world, BlockPos pos) {
+        if (world instanceof Level level) {
+            Optional<Container> container = this.getBlockEntitySource(state, level, pos).apply(INVENTORY_RETRIEVER);
+
+            if (container.isPresent()) {
+                return new WorldlyCrateContainer(container.get());
+            }
+        }
+
+        return new WorldlyCrateContainer((CrateBlockEntity) world.getBlockEntity(pos));
     }
 
     @Override

@@ -6,6 +6,8 @@
   crimson fungus.
 * Fixed the iron nugget pouch being registered with a gold nugget ingredient.
 * Fixed the vanilla barrel and bookshelf recipe overrides not being applied.
+* Fixed hoppers only filling the half of a double crate they were touching; they now fill and drain
+  both halves.
 
 ### 26.2 - 10.1.0
 
