@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
@@ -66,6 +67,24 @@ public class DoubleCrateHopperGameTest {
 
             context.assertTrue(inEast == 3, "the hopper should have pushed all 3 redstone into the far half, found " + inEast);
         });
+    }
+
+    /** The reported scenario: a hopper on the west end, pointing east into the crate, with that half full. */
+    @GameTest
+    public void sidewaysHopperOverflowsIntoOtherHalf(GameTestHelper context) {
+        placeDoubleCrate(context);
+
+        CrateBlockEntity west = context.getBlockEntity(WEST_CRATE, CrateBlockEntity.class);
+        CrateBlockEntity east = context.getBlockEntity(EAST_CRATE, CrateBlockEntity.class);
+        fill(west, new ItemStack(Items.REDSTONE_BLOCK, 64));
+
+        BlockPos hopperPos = WEST_CRATE.west();
+        context.setBlock(hopperPos, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.EAST));
+        context.getBlockEntity(hopperPos, HopperBlockEntity.class).setItem(0, new ItemStack(Items.REDSTONE_BLOCK, 64));
+
+        context.succeedWhen(() -> context.assertTrue(
+            !east.isEmpty(),
+            "the sideways hopper should have pushed redstone blocks into the far half"));
     }
 
     /** A hopper below a double crate must also be able to pull from the half it is not touching. */
