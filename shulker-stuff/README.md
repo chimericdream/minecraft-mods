@@ -45,10 +45,11 @@ box is protected from explosions and fire both as an item and when placed.
   blocks.
 * Inventory and player-interaction tweaks supporting the enchantment behaviors above.
 
-## Notes for Documentation
+### In-game guide
 
-For in-game documentation, the three player-facing systems are: **enchantments** (Refill, Vacuum, Void), the
-**Shulker Dyeing Station**, and **Netherite Plating** via the smithing template.
+The Shulker Stuff Guide is an in-game book (provided by Opus) that covers the enchantments, the Dyeing Station, and
+Netherite Plating. Craft one from a book and a shulker shell, or use `/opus give shulkerstuff:guide`. Requires
+[Opus](../opus/README.md) 1.2.0 or newer.
 
 ## Issues & Suggestions
 

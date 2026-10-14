@@ -53,6 +53,10 @@ netherite.
 8. **Round-trips** — dyed+plated+enchanted box: break/re-place, world reload, put through the
    dyeing station again; nothing (contents, color, plating, enchantment) may be lost at any step.
 9. **Ender chest / bundles / nesting rules** — unchanged vanilla restrictions (boxes don't nest).
+10. **Guide book** — craft a book and a shulker shell: you get the Shulker Stuff Guide.
+   `/opus give shulkerstuff:guide` gives the same book. Open it: the enchantment, dyeing station, and
+   plating pages show their recipes, and the links between pages work. With Opus older than 1.2.0 (or
+   missing) the game refuses to start and names Opus as the problem.
 
 ## Recommended automated tests
 
