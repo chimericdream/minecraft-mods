@@ -20,7 +20,17 @@ configurations {
     developmentNeoForge.extendsFrom common
 }
 
+def opusProps = new Properties()
+rootProject.file('opus/gradle.properties').withReader { opusProps.load(it) }
+def opusVersion = "${rootProject.minecraft_compatibility}-${opusProps.getProperty('mod_version')}"
+
 dependencies {
     common(project(path: ':camel-nostrils:common')) { transitive false }
+
+    // The guide book is Opus data, so Opus is only needed at runtime (the jars declare the dependency). It is
+    // wired as a built jar rather than project(): referencing :opus:common from here evaluates it too early.
+    runtimeOnly files("${rootDir}/opus/neoforge/build/libs/opus-neoforge-${opusVersion}.jar") {
+        builtBy ':opus:neoforge:shadowJar'
+    }
     shadowBundle project(path: ':camel-nostrils:common', configuration: 'transformProductionNeoForge')
 }
