@@ -25,7 +25,7 @@ screen is available on the client for convenience.
 * **Configurable range**
   * Set the flat base range every active beacon provides (default: 10 blocks).
   * Set how much range each pyramid level adds on top of the base (default: 10 blocks per level).
-  * Diamond and emerald blocks in the pyramid add a little extra range (0.5 each) and netherite adds 2. These amounts are built in, not part of the config.
+  * Optionally add extra range per individual block in the pyramid. By default diamond and emerald blocks add 0.5 each and netherite adds 2. Edit these in the config file (they are not on the settings screen).
 * Place a carpet on top of a beacon to completely stop the beam rendering
 * Show and hide the beacon beam with tinted glass
   * Credit to [Discontinuous Beacon Beams by supersaiyansubtlety](https://www.curseforge.com/minecraft/mc-mods/discontinuous-beacon-beams) for the original idea
@@ -34,6 +34,7 @@ screen is available on the client for convenience.
 
 * **Configurable range**
   * Optionally keep the vanilla conduit range and add to it, or replace it entirely.
+  * Optionally set how much range each conduit frame block contributes, in the config file (none by default).
 
 #### Guide book
 
@@ -48,6 +49,8 @@ Beacon & Conduit Tweaks uses [YACL](https://github.com/isXander/YetAnotherConfig
 | --- | --- | --- |
 | Base Beacon Range | Flat range provided by an active beacon before pyramid bonuses. | 10 |
 | Beacon Range / Level | Additional range added per completed pyramid level. | 10 |
+| Beacon Range / Block *(config file only)* | Additional range added per block in the pyramid, by block id. | Iron/gold 0, diamond/emerald 0.5, netherite 2 |
+| Conduit Range / Block *(config file only)* | Range contributed by each listed conduit frame block, by block id. | None |
 | Conduit: Add Vanilla Range | When enabled, conduits keep their vanilla range. When disabled, the mod's own conduit range replaces it, which is currently zero. | On |
 
 ## Issues & Suggestions

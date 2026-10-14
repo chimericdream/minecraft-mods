@@ -25,7 +25,7 @@ The one setting here is **Conduit: Add Vanilla Range**:
 > [!WARNING]
 > Leave **Add Vanilla Range** on unless you know why you are turning it off.
 
-The mod can also give individual frame blocks their own range bonus, but those amounts are built in and empty by
-default, so there is nothing to tune on the config screen yet.
+You can also give individual frame blocks their own range bonus in the config file. The list is empty by default;
+see [Configuration](../03-configuration/index.md#per-block-ranges-config-file-only).
 
 See [Configuration](../03-configuration/index.md) for where to find the setting.

@@ -37,7 +37,7 @@ Other beacon base blocks add nothing. Since a pyramid has many blocks, a netheri
 further than an iron one.
 
 > [!NOTE]
-> These per-block amounts are built into the mod. They are not part of the config screen or config file.
+> These are the defaults. You can change them in the config file; see [Configuration](../03-configuration/index.md#per-block-ranges-config-file-only).
 
 ## Tips
 
