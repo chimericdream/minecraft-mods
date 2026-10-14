@@ -58,6 +58,11 @@ minecarts.
   ore. *(Default: off.)*
 * **Leash nitwits** — allows leads to be attached to nitwit villagers. *(Default: off.)*
 
+### Guide book
+
+An in-game guide book (provided by the Opus mod, which is required) explains the Bagged
+Villager and every setting. Craft one from a book and an emerald, or use `/opus give villagertweaks:guide`.
+
 ### Configuration
 
 Villager Tweaks uses [YACL](https://github.com/isXander/YetAnotherConfigLib) for its config screen (accessible via

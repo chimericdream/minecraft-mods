@@ -72,6 +72,9 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
     confirm baby villagers grow up at the normal vanilla rate on both paths.
 12. **Config screen** â€” all options appear in the Trading / Zombie Conversion / Villager Growth /
     Misc sections and persist.
+13. **Guide book** — craft a book and an emerald: you get the Villager Tweaks Guide. `/opus give villagertweaks:guide`
+    gives the same book. Open it: every page renders, links work, and the Bagged Villager item widgets show.
+    With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
 
 ## Recommended automated tests
 

@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Villager Tweaks Guide, an in-game book covering the Bagged Villager and every setting. Craft one from a book and an emerald, or use `/opus give villagertweaks:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
+
 #### Changes
 
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
