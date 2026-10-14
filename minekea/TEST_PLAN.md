@@ -54,7 +54,10 @@ Too large for a full per-block pass; do a **per-family** pass on Fabric plus a N
 14. **Creative tabs & guide book** — every family present and organized. Craft a book and an iron ingot: you get the
     Minekea Catalogue (`/opus give minekea:guide` gives the same book). Open it: every chapter's recipes show on crafting
     panels, screenshots show and enlarge on click, and the content matches the game (tools, crates, jars). A new world
-    gives the catalogue on first join. With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus.
+    gives the catalogue on first join when Opus is installed. Without Opus installed, the game starts normally, the mod
+    works, there is no guide recipe (nothing logs a recipe parse error about `opus:book`), and joining a new world
+    grants no book and logs no loot-table or advancement error. With Opus older than 1.2.0 installed, the game refuses
+    to start (the version range is still enforced).
 15. **Network packets** — whatever the two `network` classes carry (likely tool/GUI sync):
     exercise the corresponding feature on a **dedicated server**, not just single-player.
 

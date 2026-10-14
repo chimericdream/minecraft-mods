@@ -2,8 +2,8 @@
 
 #### New Features
 
-* The Minekea Catalogue guide book now uses Opus instead of Patchouli. Craft one from a book and an iron ingot, or use `/opus give minekea:guide`. It is rewritten to match the current mod, with more blocks and tools covered, and new players still get one on first join.
-* Opus 1.2.0 or newer is now required (it provides the guide book). Patchouli is no longer used.
+* The Minekea Catalogue guide book now uses Opus instead of Patchouli. Craft one from a book and an iron ingot, or use `/opus give minekea:guide`. Needs the optional Opus mod (1.2.0 or newer). It is rewritten to match the current mod, with more blocks and tools covered, and new players still get one on first join.
+* Patchouli is no longer used.
 
 #### Changes
 
