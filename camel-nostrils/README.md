@@ -22,7 +22,7 @@ _This mod is weird. Really weird. Absurdity of the highest order, sourced from r
 * Upside-Down Bed: crafted like a regular bed with the planks and wool swapped, and it hangs from the ceiling instead of sitting on the floor. Sleep in it to turn day straight into night. Comes in all sixteen dye colors.
 * Upside-Down Crafting Table: looks flipped upside-down, but works exactly like a regular crafting table. Craft one from a regular crafting table by itself, and vice versa to flip it back.
 * Upside-Down Chest: looks flipped upside-down, but works exactly like a regular chest. Craft one from a regular chest by itself, and vice versa to flip it back.
-* Camel Nostrils Guide: an in-game book (made with Opus) covering everything above. Craft one from a book and a cactus, or use `/opus give camelnostrils:guide`.
+* Camel Nostrils Guide: an in-game book (optional; needs the Opus mod 1.2.0 or newer) covering everything above. Craft one from a book and a cactus, or use `/opus give camelnostrils:guide`.
 
 ## FAQ
 

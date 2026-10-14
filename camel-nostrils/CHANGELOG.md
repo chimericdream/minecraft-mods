@@ -2,8 +2,7 @@
 
 #### New Features
 
-* Added the Camel Nostrils Guide, an in-game book covering camels, fish, golden foods, and upside-down blocks. Craft one from a book and a cactus, or use `/opus give camelnostrils:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+* Added the Camel Nostrils Guide, an in-game book covering camels, fish, golden foods, and upside-down blocks. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a cactus, or use `/opus give camelnostrils:guide`.
 
 ### 26.2 - 1.1.0
 
