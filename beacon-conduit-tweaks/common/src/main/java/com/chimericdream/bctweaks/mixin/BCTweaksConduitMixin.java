@@ -19,6 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 
 @Mixin(value = ConduitBlockEntity.class, priority = 4101)
@@ -36,6 +37,7 @@ public class BCTweaksConduitMixin {
             Set<Block> modifierBlocks = config.conduitRangePerBlock.keySet().stream()
                 .map(Identifier::parse)
                 .map(BuiltInRegistries.BLOCK::getValue)
+                .filter(block -> block != Blocks.AIR)
                 .collect(Collectors.toSet());
 
             Collections.addAll(modifierBlocks, VALID_BLOCKS);

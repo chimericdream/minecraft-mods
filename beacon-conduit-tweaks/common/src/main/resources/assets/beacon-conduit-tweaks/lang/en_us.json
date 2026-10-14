@@ -3,8 +3,8 @@
     "text.config.bctweaks.option.beaconBaseRange": "Base Beacon Range (default 10)",
     "text.config.bctweaks.option.beaconRangePerLevel": "Beacon Range / Level (default 10)",
     "text.config.bctweaks.option.beaconRangePerBlock": "Beacon Range / Block",
-    "text.config.bctweaks.option.beaconRangePerBlock.description": "Extra range for each block of this type in the pyramid. One entry per line, written as block_id=range, for example minecraft:diamond_block=0.5. Lines that are not in that form are dropped when you save.",
+    "text.config.bctweaks.option.beaconRangePerBlock.description": "Extra range for each block of this type in the pyramid. One entry per line, written as block_id=range, for example minecraft:diamond_block=0.5. Lines that are not in that form, or that name a block that doesn't exist, are dropped when you save.",
     "text.config.bctweaks.option.conduitAddVanillaRange": "Conduit: Add Vanilla Range",
     "text.config.bctweaks.option.conduitRangePerBlock": "Conduit Range / Block",
-    "text.config.bctweaks.option.conduitRangePerBlock.description": "Range for each frame block of this type around a conduit. One entry per line, written as block_id=range, for example minecraft:diamond_block=4. Listed blocks also count as conduit frame blocks. Restart the game after changing this."
+    "text.config.bctweaks.option.conduitRangePerBlock.description": "Range for each frame block of this type around a conduit. One entry per line, written as block_id=range, for example minecraft:diamond_block=4. Lines that are not in that form, or that name a block that doesn't exist, are dropped when you save. Listed blocks also count as conduit frame blocks. Restart the game after changing this."
 }

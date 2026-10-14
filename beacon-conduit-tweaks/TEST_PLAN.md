@@ -89,8 +89,9 @@ include the beacon with its effect pre-selected via block entity NBT).
 
 ### Config serialization test
 
-* Round-trip `BCTweaksConfig` through its GSON serializer and assert that all five fields survive,
-  including both per-block maps. Also cover `toLines` / `fromLines` (sorted output, bad lines skipped).
+* Done: `RangeEntriesTest` (fabric `test` source set) covers `RangeEntries.toLines` / `fromLines` (sorted output,
+  bad and unknown lines skipped) and checks that all five config fields are `@SerialEntry` and not `transient`.
+* Still open: a full GSON round-trip of `BCTweaksConfig`.
 
 ## ChimericLib helper opportunities
 

@@ -10,12 +10,10 @@ import dev.isxander.yacl3.api.controller.DoubleFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -85,9 +83,9 @@ public class BCTweaksConfig {
             .name(Component.translatable("text.config.bctweaks.option." + field))
             .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option." + field + ".description")))
             .binding(
-                toLines(defaults),
-                () -> toLines(getter.get()),
-                lines -> setter.accept(fromLines(lines))
+                RangeEntries.toLines(defaults),
+                () -> RangeEntries.toLines(getter.get()),
+                lines -> setter.accept(RangeEntries.fromLines(lines, BCTweaksConfig::isRegisteredBlock))
             )
             .controller(StringControllerBuilder::create)
             .initial("minecraft:stone=0.0")
@@ -95,34 +93,9 @@ public class BCTweaksConfig {
             .build();
     }
 
-    static List<String> toLines(Map<String, Double> map) {
-        List<String> lines = new ArrayList<>();
-        map.entrySet().stream()
-            .sorted(Map.Entry.comparingByKey())
-            .forEach(entry -> lines.add(entry.getKey() + "=" + entry.getValue()));
-        return lines;
-    }
-
-    static Map<String, Double> fromLines(List<String> lines) {
-        Map<String, Double> map = new LinkedHashMap<>();
-        for (String line : lines) {
-            int split = line.lastIndexOf('=');
-            if (split < 1) {
-                continue;
-            }
-
-            String id = line.substring(0, split).trim();
-            if (Identifier.tryParse(id) == null) {
-                continue;
-            }
-
-            try {
-                map.put(id, Double.parseDouble(line.substring(split + 1).trim()));
-            } catch (NumberFormatException ignored) {
-                // not a number: skip the line
-            }
-        }
-        return map;
+    private static boolean isRegisteredBlock(String id) {
+        Identifier identifier = Identifier.tryParse(id);
+        return identifier != null && BuiltInRegistries.BLOCK.containsKey(identifier);
     }
 
     public static class Defaults {
