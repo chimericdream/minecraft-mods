@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Miniblock Merchants Guide, an in-game book covering conversion items, every profession, trading, and the config. Craft one from a book and a painting, or use `/opus give miniblockmerchants:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
+
 #### Changes
 
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The

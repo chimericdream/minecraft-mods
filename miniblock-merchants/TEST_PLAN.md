@@ -50,6 +50,11 @@ village or spawned villagers, conversion items from the creative tab.
 9. **Advancements & stats** — conversion triggers its advancement; stats increment.
 10. **Persistence** — converted villager survives world reload, chunk unload/reload, and being
     bagged/unbagged by Villager Tweaks' bundle (cross-mod check worth one manual pass).
+11. **Guide book** — craft a book and a painting: you get the Miniblock Merchants Guide.
+    `/opus give miniblockmerchants:guide` gives the same book. Open it: all four chapters and the
+    conversion-item and profession tables render, item icons show, and links between pages work.
+    Spot-check the guide's tables against the config defaults and the Recycler/trade counts. With Opus
+    older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
 
 ## Recommended automated tests
 

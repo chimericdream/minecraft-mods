@@ -1,6 +1,6 @@
 # Miniblock Merchants (Fabric/NeoForge)
 
-![Version: 7.0.0](https://img.shields.io/badge/version-7.0.0-blueviolet?style=flat-square)
+![Version: 7.1.0-beta.0](https://img.shields.io/badge/version-7.1.0--beta.0-blueviolet?style=flat-square)
 ![](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square)
 ![](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square)
 ![](https://img.shields.io/badge/client-required-4caf50?style=flat-square)
@@ -367,6 +367,7 @@ Fine Thread<br />
 
 * 26 new professions which trade a wide variety of miniblocks useful for decorating any build you can come up with
 * Fully configurable drop chances for each individual conversion item
+* An in-game guide book (requires Opus) with every conversion item, profession, and trade. Craft one from a book and a painting
 * Automatically convert villagers from the Miniblock Traders datapack to the corresponding profession in the Miniblock Merchants mod
 
 ### Planned
