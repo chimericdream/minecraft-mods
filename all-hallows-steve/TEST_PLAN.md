@@ -151,4 +151,5 @@ NeoForge.
 1. **Guide book**
    * Craft a book and a pumpkin: you get the All Hallows Steve Guide. `/opus give allhallowssteve:guide` gives the same book.
    * Open it: the carving station chapter shows its screenshots, recipes show on crafting panels, and clicking a screenshot enlarges it.
-   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+   * Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log).
+   * With Opus older than 1.2.0 installed, the game refuses to start.

@@ -1,6 +1,6 @@
 # All Hallows Steve (Fabric/NeoForge)
 
-![Version: 1.1.0-beta.0](https://img.shields.io/badge/version-1.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.1.1-beta.0](https://img.shields.io/badge/version-1.1.1--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Halloween-themed blocks, items, and pumpkin dyeing._
 
@@ -67,6 +67,8 @@ _Halloween-themed blocks, items, and pumpkin dyeing._
 *   **Roasted Pumpkin Seeds** — cook pumpkin seeds in a furnace, smoker, or campfire.
 *   **Apple Pie** — apple, sugar, and apple over three wheat.
 *   **Spiced Pumpkin Pie** — a pumpkin pie and mulling spices, crafted together. A bigger meal than plain pumpkin pie.
+
+**Guide Book** — an in-game guide (optional; needs the Opus mod 1.2.0 or newer). Craft one from a book and a pumpkin, or use `/opus give allhallowssteve:guide`.
 
 **Advancements** — a set of advancements for crafting the station, dyeing, carving, wearing pumpkins, lighting them in new ways, and collecting stencils. A second branch covers the cider press, pomace, spices, juices, and mulled drinks, ending in the secret *Season's Drinkings*. Three in all are secret.
 

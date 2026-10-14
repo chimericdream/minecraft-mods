@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Changes
+
+* Opus is now an optional dependency: install it (1.2.0 or newer) to get the All Hallows Steve Guide; without it the game runs normally and the guide recipe is simply unavailable.
+
 ### 26.2 - 1.1.0
 
 #### New Features
