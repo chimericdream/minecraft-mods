@@ -1,6 +1,6 @@
 # Beacon & Conduit Tweaks (Fabric/NeoForge)
 
-![Version: 4.0.0](https://img.shields.io/badge/version-4.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: optional](https://img.shields.io/badge/client-optional-ff9800?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 4.2.0-beta.0](https://img.shields.io/badge/version-4.2.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Make beacons and conduits reach as far as you want._
 
@@ -35,6 +35,10 @@ screen is available on the client for convenience.
 * **Configurable range**
   * Optionally keep the vanilla conduit range and add to it, or replace it entirely.
   * Set how much range each conduit frame block contributes.
+
+#### Guide book
+
+* An in-game guide book (made with Opus) explains everything above. Craft one from a book and a glass block, or use `/opus give beaconconduittweaks:guide`.
 
 ### Configuration
 

@@ -108,3 +108,10 @@ include the beacon with its effect pre-selected via block entity NBT).
   the intended behavior.
 * Exact beacon range formula (does per-level replace or add to vanilla's `10 + level*10`?) —
   document it in the mixin when implementing tests so manual and automated expectations agree.
+
+## Guide book
+
+9. **Guide book**
+   * Craft a book and a glass block: you get the Beacon & Conduit Tweaks Guide. `/opus give beaconconduittweaks:guide` gives the same book.
+   * Open it: the Beacons, Conduits, and Configuration chapters open, links between pages work, and the recipes show on crafting panels.
+   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
