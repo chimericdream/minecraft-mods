@@ -1,6 +1,6 @@
 # Artificial Heart (Fabric/NeoForge)
 
-![Version: 3.0.0](https://img.shields.io/badge/version-3.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 3.2.0-beta.0](https://img.shields.io/badge/version-3.2.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Decorative versions of the creaking heart and more._
 
@@ -27,6 +27,8 @@ without their behavior.
   axe for the creaking heart), keeping the workflow intuitive and vanilla-friendly.
 * **Pale Pumpkin** — a pale garden-themed pumpkin, with matching carved and jack o'lantern variants. Pale
   pumpkin patches also grow naturally in Pale Garden biomes.
+* **Guide book** — an in-game Opus guide covering everything above. Craft one from a book and a pale pumpkin, or
+  use `/opus give artificialheart:guide`. Requires Opus 1.2.0 or newer.
 * **Creaking Golem** — build a golem shape from pale oak fence and logs around a Creaking Heart, then top
   it with a carved pale pumpkin or jack o'lantern to summon a friendly, sturdy creaking. It reacts to
   nearby players just like a wild one — it'll even freeze in place if you stare it down — but it will

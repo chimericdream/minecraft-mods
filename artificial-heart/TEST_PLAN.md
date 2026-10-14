@@ -47,6 +47,10 @@ shears, flower pots. Fabric full pass, NeoForge smoke pass.
 8. **Tool edge cases** — shears on the artificial heart / axe on clipped flowers: normal vanilla
    behavior, no conversion; conversion via dispenser (dispensers use items differently — document
    whether dispenser-axe/shears convert or not).
+9. **Guide book** — craft a book and a Pale Pumpkin: you get the Artificial Heart Guide. `/opus give
+   artificialheart:guide` gives the same book. Open it: every page opens, recipes show on crafting panels, and
+   the golem page shows a creaking. With Opus older than 1.2.0 (or missing) the game refuses to start and names
+   Opus as the problem.
 
 ## Recommended automated tests
 
