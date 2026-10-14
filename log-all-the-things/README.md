@@ -25,7 +25,7 @@ _Water-logging behavior, but for lava, carpet, and glass panes too._
   snow to build it up in layers. Mine just the snow to pop it back out (requires a shovel), or mine
   the solid part to break the whole thing.
 * **In-game guide** — craft a book and a lava bucket (or run `/opus give logallthethings:guide`) to get
-  a guide book covering all of the above. Requires the Opus mod.
+  a guide book covering all of the above (optional; needs the Opus mod 1.2.0 or newer).
 
 ## Notes for Documentation
 
