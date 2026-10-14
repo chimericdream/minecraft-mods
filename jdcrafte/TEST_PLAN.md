@@ -36,4 +36,5 @@ collection rather than living here.
    * Craft a book and wheat: you get the JD Crafte Guide. `/opus give jdcrafte:guide` gives the same book.
    * Open it: the four pages (feeding trough, weathervane, trellises, Home Sweet Hrmmm) show their recipes on crafting
      panels, and the recipes match what the crafting table accepts.
-   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+   * Without Opus installed, the game starts normally, the mod works, and there is no guide recipe in the recipe book or crafting (nothing logs a recipe parse error about `opus:book`).
+   * With Opus older than 1.2.0 installed, the game refuses to start (the version range is still enforced).
