@@ -48,5 +48,12 @@ versionRange = "[${yacl_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.${mod_id}]]
+modId = "opus"
+type = "required"
+versionRange = "[${opus_compat},)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "effectivegear.mixins.json"

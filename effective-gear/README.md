@@ -1,6 +1,6 @@
 # Effective Gear (Fabric/NeoForge)
 
-![Version: 1.3.0-beta.0](https://img.shields.io/badge/version-1.3.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.5.0-beta.0](https://img.shields.io/badge/version-1.5.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
@@ -12,6 +12,7 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Current Features
 
+* An in-game guide book (requires [Opus](../opus)): craft a book and an iron helmet, or use `/opus give effectivegear:guide`.
 * New enchantments:
   * **Preserving** (shears, applied via anvil) — leaves mined with Preserving-enchanted shears keep
     their original color forever, no matter what biome they're placed in. Crafting a preserved leaf
