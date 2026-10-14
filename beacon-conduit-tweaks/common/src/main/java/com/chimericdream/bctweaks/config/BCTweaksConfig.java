@@ -1,5 +1,6 @@
 package com.chimericdream.bctweaks.config;
 
+import com.chimericdream.bctweaks.BeaconConduitTweaksMod;
 import com.chimericdream.bctweaks.ModInfo;
 import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -85,7 +86,7 @@ public class BCTweaksConfig {
             .binding(
                 RangeEntries.toLines(defaults),
                 () -> RangeEntries.toLines(getter.get()),
-                lines -> setter.accept(RangeEntries.fromLines(lines, BCTweaksConfig::isRegisteredBlock))
+                lines -> setter.accept(RangeEntries.fromLines(lines, BCTweaksConfig::isKeepable))
             )
             .controller(StringControllerBuilder::create)
             .initial("minecraft:stone=0.0")
@@ -93,9 +94,32 @@ public class BCTweaksConfig {
             .build();
     }
 
-    private static boolean isRegisteredBlock(String id) {
+    /**
+     * A vanilla id has to name a real block, but another mod's block may not be registered yet when the screen
+     * is saved (or the mod may be missing for now), so those ids are kept.
+     */
+    private static boolean isKeepable(String id) {
         Identifier identifier = Identifier.tryParse(id);
-        return identifier != null && BuiltInRegistries.BLOCK.containsKey(identifier);
+        if (identifier == null) {
+            return false;
+        }
+
+        return !identifier.getNamespace().equals(Identifier.DEFAULT_NAMESPACE) || BuiltInRegistries.BLOCK.containsKey(identifier);
+    }
+
+    /** Logs a warning for each configured block that is not registered. Those entries are ignored. */
+    public static void warnAboutUnknownBlocks(BCTweaksConfig config) {
+        warnAboutUnknownBlocks("Beacon Range / Block", config.beaconRangePerBlock);
+        warnAboutUnknownBlocks("Conduit Range / Block", config.conduitRangePerBlock);
+    }
+
+    private static void warnAboutUnknownBlocks(String option, Map<String, Double> map) {
+        for (String id : map.keySet()) {
+            Identifier identifier = Identifier.tryParse(id);
+            if (identifier == null || !BuiltInRegistries.BLOCK.containsKey(identifier)) {
+                BeaconConduitTweaksMod.LOGGER.warn("{}: ignoring '{}' because no block with that id exists.", option, id);
+            }
+        }
     }
 
     public static class Defaults {

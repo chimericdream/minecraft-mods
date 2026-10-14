@@ -18,7 +18,7 @@ Beacon & Conduit Tweaks has a small config screen built with YACL.
 
 ## Per-block ranges
 
-Two more settings are lists further down the screen. Each line is a block id and a range, written `block_id=range`, for example `minecraft:diamond_block=0.5`. A line that isn't in that form is dropped when you save. They are also saved in the config file as `beaconRangePerBlock` and `conduitRangePerBlock`.
+Two more settings are lists further down the screen. Each line is a block id and a range, written `block_id=range`, for example `minecraft:diamond_block=0.5`. A line that isn't in that form, or that names a `minecraft:` block that doesn't exist, is dropped when you save. A block from another mod is kept even if that mod isn't installed right now; it is ignored, with a warning in the game log, until the block exists. They are also saved in the config file as `beaconRangePerBlock` and `conduitRangePerBlock`.
 
 | Option | What it does | Default |
 |:-------|:-------------|:--------|

@@ -48,7 +48,10 @@ watching the effect icon.
    `beacon-conduit-tweaks.json5` and take effect without a full game restart (or document that a
    world reload is needed). Also open the **Beacon Range / Block** and **Conduit Range / Block**
    lists: the beacon list shows the five default lines; add, edit, and remove lines, add a bad line
-   (`nonsense`), save, and confirm the bad line is dropped and the rest persist to the file. A
+   (`nonsense`), a fake vanilla block (`minecraft:nonsense=1`), and a fake modded block
+   (`othermod:thing=1`), save, and confirm only the first two are dropped, the modded line stays in the file, and the
+   rest persist. Start a world and confirm the log warns that `othermod:thing` is ignored (and that no conduit
+   or beacon calculation breaks because of it). A
    conduit entry takes effect after a restart.
 8. **Beacon UI & activation regressions** — beam renders, payment item consumed, effects selectable;
    pyramid detection unchanged (the mixin should only touch range, not validity).

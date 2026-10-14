@@ -5,21 +5,21 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 
 @Mixin(value = ConduitBlockEntity.class, priority = 4101)
@@ -29,16 +29,35 @@ public class BCTweaksConduitMixin {
     @Shadow
     private static Block[] VALID_BLOCKS;
 
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void updateBlocks(CallbackInfo ci) {
-        BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
+    @Unique
+    private static volatile boolean bct$validBlocksResolved = false;
 
-        if (!config.conduitRangePerBlock.isEmpty()) {
-            Set<Block> modifierBlocks = config.conduitRangePerBlock.keySet().stream()
-                .map(Identifier::parse)
-                .map(BuiltInRegistries.BLOCK::getValue)
-                .filter(block -> block != Blocks.AIR)
-                .collect(Collectors.toSet());
+    // Resolved on first use rather than in <clinit>, which runs before other mods have registered their blocks.
+    // Ids that don't name a registered block are ignored (they are reported when the server starts).
+    @Inject(method = "updateShape(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)Z", at = @At("HEAD"))
+    private static void bct$resolveValidBlocks(Level level, BlockPos pos, List<BlockPos> frameBlocks, CallbackInfoReturnable<Boolean> cir) {
+        if (bct$validBlocksResolved) {
+            return;
+        }
+
+        synchronized (BCTweaksConduitMixin.class) {
+            if (bct$validBlocksResolved) {
+                return;
+            }
+            bct$validBlocksResolved = true;
+
+            BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
+            if (config.conduitRangePerBlock.isEmpty()) {
+                return;
+            }
+
+            Set<Block> modifierBlocks = new HashSet<>();
+            for (String id : config.conduitRangePerBlock.keySet()) {
+                Identifier identifier = Identifier.tryParse(id);
+                if (identifier != null && BuiltInRegistries.BLOCK.containsKey(identifier)) {
+                    modifierBlocks.add(BuiltInRegistries.BLOCK.getValue(identifier));
+                }
+            }
 
             Collections.addAll(modifierBlocks, VALID_BLOCKS);
             VALID_BLOCKS = modifierBlocks.toArray(new Block[]{});
