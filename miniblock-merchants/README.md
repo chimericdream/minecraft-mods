@@ -158,7 +158,7 @@ Budding Cactus<br />
 
 #### Conversion Item
 Endless Bookshelf<br />
-1 in 3 chance from Stronghold Library chests
+1 in 2 chance from Stronghold Library chests
 
 ![Conversion item for the Furnisher](./docs/img/furnisher-item.png)
 
@@ -236,7 +236,7 @@ Sparkling Blaze Powder<br />
 
 #### Conversion Item
 Ancient Shell<br />
-1 in 3 chance from Big Underwater Ruin chests
+1 in 2 chance from Big Underwater Ruin chests
 
 ![Conversion item for the Oceanographer](./docs/img/oceanographer-item.png)
 
@@ -314,7 +314,7 @@ Rotting Recycling Bin<br />
 
 #### Conversion Item
 Book of Rituals<br />
-1 in 3 chance from Stronghold Library chests
+1 in 2 chance from Stronghold Library chests
 
 ![Conversion item for the Ritualist](./docs/img/ritualist-item.png)
 

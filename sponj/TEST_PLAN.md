@@ -6,8 +6,7 @@ absorption radius and capacity scale with the number of *connected* sponjes —
 `radius = 6 + 3·(count−1)`, `max = 64·count`, discovered via
 `BlockUtils.getConnectedBlocksByType(world, pos, ..., 32)` — and every connected dry sponj turns wet
 when any absorption happens. Wet variants dry out in specific dimensions (Nether for sponj, End for
-lava sponj) or via smelting, and the wet lava sponj is a 128-item furnace fuel that leaves a dry
-lava sponj behind.
+lava sponj) or via smelting. (Wet lava sponj as a furnace fuel is currently disabled in `ModBlocks.init()`.)
 
 ## Test conventions
 
@@ -41,7 +40,7 @@ NeoForge smoke pass.
    * Wet lava sponj in the End: dries to lava sponj.
    * Wrong dimension: neither dries.
    * Smelting: wet sponj smelts back to sponj.
-7. **Fuel behavior** — put ONE wet lava sponj in a furnace fuel slot: it should smelt 128 items and
+7. **Fuel behavior** (currently disabled in code, skip until fuel is re-enabled) — put ONE wet lava sponj in a furnace fuel slot: it should smelt 128 items and
    leave a **dry lava sponj** in the fuel slot when consumed. Then repeat with a stack of 2+ and
    confirm the README's warning (stacked wet lava sponjes don't return dry ones) — decide whether
    that's intended or a bug worth fixing.
@@ -75,7 +74,7 @@ Structure family `sponj:absorption/*`: a glass-walled tank of water sized per te
 
 ### GameTests — drying and fuel
 
-* **`wetLavaSponjFuelLeavesDrySponj`** — structure with a furnace preloaded (or filled by the test)
+* **`wetLavaSponjFuelLeavesDrySponj`** (blocked: fuel registration is disabled) — structure with a furnace preloaded (or filled by the test)
   with 1 wet lava sponj + smeltable items; fast-forward with `context.runAfterDelay` past one smelt
   cycle... furnace burn is 100 real ticks minimum, so instead set the furnace's `litTimeRemaining`
   via its block entity or use a short-cook item; assert fuel slot now holds a dry lava sponj.
@@ -108,7 +107,7 @@ Structure family `sponj:absorption/*`: a glass-walled tank of water sized per te
 
 ## Open questions
 
-* Is the stacked-wet-lava-sponj fuel behavior (losing the dry sponjes) accepted vanilla-furnace
+* (Fuel is disabled for now.) Once re-enabled: is the stacked-wet-lava-sponj fuel behavior (losing the dry sponjes) accepted vanilla-furnace
   jank or a bug to fix? The fuel GameTest should encode whichever answer you pick.
 * The replaceable-block branch re-queues only while `j < 6` (hardcoded) rather than `< absorptionRadius`
   — likely a leftover from vanilla's constants. Worth a code review before pinning tests to it.

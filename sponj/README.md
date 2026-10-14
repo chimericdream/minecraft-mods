@@ -27,8 +27,6 @@ This simple mod adds two new blocks: a sponj and lava sponj.
 * Wet lava sponj
   * What you get when a lava sponj absorbs lava
   * Can be dried out in the end
-  * Wet lava sponjes can be used as fuel in a furnace, smelting 128 items and leaving a dry lava sponj behind
-    * Be sure to only insert a single wet lava sponj at a time. If you do, you won't get dry ones back!
 
 ### In-game guide
 

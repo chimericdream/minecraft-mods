@@ -1,9 +1,9 @@
 # Test Plan — Miniblock Merchants
 
-Miniblock Merchants adds 25 villager professions trading ~1000 miniblocks (player heads with custom
-textures). Moving parts: `VillagerConversionItem` (25 items, each a textured head-profile item;
+Miniblock Merchants adds 26 villager professions trading ~1000 miniblocks (player heads with custom
+textures). Moving parts: `VillagerConversionItem` (26 items, each a textured head-profile item;
 right-click an **unemployed adult** villager to convert it — `MMVillagerEntityMixin`),
-`ModProfessions` + 25 `*Trades` classes (trade tables), conversion-item drops via loot injection
+`ModProfessions` + 26 `*Trades` classes (trade tables), conversion-item drops via loot injection
 (`MMLootTables` on Fabric, `VillagerConversionItemsLootModifier` on NeoForge) with **per-item
 configurable drop chances** (`MiniblockMerchantsConfig`), miniblock texture data
 (`MiniblockTextures`, `SkullTextureData`, `MMPlayerHeadItemMixin`), datapack-migration
@@ -15,7 +15,7 @@ stats (`ModStats`), and zombie-villager profession retention (`MMZombieVillagerE
 Follow the Hopper X-Treme pattern: GameTest classes in
 `fabric/src/main/java/com/chimericdream/miniblockmerchants/fabric/test/`, registered under the
 `fabric-gametest` entrypoint, structures under
-`common/src/main/resources/data/miniblockmerchants/gametest/structure/`. With 25 professions ×
+`common/src/main/resources/data/miniblockmerchants/gametest/structure/`. With 26 professions ×
 5 trade levels, the win here is **loop-driven tests over registries and trade tables**, not
 hand-written per-profession tests.
 
@@ -60,7 +60,7 @@ village or spawned villagers, conversion items from the creative tab.
 
 ### GameTests — conversion
 
-* **`conversionItemConvertsUnemployedAdult`** — parameterized over all 25 items (loop over
+* **`conversionItemConvertsUnemployedAdult`** — parameterized over all 26 items (loop over
   `ModItems`/profession pairs): spawn unemployed adult villager, mock-player right-click with the
   item, assert profession == expected, item count decremented, villager offers non-empty.
 * **`conversionRefusedFor<Employed|Baby|ZombieVillager>`** — assert no profession change AND item
@@ -70,7 +70,7 @@ village or spawned villagers, conversion items from the creative tab.
 
 ### GameTests / server tests — trades & professions (loop-driven)
 
-* **`allProfessionsRegistered`** — 25 professions resolve in the villager profession registry.
+* **`allProfessionsRegistered`** — 26 professions resolve in the villager profession registry.
 * **`tradeTablesComplete`** — for each profession: levels 1–5 all have ≥ 1 offer; every offer's
   output stack is valid (non-empty, registered item); every head output carries a profile/texture
   component that resolves in `MiniblockTextures`; costs are within sane bounds (e.g. 1–64
@@ -100,7 +100,7 @@ village or spawned villagers, conversion items from the creative tab.
   well-formed base64 texture payload; decode and sanity-check the JSON inside (URL present). A loop
   over all texture entries catches paste errors in the 1000-texture data set — likely the highest
   bug-per-line-of-test ratio available in this mod.
-* **Config round-trip** — serialize/deserialize `MiniblockMerchantsConfig`; all 25 chance fields
+* **Config round-trip** — serialize/deserialize `MiniblockMerchantsConfig`; all 26 chance fields
   survive.
 
 ## ChimericLib helper opportunities
