@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### New Features
+
+* Armored Elytra from the Armored Elytra mod now count as the chestplate for trim and full-set bonuses.
+
 #### Changes
 
 * Preserving now shows a description in the enchanting tooltip.
