@@ -100,7 +100,7 @@ public class RangeEntriesTest {
         // Class.forName(..., false, ...) avoids running the config's static initializer.
         Class<?> config = Class.forName("com.chimericdream.bctweaks.config.BCTweaksConfig", false, getClass().getClassLoader());
 
-        for (String name : List.of("beaconBaseRange", "beaconRangePerLevel", "conduitAddVanillaRange", "beaconRangePerBlock", "conduitRangePerBlock")) {
+        for (String name : List.of("beaconBaseRange", "beaconRangePerLevel", "conduitAddVanillaRange", "conduitBaseRange", "conduitFrameBlocksPerStep", "conduitRangePerStep", "beaconRangePerBlock", "conduitRangePerBlock")) {
             Field field = config.getDeclaredField(name);
             assertNotNull(field.getAnnotation(SerialEntry.class), name + " needs @SerialEntry");
             assertFalse(Modifier.isTransient(field.getModifiers()), name + " must not be transient");

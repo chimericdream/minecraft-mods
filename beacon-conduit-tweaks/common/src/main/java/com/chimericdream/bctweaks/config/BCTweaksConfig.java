@@ -8,6 +8,7 @@ import dev.isxander.yacl3.api.ListOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.controller.DoubleFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
@@ -23,6 +24,16 @@ public class BCTweaksConfig {
     public double beaconBaseRange = Defaults.BEACON_BASE_RANGE;
     @SerialEntry
     public double beaconRangePerLevel = Defaults.BEACON_RANGE_PER_LEVEL;
+    // The three conduit range settings are null until set (they are not written to the file until then), so older
+    // configs keep behaving as they did: unset values fall back to conduitAddVanillaRange. See ConduitRange.
+    @SerialEntry
+    public Double conduitBaseRange = null;
+    @SerialEntry
+    public Integer conduitFrameBlocksPerStep = null;
+    @SerialEntry
+    public Double conduitRangePerStep = null;
+    /** @deprecated Only used for the conduit settings above that are not set. */
+    @Deprecated
     @SerialEntry
     public boolean conduitAddVanillaRange = Defaults.CONDUIT_ADD_VANILLA_RANGE;
     @SerialEntry
@@ -48,9 +59,27 @@ public class BCTweaksConfig {
                     .binding(Defaults.BEACON_RANGE_PER_LEVEL, () -> config.beaconRangePerLevel, newVal -> config.beaconRangePerLevel = newVal)
                     .controller(opt -> DoubleFieldControllerBuilder.create(opt).min(10.0))
                     .build())
+                .option(Option.<Double>createBuilder()
+                    .name(Component.translatable("text.config.bctweaks.option.conduitBaseRange"))
+                    .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option.conduitBaseRange.description")))
+                    .binding(ConduitRange.DEFAULT_BASE_RANGE, () -> ConduitRange.baseRange(config.conduitBaseRange), newVal -> config.conduitBaseRange = newVal)
+                    .controller(opt -> DoubleFieldControllerBuilder.create(opt).min(0.0))
+                    .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.bctweaks.option.conduitFrameBlocksPerStep"))
+                    .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option.conduitFrameBlocksPerStep.description")))
+                    .binding(ConduitRange.DEFAULT_BLOCKS_PER_STEP, () -> ConduitRange.blocksPerStep(config.conduitFrameBlocksPerStep), newVal -> config.conduitFrameBlocksPerStep = newVal)
+                    .controller(opt -> IntegerFieldControllerBuilder.create(opt).min(1))
+                    .build())
+                .option(Option.<Double>createBuilder()
+                    .name(Component.translatable("text.config.bctweaks.option.conduitRangePerStep"))
+                    .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option.conduitRangePerStep.description")))
+                    .binding(ConduitRange.DEFAULT_RANGE_PER_STEP, () -> ConduitRange.rangePerStep(config.conduitRangePerStep, config.conduitAddVanillaRange), newVal -> config.conduitRangePerStep = newVal)
+                    .controller(opt -> DoubleFieldControllerBuilder.create(opt).min(0.0))
+                    .build())
                 .option(Option.<Boolean>createBuilder()
                     .name(Component.translatable("text.config.bctweaks.option.conduitAddVanillaRange"))
-                    .description(OptionDescription.of(Component.literal("")))
+                    .description(OptionDescription.of(Component.translatable("text.config.bctweaks.option.conduitAddVanillaRange.description")))
                     .binding(Defaults.CONDUIT_ADD_VANILLA_RANGE, () -> config.conduitAddVanillaRange, newVal -> config.conduitAddVanillaRange = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())

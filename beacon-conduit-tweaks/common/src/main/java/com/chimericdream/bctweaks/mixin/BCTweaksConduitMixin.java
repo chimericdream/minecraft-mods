@@ -1,6 +1,7 @@
 package com.chimericdream.bctweaks.mixin;
 
 import com.chimericdream.bctweaks.config.BCTweaksConfig;
+import com.chimericdream.bctweaks.config.ConduitRange;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -80,14 +81,13 @@ public class BCTweaksConduitMixin {
     private static int bct$modifiedRange(int _unused, Level world, BlockPos pos, List<BlockPos> activatingBlocks) {
         BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
 
-        int i = activatingBlocks.size();
-        int j = i / 7 * 16;
-
-        if (!config.conduitAddVanillaRange) {
-            j = 0;
-        }
-
-        double n = j;
+        double n = ConduitRange.flatRange(
+            activatingBlocks.size(),
+            config.conduitBaseRange,
+            config.conduitFrameBlocksPerStep,
+            config.conduitRangePerStep,
+            config.conduitAddVanillaRange
+        );
         for (BlockPos p : activatingBlocks) {
             String blockId = BuiltInRegistries.BLOCK.wrapAsHolder(world.getBlockState(p).getBlock()).getRegisteredName();
 

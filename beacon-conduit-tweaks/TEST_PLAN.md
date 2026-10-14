@@ -4,7 +4,9 @@ This server-side mod makes beacon and conduit effect ranges configurable via two
 (`BCTweaksBeaconMixin`, `BCTweaksConduitMixin`) driven by `BCTweaksConfig` (YACL,
 `config/beacon-conduit-tweaks.json5`): `beaconBaseRange` (default 10), `beaconRangePerLevel`
 (default 10), a per-block bonus map `beaconRangePerBlock` (defaults: diamond/emerald 0.5,
-netherite 2.0, iron/gold 0), `conduitAddVanillaRange` (default true), and `conduitRangePerBlock`.
+netherite 2.0, iron/gold 0), `conduitBaseRange` (0), `conduitFrameBlocksPerStep` (7), `conduitRangePerStep` (16),
+`conduitRangePerBlock`, and the deprecated `conduitAddVanillaRange` (default true), which only supplies values for the
+three new conduit settings when they are `null` (unset) in the config file.
 Both per-block maps are saved in the config file and editable on the config screen as lists of
 `block_id=range` lines (invalid lines are dropped on save).
 
@@ -41,7 +43,14 @@ watching the effect icon.
 5. **Conduit: additive mode (default)** — full 42-frame conduit: Conduit Power range should be
    vanilla (96) plus the configured per-block contribution. With `conduitRangePerBlock` empty
    (default), range should equal vanilla exactly.
-6. **Conduit: replace mode** — set `conduitAddVanillaRange = false`; with an empty per-block map the
+5a. **Conduit: new settings** — set `conduitRangePerStep = 8`, `conduitFrameBlocksPerStep = 7`,
+   `conduitBaseRange = 10`: a 42-frame conduit reaches 10 + 6×8 = 58. Setting `conduitFrameBlocksPerStep = 3` gives
+   10 + 14×8. The screen shows 0 / 7 / 16 on a fresh config and rejects a step size below 1.
+5b. **Conduit: legacy fallback** — use a config with `conduitBaseRange`, `conduitFrameBlocksPerStep` and
+   `conduitRangePerStep` all `null` (or missing, as in a config from the previous version): `conduitAddVanillaRange =
+   true` behaves as vanilla (96), `false` as the replace case below. An explicitly set new value wins over the legacy flag.
+6. **Conduit: replace mode** — set `conduitAddVanillaRange = false` with the new settings unset, or
+   `conduitRangePerStep = 0`; with an empty per-block map the
    range should be 0/minimal — verify the degenerate case doesn't crash and document expected
    behavior.
 7. **Config screen** — via Mod Menu (Fabric): change values, save, confirm they persist to
@@ -93,6 +102,7 @@ include the beacon with its effect pre-selected via block entity NBT).
 
 ### Config serialization test
 
+* Done: `ConduitRangeTest` (flat-range formula and the per-setting legacy fallback).
 * Done: `RangeEntriesTest` (fabric `test` source set) covers `RangeEntries.toLines` / `fromLines` (sorted output,
   bad and unknown lines skipped) and checks that all five config fields are `@SerialEntry` and not `transient`.
 * Still open: a full GSON round-trip of `BCTweaksConfig`.

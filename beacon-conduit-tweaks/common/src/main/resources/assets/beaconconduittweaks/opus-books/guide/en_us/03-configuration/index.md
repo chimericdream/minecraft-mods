@@ -14,7 +14,10 @@ Beacon & Conduit Tweaks has a small config screen built with YACL.
 |:-------|:-------------|:--------|
 | Base Beacon Range | The flat range every active beacon has, before pyramid bonuses. At least 10. | 10 |
 | Beacon Range / Level | Range added for each pyramid level. At least 10. | 10 |
-| Conduit: Add Vanilla Range | Keeps the vanilla conduit range. Turn it off and conduits lose their range. | On |
+| Base Conduit Range | A flat range every active conduit has, before frame bonuses. | 0 |
+| Conduit Frame Blocks / Step | How many active frame blocks earn one step of range. At least 1. | 7 |
+| Conduit Range / Step | Range added for each full step. | 16 |
+| Conduit: Add Vanilla Range (deprecated) | The old on/off option. Only used for a conduit setting above that your config file hasn't set: on means 16 per step, off means none. | On |
 
 ## Per-block ranges
 

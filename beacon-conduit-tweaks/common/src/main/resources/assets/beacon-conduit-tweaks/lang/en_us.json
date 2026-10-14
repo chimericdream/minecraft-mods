@@ -4,7 +4,14 @@
     "text.config.bctweaks.option.beaconRangePerLevel": "Beacon Range / Level (default 10)",
     "text.config.bctweaks.option.beaconRangePerBlock": "Beacon Range / Block",
     "text.config.bctweaks.option.beaconRangePerBlock.description": "Extra range for each block of this type in the pyramid. One entry per line, written as block_id=range, for example minecraft:diamond_block=0.5. Lines that are not in that form, or that name a minecraft: block that doesn't exist, are dropped when you save. Blocks from other mods are kept, and ignored (with a warning in the log) while that block isn't in the game.",
-    "text.config.bctweaks.option.conduitAddVanillaRange": "Conduit: Add Vanilla Range",
+    "text.config.bctweaks.option.conduitBaseRange": "Base Conduit Range (default 0)",
+    "text.config.bctweaks.option.conduitBaseRange.description": "A flat range every active conduit has, before frame bonuses.",
+    "text.config.bctweaks.option.conduitFrameBlocksPerStep": "Conduit Frame Blocks / Step (default 7)",
+    "text.config.bctweaks.option.conduitFrameBlocksPerStep.description": "How many active frame blocks it takes to earn one step of range. Vanilla uses 7.",
+    "text.config.bctweaks.option.conduitRangePerStep": "Conduit Range / Step (default 16)",
+    "text.config.bctweaks.option.conduitRangePerStep.description": "Range added for each full step of frame blocks. Vanilla uses 16, so a complete 42-block frame reaches 96.",
+    "text.config.bctweaks.option.conduitAddVanillaRange": "Conduit: Add Vanilla Range (deprecated)",
+    "text.config.bctweaks.option.conduitAddVanillaRange.description": "Deprecated. Only used for the three conduit settings above that were never set in your config file: on gives vanilla's range per step (16), off gives none. Use Conduit Range / Step instead.",
     "text.config.bctweaks.option.conduitRangePerBlock": "Conduit Range / Block",
     "text.config.bctweaks.option.conduitRangePerBlock.description": "Range for each frame block of this type around a conduit. One entry per line, written as block_id=range, for example minecraft:diamond_block=4. Lines that are not in that form, or that name a minecraft: block that doesn't exist, are dropped when you save. Blocks from other mods are kept, and ignored (with a warning in the log) while that block isn't in the game. Listed blocks also count as conduit frame blocks."
 }
