@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.4.0
+
 #### New Features
 
 * Armored Elytra from the Armored Elytra mod now count as the chestplate for trim and full-set bonuses.
