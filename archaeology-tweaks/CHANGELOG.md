@@ -2,8 +2,7 @@
 
 #### New Features
 
-* Added the Archaeology Tweaks Guide, an in-game book covering brushing, every suspicious block and its loot, Gentle Touch, and pottery sherds. Craft one from a book and a brush, or use `/opus give archtweaks:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+* Added the Archaeology Tweaks Guide, an in-game book covering brushing, every suspicious block and its loot, Gentle Touch, and pottery sherds. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a brush, or use `/opus give archtweaks:guide`.
 
 #### Changes
 

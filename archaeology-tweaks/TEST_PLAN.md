@@ -54,8 +54,9 @@ pass.
 10. **Guide book** — craft a book and a brush: you get the Archaeology Tweaks Guide.
     `/opus give archtweaks:guide` gives the same book. Open it and check every page (the loot and
     "where they generate" tables, the Gentle Touch chances, the hiding-items steps) against the real
-    game. With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the
-    problem.
+    game. Without Opus installed, the game starts normally, the mod works, and there is no guide recipe
+    (nothing logs a recipe parse error about `opus:book`). With Opus older than 1.2.0 installed, the
+    game refuses to start.
 
 ## Recommended automated tests
 

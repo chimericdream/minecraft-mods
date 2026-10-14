@@ -35,7 +35,7 @@ whatever loot has been assigned to it.
 * Adds advancements for using a brush for the first time, collecting every pottery sherd, brushing a
   suspicious block in the Nether, and getting a second drop via the Gentle Touch enchantment
 * Wandering traders have a 20% chance of selling a random pottery sherd for 8 emeralds and a brick.
-* Includes an in-game guide book (powered by Opus). Craft one from a book and a brush, or use
+* Includes an in-game guide book (optional; needs the Opus mod 1.2.0 or newer). Craft one from a book and a brush, or use
   `/opus give archtweaks:guide`.
 
 ## Notes for Documentation
