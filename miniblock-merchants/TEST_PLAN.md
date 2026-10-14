@@ -54,7 +54,7 @@ village or spawned villagers, conversion items from the creative tab.
     `/opus give miniblockmerchants:guide` gives the same book. Open it: all four chapters and the
     conversion-item and profession tables render, item icons show, and links between pages work.
     Spot-check the guide's tables against the config defaults and the Recycler/trade counts. With Opus
-    older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+    older than 1.2.0 installed the game refuses to start. Without Opus the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log).
 
 ## Recommended automated tests
 

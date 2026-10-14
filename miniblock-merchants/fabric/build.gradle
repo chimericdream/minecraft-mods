@@ -17,7 +17,7 @@ def opusVersion = "${rootProject.minecraft_compatibility}-${opusProps.getPropert
 dependencies {
     common(project(path: ':miniblock-merchants:common')) { transitive false }
 
-    // The guide book is Opus data, so Opus is only needed at runtime (the jars declare the dependency). It is
+    // The guide book is Opus data and Opus is an optional dependency, so it is only on the dev runtime classpath. It is
     // wired as a built jar rather than project(): referencing :opus:common from here evaluates it too early.
     runtimeOnly files("${rootDir}/opus/fabric/build/libs/opus-fabric-${opusVersion}.jar") {
         builtBy ':opus:fabric:shadowJar'

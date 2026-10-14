@@ -367,7 +367,7 @@ Fine Thread<br />
 
 * 26 new professions which trade a wide variety of miniblocks useful for decorating any build you can come up with
 * Fully configurable drop chances for each individual conversion item
-* An in-game guide book (requires Opus) with every conversion item, profession, and trade. Craft one from a book and a painting
+* An in-game guide book (optional; needs the Opus mod 1.2.0 or newer) with every conversion item, profession, and trade. Craft one from a book and a painting
 * Automatically convert villagers from the Miniblock Traders datapack to the corresponding profession in the Miniblock Merchants mod
 
 ### Planned
