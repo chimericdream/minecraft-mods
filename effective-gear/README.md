@@ -12,7 +12,7 @@ _Small quality-of-life tweaks and bonuses for player armor, weapons, and tools._
 
 ### Current Features
 
-* An in-game guide book (requires [Opus](../opus)): craft a book and an iron helmet, or use `/opus give effectivegear:guide`.
+* An in-game guide book (optional; needs the [Opus](../opus) mod 1.2.0 or newer): craft a book and an iron helmet, or use `/opus give effectivegear:guide`.
 * New enchantments:
   * **Preserving** (shears, applied via anvil) — leaves mined with Preserving-enchanted shears keep
     their original color forever, no matter what biome they're placed in. Crafting a preserved leaf
