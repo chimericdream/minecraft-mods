@@ -11,6 +11,7 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
+            "com.chimericdream.minekea.fabric.test.DoubleCrateHopperGameTest",
             "com.chimericdream.minekea.fabric.test.GlassJarContainerGameTest",
             "com.chimericdream.minekea.fabric.test.GlassJarInteractionGameTest",
             "com.chimericdream.minekea.fabric.test.OpenShutterHalfBlockGameTest"
