@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        "minecraft:book",
+        "minecraft:sponge"
+    ],
+    "result": {
+        "id": "opus:book",
+        "components": {
+            "opus:book_id": {
+                "book_id": "sponj:guide"
+            }
+        }
+    }
+}

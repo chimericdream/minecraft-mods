@@ -1,6 +1,6 @@
 # Sponj (Fabric/NeoForge)
 
-![Version: 6.0.0](https://img.shields.io/badge/version-6.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFGSURBVDhPY8AHpCVF2M2MNQ9CucQDW0u9azvXT/9jbqx5GCpEHABq/H9i37L/uzbMIE6zjJQoI1Dh7aO7F/7397L7f2Db/P+7NhKh2cJE6+62tdP/3b6w5f+xPYv++3rYQDTjshlkE0jTqQPL/t06vxnsTBAN0uznaft/9cLe/0D5v0DNh6BaIADkvJP7loJtAmGQpuN7l/0/unvJ/1ULe/67Opr9L8pJ+A9UdxasAWgTu7WZzt2T+5eCNcBsAuGb5zb/37NpDkjjP6CGb3BNIAC0/vKcqS3/r5xcD9YI03xsz9L/189s/L96Ue8/S1PtayCvgDBUG9iJh9vqc/+sXNiPohlkE0iTmZHGNahSTICu+cbZjWDngWyCKsENYJpXLeoHBwbITyhOwwdAmlvrcv5am+uAQ49ojSAA1HAIpAnKxQIYGABj4eLruqAJiAAAAABJRU5ErkJggg==) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 6.2.0-beta.0](https://img.shields.io/badge/version-6.2.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFGSURBVDhPY8AHpCVF2M2MNQ9CucQDW0u9azvXT/9jbqx5GCpEHABq/H9i37L/uzbMIE6zjJQoI1Dh7aO7F/7397L7f2Db/P+7NhKh2cJE6+62tdP/3b6w5f+xPYv++3rYQDTjshlkE0jTqQPL/t06vxnsTBAN0uznaft/9cLe/0D5v0DNh6BaIADkvJP7loJtAmGQpuN7l/0/unvJ/1ULe/67Opr9L8pJ+A9UdxasAWgTu7WZzt2T+5eCNcBsAuGb5zb/37NpDkjjP6CGb3BNIAC0/vKcqS3/r5xcD9YI03xsz9L/189s/L96Ue8/S1PtayCvgDBUG9iJh9vqc/+sXNiPohlkE0iTmZHGNahSTICu+cbZjWDngWyCKsENYJpXLeoHBwbITyhOwwdAmlvrcv5am+uAQ49ojSAA1HAIpAnKxQIYGABj4eLruqAJiAAAAABJRU5ErkJggg==) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Yet another sponge mod_
 
@@ -29,6 +29,11 @@ This simple mod adds two new blocks: a sponj and lava sponj.
   * Can be dried out in the end
   * Wet lava sponjes can be used as fuel in a furnace, smelting 128 items and leaving a dry lava sponj behind
     * Be sure to only insert a single wet lava sponj at a time. If you do, you won't get dry ones back!
+
+### In-game guide
+
+Craft a book and a sponge to get the Sponj Guide, or use `/opus give sponj:guide`. It needs the
+[Opus](https://github.com/chimericdream/minecraft-mods/tree/main/opus) mod.
 
 ### Screenshots
 

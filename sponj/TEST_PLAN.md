@@ -112,3 +112,9 @@ Structure family `sponj:absorption/*`: a glass-walled tank of water sized per te
   jank or a bug to fix? The fuel GameTest should encode whichever answer you pick.
 * The replaceable-block branch re-queues only while `j < 6` (hardcoded) rather than `< absorptionRadius`
   — likely a leftover from vanilla's constants. Worth a code review before pinning tests to it.
+
+## Guide book
+
+* Craft a book and a sponge: you get the Sponj Guide. `/opus give sponj:guide` gives the same book.
+* Open it: the recipes show on crafting and furnace panels and the item icons render.
+* With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
