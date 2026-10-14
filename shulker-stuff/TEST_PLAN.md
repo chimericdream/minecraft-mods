@@ -55,8 +55,8 @@ netherite.
 9. **Ender chest / bundles / nesting rules** — unchanged vanilla restrictions (boxes don't nest).
 10. **Guide book** — craft a book and a shulker shell: you get the Shulker Stuff Guide.
    `/opus give shulkerstuff:guide` gives the same book. Open it: the enchantment, dyeing station, and
-   plating pages show their recipes, and the links between pages work. With Opus older than 1.2.0 (or
-   missing) the game refuses to start and names Opus as the problem.
+   plating pages show their recipes, and the links between pages work. With Opus older than 1.2.0 installed,
+   the game refuses to start. Without Opus the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log).
 
 ## Recommended automated tests
 

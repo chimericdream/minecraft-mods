@@ -4,7 +4,7 @@
 
 * Added the Shulker Stuff Guide, an in-game book covering the enchantments, the Shulker Dyeing Station, and
   Netherite Plating. Craft one from a book and a shulker shell, or use `/opus give shulkerstuff:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+  Install the optional Opus mod (1.2.0 or newer) to get it.
 
 #### Bug Fixes
 

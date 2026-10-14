@@ -47,9 +47,9 @@ box is protected from explosions and fire both as an item and when placed.
 
 ### In-game guide
 
-The Shulker Stuff Guide is an in-game book (provided by Opus) that covers the enchantments, the Dyeing Station, and
-Netherite Plating. Craft one from a book and a shulker shell, or use `/opus give shulkerstuff:guide`. Requires
-[Opus](../opus/README.md) 1.2.0 or newer.
+The Shulker Stuff Guide is an in-game book (optional; provided by Opus) that covers the enchantments, the Dyeing Station, and
+Netherite Plating. Craft one from a book and a shulker shell, or use `/opus give shulkerstuff:guide`. Needs
+[Opus](../opus/README.md) 1.2.0 or newer (optional).
 
 ## Issues & Suggestions
 
