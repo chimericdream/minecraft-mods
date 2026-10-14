@@ -1,5 +1,6 @@
 package com.chimericdream.effectivegear.item.armor;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +15,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
+
+import java.util.function.Predicate;
 
 /**
  * Shared helpers for checking whether an entity is wearing a full set of armor that qualifies for
@@ -34,6 +37,16 @@ public class TrimSetUtils {
 
     /** Material and pattern identifiers, compared by id so no registry access is needed. */
     private record TrimIds(Identifier material, Identifier pattern) {
+    }
+
+    static boolean hasTrimMaterial(ItemStack stack, ResourceKey<TrimMaterial> materialId) {
+        TrimIds trim = trimIds(stack);
+        return trim != null && materialId.identifier().equals(trim.material());
+    }
+
+    static boolean hasTrimPattern(ItemStack stack, ResourceKey<TrimPattern> patternId) {
+        TrimIds trim = trimIds(stack);
+        return trim != null && patternId.identifier().equals(trim.pattern());
     }
 
     /** The stack's real trim, or the trim of the chestplate merged into an Armored Elytra. */
@@ -73,8 +86,13 @@ public class TrimSetUtils {
         return data.copyTag().getCompound(ARMORED_ELYTRA_CHESTPLATE).orElse(null);
     }
 
-    private static boolean chestIs(ItemStack stack, TagKey<Item> chestplates) {
-        if (stack.is(chestplates)) {
+    static boolean chestIs(ItemStack stack, TagKey<Item> chestplates) {
+        return chestMatches(stack, holder -> holder.is(chestplates));
+    }
+
+    /** True if the stack, or the chestplate merged into an Armored Elytra, satisfies the predicate. */
+    static boolean chestMatches(ItemStack stack, Predicate<Holder<Item>> matcher) {
+        if (matcher.test(stack.getItem().builtInRegistryHolder())) {
             return true;
         }
 
@@ -86,7 +104,7 @@ public class TrimSetUtils {
         return chestplate.getString("id")
             .map(Identifier::tryParse)
             .flatMap(id -> BuiltInRegistries.ITEM.get(id))
-            .map(holder -> holder.is(chestplates))
+            .map(matcher::test)
             .orElse(false);
     }
 
@@ -97,8 +115,7 @@ public class TrimSetUtils {
                 return false;
             }
 
-            TrimIds trim = trimIds(stack);
-            if (trim == null || !trimId.identifier().equals(trim.material())) {
+            if (!hasTrimMaterial(stack, trimId)) {
                 return false;
             }
         }
@@ -113,8 +130,7 @@ public class TrimSetUtils {
                 return false;
             }
 
-            TrimIds trim = trimIds(stack);
-            if (trim == null || !patternId.identifier().equals(trim.pattern())) {
+            if (!hasTrimPattern(stack, patternId)) {
                 return false;
             }
         }
