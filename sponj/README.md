@@ -33,7 +33,7 @@ This simple mod adds two new blocks: a sponj and lava sponj.
 ### In-game guide
 
 Craft a book and a sponge to get the Sponj Guide, or use `/opus give sponj:guide`. It needs the
-[Opus](https://github.com/chimericdream/minecraft-mods/tree/main/opus) mod.
+[Opus](https://github.com/chimericdream/minecraft-mods/tree/main/opus) mod (optional; 1.2.0 or newer).
 
 ### Screenshots
 

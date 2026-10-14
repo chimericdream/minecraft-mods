@@ -117,4 +117,5 @@ Structure family `sponj:absorption/*`: a glass-walled tank of water sized per te
 
 * Craft a book and a sponge: you get the Sponj Guide. `/opus give sponj:guide` gives the same book.
 * Open it: the recipes show on crafting and furnace panels and the item icons render.
-* With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+* Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log).
+* With Opus older than 1.2.0 installed, the game refuses to start.

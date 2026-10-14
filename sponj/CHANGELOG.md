@@ -2,8 +2,7 @@
 
 #### New Features
 
-* Added the Sponj Guide, an in-game book covering both sponj, how their reach grows, and how to dry them out. Craft one from a book and a sponge, or use `/opus give sponj:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+* Added the Sponj Guide, an in-game book covering both sponj, how their reach grows, and how to dry them out. Craft one from a book and a sponge, or use `/opus give sponj:guide`. Install the optional Opus mod (1.2.0 or newer) to get it.
 
 
 ### 26.2 - 6.1.0
