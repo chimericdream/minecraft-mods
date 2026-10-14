@@ -51,8 +51,9 @@ watching the effect icon.
    (`nonsense`), a fake vanilla block (`minecraft:nonsense=1`), and a fake modded block
    (`othermod:thing=1`), save, and confirm only the first two are dropped, the modded line stays in the file, and the
    rest persist. Start a world and confirm the log warns that `othermod:thing` is ignored (and that no conduit
-   or beacon calculation breaks because of it). A
-   conduit entry takes effect after a restart.
+   or beacon calculation breaks because of it). Then, in a world with a conduit, add and remove a
+   valid block (for example `minecraft:gold_block=4`) on the conduit list: the block counts as a conduit frame
+   block as soon as you save, with no restart.
 8. **Beacon UI & activation regressions** — beam renders, payment item consumed, effects selectable;
    pyramid detection unchanged (the mixin should only touch range, not validity).
 

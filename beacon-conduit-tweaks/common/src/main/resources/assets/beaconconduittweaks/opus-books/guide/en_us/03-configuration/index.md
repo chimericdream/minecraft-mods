@@ -23,7 +23,7 @@ Two more settings are lists further down the screen. Each line is a block id and
 | Option | What it does | Default |
 |:-------|:-------------|:--------|
 | Beacon Range / Block | Extra range for each block of that type in the pyramid. | Iron and gold 0, diamond and emerald 0.5, netherite 2 |
-| Conduit Range / Block | Range for each frame block of that type around a conduit. A listed block also counts as a valid frame block. Restart the game after changing it. | Empty |
+| Conduit Range / Block | Range for each frame block of that type around a conduit. A listed block also counts as a valid frame block. | Empty |
 
 > [!NOTE]
 > The mod is driven by the server (or your single-player world), so on a server, set these on the server.

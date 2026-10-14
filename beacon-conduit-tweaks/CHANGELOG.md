@@ -6,7 +6,7 @@
 
 #### Changes
 
-* The config screen now has **Beacon Range / Block** and **Conduit Range / Block** lists, one `block_id=range` entry per line. Previously these could only be changed by editing the config file. Conduit changes need a game restart. Entries for blocks that don't exist are ignored with a warning in the log, and the screen only removes unknown `minecraft:` blocks, so a config that uses another mod's block is left alone.
+* The config screen now has **Beacon Range / Block** and **Conduit Range / Block** lists, one `block_id=range` entry per line. Previously these could only be changed by editing the config file. Entries for blocks that don't exist are ignored with a warning in the log, and the screen only removes unknown `minecraft:` blocks, so a config that uses another mod's block is left alone.
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
   settings themselves are unchanged.
 

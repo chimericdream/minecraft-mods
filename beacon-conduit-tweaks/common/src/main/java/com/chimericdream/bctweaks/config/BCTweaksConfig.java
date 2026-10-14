@@ -113,7 +113,7 @@ public class BCTweaksConfig {
         warnAboutUnknownBlocks("Conduit Range / Block", config.conduitRangePerBlock);
     }
 
-    private static void warnAboutUnknownBlocks(String option, Map<String, Double> map) {
+    public static void warnAboutUnknownBlocks(String option, Map<String, Double> map) {
         for (String id : map.keySet()) {
             Identifier identifier = Identifier.tryParse(id);
             if (identifier == null || !BuiltInRegistries.BLOCK.containsKey(identifier)) {

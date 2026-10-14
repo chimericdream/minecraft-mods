@@ -29,38 +29,49 @@ public class BCTweaksConduitMixin {
     @Shadow
     private static Block[] VALID_BLOCKS;
 
+    // The frame blocks vanilla accepts, captured the first time the list is rebuilt.
     @Unique
-    private static volatile boolean bct$validBlocksResolved = false;
+    private static Block[] bct$vanillaBlocks;
 
-    // Resolved on first use rather than in <clinit>, which runs before other mods have registered their blocks.
-    // Ids that don't name a registered block are ignored (they are reported when the server starts).
+    // The configured ids VALID_BLOCKS was last built from (null until the first build).
+    @Unique
+    private static volatile Set<String> bct$appliedIds;
+
+    // Rebuilt on first use (not in <clinit>, which runs before other mods have registered their blocks) and again
+    // whenever the configured ids change, so edits on the config screen apply without a restart. Ids that don't
+    // name a registered block are ignored.
     @Inject(method = "updateShape(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/List;)Z", at = @At("HEAD"))
     private static void bct$resolveValidBlocks(Level level, BlockPos pos, List<BlockPos> frameBlocks, CallbackInfoReturnable<Boolean> cir) {
-        if (bct$validBlocksResolved) {
+        Set<String> wanted = BCTweaksConfig.CONFIG.instance().conduitRangePerBlock.keySet();
+        if (wanted.equals(bct$appliedIds)) {
             return;
         }
 
         synchronized (BCTweaksConduitMixin.class) {
-            if (bct$validBlocksResolved) {
-                return;
-            }
-            bct$validBlocksResolved = true;
-
-            BCTweaksConfig config = BCTweaksConfig.CONFIG.instance();
-            if (config.conduitRangePerBlock.isEmpty()) {
+            Set<String> ids = Set.copyOf(wanted);
+            if (ids.equals(bct$appliedIds)) {
                 return;
             }
 
-            Set<Block> modifierBlocks = new HashSet<>();
-            for (String id : config.conduitRangePerBlock.keySet()) {
+            if (bct$vanillaBlocks == null) {
+                bct$vanillaBlocks = VALID_BLOCKS;
+            }
+
+            Set<Block> blocks = new HashSet<>();
+            Collections.addAll(blocks, bct$vanillaBlocks);
+            for (String id : ids) {
                 Identifier identifier = Identifier.tryParse(id);
                 if (identifier != null && BuiltInRegistries.BLOCK.containsKey(identifier)) {
-                    modifierBlocks.add(BuiltInRegistries.BLOCK.getValue(identifier));
+                    blocks.add(BuiltInRegistries.BLOCK.getValue(identifier));
                 }
             }
+            VALID_BLOCKS = blocks.toArray(new Block[]{});
 
-            Collections.addAll(modifierBlocks, VALID_BLOCKS);
-            VALID_BLOCKS = modifierBlocks.toArray(new Block[]{});
+            // The first build happens right after the server-start warning, so only warn again for later edits.
+            if (bct$appliedIds != null) {
+                BCTweaksConfig.warnAboutUnknownBlocks("Conduit Range / Block", BCTweaksConfig.CONFIG.instance().conduitRangePerBlock);
+            }
+            bct$appliedIds = ids;
         }
     }
 
