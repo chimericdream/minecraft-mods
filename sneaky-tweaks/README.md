@@ -18,7 +18,7 @@ Vanilla Minecraft already gives sneaking a handful of side effects — you don't
 * **Timed campfire immunity.** Sneaking on a lit campfire (or soul campfire) grants temporary damage immunity, similar to how sneaking near ledges keeps you from falling. Unlike stepping on magma, it's not indefinite — a depleting grace meter (shown as a HUD row of flame icons, right alongside the air-bubble meter) runs out after a few seconds of continuous sneaking, and refills once you step off. Configurable duration and an on/off toggle are in the mod's config screen.
 * **Crouch bridging.** Sneak off a ledge without looking down and you'll walk straight across a gap of up to a few blocks as though it were solid ground — right up until you either look down or run out of gap to cross, at which point gravity remembers you exist. Both the gap size and the look-down angle that breaks it are configurable, along with an on/off toggle.
 
-* **In-game guide.** Craft a book and a pair of leather boots (or run `/opus give sneakytweaks:guide`) to get a guide book covering every feature and its settings. Requires the [Opus](https://github.com/chimericdream/minecraft-mods/tree/main/opus) mod, version 1.2.0 or newer.
+* **In-game guide.** Craft a book and a pair of leather boots (or run `/opus give sneakytweaks:guide`) to get a guide book covering every feature and its settings. Optional: needs the [Opus](https://github.com/chimericdream/minecraft-mods/tree/main/opus) mod, version 1.2.0 or newer.
 
 ## Notes for Documentation
 
