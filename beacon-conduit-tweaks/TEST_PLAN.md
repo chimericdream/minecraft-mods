@@ -114,4 +114,5 @@ include the beacon with its effect pre-selected via block entity NBT).
 9. **Guide book**
    * Craft a book and a glass block: you get the Beacon & Conduit Tweaks Guide. `/opus give beaconconduittweaks:guide` gives the same book.
    * Open it: the Beacons, Conduits, and Configuration chapters open, links between pages work, and the recipes show on crafting panels.
-   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+   * Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (nothing logs a recipe parse error about `opus:book`).
+   * With Opus older than 1.2.0 installed, the game refuses to start.
