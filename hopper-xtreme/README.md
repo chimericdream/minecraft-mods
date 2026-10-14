@@ -68,7 +68,7 @@ managed with two items:
 
 The Hopper X-Treme Guide walks you through every hopper, with recipes and screenshots. Craft one from a book and a
 hopper, or use `/opus give hopperxtreme:guide`. A new world also gives you one the first time you join. The guide is
-provided by the Opus mod, which is required.
+provided by the Opus mod (optional; needs Opus 1.2.0 or newer).
 
 ### Creative tabs
 

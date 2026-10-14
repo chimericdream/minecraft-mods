@@ -4,8 +4,7 @@
 
 * Added the Hopper X-Treme Guide, an in-game book covering every hopper, multi-hopper, hupper, glazed hopper, and
   item filter, with recipes and screenshots. Craft one from a book and a hopper, or use
-  `/opus give hopperxtreme:guide`. New players still get a copy the first time they join a world.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+  `/opus give hopperxtreme:guide`. Needs the optional Opus mod (1.2.0 or newer). New players still get a copy the first time they join a world.
 
 #### Other Changes
 

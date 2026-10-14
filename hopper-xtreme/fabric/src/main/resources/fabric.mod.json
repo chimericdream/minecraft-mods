@@ -44,10 +44,10 @@
         "java": ">=25",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
-        "chimericlib": ">=${chimericlib_compat}",
-        "opus": ">=${opus_compat}"
+        "chimericlib": ">=${chimericlib_compat}"
     },
     "recommends": {
-        "modmenu": ">=${modmenu_compat}"
+        "modmenu": ">=${modmenu_compat}",
+        "opus": ">=${opus_compat}"
     }
 }

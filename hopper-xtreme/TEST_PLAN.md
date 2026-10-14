@@ -75,8 +75,11 @@ NeoForge coverage).
 11. **Guide book** (Fabric and NeoForge) — craft a book and a hopper: you get the Hopper X-Treme Guide, and
     `/opus give hopperxtreme:guide` gives the same book. A brand-new world hands one over on first join (the
     `grant_book_on_first_join` advancement). Open it: every chapter lists its pages, recipes draw on crafting and
-    smithing panels, the filter screenshots show (click to enlarge), and the cross-page links work. With Opus
-    older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
+    smithing panels, the filter screenshots show (click to enlarge), and the cross-page links work.
+    Without Opus installed, the game starts normally, the mod works, there is no guide recipe (nothing logs a recipe
+    parse error about `opus:book`), and joining a new world grants no book and logs no loot-table or advancement
+    error; with Opus installed, first join grants the guide. With Opus older than 1.2.0 installed, the game refuses
+    to start (the version range is still enforced).
 
 ## Recommended additional automated tests (gaps)
 
