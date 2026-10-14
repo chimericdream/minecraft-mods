@@ -28,7 +28,7 @@ without their behavior.
 * **Pale Pumpkin** — a pale garden-themed pumpkin, with matching carved and jack o'lantern variants. Pale
   pumpkin patches also grow naturally in Pale Garden biomes.
 * **Guide book** — an in-game Opus guide covering everything above. Craft one from a book and a pale pumpkin, or
-  use `/opus give artificialheart:guide`. Requires Opus 1.2.0 or newer.
+  use `/opus give artificialheart:guide`. Optional; needs the Opus mod 1.2.0 or newer.
 * **Creaking Golem** — build a golem shape from pale oak fence and logs around a Creaking Heart, then top
   it with a carved pale pumpkin or jack o'lantern to summon a friendly, sturdy creaking. It reacts to
   nearby players just like a wild one — it'll even freeze in place if you stare it down — but it will

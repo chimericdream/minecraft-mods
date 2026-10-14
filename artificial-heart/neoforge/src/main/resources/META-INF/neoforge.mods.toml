@@ -43,7 +43,7 @@ side = "BOTH"
 
 [[dependencies.${mod_id}]]
 modId = "opus"
-type = "required"
+type = "optional"
 versionRange = "[${opus_compat},)"
 ordering = "AFTER"
 side = "BOTH"
