@@ -31,6 +31,7 @@
         "java": ">=25",
         "fabric-api": "*",
         "architectury": ">=${architectury_compat}",
+        "opus": ">=${opus_compat}",
         "chimericlib": ">=${chimericlib_compat}",
         "yet_another_config_lib_v3": ">=${yacl_compat}"
     },

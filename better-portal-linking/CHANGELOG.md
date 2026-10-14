@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Better Portal Linking Guide, an in-game book covering portal addresses and how links are chosen. Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
+
 #### Bug Fixes
 
 * The config screen is now available on NeoForge too (Mods → select Better Portal Linking → Config); previously it only worked on Fabric via Mod Menu.
