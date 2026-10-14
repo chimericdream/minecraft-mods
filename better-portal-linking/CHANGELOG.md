@@ -2,8 +2,7 @@
 
 #### New Features
 
-* Added the Better Portal Linking Guide, an in-game book covering portal addresses and how links are chosen. Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
-* Opus 1.2.0 or newer is now required (it provides the guide book).
+* Added the Better Portal Linking Guide, an in-game book covering portal addresses and how links are chosen. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
 
 #### Bug Fixes
 

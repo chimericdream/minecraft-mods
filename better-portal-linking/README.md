@@ -1,6 +1,6 @@
 # Better Portal Linking (Fabric/NeoForge)
 
-![Version: 1.1.0-beta.0](https://img.shields.io/badge/version-1.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.1.0-beta.0](https://img.shields.io/badge/version-1.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: optional](https://img.shields.io/badge/client-optional-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Gives players more control over how their nether portals link between the Nether and Overworld._
 
@@ -19,7 +19,7 @@ _Gives players more control over how their nether portals link between the Nethe
 * Corner order doesn't matter, and the same block can be used on more than one corner.
 * The portal with the most matching corners wins. Ties go to whichever portal is closer, and any remaining tie is broken the same way every time, so a given portal always sends you to the same place.
 * Portals with plain corners, or with no matching portal in range, behave exactly like vanilla.
-* Includes an in-game guide book (requires Opus). Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
+* Includes an in-game guide book (optional; needs the Opus mod 1.2.0 or newer). Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
 
 ## Issues & Suggestions
 
