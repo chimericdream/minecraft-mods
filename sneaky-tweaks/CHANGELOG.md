@@ -1,7 +1,13 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Sneaky Tweaks Guide, an in-game book that explains each feature and its settings. Craft one
+  from a book and a pair of leather boots, or use `/opus give sneakytweaks:guide`.
+
 #### Changes
 
+* Opus 1.2.0 or newer is now required (it provides the guide book).
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
   settings themselves are unchanged.
 
