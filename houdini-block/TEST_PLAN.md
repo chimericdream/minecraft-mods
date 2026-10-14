@@ -50,6 +50,10 @@ redstone lamp circuit. Repeat the full pass on Fabric and NeoForge.
    * Break the block in survival with/without suppression; it must still drop itself and keep its
      mode (check whether mode is stored on the item after re-picking it up — if not, that's a
      finding to report).
+9. **Guide book**
+   * Craft a book and an eye of ender: you get the Houdini Block Guide. `/opus give houdiniblock:guide` gives the same book.
+   * Open it: the recipe page shows the crafting grid, and the mode names match the in-game tooltip.
+   * With Opus older than 1.2.0 (or missing) the game refuses to start and names Opus as the problem.
 
 ## Recommended automated tests
 

@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added the Houdini Block Guide, an in-game book covering the four modes and replace mode. Craft one from a book and an eye of ender, or use `/opus give houdiniblock:guide`.
+* Opus 1.2.0 or newer is now required (it provides the guide book).
+
 
 ### 26.2 - 3.0.0
 

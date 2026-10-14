@@ -1,6 +1,6 @@
 # Houdini Block (Fabric/NeoForge)
 
-![Version: 3.0.0](https://img.shields.io/badge/version-3.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 3.1.0-beta.0](https://img.shields.io/badge/version-3.1.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _A magical block that doesn't trigger block updates when broken!_
 
@@ -25,6 +25,8 @@ contraptions, "update suppression" tricks, and clean building.
   * **Prevent all** — suppresses updates on both place and break.
   * **Replace block** — suppresses updates whenever the block is placed or replaced, useful for swapping the block
     in and out of an existing structure without side effects.
+* **An in-game guide book** (the Houdini Block Guide, powered by the Opus mod). Craft one from a book and an eye of
+  ender.
 
 ## Notes for Documentation
 
