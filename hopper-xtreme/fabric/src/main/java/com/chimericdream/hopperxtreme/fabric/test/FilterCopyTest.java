@@ -118,6 +118,7 @@ public class FilterCopyTest {
     @GameTest
     public void upgradeRecipeKeepsContentsAndMode(GameTestHelper context) {
         ItemStack source = configured(standard(), "exclude", new ItemStack(Items.DIAMOND), new ItemStack(Items.GOLD_INGOT));
+        source.set(DataComponents.CUSTOM_MODEL_DATA, new net.minecraft.world.item.component.CustomModelData(List.of(), List.of(), List.of("2233000"), List.of()));
         CraftingInput input = grid(source, new ItemStack(Items.DIAMOND));
         FilterUpgradeRecipe recipe = new FilterUpgradeRecipe();
 
@@ -126,6 +127,7 @@ public class FilterCopyTest {
         ItemStack result = recipe.assemble(input);
         expect(result.is(diamond()), "Upgrade should produce a diamond filter");
         expect(result.get(DataComponents.CONTAINER).equals(source.get(DataComponents.CONTAINER)), "Upgrade should keep the filter's items");
+        expect(java.util.Objects.equals(result.get(DataComponents.CUSTOM_MODEL_DATA), source.get(DataComponents.CUSTOM_MODEL_DATA)), "Upgrade should keep the configured-model flag");
         expect(result.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get()).equals(source.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get())), "Upgrade should keep the filter's mode");
 
         expect(!recipe.matches(grid(configured(diamond(), "include", new ItemStack(Items.EMERALD)), new ItemStack(Items.DIAMOND)), context.getLevel()), "A diamond filter can't be upgraded again");

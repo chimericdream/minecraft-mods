@@ -14,6 +14,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -76,6 +77,12 @@ public class FilterUpgradeRecipe extends CustomRecipe {
         ItemContainerContents contents = source.get(DataComponents.CONTAINER);
         if (contents != null) {
             result.set(DataComponents.CONTAINER, contents);
+        }
+
+        // Drives the "configured" item model; without it the upgraded filter renders as blank.
+        CustomModelData modelData = source.get(DataComponents.CUSTOM_MODEL_DATA);
+        if (modelData != null) {
+            result.set(DataComponents.CUSTOM_MODEL_DATA, modelData);
         }
 
         HopperXtremeFilterModeComponent mode = source.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get());
