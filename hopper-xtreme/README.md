@@ -62,7 +62,11 @@ managed with two items:
   only lets the listed items through, exclude mode blocks the listed items. Holds up to five filter entries.
 * **Diamond Hopper Item Filter** — works exactly like the standard filter, but holds up to ten filter entries.
   Crafted by upgrading a Hopper Item Filter with a diamond.
-* **Wrench** — a tool for configuring/adjusting hoppers.
+* **Hopper Wrench** — rotates hoppers and switches multi-hopper sides. Press **M** (rebindable) while holding it to switch to
+  Copy / Paste mode, which copies one hopper's filter and pastes it onto others.
+
+You can also copy a filter in a crafting grid: put a configured filter and a blank filter of the same kind together
+and you get a second identical filter, keeping the original.
 
 ### In-game guide
 

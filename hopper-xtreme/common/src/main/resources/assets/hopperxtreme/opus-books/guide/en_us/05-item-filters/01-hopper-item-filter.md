@@ -34,3 +34,13 @@ holding the filter to switch modes. A message shows the new mode, and the item's
 
 Filters match by item type, so extra data like custom names, enchantments, or damage is ignored. As long as the item
 is the same kind as one in the filter, it matches.
+
+## Copying a filter
+
+Setting up a lot of hoppers the same way? Copy the filter instead of filling in each one.
+
+In a crafting grid, put a configured filter and a blank filter of the same kind (a standard filter with a standard
+one, a diamond filter with a diamond one) side by side, and nothing else. You get a second filter with the same items
+and mode, and the original stays in the grid. A filter with nothing in it counts as blank.
+
+To copy a filter straight from a hopper, use the [Hopper Wrench](../06-wrench.md#copying-filters).

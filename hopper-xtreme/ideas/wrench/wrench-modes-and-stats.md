@@ -7,7 +7,7 @@
 
 Turn the wrench into a multi-mode tool: rotate (today), copy and paste (#4), and a stats mode that shows
 items per minute through the hopper you click. The stats mode is useful for tuning farms and shows off
-the speed tiers. **Recommendation:** cycle modes with sneak-use in the air, show the current mode as an
+the speed tiers. **Recommendation:** cycle modes with a keybind (default M; see Decisions), show the current mode as an
 actionbar message, and build this around #4 (copy and paste is the first new mode). Keep stats to a
 simple rolling average that isn't saved.
 
@@ -16,6 +16,8 @@ simple rolling average that isn't saved.
 - 2026-10-14 — The wrench is always registered, even when Minekea is loaded, and renamed "Hopper Wrench"
   (ID unchanged), so these modes exist for every player. See
   [Filter copy and paste](../filtering/filter-copy-and-paste.md).
+- 2026-10-15 — Modes are switched with a keybind, default M, not sneak-use in the air, because sneak-clicking a
+  hopper is how it is rotated. See [Filter copy and paste](../filtering/filter-copy-and-paste.md).
 
 ## Related
 

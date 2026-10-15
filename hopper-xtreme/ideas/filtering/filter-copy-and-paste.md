@@ -1,7 +1,7 @@
 # Filter copy and paste
 
 > Shortlist #4 · Tier 2 — Solid mid-size features · Effort **M** · Value ★★★ · Votes — · My vote **Yes**
-> Status: **Ready**
+> Status: **Building** — branch `feat/hopper-xtreme-filter-copy`
 
 ## Description
 
@@ -35,7 +35,7 @@ same on all of them.
 
 **Wrench rules:**
 
-- The wrench has modes, as in #9: sneak-use in the air cycles them. In Copy-Paste mode, a click with nothing
+- The wrench has modes, as in #9: a keybind (default M) cycles them. In Copy-Paste mode, a click with nothing
   copied copies the hopper's filter, and a click with something copied pastes it. Rotate mode behaves as it
   does today.
 - Pasting onto a hopper with no filter item consumes a blank filter from the player's inventory (creative
@@ -71,7 +71,7 @@ in `TEST_PLAN.md`.
   sneak-paste overwrites.
 - 2026-10-14 — The grid recipe keeps the original and needs a blank filter per copy (configured filter +
   blank filter → two identical filters).
-- 2026-10-14 — The wrench is mode-based, as in #9: sneak-use in the air cycles modes, and Copy-Paste mode
+- 2026-10-14 — The wrench is mode-based, as in #9: sneak-use in the air cycles modes (superseded 2026-10-15: now a keybind), and Copy-Paste mode
   uses click = copy (nothing held) or paste (something held), sneak-click = overwrite. Rotate mode keeps
   today's behavior.
 - 2026-10-14 — The wrench copies from placed hoppers only, not from loose filter items.
@@ -91,6 +91,17 @@ in `TEST_PLAN.md`.
   blocks can stay.
 - 2026-10-14 — The custom-recipe registration plumbing is captured as a ChimericLib idea so other mods can
   reuse it. Hopper X-Treme is its second consumer after Opus.
+
+- 2026-10-15 — Implementation choices: switching wrench modes forgets the copied filter (this is how a
+  player copies a different filter); a sneak-overwrite replaces the filter in place and needs the same tier
+  as the filter it replaces; the copied filter stays on the wrench after a paste, so one copy can be pasted
+  many times; the wrench's Copy/Paste clicks are handled by an Architectury `RIGHT_CLICK_BLOCK` event rather
+  than per-block overrides, so one hook covers every hopper family.
+
+- 2026-10-15 — Wrench modes are switched with a keybind, default M, not sneak-use in the air. Sneak-right-clicking a
+  hopper is how players rotate it, and that was also changing the mode. M is unused by every other mod in this repo
+  (Effective Gear uses R, Minekea uses =, Opus and All Hallows Steve ship theirs unbound). Reuses All Hallows
+  Steve's common-code pattern: an Architectury keybind and client tick, and a c2s payload with no data.
 
 ## Related
 

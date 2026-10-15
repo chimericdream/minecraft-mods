@@ -3,6 +3,7 @@ package com.chimericdream.hopperxtreme.fabric.client;
 import com.chimericdream.hopperxtreme.block.HopperDeprecation;
 import com.chimericdream.hopperxtreme.block.ModBlocks;
 import com.chimericdream.hopperxtreme.client.HopperXtremeClient;
+import com.chimericdream.hopperxtreme.client.WrenchKeybindings;
 import com.chimericdream.hopperxtreme.component.HopperXtremeComponentTypes;
 import com.chimericdream.hopperxtreme.component.HopperXtremeFilterModeComponent;
 import com.chimericdream.hopperxtreme.item.HopperItemFilterItem;
@@ -18,6 +19,7 @@ public final class HopperXtremeFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HopperXtremeClient.onInitializeClient();
+        WrenchKeybindings.init();
 
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, list) -> {
             if (HopperDeprecation.isDeprecatedItem(itemStack)) {
