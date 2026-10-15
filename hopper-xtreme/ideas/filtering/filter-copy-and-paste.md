@@ -79,7 +79,7 @@ in `TEST_PLAN.md`.
   cross-tier cases.
 - 2026-10-14 — A "blank" filter is any same-tier filter with no items in its container, whatever its
   Include/Exclude mode. Copying overwrites the blank's mode.
-- 2026-10-14 — The diamond upgrade recipe's suspected loss of filter contents is tracked separately, not
+- 2026-10-14 — The diamond upgrade recipe's suspected loss of filter contents is tracked separately (#139), not
   fixed as part of this feature.
 - 2026-10-14 — The grid recipe was briefly replaced by an off-hand + main-hand sneak-use gesture, then
   restored. Opus' `TomeCombineRecipe` showed that a custom recipe is common-code only, so the recipe's main
@@ -108,5 +108,5 @@ in `TEST_PLAN.md`.
 - **Keeping the original.** Confirm the 26.2 mechanism for returning the source stack from a `CustomRecipe`
   (compare vanilla `BookCloningRecipe`). Can be decided during implementation.
 - **Adjacent bug (tracked separately).** The diamond upgrade recipe (`filter` + `diamond`) copies no
-  components, so upgrading a configured standard filter likely wipes its contents. Verify in-game and file
-  it on its own.
+  components, so upgrading a configured standard filter likely wipes its contents. Tracked in
+  [#139](https://github.com/chimericdream/minecraft-mods/issues/139); verify in-game there.
