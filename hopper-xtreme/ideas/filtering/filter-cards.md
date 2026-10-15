@@ -15,7 +15,7 @@ _None yet._
 
 ## Related
 
-- [Filter copy and paste with the wrench](filter-copy-and-paste.md) — covers most of the same need.
+- [Filter copy and paste](filter-copy-and-paste.md) — covers most of the same need.
 
 ## Open questions
 

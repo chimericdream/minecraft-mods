@@ -26,6 +26,8 @@ adds nothing a player would install it for, and what it does add exists to be us
   UI as a reusable component.
 - [Villager profession helper](suite-patterns/villager-profession-helper.md) — Miniblock Merchants'
   convert-register-trade flow as a declarative builder.
+- [Custom recipe helpers](suite-patterns/custom-recipe-helpers.md) — One-line registration, datagen, and
+  matching helpers for custom crafting recipe types, extracted from Opus' tome recipe.
 
 ### Datagen and registration
 

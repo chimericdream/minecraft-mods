@@ -13,11 +13,13 @@ simple rolling average that isn't saved.
 
 ## Decisions
 
-_None yet._
+- 2026-10-14 — The wrench is always registered, even when Minekea is loaded, and renamed "Hopper Wrench"
+  (ID unchanged), so these modes exist for every player. See
+  [Filter copy and paste](../filtering/filter-copy-and-paste.md).
 
 ## Related
 
-- [Filter copy and paste with the wrench](../filtering/filter-copy-and-paste.md) — the first new mode.
+- [Filter copy and paste](../filtering/filter-copy-and-paste.md) — the first new mode.
 
 ## Open questions
 

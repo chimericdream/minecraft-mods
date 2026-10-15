@@ -11,7 +11,7 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ### Filtering
 
-- [Filter copy and paste with the wrench](filtering/filter-copy-and-paste.md) — Copy one hopper's filter and apply it to others.
+- [Filter copy and paste](filtering/filter-copy-and-paste.md) — Copy a filter in the crafting grid or copy a hopper's filter with the wrench.
 - [Tag-based filter entries](filtering/tag-filter-entries.md) — Filter by item tag as well as by item.
 - [Overflow routing](filtering/overflow-routing.md) — Rejected items pass through to the hopper below.
 - [Component-aware filter matching](filtering/component-aware-matching.md) — Match enchantments, names or damage.
