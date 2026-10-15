@@ -1,0 +1,28 @@
+{
+    "parent": "opus:root",
+    "criteria": {
+        "crafted_book_of_books": {
+            "trigger": "minecraft:recipe_crafted",
+            "conditions": {
+                "recipe_id": "opus:book_of_books"
+            }
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "advancements.opus.bookception.description"
+        },
+        "hidden": true,
+        "icon": {
+            "id": "opus:book_of_books"
+        },
+        "title": {
+            "translate": "advancements.opus.bookception.title"
+        }
+    },
+    "requirements": [
+        [
+            "crafted_book_of_books"
+        ]
+    ]
+}

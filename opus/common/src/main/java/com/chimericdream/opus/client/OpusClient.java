@@ -5,10 +5,18 @@ import com.chimericdream.opus.client.book.BookRepository;
 import com.chimericdream.opus.client.book.OpusReloadListener;
 import com.chimericdream.opus.client.screen.BookMissingScreen;
 import com.chimericdream.opus.client.screen.BookScreen;
+import com.chimericdream.opus.client.screen.TomePickerScreen;
+import com.chimericdream.opus.component.TomeContentsComponent;
 import com.chimericdream.opus.core.book.Book;
 import com.chimericdream.opus.item.OpusBookItem;
+import com.chimericdream.opus.item.TomeStacks;
+import com.chimericdream.opus.network.TomeRevertPayload;
 import dev.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.event.events.common.InteractionEvent;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Client entry point shared by both loaders (called from the Fabric client initializer and NeoForge's
@@ -28,11 +36,24 @@ public final class OpusClient {
         Keybindings.init();
         OpusReloadListener.register();
 
+        // "Punch the air" turns a guide that came out of a Book of Books back into the Book of Books.
+        InteractionEvent.CLIENT_LEFT_CLICK_AIR.register((player, hand) -> {
+            ItemStack held = player.getItemInHand(hand);
+            if (hand == InteractionHand.MAIN_HAND && TomeStacks.transformedContents(held) != null) {
+                NetworkManager.sendToServer(TomeRevertPayload.INSTANCE);
+            }
+        });
+
         ClientTickEvent.CLIENT_POST.register(minecraft -> {
             while (Keybindings.OPEN_GUIDE.consumeClick()) {
                 openBook(OpusBookItem.DEFAULT_BOOK);
             }
         });
+    }
+
+    /** Opens the menu for picking one of the guides stored in the Book of Books held in {@code hand}. */
+    public static void openTomePicker(InteractionHand hand, TomeContentsComponent contents) {
+        Minecraft.getInstance().setScreenAndShow(new TomePickerScreen(hand, contents));
     }
 
     /** Opens {@code bookId} at its home page, or shows a screen saying the book is missing. */

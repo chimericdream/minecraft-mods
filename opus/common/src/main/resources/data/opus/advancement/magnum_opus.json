@@ -1,0 +1,29 @@
+{
+    "parent": "opus:bookception",
+    "criteria": {
+        "ten_books": {
+            "trigger": "opus:tome_books",
+            "conditions": {
+                "min_books": 10
+            }
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "advancements.opus.magnum_opus.description"
+        },
+        "frame": "challenge",
+        "hidden": true,
+        "icon": {
+            "id": "opus:book_of_books"
+        },
+        "title": {
+            "translate": "advancements.opus.magnum_opus.title"
+        }
+    },
+    "requirements": [
+        [
+            "ten_books"
+        ]
+    ]
+}

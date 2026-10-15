@@ -43,6 +43,21 @@ Setup: new creative world, `/give @s opus:book`.
 10. **Dedicated server** â€” the mod loads on a server without errors (no client classes touched).
 11. **Images** â€” on the Images section of "Writing books" (Opus Guide): the 64-wide book image is centred with its caption under it; hovering it shows "Click to enlarge"; clicking dims the screen and shows it larger (whole-number zoom, crisp pixels) with the caption under it; any click, any key (including Esc) or changing page closes it, and scrolling is ignored while it is open. The small inline image sits in the line of text; the three-image row sits side by side, centred, and wraps to a second row in a narrow window without anything running past the column. In a book of your own: `align=left`/`right` move a row; a `texture:` address with a typo shows a labelled "missing:" box (not clickable, no tooltip) and an inline one shows `[alt]`; `icon: texture:ns:path` in a chapter's front matter draws the picture in the contents; F3+T after replacing a PNG shows the new picture and size.
 
+## Book of Books (manual)
+
+Setup: survival or creative world with `/give @s opus:book` a few times, plus `/give @s opus:book[opus:book_id={book_id:"mymod:x"}]`.
+
+1. **Craft** — a book and a chest, shapeless, make `opus:book_of_books`. An "Opus" tab is already in the advancements screen (granted on join, no toast); the first craft shows a "Bookception" toast, and that advancement stays hidden under the tab until then. A second craft shows nothing.
+1a. **Magnum Opus** — a Book of Books holding 10+ guides in the inventory grants the hidden "Magnum Opus" challenge within a second; 9 guides does not.
+2. **Empty** — right-clicking an empty Book of Books shows "This Book of Books is empty..." on the action bar and opens no menu. The tooltip says it is empty.
+3. **Combine** — Book of Books + two Opus books in the grid gives a Book of Books whose tooltip lists both by title and says "Holds 2 guides". Adding a duplicate adds a third entry. Adding anything that is not an Opus book (a vanilla book, a stick) gives no result. A book and nothing else, or two plain books without a Book of Books, give no result.
+4. **Merge** — two Books of Books in the grid merge into one holding everything.
+5. **Pick** — right-click the full Book of Books: a menu lists each guide by title (an uninstalled id shows as the id). Picking one turns the held item into that real guide; right-click opens it. The tooltip says it is part of a Book of Books. With more than seven guides the menu pages with `<` / `>`. Works from the off hand too.
+6. **Revert** — punch the air with the guide in the main hand: it turns back into the Book of Books with the same contents. Punching a block or mob does not revert it.
+7. **Remove** — turn the Book of Books into a guide, sneak and press drop: a plain guide drops, and the Book of Books (minus that guide, one fewer duplicate if there were several) is back in the same hotbar slot. Without sneaking, the guide drops as-is and keeps its Book of Books data.
+8. **Crafting with a turned-out guide** — a guide turned out of a Book of Books can be used in the grid as the Book of Books (the result holds everything).
+9. **Dedicated server** — the mod loads without errors; picking, reverting and removing all work for a remote client.
+
 ## `/opus give` (manual)
 
 - On a dedicated server, as a non-op: `/opus give` gives the guide; `/opus give mymod:x` gives a book with that id; `/opus give Bad Id` errors.

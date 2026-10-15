@@ -12,6 +12,11 @@ public class OpusComponentTypes {
         () -> DataComponentType.<BookIdComponent>builder().persistent(BookIdComponent.CODEC).build()
     );
 
+    public static final RegistrySupplier<DataComponentType<TomeContentsComponent>> TOME_CONTENTS = REGISTRY_HELPER.CUSTOM_COMPONENTS.register(
+        TomeContentsComponent.COMPONENT_ID,
+        () -> DataComponentType.<TomeContentsComponent>builder().persistent(TomeContentsComponent.CODEC).build()
+    );
+
     public static void init() {
     }
 }

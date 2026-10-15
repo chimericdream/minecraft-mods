@@ -88,6 +88,11 @@ public class OpusBookItem extends Item {
         if (book != null && book.meta().description() != null && !book.meta().description().isBlank()) {
             builder.accept(Component.literal(book.meta().description()).withStyle(ChatFormatting.GRAY));
         }
+
+        if (TomeStacks.transformedContents(itemStack) != null) {
+            builder.accept(Component.translatable("opus.tome.tooltip.part_of").withStyle(ChatFormatting.DARK_PURPLE));
+            builder.accept(Component.translatable("opus.tome.tooltip.revert").withStyle(ChatFormatting.DARK_GRAY));
+        }
     }
 
     /**

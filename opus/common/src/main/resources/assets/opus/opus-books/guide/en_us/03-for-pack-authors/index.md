@@ -20,6 +20,22 @@ The resource pack has to be enabled on the client. If the book isn't found, you 
 "Book '<id>' was not found": see [A book says "not found"](../04-troubleshooting/01-book-not-found.md) for the
 causes and fixes.
 
+## Carrying several books
+
+In a big pack every mod can ship its own book. The **Book of Books** holds them all in one inventory slot.
+Craft it with a book and a chest (shapeless). Players who have used the Akashic Tome mod will find the controls
+familiar.
+
+* **Add books:** put the Book of Books and any Opus books in a crafting grid. You can add as many as you like,
+  including duplicates. Only Opus books can be added.
+* **Pick one:** right-click the Book of Books and choose a book from the menu. It turns into that real book, so
+  everything about the book works as normal.
+* **Put it back:** punch the air to turn the book back into the Book of Books.
+* **Take one out:** turn the Book of Books into the book you want to remove, then sneak and press your drop key.
+
+The first time a player crafts one they get a hidden advancement called Bookception. Carrying one that holds 10 or
+more books earns the hidden challenge Magnum Opus.
+
 ## Translating
 
 Copy the default-language folder, rename it (`de_de`) and translate the files you want. Any page you skip is

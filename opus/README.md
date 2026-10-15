@@ -25,6 +25,17 @@ chapter.
 * Translations that fall back to the book's default language
 * Custom item looks, names, and tooltips for each book, plus a `/opus give` command to hand out books
 * A validator that finds broken links and bad widgets before your players do
+* A Book of Books that holds every Opus guide in a pack in a single inventory slot
+
+### Book of Books
+
+In a big pack every mod can ship its own guide. The Book of Books lets players carry them all in one slot.
+
+* **Craft it:** a book and a chest, shapeless. The first time you craft one you get the hidden "Bookception" advancement, and holding one with 10 or more guides earns the hidden "Magnum Opus" challenge.
+* **Add guides:** combine the Book of Books with Opus books in a crafting grid. Add as many as you like, duplicates included.
+* **Read one:** right-click the Book of Books and pick a guide from the menu. It becomes that real guide.
+* **Switch back:** punch the air to turn the guide back into the Book of Books.
+* **Remove a guide:** turn the Book of Books into the guide you want to remove, then sneak and press your drop key.
 
 ## Notes for Documentation
 
@@ -41,6 +52,8 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 ## Credits
 
 Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
+
+The Book of Books is heavily inspired by the [Akashic Tome](https://www.curseforge.com/minecraft/mc-mods/akashic-tome) mod by Vazkii and the Violet Moon team, and its controls are modelled on theirs so that players who know the Akashic Tome feel at home. Akashic Tome's readme describes it like this: "The Akashic Tome is meant to be used in large modpacks where every mod adds its own documentation book. Instead of cluttering your inventory, you can hold them all in one slot and swap as needed." No code or assets from Akashic Tome are used.
 
 ## License
 

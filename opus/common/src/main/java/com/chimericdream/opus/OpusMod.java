@@ -1,9 +1,13 @@
 package com.chimericdream.opus;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
+import com.chimericdream.opus.advancement.OpusTriggers;
 import com.chimericdream.opus.command.OpusCommand;
 import com.chimericdream.opus.component.OpusComponentTypes;
 import com.chimericdream.opus.item.OpusItems;
+import com.chimericdream.opus.item.TomeEvents;
+import com.chimericdream.opus.network.TomeNetworking;
+import com.chimericdream.opus.recipe.TomeCombineRecipe;
 import com.google.common.base.Suppliers;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -24,6 +28,10 @@ public final class OpusMod {
         // Touch the holder classes so their static registrations run before REGISTRY_HELPER.init() flushes.
         OpusComponentTypes.init();
         OpusItems.init();
+        TomeCombineRecipe.init();
+        TomeNetworking.init();
+        TomeEvents.init();
+        OpusTriggers.init();
 
         CommandRegistrationEvent.EVENT.register((dispatcher, context, selection) -> OpusCommand.register(dispatcher));
 
