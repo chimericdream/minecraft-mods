@@ -10,6 +10,11 @@
   right-click a hopper to copy its filter, and right-click other hoppers to paste it. Pasting uses up a blank
   filter, and sneak-clicking replaces a filter a hopper already has.
 
+#### Bug Fixes
+
+* Upgrading a Hopper Item Filter to a Diamond Hopper Item Filter with a diamond now keeps the filter's items and
+  its Include/Exclude setting instead of resetting them.
+
 #### Other Changes
 
 * The wrench is now called the **Hopper Wrench**, and it is always added, even when Minekea is installed. Minekea's wrench

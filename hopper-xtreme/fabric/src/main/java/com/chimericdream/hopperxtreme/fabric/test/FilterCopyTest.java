@@ -9,6 +9,7 @@ import com.chimericdream.hopperxtreme.item.FilterCopying.Result;
 import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.hopperxtreme.item.WrenchItem;
 import com.chimericdream.hopperxtreme.recipe.FilterCopyRecipe;
+import com.chimericdream.hopperxtreme.recipe.FilterUpgradeRecipe;
 import java.util.List;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
@@ -110,6 +111,24 @@ public class FilterCopyTest {
         NonNullList<ItemStack> remaining = recipe.getRemainingItems(input);
         expect(ItemStack.isSameItemSameComponents(remaining.get(0), source), "The configured filter should be handed back");
         expect(remaining.get(1).isEmpty(), "The blank filter should be used up");
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void upgradeRecipeKeepsContentsAndMode(GameTestHelper context) {
+        ItemStack source = configured(standard(), "exclude", new ItemStack(Items.DIAMOND), new ItemStack(Items.GOLD_INGOT));
+        CraftingInput input = grid(source, new ItemStack(Items.DIAMOND));
+        FilterUpgradeRecipe recipe = new FilterUpgradeRecipe();
+
+        expect(recipe.matches(input, context.getLevel()), "Upgrade should match a standard filter plus a diamond");
+
+        ItemStack result = recipe.assemble(input);
+        expect(result.is(diamond()), "Upgrade should produce a diamond filter");
+        expect(result.get(DataComponents.CONTAINER).equals(source.get(DataComponents.CONTAINER)), "Upgrade should keep the filter's items");
+        expect(result.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get()).equals(source.get(HopperXtremeComponentTypes.HOPPER_XTREME_FILTER_MODE_COMPONENT.get())), "Upgrade should keep the filter's mode");
+
+        expect(!recipe.matches(grid(configured(diamond(), "include", new ItemStack(Items.EMERALD)), new ItemStack(Items.DIAMOND)), context.getLevel()), "A diamond filter can't be upgraded again");
 
         context.succeed();
     }

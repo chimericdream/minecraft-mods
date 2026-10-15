@@ -6,6 +6,7 @@ import com.chimericdream.hopperxtreme.item.ModItems;
 import com.chimericdream.hopperxtreme.item.WrenchEvents;
 import com.chimericdream.hopperxtreme.network.WrenchNetworking;
 import com.chimericdream.hopperxtreme.recipe.FilterCopyRecipe;
+import com.chimericdream.hopperxtreme.recipe.FilterUpgradeRecipe;
 import com.chimericdream.hopperxtreme.registry.ModItemGroups;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
@@ -29,6 +30,7 @@ public final class HopperXtremeMod {
         ModItemGroups.init();
         HopperXtremeComponentTypes.init();
         FilterCopyRecipe.init();
+        FilterUpgradeRecipe.init();
         WrenchEvents.init();
         WrenchNetworking.init();
 
