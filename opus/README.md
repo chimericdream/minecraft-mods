@@ -32,7 +32,7 @@ chapter.
 In a big pack every mod can ship its own guide. The Book of Books lets players carry them all in one slot.
 
 * **Craft it:** a book and a chest, shapeless. The first time you craft one you get the hidden "Bookception" advancement, and holding one with 10 or more guides earns the hidden "Magnum Opus" challenge.
-* **Add guides:** combine the Book of Books with Opus books in a crafting grid. Add as many as you like, duplicates included.
+* **Add guides:** combine the Book of Books with Opus books in a crafting grid. Add as many as you like, duplicates included. Pack authors can allow other mods' guidebooks too by adding them to the `opus:book_of_books_storable` item tag.
 * **Read one:** right-click the Book of Books and pick a guide from the menu. It becomes that real guide.
 * **Switch back:** punch the air to turn the guide back into the Book of Books.
 * **Remove a guide:** turn the Book of Books into the guide you want to remove, then sneak and press your drop key.

@@ -27,7 +27,9 @@ Craft it with a book and a chest (shapeless). Players who have used the Akashic 
 familiar.
 
 * **Add books:** put the Book of Books and any Opus books in a crafting grid. You can add as many as you like,
-  including duplicates. Only Opus books can be added.
+  including duplicates. Opus books are always accepted. Any other item can be added if it is in the
+  `opus:book_of_books_storable` item tag, which is empty by default. Add your own mod's guidebook item to that
+  tag (for example with a datapack file at `data/opus/tags/item/book_of_books_storable.json`).
 * **Pick one:** right-click the Book of Books and choose a book from the menu. It turns into that real book, so
   everything about the book works as normal.
 * **Put it back:** punch the air to turn the book back into the Book of Books.

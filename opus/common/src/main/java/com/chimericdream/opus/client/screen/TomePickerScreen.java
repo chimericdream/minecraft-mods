@@ -9,6 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class TomePickerScreen extends Screen {
     private static final int PAGE_BUTTON_WIDTH = 20;
 
     private final InteractionHand hand;
-    private final List<String> books;
+    private final List<ItemStack> books;
     private int page;
 
     public TomePickerScreen(InteractionHand hand, TomeContentsComponent contents) {

@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adds guides to a Book of Books: one or more Books of Books (or books turned out of one) plus any number of plain
- * Opus books, and nothing else, make a Book of Books holding everything. Duplicates are kept.
+ * Adds books to a Book of Books: one or more Books of Books (or books turned out of one) plus any number of plain
+ * storable books (Opus guides or items in the {@code opus:book_of_books_storable} tag), and nothing else, make a Book of Books holding everything. Duplicates are kept.
  */
 public class TomeCombineRecipe extends CustomRecipe {
     private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ModInfo.MOD_ID, Registries.RECIPE_SERIALIZER);
@@ -63,7 +63,7 @@ public class TomeCombineRecipe extends CustomRecipe {
 
     @Override
     public @NotNull ItemStack assemble(@NotNull CraftingInput input) {
-        List<String> combined = new ArrayList<>();
+        List<ItemStack> combined = new ArrayList<>();
 
         for (ItemStack stack : input.items()) {
             TomeContentsComponent contents = TomeStacks.contentsOf(stack);
@@ -71,7 +71,7 @@ public class TomeCombineRecipe extends CustomRecipe {
             if (contents != null) {
                 combined.addAll(contents.books());
             } else if (TomeStacks.isPlainBook(stack)) {
-                combined.add(TomeStacks.bookId(stack));
+                combined.add(TomeStacks.plain(stack));
             }
         }
 

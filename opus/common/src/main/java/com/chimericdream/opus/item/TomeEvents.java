@@ -10,9 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Sneak-dropping a guide that was turned out of a Book of Books takes that guide out of the set: the dropped item
- * becomes a plain copy of the guide, and the player gets the Book of Books back (minus that guide) in the slot the
- * guide came from.
+ * Sneak-dropping a book that was turned out of a Book of Books takes it out of the set: the dropped item
+ * becomes a plain copy of the book, and the player gets the Book of Books back (minus that book) in the slot the
+ * book came from.
  */
 public final class TomeEvents {
     private TomeEvents() {
@@ -32,7 +32,7 @@ public final class TomeEvents {
             return EventResult.pass();
         }
 
-        entity.setItem(TomeStacks.book(contents.books().get(contents.selected())));
+        entity.setItem(TomeStacks.plain(entity.getItem()));
         giveBack(serverPlayer, TomeStacks.tome(contents.without(contents.selected())));
 
         return EventResult.pass();

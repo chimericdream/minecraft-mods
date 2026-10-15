@@ -27,16 +27,16 @@ import java.util.function.Consumer;
 import static com.chimericdream.opus.OpusMod.REGISTRY_HELPER;
 
 /**
- * Holds any number of Opus guides in one slot. Guides are added in a crafting grid ({@code TomeCombineRecipe}).
- * Right-click opens a menu to pick one, which turns this item into that guide's real {@code opus:book}; punching
- * the air turns it back, and sneak-dropping the guide takes it out of the set (see {@code TomeEvents}).
+ * Holds any number of books in one slot: Opus guides, plus any item in the {@code opus:book_of_books_storable}
+ * tag. They are added in a crafting grid ({@code TomeCombineRecipe}). Right-click opens a menu to pick one, which
+ * turns this item into that book; punching the air turns it back, and sneak-dropping the book takes it out of the set (see {@code TomeEvents}).
  *
  * <p>Inspired by the Akashic Tome mod's controls.
  */
 public class BookOfBooksItem extends Item {
     public static final Identifier ITEM_ID = Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "book_of_books");
 
-    /** How many guide names the tooltip lists before it says "and N more". */
+    /** How many book names the tooltip lists before it says "and N more". */
     private static final int TOOLTIP_LIMIT = 8;
 
     @SuppressWarnings("UnstableApiUsage")
@@ -83,7 +83,7 @@ public class BookOfBooksItem extends Item {
             return;
         }
 
-        List<String> books = contents.books();
+        List<ItemStack> books = contents.books();
         builder.accept(Component.translatable("opus.tome.tooltip.count", books.size()).withStyle(ChatFormatting.GRAY));
 
         for (int i = 0; i < Math.min(books.size(), TOOLTIP_LIMIT); i++) {
@@ -97,10 +97,15 @@ public class BookOfBooksItem extends Item {
     }
 
     /**
-     * The guide's own title, or its id when it is not installed. Book data lives in client resource packs, so on a
-     * dedicated server (and before the first reload) this is always the id.
+     * The stored book's own title. For an Opus guide that is the guide's title, or its id when it is not installed:
+     * book data lives in client resource packs, so on a dedicated server (and before the first reload) it is the id.
      */
-    public static String titleOf(String bookId) {
+    public static String titleOf(ItemStack stack) {
+        if (!stack.is(OpusItems.BOOK.get())) {
+            return stack.getHoverName().getString();
+        }
+
+        String bookId = TomeStacks.bookId(stack);
         try {
             Book book = BookRepository.get(bookId);
             if (book != null && book.meta().title() != null && !book.meta().title().isBlank()) {
