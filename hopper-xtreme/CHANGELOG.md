@@ -5,9 +5,15 @@
 * Added the Hopper X-Treme Guide, an in-game book covering every hopper, multi-hopper, hupper, glazed hopper, and
   item filter, with recipes and screenshots. Craft one from a book and a hopper, or use
   `/opus give hopperxtreme:guide`. Needs the optional Opus mod (1.2.0 or newer). New players still get a copy the first time they join a world.
+* Added **filter copying**. Put a configured filter and a blank one of the same kind in a crafting grid to get a
+  second identical filter, keeping the original. Or press **M** (rebindable) to switch the wrench to Copy / Paste mode,
+  right-click a hopper to copy its filter, and right-click other hoppers to paste it. Pasting uses up a blank
+  filter, and sneak-clicking replaces a filter a hopper already has.
 
 #### Other Changes
 
+* The wrench is now called the **Hopper Wrench**, and it is always added, even when Minekea is installed. Minekea's wrench
+  still works on hoppers too.
 * The guide moved from Patchouli to Opus, and Patchouli is no longer used. Your old Hopper X-Treme Manual (the
   Patchouli book) stops working, and its recipe is gone. Craft a new guide from a book and a hopper. Players who
   already received a book on joining will not get a second one automatically.

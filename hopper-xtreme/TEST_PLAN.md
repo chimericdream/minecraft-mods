@@ -41,6 +41,11 @@ All in `fabric/src/main/java/com/chimericdream/hopperxtreme/fabric/test/`, regis
   the installed filter item.
 * **`DeprecatedBlockConversionTest`** — deprecated filtered golden hopper converts on first tick to
   the canonical block, preserving inventory, filter, and dropping nothing.
+* **`FilterCopyTest`** — filter copy and paste. The `FilterCopyRecipe` crafting recipe (configured + blank of the
+  same tier copies contents and mode and hands the original back; rejects two configured, two blanks, mixed tiers,
+  and extra items), and the wrench's Copy/Paste logic (`FilterCopying.copyOrPaste`: copy, paste uses a blank in
+  survival and not in creative, refuse vs. sneak-overwrite, same-tier only, mode switch clears the copy). The
+  wrench's right-click event and the actionbar messages are not covered; see manual item 12.
 
 ## Manual test plan
 
@@ -81,6 +86,22 @@ NeoForge coverage).
     error; with Opus installed, first join grants the guide. With Opus older than 1.2.0 installed, the game refuses
     to start (the version range is still enforced).
 
+12. **Hopper Wrench filter copy/paste** (Fabric and NeoForge) — hold the wrench and press M (Controls > Hopper X-Treme;
+    check it also works from the off hand, does nothing with another item, and shows up once, with no conflicts, next to
+    Minekea's `=` and Effective Gear's `R`): the actionbar shows "Copy / Paste" then "Rotate". Sneak-right-clicking a
+    hopper in Rotate mode rotates it and does not change the mode. In Copy / Paste mode the wrench does not
+    rotate a hopper or a glazed terracotta block. Right-click a filtered hopper (try a plain hopper, a glazed
+    hopper, a multi-hopper, and a hupper): "Copied the filter", and the hopper's screen does not open and no
+    multi-hopper arm toggles. Right-click an empty-filter hopper with a blank filter in the inventory: it pastes
+    and one blank is used up; with no blank you get the "need a blank filter" message. Right-click a hopper that has a filter: refused,
+    and a sneak-click replaces it. A diamond filter can't replace a standard one. Log out and in: the copied filter
+    survives. In creative, paste costs nothing. With Minekea installed there is a Hopper Wrench as well as Minekea's
+    wrench, and both rotate hoppers.
+13. **Filter copy recipe** — in a crafting grid, a configured filter plus a blank of the same tier gives two
+    identical filters and the original stays in the grid (shift-click the result too). Two configured filters, two
+    blanks, or a standard with a diamond filter give nothing. The result shows up in the recipe book only if the
+    game normally lists custom recipes there; no recipe parse errors in the log.
+
 ## Recommended additional automated tests (gaps)
 
 ### GameTests — variants with zero current coverage
@@ -106,7 +127,7 @@ NeoForge coverage).
 * **`RedstoneLockTest`** — powered tiered hopper does not transfer; unpowered resumes; copper is
   immune (partially covered by the copper speed test; make the lock case explicit per tier).
 * **`WrenchInteractionTest`** — wrench-use on hoppers toggles whatever it toggles (mode/outputs);
-  assert state change + no-op on vanilla blocks.
+  assert state change + no-op on vanilla blocks. (Copy/Paste mode is covered by `FilterCopyTest`.)
 * **`DeprecatedBlockConversionTest` extension** — parameterize across *all* deprecated variants,
   not just filtered golden.
 

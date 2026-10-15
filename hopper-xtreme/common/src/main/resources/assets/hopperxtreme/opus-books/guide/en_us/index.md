@@ -13,7 +13,7 @@ gives you a whole family of hoppers that move items faster, send them to several
 * [Huppers](03-huppers/index.md): hoppers that move items up instead of down.
 * [Glazed hoppers](04-glazed-hoppers/index.md): hoppers that spit items out instead of holding them.
 * [Item filters](05-item-filters/index.md): pick exactly which items a hopper accepts.
-* [Wrench](06-wrench.md): rotate blocks and switch the sides of multi-hoppers.
+* [Hopper Wrench](06-wrench.md): rotate blocks, switch the sides of multi-hoppers, and copy filters.
 * [Old filtered hoppers](07-old-filtered-hoppers.md): what happened to the "Filtered" blocks.
 
 > [!TIP]
