@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.5.0
+
 #### New Features
 
 * Added the Effective Gear Guide, an in-game book covering trim bonuses, trim abilities, Preserving shears, and wandering trader templates. Craft one from a book and an iron helmet, or use `/opus give effectivegear:guide`. Needs the optional Opus mod (1.2.0 or newer).
