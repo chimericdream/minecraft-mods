@@ -72,3 +72,11 @@
   surface for chimeric-lib, etc.). Skip either file when nothing it covers actually changed — don't
   add an entry just to have one. **Whenever this adds a `CHANGELOG.md` entry, also run the
   `mod_version` check** from the versioning rules above in the same commit.
+- **CurseForge publishing** is opt-in per mod: add `curseforge_project_id = <id>` to the mod's
+  `gradle.properties` (Opus is the pilot). `gradle/mod-conventions.gradle` then wires
+  `me.modmuss50.mod-publish-plugin` on the fabric/neoforge subprojects: file display name
+  `[<Loader>] <mc>-<mod_version>`, changelog taken from the `### <mc> - <mod_version>` CHANGELOG section,
+  release type beta/alpha/stable from the `mod_version` suffix. The dependency slugs are listed in that
+  file and must match the mod's declared dependencies. Run `:<mod>:fabric:publishCurseforge` and
+  `:<mod>:neoforge:publishCurseforge`; add `-Ppublish_dry_run` to preview without uploading. The token
+  is `curseforge_token` in `~/.gradle/gradle.properties`, never in the repo.

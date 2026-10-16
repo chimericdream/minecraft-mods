@@ -79,3 +79,55 @@ subprojects {
         }
     }
 }
+
+// CurseForge publishing. Opt-in per mod: a mod publishes only when its gradle.properties sets
+// `curseforge_project_id`. One file per loader (the shadowJar), named "[Fabric] 26.2-1.2.0". Run with
+//   ./gradlew :<mod>:fabric:publishCurseforge :<mod>:neoforge:publishCurseforge
+// Add `-Ppublish_dry_run` to build the upload request without sending it. The API token is read from
+// `curseforge_token` in ~/.gradle/gradle.properties (never commit it).
+if (project.hasProperty('curseforge_project_id')) {
+    subprojects {
+        if (project.name == 'common') return
+
+        apply plugin: 'me.modmuss50.mod-publish-plugin'
+
+        def loaderId = project.name // 'fabric' | 'neoforge'
+        def loaderTitle = loaderId == 'neoforge' ? 'NeoForge' : 'Fabric'
+        def mcVersion = rootProject.minecraft_compatibility
+        def modVersion = project.mod_version
+
+        // The changelog section whose heading is "### <mc> - <version>", up to the next "### " heading.
+        def changelogFile = project.parent.file('CHANGELOG.md')
+        def releaseNotes = {
+            if (!changelogFile.exists()) return ''
+            def m = changelogFile.text =~ /(?ms)^### \Q${mcVersion} - ${modVersion}\E[ 	]*\R(.*?)(?=^### |\z)/
+            return m.find() ? m.group(1).trim() : ''
+        }
+
+        publishMods {
+            file = tasks.named('shadowJar').flatMap { it.archiveFile }
+            displayName = "[${loaderTitle}] ${mcVersion}-${modVersion}".toString()
+            version = "${mcVersion}-${modVersion}".toString()
+            changelog = providers.provider(releaseNotes)
+            type = modVersion =~ /-(alpha|beta)/ ? (modVersion.contains('-alpha') ? ALPHA : BETA) : STABLE
+            modLoaders.add(loaderId)
+            dryRun = providers.gradleProperty('publish_dry_run').isPresent()
+
+            curseforge {
+                projectId = project.curseforge_project_id
+                accessToken = providers.gradleProperty('curseforge_token')
+                minecraftVersions.add(mcVersion)
+                javaVersions.add(JavaVersion.VERSION_25)
+
+                // CurseForge project slugs of the mod's declared dependencies.
+                if (loaderId == 'fabric') {
+                    requires('fabric-api')
+                    optional('modmenu')
+                }
+                requires('architectury-api')
+                requires('yacl')
+                requires('chimericlib')
+            }
+        }
+    }
+}

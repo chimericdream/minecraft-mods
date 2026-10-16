@@ -83,6 +83,17 @@ git tag <project-folder>/<minecraft_compat>-<mod_version>
 **Tagging (and especially pushing a tag) is hard to reverse and affects shared state — always show the
 user the exact tag name and ask before running `git tag`, and never push tags without a separate,
 explicit go-ahead**, even if they approved the commit in the same breath. This repo's CI (`build.yml`)
-runs on every push but does not currently publish anything on tag push — distribution beyond the git tag
-(Modrinth/CurseForge, etc.) is a manual step outside this skill's scope; don't assume or invent an
-automated path for it.
+runs on every push but does not publish anything on tag push.
+
+## 8. Publish to CurseForge (only for mods with `curseforge_project_id`) � confirm first
+
+Uploading is outward-facing and can't be undone, so always ask before the real run. Check out the tagged
+commit, then dry-run and show the user the output:
+
+```
+./gradlew :<mod>:fabric:publishCurseforge :<mod>:neoforge:publishCurseforge -Ppublish_dry_run
+```
+
+The real run is the same command without `-Ppublish_dry_run` (needs `curseforge_token` in
+`~/.gradle/gradle.properties`). Setup details are in the "CurseForge publishing" bullet of
+[versioning.md](../../../docs/agents/releases/versioning.md). Modrinth is not set up.
