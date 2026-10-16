@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.2.0
+
 #### New Features
 
 * Added the Sneaky Tweaks Guide, an in-game book that explains each feature and its settings. Craft one
