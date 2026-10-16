@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 4.1.0
+
 #### New Features
 
 * Added the Shulker Stuff Guide, an in-game book covering the enchantments, the Shulker Dyeing Station, and
