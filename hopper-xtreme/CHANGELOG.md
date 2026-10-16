@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 4.2.0
+
 #### New Features
 
 * Added the Hopper X-Treme Guide, an in-game book covering every hopper, multi-hopper, hupper, glazed hopper, and
