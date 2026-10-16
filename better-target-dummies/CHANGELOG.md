@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.1.0
+
 #### New Features
 
 * Added the Better Target Dummies Guide, an in-game book covering the Target Dummy, binding mobs, the Dummy Spawn Egg, and testing damage. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a target block, or use `/opus give bettertargetdummies:guide`.
