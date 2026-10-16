@@ -1,0 +1,183 @@
+// Run-task shutdown watchdog.
+//
+// Dev-environment `run*` tasks (NeoForge runData/runClient/runServer, Fabric runGameTest, ...) can finish
+// all of their real work and then never exit, because a dependency leaves non-daemon executor threads
+// alive (see docs/MC-26.2-NOTES.md, "Build/datagen/GameTest tasks can hang after finishing"). Nothing
+// kills them, so a build can sit for an hour.
+//
+// This script watches the forked JVM's output for a "finished" sentinel:
+//
+//     NeoForge:   "Closing FML Loader" / "Clearing ModLoader"   (logged as the last thing on shutdown)
+//     Fabric:     "All N required tests passed"                 (runGameTest)
+//
+// If the JVM is still alive `watchdog.graceSeconds` (default 30) after the sentinel, the JVM and its
+// descendants (including any Architectury TransformerRuntime it spawned, which otherwise keeps the dev
+// jar locked) are force-killed. The task is then treated as successful IF the sentinel proves it finished
+// (see `isCleanFinish`); a JVM that exits non-zero on its own, or is killed without a clean sentinel,
+// still fails the task exactly as before.
+//
+// Opt out with -Pwatchdog=false. Tune the grace period with -Pwatchdog.graceSeconds=60.
+import java.nio.charset.StandardCharsets
+
+if (findProperty('watchdog') == 'false') {
+    return
+}
+
+long graceMillis = ((findProperty('watchdog.graceSeconds') ?: '30') as long) * 1000L
+
+// Task path -> state. A plain Map guarded by `watchdogLock`.
+def watchdogLock = new Object()
+def sentinelSeen = [:]   // task path -> sentinel text that was matched
+def killedTasks = [:]    // task path -> true once the watchdog killed the JVM
+def passedMarker = [:]   // task path -> true once a "tests passed" line was seen
+
+def SENTINELS = ['Closing FML Loader', 'Clearing ModLoader']
+def PASS_MARKER = ~/All \d+ required tests passed/
+
+// Watches a stream's text for sentinels, passing every byte through untouched.
+class SentinelOutputStream extends OutputStream {
+    final OutputStream delegate
+    final Closure onLine
+    final StringBuilder line = new StringBuilder()
+
+    SentinelOutputStream(OutputStream delegate, Closure onLine) {
+        this.delegate = delegate
+        this.onLine = onLine
+    }
+
+    @Override
+    void write(int b) {
+        delegate.write(b)
+        scan((char) (b & 0xFF))
+    }
+
+    @Override
+    void write(byte[] b, int off, int len) {
+        delegate.write(b, off, len)
+        for (int i = off; i < off + len; i++) {
+            scan((char) (b[i] & 0xFF))
+        }
+    }
+
+    @Override
+    void flush() {
+        delegate.flush()
+    }
+
+    private void scan(char c) {
+        if (c == (char) '\n') {
+            flushLine()
+        } else if (line.length() < 4096) {
+            line.append(c)
+        }
+    }
+
+    private void flushLine() {
+        String text = line.toString()
+        line.setLength(0)
+        try {
+            onLine(text)
+        } catch (Throwable ignored) {
+            // The watchdog must never break the task's output pipe.
+        }
+    }
+}
+
+// The forked JVM's descendants of this Gradle daemon that look like the run for `task`.
+def findRunJvms = { Task task ->
+    def modDir = (task.project.parent == rootProject ? task.project.projectDir : task.project.parent.projectDir)
+    def needles = [modDir.absolutePath, task.project.projectDir.absolutePath]
+    def children = ProcessHandle.current().children().filter { it.isAlive() }.toList()
+    def javas = children.findAll { ph ->
+        def cmd = ph.info().command().orElse('')
+        cmd.toLowerCase().contains('java') && !ph.info().commandLine().orElse('').contains('GradleWorkerMain')
+    }
+    def matched = javas.findAll { ph ->
+        def line = ph.info().commandLine().orElse('') + ' ' + ph.info().arguments().map { it.join(' ') }.orElse('')
+        needles.any { line.contains(it) }
+    }
+    // If the command line is unreadable and there is exactly one candidate, it can only be ours.
+    return matched ?: (javas.size() == 1 ? javas : [])
+}
+
+def killTree = { ProcessHandle root ->
+    root.descendants().forEach { it.destroyForcibly() }
+    root.destroyForcibly()
+}
+
+allprojects {
+    tasks.configureEach { Task task ->
+        if (!(task instanceof JavaExec) || !task.name.startsWith('run')) {
+            return
+        }
+
+        task.doFirst {
+            // The watchdog decides pass/fail itself in doLast (see below).
+            task.ignoreExitValue = true
+
+            def armed = new java.util.concurrent.atomic.AtomicBoolean(false)
+            def onLine = { String text ->
+                def hit = SENTINELS.find { text.contains(it) }
+                if (PASS_MARKER.matcher(text).find()) {
+                    synchronized (watchdogLock) { passedMarker[task.path] = true }
+                    hit = hit ?: 'tests passed'
+                }
+                if (hit == null || !armed.compareAndSet(false, true)) {
+                    return
+                }
+                synchronized (watchdogLock) { sentinelSeen[task.path] = hit }
+
+                def watcher = new Thread({
+                    Thread.sleep(graceMillis)
+                    def jvms = findRunJvms(task)
+                    if (jvms.isEmpty()) {
+                        return // exited on its own within the grace period
+                    }
+                    synchronized (watchdogLock) { killedTasks[task.path] = true }
+                    task.logger.lifecycle("[watchdog] ${task.path}: JVM still alive ${graceMillis / 1000}s after '${hit}'; killing it.")
+                    jvms.each { killTree(it) }
+                } as Runnable, "run-watchdog ${task.path}")
+                watcher.daemon = true
+                watcher.start()
+            }
+
+            task.standardOutput = new SentinelOutputStream(task.standardOutput ?: System.out, onLine)
+            task.errorOutput = new SentinelOutputStream(task.errorOutput ?: System.err, onLine)
+        }
+
+        task.doLast {
+            def exit = task.executionResult.get().exitValue
+            if (exit == 0) {
+                return
+            }
+
+            boolean killed, finished
+            synchronized (watchdogLock) {
+                killed = killedTasks[task.path] == true
+                finished = sentinelSeen[task.path] != null
+            }
+
+            // Killed by the watchdog after a clean finish: success. For test runs, "finished" must also
+            // mean the tests passed -- a hung run whose tests failed must still fail.
+            boolean isTestRun = task.name.toLowerCase().contains('gametest')
+            boolean isCleanFinish = killed && finished && (!isTestRun || passedMarker[task.path] == true)
+            if (isCleanFinish) {
+                task.logger.lifecycle("[watchdog] ${task.path}: treating watchdog kill as success (run had already finished).")
+                return
+            }
+
+            throw new GradleException("Process '${task.path}' finished with non-zero exit value ${exit}")
+        }
+    }
+}
+
+// After the build, reap Architectury TransformerRuntime JVMs that are still descended from this Gradle
+// daemon; left alive they keep the dev jar locked and break the next run. Only our own descendants.
+gradle.buildFinished {
+    try {
+        ProcessHandle.current().descendants()
+            .filter { it.isAlive() && it.info().commandLine().orElse('').contains('dev.architectury.transformer.TransformerRuntime') }
+            .forEach { it.destroyForcibly() }
+    } catch (Throwable ignored) {
+    }
+}

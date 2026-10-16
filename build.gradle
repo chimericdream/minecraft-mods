@@ -9,6 +9,7 @@ architectury {
 }
 
 apply from: 'gradle/task-logs.gradle'
+apply from: 'gradle/run-watchdog.gradle'
 
 allprojects {
     apply plugin: "java-library"

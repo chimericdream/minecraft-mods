@@ -29,3 +29,12 @@ watchdog crash, this does **not** self-terminate). **Check status every ~10 minu
 means hung, not slow. Poll the expected *output* (log tail, generated-file timestamps, whether the
 artifact already exists), not just whether the process reports completion. Full write-up (root cause,
 confirmed instances, how to find + kill the stuck `java.exe`): [MC 26.2 notes](../../MC-26.2-NOTES.md).
+
+### Run-task watchdog (auto-kill of hung `run*` JVMs)
+
+`gradle/run-watchdog.gradle` (applied from the root `build.gradle`) watches every `run*` JavaExec task's
+output for `Closing FML Loader` / `Clearing ModLoader` (NeoForge) or `All N required tests passed`
+(Fabric `runGameTest`). If the JVM is still alive 30s later it kills the JVM tree (including Architectury's
+`TransformerRuntime`) and counts the task as successful; a run that exits non-zero on its own, or a test
+run killed without the "tests passed" line, still fails. Opt out with `-Pwatchdog=false`; tune with
+`-Pwatchdog.graceSeconds=N`. Its `[watchdog]` messages go to the Gradle console, not the `logs/` files.

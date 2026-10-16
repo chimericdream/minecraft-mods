@@ -31,7 +31,10 @@ export const runDatagen = async (projects: string[]): Promise<void> => {
 
     console.log(`Running data generation for: ${taskPaths.join(', ')}`);
 
-    await $`./gradlew ${taskPaths}`;
+    // --no-parallel: a mod's Fabric runDatagen and NeoForge runData both clean the same generated/
+    // directory, so running them concurrently (or Fabric after NeoForge) wipes the other's output.
+    // Fabric tasks are queued before NeoForge tasks per mod, so sequential order is Fabric -> NeoForge.
+    await $`./gradlew --no-parallel ${taskPaths}`;
 };
 
 if (import.meta.main) {
