@@ -80,3 +80,5 @@
   file and must match the mod's declared dependencies. Run `:<mod>:fabric:publishCurseforge` and
   `:<mod>:neoforge:publishCurseforge`; add `-Ppublish_dry_run` to preview without uploading. The token
   is `curseforge_token` in `~/.gradle/gradle.properties`, never in the repo.
+  CurseForge requires an environment tag: the default is Client + Server; a client-only or server-only
+  mod sets `curseforge_environment = client|server` in its `gradle.properties`.

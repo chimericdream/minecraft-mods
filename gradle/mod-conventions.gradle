@@ -119,6 +119,13 @@ if (project.hasProperty('curseforge_project_id')) {
                 minecraftVersions.add(mcVersion)
                 javaVersions.add(JavaVersion.VERSION_25)
 
+                // CurseForge rejects uploads with no environment tag. Default is both sides; a mod that is
+                // client-only or server-only sets `curseforge_environment = client|server` in its
+                // gradle.properties.
+                def environment = project.findProperty('curseforge_environment') ?: 'both'
+                clientRequired = environment in ['both', 'client']
+                serverRequired = environment in ['both', 'server']
+
                 // CurseForge project slugs of the mod's declared dependencies.
                 if (loaderId == 'fabric') {
                     requires('fabric-api')
