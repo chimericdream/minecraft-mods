@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 5.1.1
+
 #### Changes
 
 * The config screen is now provided through Chimeric Lib, which must be updated to 6.6.0 or newer. The
