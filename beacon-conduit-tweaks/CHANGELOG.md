@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 4.2.0
+
 #### New Features
 
 * Added the Beacon & Conduit Tweaks Guide, an in-game book covering beacon and conduit range, hiding the beam, and the settings. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a glass block, or use `/opus give beaconconduittweaks:guide`.
