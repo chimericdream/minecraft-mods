@@ -1,0 +1,114 @@
+// Per-subproject task logs.
+//
+// The console output of every forked-process task (JavaExec / Exec: runGameTest, runDatagen, runData,
+// runClient, ... -- i.e. the Minecraft JVM's stdout + stderr) is teed into
+//
+//     <root>/logs/<mod-dir>/<sub-project>/<yyyy-MM-dd_HH-mm-ss>.log
+//
+// where <sub-project> is `common`, `fabric`, `neoforge`, ... (or `_project` for the mod's container
+// project). The timestamp is when this Gradle invocation was configured, so one build produces one
+// file per sub-project, with a `===== :task:path =====` header before each task's output. Root-project
+// tasks go to logs/_root/<timestamp>.log. Any task of any type that FAILS also gets a
+// `>>> :task:path FAILED: ...` line in its sub-project's file (this is how compile/test failures show
+// up). Output still goes to the console as usual. `logs/` is gitignored.
+//
+// Only exec-style tasks are teed (rather than using task.logging listeners) because, with
+// org.gradle.parallel on, Gradle attributes other tasks' progress lines and javac notes to whichever
+// task happens to be running, which would pollute the logs.
+import java.nio.charset.StandardCharsets
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+class TeeOutputStream extends OutputStream {
+    final OutputStream console
+    final OutputStream log
+
+    TeeOutputStream(OutputStream console, OutputStream log) {
+        this.console = console
+        this.log = log
+    }
+
+    @Override
+    void write(int b) {
+        console.write(b)
+        safeLog { log.write(b) }
+    }
+
+    @Override
+    void write(byte[] b, int off, int len) {
+        console.write(b, off, len)
+        safeLog { log.write(b, off, len) }
+    }
+
+    @Override
+    void flush() {
+        console.flush()
+    }
+
+    // A logging problem must never block the forked process's output pipe.
+    private void safeLog(Closure action) {
+        try {
+            synchronized (log) { action() }
+        } catch (Throwable ignored) {
+        }
+    }
+}
+
+def logStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyy-MM-dd_HH-mm-ss'))
+def logRoot = new File(rootProject.projectDir, 'logs')
+def openLogs = [:] // task path -> OutputStream onto its sub-project's log file
+def writeLock = new Object()
+
+def logFileFor = { Project p ->
+    if (p == rootProject) {
+        return new File(logRoot, "_root/${logStamp}.log")
+    }
+    if (p.parent == rootProject) {
+        return new File(logRoot, "${p.name}/_project/${logStamp}.log")
+    }
+    return new File(logRoot, "${p.parent.name}/${p.name}/${logStamp}.log")
+}
+
+// Appends a task header (and optional text) to the task's sub-project log, returning the stream.
+def openLogFor = { Task task ->
+    def file = logFileFor(task.project)
+    file.parentFile.mkdirs()
+    def out = new FileOutputStream(file, true)
+    out.write("\n===== ${task.path} =====\n".getBytes(StandardCharsets.UTF_8))
+    return out
+}
+
+
+allprojects {
+    tasks.configureEach { Task task ->
+        if (!(task instanceof JavaExec || task instanceof Exec)) {
+            return
+        }
+
+        task.doFirst {
+            def log
+            synchronized (writeLock) {
+                log = openLogFor(task)
+                openLogs[task.path] = log
+            }
+            task.standardOutput = new TeeOutputStream(task.standardOutput ?: System.out, log)
+            task.errorOutput = new TeeOutputStream(task.errorOutput ?: System.err, log)
+        }
+    }
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    def log
+    synchronized (writeLock) {
+        log = openLogs.remove(task.path)
+    }
+
+    if (state.failure != null) {
+        if (log == null) {
+            log = openLogFor(task)
+        }
+        log.write("\n>>> ${task.path} FAILED: ${state.failure.message}\n".getBytes(StandardCharsets.UTF_8))
+    }
+
+    log?.close()
+}

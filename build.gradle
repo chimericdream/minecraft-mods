@@ -8,6 +8,8 @@ architectury {
     minecraft = project.minecraft_version
 }
 
+apply from: 'gradle/task-logs.gradle'
+
 allprojects {
     apply plugin: "java-library"
     apply plugin: 'architectury-plugin'
