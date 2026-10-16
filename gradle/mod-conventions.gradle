@@ -84,7 +84,8 @@ subprojects {
 // `curseforge_project_id`. One file per loader (the shadowJar), named "[Fabric] 26.2-1.2.0". Run with
 //   ./gradlew :<mod>:fabric:publishCurseforge :<mod>:neoforge:publishCurseforge
 // Add `-Ppublish_dry_run` to build the upload request without sending it. The API token is read from
-// `curseforge_token` in ~/.gradle/gradle.properties (never commit it).
+// `curseforge_token` in ~/.gradle/gradle.properties (never commit it). Optional per-mod overrides
+// (curseforge_environment, curseforge_requires, curseforge_optional) are documented in the mod template.
 if (project.hasProperty('curseforge_project_id')) {
     subprojects {
         if (project.name == 'common') return
@@ -126,14 +127,24 @@ if (project.hasProperty('curseforge_project_id')) {
                 clientRequired = environment in ['both', 'client']
                 serverRequired = environment in ['both', 'server']
 
-                // CurseForge project slugs of the mod's declared dependencies.
-                if (loaderId == 'fabric') {
-                    requires('fabric-api')
-                    optional('modmenu')
+                // Dependencies, as CurseForge project slugs. Defaults match the mod template; a mod overrides
+                // a whole list with a comma-separated `curseforge_requires` / `curseforge_optional` in its
+                // gradle.properties (empty value = none). fabric-api is always added on Fabric.
+                def slugs = { String key, String fallback ->
+                    // An explicitly empty value means "none", so only fall back when the property is unset.
+                    def raw = project.findProperty(key)
+                    ((raw == null ? fallback : raw) as String).split(',')*.trim().findAll { it }
                 }
-                requires('architectury-api')
-                requires('yacl')
-                requires('chimericlib')
+                def required = new LinkedHashSet(slugs('curseforge_requires', 'architectury-api,yacl,chimericlib'))
+                def optionalDeps = new LinkedHashSet(slugs('curseforge_optional', loaderId == 'fabric' ? 'modmenu' : ''))
+                if (loaderId == 'fabric') required.add('fabric-api')
+                // chimeric-lib is itself the default "chimericlib" dependency; it must never depend on itself.
+                if (project.parent.name == 'chimeric-lib') {
+                    required.remove('chimericlib')
+                    optionalDeps.remove('chimericlib')
+                }
+                required.each { requires(it) }
+                optionalDeps.each { optional(it) }
             }
         }
     }
