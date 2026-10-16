@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.1.0
+
 #### New Features
 
 * Added the Better Portal Linking Guide, an in-game book covering portal addresses and how links are chosen. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a block of obsidian, or use `/opus give betterportallinking:guide`.
