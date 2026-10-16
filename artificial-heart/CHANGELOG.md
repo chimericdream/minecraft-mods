@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 3.2.0
+
 #### New Features
 
 * Added the Artificial Heart Guide, an in-game book covering the decorative hearts and eyeblossoms, pale pumpkins, and creaking golems. Install the optional Opus mod (1.2.0 or newer) to get it. Craft one from a book and a pale pumpkin, or use `/opus give artificialheart:guide`.
