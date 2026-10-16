@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.3.0
+
 #### New Features
 
 - New **Book of Books** that holds every Opus guide in your pack in a single inventory slot. Craft it with a book and a chest. It is inspired by the Akashic Tome mod, and works the same way: combine it with Opus books in a crafting grid to add them (duplicates are fine), right-click it to pick a guide from a menu, punch the air to turn the guide back into the Book of Books, and sneak and drop a guide to take it out of the set. Pack authors can let it hold other mods' guidebooks by adding those items to the new `opus:book_of_books_storable` item tag, which is empty by default.
