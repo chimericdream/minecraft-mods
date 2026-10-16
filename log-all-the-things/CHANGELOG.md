@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 1.1.0
+
 #### New Features
 
 * Added the Log All the Things! Guide, an in-game book covering lava-, window-, carpet-, and snow-logging. Craft one from a book and a lava bucket, or use `/opus give logallthethings:guide`. Needs the optional Opus mod (1.2.0 or newer).
