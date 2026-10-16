@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+
+### 26.2 - 7.1.0
+
 #### New Features
 
 * Added the Miniblock Merchants Guide, an in-game book covering conversion items, every profession, trading, and the config. Craft one from a book and a painting, or use `/opus give miniblockmerchants:guide`. Install the optional Opus mod (1.2.0 or newer) to get it.
