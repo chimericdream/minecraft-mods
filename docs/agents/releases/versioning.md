@@ -31,8 +31,13 @@
     minor-level pre-release (`x.(y+1).0-beta.0`) instead — e.g. `6.0.0` → (first fix) `6.0.1-beta.0` →
     (later feature) `6.1.0-beta.0`. Once escalated to minor for a cycle, further fixes or features in
     that same cycle don't downgrade it back to patch.
+- **"Bump" is not "release".** When the user says "bump" (e.g. "bump opus to the next beta"), only
+  change `mod_version` in `gradle.properties`, to the right next pre-release version per the rules
+  above. Do not retitle the changelog heading, run release datagen, make a `release(...)` commit, or tag.
+  The full release process runs only on explicit release language ("cut a release", "tag", "release
+  <mod>", "cut a beta", "publish").
 - **When asked to "cut a release" with no other qualifier, that means a final release.** If
-  `mod_version` is currently `a.b.c-beta.x`, bump it straight to `a.b.c` (update `mod_version`, retitle
+  `mod_version` is currently `a.b.c-beta.x`, set it straight to `a.b.c` (update `mod_version`, retitle
   the changelog heading, tag `a.b.c`) — do not tag the beta first and promote it in a separate step.
   Only cut an actual beta tag (`-beta.x`) when the user explicitly asks for a beta/pre-release.
 - **Check `mod_version` every time you touch `CHANGELOG.md`, not on a separate cadence.** Whenever a

@@ -1,6 +1,6 @@
 ---
 name: mc-cut-release
-description: Step-by-step procedure for cutting a tagged release (beta or final) of one mod in this monorepo — bump mod_version, retitle the CHANGELOG heading, run scoped datagen, commit, and tag. Use when the user asks to "cut a release", "tag a release", "release <mod>", "cut a beta", or "publish <mod>".
+description: Step-by-step procedure for cutting a tagged release (beta or final) of one mod in this monorepo — set mod_version, retitle the CHANGELOG heading, run scoped datagen, commit, and tag. Use when the user asks to "cut a release", "tag a release", "release <mod>", "cut a beta", or "publish <mod>". Do NOT use for "bump" / "bump the version" - that only means editing mod_version in gradle.properties.
 ---
 
 # Cutting a release
@@ -12,6 +12,12 @@ and that doc ever disagree, the doc wins; update this skill to match rather than
 of it.
 
 ## 0. Confirm scope before touching anything
+
+- **Is this actually a release request?** The word "bump" (e.g. "bump opus to the next beta") means
+  *only* update `mod_version` in `gradle.properties` (per the next-pre-release rules in
+  versioning.md) - no dated changelog heading, no datagen run, no release commit, no tag. Run this
+  skill only for explicit release language: "cut a release", "tag", "release <mod>", "cut a beta",
+  "publish". If it's ambiguous, ask.
 
 - **Which mod?** One project folder = one release; releases are never cross-mod.
 - **Final or beta?** "Cut a release" with no qualifier means **final** — bump straight to `a.b.c` even
