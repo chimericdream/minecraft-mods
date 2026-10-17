@@ -1,6 +1,12 @@
 ### Unreleased changes
 
 
+### 26.2 - 6.2.1
+
+#### Bug Fixes
+
+* Fixed the Fabric version failing to load its access widener, which could cause a crash or a black screen on startup. Only the 26.2 release was affected.
+
 ### 26.2 - 6.2.0
 
 #### New Features
