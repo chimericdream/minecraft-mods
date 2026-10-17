@@ -72,7 +72,7 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
     confirm baby villagers grow up at the normal vanilla rate on both paths.
 12. **Config screen** — all options appear in the Trading / Zombie Conversion / Villager Growth /
     Misc sections and persist.
-13. **Guide book** � craft a book and an emerald: you get the Villager Tweaks Guide. `/opus give villagertweaks:guide`
+13. **Guide book** — craft a book and an emerald: you get the Villager Tweaks Guide. `/opus give villagertweaks:guide`
     gives the same book. Open it: every page renders, links work, and the Bagged Villager item widgets show.
     Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log). With Opus older than 1.2.0 installed, the game refuses to start.
 

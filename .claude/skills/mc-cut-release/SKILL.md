@@ -91,7 +91,7 @@ user the exact tag name and ask before running `git tag`, and never push tags wi
 explicit go-ahead**, even if they approved the commit in the same breath. This repo's CI (`build.yml`)
 runs on every push but does not publish anything on tag push.
 
-## 8. Publish to CurseForge (only for mods with `curseforge_project_id`) — confirm first
+## 8. Publish to CurseForge (only for mods with `curseforge_project_id`) â€” confirm first
 
 Uploading is outward-facing and can't be undone, so always ask before the real run. Check out the tagged
 commit, then dry-run and show the user the output:

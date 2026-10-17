@@ -47,17 +47,17 @@ Setup: new creative world, `/give @s opus:book`.
 
 Setup: survival or creative world with `/give @s opus:book` a few times, plus `/give @s opus:book[opus:book_id={book_id:"mymod:x"}]`.
 
-1. **Craft** — a book and a chest, shapeless, make `opus:book_of_books`. An "Opus" tab is already in the advancements screen (granted on join, no toast); the first craft shows a "Bookception" toast, and that advancement stays hidden under the tab until then. A second craft shows nothing.
-1a. **Magnum Opus** — a Book of Books holding 10+ guides in the inventory grants the hidden "Magnum Opus" challenge within a second; 9 guides does not.
-2. **Empty** — right-clicking an empty Book of Books shows "This Book of Books is empty..." on the action bar and opens no menu. The tooltip says it is empty.
-3. **Combine** — Book of Books + two Opus books in the grid gives a Book of Books whose tooltip lists both by title and says "Holds 2 guides". Adding a duplicate adds a third entry. Adding anything that is not an Opus book (a vanilla book, a stick) gives no result. A book and nothing else, or two plain books without a Book of Books, give no result.
-4. **Merge** — two Books of Books in the grid merge into one holding everything.
-5. **Pick** — right-click the full Book of Books: a menu lists each guide by title (an uninstalled id shows as the id). Picking one turns the held item into that real guide; right-click opens it. The tooltip says it is part of a Book of Books. With more than seven guides the menu pages with `<` / `>`. Works from the off hand too.
-6. **Revert** — punch the air with the guide in the main hand: it turns back into the Book of Books with the same contents. Punching a block or mob does not revert it.
-7. **Remove** — turn the Book of Books into a guide, sneak and press drop: a plain guide drops, and the Book of Books (minus that guide, one fewer duplicate if there were several) is back in the same hotbar slot. Without sneaking, the guide drops as-is and keeps its Book of Books data.
+1. **Craft** â€” a book and a chest, shapeless, make `opus:book_of_books`. An "Opus" tab is already in the advancements screen (granted on join, no toast); the first craft shows a "Bookception" toast, and that advancement stays hidden under the tab until then. A second craft shows nothing.
+1a. **Magnum Opus** â€” a Book of Books holding 10+ guides in the inventory grants the hidden "Magnum Opus" challenge within a second; 9 guides does not.
+2. **Empty** â€” right-clicking an empty Book of Books shows "This Book of Books is empty..." on the action bar and opens no menu. The tooltip says it is empty.
+3. **Combine** â€” Book of Books + two Opus books in the grid gives a Book of Books whose tooltip lists both by title and says "Holds 2 guides". Adding a duplicate adds a third entry. Adding anything that is not an Opus book (a vanilla book, a stick) gives no result. A book and nothing else, or two plain books without a Book of Books, give no result.
+4. **Merge** â€” two Books of Books in the grid merge into one holding everything.
+5. **Pick** â€” right-click the full Book of Books: a menu lists each guide by title (an uninstalled id shows as the id). Picking one turns the held item into that real guide; right-click opens it. The tooltip says it is part of a Book of Books. With more than seven guides the menu pages with `<` / `>`. Works from the off hand too.
+6. **Revert** â€” punch the air with the guide in the main hand: it turns back into the Book of Books with the same contents. Punching a block or mob does not revert it.
+7. **Remove** â€” turn the Book of Books into a guide, sneak and press drop: a plain guide drops, and the Book of Books (minus that guide, one fewer duplicate if there were several) is back in the same hotbar slot. Without sneaking, the guide drops as-is and keeps its Book of Books data.
 7a. **Tagged items** - add `{"values":["minecraft:written_book"]}` (or any item) to `data/opus/tags/item/book_of_books_storable.json` in a datapack. That item can now be combined into a Book of Books (its name shows in the tooltip and picker), picked, punched back, and sneak-dropped like a guide, and keeps its own data (a written book keeps its text). Removing it from the tag stops new ones being added; the default (empty) tag still accepts Opus guides.
-8. **Crafting with a turned-out guide** — a guide turned out of a Book of Books can be used in the grid as the Book of Books (the result holds everything).
-9. **Dedicated server** — the mod loads without errors; picking, reverting and removing all work for a remote client.
+8. **Crafting with a turned-out guide** â€” a guide turned out of a Book of Books can be used in the grid as the Book of Books (the result holds everything).
+9. **Dedicated server** â€” the mod loads without errors; picking, reverting and removing all work for a remote client.
 
 ## `/opus give` (manual)
 
