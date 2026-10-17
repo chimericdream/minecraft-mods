@@ -157,6 +157,14 @@ subprojects {
     }
 
     if (project.name == 'fabric') {
+        // Loom adds "accessWidener" to this module's fabric.mod.json (from loom.accessWidenerPath,
+        // which points at :common), but the file itself must also be present in the fabric
+        // resources. Without it, the dev launch fails with "Missing classTweaker file" and
+        // consumer mods' genSources fail reading chimeric-lib's jar.
+        processResources {
+            from(project(':' + project.parent.name + ':common').loom.accessWidenerPath)
+        }
+
         fabricApi {
             configureTests {
                 createSourceSet = true
