@@ -7,13 +7,17 @@ import com.chimericdream.opus.item.OpusItems;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.chimericdream.opus.network.BookCatalog;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
@@ -22,7 +26,7 @@ import static net.minecraft.commands.Commands.literal;
  * {@code /opus give [<book>]}: hands the running player an Opus book. Open to everyone unless
  * {@code opsOnly} is set in {@code opus-guides.json}; the check lives in the permission requirement so it is
  * enforced on the server. The server cannot know which books exist (they are client-side resources), so any
- * well-formed id is accepted.
+ * well-formed id is accepted. Tab-completion offers the books the player's own client reported ({@link BookCatalog}).
  */
 public final class OpusCommand {
     private OpusCommand() {
@@ -35,6 +39,11 @@ public final class OpusCommand {
                     new net.minecraft.server.permissions.Permission.HasCommandLevel(net.minecraft.server.permissions.PermissionLevel.GAMEMASTERS)))
                 .executes(ctx -> give(ctx, OpusGuidesConfig.defaultGuide()))
                 .then(argument("book", IdentifierArgument.id())
+                    .suggests((ctx, builder) -> {
+                        ServerPlayer player = ctx.getSource().getPlayer();
+                        return SharedSuggestionProvider.suggestResource(
+                            player == null ? List.<Identifier>of() : BookCatalog.booksFor(player), builder);
+                    })
                     .executes(ctx -> give(ctx, ctx.getArgument("book", Identifier.class).toString())))));
     }
 

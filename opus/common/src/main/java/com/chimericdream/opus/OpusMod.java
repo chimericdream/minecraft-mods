@@ -6,6 +6,7 @@ import com.chimericdream.opus.command.OpusCommand;
 import com.chimericdream.opus.component.OpusComponentTypes;
 import com.chimericdream.opus.item.OpusItems;
 import com.chimericdream.opus.item.TomeEvents;
+import com.chimericdream.opus.network.BookCatalog;
 import com.chimericdream.opus.network.TomeNetworking;
 import com.chimericdream.opus.recipe.TomeCombineRecipe;
 import com.google.common.base.Suppliers;
@@ -30,6 +31,7 @@ public final class OpusMod {
         OpusItems.init();
         TomeCombineRecipe.init();
         TomeNetworking.init();
+        BookCatalog.init();
         TomeEvents.init();
         OpusTriggers.init();
 

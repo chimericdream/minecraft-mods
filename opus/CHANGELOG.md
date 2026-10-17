@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+#### New Features
+
+* `/opus give` now suggests the books you have installed as you type, including on servers.
 
 ### 26.2 - 1.3.1
 

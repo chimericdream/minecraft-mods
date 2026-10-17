@@ -26,6 +26,7 @@ public class OpusReloadListener implements ResourceManagerReloadListener {
     public void onResourceManagerReload(@NotNull ResourceManager manager) {
         ImageTextures.clear();
         BookRepository.reload(manager);
+        BookListSync.send();
     }
 
     @Override

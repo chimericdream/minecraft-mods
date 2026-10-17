@@ -1,6 +1,7 @@
 package com.chimericdream.opus.client;
 
 import com.chimericdream.opus.OpusMod;
+import com.chimericdream.opus.client.book.BookListSync;
 import com.chimericdream.opus.client.book.BookRepository;
 import com.chimericdream.opus.client.book.OpusReloadListener;
 import com.chimericdream.opus.client.screen.BookMissingScreen;
@@ -35,6 +36,7 @@ public final class OpusClient {
     public static void init() {
         Keybindings.init();
         OpusReloadListener.register();
+        BookListSync.init();
 
         // "Punch the air" turns a guide that came out of a Book of Books back into the Book of Books.
         InteractionEvent.CLIENT_LEFT_CLICK_AIR.register((player, hand) -> {

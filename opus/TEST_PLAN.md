@@ -63,4 +63,5 @@ Setup: survival or creative world with `/give @s opus:book` a few times, plus `/
 
 - On a dedicated server, as a non-op: `/opus give` gives the guide; `/opus give mymod:x` gives a book with that id; `/opus give Bad Id` errors.
 - Set `"opsOnly": true` in `config/opus-guides.json` (no restart): a non-op no longer sees or can run the command; an op still can.
+- Tab-completion: type `/opus give ` and press Tab: every installed book id is offered (singleplayer and dedicated server). After `F3+T` with a pack that adds or removes a book, the suggestions update without rejoining. A client without Opus gets no suggestions but the command still works.
 - Set `"defaultGuide"` to another id: `/opus give` uses it. A malformed id logs a warning and falls back to `opus:guide`.
