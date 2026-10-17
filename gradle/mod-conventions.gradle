@@ -41,6 +41,25 @@ subprojects {
         filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
             expand(tokens)
         }
+
+        // Fabric only applies an access widener at runtime if fabric.mod.json names it. The committed
+        // file deliberately omits the field (it breaks the IDE when declared alongside Loom's
+        // accessWidenerPath), and `bun run build` adds it transiently. Add it here too so a plain
+        // `./gradlew` build (e.g. publishCurseforge) produces a working jar. Idempotent: skipped if the
+        // source file already has the field.
+        if (project.name == 'fabric') {
+            def awName = "${project.mod_id}.accesswidener".toString()
+            def awFile = project.parent.file("common/src/main/resources/${awName}")
+            def modJsonFile = project.file('src/main/resources/fabric.mod.json')
+            inputs.property 'accessWidener', awFile.exists()
+            if (awFile.exists() && modJsonFile.exists() && !modJsonFile.text.contains('"accessWidener"')) {
+                filesMatching('fabric.mod.json') {
+                    filter { String line ->
+                        line.matches(/^\s*"depends"\s*:.*/) ? line.replaceFirst(/^(\s*)/, '$1"accessWidener": "' + awName + '",\n$1') : line
+                    }
+                }
+            }
+        }
     }
 
     // The platform subprojects (fabric/neoforge) bundle their common code with the Shadow plugin.
