@@ -82,8 +82,8 @@
   is `curseforge_token` in `~/.gradle/gradle.properties`, never in the repo.
   CurseForge requires an environment tag: the default is Client + Server; a client-only or server-only
   mod sets `curseforge_environment = client|server` in its `gradle.properties`.
-  Dependencies default to required `architectury-api,yacl,chimericlib` (+ `fabric-api` on Fabric) and
-  optional `modmenu` (Fabric); override with comma-separated `curseforge_requires` /
+  Dependencies default to required `architectury-api,yacl,chimericlib` and no optional ones; Fabric always adds
+  required `fabric-api` and optional `modmenu`. Override with comma-separated `curseforge_requires` /
   `curseforge_optional` (the commented lines in `.bun-create/mod/gradle.properties.tpl`); an empty value
   means none. chimeric-lib never lists itself as a dependency and overrides `curseforge_requires` to
   `architectury-api` (it has no YACL dependency).

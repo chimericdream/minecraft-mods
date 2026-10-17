@@ -129,15 +129,19 @@ if (project.hasProperty('curseforge_project_id')) {
 
                 // Dependencies, as CurseForge project slugs. Defaults match the mod template; a mod overrides
                 // a whole list with a comma-separated `curseforge_requires` / `curseforge_optional` in its
-                // gradle.properties (empty value = none). fabric-api is always added on Fabric.
+                // gradle.properties (empty value = none). On Fabric, fabric-api (required) and modmenu (optional) are
+                // always added; Mod Menu has no NeoForge version.
                 def slugs = { String key, String fallback ->
                     // An explicitly empty value means "none", so only fall back when the property is unset.
                     def raw = project.findProperty(key)
                     ((raw == null ? fallback : raw) as String).split(',')*.trim().findAll { it }
                 }
                 def required = new LinkedHashSet(slugs('curseforge_requires', 'architectury-api,yacl,chimericlib'))
-                def optionalDeps = new LinkedHashSet(slugs('curseforge_optional', loaderId == 'fabric' ? 'modmenu' : ''))
-                if (loaderId == 'fabric') required.add('fabric-api')
+                def optionalDeps = new LinkedHashSet(slugs('curseforge_optional', ''))
+                if (loaderId == 'fabric') {
+                    required.add('fabric-api')
+                    optionalDeps.add('modmenu')
+                }
                 // chimeric-lib is itself the default "chimericlib" dependency; it must never depend on itself.
                 if (project.parent.name == 'chimeric-lib') {
                     required.remove('chimericlib')

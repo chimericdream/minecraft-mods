@@ -15,7 +15,7 @@ minecraft_compat = {{MC_COMPAT}}
 # curseforge_project_id =
 # Default: both. Use client or server for a mod that only runs on one side.
 # curseforge_environment = both
-# Default: architectury-api,yacl,chimericlib (fabric-api is always added on Fabric). Empty = none.
+# Default: architectury-api,yacl,chimericlib. Empty = none. (fabric-api is always added on Fabric.)
 # curseforge_requires = architectury-api,yacl,chimericlib
-# Default: modmenu on Fabric, none on NeoForge (e.g. add the Opus slug if the guide book is optional).
-# curseforge_optional = modmenu
+# Default: none. Use `opus` if the mod's guide book is optional. (modmenu is always added on Fabric.)
+# curseforge_optional = opus
