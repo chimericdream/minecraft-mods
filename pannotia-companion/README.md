@@ -23,6 +23,7 @@ and isn't meant to be used or supported on its own.
   trades and trades added by other mods are left alone.
 * **Extra mob drops**: mob heads, sand from husks, dragon eggs/elytra/heads from the Ender Dragon, and extra shulker
   shells with Looting. These are added on top of existing loot, so other mods' loot changes keep working.
+* **Beacon bases**: copper, emerald, quartz, amethyst and other storage blocks work as beacon bases.
 * **Ancient debris** drops netherite scrap instead of itself, unless mined with Silk Touch.
 * **Recipes**: mini block stonecutting, stair/slab/dye/coral/glass/concrete conveniences, and a few other pack recipes. Some give the same result as a vanilla recipe from the same ingredients, so the pack needs a mod like Polymorph to choose between them.
 

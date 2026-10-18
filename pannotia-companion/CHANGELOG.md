@@ -6,3 +6,4 @@
 * Ancient debris now drops netherite scrap unless mined with Silk Touch.
 * Added the pack's custom recipes and item tags. They all live in this mod's own namespace (none replace vanilla recipes), so a mod like Polymorph is needed to pick between recipes with the same ingredients.
 * Fabric only: the NeoForge version was removed.
+* Copper, emerald, quartz, amethyst and other storage blocks can now be used as beacon bases.
