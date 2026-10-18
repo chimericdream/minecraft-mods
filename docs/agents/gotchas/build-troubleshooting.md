@@ -38,3 +38,25 @@ output for `Closing FML Loader` / `Clearing ModLoader` (NeoForge) or `All N requ
 `TransformerRuntime`) and counts the task as successful; a run that exits non-zero on its own, or a test
 run killed without the "tests passed" line, still fails. Opt out with `-Pwatchdog=false`; tune with
 `-Pwatchdog.graceSeconds=N`. Its `[watchdog]` messages go to the Gradle console, not the `logs/` files.
+
+### Slow Gradle startup: configuration-on-demand and the configuration cache
+
+Loom's per-project `afterEvaluate` costs ~1-2s x ~130 projects, so configuring everything took 2-2.5 min
+before any task started. `org.gradle.configureondemand=true` (in `gradle.properties`) configures only the
+projects a qualified task path needs (`:mod:fabric:runClient` ~10s). Unqualified tasks (`build`,
+`runData` with no path) still configure everything. Things that make this safe — keep them:
+
+- `build.gradle` applies Loom first to the mods named in the requested tasks. Loom registers its
+  `jarManifestService_<project NAME>` build service via `registerIfAbsent`, so the first project of each name
+  (`common`/`fabric`/`neoforge`) supplies the params for every mod. If that is an unevaluated project, every
+  `jar` task fails with "Cannot get MinecraftProvider before it has been setup".
+- Each `:fabric`/`:neoforge` evaluates after its `:common` sibling (`beforeEvaluate { evaluationDependsOn }`),
+  otherwise "accessWidenerPath is final and cannot be changed any further".
+- `-Dorg.gradle.configureondemand=false` is the escape hatch if a new configure-order error appears.
+
+The Gradle **configuration cache** stays off: `--configuration-cache` works for compile-style tasks (~1-2s
+startup on a hit) but run/jar tasks fail inside Loom (`JarManifestService`) and Architectury
+(`prepareArchitecturyTransformer` reads `Task.project`). `task-logs.gradle` and `run-watchdog.gradle` are
+already written as build services so they are not the blocker. Don't make closures in those services read
+`private` members — Gradle's generated subclass breaks that silently and the watchdog stops firing.
+`~/.gradle/gradle.properties` overrides the project's `org.gradle.jvmargs`, so repeat `-Xmx8G` there.

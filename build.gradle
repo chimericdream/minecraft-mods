@@ -34,6 +34,20 @@ allprojects {
     }
 }
 
+// Loom registers a build service per project NAME ("jarManifestService_fabric", ..._common, ..._neoforge)
+// via registerIfAbsent, so the FIRST project of each name to apply Loom supplies the parameters (its
+// MinecraftProvider) for every mod's jar task. We apply Loom eagerly to all subprojects, in path order,
+// so by default that is all-hallows-steve's -- which configuration-on-demand never evaluates, leaving
+// its provider unset ("Cannot get MinecraftProvider before it has been setup" in every jar task).
+// Applying Loom first to the mods named in the requested tasks makes the registrant a project that
+// is guaranteed to be evaluated. (Unqualified tasks like `build` evaluate every project anyway.)
+def requestedMods = gradle.startParameter.taskNames
+    .findAll { it.startsWith(':') && it.count(':') >= 2 }
+    .collect { it.split(':')[1] } as Set
+subprojects.sort(false) { p ->
+    requestedMods.contains(p.parent?.name == rootProject.name ? p.name : p.parent?.name) ? 0 : 1
+}.each { it.pluginManager.apply('dev.architectury.loom-no-remap') }
+
 subprojects {
     // Under configuration-on-demand, projects are no longer evaluated in tree order, so a platform
     // project can be evaluated before its sibling :common has set loom.accessWidenerPath (Loom
