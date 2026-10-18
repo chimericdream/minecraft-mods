@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+#### New Features
+
+* Make more blocks mineable with axes, hoes, pickaxes, shovels, and shears.
 
 ### 26.2 - 1.5.1
 
