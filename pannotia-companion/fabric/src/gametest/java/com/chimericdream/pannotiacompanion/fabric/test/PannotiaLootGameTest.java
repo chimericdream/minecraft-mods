@@ -2,6 +2,7 @@ package com.chimericdream.pannotiacompanion.fabric.test;
 
 import com.chimericdream.pannotiacompanion.ModInfo;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
@@ -66,6 +67,28 @@ public class PannotiaLootGameTest {
         }
         if (drops.stream().anyMatch(stack -> stack.is(Items.ANCIENT_DEBRIS))) {
             throw context.assertionException("Ancient debris should not drop without Silk Touch: " + drops);
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void welcomeRewardGivesTheGuideBook(GameTestHelper context) {
+        var level = context.getLevel();
+        LootTable table = level.getServer().reloadableRegistries().lookup().lookupOrThrow(Registries.LOOT_TABLE)
+            .getOrThrow(ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "gameplay/welcome_guide"))).value();
+        var player = context.makeMockServerPlayerInLevel();
+        LootParams params = new LootParams.Builder(level)
+            .withParameter(LootContextParams.THIS_ENTITY, player)
+            .withParameter(LootContextParams.ORIGIN, player.position())
+            .create(LootContextParamSets.ADVANCEMENT_REWARD);
+
+        List<ItemStack> drops = table.getRandomItems(params);
+        if (drops.size() != 1 || !BuiltInRegistries.ITEM.getKey(drops.getFirst().getItem()).toString().equals("opus:book")) {
+            throw context.assertionException("Expected a single opus:book, got " + drops);
+        }
+        if (!drops.getFirst().getComponentsPatch().toString().contains("pannotia:pannotia")) {
+            throw context.assertionException("Guide book is missing its book id: " + drops.getFirst());
         }
 
         context.succeed();
