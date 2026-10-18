@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:polished_deepslate"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Polished Deepslate",
+      "minecraft:profile": {
+        "id": [
+          1965415459,
+          -840879035,
+          -1506153632,
+          -85573581
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjFkMDIyNTY2OTNjYWYwODFlNGM1ZmMzMDQ5MTc5YmZkNTVjMWU3NmFmYWI5ZTExMjZiYmQ3NjQzZWRjZThkYSJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

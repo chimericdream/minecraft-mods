@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "impulseSV",
+      "minecraft:profile": {
+        "id": [
+          -1754502676,
+          1436825612,
+          -1438196041,
+          -427117527
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzcyNTFjODYwNTU4YTU2YzA0ZjYwZTEwNzA1MGI3NzkxMzgwYTgwZDRlYTBhYjZhMjdiOTc5NzljYjhmYmM2ZCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

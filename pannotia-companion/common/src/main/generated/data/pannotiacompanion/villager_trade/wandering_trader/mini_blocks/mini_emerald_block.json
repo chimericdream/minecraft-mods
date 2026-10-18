@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:emerald_block"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Emerald Block",
+      "minecraft:profile": {
+        "id": [
+          971028204,
+          -934334402,
+          -1609149002,
+          1994846914
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWFiOGZhNzY1NTU1MTVlMmRjYmUzODMzNmM2OTE4NDFhOWMyM2Q5OWM4OGY2NWQ5NmY0NDQ3Nzc1YmNjMTZlYiJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

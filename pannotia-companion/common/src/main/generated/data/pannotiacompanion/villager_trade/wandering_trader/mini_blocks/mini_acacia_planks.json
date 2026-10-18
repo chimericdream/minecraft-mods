@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:acacia_planks"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Acacia Planks",
+      "minecraft:profile": {
+        "id": [
+          -2144418066,
+          -1752547968,
+          -1360939224,
+          -1448136923
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzAxNjk2NmY0ZjNkYWU2NTI0ODYxZTZjYzU2MzE3NDk5MDcwMWJlYWUyNjI3NzEyNzE4YzUxMGYzMzNjNmM4MyJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:ochre_froglight"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Ochre Froglight",
+      "minecraft:profile": {
+        "id": [
+          625245154,
+          -961072785,
+          -1393910549,
+          933614388
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzEzMWUyZGFlNjkyMTg3ZWQzYTYyMTc1ZWU2YmYwOGUzYjg5MWFkMjBkZTk2YmVlMDNkNTQ4M2I0MDBlMmVhOSJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

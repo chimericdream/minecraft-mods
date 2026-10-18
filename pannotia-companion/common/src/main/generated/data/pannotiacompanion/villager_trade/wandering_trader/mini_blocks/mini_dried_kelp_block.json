@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:dried_kelp_block"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Dried Kelp Block",
+      "minecraft:profile": {
+        "id": [
+          1805730815,
+          -442092698,
+          -1408916703,
+          1847550433
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjgwNWNhZjNkMDJlMzVlNGFhZGMxOWFmMTVlODI3OTAxNzdmMWNkN2I3OWY0ZjViODhkOTQzYWM2YmUyMDNhMSJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

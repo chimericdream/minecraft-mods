@@ -1,0 +1,26 @@
+{
+    "schemaVersion": 1,
+    "id": "pannotiacompanion_test",
+    "version": "1.0.0",
+    "name": "Pannotia Companion GameTest",
+    "description": "Test-only GameTests for Pannotia Companion. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.pannotiacompanion.fabric.test.PannotiaLootGameTest",
+            "com.chimericdream.pannotiacompanion.fabric.test.PannotiaTradeGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "pannotiacompanion": "*"
+    }
+}

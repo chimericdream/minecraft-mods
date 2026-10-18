@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "GoodTimesWithScar",
+      "minecraft:profile": {
+        "id": [
+          1562343171,
+          -60998619,
+          -1356686416,
+          774827816
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODFiNjRiYWU5ODc0Mzc4YWNkM2Y5YjdiNjRjODRkNWZmYmUzYzA2MjcwZDM4NGUyZmViYTQ1NWVlZGIyYTkxNiJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

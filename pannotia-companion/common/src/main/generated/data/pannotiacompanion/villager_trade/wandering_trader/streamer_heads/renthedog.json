@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Renthedog",
+      "minecraft:profile": {
+        "id": [
+          -963203436,
+          -2006764554,
+          -1337009902,
+          1428744087
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmEwNWU1MjFlNmUyNTM3YmY5ZGNiMTQ5YzU3NDNkMmQ1YzVmNjBiMjJjOGUxMWZiMWQxOWVkMWZjYmMyMjBiMyJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

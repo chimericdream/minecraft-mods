@@ -1,6 +1,6 @@
-# Pannotia Companion (Fabric/NeoForge)
+# Pannotia Companion (Fabric)
 
-![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Companion mod for the World of Pannotia modpack_
 
@@ -16,7 +16,14 @@ and isn't meant to be used or supported on its own.
 
 ### Current Features
 
-None yet. The mod is a placeholder while the pack's needs take shape.
+* **Home and spawn commands**: `/pc home [name]`, `/pc homes`, `/pc homes set [name]`,
+  `/pc homes delete <name>`, `/pc homes rename <old> <new>` and `/pc spawn`. The home limit (per dimension),
+  teleport delay and cooldown are configurable.
+* **Wandering trader trades**: every trader also offers a handful of mini block heads and streamer heads. Vanilla
+  trades and trades added by other mods are left alone.
+* **Extra mob drops**: mob heads, sand from husks, dragon eggs/elytra/heads from the Ender Dragon, and extra shulker
+  shells with Looting. These are added on top of existing loot, so other mods' loot changes keep working.
+* **Recipes**: mini block stonecutting, stair/slab/dye/coral/glass/concrete conveniences, and a few other pack recipes.
 
 ## Notes for Documentation
 
@@ -26,7 +33,7 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 
 ## Credits
 
-Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
+Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric mod loader and the Architectury API.
 
 ## License
 

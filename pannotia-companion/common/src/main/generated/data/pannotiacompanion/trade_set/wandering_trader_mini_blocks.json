@@ -1,0 +1,9 @@
+{
+  "amount": {
+    "type": "minecraft:uniform",
+    "max": 21.0,
+    "min": 15.0
+  },
+  "random_sequence": "pannotiacompanion:trade_set/wandering_trader_mini_blocks",
+  "trades": "#pannotiacompanion:wandering_trader_mini_blocks"
+}

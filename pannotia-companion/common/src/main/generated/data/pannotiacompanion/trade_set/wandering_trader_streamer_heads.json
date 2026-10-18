@@ -1,0 +1,9 @@
+{
+  "amount": {
+    "type": "minecraft:uniform",
+    "max": 5.0,
+    "min": 2.0
+  },
+  "random_sequence": "pannotiacompanion:trade_set/wandering_trader_streamer_heads",
+  "trades": "#pannotiacompanion:wandering_trader_streamer_heads"
+}

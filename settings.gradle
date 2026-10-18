@@ -60,5 +60,15 @@ orderedList.each {
     include ":$it"
     include ":$it:common"
     include ":$it:fabric"
-    include ":$it:neoforge"
+
+    // A mod can opt out of NeoForge by omitting it from `enabled_platforms` in its gradle.properties.
+    def modProps = new Properties()
+    def modPropsFile = new File(rootDir, "$it/gradle.properties")
+    if (modPropsFile.exists()) {
+        modPropsFile.withInputStream { modProps.load(it) }
+    }
+    def platforms = (modProps.getProperty('enabled_platforms') ?: 'fabric,neoforge').split(',')*.trim()
+    if (platforms.contains('neoforge')) {
+        include ":$it:neoforge"
+    }
 }

@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:lapis_ore"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Lapis Lazuli Ore",
+      "minecraft:profile": {
+        "id": [
+          906979408,
+          -1042466636,
+          -1367460565,
+          -576692755
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmI4ZDkxMzE4NWU1YTM2NWI5NWE4NThkMmU2Yzk5NDE5ODU2NjM5ZDAzNWRjYmY3N2NkNDQwNDU2MGEyNTM4NCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "minecraft:deepslate_brick_stairs",
+    "count": 8
+  },
+  "type": "crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": [
+      "minecraft:deepslate_bricks"
+    ]
+  },
+  "category": "building"
+}

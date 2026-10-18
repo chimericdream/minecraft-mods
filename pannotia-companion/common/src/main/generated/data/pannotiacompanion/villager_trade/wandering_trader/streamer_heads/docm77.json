@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Docm77",
+      "minecraft:profile": {
+        "id": [
+          549763619,
+          -1304019844,
+          -2071039629,
+          1341896894
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODI5OGY0MzE0MjE1YmY2NjA1NzU1NTE4NmIzMWZlNmVlY2QzMzFiY2FjZGJiYTFlYWUzYzA0NmJkZmRhNDNiOCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

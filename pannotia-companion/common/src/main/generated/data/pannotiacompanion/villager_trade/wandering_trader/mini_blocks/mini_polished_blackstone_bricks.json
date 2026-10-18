@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:polished_blackstone_bricks"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Polished Blackstone Bricks",
+      "minecraft:profile": {
+        "id": [
+          -1356869697,
+          -1818674051,
+          -1320444250,
+          2082178824
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk3NzUwYTI4NGZmNDAzOGNiMDM1ZjFkNmRiMDQ5M2ZmNTM5YzhhOTNhZTNjZGE2MTg2ZGYwYmU2MTYyYzMwNCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

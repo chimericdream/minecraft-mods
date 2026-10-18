@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Grian",
+      "minecraft:profile": {
+        "id": [
+          148996459,
+          208158515,
+          -1905397190,
+          -865167592
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGI3YWI2ZGQ3MzE4ZTk5NDMyZjI0MzFiZTBlYjZiMGYxYzcwOTQ5YTRiOTJmNDUzYzYwZWE1YjhkMzNiNzEyYyJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

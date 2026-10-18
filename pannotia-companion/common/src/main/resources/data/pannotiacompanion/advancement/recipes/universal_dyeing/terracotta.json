@@ -1,0 +1,53 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#pannotiacompanion:universal_dyeing/terracotta"
+          }
+        ]
+      }
+    },
+    "has_dye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#pannotiacompanion:universal_dyeing/dyes"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_block"
+    ],
+    [
+      "has_dye"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "pannotiacompanion:universal_dyeing/white_terracotta",
+      "pannotiacompanion:universal_dyeing/orange_terracotta",
+      "pannotiacompanion:universal_dyeing/magenta_terracotta",
+      "pannotiacompanion:universal_dyeing/light_blue_terracotta",
+      "pannotiacompanion:universal_dyeing/yellow_terracotta",
+      "pannotiacompanion:universal_dyeing/lime_terracotta",
+      "pannotiacompanion:universal_dyeing/pink_terracotta",
+      "pannotiacompanion:universal_dyeing/gray_terracotta",
+      "pannotiacompanion:universal_dyeing/light_gray_terracotta",
+      "pannotiacompanion:universal_dyeing/cyan_terracotta",
+      "pannotiacompanion:universal_dyeing/purple_terracotta",
+      "pannotiacompanion:universal_dyeing/blue_terracotta",
+      "pannotiacompanion:universal_dyeing/brown_terracotta",
+      "pannotiacompanion:universal_dyeing/green_terracotta",
+      "pannotiacompanion:universal_dyeing/red_terracotta",
+      "pannotiacompanion:universal_dyeing/black_terracotta"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "SmallishBeans",
+      "minecraft:profile": {
+        "id": [
+          1699361688,
+          -770625409,
+          -1497448341,
+          -1394646774
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2FiYjM5NTU1Nzk0N2JlODM1ODE5ZmZiZTgwOTg4MDA0YThjZDQ5MzgxZTI2ZWE3ZTMwNTE3YzUyNGUxYTJmOCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

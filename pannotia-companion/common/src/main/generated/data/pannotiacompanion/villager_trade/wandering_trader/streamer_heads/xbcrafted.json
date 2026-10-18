@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "xBCrafted",
+      "minecraft:profile": {
+        "id": [
+          1546726630,
+          -1876152163,
+          -2105423609,
+          -58789652
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2Y1M2Q4YjQwMGZlZjAyOGRlYzk1MjEzMGQ0MDY1NDRhZGVjMTY0ZDFkYjRmMGQwYjExNDZjNjVhMWRmYzI2MyJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

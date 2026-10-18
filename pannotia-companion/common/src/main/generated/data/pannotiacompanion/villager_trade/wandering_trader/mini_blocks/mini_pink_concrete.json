@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:pink_concrete"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Pink Concrete",
+      "minecraft:profile": {
+        "id": [
+          -854609420,
+          -1094372940,
+          -1782533042,
+          -1674011130
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjI3NDlkMzdjM2Y5OGQ0NTdiZjU0MDIyYThiNjEzYTQzNTNlZDhkZDJlMTQ5NDI2ZmM0MmRiM2I3ZCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

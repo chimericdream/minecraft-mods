@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:mossy_cobblestone"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Mossy Cobblestone",
+      "minecraft:profile": {
+        "id": [
+          1050023793,
+          -1642778296,
+          -1947598378,
+          -536605940
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTFiNzcyOTFlMTU3MWZkMjdkZWNhMWM3NzJlZjRmOTE3ZjU5YTlkNTllZjcwMjYxOTBmMTY2NzM1MDdmMmVlNyJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

@@ -1,0 +1,33 @@
+{
+  "additional_wants": {
+    "id": "minecraft:chiseled_bookshelf"
+  },
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Mini Chiseled Bookshelf",
+      "minecraft:profile": {
+        "id": [
+          -658780901,
+          -313573883,
+          -1359775827,
+          -1513200773
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlmNzE0OWM4Y2ViNzljMDQzNTBhYWMwMzRlZjcyNDUwN2E3M2ZhZjljNjM5OWU3OTc2YThkZTVhMTk3MGRkNCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "count": 8,
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 1.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "cubfan135",
+      "minecraft:profile": {
+        "id": [
+          -1091803079,
+          102904293,
+          -1620247098,
+          -400813039
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTJhOTM0Y2JhYmNhODU4MTg5OTg4MTg5NDA4MDNkYjM5YjM0NTBkM2Y5Y2E1MzE2ZmU0ZWMzYzU3MGU3OTJhNiJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

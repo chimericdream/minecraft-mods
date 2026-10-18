@@ -1,8 +1,8 @@
 # Test Plan — Pannotia Companion
 
-**Status: scaffold only — nothing to test yet.** This project is disabled in `settings.gradle` and
-contains only Architectury boilerplate (entrypoints, empty mixin config, access widener). The README
-is empty. The name suggests a companion/helper mod for a "Pannotia" world, server, or modpack —
+**Status: partly covered.** Fabric-only. `fabric/src/gametest` covers that every shipped loot table loads and that wandering
+traders keep vanilla offers while gaining our head trades; `fabric/src/test` has JUnit tests for the home book. Not yet covered:
+recipe resolution, tag membership, command teleport behavior, and loot drop rates. The name suggests a companion/helper mod for a "Pannotia" world, server, or modpack —
 likely glue features (recipes, tags, world tweaks) rather than standalone content.
 
 ## When features land

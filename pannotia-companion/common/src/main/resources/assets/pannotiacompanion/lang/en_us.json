@@ -1,0 +1,36 @@
+{
+  "text.pannotiacompanion.config.title": "Pannotia Companion",
+  "text.pannotiacompanion.config.section.homes": "Homes",
+  "text.pannotiacompanion.config.section.spawn": "Spawn",
+  "text.pannotiacompanion.config.option.maxHomesPerDimension": "Max Homes Per Dimension",
+  "text.pannotiacompanion.config.option.maxHomesPerDimension.desc": "How many homes each player can set in each dimension.",
+  "text.pannotiacompanion.config.option.homeDelayTicks": "Home Delay (ticks)",
+  "text.pannotiacompanion.config.option.homeDelayTicks.desc": "How long a player must stand still after using /pc home before being teleported. 20 ticks = 1 second.",
+  "text.pannotiacompanion.config.option.homeCooldownSeconds": "Home Cooldown (seconds)",
+  "text.pannotiacompanion.config.option.homeCooldownSeconds.desc": "How long a player must wait between uses of /pc home.",
+  "text.pannotiacompanion.config.option.spawnDelayTicks": "Spawn Delay (ticks)",
+  "text.pannotiacompanion.config.option.spawnDelayTicks.desc": "How long a player must stand still after using /pc spawn before being teleported. 20 ticks = 1 second.",
+  "text.pannotiacompanion.config.option.spawnCooldownSeconds": "Spawn Cooldown (seconds)",
+  "text.pannotiacompanion.config.option.spawnCooldownSeconds.desc": "How long a player must wait between uses of /pc spawn.",
+
+  "message.pannotiacompanion.cooldown": "You can teleport again in %s seconds.",
+  "message.pannotiacompanion.hold_still": "Hold still for %s seconds to teleport...",
+  "message.pannotiacompanion.cancelled_moved": "Teleport cancelled because you moved.",
+
+  "message.pannotiacompanion.home.none": "You have no homes. Use /pc homes set [name] to make one.",
+  "message.pannotiacompanion.home.choose": "You have several homes. Use /pc home <name> or pick one from /pc homes.",
+  "message.pannotiacompanion.home.not_found": "No home called %s.",
+  "message.pannotiacompanion.home.name_taken": "You already have a home called %s.",
+  "message.pannotiacompanion.home.bad_name": "Home names must be 1 to %s characters.",
+  "message.pannotiacompanion.home.limit": "You can only have %s home(s) per dimension. Delete one or reuse a name.",
+  "message.pannotiacompanion.home.added": "Home %s set.",
+  "message.pannotiacompanion.home.replaced": "Home %s moved here.",
+  "message.pannotiacompanion.home.deleted": "Home %s deleted.",
+  "message.pannotiacompanion.home.renamed": "Home %s renamed to %s.",
+  "message.pannotiacompanion.home.teleported": "Teleported to %s.",
+  "message.pannotiacompanion.home.dimension_missing": "That home's dimension (%s) is not available.",
+  "message.pannotiacompanion.home.list_header": "Your homes (%s):",
+  "message.pannotiacompanion.home.click_to_teleport": "Click to teleport",
+
+  "message.pannotiacompanion.spawn.teleported": "Teleported to world spawn."
+}

@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "hypnotizd",
+      "minecraft:profile": {
+        "id": [
+          -2119651104,
+          -1815920652,
+          -1158751906,
+          -511849045
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODE0OTRkYzljOTI3NTRlYjY0Zjc1N2E4ZTRhMmMxZjJhZGNjYTIxMTVkMTE5NzJkNmQzOWRjOWZkYjE2ZjU2NCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

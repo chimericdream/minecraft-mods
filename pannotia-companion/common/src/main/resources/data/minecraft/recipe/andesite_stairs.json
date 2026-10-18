@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "minecraft:andesite_stairs",
+    "count": 8
+  },
+  "type": "crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:andesite"
+  },
+  "category": "building"
+}

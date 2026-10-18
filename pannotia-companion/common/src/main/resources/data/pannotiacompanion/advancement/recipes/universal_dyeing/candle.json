@@ -1,0 +1,53 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:candles"
+          }
+        ]
+      }
+    },
+    "has_dye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#pannotiacompanion:universal_dyeing/dyes"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_block"
+    ],
+    [
+      "has_dye"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "pannotiacompanion:universal_dyeing/white_candle",
+      "pannotiacompanion:universal_dyeing/orange_candle",
+      "pannotiacompanion:universal_dyeing/magenta_candle",
+      "pannotiacompanion:universal_dyeing/light_blue_candle",
+      "pannotiacompanion:universal_dyeing/yellow_candle",
+      "pannotiacompanion:universal_dyeing/lime_candle",
+      "pannotiacompanion:universal_dyeing/pink_candle",
+      "pannotiacompanion:universal_dyeing/gray_candle",
+      "pannotiacompanion:universal_dyeing/light_gray_candle",
+      "pannotiacompanion:universal_dyeing/cyan_candle",
+      "pannotiacompanion:universal_dyeing/purple_candle",
+      "pannotiacompanion:universal_dyeing/blue_candle",
+      "pannotiacompanion:universal_dyeing/brown_candle",
+      "pannotiacompanion:universal_dyeing/green_candle",
+      "pannotiacompanion:universal_dyeing/red_candle",
+      "pannotiacompanion:universal_dyeing/black_candle"
+    ]
+  }
+}

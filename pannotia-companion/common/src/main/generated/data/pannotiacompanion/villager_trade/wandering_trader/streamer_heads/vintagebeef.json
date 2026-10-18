@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "VintageBeef",
+      "minecraft:profile": {
+        "id": [
+          -1995307497,
+          1215968236,
+          -1268571460,
+          17828439
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVmNWZiMzE4Zjg1NWZiNjNiYTFlZmRjYzEyMDJlZTIzOGNiNDAzYTIxY2Q2YmI0ZjMyNDM3NGYxZTE0ZGRkOSJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

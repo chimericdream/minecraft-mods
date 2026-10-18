@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "minecraft:crimson_hyphae",
+    "count": 4
+  },
+  "type": "crafting_shaped",
+  "group": "bark",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": "minecraft:crimson_stem"
+  },
+  "category": "building"
+}

@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "Etho",
+      "minecraft:profile": {
+        "id": [
+          1013390082,
+          -1841613655,
+          -1977581077,
+          867185921
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmY3NzQ3ZWEzNDA5ODliOThhODIyMjk0OGFmNDU0NTRiZWU5MDliOWFkODMwYjJhMDFkY2Y5MTE3YzgzYTMzYSJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}

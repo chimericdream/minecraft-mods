@@ -1,0 +1,29 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_name": "BdoubleO100",
+      "minecraft:profile": {
+        "id": [
+          1293338514,
+          -353226410,
+          -1535340765,
+          1961486393
+        ],
+        "name": "pannotia",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjcwOTYyYTM3YTNkZjgxN2E1ODg2MTlkNTlkZjA5MWYxMmM4NDE5NTJkZDFkMGZkMmQwMjliNjk3MjJlNWQ3ZiJ9fX0="
+          }
+        ]
+      },
+      "minecraft:rarity": "uncommon"
+    },
+    "id": "minecraft:player_head"
+  },
+  "max_uses": 3.0,
+  "wants": {
+    "id": "minecraft:emerald"
+  },
+  "xp": 0.0
+}
