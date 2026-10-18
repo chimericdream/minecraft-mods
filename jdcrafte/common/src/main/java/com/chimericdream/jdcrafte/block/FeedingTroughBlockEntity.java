@@ -1,28 +1,40 @@
 package com.chimericdream.jdcrafte.block;
 
+import com.chimericdream.jdcrafte.config.JDCrafteConfig;
 import com.chimericdream.lib.inventories.ImplementedInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -38,8 +50,21 @@ public class FeedingTroughBlockEntity extends BlockEntity implements Implemented
         Items.BEETROOT,
         Items.CARROT,
         Items.POTATO,
-        Items.WHEAT_SEEDS
+        Items.WHEAT_SEEDS,
+        Items.GOLDEN_CARROT,
+        Items.GOLDEN_APPLE
     );
+
+    private static final Set<EntityType<?>> BREEDABLE_SPECIES = Set.of(
+        EntityTypes.COW,
+        EntityTypes.SHEEP,
+        EntityTypes.PIG,
+        EntityTypes.CHICKEN,
+        EntityTypes.RABBIT,
+        EntityTypes.HORSE
+    );
+
+    private static final int LOVE_MODE_TICKS = 600;
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
 
@@ -119,6 +144,92 @@ public class FeedingTroughBlockEntity extends BlockEntity implements Implemented
         }
 
         return remainder;
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, FeedingTroughBlockEntity trough) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        JDCrafteConfig config = JDCrafteConfig.CONFIG.instance();
+        config.clamp();
+
+        if (!config.troughFeedingEnabled || trough.getStoredCount() <= 0) {
+            return;
+        }
+
+        // Offset by position so a field of troughs doesn't all scan on the same tick.
+        long interval = config.troughIntervalSeconds * 20L;
+        if (Math.floorMod(level.getGameTime() + pos.asLong(), interval) != 0) {
+            return;
+        }
+
+        trough.feedOnePair(serverLevel, pos, config);
+    }
+
+    /**
+     * Puts one pair of same-species animals in love mode, if the stored food suits two eligible
+     * animals and the area isn't overcrowded. Costs one food item per animal.
+     */
+    void feedOnePair(ServerLevel level, BlockPos pos, JDCrafteConfig config) {
+        if (getStoredCount() < 2) {
+            return;
+        }
+
+        ItemStack food = getStoredFood();
+
+        int h = config.troughHorizontalRadius;
+        int v = config.troughVerticalRadius;
+        AABB area = new AABB(pos).inflate(h, v, h);
+
+        List<Animal> nearby = level.getEntitiesOfClass(Animal.class, area, animal -> BREEDABLE_SPECIES.contains(animal.getType()));
+        if (nearby.size() >= config.troughAnimalCap) {
+            return;
+        }
+
+        Map<EntityType<?>, List<Animal>> eligibleBySpecies = new HashMap<>();
+        for (Animal animal : nearby) {
+            if (animal.getAge() == 0 && !animal.isInLove() && animal.canFallInLove() && animal.isFood(food)) {
+                eligibleBySpecies.computeIfAbsent(animal.getType(), t -> new ArrayList<>()).add(animal);
+            }
+        }
+
+        for (List<Animal> group : eligibleBySpecies.values()) {
+            if (group.size() < 2) {
+                continue;
+            }
+
+            if (!consumeFood(2)) {
+                return;
+            }
+
+            group.get(0).setInLoveTime(LOVE_MODE_TICKS);
+            group.get(1).setInLoveTime(LOVE_MODE_TICKS);
+
+            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 7, 0.3, 0.2, 0.3, 0.0);
+
+            return;
+        }
+    }
+
+    private boolean consumeFood(int amount) {
+        if (getStoredCount() < amount) {
+            return false;
+        }
+
+        int remaining = amount;
+        for (int slot = 0; slot < SLOT_COUNT && remaining > 0; slot++) {
+            ItemStack stack = items.get(slot);
+            int taken = Math.min(stack.getCount(), remaining);
+            if (taken > 0) {
+                stack.shrink(taken);
+                remaining -= taken;
+            }
+        }
+
+        setChanged();
+
+        return true;
     }
 
     private int computeLevel() {

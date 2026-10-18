@@ -1,6 +1,6 @@
 # Feeding trough breeding
 
-> Source: [legacy ideas.md](../brainstorms/2026-09-02-legacy/ideas-md.md) ("Feeding trough: feeds animals in a given radius"), reshaped by the user on 2026-10-09 · Effort **M** · Status: **Ready**
+> Source: [legacy ideas.md](../brainstorms/2026-09-02-legacy/ideas-md.md) ("Feeding trough: feeds animals in a given radius"), reshaped by the user on 2026-10-09 · Effort **M** · Status: **Implemented** (golden carrot/apple trough textures are placeholders until supplied)
 
 ## Description
 

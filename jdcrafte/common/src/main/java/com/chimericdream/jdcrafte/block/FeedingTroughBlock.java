@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -105,6 +107,11 @@ public class FeedingTroughBlock extends BaseEntityBlock {
     }
 
     @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null : createTickerHelper(type, ModBlocks.FEEDING_TROUGH_BLOCK_ENTITY.get(), FeedingTroughBlockEntity::serverTick);
+    }
+
+    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
@@ -165,7 +172,9 @@ public class FeedingTroughBlock extends BaseEntityBlock {
         BEETROOT("beetroot", Items.BEETROOT),
         CARROTS("carrots", Items.CARROT),
         POTATOES("potatoes", Items.POTATO),
-        WHEAT_SEEDS("wheat_seeds", Items.WHEAT_SEEDS);
+        WHEAT_SEEDS("wheat_seeds", Items.WHEAT_SEEDS),
+        GOLDEN_CARROTS("golden_carrots", Items.GOLDEN_CARROT),
+        GOLDEN_APPLES("golden_apples", Items.GOLDEN_APPLE);
 
         private final String serializedName;
         private final Item item;

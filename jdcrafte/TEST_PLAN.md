@@ -9,8 +9,9 @@ implemented.
 
 Expected shape based on the idea list — plan accordingly:
 
-* **Feeding trough** — GameTests: animals within range path to the trough and consume feed; breeding
-  triggers when two fed adults are in range; trough inventory depletes correctly; hopper interaction
+* **Feeding trough** — GameTests: a trough feeds one pair of same-species eligible adults per check, skips
+  animals on breeding cooldown, counts babies toward the 24-animal cap but never feeds them, and respects the
+  config kill switch/clamps. Manual: heart particles on fed animals and green sparkles above the trough; trough inventory depletes correctly; hopper interaction
   (can troughs be auto-filled?). Reuse the container-assertion helpers from Hopper X-Treme's tests.
 * **Crates / storage** — mirror Minekea's crate coverage (see `minekea/TEST_PLAN.md`): capacity,
   hopper in/out, contents preserved on break if applicable, screen opens.

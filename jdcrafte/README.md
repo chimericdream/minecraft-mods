@@ -16,9 +16,11 @@ and the troughs, trellises, and weathervanes that make a farm look lived-in.
 
 ### Current Features
 
-* **Feeding trough.** A block that holds feed (wheat, beetroot, carrots, potatoes, or wheat seeds)
+* **Feeding trough.** A block that holds feed (wheat, beetroot, carrots, potatoes, wheat seeds, golden carrots, or golden apples)
   for your animals. Right-click it with feed in hand to fill it up, and it'll visibly fill as more
-  is added; shift-right-click with an empty hand to take feed back out.
+  is added; shift-right-click with an empty hand to take feed back out. Stocked with food they like,
+  it also feeds pairs of nearby cows, sheep, pigs, chickens, rabbits, and horses so your pens breed
+  on their own.
 * **Weathervane.** A decorative rooftop weather vane. Right-click it to spin it in place.
 * **In-game guide (optional; needs the Opus mod 1.2.0 or newer).** A book covering everything above. Craft one from a book and wheat, or use `/opus give jdcrafte:guide`.
 * **Trellis.** A climbable decorative wooden lattice. Bridge a gap between two trellises with a trellis arch. Comes in every wood type.

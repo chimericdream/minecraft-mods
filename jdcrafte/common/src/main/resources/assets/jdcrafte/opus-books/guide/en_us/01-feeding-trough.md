@@ -28,6 +28,8 @@ A trough takes one kind of feed at a time:
 | Carrots |
 | Potatoes |
 | Wheat seeds |
+| Golden carrots |
+| Golden apples |
 
 ```item
 jdcrafte:feeding_trough
@@ -39,4 +41,7 @@ jdcrafte:feeding_trough
 * Shift-right-click with an empty hand to take a stack back out.
 * Hoppers can fill and empty it too.
 * The trough turns to run along the way you were facing when you placed it.
+* Every 10 seconds, a stocked trough feeds one pair of nearby animals of the same kind (cows, sheep, pigs, chickens, rabbits, or horses), using one feed each, so they start breeding.
+* What you stock picks who breeds: wheat for cows and sheep, carrots for pigs and rabbits, wheat seeds for chickens, golden carrots for horses and rabbits, golden apples for horses.
+* In a crowded pen (24 or more animals nearby) it stops, so it can't overrun your farm.
 * Breaking it drops whatever feed is inside.

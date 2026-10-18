@@ -1,6 +1,7 @@
 package com.chimericdream.jdcrafte;
 
 import com.chimericdream.jdcrafte.block.ModBlocks;
+import com.chimericdream.jdcrafte.config.JDCrafteConfig;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,8 @@ public final class JDCrafteMod {
     public static final ModRegistryHelper REGISTRY_HELPER = new ModRegistryHelper(MOD_ID, LOGGER);
 
     public static void init() {
+        JDCrafteConfig.CONFIG.init();
+
         ModBlocks.init();
 
         REGISTRY_HELPER.init();

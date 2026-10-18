@@ -60,6 +60,26 @@
     },
     {
       "apply": {
+        "model": "jdcrafte:block/trough_level1_golden_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_carrots",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_golden_apples"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_apples",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
         "model": "jdcrafte:block/trough_level2_wheat"
       },
       "when": {
@@ -110,6 +130,26 @@
     },
     {
       "apply": {
+        "model": "jdcrafte:block/trough_level2_golden_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_carrots",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_golden_apples"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_apples",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
         "model": "jdcrafte:block/trough_level3_wheat"
       },
       "when": {
@@ -155,6 +195,26 @@
       "when": {
         "axis": "x",
         "food": "wheat_seeds",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_golden_carrots"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_carrots",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_golden_apples"
+      },
+      "when": {
+        "axis": "x",
+        "food": "golden_apples",
         "level": "3"
       }
     },
@@ -224,6 +284,28 @@
     },
     {
       "apply": {
+        "model": "jdcrafte:block/trough_level1_golden_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_carrots",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level1_golden_apples",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_apples",
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
         "model": "jdcrafte:block/trough_level2_wheat",
         "y": 90
       },
@@ -279,6 +361,28 @@
     },
     {
       "apply": {
+        "model": "jdcrafte:block/trough_level2_golden_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_carrots",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level2_golden_apples",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_apples",
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
         "model": "jdcrafte:block/trough_level3_wheat",
         "y": 90
       },
@@ -329,6 +433,28 @@
       "when": {
         "axis": "z",
         "food": "wheat_seeds",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_golden_carrots",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_carrots",
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "jdcrafte:block/trough_level3_golden_apples",
+        "y": 90
+      },
+      "when": {
+        "axis": "z",
+        "food": "golden_apples",
         "level": "3"
       }
     }

@@ -105,6 +105,18 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             for (FabricBlockDataGenerator blockGenerator : BLOCK_GENERATORS) {
                 blockGenerator.configureTranslations(registryLookup, translationBuilder);
             }
+
+            translationBuilder.add("text.config.jdcrafte.title", "JD Crafte Config");
+            translationBuilder.add("text.config.jdcrafte.option.troughFeedingEnabled", "Feeding Troughs Breed Animals");
+            translationBuilder.add("text.config.jdcrafte.option.troughFeedingEnabled.description", "When off, troughs still store food but never feed animals.");
+            translationBuilder.add("text.config.jdcrafte.option.troughHorizontalRadius", "Trough Horizontal Range (blocks)");
+            translationBuilder.add("text.config.jdcrafte.option.troughHorizontalRadius.description", "How far to the sides a trough looks for animals (1-16).");
+            translationBuilder.add("text.config.jdcrafte.option.troughVerticalRadius", "Trough Vertical Range (blocks)");
+            translationBuilder.add("text.config.jdcrafte.option.troughVerticalRadius.description", "How far up and down a trough looks for animals (0-8).");
+            translationBuilder.add("text.config.jdcrafte.option.troughIntervalSeconds", "Trough Check Interval (seconds)");
+            translationBuilder.add("text.config.jdcrafte.option.troughIntervalSeconds.description", "How often a trough tries to feed a pair of animals (at least 1).");
+            translationBuilder.add("text.config.jdcrafte.option.troughAnimalCap", "Trough Crowding Limit");
+            translationBuilder.add("text.config.jdcrafte.option.troughAnimalCap.description", "A trough does nothing when this many farm animals are in range (at least 2).");
         }
     }
 
