@@ -1,5 +1,12 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added **Trade preview**: a villager's trades for levels it hasn't reached yet now appear greyed out below its
+  current trades, and can't be selected. Hover one to see which level unlocks it. A villager's future trades are now
+  decided up front, so they will differ from vanilla. Villagers you've already traded with get their remaining levels
+  filled in the next time you open their trades. With this on, a villager now levels up while you're still trading and
+  the new trades unlock on screen, without closing and reopening it. *(Default: on.)*
 
 ### 26.2 - 6.3.1
 

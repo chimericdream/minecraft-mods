@@ -31,6 +31,9 @@ minecarts.
 * **Demand modifier** — toggle vanilla's price-increase-on-heavy-trading behavior. *(Default: on.)*
 * **Cap max discount** — limit how far reputation (mainly from curing zombie villagers) can discount a trade's
   price, as a percentage of the original price. *(Default: off; default cap 99% when enabled.)*
+* **Trade preview** — see a villager's trades for levels it hasn't reached yet, greyed out and unselectable, with a
+  tooltip line naming the level that unlocks each. Future trades are decided up front, so they differ from vanilla.
+  *(Default: on.)*
 
 ### Reputation tweaks
 

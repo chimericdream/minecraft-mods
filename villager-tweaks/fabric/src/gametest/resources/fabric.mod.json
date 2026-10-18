@@ -11,7 +11,8 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
-            "com.chimericdream.villagertweaks.fabric.test.GlobalReputationGameTest"
+            "com.chimericdream.villagertweaks.fabric.test.GlobalReputationGameTest",
+            "com.chimericdream.villagertweaks.fabric.test.TradePreviewGameTest"
         ]
     },
     "depends": {

@@ -3,6 +3,7 @@ package com.chimericdream.villagertweaks;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.chimericdream.villagertweaks.item.ModItems;
+import com.chimericdream.villagertweaks.trade.TradePreviewNetworking;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -23,5 +24,6 @@ public class VillagerTweaksMod {
 
         REGISTRY_HELPER.init();
         ModItems.init();
+        TradePreviewNetworking.init();
     }
 }

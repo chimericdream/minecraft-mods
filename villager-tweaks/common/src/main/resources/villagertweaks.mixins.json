@@ -9,10 +9,12 @@
         "VTTradeOfferMixin",
         "VTVillagerEntityMixin",
         "VTVillagerMakeLoveMixin",
+        "VTVillagerTradePreviewMixin",
         "VTZombieEntityMixin",
         "VTZombieVillagerEntityMixin"
     ],
     "client": [
+        "VTMerchantScreenMixin"
     ],
     "injectors": {
         "defaultRequire": 1

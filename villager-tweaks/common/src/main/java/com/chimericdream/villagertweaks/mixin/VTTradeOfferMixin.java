@@ -2,6 +2,7 @@ package com.chimericdream.villagertweaks.mixin;
 
 import com.chimericdream.villagertweaks.config.VillagerTweaksConfig;
 import com.chimericdream.villagertweaks.tag.ModTags;
+import com.chimericdream.villagertweaks.trade.LockableOffer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -9,13 +10,17 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MerchantOffer.class)
-public class VTTradeOfferMixin {
+public class VTTradeOfferMixin implements LockableOffer {
+    @Unique
+    private int vt$unlockLevel = 0;
+
     @Shadow
     private @Final
     @Mutable int maxUses;
@@ -84,6 +89,25 @@ public class VTTradeOfferMixin {
 
         if (cir.getReturnValue() < minPrice) {
             cir.setReturnValue(minPrice);
+        }
+    }
+
+    @Override
+    public int vt$getUnlockLevel() {
+        return this.vt$unlockLevel;
+    }
+
+    @Override
+    public void vt$setUnlockLevel(int level) {
+        this.vt$unlockLevel = level;
+    }
+
+    // A locked offer is only a preview. Without this, the client would fill the result slot for a locked
+    // trade whenever the payment items happened to match it.
+    @Inject(method = "satisfiedBy", at = @At("HEAD"), cancellable = true)
+    private void vt$lockedOffersCannotBeTraded(ItemStack buyA, ItemStack buyB, CallbackInfoReturnable<Boolean> cir) {
+        if (this.vt$unlockLevel > 0) {
+            cir.setReturnValue(false);
         }
     }
 }

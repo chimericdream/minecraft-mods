@@ -12,6 +12,21 @@ These settings are in the **Trading** section.
 | Demand modifier | Prices rise when you trade a lot with a villager. Turn it off to stop prices from climbing. | On |
 | Cap max discount | Limits how far reputation can lower a trade's price. | Off |
 | Max discount percent | The biggest discount allowed, as a percent of the original price. | 99 |
+| Trade preview | Shows trades for levels the villager hasn't reached yet, greyed out. | On |
+
+## Trade preview
+
+Below a villager's current trades you'll see the trades it will offer at higher levels, greyed out. You can't select
+them, but hovering over one tells you which level unlocks it. Use this to check that a villager will sell what you want
+before you level it up.
+
+![A novice librarian's trades, with the higher level trades greyed out and a tooltip naming the level that unlocks one](texture:villagertweaks:guide/future_trades){width=400}
+
+With this on, a villager levels up while you're still trading, a couple of seconds after its experience bar fills. The
+new trades unlock on screen, so you don't need to close and reopen it.
+
+A villager's future trades are decided the first time you open its trades, so they won't match vanilla. Villagers you
+had already traded with before installing the mod get their remaining levels the next time you open them.
 
 ## Unlimited trades
 

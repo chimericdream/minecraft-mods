@@ -75,6 +75,19 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
 13. **Guide book** — craft a book and an emerald: you get the Villager Tweaks Guide. `/opus give villagertweaks:guide`
     gives the same book. Open it: every page renders, links work, and the Bagged Villager item widgets show.
     Without Opus installed, the game starts normally, the mod works, and there is no guide recipe (no `opus:book` recipe parse error in the log). With Opus older than 1.2.0 installed, the game refuses to start.
+14. **Trade preview** — (server logic is covered by `TradePreviewGameTest`; the screen needs a manual look.)
+    Open a fresh employed villager's trades: its current trades are normal, and the higher levels' trades are
+    listed below, greyed out. Clicking one does nothing (no selection change, no result item, even with the
+    payment items in your inventory). Hover each of the three item areas of a locked row: every tooltip ends with
+    "Available at <rank> level" and the rank matches the row's level. Scroll the list (a farmer has more than 7
+    rows) and check the grey rows stay lined up. Keep the screen open and trade until the villager levels up (about
+    2 seconds after the trade that fills its experience bar): the newly unlocked trades turn normal and selectable
+    without reopening, they are exactly the ones that were previewed, prices include your reputation discount (and
+    existing trades aren't discounted twice), and the remaining locked rows are still there. Restock mid-trade
+    (sleep/work time passing with the screen open) keeps the locked rows. Master villager: no locked rows. Bag the villager and place it again: previews
+    unchanged. A villager from a world saved before the mod (already level 3): only levels 4 and 5 appear, its
+    current trades are unchanged. Turn **Trade preview** off: no locked rows. Join a server with the mod from a
+    client without it: no errors, no locked rows.
 
 ## Recommended automated tests
 
