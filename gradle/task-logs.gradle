@@ -12,10 +12,22 @@
 // `>>> :task:path FAILED: ...` line in its sub-project's file (this is how compile/test failures show
 // up). Output still goes to the console as usual. `logs/` is gitignored.
 //
+// State lives in a build service (not script-level variables) and task failures arrive through an
+// OperationCompletionListener, so this script is compatible with the configuration cache.
+//
 // Only exec-style tasks are teed (rather than using task.logging listeners) because, with
 // org.gradle.parallel on, Gradle attributes other tasks' progress lines and javac notes to whichever
 // task happens to be running, which would pollute the logs.
 import java.nio.charset.StandardCharsets
+import javax.inject.Inject
+import org.gradle.api.provider.Property
+import org.gradle.api.services.BuildService
+import org.gradle.api.services.BuildServiceParameters
+import org.gradle.build.event.BuildEventsListenerRegistry
+import org.gradle.tooling.events.FinishEvent
+import org.gradle.tooling.events.OperationCompletionListener
+import org.gradle.tooling.events.task.TaskFailureResult
+import org.gradle.tooling.events.task.TaskFinishEvent
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -54,30 +66,73 @@ class TeeOutputStream extends OutputStream {
     }
 }
 
+interface TaskLogParameters extends BuildServiceParameters {
+    Property<String> getLogRoot()
+    Property<String> getStamp()
+}
+
+abstract class TaskLogService implements BuildService<TaskLogParameters>, OperationCompletionListener, AutoCloseable {
+    private final Map<String, OutputStream> openLogs = [:] // task path -> OutputStream onto its sub-project's log file
+
+    // Mirrors the task-path layout: :task -> _root, :mod:task -> <mod>/_project, :mod:sub:task -> <mod>/<sub>.
+    private File logFileFor(String taskPath) {
+        def segments = taskPath.substring(1).split(':') as List
+        def dir = segments.size() == 1 ? '_root' : segments.size() == 2 ? "${segments[0]}/_project" : "${segments[0]}/${segments[1]}"
+        return new File(parameters.logRoot.get(), "${dir}/${parameters.stamp.get()}.log")
+    }
+
+    // Appends a task header to the task's sub-project log, returning the stream.
+    private OutputStream openLogFor(String taskPath) {
+        def file = logFileFor(taskPath)
+        file.parentFile.mkdirs()
+        def out = new FileOutputStream(file, true)
+        out.write("\n===== ${taskPath} =====\n".getBytes(StandardCharsets.UTF_8))
+        return out
+    }
+
+    synchronized OutputStream begin(String taskPath) {
+        def log = openLogFor(taskPath)
+        openLogs[taskPath] = log
+        return log
+    }
+
+    @Override
+    synchronized void onFinish(FinishEvent event) {
+        if (!(event instanceof TaskFinishEvent)) {
+            return
+        }
+        def taskPath = event.descriptor.taskPath
+        def log = openLogs.remove(taskPath)
+
+        if (event.result instanceof TaskFailureResult) {
+            if (log == null) {
+                log = openLogFor(taskPath)
+            }
+            def message = event.result.failures.collect { it.message }.join('; ')
+            log.write("\n>>> ${taskPath} FAILED: ${message}\n".getBytes(StandardCharsets.UTF_8))
+        }
+
+        log?.close()
+    }
+
+    @Override
+    synchronized void close() {
+        openLogs.values().each { try { it.close() } catch (Throwable ignored) { } }
+        openLogs.clear()
+    }
+}
+
+interface TaskLogInjected {
+    @Inject
+    BuildEventsListenerRegistry getListenerRegistry()
+}
+
 def logStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyy-MM-dd_HH-mm-ss'))
-def logRoot = new File(rootProject.projectDir, 'logs')
-def openLogs = [:] // task path -> OutputStream onto its sub-project's log file
-def writeLock = new Object()
-
-def logFileFor = { Project p ->
-    if (p == rootProject) {
-        return new File(logRoot, "_root/${logStamp}.log")
-    }
-    if (p.parent == rootProject) {
-        return new File(logRoot, "${p.name}/_project/${logStamp}.log")
-    }
-    return new File(logRoot, "${p.parent.name}/${p.name}/${logStamp}.log")
+def taskLogs = gradle.sharedServices.registerIfAbsent('taskLogs', TaskLogService) {
+    parameters.logRoot.set(new File(rootProject.projectDir, 'logs').absolutePath)
+    parameters.stamp.set(logStamp)
 }
-
-// Appends a task header (and optional text) to the task's sub-project log, returning the stream.
-def openLogFor = { Task task ->
-    def file = logFileFor(task.project)
-    file.parentFile.mkdirs()
-    def out = new FileOutputStream(file, true)
-    out.write("\n===== ${task.path} =====\n".getBytes(StandardCharsets.UTF_8))
-    return out
-}
-
+project.objects.newInstance(TaskLogInjected).listenerRegistry.onTaskCompletion(taskLogs)
 
 allprojects {
     tasks.configureEach { Task task ->
@@ -85,30 +140,12 @@ allprojects {
             return
         }
 
-        task.doFirst {
-            def log
-            synchronized (writeLock) {
-                log = openLogFor(task)
-                openLogs[task.path] = log
-            }
-            task.standardOutput = new TeeOutputStream(task.standardOutput ?: System.out, log)
-            task.errorOutput = new TeeOutputStream(task.errorOutput ?: System.err, log)
+        task.usesService(taskLogs)
+        def taskPath = task.path
+        task.doFirst { Task t ->
+            def log = taskLogs.get().begin(taskPath)
+            t.standardOutput = new TeeOutputStream(t.standardOutput ?: System.out, log)
+            t.errorOutput = new TeeOutputStream(t.errorOutput ?: System.err, log)
         }
     }
-}
-
-gradle.taskGraph.afterTask { Task task, TaskState state ->
-    def log
-    synchronized (writeLock) {
-        log = openLogs.remove(task.path)
-    }
-
-    if (state.failure != null) {
-        if (log == null) {
-            log = openLogFor(task)
-        }
-        log.write("\n>>> ${task.path} FAILED: ${state.failure.message}\n".getBytes(StandardCharsets.UTF_8))
-    }
-
-    log?.close()
 }
