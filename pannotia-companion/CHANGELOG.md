@@ -1,7 +1,8 @@
 ### Unreleased changes
 
-* Added `/pc home`, `/pc homes` and `/pc spawn` commands, replacing the Homes and Spawn datapacks.
+* Added `/pc home`, `/pc homes`, `/pc spawn` and `/pc back` commands, replacing the Homes, Spawn and Back datapacks.
 * Wandering traders now also sell mini block and streamer heads.
 * Added mob head, husk sand, Ender Dragon, and shulker shell (Looting) drops as additions to existing loot.
-* Added the pack's custom recipes and item tags.
+* Ancient debris now drops netherite scrap unless mined with Silk Touch.
+* Added the pack's custom recipes and item tags. They all live in this mod's own namespace (none replace vanilla recipes), so a mod like Polymorph is needed to pick between recipes with the same ingredients.
 * Fabric only: the NeoForge version was removed.

@@ -16,14 +16,15 @@ and isn't meant to be used or supported on its own.
 
 ### Current Features
 
-* **Home and spawn commands**: `/pc home [name]`, `/pc homes`, `/pc homes set [name]`,
-  `/pc homes delete <name>`, `/pc homes rename <old> <new>` and `/pc spawn`. The home limit (per dimension),
-  teleport delay and cooldown are configurable.
+* **Home, spawn and back commands**: `/pc back`, `/pc home [name]`, `/pc homes`, `/pc homes set [name]`,
+  `/pc homes delete <name>`, `/pc homes rename <old> <new>` and `/pc spawn`. `/pc back` returns you to where you were
+  before your last home or spawn teleport. The home limit (per dimension), teleport delays and cooldowns are configurable.
 * **Wandering trader trades**: every trader also offers a handful of mini block heads and streamer heads. Vanilla
   trades and trades added by other mods are left alone.
 * **Extra mob drops**: mob heads, sand from husks, dragon eggs/elytra/heads from the Ender Dragon, and extra shulker
   shells with Looting. These are added on top of existing loot, so other mods' loot changes keep working.
-* **Recipes**: mini block stonecutting, stair/slab/dye/coral/glass/concrete conveniences, and a few other pack recipes.
+* **Ancient debris** drops netherite scrap instead of itself, unless mined with Silk Touch.
+* **Recipes**: mini block stonecutting, stair/slab/dye/coral/glass/concrete conveniences, and a few other pack recipes. Some give the same result as a vanilla recipe from the same ingredients, so the pack needs a mod like Polymorph to choose between them.
 
 ## Notes for Documentation
 

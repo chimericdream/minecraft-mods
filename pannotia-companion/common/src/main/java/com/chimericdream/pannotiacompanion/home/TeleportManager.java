@@ -23,6 +23,7 @@ public final class TeleportManager {
 
     public static final Cooldowns HOME_COOLDOWNS = new Cooldowns();
     public static final Cooldowns SPAWN_COOLDOWNS = new Cooldowns();
+    public static final Cooldowns BACK_COOLDOWNS = new Cooldowns();
 
     private record Pending(Vec3 start, int ticksLeft, int cooldownSeconds, Cooldowns cooldowns, Consumer<ServerPlayer> action) {
         Pending tick() {

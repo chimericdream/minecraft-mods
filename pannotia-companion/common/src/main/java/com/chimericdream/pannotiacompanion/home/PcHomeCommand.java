@@ -144,6 +144,7 @@ public class PcHomeCommand implements ChimericCommand {
 
         PannotiaCompanionConfig config = PannotiaCompanionConfig.get();
         boolean started = TeleportManager.request(player, TeleportManager.HOME_COOLDOWNS, config.homeDelayTicks, config.homeCooldownSeconds, p -> {
+            BackData.record(p);
             p.teleportTo(target, home.x(), home.y(), home.z(), Set.of(), home.yRot(), home.xRot(), true);
             p.sendSystemMessage(ok("message.pannotiacompanion.home.teleported", homeName(home.name())));
         });
@@ -229,6 +230,7 @@ public class PcHomeCommand implements ChimericCommand {
             ServerLevel overworld = server.getLevel(Level.OVERWORLD);
             BlockPos spawn = overworld.getRespawnData().pos();
             BlockPos landing = p.adjustSpawnLocation(overworld, spawn);
+            BackData.record(p);
             p.teleportTo(overworld, landing.getX() + 0.5, landing.getY(), landing.getZ() + 0.5, Set.of(), p.getYRot(), p.getXRot(), true);
             p.sendSystemMessage(ok("message.pannotiacompanion.spawn.teleported"));
         });

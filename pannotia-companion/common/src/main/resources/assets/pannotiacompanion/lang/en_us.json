@@ -2,6 +2,7 @@
   "text.pannotiacompanion.config.title": "Pannotia Companion",
   "text.pannotiacompanion.config.section.homes": "Homes",
   "text.pannotiacompanion.config.section.spawn": "Spawn",
+  "text.pannotiacompanion.config.section.back": "Back",
   "text.pannotiacompanion.config.option.maxHomesPerDimension": "Max Homes Per Dimension",
   "text.pannotiacompanion.config.option.maxHomesPerDimension.desc": "How many homes each player can set in each dimension.",
   "text.pannotiacompanion.config.option.homeDelayTicks": "Home Delay (ticks)",
@@ -12,6 +13,13 @@
   "text.pannotiacompanion.config.option.spawnDelayTicks.desc": "How long a player must stand still after using /pc spawn before being teleported. 20 ticks = 1 second.",
   "text.pannotiacompanion.config.option.spawnCooldownSeconds": "Spawn Cooldown (seconds)",
   "text.pannotiacompanion.config.option.spawnCooldownSeconds.desc": "How long a player must wait between uses of /pc spawn.",
+
+  "text.pannotiacompanion.config.option.saveDeathLocation": "Save Death Location",
+  "text.pannotiacompanion.config.option.saveDeathLocation.desc": "When enabled, /pc back can take a player to where they last died.",
+  "text.pannotiacompanion.config.option.backDelayTicks": "Back Delay (ticks)",
+  "text.pannotiacompanion.config.option.backDelayTicks.desc": "How long a player must stand still after using /pc back before being teleported. 20 ticks = 1 second.",
+  "text.pannotiacompanion.config.option.backCooldownSeconds": "Back Cooldown (seconds)",
+  "text.pannotiacompanion.config.option.backCooldownSeconds.desc": "How long a player must wait between uses of /pc back.",
 
   "message.pannotiacompanion.cooldown": "You can teleport again in %s seconds.",
   "message.pannotiacompanion.hold_still": "Hold still for %s seconds to teleport...",
@@ -32,5 +40,8 @@
   "message.pannotiacompanion.home.list_header": "Your homes (%s):",
   "message.pannotiacompanion.home.click_to_teleport": "Click to teleport",
 
-  "message.pannotiacompanion.spawn.teleported": "Teleported to world spawn."
+  "message.pannotiacompanion.spawn.teleported": "Teleported to world spawn.",
+
+  "message.pannotiacompanion.back.none": "You have nowhere to go back to.",
+  "message.pannotiacompanion.back.teleported": "Teleported back."
 }

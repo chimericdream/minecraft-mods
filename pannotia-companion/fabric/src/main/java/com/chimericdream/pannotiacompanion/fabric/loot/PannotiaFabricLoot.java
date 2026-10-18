@@ -1,7 +1,14 @@
 package com.chimericdream.pannotiacompanion.fabric.loot;
 
+import com.chimericdream.pannotiacompanion.PannotiaCompanionMod;
 import com.chimericdream.pannotiacompanion.loot.PannotiaLootTables;
+import com.google.gson.JsonParser;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
@@ -13,7 +20,27 @@ public final class PannotiaFabricLoot {
     private PannotiaFabricLoot() {
     }
 
+    private static final String ANCIENT_DEBRIS_TABLE = Blocks.ANCIENT_DEBRIS.getLootTable().orElseThrow().identifier().toString();
+
     public static void init() {
+        // Ancient debris is the one deliberate replacement: it drops netherite scrap instead of debris unless mined
+        // with Silk Touch. Using REPLACE (not clearing pools in MODIFY) means other mods' MODIFY additions still apply.
+        LootTableEvents.REPLACE.register((key, original, source, registries) -> {
+            if (!source.isBuiltin() || !ANCIENT_DEBRIS_TABLE.equals(key.identifier().toString())) {
+                return null;
+            }
+
+            try (var stream = PannotiaFabricLoot.class.getResourceAsStream("/pannotia_replacements/ancient_debris.json")) {
+                var json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+                return LootTable.DIRECT_CODEC
+                    .parse(RegistryOps.create(JsonOps.INSTANCE, registries), json)
+                    .getOrThrow();
+            } catch (Exception e) {
+                PannotiaCompanionMod.LOGGER.error("Could not load the ancient debris loot table override; keeping vanilla's", e);
+                return null;
+            }
+        });
+
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             // Only touch built-in (vanilla) tables, never data pack tables.
             if (!source.isBuiltin()) {
