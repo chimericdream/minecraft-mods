@@ -37,6 +37,8 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 
 Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric mod loader and the Architectury API.
 
+Additionally, many of the features in this mod began as datapacks from a variety of sources, largely VanillaTweaks. Props to the maintainers of those datapacks for their hard work.
+
 ## License
 
 This mod is released under the MIT license. [The full text of the license can be found here.](./LICENSE)
