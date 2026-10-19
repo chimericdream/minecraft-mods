@@ -22,8 +22,6 @@ jobs:
         run: npm i -g bun
       - name: Install npm deps
         run: bun i
-      - name: Prepare build
-        run: bun run prepare:build
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Setup Gradle

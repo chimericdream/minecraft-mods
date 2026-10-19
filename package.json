@@ -8,10 +8,8 @@
         "clean": "bun ./scripts/clean.ts",
         "dashboard": "bun ./scripts/dashboard/index.ts",
         "datagen": "bun ./scripts/run-datagen.ts",
-        "prepare:build": "bun run update:patchoulibooks",
         "publish:lib": "./gradlew :chimeric-lib:common:publishToMavenLocal :chimeric-lib:fabric:publishToMavenLocal :chimeric-lib:neoforge:publishToMavenLocal",
         "status": "bun ./scripts/mod-status.ts",
-        "update:patchoulibooks": "bun ./scripts/update-patchouli-books.ts",
         "update:projectlist": "bun ./scripts/update-projectlist.ts",
         "update:settingsgradle": "bun ./scripts/update-settingsgradle.ts",
         "verify:gametests": "bun ./scripts/verify-gametest-registration.ts"

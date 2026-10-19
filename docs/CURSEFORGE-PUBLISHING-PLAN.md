@@ -31,7 +31,6 @@ to a Modrinth page.**
 | `publish-packages.yml` publishes chimeric-lib to GitHub Packages on `release: created`, **using Java 21** | `.github/workflows/publish-packages.yml` | Looks stale: the build needs Java 25 (`options.release = 25`). Fix while here |
 | 33 mods, each `enabled_platforms = fabric,neoforge` | `*/gradle.properties` | Each release = **2 jars** → 2 CurseForge files (+2 Modrinth) |
 | Jar names: `<archives_name>-<loader>-<mc>-<ver>.jar` (e.g. `hopperxtreme-fabric-26.2-4.2.0.jar`); `archives_name` does **not** always equal the folder name | `gradle/mod-conventions.gradle`, `scripts/create-modpacks.ts` | Plugin must take the file from the Gradle task (`shadowJar.archiveFile`), never from a hand-built path |
-| Prerequisite build steps: `update:patchoulibooks` (`bun run prepare:build`) | root `package.json` | CI publish job must run these before Gradle |
 | `-beta.N` suffix in versions already distinguishes betas | versioning.md | Maps 1:1 to CurseForge `beta` vs `release` |
 | Changelog heading `### <mc> - <version>` per tag | each `CHANGELOG.md` | Can extract release notes automatically |
 | Dependencies are consistent: required = `chimericlib`, `architectury`, (Fabric) `fabric-api`; optional = `opus`, `modmenu` | `fabric.mod.json` / `neoforge.mods.toml` | CurseForge "relations" can be generated, same set for most mods |
@@ -124,7 +123,7 @@ existing player-facing changelog tone is already right for it.
 - Parses `GITHUB_REF_NAME` / CLI arg `sponj/26.2-6.1.0` → folder `sponj`, mc `26.2`, version `6.1.0`.
 - Asserts these equal the mod's `gradle.properties` (`mod_version`, `minecraft_compat`) — **refuses to
   publish on mismatch** (catches "tagged the wrong commit").
-- Runs `bun run prepare:build`, then `./gradlew :<folder>:fabric:publishMods :<folder>:neoforge:publishMods`.
+- Runs `./gradlew :<folder>:fabric:publishMods :<folder>:neoforge:publishMods`.
   (`mod_id` vs. folder: the existing `--mods` flag takes `mod_id`s; reuse `resolveSelectedProjects`.)
 - `--dry-run` sets `PUBLISH_DRY_RUN=1`.
 - Same script is the local entry point: `bun run publish -- sponj` (reads tokens from env).

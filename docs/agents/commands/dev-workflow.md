@@ -32,7 +32,6 @@ mod with no datagen on either platform has neither flag.
 
 - `bun run update:settingsgradle` — regenerate `settings.gradle` from the project list.
 - `bun run update:projectlist` — regenerate `project-list.json`.
-- `bun run update:patchoulibooks` — update Patchouli documentation books.
 - `bun run dashboard` — generate `dashboard/dist/index.html` (gitignored): mod versions/icons, ideas
   pipeline status, and open GitHub issues/PRs mapped to mods. Flags: `--open` (launch in browser),
   `--refresh` (bypass the 5-minute GitHub cache). Also renders each mod's README/CHANGELOG/TEST_PLAN and
