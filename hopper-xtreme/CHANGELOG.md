@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fixed several textures on huppers (upward-facing hoppers): the plain hupper was missing its top rim when facing into a block, and the outer funnel texture was wrong on the honeyed hupper and the straight-up copper, golden, diamond, netherite, and nether star huppers.
 
 ### 26.2 - 4.2.1
 
