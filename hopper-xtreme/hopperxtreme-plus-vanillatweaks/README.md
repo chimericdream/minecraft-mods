@@ -4,6 +4,7 @@ Resource pack that adds the [Vanilla Tweaks](https://vanillatweaks.net) hopper a
 Hopper X-Treme's hoppers. Load it above Hopper X-Treme's built-in resources.
 
 - Targets Minecraft 26.1 - 26.3 (pack formats 84 - 97).
+- Covers hoppers and huppers (upward hoppers). Multi-hoppers and multi-huppers are not changed.
 - Honeyed hoppers get the plain arrow on top; honey-glazed hoppers keep the honey top (no arrow there).
 - Glazed hoppers only get the arrow on the outer walls.
 

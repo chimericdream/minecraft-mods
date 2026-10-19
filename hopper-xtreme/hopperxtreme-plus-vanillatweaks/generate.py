@@ -8,6 +8,13 @@ src = os.path.join(root, 'common/src/main/resources/assets/hopperxtreme/models/b
 shutil.rmtree(out + '/assets/hopperxtreme', ignore_errors=True)
 os.makedirs(out + '/assets/hopperxtreme/models/block')
 
+
+def write(f, m):
+    with open(out + '/assets/hopperxtreme/models/block/' + os.path.basename(f), 'w', newline='\n') as o:
+        json.dump(m, o, indent='\t')
+        o.write('\n')
+
+
 for f in sorted(glob.glob(src + '/*_hopper_side.json')):
     m = json.load(open(f))
     m['textures']['inside_arrow'] = 'minecraft:block/hopper_inside_arrow'
@@ -26,9 +33,32 @@ for f in sorted(glob.glob(src + '/*_hopper_side.json')):
                 fc['west']['texture'] = '#side_arrow'
                 fc['west']['uv'] = [16, 1, 0, 5]
     assert walls == 2 and top == (0 if 'honey_glazed' in f else 1), (f, walls, top)
-    with open(out + '/assets/hopperxtreme/models/block/' + os.path.basename(f), 'w', newline='\n') as o:
-        json.dump(m, o, indent='\t')
-        o.write('\n')
+    write(f, m)
+
+# Huppers are upside-down hoppers (the mod flips the V of their textures), so the arrows are
+# flipped the same way. The funnel's inside face is the plate's down face, whose default UV has
+# north at the bottom, hence the swapped V to keep the arrow pointing north.
+for f in sorted(glob.glob(src + '/*hupper_side.json')):
+    m = json.load(open(f))
+    m['textures']['inside_arrow'] = 'minecraft:block/hopper_inside_arrow'
+    m['textures']['side_arrow'] = 'minecraft:block/hopper_outside_arrow'
+    top = walls = 0
+    for e in m['elements']:
+        fc = e['faces']
+        if e['from'] == [0, 5, 0] and e['to'] == [16, 6, 16] and fc['down']['texture'] == '#inside':
+            fc['down']['texture'] = '#inside_arrow'
+            fc['down']['uv'] = [0, 16, 16, 0]
+            top += 1
+        elif e['from'] in ([0, 0, 0], [14, 0, 0], [0, 1, 0], [14, 1, 0]) and e['to'][1] == 5 and e['to'][2] == 16:
+            walls += 1
+            assert fc['east']['texture'] == fc['west']['texture'] == '#side', f
+            fc['east']['texture'] = '#side_arrow'
+            fc['east']['uv'] = [0, 5, 16, 1]
+            fc['west']['texture'] = '#side_arrow'
+            fc['west']['uv'] = [16, 5, 0, 1]
+    assert walls == 2 and top == 1, (f, walls, top)
+    write(f, m)
+
 with open(out + '/pack.mcmeta', 'w', newline='\n') as o:
     o.write('''{
 	"pack": {
