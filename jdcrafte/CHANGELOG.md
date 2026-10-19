@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0
+
 #### New Features
 
 * The feeding trough now helps your animals breed. Every 10 seconds, if it holds food that cows, sheep, pigs, chickens, rabbits, or horses like and two of the same kind are nearby, it feeds them a pair (one food item each) so they pair up on their own. It does nothing in a crowded pen (24 or more animals). What you stock decides who breeds: wheat for cows and sheep, carrots for pigs and rabbits, wheat seeds for chickens, golden carrots for horses and rabbits, golden apples for horses.
