@@ -9,7 +9,7 @@
   `--mods` selected (or from the full project list if `--mods` was omitted), e.g.
   `--exclude=minekea` builds everything except minekea, or `--mods=chimericlib,minekea
   --exclude=minekea` builds just chimericlib. Both flags work on `build:gradle`, `build:modpacks`,
-  `clean`, `copy:accesswideners`, and `update:patchoulibooks` when run standalone.
+  `clean` and `update:patchoulibooks` when run standalone.
 - `bun run build:gradle` — `./gradlew build` only (or scoped `:mod:build` tasks with `--mods`/`--exclude`).
 - `bun run build:modpacks` — create modpack distributions in `build/modpacks/{fabric,neoforge}/`.
 - `bun run clean` — `./gradlew clean` (or scoped `:mod:clean` tasks with `--mods`/`--exclude`).

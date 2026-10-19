@@ -32,9 +32,6 @@ mod with no datagen on either platform has neither flag.
 
 - `bun run update:settingsgradle` — regenerate `settings.gradle` from the project list.
 - `bun run update:projectlist` — regenerate `project-list.json`.
-- `bun run copy:accesswideners` — copy access widener files across projects (see
-  [access wideners](../gotchas/access-wideners.md) for why this is build-time-only, and never invoke it
-  standalone outside `prebuild`/`bun run build`).
 - `bun run update:patchoulibooks` — update Patchouli documentation books.
 - `bun run dashboard` — generate `dashboard/dist/index.html` (gitignored): mod versions/icons, ideas
   pipeline status, and open GitHub issues/PRs mapped to mods. Flags: `--open` (launch in browser),

@@ -31,7 +31,7 @@ to a Modrinth page.**
 | `publish-packages.yml` publishes chimeric-lib to GitHub Packages on `release: created`, **using Java 21** | `.github/workflows/publish-packages.yml` | Looks stale: the build needs Java 25 (`options.release = 25`). Fix while here |
 | 33 mods, each `enabled_platforms = fabric,neoforge` | `*/gradle.properties` | Each release = **2 jars** → 2 CurseForge files (+2 Modrinth) |
 | Jar names: `<archives_name>-<loader>-<mc>-<ver>.jar` (e.g. `hopperxtreme-fabric-26.2-4.2.0.jar`); `archives_name` does **not** always equal the folder name | `gradle/mod-conventions.gradle`, `scripts/create-modpacks.ts` | Plugin must take the file from the Gradle task (`shadowJar.archiveFile`), never from a hand-built path |
-| Prerequisite build steps: `copy:accesswideners` + `update:patchoulibooks` (`bun run prepare:build`) | root `package.json` | CI publish job must run these before Gradle |
+| Prerequisite build steps: `update:patchoulibooks` (`bun run prepare:build`) | root `package.json` | CI publish job must run these before Gradle |
 | `-beta.N` suffix in versions already distinguishes betas | versioning.md | Maps 1:1 to CurseForge `beta` vs `release` |
 | Changelog heading `### <mc> - <version>` per tag | each `CHANGELOG.md` | Can extract release notes automatically |
 | Dependencies are consistent: required = `chimericlib`, `architectury`, (Fabric) `fabric-api`; optional = `opus`, `modmenu` | `fabric.mod.json` / `neoforge.mods.toml` | CurseForge "relations" can be generated, same set for most mods |
