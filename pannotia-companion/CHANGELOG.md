@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0
+
 * Added `/pc home`, `/pc homes`, `/pc spawn` and `/pc back` commands, replacing the Homes, Spawn and Back datapacks.
 * Wandering traders now also sell mini block and streamer heads.
 * Added mob head, husk sand, Ender Dragon, and shulker shell (Looting) drops as additions to existing loot.
