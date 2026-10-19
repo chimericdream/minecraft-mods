@@ -116,8 +116,17 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
             def line = ph.info().commandLine().orElse('') + ' ' + ph.info().arguments().map { it.join(' ') }.orElse('')
             needles.any { line.contains(it) }
         }
-        // If the command line is unreadable and there is exactly one candidate, it can only be ours.
-        return matched ?: (javas.size() == 1 ? javas : [])
+        if (matched) {
+            return matched
+        }
+        // Only fall back when the single candidate's command line is unreadable. A readable command
+        // line that matched no needle belongs to another (parallel) run task, and killing it would
+        // fail that task; if our own JVM already exited there is simply nothing to kill.
+        if (javas.size() == 1 && javas[0].info().commandLine().orElse('').isEmpty()
+                && javas[0].info().arguments().isEmpty()) {
+            return javas
+        }
+        return []
     }
 
     static void killTree(ProcessHandle root) {
