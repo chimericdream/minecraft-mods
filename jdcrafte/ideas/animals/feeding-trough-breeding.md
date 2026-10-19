@@ -1,6 +1,6 @@
 # Feeding trough breeding
 
-> Source: [legacy ideas.md](../brainstorms/2026-09-02-legacy/ideas-md.md) ("Feeding trough: feeds animals in a given radius"), reshaped by the user on 2026-10-09 · Effort **M** · Status: **Implemented** (golden carrot/apple trough textures are placeholders until supplied)
+> Source: [legacy ideas.md](../brainstorms/2026-09-02-legacy/ideas-md.md) ("Feeding trough: feeds animals in a given radius"), reshaped by the user on 2026-10-09 · Effort **M** · Status: **Implemented**
 
 ## Description
 
@@ -103,6 +103,5 @@ _None yet._
 
 ## Open questions
 
-None that change what gets built. To settle while building: each food has its own
-`trough_level<N>_<food>` models, so golden carrots and golden apples each need three level models, a
-`FoodType` entry, lang strings, and datagen, using the textures the user provides.
+None. The golden carrot and golden apple models, `FoodType` entries, lang strings, datagen, and textures
+are all in.

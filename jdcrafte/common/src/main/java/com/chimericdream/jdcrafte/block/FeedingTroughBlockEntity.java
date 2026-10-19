@@ -171,7 +171,7 @@ public class FeedingTroughBlockEntity extends BlockEntity implements Implemented
      * Puts one pair of same-species animals in love mode, if the stored food suits two eligible
      * animals and the area isn't overcrowded. Costs one food item per animal.
      */
-    void feedOnePair(ServerLevel level, BlockPos pos, JDCrafteConfig config) {
+    public void feedOnePair(ServerLevel level, BlockPos pos, JDCrafteConfig config) {
         if (getStoredCount() < 2) {
             return;
         }

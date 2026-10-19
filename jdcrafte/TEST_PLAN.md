@@ -9,9 +9,10 @@ implemented.
 
 Expected shape based on the idea list — plan accordingly:
 
-* **Feeding trough** — GameTests: a trough feeds one pair of same-species eligible adults per check, skips
-  animals on breeding cooldown, counts babies toward the 24-animal cap but never feeds them, and respects the
-  config kill switch/clamps. Manual: heart particles on fed animals and green sparkles above the trough; trough inventory depletes correctly; hopper interaction
+* **Feeding trough** — GameTests are written (`fabric/src/gametest/.../FeedingTroughBreedingGameTest`, run with
+  `./gradlew :jdcrafte:fabric:runGameTest`): one pair per check, cooldown and baby exclusions, the animal cap,
+  food-picks-species, radius, unsupported species, the kill switch on the real tick path, and config clamps.
+  Still manual: heart particles on fed animals and green sparkles above the trough; trough inventory depletes correctly; hopper interaction
   (can troughs be auto-filled?). Reuse the container-assertion helpers from Hopper X-Treme's tests.
 * **Crates / storage** — mirror Minekea's crate coverage (see `minekea/TEST_PLAN.md`): capacity,
   hopper in/out, contents preserved on break if applicable, screen opens.

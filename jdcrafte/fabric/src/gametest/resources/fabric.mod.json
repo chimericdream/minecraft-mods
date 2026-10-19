@@ -1,0 +1,25 @@
+{
+    "schemaVersion": 1,
+    "id": "jdcrafte_test",
+    "version": "1.0.0",
+    "name": "JD Crafte GameTest",
+    "description": "Test-only GameTests for JD Crafte. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.jdcrafte.fabric.test.FeedingTroughBreedingGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "jdcrafte": "*"
+    }
+}
