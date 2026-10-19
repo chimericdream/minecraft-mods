@@ -2,6 +2,10 @@ architectury {
     common project(":miniblock-merchants").enabled_platforms.split(',')
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/miniblockmerchants.accesswidener")
+}
+
 sourceSets {
     main {
         resources.srcDir 'src/main/generated'
