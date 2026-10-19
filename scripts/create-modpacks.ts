@@ -1,4 +1,4 @@
-import {copyFile, mkdir, rm} from 'node:fs/promises';
+import {copyFile, exists, mkdir, rm} from 'node:fs/promises';
 import path from 'node:path';
 
 import {getProjectFolder, loadProperties, resolveSelectedProjects} from "./util/shared.ts";
@@ -26,8 +26,23 @@ export const createModpacks = async (projects: string[]): Promise<void> => {
         const fabricFile = path.join(projectFolder, 'fabric', 'build', 'libs', fabricFileName);
         const neoforgeFile = path.join(projectFolder, 'neoforge', 'build', 'libs', neoForgeFileName);
 
-        await copyFile(fabricFile, path.join(__dirname, '..', 'build', 'modpacks', 'fabric', fabricFileName));
-        await copyFile(neoforgeFile, path.join(__dirname, '..', 'build', 'modpacks', 'neoforge', neoForgeFileName));
+        const [fabricExists, neoForgeExists] = await Promise.all([exists(fabricFile), exists(neoforgeFile)]);
+
+        const copyPromises = [];
+
+        if (fabricExists) {
+            copyPromises.push(copyFile(fabricFile, path.join(__dirname, '..', 'build', 'modpacks', 'fabric', fabricFileName)));
+        } else {
+            console.warn(`Fabric mod not found for project ${project}`);
+        }
+
+        if (neoForgeExists) {
+            copyPromises.push(copyFile(neoforgeFile, path.join(__dirname, '..', 'build', 'modpacks', 'neoforge', neoForgeFileName)));
+        } else {
+            console.warn(`NeoForge mod not found for project ${project}`);
+        }
+
+        await Promise.all(copyPromises);
     }
 };
 
