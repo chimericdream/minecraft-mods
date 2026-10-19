@@ -8,6 +8,8 @@ on: [ pull_request, push ]
 
 jobs:
   build:
+    # Backstop for a hung run task; a healthy full build is well under this.
+    timeout-minutes: 120
     strategy:
       matrix:
         # Must be >= the `options.release` in build.gradle (currently 25).
