@@ -12,6 +12,10 @@
 - [docs/MC-26.2-NOTES.md](../../MC-26.2-NOTES.md) — MC 26.2 port gotchas: datagen component binding,
   API renames, reading decompiled vanilla source, the shutdown-watchdog false crash, and
   build/datagen/GameTest tasks that hang after finishing.
+- [docs/MC-26.2-RENDERING.md](../../MC-26.2-RENDERING.md) — client rendering: `submitMovingBlock` (and its
+  lost AO), custom quad geometry, vanilla beds as a special model.
+- [docs/DESIGN-NOTES.md](../../DESIGN-NOTES.md) — per-mod design invariants: Hopper X-Treme filter slot,
+  glass jar container, villager trade preview, chimeric-lib trim datagen.
 - [docs/BLOCK-MIGRATION.md](../../BLOCK-MIGRATION.md) — non-breaking block/item deprecation & rename
   across both loaders (no DataFixerUpper).
 - [docs/history/UPDATE-PLAN.md](../../history/UPDATE-PLAN.md) — the Yarn→Mojang + MC 26.2 update runbook

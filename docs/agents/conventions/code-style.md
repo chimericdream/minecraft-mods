@@ -15,3 +15,15 @@
   - `setItems` must preserve the fixed slot count: copy in place
     (`for i: items.set(i, incoming.get(i))`), never `clear()+addAll` on a fixed-size `NonNullList`
     (that can throw or let the size drift). Same fixed-size rule as `ImplementedInventory.clearContent`.
+- **Writing files programmatically**: LF is required (`core.autocrlf` is `false`, so git stores exactly what
+  you write). Python on Windows translates `\n` to `\r\n` by default and the `csv` module defaults to
+  `\r\n`: pass `newline="\n"` to `open(...)` and `lineterminator="\n"` to `csv.writer` / `DictWriter`, and
+  always `encoding="utf-8"`. Verify at the byte level (`b.count(b"\r\n") == 0`).
+- **Don't write files with Windows PowerShell 5.1** (`Set-Content`, `Out-File`, `>`): it defaults to the ANSI
+  codepage and has written Windows-1252 bytes (lone `0x97` em dashes) into `.md` files, which later fail
+  UTF-8 edits. Use the Write/Edit tools, or Python with explicit `encoding="utf-8"` and `newline="\n"`.
+  PowerShell is fine for read-only tasks.
+- **Follow an existing naming convention over personal habit.** The maintainer defaults to hyphenated names
+  (`{stencil}-candlelit-{count}.png`) but wants strong repo conventions followed instead (e.g. All Hallows
+  Steve overlay textures use underscores: `creeper_lit_blue.png`). When asked to name a file or asset, check
+  its neighbors, point out any mismatch, and default to the existing style without asking twice.

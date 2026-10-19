@@ -92,3 +92,9 @@
   `curseforge_optional` (the commented lines in `.bun-create/mod/gradle.properties.tpl`); an empty value
   means none. chimeric-lib never lists itself as a dependency and overrides `curseforge_requires` to
   `architectury-api` (it has no YACL dependency).
+- **Always tag the release commit** (`<folder>/<mc_compat>-<mod_version>`) right after the release commit,
+  without asking. Pushing tags is separate and still needs an explicit go-ahead.
+- **No changelog entry for dev-only bugs.** Before adding a bug-fix bullet, ask whether the bug could ever
+  have manifested in a released jar. If it only reproduced in `runClient`/dev (a dependency-version quirk, a
+  dev-run mod-loading fluke, a datagen-only failure), skip the changelog; it belongs at most in the commit
+  message.

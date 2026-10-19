@@ -60,3 +60,38 @@ startup on a hit) but run/jar tasks fail inside Loom (`JarManifestService`) and 
 already written as build services so they are not the blocker. Don't make closures in those services read
 `private` members — Gradle's generated subclass breaks that silently and the watchdog stops firing.
 `~/.gradle/gradle.properties` overrides the project's `org.gradle.jvmargs`, so repeat `-Xmx8G` there.
+
+### Confirming a hung `run*` JVM is really done (before killing it)
+
+The run watchdog above handles most hangs, but if you have to judge one by hand: take `jstack <pid>` of the
+forked JVM. If every thread is idle (`ForkJoinPool` / `ThreadPoolExecutor` workers parked in
+`LinkedBlockingQueue.take()`, `DestroyJavaVM` present and waiting) and nothing is executing generation
+logic, the work is done and it will never exit on its own (some dependency starts non-daemon executors and
+never shuts them down). Verify the expected output landed (the file or directory exists, or `git status`
+shows the expected diff) before killing. Gradle then reports the task FAILED (`non-zero exit value -1`) purely
+from the forced kill; re-run that one task for a clean confirmation. A leftover hung JVM can also cause
+"Failed to modify jar manifest" on the next build; killing it fixes that.
+
+Fabric's `runDatagen` and NeoForge's `runData` share a clean-the-generated-directory step scoped per mod, not
+per platform, so running Fabric's task after NeoForge's wipes NeoForge's output. Run NeoForge's datagen
+**last**, one mod at a time, immediately before committing. See also the Fabric/NeoForge datagen race in
+[MC 26.2 notes](../../MC-26.2-NOTES.md).
+
+## Datagen reads machine-global environment variables: verify them first
+
+chimeric-lib's `JarAccess` / `TextureGenerator` read `chimericdream.datagen.minecraft-jar-path` and
+`<modid>.datagen.resource-path` from the **OS/user environment**, not per repo, branch or worktree. They can
+silently point at another checkout or another Minecraft version's jar. `TextureGenerator` then logs a warning
+and produces nothing instead of failing; this once shipped minekea's compressed Purpur Pillar with a missing
+side texture (`purpur_pillar.png` on 26.1.2, `purpur_pillar_side.png` on 26.2). These variables are set per
+computer, so check them on each machine you work from.
+
+- Before trusting any `bun run datagen` / `runDatagen` output, check both variables point at *this* worktree's
+  resource path and *this* branch's Minecraft jar.
+- To override for one command only, use `env 'name=value' ...` in bash (the dotted names break plain
+  `VAR=value`) rather than changing the global value.
+- Datagen keeps a gitignored content-hash cache at `<mod>/common/src/main/generated/.cache/`. If you revert
+  generated output with `git checkout` but leave the cache, the next correct run sees matching hashes, skips
+  rewriting, and leaves the stale file while reporting success. Delete `.cache` (safe, regenerable) after any
+  such revert, or diff against HEAD afterward. The same stale cache made minekea's model provider skip every
+  write during the 26.1.2 backport.

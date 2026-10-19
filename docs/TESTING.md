@@ -121,3 +121,46 @@ covers the exact 26.2 API calls and the cleanup checklist.
   test yourself before reporting a rendering change as done — there's no one to look at it live.
 - **Unsure which situation you're in**: pause and ask which they'd prefer. If there's no response for
   several minutes, proceed with the automated smoke test rather than blocking indefinitely.
+
+- **If a smoke run is ambiguous, stop and ask.** After two runs that don't settle a visual judgment call
+  ("does this look right"), stop and ask the user whether to keep iterating or let them check in a real client,
+  instead of re-adjusting camera angles on your own. Each `runClientGameTest` costs about 2 minutes of
+  Gradle + JVM startup, and the user can often confirm in seconds what more scripted shots may never settle.
+  This applies to the visual judgment only; mechanical failures (crashes, exceptions, wrong file written) have an
+  unambiguous pass/fail and don't need the pause.
+
+## GameTest-writing notes (MC 26.2)
+
+- Fixtures in chimeric-lib's gametest set are registered through the library's own `ModRegistryHelper`
+  (`new ModRegistryHelper("chimericlib_test", LogManager.getLogger(...))` + suppliers + `.init()` from the
+  entrypoint), so registering them *is* what the registration test verifies.
+- A `MenuType` self-reference in a static field initializer (even inside the `MenuSupplier` lambda) is a compile
+  error: pass `null` as the type in the supplier (Minekea's `CrateScreenHandler` does this) and construct the
+  handler directly with the real registered type in the test.
+- Block-entity NBT round-trip: `be.saveWithFullMetadata(provider)` then
+  `BlockEntity.loadStatic(pos, state, tag, provider)`, with `provider = ctx.getLevel().registryAccess()`.
+  Container block entities save/load via `ContainerHelper.saveAllItems` / `loadAllItems(view, items)` in
+  `saveAdditional(ValueOutput)` / `loadAdditional(ValueInput)`.
+- `GameTestHelper.getEntities(EntityType)` is region-scoped, which makes it good for leak checks.
+  `makeMockServerPlayerInLevel()` works but is deprecated for removal.
+- **Test-count sanity check.** After adding a `@GameTest` class, compare the run log's `"N tests are now
+  running"` to what you expect. A count that didn't change means the class isn't in the `fabric-gametest`
+  entrypoint array (see "Registration is mandatory" above). `log-all-the-things` once had a 7-test class that
+  never ran for months while every run reported "all passed".
+
+### Minekea's gametest source set
+
+Minekea has its own `gametest` source set, separate from chimeric-lib's:
+
+- Sources: `minekea/fabric/src/gametest/java/com/chimericdream/minekea/fabric/test/`.
+- Test-mod manifest: `minekea/fabric/src/gametest/resources/fabric.mod.json` (id `minekea_test`, a
+  `fabric-gametest` entrypoint listing each test class, `depends` on minekea, chimericlib, fabric-api and
+  architectury). No `main` entrypoint is needed: the real minekea mod loads from the run classpath and registers
+  all blocks.
+- Wiring is automatic from the root `build.gradle` (`fabricApi.configureTests`), so you only add source files.
+- Run: `./gradlew :minekea:fabric:runGameTest` (about 1.5 minutes, headless server). Tests use the real
+  registered blocks. `GameTestHelper.useBlock(pos)` synthesizes a center hit with an empty creative hand and
+  dispatches straight into `useWithoutItem` (no raycast against the collision shape). The default arena is empty;
+  place blocks around relative (2,2,2).
+- Harmless log noise: a `minekea:minekea_catalogue` patchouli book parse ERROR (unrelated data issue), and Fabric
+  counts a built-in structure self-test, so 2 authored tests report as "3 tests".

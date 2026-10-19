@@ -174,3 +174,9 @@ brainstorms) and in a root `ideas.md` (the user's own older notes). Both were re
 - **chimeric-lib is the exception.** Its backlog was already treated as a working list, especially the
   GameTest helper backlog, so its items became idea files straight away. The docs, test plans, and
   source comments that referenced the backlog now point at those files.
+
+## Advancement ideas
+
+When processing a mod's legacy backlog, delete the vague "add thematic/fun advancements" bullet; it is
+table-stakes and not useful as an idea. Specific advancement ideas (for example Sneaky Tweaks' "Uncomfortable
+Silence") are welcome and are scored and fleshed out like any other idea, with a normal vote.
