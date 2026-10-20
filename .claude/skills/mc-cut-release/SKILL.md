@@ -66,10 +66,11 @@ above it for the next cycle.
 Player-facing changelog prose must stay concise and non-technical (chimeric-lib is the one technical
 exception — see versioning.md).
 
-## 5. Update `README.md` if it needs it
+## 5. Update `README.md` — always, on every release
 
-Only if something the README documents actually changed (feature list, supported versions, setup steps,
-public API surface). Skip it otherwise — don't add a touch just to have one.
+Always bump the version badge at the top (`Version: x` and the `version-x-` shields.io URL, with `-`
+escaped as `--`) to the new `mod_version`, and also update anything else the README documents that
+changed (feature list, supported versions, setup steps, public API surface). Never skip this step.
 
 ## 6. Commit
 
