@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 6.4.0
+
 #### New Features
 
 * The **Bagged Villager** tooltip now shows the villager's biome type, profession and level. Hold Shift to see what
