@@ -1,7 +1,7 @@
 # Bagged Villager tooltip
 
 > Shortlist #1 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes — · My vote **Yes**
-> Status: **Building** (unreleased, `6.4.0-beta.0`)
+> Status: **Shipped** in 6.4.0
 
 ## Description
 

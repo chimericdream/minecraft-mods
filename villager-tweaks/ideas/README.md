@@ -9,15 +9,10 @@ Feature ideas for this mod, from first thought to ready to build. The process is
 
 ## Active ideas
 
-### Bagged villager
-
-- [Bagged Villager tooltip](bagged-villager/bagged-villager-tooltip.md) — Show profession, level and trades on hover.
-
 ### Trading hall
 
 - [Workstation checker](trading-hall/workstation-checker.md) — An item that shows why a villager won't take a job.
 - [Restock rules config](trading-hall/restock-rules.md) — Toggles for how and when villagers restock.
-- [Trade preview on locked trades](trading-hall/trade-preview.md) — See what later trades will be.
 
 ### Movement
 
@@ -45,4 +40,5 @@ _Empty._
 
 ## Archive
 
-_Empty._
+- [Bagged Villager tooltip](archive/bagged-villager-tooltip.md) — Shipped in 6.4.0.
+- [Trade preview on locked trades](archive/trade-preview.md) — Shipped in 6.4.0.

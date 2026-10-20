@@ -1,7 +1,7 @@
 # Trade preview on locked trades
 
 > Shortlist #16 · Tier 3 — Big bets · Effort **L** · Value ★ · Votes — · My vote **Maybe**
-> Status: **Building**
+> Status: **Shipped** in 6.4.0
 
 ## Description
 
@@ -28,7 +28,7 @@ until the villager is max level.
 
 ## Related
 
-- [Workstation checker](workstation-checker.md) — same trading-hall group.
+- [Workstation checker](../trading-hall/workstation-checker.md) — same trading-hall group.
 
 - In 26.2 a villager only counts down to a level-up while nobody is trading, so the level-up waits until the screen
   closes. With previews on, the same 40 tick countdown runs during a trade, then the villager levels up, its prices

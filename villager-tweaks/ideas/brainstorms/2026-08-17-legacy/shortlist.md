@@ -42,7 +42,7 @@ Linked rows have their own idea files.
 | # | Feature | Effort | Value | Votes | My Vote |
 |---|---|---|---|---|---|
 | | **Tier 1 — Quick wins** | | | | |
-| 1 | [Bagged Villager tooltip](../../bagged-villager/bagged-villager-tooltip.md) | S | ★★★ | — | Yes |
+| 1 | [Bagged Villager tooltip](../../archive/bagged-villager-tooltip.md) | S | ★★★ | — | Yes |
 | 2 | Stacked curing discounts | S | ★★ | — | Already a feature (max discount cap) |
 | 3 | Leash any villager | S | ★★ | — | No |
 | 4 | Configurable lure items | S | ★★ | — | Already a feature |
@@ -59,7 +59,7 @@ Linked rows have their own idea files.
 | 14 | Bag more mobs | M | ★★ | — | No |
 | 15 | Per-player cure discounts | M | ★ | — | This is how vanilla works; my "Global reputation" config changes it to a shared value |
 | | **Tier 3 — Big bets** | | | | |
-| 16 | [Trade preview on locked trades](../../trading-hall/trade-preview.md) | L | ★ | — | Maybe: I think the trade set is deterministic after the initial roll |
+| 16 | [Trade preview on locked trades](../../archive/trade-preview.md) | L | ★ | — | Maybe: I think the trade set is deterministic after the initial roll |
 
 ## Tier 1 — Quick wins
 

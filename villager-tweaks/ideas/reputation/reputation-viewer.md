@@ -15,7 +15,7 @@ _None yet._
 
 ## Related
 
-- [Bagged Villager tooltip](../bagged-villager/bagged-villager-tooltip.md) — another way to inspect a villager.
+- [Bagged Villager tooltip](../archive/bagged-villager-tooltip.md) — another way to inspect a villager.
 
 ## Open questions
 
