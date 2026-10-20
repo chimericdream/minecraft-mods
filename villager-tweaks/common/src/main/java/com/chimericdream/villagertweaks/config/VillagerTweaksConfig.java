@@ -6,6 +6,7 @@ import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import net.minecraft.network.chat.Component;
@@ -48,6 +49,8 @@ public class VillagerTweaksConfig {
     public boolean enableEmeraldTemptation = Defaults.ENABLE_EMERALD_TEMPTATION;
     @SerialEntry
     public boolean enableNitwitLeashing = Defaults.ENABLE_NITWIT_LEASHING;
+    @SerialEntry
+    public int baggedTooltipMaxTrades = Defaults.BAGGED_TOOLTIP_MAX_TRADES;
 
     public static final YaclConfig<VillagerTweaksConfig> CONFIG = YaclConfig.builder(VillagerTweaksConfig.class, ModInfo.MOD_ID)
         .screen((defaults, config, builder) -> builder
@@ -165,6 +168,12 @@ public class VillagerTweaksConfig {
                     .binding(Defaults.ENABLE_NITWIT_LEASHING, () -> config.enableNitwitLeashing, newVal -> config.enableNitwitLeashing = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .option(Option.<Integer>createBuilder()
+                    .name(Component.translatable("text.config.option.baggedTooltipMaxTrades"))
+                    .description(OptionDescription.of(Component.translatable("text.config.option.baggedTooltipMaxTrades.desc")))
+                    .binding(Defaults.BAGGED_TOOLTIP_MAX_TRADES, () -> config.baggedTooltipMaxTrades, newVal -> config.baggedTooltipMaxTrades = newVal)
+                    .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(0, 20).step(1))
+                    .build())
                 .build())
         )
         .build();
@@ -191,5 +200,7 @@ public class VillagerTweaksConfig {
         public static boolean ENABLE_EMERALD_TEMPTATION = false;
 
         public static boolean ENABLE_NITWIT_LEASHING = false;
+
+        public static int BAGGED_TOOLTIP_MAX_TRADES = 5;
     }
 }

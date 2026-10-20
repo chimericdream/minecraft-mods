@@ -36,6 +36,10 @@ potions + golden apples. Fabric full pass, NeoForge smoke pass.
    villager reappears with same profession, level, trades, and name; the item becomes a plain
    bundle. Try invalid targets: side/bottom faces, a spot with only 1 air block above — placement
    must fail and the item must remain a Bagged Villager (no villager loss!).
+2a. **Bagged tooltip** — hover a bagged librarian: gray line "<Type> <Profession> · Level N (Rank)" and a
+   "Hold Shift to see trades" hint. Hold Shift: up to 5 bullets of trade results (enchanted books show the
+   enchantment, stacks show "N × Item"), then "…and N more". Set **Bagged villager tooltip trades** to 0: no
+   hint or list. Bag a nitwit/unemployed villager: summary line only.
 3. **Un-bagging in place** — right-click air while on the ground: villager spawns at your feet.
    While airborne (elytra/jumping): nothing happens (the code PASSes when not on ground).
 4. **Bagging edge cases** — baby villager, zombie villager, wandering trader, and a villager

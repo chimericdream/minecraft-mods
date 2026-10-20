@@ -1,19 +1,30 @@
 # Bagged Villager tooltip
 
 > Shortlist #1 · Tier 1 — Quick wins · Effort **S** · Value ★★★ · Votes — · My vote **Yes**
-> Status: **Exploring**
+> Status: **Building** (unreleased, `6.4.0-beta.0`)
 
 ## Description
 
-The Bagged Villager item shows the villager's profession, level and a short trade summary on hover, so a
-chest of bagged villagers isn't a lottery. It is the item the mod is best known for, and today every
-bagged villager looks identical. **Recommendation:** profession and level on one line, plus the first few
-trades (capped at a handful, with "and N more"). Read the data from the item's stored villager, no new
-data needed. Make the trade summary a client setting in case the tooltip gets long (A4).
+The Bagged Villager item shows what is inside it on hover, so a chest of bagged villagers isn't a lottery.
+
+- Always: one gray line, "<Type> <Profession> · Level N (Rank)", e.g. "Swamp Librarian · Level 4 (Expert)".
+- Offers present and the setting above 0: a dark-gray "Hold Shift to see trades" hint. While Shift is held,
+  the trade **results** only (no costs), in the villager's own offer order, one bullet each, capped at the
+  setting, then "…and N more". An enchanted book shows its enchantment instead of "Enchanted Book"; a stack
+  of more than one shows "N × Item".
+- Client setting **Bagged villager tooltip trades** (Misc, 0–20, default 5). 0 removes the hint and the list
+  but keeps the summary line.
+- Read straight from the item's stored villager data; no new data on the item.
+
+Out of scope: trade costs, locked/future trades from trade preview, out-of-stock markers.
 
 ## Decisions
 
-_None yet._
+- 2026-10-19 — Default view is profession and level only; the trade list appears while holding Shift.
+- 2026-10-19 — Trades list the result item only, not the cost.
+- 2026-10-19 — Trades are listed in the villager's own offer order (lowest level first), not highest first.
+- 2026-10-19 — The summary line also names the villager's biome type.
+- 2026-10-19 — The setting is a "max trades shown" number where 0 turns the list off.
 
 ## Related
 
@@ -21,4 +32,6 @@ _None yet._
 
 ## Open questions
 
-_None yet._
+_None._
+
+Verification: manual steps in `TEST_PLAN.md` (2a). Dependencies: none.

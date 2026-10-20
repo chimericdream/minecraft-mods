@@ -2,6 +2,9 @@
 
 #### New Features
 
+* The **Bagged Villager** tooltip now shows the villager's biome type, profession and level. Hold Shift to see what
+  it sells (its trade results, not their costs). The number of trades listed is set by the new **Bagged villager
+  tooltip trades** option; set it to 0 to hide the list. *(Default: 5.)*
 * Added **Trade preview**: a villager's trades for levels it hasn't reached yet now appear greyed out below its
   current trades, and can't be selected. Hover one to see which level unlocks it. A villager's future trades are now
   decided up front, so they will differ from vanilla. Villagers you've already traded with get their remaining levels
