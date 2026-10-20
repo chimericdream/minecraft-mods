@@ -176,7 +176,7 @@ public abstract class VTVillagerEntityMixin extends AbstractVillager {
                 );
 
                 ItemStack newItemStack = new ItemStack(ModItems.BAGGED_VILLAGER_ITEM.get());
-                TagValueOutput writeView = TagValueOutput.createWithoutContext(new ProblemReporter.Collector());
+                TagValueOutput writeView = TagValueOutput.createWithContext(new ProblemReporter.Collector(), this.registryAccess());
                 this.addAdditionalSaveData(writeView);
                 CustomData nbtComponent = CustomData.of(writeView.buildResult());
 
