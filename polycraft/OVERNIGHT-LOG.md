@@ -210,3 +210,52 @@ Notes and things to look at in the morning:
 - **Not done in M3**: the inventory screen's 2x2 grid uses the same code path and button (above the result slot), but is not
   covered by a test yet. Recipe-book placement is M7.
 - `makeMockServerPlayerInLevel` deprecation warning is unchanged.
+
+## M4 — Furnace family and the pin (2026-10-21)
+
+Added: `recipe/FurnaceState`, `FurnaceResolver`, `StationBlock` (duck interface), `PolyCraftEpoch`; `network/StationViewers`,
+`FurnaceOffers`, `SetPinPayload`; mixins `PCAbstractFurnaceBlockEntityMixin`, `PCAbstractFurnaceMenuAccessor`,
+`PCAbstractContainerMenuMixin`; client lock toggle, disabled options, and furnace-screen support in `ConflictOverlay`;
+placeholder lock icons from `polycraft/design/make_placeholders.py` (`lock_toggle.png`, `lock_toggle_on.png`, 12x12).
+
+How it works:
+- The furnace, blast furnace and smoker share one mixin on `AbstractFurnaceBlockEntity`. It wraps the two places vanilla looks
+  up the recipe (`serverTick`, and `getTotalCookTime` when the input item changes). Pins and the recipe in use are saved on the
+  block (`polycraft_pins`, `polycraft_active_input`, `polycraft_active_recipe`), so a cook survives a restart unchanged.
+- Order: block pin, then the acting player's choice, then pack default, then vanilla. The recipe in use is remembered and only
+  chosen again when the input item changes, someone changes the selection or a pin, or the recipes reload. Closing the screen
+  does not change it.
+- Switching mid-cook keeps the elapsed ticks against the new recipe's total (`CookMath.switchedProgress`); past the new total
+  it finishes on the next tick. No fuel or input is touched. Verified by GameTests, including the exact timer values.
+- Offers: a furnace doesn't notify its menu, so `FurnaceOffers` runs on each player tick and recomputes only when a stamp
+  (input, output, epoch, acting player, rules, recipe set, config) changes. All viewers see the same offer, because it is
+  computed from the furnace's own resolution (including the acting player).
+- Options the output slot can't take are listed but disabled (dimmed, red tooltip line); the server rejects selecting them and
+  pinning them. An already-selected option that can't merge simply stalls the furnace, like any vanilla mismatch.
+- Pin toggle: the client asks, the server pins whatever it last offered as selected for that group on that block. Wrong menu,
+  wrong group, or a non-furnace menu are ignored.
+
+Decisions and notes:
+- **Acting player** is the viewer who clicked most recently in a furnace menu (a hook on `AbstractContainerMenu.clicked`), not
+  strictly "changed the input slot". With one viewer these are the same; with two, the one who last clicked anything wins.
+  Tell me if you want it narrowed to input-slot changes only.
+- **Hopper-fed furnaces** have no acting player, so they use the pin, then the pack default, then vanilla, as designed.
+- The per-tick wrapper returns the remembered recipe without scanning all recipes while nothing has changed, so an idle furnace
+  costs the same as vanilla plus one string comparison.
+- `makeMockServerPlayerInLevel` players are real entries in `level.players()`, which the furnace GameTests rely on to simulate a
+  viewer. They tick furnaces by calling `AbstractFurnaceBlockEntity.serverTick` directly, so whole cooks take no game time.
+- A first test of mine tried to cook a second, different item into a filled output slot and failed; that was my test, and the
+  furnace was right (vanilla won't mix coal and charcoal). Fixed the test.
+
+Verification: 65 unit tests; 29 GameTests (`FurnaceGameTest` adds 10: vanilla default, pin from the start, viewer choice and pin
+beating it, mid-cook switch, switch past the new total, closing the screen, disabled options, pin/unpin validation, save and load,
+blast furnace and smoker types). NeoForge: compiles, and a dev server boot force-loaded `AbstractFurnaceBlockEntity`,
+`FurnaceBlockEntity`, `AbstractFurnaceMenu`, `AbstractContainerMenu`, `CraftingMenu` and `ResultSlot` with all mixins applied and no
+errors (temporary check, reverted).
+Visual (temporary client test, deleted): furnace screen with the button, the lock beside it, a disabled option, and the lock
+turning gold when clicked; the block really pinned the fast recipe. Screenshots in
+`C:\Users\bill\AppData\Local\Temp\claude\C--Users-bill-code-minecraft-mods\41e2c44a-9693-42ab-b379-7baf94eacc17\scratchpad\m4-screenshots\`.
+
+TODO(art): lock icons are placeholders (12x12, off and on); replace with your own files of the same names.
+Not covered yet: the lock/pin UI on a smoker or blast furnace screen is the same code path but was only screenshotted on the
+furnace; the Crafter's pin comes in M5.

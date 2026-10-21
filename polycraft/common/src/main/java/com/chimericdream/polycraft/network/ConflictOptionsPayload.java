@@ -17,14 +17,18 @@ import java.util.List;
  *
  * @param containerId the open menu this belongs to; the client ignores it for any other menu
  * @param selected    index of the recipe the station is currently using
+ * @param pinnable    whether this station can pin a recipe to the block (furnaces and the like)
+ * @param pinned      whether this group is pinned on the block
  */
-public record ConflictOptionsPayload(int containerId, String groupKey, int selected, List<Entry> options) implements CustomPacketPayload {
+public record ConflictOptionsPayload(int containerId, String groupKey, int selected, List<Entry> options, boolean pinnable, boolean pinned) implements CustomPacketPayload {
     public static final Type<ConflictOptionsPayload> ID = new Type<>(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "conflict_options"));
 
-    public record Entry(String recipeId, ItemStack result) {
+    /** {@code enabled} is false when the station can't take this recipe's result right now. */
+    public record Entry(String recipeId, ItemStack result, boolean enabled) {
         public static final StreamCodec<RegistryFriendlyByteBuf, Entry> CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, Entry::recipeId,
             ItemStack.STREAM_CODEC, Entry::result,
+            ByteBufCodecs.BOOL, Entry::enabled,
             Entry::new
         );
 
@@ -40,11 +44,13 @@ public record ConflictOptionsPayload(int containerId, String groupKey, int selec
         ByteBufCodecs.STRING_UTF8, ConflictOptionsPayload::groupKey,
         ByteBufCodecs.VAR_INT, ConflictOptionsPayload::selected,
         Entry.CODEC.apply(ByteBufCodecs.list()), ConflictOptionsPayload::options,
+        ByteBufCodecs.BOOL, ConflictOptionsPayload::pinnable,
+        ByteBufCodecs.BOOL, ConflictOptionsPayload::pinned,
         ConflictOptionsPayload::new
     );
 
     public static ConflictOptionsPayload none(int containerId) {
-        return new ConflictOptionsPayload(containerId, "", -1, List.of());
+        return new ConflictOptionsPayload(containerId, "", -1, List.of(), false, false);
     }
 
     public boolean isEmpty() {

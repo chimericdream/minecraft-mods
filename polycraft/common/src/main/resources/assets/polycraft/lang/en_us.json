@@ -20,6 +20,9 @@
 
     "polycraft.ui.choose_recipe": "Choose which recipe to craft",
     "polycraft.ui.from_mod": "From %s",
+    "polycraft.ui.cant_take": "Can't be crafted right now: the output slot holds something else",
+    "polycraft.ui.pin.off": "Pin this recipe to this block",
+    "polycraft.ui.pin.on": "Pinned: %s. Click to unpin",
 
     "polycraft.command.conflicts.none": "PolyCraft found no recipe conflicts.",
     "polycraft.command.conflicts.none_for_mod": "PolyCraft found no recipe conflicts involving %s.",

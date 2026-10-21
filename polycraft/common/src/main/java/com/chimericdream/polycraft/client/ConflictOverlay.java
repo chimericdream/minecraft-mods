@@ -4,6 +4,7 @@ import com.chimericdream.polycraft.ModInfo;
 import com.chimericdream.polycraft.config.PolyCraftConfig;
 import com.chimericdream.polycraft.network.ConflictOptionsPayload;
 import com.chimericdream.polycraft.network.SelectRecipePayload;
+import com.chimericdream.polycraft.network.SetPinPayload;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
 import net.minecraft.client.Minecraft;
@@ -14,8 +15,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractCraftingMenu;
-import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
@@ -25,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The recipe picker on a crafting screen: a small button that, when the server says there is a choice, opens a
+ * The recipe picker on a crafting or furnace screen: a small button that, when the server says there is a choice, opens a
  * horizontal list of the possible results. It draws and handles input itself on top of the screen, so it needs no
  * changes to the screen classes.
  * <p>
@@ -35,16 +38,20 @@ import java.util.Optional;
  */
 public final class ConflictOverlay {
     public static final int BUTTON_SIZE = 16;
+    public static final int LOCK_SIZE = 12;
     public static final int ITEM_SIZE = 30;
     public static final int ARROW_WIDTH = 12;
     public static final int ARROW_HEIGHT = 17;
 
     private static final int PADDING = 4;
     private static final int ARROW_GAP = 2;
+    private static final int LOCK_GAP = 2;
     private static final int ITEM_INSET = (ITEM_SIZE - 16) / 2;
 
     private static final Identifier BUTTON = texture("toggle_list_button");
     private static final Identifier BUTTON_PRESSED = texture("toggle_list_button_pressed");
+    private static final Identifier LOCK = texture("lock_toggle");
+    private static final Identifier LOCK_ON = texture("lock_toggle_on");
     private static final Identifier ITEM = texture("result_list_item");
     private static final Identifier ITEM_ACTIVE = texture("result_list_item_active");
     private static final Identifier ARROW_FORWARD = Identifier.withDefaultNamespace("recipe_book/page_forward");
@@ -81,7 +88,8 @@ public final class ConflictOverlay {
 
     /** True for the screens PolyCraft puts a picker on. */
     public static boolean supports(Screen screen) {
-        return screen instanceof AbstractContainerScreen<?> container && container.getMenu() instanceof AbstractCraftingMenu;
+        return screen instanceof AbstractContainerScreen<?> container
+            && (container.getMenu() instanceof AbstractCraftingMenu || container.getMenu() instanceof AbstractFurnaceMenu);
     }
 
     public static void onInit(Screen screen) {
@@ -149,6 +157,10 @@ public final class ConflictOverlay {
 
     private void choose(ConflictOptionsPayload payload, int index) {
         ConflictOptionsPayload.Entry entry = payload.options().get(index);
+        if (!entry.enabled()) {
+            return;
+        }
+
         open = false;
         if (index == payload.selected()) {
             return;
@@ -156,24 +168,41 @@ public final class ConflictOverlay {
 
         NetworkManager.sendToServer(new SelectRecipePayload(payload.containerId(), payload.groupKey(), entry.recipeId()));
         // Show the choice straight away; the server's own update follows and replaces this.
-        ClientConflictState.set(new ConflictOptionsPayload(payload.containerId(), payload.groupKey(), index, payload.options()));
+        ClientConflictState.set(new ConflictOptionsPayload(payload.containerId(), payload.groupKey(), index, payload.options(), payload.pinnable(), payload.pinned()));
     }
 
     // ---- geometry ----
 
     private Slot resultSlot() {
-        return ((AbstractCraftingMenu) screen.getMenu()).getResultSlot();
+        AbstractContainerMenu menu = screen.getMenu();
+        return menu instanceof AbstractFurnaceMenu furnace ? furnace.getResultSlot() : ((AbstractCraftingMenu) menu).getResultSlot();
+    }
+
+    /** Beside the result slot where there is room; above it in the inventory, which has none. */
+    private boolean besideResult() {
+        return !(screen.getMenu() instanceof InventoryMenu);
     }
 
     private int buttonX() {
         Slot slot = resultSlot();
-        // Beside the result slot on the crafting table; above it in the inventory, where there is no room beside it.
-        return screen.getMenu() instanceof CraftingMenu ? screen.leftPos + slot.x + 20 : screen.leftPos + slot.x;
+        return besideResult() ? screen.leftPos + slot.x + 20 : screen.leftPos + slot.x;
     }
 
     private int buttonY() {
         Slot slot = resultSlot();
-        return screen.getMenu() instanceof CraftingMenu ? screen.topPos + slot.y : screen.topPos + slot.y - 20;
+        return besideResult() ? screen.topPos + slot.y : screen.topPos + slot.y - 20;
+    }
+
+    private int lockX() {
+        return buttonX() + BUTTON_SIZE + LOCK_GAP;
+    }
+
+    private int lockY() {
+        return buttonY() + (BUTTON_SIZE - LOCK_SIZE) / 2;
+    }
+
+    private boolean overLock(double x, double y) {
+        return within(x, y, lockX(), lockY(), LOCK_SIZE, LOCK_SIZE);
     }
 
     private int panelWidth(ConflictOptionsPayload payload) {
@@ -256,6 +285,10 @@ public final class ConflictOverlay {
 
         Font font = Minecraft.getInstance().font;
         drawButton(g, font, payload, mouseX, mouseY);
+        if (payload.pinnable()) {
+            drawLock(g, font, payload, mouseX, mouseY);
+        }
+
         if (open) {
             clampScroll(payload);
             drawPanel(g, font, payload, mouseX, mouseY);
@@ -279,6 +312,21 @@ public final class ConflictOverlay {
 
         if (hovered && !open) {
             g.setTooltipForNextFrame(font, List.of(Component.translatable("polycraft.ui.choose_recipe")), Optional.empty(), mouseX, mouseY);
+        }
+    }
+
+    private void drawLock(GuiGraphicsExtractor g, Font font, ConflictOptionsPayload payload, int mouseX, int mouseY) {
+        int x = lockX();
+        int y = lockY();
+        g.blit(RenderPipelines.GUI_TEXTURED, payload.pinned() ? LOCK_ON : LOCK, x, y, 0f, 0f, LOCK_SIZE, LOCK_SIZE, LOCK_SIZE, LOCK_SIZE);
+
+        if (overLock(mouseX, mouseY)) {
+            g.fill(x, y, x + LOCK_SIZE, y + LOCK_SIZE, 0x40FFFFFF);
+            Component name = payload.options().get(Math.max(0, payload.selected())).result().getHoverName();
+            Component line = payload.pinned()
+                ? Component.translatable("polycraft.ui.pin.on", name)
+                : Component.translatable("polycraft.ui.pin.off");
+            g.setTooltipForNextFrame(font, List.of(line), Optional.empty(), mouseX, mouseY);
         }
     }
 
@@ -308,7 +356,9 @@ public final class ConflictOverlay {
             g.item(stack, cellX + ITEM_INSET, top + ITEM_INSET);
             g.itemDecorations(font, stack, cellX + ITEM_INSET, top + ITEM_INSET);
 
-            if (index == hovered) {
+            if (!payload.options().get(index).enabled()) {
+                g.fill(cellX + 1, top + 1, cellX + ITEM_SIZE - 1, top + ITEM_SIZE - 1, 0x99C6C6C6);
+            } else if (index == hovered) {
                 g.fill(cellX + 1, top + 1, cellX + ITEM_SIZE - 1, top + ITEM_SIZE - 1, 0x40FFFFFF);
             }
 
@@ -342,6 +392,9 @@ public final class ConflictOverlay {
         List<Component> lines = new ArrayList<>();
         lines.add(entry.result().getHoverName());
         lines.add(Component.translatable("polycraft.ui.from_mod", modName(entry.namespace())).withStyle(net.minecraft.ChatFormatting.GRAY));
+        if (!entry.enabled()) {
+            lines.add(Component.translatable("polycraft.ui.cant_take").withStyle(net.minecraft.ChatFormatting.RED));
+        }
         if (Minecraft.getInstance().options.advancedItemTooltips) {
             lines.add(Component.literal(entry.recipeId()).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         }
@@ -363,6 +416,13 @@ public final class ConflictOverlay {
         ConflictOptionsPayload payload = payload();
         if (payload == null) {
             return false;
+        }
+
+        if (button == 0 && payload.pinnable() && overLock(x, y)) {
+            boolean pin = !payload.pinned();
+            NetworkManager.sendToServer(new SetPinPayload(payload.containerId(), payload.groupKey(), pin));
+            ClientConflictState.set(new ConflictOptionsPayload(payload.containerId(), payload.groupKey(), payload.selected(), payload.options(), true, pin));
+            return true;
         }
 
         if (!open) {

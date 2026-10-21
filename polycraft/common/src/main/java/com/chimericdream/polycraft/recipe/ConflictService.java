@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Where PolyCraft decides which recipe a station uses for the input it holds right now. It runs on the server only,
@@ -27,8 +28,11 @@ import java.util.function.Function;
  * to vanilla's pick, so a bug here can cost a player a choice but never a craft.
  */
 public final class ConflictService {
-    /** What the player can choose between at one station right now. */
-    public record Offer(String groupKey, List<Option> options, int selectedIndex) {
+    /**
+     * What the player can choose between at one station right now. {@code pinnable} is true for stations that can pin
+     * a recipe to the block, and {@code pinned} says whether this group is pinned there.
+     */
+    public record Offer(String groupKey, List<Option> options, int selectedIndex, boolean pinnable, boolean pinned) {
         public Option selected() {
             return options.get(selectedIndex);
         }
@@ -38,7 +42,8 @@ public final class ConflictService {
         }
     }
 
-    public record Option(RecipeHolder<?> holder, ItemStack result) {
+    /** {@code enabled} is false when the station can't take this recipe's result right now, so it can't be chosen. */
+    public record Option(RecipeHolder<?> holder, ItemStack result, boolean enabled) {
         public String id() {
             return RecipeIndex.recipeId(holder);
         }
@@ -61,7 +66,6 @@ public final class ConflictService {
      * @param pins         the station's pinned recipes, or null for stations without pins
      * @return empty when vanilla's pick should stand and there is nothing to offer
      */
-    @SuppressWarnings("unchecked")
     public static <I extends RecipeInput, T extends Recipe<I>> Optional<Selection<T>> select(
         ServerLevel level,
         RecipeType<T> type,
@@ -69,6 +73,23 @@ public final class ConflictService {
         @Nullable RecipeHolder<T> vanillaPick,
         Function<String, Optional<String>> playerChoice,
         @Nullable PinMap pins
+    ) {
+        return select(level, type, input, vanillaPick, playerChoice, pins, result -> true);
+    }
+
+    /**
+     * @param acceptable whether the station can take a recipe's result right now; an option it can't take is still
+     *                   listed but can't be chosen
+     */
+    @SuppressWarnings("unchecked")
+    public static <I extends RecipeInput, T extends Recipe<I>> Optional<Selection<T>> select(
+        ServerLevel level,
+        RecipeType<T> type,
+        I input,
+        @Nullable RecipeHolder<T> vanillaPick,
+        Function<String, Optional<String>> playerChoice,
+        @Nullable PinMap pins,
+        Predicate<ItemStack> acceptable
     ) {
         try {
             PolyCraftConfig config = PolyCraftConfig.get();
@@ -96,7 +117,7 @@ public final class ConflictService {
                     continue;
                 }
 
-                matches.add(new Option(holder, result));
+                matches.add(new Option(holder, result, acceptable.test(result)));
                 infos.add(index.info(holder, result));
             }
 
@@ -132,7 +153,7 @@ public final class ConflictService {
                 ? RecipeIndex.recipeId(vanillaPick)
                 : resolution.recipeId();
 
-            Offer offer = new Offer(found.groupKey(), List.copyOf(options), ids.indexOf(selectedId));
+            Offer offer = new Offer(found.groupKey(), List.copyOf(options), ids.indexOf(selectedId), pins != null, pins != null && pins.isPinned(found.groupKey()));
             return Optional.of(new Selection<>((RecipeHolder<T>) offer.selected().holder(), offer));
         } catch (RuntimeException e) {
             PolyCraftMod.LOGGER.error("PolyCraft couldn't pick a recipe; using vanilla's", e);

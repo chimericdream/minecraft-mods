@@ -3,6 +3,7 @@ package com.chimericdream.polycraft.data;
 import com.chimericdream.polycraft.ModInfo;
 import com.chimericdream.polycraft.config.PolyCraftConfig;
 import com.chimericdream.polycraft.core.ChoiceStore;
+import com.chimericdream.polycraft.recipe.PolyCraftEpoch;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.UUIDUtil;
@@ -81,6 +82,7 @@ public class PolyCraftChoices extends SavedData {
 
         if (store.set(player, groupKey, recipeId)) {
             setDirty();
+            PolyCraftEpoch.bump();
         }
     }
 
@@ -88,6 +90,7 @@ public class PolyCraftChoices extends SavedData {
         int removed = store.clear(player);
         if (removed > 0) {
             setDirty();
+            PolyCraftEpoch.bump();
         }
 
         return removed;
@@ -97,6 +100,7 @@ public class PolyCraftChoices extends SavedData {
         int removed = store.clearAll();
         if (removed > 0) {
             setDirty();
+            PolyCraftEpoch.bump();
         }
 
         return removed;

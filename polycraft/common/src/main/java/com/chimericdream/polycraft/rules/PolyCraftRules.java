@@ -3,6 +3,7 @@ package com.chimericdream.polycraft.rules;
 import com.chimericdream.polycraft.ModInfo;
 import com.chimericdream.polycraft.PolyCraftMod;
 import com.chimericdream.polycraft.core.Rules;
+import com.chimericdream.polycraft.recipe.PolyCraftEpoch;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.resources.Identifier;
@@ -106,6 +107,7 @@ public final class PolyCraftRules {
 
     private static void rebuild() {
         merged = configRules.merge(datapackRules);
+        PolyCraftEpoch.bump();
         PolyCraftMod.LOGGER.debug(
             "Rules: {} priority entries, {} excluded recipes, {} group defaults",
             merged.priority().size(), merged.exclude().size(), merged.groupDefaults().size()

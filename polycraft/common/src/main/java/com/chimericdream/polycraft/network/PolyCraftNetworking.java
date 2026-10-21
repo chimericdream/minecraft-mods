@@ -4,10 +4,14 @@ import com.chimericdream.polycraft.client.ClientConflictState;
 import com.chimericdream.polycraft.data.PolyCraftChoices;
 import com.chimericdream.polycraft.recipe.ConflictService.Offer;
 import com.chimericdream.polycraft.recipe.ConflictService.Option;
+import com.chimericdream.polycraft.recipe.PolyCraftEpoch;
+import com.chimericdream.polycraft.recipe.StationBlock;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
@@ -19,8 +23,8 @@ import java.util.function.Function;
 
 /**
  * The server's side of the picker: it remembers what each open menu was last offered (so it can tell the client only
- * when something changed, and so it can check a selection against what was really offered) and applies selections.
- * Everything here runs on the server thread. Entries are keyed by menu, so they disappear when a menu is closed.
+ * when something changed, and so it can check a selection against what was really offered) and applies selections and
+ * pins. Everything here runs on the server thread. Entries are keyed by menu, so they disappear when a menu is closed.
  */
 public final class PolyCraftNetworking {
     private static final Map<AbstractContainerMenu, Offer> OFFERED = new WeakHashMap<>();
@@ -29,7 +33,7 @@ public final class PolyCraftNetworking {
     private PolyCraftNetworking() {
     }
 
-    /** Registers both payloads. One call from common init registers each type on both sides. */
+    /** Registers the payloads. One call from common init registers each type on both sides. */
     public static void init() {
         NetworkManager.registerReceiver(
             NetworkManager.c2s(),
@@ -38,6 +42,17 @@ public final class PolyCraftNetworking {
             (payload, context) -> {
                 if (context.getPlayer() instanceof ServerPlayer player) {
                     context.queue(() -> applySelection(player, payload));
+                }
+            }
+        );
+
+        NetworkManager.registerReceiver(
+            NetworkManager.c2s(),
+            SetPinPayload.ID,
+            SetPinPayload.CODEC,
+            (payload, context) -> {
+                if (context.getPlayer() instanceof ServerPlayer player) {
+                    context.queue(() -> applyPin(player, payload));
                 }
             }
         );
@@ -86,9 +101,12 @@ public final class PolyCraftNetworking {
         }
 
         List<ConflictOptionsPayload.Entry> entries = offer.options().stream()
-            .map(option -> new ConflictOptionsPayload.Entry(option.id(), option.result()))
+            .map(option -> new ConflictOptionsPayload.Entry(option.id(), option.result(), option.enabled()))
             .toList();
-        NetworkManager.sendToPlayer(player, new ConflictOptionsPayload(menu.containerId, offer.groupKey(), offer.selectedIndex(), entries));
+        NetworkManager.sendToPlayer(
+            player,
+            new ConflictOptionsPayload(menu.containerId, offer.groupKey(), offer.selectedIndex(), entries, offer.pinnable(), offer.pinned())
+        );
     }
 
     /** What the server last offered for {@code menu}, if it offered anything. */
@@ -104,15 +122,59 @@ public final class PolyCraftNetworking {
         }
 
         Offer offer = OFFERED.get(menu);
-        if (offer == null || !offer.groupKey().equals(payload.groupKey()) || offer.byId(payload.recipeId()).isEmpty()) {
+        if (offer == null || !offer.groupKey().equals(payload.groupKey())) {
+            return;
+        }
+
+        Optional<Option> chosen = offer.byId(payload.recipeId());
+        if (chosen.isEmpty() || !chosen.get().enabled()) {
             return;
         }
 
         SESSION_CHOICES.computeIfAbsent(menu, key -> new HashMap<>()).put(payload.groupKey(), payload.recipeId());
         PolyCraftChoices.get(player.level().getServer()).choose(player.getUUID(), payload.groupKey(), payload.recipeId());
+        PolyCraftEpoch.bump();
 
-        // Run the station's own update so it picks the recipe again with the new choice in place.
-        menu.slotsChanged(menu.getSlot(0).container);
+        if (menu instanceof AbstractCraftingMenu) {
+            // Run the station's own update so it picks the recipe again with the new choice in place.
+            menu.slotsChanged(menu.getSlot(0).container);
+        } else {
+            StationViewers.furnaceOf(menu).ifPresent(PolyCraftNetworking::markStale);
+        }
+    }
+
+    /** Applies a pin or unpin the client asked for. Public so tests can drive it. */
+    public static void applyPin(ServerPlayer player, SetPinPayload payload) {
+        AbstractContainerMenu menu = player.containerMenu;
+        if (menu.containerId != payload.containerId()) {
+            return;
+        }
+
+        Offer offer = OFFERED.get(menu);
+        Optional<AbstractFurnaceBlockEntity> furnace = StationViewers.furnaceOf(menu);
+        if (offer == null || !offer.pinnable() || furnace.isEmpty() || !offer.groupKey().equals(payload.groupKey())) {
+            return;
+        }
+
+        StationBlock station = (StationBlock) furnace.get();
+        if (payload.pinned()) {
+            Option selected = offer.selected();
+            if (!selected.enabled()) {
+                return;
+            }
+
+            station.polycraft$state().pins().pin(payload.groupKey(), selected.id());
+        } else {
+            station.polycraft$state().pins().unpin(payload.groupKey());
+        }
+
+        PolyCraftEpoch.bump();
+        markStale(furnace.get());
+    }
+
+    private static void markStale(AbstractFurnaceBlockEntity furnace) {
+        ((StationBlock) furnace).polycraft$state().invalidate();
+        furnace.setChanged();
     }
 
     private static boolean sameOffer(@Nullable Offer a, @Nullable Offer b) {
@@ -120,14 +182,15 @@ public final class PolyCraftNetworking {
             return a == b;
         }
 
-        if (!a.groupKey().equals(b.groupKey()) || a.selectedIndex() != b.selectedIndex() || a.options().size() != b.options().size()) {
+        if (!a.groupKey().equals(b.groupKey()) || a.selectedIndex() != b.selectedIndex() || a.options().size() != b.options().size()
+            || a.pinnable() != b.pinnable() || a.pinned() != b.pinned()) {
             return false;
         }
 
         for (int i = 0; i < a.options().size(); i++) {
             Option left = a.options().get(i);
             Option right = b.options().get(i);
-            if (!left.id().equals(right.id()) || !ItemStack.matches(left.result(), right.result())) {
+            if (!left.id().equals(right.id()) || left.enabled() != right.enabled() || !ItemStack.matches(left.result(), right.result())) {
                 return false;
             }
         }
