@@ -1,0 +1,26 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":polycraft:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "polycraft.accesswidener")
+    }
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':polycraft:common')) { transitive false }
+    shadowBundle project(path: ':polycraft:common', configuration: 'transformProductionNeoForge')
+}

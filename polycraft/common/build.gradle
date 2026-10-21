@@ -1,0 +1,7 @@
+architectury {
+    common project(':polycraft').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/polycraft.accesswidener")
+}

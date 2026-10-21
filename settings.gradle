@@ -37,6 +37,7 @@ def projectList = [
     'opus',
     'pannotia-companion',
     'playgrounds',
+    'polycraft',
     'shulker-stuff',
     'sneaky-tweaks',
     'sponj',
