@@ -1,0 +1,5 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": ["minecraft:cactus", "minecraft:cactus"],
+    "result": { "id": "minecraft:green_dye", "count": 5 }
+}

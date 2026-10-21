@@ -1,0 +1,25 @@
+{
+    "schemaVersion": 1,
+    "id": "polycraft_test",
+    "version": "1.0.0",
+    "name": "PolyCraft GameTest",
+    "description": "Test-only GameTests and fixture recipes for PolyCraft. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.polycraft.fabric.test.CommandGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "polycraft": "*"
+    }
+}

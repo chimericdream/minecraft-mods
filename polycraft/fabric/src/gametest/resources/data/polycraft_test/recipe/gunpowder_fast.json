@@ -1,0 +1,7 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": "minecraft:gunpowder",
+    "result": { "id": "minecraft:coal" },
+    "experience": 0.7,
+    "cookingtime": 100
+}

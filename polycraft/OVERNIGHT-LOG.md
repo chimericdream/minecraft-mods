@@ -123,3 +123,40 @@ Decisions made while implementing (all inside DESIGN.md's lines; flagging so you
 - **Group key** = `type|canonical` of the vanilla winner's signature (see M0 refinements 1 and 2).
 - `Rules` ids are validated with a lenient lowercase `namespace:path` pattern; invalid entries warn and are dropped.
 - `CookMath.canMergeIntoOutput` replicates vanilla's private `canBurn` rule for greying out options.
+
+## M2 — Config, rules, commands, player data (2026-10-21)
+
+Added: `config/PolyCraftConfig` (YaclConfig, all keys from DESIGN.md's table except the removed `allowPlayerChoice`),
+`core/ConfigLimits`, `data/PolyCraftChoices` (SavedData wrapping `ChoiceStore`), `rules/PolyCraftRules` (config file +
+datapack reload listener), `recipe/RecipeIndex` (per-reload index; signatures; synthetic results for static listings),
+`command/PolyCraftCommand`, `en_us.json`. `PolyCraftMod.init()` now initialises config, rules and the command.
+
+Checks: unit tests 65 passing (adds `ConfigTest`); 10 GameTests passing on `:polycraft:fabric:runGameTest`
+(`CommandGameTest`: datapack rules load, conflict listing, export contents, op-only commands, reset self/other,
+`rememberChoices` off, save/load round trip); both loaders compile; `bun run verify:gametests` clean.
+
+Fixture datapack (`fabric/src/gametest/resources/data/polycraft_test/`): four 2-cactus crafting recipes (a: 3 green dye,
+b: 5 green dye, c: 2 lime dye, copy: 3 green dye) and two gunpowder smelting recipes (charcoal/200 ticks, coal/100 ticks),
+plus a rules file that prefers recipe b and excludes recipe c. The export test proves the full pipeline: the copy
+collapses into a, c is excluded, b is kept because its count differs.
+
+Decisions and notes:
+- **Command permissions**: `conflicts` and `reset` (self) are open to everyone; `export`, `reload` and `reset <player>` need
+  gamemaster (level 2), matching how `opus` checks permissions in 26.2 (`Permission.HasCommandLevel`).
+- **`/polycraft conflicts`** lists identical-input conflicts only (it works from the recipes alone). Overlapping conflicts
+  depend on what is in a station, so they can't be listed. Excluded recipes are left out of the listing and export.
+- **`reload`** re-reads `config/polycraft/rules.json` only; datapack rules reload with `/reload`.
+- `rules.json` is created with an empty starter body the first time the mod runs.
+- **`rememberChoices` off** stops both reading and writing choices but leaves stored ones in the world.
+- Per-player cap is 256 stored choices (constant `PolyCraftChoices.MAX_PER_PLAYER`, not a config option).
+- **Loader-specific ingredients**: 26.2's `Ingredient` is a final class over a `HolderSet<Item>`, so common code sees
+  plain item sets. If NeoForge or Fabric API add custom ingredient types that expose extra predicates, common code
+  can't see them; two recipes differing only by such a predicate could be grouped as "identical". Runtime matching
+  still uses the real predicates, so a grouped recipe that doesn't actually match the grid never appears as an option.
+  Not worth special handling for v1; noted for the README's known limitations.
+- **GameTest quirk**: every `makeMockServerPlayerInLevel()` player has the name `test-mock-player`, and `EntityArgument.player()`
+  rejects UUID selectors, so the reset-other test resolves the player via the server's name lookup.
+  `makeMockServerPlayerInLevel` is deprecated for removal (the opus test uses it too); a replacement should be adopted
+  repo-wide when one is chosen.
+- You added `polycraft/common/src/main/resources/assets/polycraft/textures/gui/toggle_list_button.png`
+  (untracked, not mine). I haven't committed it. M3 uses that file name for the main button texture and won't overwrite it.
