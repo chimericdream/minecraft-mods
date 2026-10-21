@@ -15,7 +15,7 @@ never be crafted. PolyCraft keeps every recipe and lets the player pick which re
 
 ### Current Features
 
-* A small button next to the result slot appears whenever the items you have in a station could make more than one thing. Click it to open a row of the possible results, and click one to choose it. The button shows how many choices there are.
+* A small button above the result slot appears whenever the items you have in a station could make more than one thing. Click it to open a row of the possible results, and click one to choose it. The button shows how many choices there are.
 * Works at the crafting table, your 2x2 inventory grid, furnaces, blast furnaces, smokers, smithing tables, and the Crafter. Campfires use the pack's default. The stonecutter already lets you choose, so PolyCraft leaves it alone.
 * Your choices are remembered per player, per recipe conflict.
 * A lock beside the button on furnaces, blast furnaces, smokers, and Crafters pins the recipe to that block. A pinned block always uses its pinned recipe, even when another player with a different choice is using it, so hopper-fed furnaces and redstone-fired Crafters can be set up once and left alone.

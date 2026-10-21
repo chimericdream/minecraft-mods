@@ -20,7 +20,6 @@ import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.CrafterMenu;
 import net.minecraft.world.inventory.SmithingMenu;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
@@ -194,19 +193,13 @@ public final class ConflictOverlay {
         return ((AbstractCraftingMenu) menu).getResultSlot();
     }
 
-    /** Beside the result slot where there is room; above it in the inventory and the Crafter, which have none. */
-    private boolean besideResult() {
-        return !(screen.getMenu() instanceof InventoryMenu || screen.getMenu() instanceof CrafterMenu);
-    }
-
+    /** Above the result slot on every screen, in line with its left edge. */
     private int buttonX() {
-        Slot slot = resultSlot();
-        return besideResult() ? screen.leftPos + slot.x + 20 : screen.leftPos + slot.x;
+        return screen.leftPos + resultSlot().x;
     }
 
     private int buttonY() {
-        Slot slot = resultSlot();
-        return besideResult() ? screen.topPos + slot.y : screen.topPos + slot.y - 20;
+        return screen.topPos + resultSlot().y - 22;
     }
 
     private int lockX() {
