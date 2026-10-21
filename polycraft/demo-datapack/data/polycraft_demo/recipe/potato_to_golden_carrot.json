@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:campfire_cooking",
+    "ingredient": "minecraft:potato",
+    "result": {
+        "id": "minecraft:golden_carrot"
+    },
+    "experience": 0.35,
+    "cookingtime": 600
+}

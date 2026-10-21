@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:smithing_transform",
+    "base": "minecraft:book",
+    "addition": "minecraft:lapis_lazuli",
+    "result": {
+        "id": "minecraft:map"
+    }
+}

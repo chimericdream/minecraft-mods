@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "FFF"
+    ],
+    "key": {
+        "F": "minecraft:feather"
+    },
+    "result": {
+        "id": "minecraft:phantom_membrane"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": "#minecraft:logs_that_burn",
+    "result": {
+        "id": "minecraft:stick",
+        "count": 2
+    },
+    "experience": 0.1,
+    "cookingtime": 100
+}

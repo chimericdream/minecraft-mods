@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smoking",
+    "ingredient": "minecraft:beef",
+    "result": {
+        "id": "minecraft:bone"
+    },
+    "experience": 0.1,
+    "cookingtime": 60
+}

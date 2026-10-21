@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:campfire_cooking",
+    "ingredient": "minecraft:potato",
+    "result": {
+        "id": "minecraft:poisonous_potato"
+    },
+    "experience": 0.1,
+    "cookingtime": 600
+}

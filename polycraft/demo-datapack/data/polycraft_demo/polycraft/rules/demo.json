@@ -1,0 +1,9 @@
+{
+    "priority": [
+        "polycraft_demo:sand_to_glass_4",
+        "polycraft_demo:potato_to_golden_carrot"
+    ],
+    "exclude": [
+        "polycraft_demo:cobblestone_to_dragon_egg"
+    ]
+}

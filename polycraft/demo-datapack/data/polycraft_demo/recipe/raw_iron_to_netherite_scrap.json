@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:blasting",
+    "ingredient": "minecraft:raw_iron",
+    "result": {
+        "id": "minecraft:netherite_scrap"
+    },
+    "experience": 1.5,
+    "cookingtime": 300
+}

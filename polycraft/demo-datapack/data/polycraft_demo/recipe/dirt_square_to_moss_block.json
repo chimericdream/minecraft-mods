@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DD",
+        "DD"
+    ],
+    "key": {
+        "D": "minecraft:dirt"
+    },
+    "result": {
+        "id": "minecraft:moss_block"
+    }
+}
