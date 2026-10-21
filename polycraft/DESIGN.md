@@ -1,6 +1,7 @@
 # PolyCraft — Design
 
-Status: **draft, pending review.** Decisions marked ✅ were made by the maintainer; items marked ❓ are open
+Status: **implemented in the first overnight session** (see `OVERNIGHT-LOG.md` for what was built, how it was checked, and the
+small judgment calls). Decisions below are unchanged. Decisions marked ✅ were made by the maintainer; items marked ❓ are open
 (see [Open questions](#open-questions)). Anything marked "verify" must be checked against decompiled MC 26.2
 source (`mc-source-decompile` skill) before coding against it.
 

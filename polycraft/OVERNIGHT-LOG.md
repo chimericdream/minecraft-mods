@@ -347,3 +347,47 @@ Notes:
 Verification: 38 GameTests (adds `placingARecipeFromTheBookCountsAsAChoice` for the crafting table and for the furnace; both call the
 real `handlePlacement` with the ingredients in the player's inventory). NeoForge: `AbstractCraftingMenu`, `AbstractFurnaceMenu`,
 `CraftingMenu` and `InventoryMenu` load with the mixins applied (temporary check, reverted).
+
+## M8 — Polish and docs (2026-10-21)
+
+Wrote the README (features, a pack-maker section with a `rules.json` example, the settings table, commands, the Polymorph
+incompatibility, known limitations), the CHANGELOG entry under Unreleased, and brought TEST_PLAN.md in line with what exists
+(classes, counts, a manual checklist that says what has and hasn't been checked). DESIGN.md's status line now says it is
+implemented; none of its decisions changed. `mod_version` is untouched (1.0.0); no release, no tag.
+
+The `TODO(art)` list is an HTML comment at the top of the CHANGELOG's Unreleased section rather than visible text, because the
+changelog is player-facing and ends up on the release page. Delete the comment once the lock icons are replaced.
+
+## Summary for the morning
+
+**Done:** every milestone M0 to M8, including the optional recipe book (M7).
+- Stations: crafting table, the 2x2 inventory grid, furnace, blast furnace, smoker, smithing table, Crafter, and campfire; the
+  stonecutter is untouched.
+- Picker UI with your textures, scroll arrows (vanilla's), count badge, keyboard control, tooltips, disabled options.
+- Pins on furnaces and Crafters, mid-cook switching, acting-player resolution, recipe-book choices.
+- Config (YACL), `rules.json` plus datapack rules, `/polycraft` commands, per-player saved choices.
+- Polymorph and Polymorph+ declared incompatible on both loaders and checked with stand-in mods.
+- 65 unit tests, 38 GameTests (Fabric), NeoForge compiled and boot-checked, screenshots of the screens.
+
+**Skipped on purpose (out of scope tonight):** pack-level disable or lock, JEI/REI/EMI integration, the public modder API,
+stonecutter changes, brewing, a release.
+
+**Questions and things to look at:**
+1. **Art**: lock icons are placeholders (12x12). Your `toggle_list_button.png` and `toggle_list_button_pressed.png` are used but
+   untracked, and `icon.png` shows as modified; I committed none of those. The code expects the button textures to exist.
+2. **First version number**: `mod_version` is 1.0.0 and the changelog entry is under Unreleased. The repo's release rules suggest a
+   `-beta.0` suffix for work in progress; I left it, as asked, for you to decide.
+3. **Client/server badges** in the README say both are required. In practice a vanilla client should still play (the server only
+   sends the picker data to clients that can receive it), but I have not tried joining with a vanilla client, and I don't know
+   whether NeoForge refuses a client without the mod. Worth a real test, then fix the badges.
+4. **Acting player** for a furnace or Crafter is whoever clicked in it most recently, which is slightly broader than "changed the
+   input slot". Say if you want it narrowed.
+5. **Popup position**: above the GUI when there is room, below otherwise (it overlaps the hotbar area at 720p and GUI scale 3). A
+   badge slightly overlaps the smithing table's armor-stand preview. Both cosmetic.
+6. **Config changes**: `detectOverlappingInputs` and the other settings take effect without a reload at stations (recipes are
+   matched live on every change); the manual test list asks you to confirm in the UI.
+7. **Tooling bug found earlier**: `bun run update:settingsgradle` regenerates `settings.gradle` from an outdated template and drops
+   the `enabled_platforms` block. I restored it by hand; the script still needs fixing.
+8. **Deprecation**: GameTests use `makeMockServerPlayerInLevel`, which is deprecated for removal (Opus's test uses it too).
+9. **Branch**: everything is committed on `feat/polycraft-scaffold`, nothing pushed.
+10. **Not tried**: the real Polymorph jars (only stand-ins), a big modpack, a dedicated server with a real second client.

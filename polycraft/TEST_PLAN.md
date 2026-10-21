@@ -1,70 +1,72 @@
 # Test Plan — PolyCraft
 
-Status: draft. Companion to [DESIGN.md](DESIGN.md). Core logic (signatures, grouping, resolution, rules
-parsing) is pure Java and unit tested; station integration is GameTested; UI needs in-game checks.
+Companion to [DESIGN.md](DESIGN.md). Core logic (signatures, grouping, resolution, rules, pins, cook arithmetic) is plain Java
+and unit tested. Station behaviour is tested by GameTests that drive the real menus and block entities on a real server. What
+a person has to judge (feel, layout at different GUI scales) is the manual list at the end.
 
-## Automated: unit (JUnit, `fabric/src/test/java/com/chimericdream/polycraft/test/`)
+Status as of the first overnight session: **65 unit tests and 38 GameTests, all passing** on Fabric. NeoForge compiles and its
+dev server loads every mixin target with all mixins applied; NeoForge has no GameTest runner in this repo, so its behaviour is
+covered by the shared common code plus that load check.
 
-Run: `./gradlew :polycraft:fabric:test`. Bootstrap MC via chimeric-lib `BootstrapMinecraft` where registries are touched.
+## Automated: unit (`fabric/src/test/java/com/chimericdream/polycraft/test/core/`)
 
-| Class | Covers |
-|---|---|
-| `SignatureBuilderTest` | shaped normalisation (mirror, trim empty rows/cols, 2x2 inside 3x3), shapeless ordering, tag vs item, uncanonicalisable ingredient -> unique group |
-| `ConflictDetectorTest` | identical inputs/different outputs grouped; same item with different count IS a conflict; same item and count collapsed; different recipe types never grouped; overlap mode off vs on; deterministic group keys across runs |
-| `ChoiceResolverTest` | resolution order (block pin > acting player > pack default > vanilla); stale pin/remembered id falls through; pin beats a differing player preference; no acting player skips step 2 |
-| `RulesParserTest` | valid/invalid JSON, unknown ids warn not crash, wildcard type lists, datapack + config merge order |
-| `PlayerChoicesTest` | serialise/deserialise, unknown ids preserved or dropped (decide in impl), cap on stored entries |
-| `ConfigTest` | defaults match DESIGN.md table; out-of-range `visibleOptions` clamped |
-| `PerfTest` (tagged slow) | 10k synthetic recipes grouped under the budget in DESIGN.md |
+Run: `./gradlew :polycraft:fabric:test`. No Minecraft bootstrap is needed.
 
-## Automated: GameTest (`gametest` source set)
+| Class | Tests | Covers |
+|---|---|---|
+| `SignatureBuilderTest` | 13 | shaped normalisation (mirror, empty rows and columns, 2x2 inside 3x3), shapeless order and counts, ordered slots, tag vs item list, unknown ingredient gives its own group, malformed shapes, stable keys |
+| `ConflictDetectorTest` | 11 | identical inputs with different outputs conflict; same item in a different amount conflicts; same result collapses (keeping the earlier recipe); lone recipe is no conflict; overlapping mode on and off; unique signatures never group; `detectAll` ordering and exclusions |
+| `ChoiceResolverTest` | 10 | pin > player > pack default > vanilla; stale pin, player choice, and pack entries fall through; no acting player; empty options rejected |
+| `RulesParserTest` | 12 | full file, empty, invalid JSON, wrong types, unknown keys, bad ids, groups without a default, merge precedence, pack order, exclusions, `IdFilter` allow/deny/wildcards |
+| `PlayerChoicesTest` | 15 | per-player and per-group storage, least-recently-used cap, remove, clear, prune, unknown ids survive a save, restore trims, `PinMap` replace/cap/round trip, `CookMath` switching and output-merge rules |
+| `ConfigTest` | 3 | defaults match DESIGN.md; `visibleOptions` clamping |
+| `PerfTest` (tagged `slow`) | 1 | 10,000 recipes grouped well inside the 250 ms budget (about 55 ms) |
 
-Fixture datapack registers synthetic conflicting recipes (e.g. `polycraft_test:a`/`b`, both 2 planks -> different
-outputs) in every station type.
+## Automated: GameTest (`fabric/src/gametest`, run with `./gradlew :polycraft:fabric:runGameTest`)
 
-| Test | Asserts |
-|---|---|
-| `crafting_default_resolution` | no choice, no rule -> vanilla winner |
-| `crafting_player_choice` | select B -> result slot is B; relog -> still B |
-| `crafting_shift_click_bulk` | whole stack crafted as selected recipe |
-| `furnace_choice` / `smoker_` / `blast_` | selection changes cooked output |
-| `furnace_mid_cook_switch` | switching mid-cook changes the output of the current cook; input and fuel not wasted; elapsed ticks kept; elapsed >= new total completes next tick; XP follows the completing recipe |
-| `furnace_close_gui_keeps_recipe` | player selects B, closes GUI: output stays B; a new input item re-resolves via pin/default/vanilla |
-| `furnace_unmergeable_output` | selected recipe whose result can't merge into the output slot behaves like vanilla can't-smelt |
-| `smithing_choice` | template+base+addition conflicts resolve |
-| `hopper_fed_furnace_uses_pack_default` | unpinned, no viewer: no player memory leaks to automation |
-| `furnace_pin_beats_player` | pinned furnace uses the pin although the viewing player prefers another; unpin -> player preference used |
-| `furnace_pin_persists` | pin survives chunk unload/reload and server restart |
-| `crafter_pin` | pinned Crafter uses the pin; unpinned -> pack default, else vanilla crafter; survives chunk reload |
-| `campfire_uses_pack_default` | configured default used, else vanilla |
-| `stonecutter_untouched` | no button, no behavior change |
-| `forged_pin_not_in_group` | forged pin payload for a recipe outside the group, or for a non-BE station, is ignored |
-| `forged_select_not_in_group` | payload with recipe not in group/inputs is ignored |
-| `reload_removes_chosen_recipe` | falls through, no exception, no stale button |
-| `no_conflict_no_button_payload` | single-recipe case sends nothing |
+The fixture datapack (`data/polycraft_test`) adds conflicting recipes: cactus (crafting; a: 3 green dye, b: 5, c: lime dye
+excluded by rules, plus an identical copy of a), sweet berries (no rule), eight amethyst-shard recipes (scroll arrows),
+gunpowder (smelting; coal in 100 ticks or charcoal in 200), stick + flint (smithing), and an egg (campfire; paper preferred by
+the rules). Furnaces are ticked by calling the real `serverTick`, so a cook takes no game time.
+
+| Class | Tests | Covers |
+|---|---|---|
+| `CommandGameTest` | 10 | datapack rules load; `conflicts` lists the fixture groups; `export` contents (collapse, exclude, both options); `export` and `reload` need op; `reset` self and other; `rememberChoices` off; save and load of choices |
+| `CraftingGameTest` | 9 | vanilla default; pack default beats vanilla; player choice beats pack default and persists into a new menu; per-player isolation; forged selections ignored; excluded and duplicate recipes not offered; lone recipe makes no offer; taking the result uses up inputs; shift-click crafts everything with the chosen recipe |
+| `FurnaceGameTest` | 11 | unwatched furnace uses vanilla; pin used from the start; viewer choice applies and a pin beats it; mid-cook switch keeps time and wastes nothing; switch past the new total finishes at once; closing the screen keeps the recipe; options the output slot cannot take are disabled and cannot be chosen; pin and unpin validation; pins and the recipe in use survive save and load; blast furnace and smoker types; recipe-book placement counts as a choice |
+| `StationsGameTest` | 8 | smithing table offers and applies a choice; the 2x2 grid; stonecutter left alone; unwatched Crafter uses the pack default; a pin makes a Crafter choice stick; Crafter pin saves and loads; campfire uses the pack default; recipe-book placement at the crafting table counts as a choice |
+
+Mixin coverage: the smithing, Crafter, and campfire tests would each fail without their mixin, because vanilla would pick a
+different result. Run `bun run verify:gametests` after adding or renaming a test class.
+
+## Visual checks done (temporary client GameTests, deleted afterwards)
+
+Crafting table (button, count badge, popup, scroll arrows, scrolling, hover, choosing), furnace (button, lock off and on, disabled
+option), smithing table, and Crafter (button above the preview slot, lock, popup). Screenshots are linked from
+`OVERNIGHT-LOG.md`. These prove it renders and the click path works; they do not prove it feels right.
 
 ## Manual (in game), Fabric and NeoForge
 
-Setup: dev world with the fixture datapack; `/give` planks.
+Setup: a dev world with the fixture datapack (or any pack with conflicts); `/give` yourself the ingredients.
 
-1. **Button appears only on conflict** in each station; absent otherwise.
-2. **Popup**: horizontal list; with > `visibleOptions` candidates arrows appear and the wheel scrolls; selection highlights; Esc closes without change.
-3. **GUI scales 1-4 + small window**: popup never clipped or overlapping the result slot.
-4. **Keyboard** navigation of the popup.
-5. **Tooltips** show output, source mod, recipe id (F3+H).
-6. **Persistence**: choose, relog, restart server -> remembered.
-7. **Two players** at one table pick differently.
-8. **Recipe book click** (if it shipped in v1) sets the choice (JEI/REI/EMI transfer is post-v1).
-8a. **Pin toggle**: lock icon appears only on furnace/smoker/blast furnace/Crafter, not on the crafting table or smithing table; tooltip names the pinned output; toggling off restores player preference.
-8b. **Crafter**: pin persists across relog; behaviour when the block is broken and replaced is documented.
-9. **Config**: toggle `detectOverlappingInputs` live-reload behaviour (reload needed? record result).
-10. **Rules**: priority, default, exclude via `rules.json` and via datapack; `/polycraft reload`.
-11. **Commands**: `conflicts`, `export`, `reset`.
-12. **Dedicated server** with vanilla client (no mod): plays as vanilla, no errors/kicks.
-12a. **Incompatibility**: with Polymorph (or a 26.2 fork) installed, each loader refuses to launch with a clear incompatibility message.
-13. **Big pack smoke**: ATM-style 300+ mod pack, record reload time and group count.
+1. **Button appears only on a conflict** at the crafting table, 2x2 grid, furnace, blast furnace, smoker, smithing table, and Crafter; absent otherwise.
+2. **Popup**: opens and closes; Esc closes it without changing anything; clicking outside closes it; with more than `visibleOptions` options the arrows appear and the mouse wheel scrolls.
+3. **GUI scales 1 to 4 and a small window**: the button, lock, and popup are never clipped or hidden behind something; the popup flips below the screen when there is no room above.
+4. **Keyboard**: with the popup open, Left and Right move, Enter or Space chooses.
+5. **Tooltips** on options show the result, the mod it came from, and (with F3+H) the recipe id; a disabled option says why.
+6. **Persistence**: choose, relog, restart the server: the choice is remembered. Two players at one table choose differently.
+7. **Pin**: pin a furnace, then have a second player with a different choice open it; the pinned recipe still cooks. Feed a pinned furnace with a hopper. Pin a Crafter and fire it with redstone.
+8. **Mid-cook switch**: change the recipe while the arrow is part-way; the arrow may jump but fuel and items are untouched.
+9. **Recipe book**: click a conflicting recipe in the book at the table and at a furnace; it becomes your choice.
+10. **Config**: toggling `detectOverlappingInputs` (does it need a world reload? record the answer), `showConflictBadge`, `visibleOptions`; the recipe-type allow and deny lists.
+11. **Rules**: `priority`, `exclude`, and a group `default` from `config/polycraft/rules.json` and from a datapack; `/polycraft reload`.
+12. **Commands**: `conflicts`, `export`, `reset` for yourself and another player, permissions for a non-op.
+13. **Dedicated server with a vanilla client** (no mod): plays as vanilla, no errors or kicks. (Not yet tried; whether NeoForge lets a client without the mod join is also worth checking.)
+14. **Incompatibility**: with Polymorph or Polymorph+ installed, each loader refuses to start with a clear message. (Checked on both loaders with a stand-in mod; try the real jars once.)
+15. **Big pack smoke**: a 300+ mod pack; note the reload time and the number of conflicts `/polycraft conflicts` reports.
 
 ## Definition of done (v1)
 
-All unit + GameTests green on `:polycraft:fabric`; manual list passed on both loaders; README, CHANGELOG
-and a rules.json example documented; no vanilla-client kick; reload cost within budget.
+All unit tests and GameTests green on `:polycraft:fabric`; both loaders compile and load; the manual list passed on both loaders;
+README, CHANGELOG, and a `rules.json` example documented; no vanilla-client kick; reload cost within budget; final art in place
+of the lock placeholders.
