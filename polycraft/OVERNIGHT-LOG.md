@@ -99,3 +99,27 @@ refinements" below.
 - `ItemCombinerMenu`'s player field name (smithing, M5).
 - Exact `AbstractWidget` rendering method names in 26.2 (M3, from a small decompile of `AbstractWidget`/`Button`).
 - Crafter screen layout (`CrafterScreen`, `CrafterMenu`) for button placement (M5).
+
+## M1 — Pure-Java core (2026-10-21)
+
+Added `polycraft/common/.../core/`: `Signature`, `SignatureBuilder`, `RecipeInfo`, `ConflictDetector`,
+`ChoiceResolver`, `Rules`, `IdFilter`, `ChoiceStore`, `PinMap`, `CookMath`. No Minecraft types (Gson only, for rules).
+
+Tests (`:polycraft:fabric:test`, 62 passing): `SignatureBuilderTest`, `ConflictDetectorTest`, `ChoiceResolverTest`,
+`RulesParserTest` (also covers `IdFilter`), `PlayerChoicesTest` (also covers `PinMap` and `CookMath`), `PerfTest`
+(10k recipes grouped in about 55 ms, budget 250 ms). Both loaders compile.
+
+Decisions made while implementing (all inside DESIGN.md's lines; flagging so you can overrule):
+- **Merge precedence**: `config.merge(datapack)`: the first argument wins on a group default, priorities are
+  concatenated first-then-second without duplicates, excludes are unioned. Intended use is local config over datapacks.
+- **`Rules.packOrder`**: group-key default first, then a default given under any option's recipe id, then the global
+  `priority`. Excluded recipes are not filtered inside `Rules`; the caller removes them from the option list (and if
+  that leaves no options, uses vanilla).
+- **Choices are never auto-pruned on reload.** `ChoiceStore.prune` exists for `/polycraft reset` style cleanup; the
+  per-player cap (LRU) is the only automatic eviction, so choices survive a datapack being off for a while.
+- **Ingredient keys**: a tag and an explicit equal item list give the same key (sorted item set, hashed when larger
+  than one). The caller passes `null` for anything it can't express (item-data matchers), which makes the recipe's
+  signature unique so it's never grouped.
+- **Group key** = `type|canonical` of the vanilla winner's signature (see M0 refinements 1 and 2).
+- `Rules` ids are validated with a lenient lowercase `namespace:path` pattern; invalid entries warn and are dropped.
+- `CookMath.canMergeIntoOutput` replicates vanilla's private `canBurn` rule for greying out options.
