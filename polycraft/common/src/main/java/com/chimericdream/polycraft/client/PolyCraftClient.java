@@ -11,7 +11,6 @@ public final class PolyCraftClient {
 
     public static void init() {
         ClientGuiEvent.INIT_POST.register((screen, access) -> ConflictOverlay.onInit(screen));
-        ClientGuiEvent.RENDER_POST.register((screen, graphics, mouseX, mouseY, delta) -> ConflictOverlay.onRender(screen, graphics, mouseX, mouseY));
 
         ClientScreenInputEvent.MOUSE_CLICKED_PRE.register((minecraft, screen, event, doubleClick) ->
             ConflictOverlay.onMouseClicked(screen, event.x(), event.y(), event.button()) ? EventResult.interruptTrue() : EventResult.pass());
