@@ -36,5 +36,9 @@
     },
     "recommends": {
         "modmenu": ">=${modmenu_compat}"
+    },
+    "breaks": {
+        "polymorph": "*",
+        "polymorph_plus": "*"
     }
 }

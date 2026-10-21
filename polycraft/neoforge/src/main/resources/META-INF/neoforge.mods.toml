@@ -48,5 +48,23 @@ versionRange = "[${yacl_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
+# Polymorph (including its unofficial 26.2 port) does the same job and hooks the same recipe lookups, so the two can't run together.
+[[dependencies.${mod_id}]]
+modId = "polymorph"
+type = "incompatible"
+versionRange = "*"
+reason = "PolyCraft and Polymorph (including its unofficial 26.2 port) both choose between conflicting recipes in the same places. Remove one of them."
+ordering = "NONE"
+side = "BOTH"
+
+# Polymorph+ does the same job and hooks the same recipe lookups, so the two can't run together.
+[[dependencies.${mod_id}]]
+modId = "polymorph_plus"
+type = "incompatible"
+versionRange = "*"
+reason = "PolyCraft and Polymorph+ both choose between conflicting recipes in the same places. Remove one of them."
+ordering = "NONE"
+side = "BOTH"
+
 [[mixins]]
 config = "polycraft.mixins.json"

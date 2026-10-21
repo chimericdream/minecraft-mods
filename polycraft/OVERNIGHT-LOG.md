@@ -299,3 +299,30 @@ A tooling note for whoever runs these: do not start a NeoForge `runServer` while
 run-watchdog kills leftover run JVMs and once killed the NeoForge server too, which looked like a startup failure and wasn't.
 Fixture growth: smithing recipes (`smithing_a/b`), campfire recipes (`campfire_egg_a/b`), and `campfire_egg_b` in the rules
 priority; `CommandGameTest` now expects six groups.
+
+## M6 — Compatibility declarations (2026-10-21)
+
+PolyCraft now declares itself incompatible with Polymorph and Polymorph+ on both loaders, so a pack that has both gets a clear
+refusal to start instead of two mods fighting over the same recipe lookups.
+
+Mod ids, read from the real 26.2 jars on Modrinth (metadata only; the jars were deleted afterwards and none of their code ran):
+- **`polymorph`**: used by both the original Polymorph and the "Polymorph (Unofficial Port)" by SmartStreamLabs (26.2 builds for
+  Fabric and NeoForge, version 1.1.7+26.2).
+- **`polymorph_plus`**: "Polymorph+" by Aminoquiz (26.2 builds for Fabric and NeoForge, 1.4.2+26.2.0). Sources:
+  https://modrinth.com/project/ZqpYquTE and https://modrinth.com/project/3uT4J18I.
+- A third project, "RS Polymorph" (Team Arcadia), is a standalone Refined Storage add-on, not a fork, and is not on 26.2 in what I
+  found, so it is not listed.
+
+What changed: `breaks` in `fabric.mod.json` and two `type = "incompatible"` dependencies (with a `reason`) in `neoforge.mods.toml`.
+
+How I checked it: built stub jars of my own containing only the id `polymorph` (no code), dropped one into each loader's dev `mods`
+folder, and started a dev server. Fabric stopped with `breaks polymorph @ [*]` ("Incompatible mods found!"). NeoForge stopped with
+"Mod polycraft is incompatible with polymorph ... Remove one of them." Both stubs were removed afterwards, and both loaders start
+normally without them (Fabric GameTests 36/36; NeoForge reached `Done`). I did not repeat the stub test for `polymorph_plus`; it
+uses the identical mechanism with a different id.
+
+Note: the repo's run-watchdog again killed a NeoForge dev server that overlapped with the end of a Fabric `runGameTest`, so Gradle
+reported the task as failed after `Done` was logged. That is the same artefact described under M5, not a problem with the mod.
+
+Policy for the maintainer: this is a hard incompatibility. If you would rather warn than refuse, change `breaks` to `conflicts` in
+`fabric.mod.json` and `type` to `discouraged` in the toml.
