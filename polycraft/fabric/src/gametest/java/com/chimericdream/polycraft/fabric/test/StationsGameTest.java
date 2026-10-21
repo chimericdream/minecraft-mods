@@ -9,18 +9,23 @@ import com.chimericdream.polycraft.recipe.PinHolder;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.inventory.CrafterMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.SmithingMenu;
 import net.minecraft.world.inventory.StonecutterMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
@@ -102,6 +107,29 @@ public class StationsGameTest {
         menu.getSlot(1).set(ItemStack.EMPTY);
         menu.getSlot(2).set(ItemStack.EMPTY);
         PolyCraftChoices.get(context.getLevel().getServer()).reset(player.getUUID());
+        context.succeed();
+    }
+
+    // ---- recipe book ----
+
+    @GameTest
+    public void placingARecipeFromTheBookCountsAsAChoice(GameTestHelper context) {
+        ServerLevel level = context.getLevel();
+        ServerPlayer player = player(context);
+        PolyCraftChoices choices = PolyCraftChoices.get(level.getServer());
+        choices.reset(player.getUUID());
+        CraftingMenu menu = new CraftingMenu(nextContainerId++, player.getInventory(), ContainerLevelAccess.create(level, BlockPos.ZERO));
+        player.containerMenu = menu;
+        player.getInventory().add(new ItemStack(Items.CACTUS, 2));
+        RecipeHolder<?> recipeA = level.recipeAccess().byKey(ResourceKey.create(Registries.RECIPE, Identifier.parse(CACTUS_A))).orElseThrow();
+
+        menu.handlePlacement(false, true, recipeA, level, player.getInventory());
+
+        context.assertTrue(is(menu.getSlot(0).getItem(), "minecraft:green_dye", 3), "the recipe placed from the book should be the one crafted, not the pack default");
+        Offer offer = PolyCraftNetworking.offered(menu).orElseThrow();
+        context.assertTrue(choices.choiceFor(player.getUUID(), offer.groupKey()).equals(Optional.of(CACTUS_A)), "the placement should be remembered as the player's choice");
+
+        choices.reset(player.getUUID());
         context.succeed();
     }
 

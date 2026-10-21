@@ -326,3 +326,24 @@ reported the task as failed after `Done` was logged. That is the same artefact d
 
 Policy for the maintainer: this is a hard incompatibility. If you would rather warn than refuse, change `breaks` to `conflicts` in
 `fabric.mod.json` and `type` to `discouraged` in the toml.
+
+## M7 — Recipe book (2026-10-21) — done, not dropped
+
+The M0 finding held up, so this shipped. Placing a recipe from the recipe book on a crafting grid (crafting table or the player's
+2x2) or on a furnace, blast furnace or smoker now counts as choosing that recipe.
+
+How: mixins on `AbstractCraftingMenu.handlePlacement` and `AbstractFurnaceMenu.handlePlacement` (`PCCraftingPlacementMixin`,
+`PCFurnacePlacementMixin`) run after the book has filled the station. If the recipe placed is one of the options on offer, is
+usable, and is not already the one in use, `PolyCraftNetworking.recordBookChoice` makes it the player's choice (saved, plus
+the menu-session choice) and the station re-picks. A furnace works out its options for the new input first, since it doesn't
+tell its menu about changes.
+
+Notes:
+- The server maps the book's display id to the recipe itself (`RecipeManager.getRecipeFromDisplay`), so no extra client work was
+  needed.
+- A recipe placed from the book that is not part of any conflict is untouched.
+- Not done: JEI/REI/EMI "move items" transfers (post-v1, as agreed).
+
+Verification: 38 GameTests (adds `placingARecipeFromTheBookCountsAsAChoice` for the crafting table and for the furnace; both call the
+real `handlePlacement` with the ingredients in the player's inventory). NeoForge: `AbstractCraftingMenu`, `AbstractFurnaceMenu`,
+`CraftingMenu` and `InventoryMenu` load with the mixins applied (temporary check, reverted).

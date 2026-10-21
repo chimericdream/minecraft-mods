@@ -213,6 +213,28 @@ public class FurnaceGameTest {
     }
 
     @GameTest
+    public void placingARecipeFromTheBookCountsAsAChoice(GameTestHelper context) {
+        ServerLevel level = context.getLevel();
+        AbstractFurnaceBlockEntity furnace = placeFurnace(context);
+        ServerPlayer player = viewer(context, furnace);
+        PolyCraftChoices choices = PolyCraftChoices.get(level.getServer());
+        choices.reset(player.getUUID());
+        player.getInventory().add(new ItemStack(Items.GUNPOWDER, 1));
+        RecipeHolder<?> slow = level.recipeAccess().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, net.minecraft.resources.Identifier.parse(SLOW))).orElseThrow();
+
+        ((FurnaceMenu) player.containerMenu).handlePlacement(false, true, slow, level, player.getInventory());
+
+        context.assertTrue(is(furnace.getItem(0), "minecraft:gunpowder", 1), "the book should have put the gunpowder in the input slot");
+        Offer offer = PolyCraftNetworking.offered(player.containerMenu).orElseThrow();
+        context.assertTrue(choices.choiceFor(player.getUUID(), offer.groupKey()).equals(java.util.Optional.of(SLOW)), "the placement should be remembered as the player's choice");
+
+        tick(context, furnace, 201);
+        context.assertTrue(is(furnace.getItem(2), "minecraft:charcoal", 1), "the furnace should cook the recipe placed from the book");
+        choices.reset(player.getUUID());
+        context.succeed();
+    }
+
+    @GameTest
     public void pinningFollowsWhatTheViewerSees(GameTestHelper context) {
         AbstractFurnaceBlockEntity furnace = placeFurnace(context);
         ServerPlayer player = viewer(context, furnace);

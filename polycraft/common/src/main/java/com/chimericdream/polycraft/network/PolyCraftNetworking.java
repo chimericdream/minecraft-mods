@@ -136,11 +136,33 @@ public final class PolyCraftNetworking {
             return;
         }
 
-        SESSION_CHOICES.computeIfAbsent(menu, key -> new HashMap<>()).put(payload.groupKey(), payload.recipeId());
-        PolyCraftChoices.get(player.level().getServer()).choose(player.getUUID(), payload.groupKey(), payload.recipeId());
-        PolyCraftEpoch.bump();
-
+        choose(player, menu, payload.groupKey(), payload.recipeId());
         refreshAfterChange(menu);
+    }
+
+    /**
+     * Placing a recipe from the recipe book is a choice: if the recipe placed is one of the options at this station and it
+     * isn't the one in use, make it the player's choice. Call after the book has finished filling the station.
+     */
+    public static void recordBookChoice(ServerPlayer player, AbstractContainerMenu menu, String recipeId) {
+        Offer offer = OFFERED.get(menu);
+        if (offer == null) {
+            return;
+        }
+
+        Optional<Option> placed = offer.byId(recipeId);
+        if (placed.isEmpty() || !placed.get().enabled() || offer.selected().id().equals(recipeId)) {
+            return;
+        }
+
+        choose(player, menu, offer.groupKey(), recipeId);
+        refreshAfterChange(menu);
+    }
+
+    private static void choose(ServerPlayer player, AbstractContainerMenu menu, String groupKey, String recipeId) {
+        SESSION_CHOICES.computeIfAbsent(menu, key -> new HashMap<>()).put(groupKey, recipeId);
+        PolyCraftChoices.get(player.level().getServer()).choose(player.getUUID(), groupKey, recipeId);
+        PolyCraftEpoch.bump();
     }
 
     /** Makes the station use the new choice or pin straight away. */
