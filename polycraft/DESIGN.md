@@ -159,6 +159,14 @@ placeholders, and swapping them must be a pure asset change (no code edits).
 - Every UI element is a named GUI sprite under `assets/polycraft/textures/gui/sprites/` (verify the 26.2 sprite
   and `.mcmeta` nine-slice conventions), referenced by id from one `PolyCraftSprites` class. No pixel
   coordinates for art live in the widget code beyond each sprite's size.
+- **Committed sizes** (maintainer will keep to these): the main button that opens the list is **16x16**; each
+  item in the horizontal list is **30x30**, as two textures,
+  `assets/polycraft/textures/gui/result_list_item.png` and `result_list_item_active.png` (selected state).
+  These are plain fixed-size textures in `textures/gui/` (not nine-slice, and not under `sprites/`), so
+  draw them with a direct texture blit; verify the 26.2 call. Placeholders must use exactly these paths and sizes.
+- **Not yet specified** (use placeholder sizes of your choosing, kept as named constants in one class, and list
+  them in the CHANGELOG `TODO(art)` so the maintainer can confirm): lock toggle, scroll arrows, popup
+  background, conflict-count badge, and the button's hover/disabled variants.
 - Sprites needed: main button (normal / hovered / disabled), lock toggle (off / on, each with a hovered
   variant), popup background (nine-slice), option slot (normal / hovered / selected / greyed-out),
   scroll arrows left and right (normal / hovered / disabled), and the conflict-count badge background.
