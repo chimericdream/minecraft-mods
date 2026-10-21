@@ -11,6 +11,15 @@ one recipe silently wins (registry/datapack order). PolyCraft detects those conf
 choose which output they get, at any crafting station. Audience: **modpack makers**, so everything is
 configurable, nothing is destructive, and defaults are sane with zero config.
 
+## Positioning and compatibility ✅
+
+Polymorph does something similar but is not on 26.2; the forks the maintainer tried either lack the wanted
+behaviour or break on servers. PolyCraft's goals are to be robust, server-correct and well tested, with pack-
+author tooling (`rules.json`, conflict export, count-based conflicts, per-block pins). PolyCraft is declared
+**explicitly incompatible** with Polymorph and its 26.2 forks in both loaders' metadata (`breaks` in
+`fabric.mod.json`, an `incompatible` dependency in `neoforge.mods.toml`), where the loader can express it. Both
+mods hook the same recipe lookups, so running them together isn't supported.
+
 ## Decisions
 
 1. ✅ **UI**: a cycle button in the station screen. Clicking it opens a **horizontal popup list** of the
@@ -137,7 +146,7 @@ Runtime
   over both players' preferences. We add no permission layer of our own for toggling in v1; claim/protection
   mods already gate access to the block.
 - Multiplayer: two players at the same station: choice is per player; the one who takes the result decides.
-- Recipe book (**v1**): clicking a recipe in the book implies a choice; select that recipe as the player's choice.
+- Recipe book (**optional for v1**, drop it if mapping display ids to recipes is awkward): clicking a recipe in the book implies a choice; select that recipe as the player's choice.
 - Recipe viewer "move items" (JEI/REI/EMI transfer): **post-v1**; same idea, selects that recipe.
 - Chosen recipe removed on reload → fall through; player not notified (log at debug).
 - `/reload` mid-session: groups rebuilt, open popups refreshed.
@@ -208,7 +217,7 @@ fabric/ neoforge/   loader glue only; client screen hooks, attachment registrati
 | 3 | Same item, different count | Conflict (primary use case) |
 | 4 | Locking | Per-block pin toggle on furnaces/Crafter (pin > player > pack default > vanilla). Pack-level disable/lock **deferred to the ideas Inbox** |
 | 5 | `/polycraft conflicts` permission | Anyone |
-| 6 | Recipe viewers | Recipe book in v1; JEI/REI/EMI later |
+| 6 | Recipe viewers | Recipe book is a nice-to-have for v1 (drop if awkward); JEI/REI/EMI later |
 | 7 | Perf budget | <= 250 ms starting point |
 | 8 | Public API | v1.1+. Detection is keyed on recipe type, so modded stations should mostly work; modders only add the button to their GUI |
 | 9 | Acting player for unpinned furnaces | GUI viewer; several viewers: whoever last changed the input slot |

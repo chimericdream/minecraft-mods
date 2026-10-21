@@ -54,13 +54,14 @@ Setup: dev world with the fixture datapack; `/give` planks.
 5. **Tooltips** show output, source mod, recipe id (F3+H).
 6. **Persistence**: choose, relog, restart server -> remembered.
 7. **Two players** at one table pick differently.
-8. **Recipe book click** sets the choice (JEI/REI/EMI transfer is post-v1).
+8. **Recipe book click** (if it shipped in v1) sets the choice (JEI/REI/EMI transfer is post-v1).
 8a. **Pin toggle**: lock icon appears only on furnace/smoker/blast furnace/Crafter, not on the crafting table or smithing table; tooltip names the pinned output; toggling off restores player preference.
 8b. **Crafter**: pin persists across relog; behaviour when the block is broken and replaced is documented.
 9. **Config**: toggle `detectOverlappingInputs` live-reload behaviour (reload needed? record result).
 10. **Rules**: priority, default, exclude via `rules.json` and via datapack; `/polycraft reload`.
 11. **Commands**: `conflicts`, `export`, `reset`.
 12. **Dedicated server** with vanilla client (no mod): plays as vanilla, no errors/kicks.
+12a. **Incompatibility**: with Polymorph (or a 26.2 fork) installed, each loader refuses to launch with a clear incompatibility message.
 13. **Big pack smoke**: ATM-style 300+ mod pack, record reload time and group count.
 
 ## Definition of done (v1)
