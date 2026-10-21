@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  * Added to furnace-type block entities by mixin. It gives PolyCraft's code a way to reach the state it keeps on the
  * block and the few private fields it needs, without a mixin accessor for each.
  */
-public interface StationBlock {
+public interface StationBlock extends PinHolder {
     FurnaceState polycraft$state();
 
     RecipeType<?> polycraft$recipeType();

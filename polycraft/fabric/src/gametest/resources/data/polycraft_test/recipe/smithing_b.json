@@ -1,0 +1,6 @@
+{
+    "type": "minecraft:smithing_transform",
+    "base": "minecraft:stick",
+    "addition": "minecraft:flint",
+    "result": { "id": "minecraft:bowl" }
+}

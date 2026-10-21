@@ -1,5 +1,6 @@
 package com.chimericdream.polycraft.mixin;
 
+import com.chimericdream.polycraft.core.PinMap;
 import com.chimericdream.polycraft.recipe.FurnaceResolver;
 import com.chimericdream.polycraft.recipe.FurnaceState;
 import com.chimericdream.polycraft.recipe.StationBlock;
@@ -102,6 +103,17 @@ public abstract class PCAbstractFurnaceBlockEntityMixin implements StationBlock 
             com.chimericdream.polycraft.PolyCraftMod.LOGGER.error("PolyCraft couldn't pick a furnace recipe; using vanilla's", e);
             return vanilla;
         }
+    }
+
+    @Override
+    public PinMap polycraft$pins() {
+        return polycraft$state.pins();
+    }
+
+    @Override
+    public void polycraft$pinsChanged() {
+        polycraft$state.invalidate();
+        ((AbstractFurnaceBlockEntity) (Object) this).setChanged();
     }
 
     @Override

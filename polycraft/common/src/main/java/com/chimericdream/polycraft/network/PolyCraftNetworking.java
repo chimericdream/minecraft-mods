@@ -4,14 +4,15 @@ import com.chimericdream.polycraft.client.ClientConflictState;
 import com.chimericdream.polycraft.data.PolyCraftChoices;
 import com.chimericdream.polycraft.recipe.ConflictService.Offer;
 import com.chimericdream.polycraft.recipe.ConflictService.Option;
+import com.chimericdream.polycraft.recipe.PinHolder;
 import com.chimericdream.polycraft.recipe.PolyCraftEpoch;
-import com.chimericdream.polycraft.recipe.StationBlock;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractCraftingMenu;
+import net.minecraft.world.inventory.CrafterMenu;
+import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
@@ -70,7 +71,11 @@ public final class PolyCraftNetworking {
      * opening it, otherwise what they have saved.
      */
     public static Function<String, Optional<String>> choicesFor(ServerPlayer player) {
-        AbstractContainerMenu menu = player.containerMenu;
+        return choicesFor(player, player.containerMenu);
+    }
+
+    /** Like {@link #choicesFor(ServerPlayer)}, for a menu that is being built and isn't the player's open menu yet. */
+    public static Function<String, Optional<String>> choicesFor(ServerPlayer player, AbstractContainerMenu menu) {
         PolyCraftChoices saved = PolyCraftChoices.get(player.level().getServer());
         return groupKey -> {
             String session = SESSION_CHOICES.getOrDefault(menu, Map.of()).get(groupKey);
@@ -135,11 +140,20 @@ public final class PolyCraftNetworking {
         PolyCraftChoices.get(player.level().getServer()).choose(player.getUUID(), payload.groupKey(), payload.recipeId());
         PolyCraftEpoch.bump();
 
-        if (menu instanceof AbstractCraftingMenu) {
-            // Run the station's own update so it picks the recipe again with the new choice in place.
+        refreshAfterChange(menu);
+    }
+
+    /** Makes the station use the new choice or pin straight away. */
+    private static void refreshAfterChange(AbstractContainerMenu menu) {
+        if (menu instanceof AbstractCraftingMenu || menu instanceof ItemCombinerMenu) {
+            // Run the station's own update so it picks the recipe again with the new choice in place. The crafting
+            // table and the smithing table both ignore which container is passed, or want their input container,
+            // and the first slot of each is in that container.
             menu.slotsChanged(menu.getSlot(0).container);
+        } else if (menu instanceof CrafterMenu crafter) {
+            crafter.slotChanged(menu, 0, net.minecraft.world.item.ItemStack.EMPTY);
         } else {
-            StationViewers.furnaceOf(menu).ifPresent(PolyCraftNetworking::markStale);
+            StationViewers.pinHolderOf(menu).ifPresent(PinHolder::polycraft$pinsChanged);
         }
     }
 
@@ -151,30 +165,27 @@ public final class PolyCraftNetworking {
         }
 
         Offer offer = OFFERED.get(menu);
-        Optional<AbstractFurnaceBlockEntity> furnace = StationViewers.furnaceOf(menu);
-        if (offer == null || !offer.pinnable() || furnace.isEmpty() || !offer.groupKey().equals(payload.groupKey())) {
+        Optional<PinHolder> holder = StationViewers.pinHolderOf(menu);
+        if (offer == null || !offer.pinnable() || holder.isEmpty() || !offer.groupKey().equals(payload.groupKey())) {
             return;
         }
 
-        StationBlock station = (StationBlock) furnace.get();
         if (payload.pinned()) {
             Option selected = offer.selected();
             if (!selected.enabled()) {
                 return;
             }
 
-            station.polycraft$state().pins().pin(payload.groupKey(), selected.id());
+            holder.get().polycraft$pins().pin(payload.groupKey(), selected.id());
         } else {
-            station.polycraft$state().pins().unpin(payload.groupKey());
+            holder.get().polycraft$pins().unpin(payload.groupKey());
         }
 
         PolyCraftEpoch.bump();
-        markStale(furnace.get());
-    }
-
-    private static void markStale(AbstractFurnaceBlockEntity furnace) {
-        ((StationBlock) furnace).polycraft$state().invalidate();
-        furnace.setChanged();
+        holder.get().polycraft$pinsChanged();
+        if (menu instanceof CrafterMenu) {
+            refreshAfterChange(menu);
+        }
     }
 
     private static boolean sameOffer(@Nullable Offer a, @Nullable Offer b) {

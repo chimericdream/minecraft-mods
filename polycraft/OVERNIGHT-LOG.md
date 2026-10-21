@@ -259,3 +259,43 @@ turning gold when clicked; the block really pinned the fast recipe. Screenshots 
 TODO(art): lock icons are placeholders (12x12, off and on); replace with your own files of the same names.
 Not covered yet: the lock/pin UI on a smoker or blast furnace screen is the same code path but was only screenshotted on the
 furnace; the Crafter's pin comes in M5.
+
+## M5 — Crafter, campfire, smithing table (2026-10-21)
+
+Added: mixins `PCSmithingMenuMixin` (+ `PCItemCombinerMenuAccessor`), `PCCrafterBlockMixin`, `PCCrafterMenuMixin`,
+`PCCrafterBlockEntityMixin`, `PCCampfireBlockEntityMixin`; `recipe/PinHolder`, `PinPersistence`, `StationResolvers`;
+`StationViewers` now covers furnace and Crafter menus. The overlay supports the smithing table and the Crafter.
+
+How each station works:
+- **Smithing table**: `SmithingMenu.createResult` is wrapped like the crafting table, with the menu's player as the acting
+  player. Options and selection work the same; no pin (a smithing table is not a block entity).
+- **Crafter**: crafting (a redstone pulse, `CrafterBlock.dispenseFrom`) and the screen's preview slot both go through the same
+  resolution: pin, then whoever has the Crafter open (the acting player), then the pack default, then vanilla. So the
+  preview always shows what a pulse would craft. Pins are saved on the block. The button and lock sit **above** the preview
+  slot, because the Crafter's slot is too close to the panel edge for the lock to fit beside it.
+- **Campfire**: no screen and no viewer. Both lookups (when food goes on, for the cooking time, and when it finishes, for the
+  result) use the pack's default for a conflicting food, otherwise vanilla's pick, so they always agree.
+- **Stonecutter**: untouched (a GameTest checks nothing is offered there).
+- **Player's 2x2 grid**: already covered by the crafting-table hook; now has its own GameTest.
+
+Decisions and notes:
+- A choice made at a Crafter with nobody pinning it only applies while that person has it open. That follows the design:
+  the pin is what makes it stick. The preview and a pulse agree at all times.
+- `PolyCraftNetworking.applySelection` and `applyPin` are generic over stations now (`PinHolder`), so the furnace and Crafter
+  share code. A Crafter refreshes its preview straight after a selection or pin by notifying its own slot listener.
+- Cosmetic: on the smithing table the count badge overlaps the armor-stand preview slightly; on the Crafter the popup opens
+  below the panel at 720p because there is no room above.
+
+Verification: 65 unit tests; 36 GameTests (`StationsGameTest` adds 7: smithing offers and applies a choice, the 2x2 grid, the
+stonecutter is left alone, an unwatched Crafter uses the pack default, a pin makes a Crafter choice stick, a Crafter pin saves
+and loads, the campfire uses the pack default). Each of the smithing, Crafter and campfire tests would fail without its mixin,
+because vanilla would pick a different result. NeoForge: compiles, and a dev server boot force-loaded `CampfireBlockEntity`,
+`CrafterBlockEntity`, `CrafterBlock`, `CrafterMenu`, `SmithingMenu`, `ItemCombinerMenu` and `AbstractFurnaceBlockEntity` with all
+mixins applied (temporary check, reverted). Visual (temporary client test, deleted): smithing and Crafter screens, and the
+Crafter's popup. Screenshots in
+`C:\Users\bill\AppData\Local\Temp\claude\C--Users-bill-code-minecraft-mods\41e2c44a-9693-42ab-b379-7baf94eacc17\scratchpad\m5-screenshots\`.
+
+A tooling note for whoever runs these: do not start a NeoForge `runServer` while a Fabric `runGameTest` is finishing. The repo's
+run-watchdog kills leftover run JVMs and once killed the NeoForge server too, which looked like a startup failure and wasn't.
+Fixture growth: smithing recipes (`smithing_a/b`), campfire recipes (`campfire_egg_a/b`), and `campfire_egg_b` in the rules
+priority; `CommandGameTest` now expects six groups.

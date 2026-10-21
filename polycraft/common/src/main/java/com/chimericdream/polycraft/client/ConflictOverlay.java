@@ -18,6 +18,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
+import net.minecraft.world.inventory.CrafterMenu;
+import net.minecraft.world.inventory.SmithingMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -89,7 +91,8 @@ public final class ConflictOverlay {
     /** True for the screens PolyCraft puts a picker on. */
     public static boolean supports(Screen screen) {
         return screen instanceof AbstractContainerScreen<?> container
-            && (container.getMenu() instanceof AbstractCraftingMenu || container.getMenu() instanceof AbstractFurnaceMenu);
+            && (container.getMenu() instanceof AbstractCraftingMenu || container.getMenu() instanceof AbstractFurnaceMenu
+            || container.getMenu() instanceof CrafterMenu || container.getMenu() instanceof SmithingMenu);
     }
 
     public static void onInit(Screen screen) {
@@ -175,12 +178,25 @@ public final class ConflictOverlay {
 
     private Slot resultSlot() {
         AbstractContainerMenu menu = screen.getMenu();
-        return menu instanceof AbstractFurnaceMenu furnace ? furnace.getResultSlot() : ((AbstractCraftingMenu) menu).getResultSlot();
+        if (menu instanceof AbstractFurnaceMenu furnace) {
+            return furnace.getResultSlot();
+        }
+
+        if (menu instanceof SmithingMenu smithing) {
+            return smithing.getSlot(smithing.getResultSlot());
+        }
+
+        if (menu instanceof CrafterMenu) {
+            // The Crafter's preview slot is the last one: the nine grid slots and the inventory come before it.
+            return menu.slots.getLast();
+        }
+
+        return ((AbstractCraftingMenu) menu).getResultSlot();
     }
 
-    /** Beside the result slot where there is room; above it in the inventory, which has none. */
+    /** Beside the result slot where there is room; above it in the inventory and the Crafter, which have none. */
     private boolean besideResult() {
-        return !(screen.getMenu() instanceof InventoryMenu);
+        return !(screen.getMenu() instanceof InventoryMenu || screen.getMenu() instanceof CrafterMenu);
     }
 
     private int buttonX() {

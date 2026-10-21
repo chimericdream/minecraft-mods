@@ -65,7 +65,7 @@ public class CommandGameTest {
     public void conflictsListsTheFixtureGroups(GameTestHelper context) throws CommandSyntaxException {
         ServerPlayer player = player(context);
 
-        context.assertTrue(run(context, player.createCommandSourceStack(), GROUPS_IN_FIXTURE) == 4, "the cactus, berry, shard, and gunpowder groups should be listed for a normal player");
+        context.assertTrue(run(context, player.createCommandSourceStack(), GROUPS_IN_FIXTURE) == 6, "the cactus, berry, shard, gunpowder, smithing, and campfire groups should be listed for a normal player");
         context.succeed();
     }
 

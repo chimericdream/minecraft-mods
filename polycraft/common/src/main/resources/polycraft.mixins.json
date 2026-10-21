@@ -9,8 +9,14 @@
         "PCAbstractContainerMenuMixin",
         "PCAbstractFurnaceBlockEntityMixin",
         "PCAbstractFurnaceMenuAccessor",
+        "PCCampfireBlockEntityMixin",
+        "PCCrafterBlockEntityMixin",
+        "PCCrafterBlockMixin",
+        "PCCrafterMenuMixin",
         "PCCraftingMenuMixin",
-        "PCResultSlotMixin"
+        "PCItemCombinerMenuAccessor",
+        "PCResultSlotMixin",
+        "PCSmithingMenuMixin"
     ],
     "injectors": {
         "defaultRequire": 1

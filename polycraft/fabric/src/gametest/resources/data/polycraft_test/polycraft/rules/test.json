@@ -1,4 +1,4 @@
 {
-    "priority": ["polycraft_test:two_cactus_b"],
+    "priority": ["polycraft_test:two_cactus_b", "polycraft_test:campfire_egg_b"],
     "exclude": ["polycraft_test:two_cactus_c"]
 }

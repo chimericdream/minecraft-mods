@@ -1,0 +1,7 @@
+{
+    "type": "minecraft:campfire_cooking",
+    "ingredient": "minecraft:egg",
+    "result": { "id": "minecraft:bone_meal" },
+    "experience": 0.1,
+    "cookingtime": 20
+}
