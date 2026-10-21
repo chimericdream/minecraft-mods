@@ -6,6 +6,8 @@
     "client": [
     ],
     "mixins": [
+        "PCCraftingMenuMixin",
+        "PCResultSlotMixin"
     ],
     "injectors": {
         "defaultRequire": 1

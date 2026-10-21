@@ -11,7 +11,8 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
-            "com.chimericdream.polycraft.fabric.test.CommandGameTest"
+            "com.chimericdream.polycraft.fabric.test.CommandGameTest",
+            "com.chimericdream.polycraft.fabric.test.CraftingGameTest"
         ]
     },
     "depends": {

@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * M2: the {@code /polycraft} commands, the rules files, and saved player choices. The fixture datapack under
  * {@code gametest/resources/data/polycraft_test} adds four conflicting recipes for two cactus (a and the copy make
- * 3 green dye, b makes 5 green dye, c makes lime dye) and two smelting recipes for gunpowder, plus a rules file that
+ * 3 green dye, b makes 5 green dye, c makes lime dye) and two sweet-berry recipes, eight amethyst-shard recipes (one conflict with many options), two smelting recipes for gunpowder, plus a rules file that
  * prefers recipe b and excludes recipe c.
  */
 @SuppressWarnings("unused")
@@ -65,7 +65,7 @@ public class CommandGameTest {
     public void conflictsListsTheFixtureGroups(GameTestHelper context) throws CommandSyntaxException {
         ServerPlayer player = player(context);
 
-        context.assertTrue(run(context, player.createCommandSourceStack(), GROUPS_IN_FIXTURE) == 2, "the cactus and gunpowder groups should be listed for a normal player");
+        context.assertTrue(run(context, player.createCommandSourceStack(), GROUPS_IN_FIXTURE) == 4, "the cactus, berry, shard, and gunpowder groups should be listed for a normal player");
         context.succeed();
     }
 

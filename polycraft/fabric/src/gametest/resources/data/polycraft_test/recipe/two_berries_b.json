@@ -1,0 +1,5 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": ["minecraft:sweet_berries", "minecraft:sweet_berries"],
+    "result": { "id": "minecraft:red_dye", "count": 4 }
+}

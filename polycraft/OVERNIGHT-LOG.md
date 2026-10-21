@@ -160,3 +160,53 @@ Decisions and notes:
   repo-wide when one is chosen.
 - You added `polycraft/common/src/main/resources/assets/polycraft/textures/gui/toggle_list_button.png`
   (untracked, not mine). I haven't committed it. M3 uses that file name for the main button texture and won't overwrite it.
+
+## M3 — Crafting table end to end (2026-10-21)
+
+Added: `recipe/ConflictService` (server-side selection), `network/` (`ConflictOptionsPayload` S2C, `SelectRecipePayload`
+C2S, `PolyCraftNetworking`), mixins `PCCraftingMenuMixin` and `PCResultSlotMixin`, and the client picker
+(`client/ConflictOverlay`, `ClientConflictState`, `PolyCraftClient`). Loader entrypoints call `PolyCraftClient.init()`.
+Access widener now exposes `AbstractContainerScreen.leftPos/topPos/imageWidth/imageHeight`.
+
+How it works:
+- `PCCraftingMenuMixin` wraps the `RecipeManager.getRecipeFor(..., hint)` call inside `CraftingMenu.slotChangedCraftingGrid`
+  (shared by the crafting table and the player's 2x2 grid). Vanilla still finds its pick first; `ConflictService.select` then
+  confirms or replaces it, and the server tells the player's client what the options are (only when they change).
+- `PCResultSlotMixin` wraps the second lookup that `ResultSlot.getRemainingItems` does when you take the result, so leftovers
+  come from the recipe that was actually chosen.
+- The server only accepts a selection that matches what it last offered that menu (checked by container id, group key and
+  recipe id), so forged or stale requests are ignored.
+- A choice applies for the current menu immediately and is saved per player unless `rememberChoices` is off. With it off,
+  the choice still lasts while that menu stays open.
+- The picker is drawn and handled by `ConflictOverlay` through Architectury's screen events (no screen mixins).
+- `ConflictService.select` also demotes a recipe the rules exclude: if vanilla would pick an excluded recipe and another
+  recipe matches, the other one is used even when there is nothing to offer. An excluded recipe is still used when it is the
+  only match (we never remove recipes).
+
+Verification:
+- Unit tests: 65 passing. GameTests: 19 passing on `:polycraft:fabric:runGameTest` (`CraftingGameTest` adds 9: vanilla default,
+  pack default beats vanilla, player choice beats pack default and persists into a new menu, per-player isolation, forged
+  selections ignored, excluded and duplicate recipes not offered, a lone recipe makes no offer, taking the result uses up the
+  inputs, shift-click crafts everything with the chosen recipe). That proves both mixins apply and work on Fabric.
+- NeoForge: compiles, and a dev `runServer` boot loaded PolyCraft, accepted the mixin config, and force-loading `CraftingMenu`
+  and `ResultSlot` (a temporary check, since reverted) applied both mixins with no errors. NeoForge has no GameTest runner
+  in this repo, so its behaviour is covered by that boot check plus the shared common code.
+- Visual smoke test (temporary client GameTest, since deleted): real client, crafting table, a conflict with 8 options.
+  Click on the button opens the list; right arrow scrolls; clicking the third visible option crafted paper (asserted on the
+  server). Screenshots: `C:\Users\bill\AppData\Local\Temp\claude\C--Users-bill-code-minecraft-mods\41e2c44a-9693-42ab-b379-7baf94eacc17\scratchpad\m3-screenshots\`
+  (`0001_popup-1-button.png` closed, `0002_popup-2-open.png`, `0003_popup-3-scrolled.png`, `0004_popup-4-hover.png`,
+  `0005_popup-5-chosen.png`). They looked right to me; the feel of the interaction is for your morning check.
+
+Notes and things to look at in the morning:
+- **Art**: the code uses your `toggle_list_button`, `toggle_list_button_pressed`, `result_list_item` and `result_list_item_active`
+  textures (all untracked/uncommitted except the list items, which you committed). I did not commit `toggle_list_button*.png`
+  or the modified `icon.png`; they are yours. Without them the button draws as the missing-texture checkerboard.
+- **Popup position**: it is centred above the GUI, and goes below it when there is no room above. At GUI scale 3 on a 720p
+  window it sits just under the table and overlaps the hotbar area slightly. Fine functionally; tell me if you'd rather it
+  anchor beside the button.
+- **Badge**: the count is drawn as plain text in the button's upper-right corner (white with shadow, no scaling).
+- **Fixture growth**: the test datapack now has an eight-option group (`two_shards_1` to `_8`) so scroll arrows can be tested;
+  `CommandGameTest` expects four groups in the fixture.
+- **Not done in M3**: the inventory screen's 2x2 grid uses the same code path and button (above the result slot), but is not
+  covered by a test yet. Recipe-book placement is M7.
+- `makeMockServerPlayerInLevel` deprecation warning is unchanged.

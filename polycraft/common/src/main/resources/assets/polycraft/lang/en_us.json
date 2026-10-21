@@ -18,6 +18,9 @@
     "polycraft.config.option.debugLogging": "Debug logging",
     "polycraft.config.option.debugLogging.desc": "Writes extra detail about the recipe conflicts it finds to the game log. (Default: false)",
 
+    "polycraft.ui.choose_recipe": "Choose which recipe to craft",
+    "polycraft.ui.from_mod": "From %s",
+
     "polycraft.command.conflicts.none": "PolyCraft found no recipe conflicts.",
     "polycraft.command.conflicts.none_for_mod": "PolyCraft found no recipe conflicts involving %s.",
     "polycraft.command.conflicts.header": "PolyCraft found %s recipe conflict(s):",
