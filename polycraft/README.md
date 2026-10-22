@@ -82,6 +82,8 @@ Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft
 
 Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
 
+Thanks also to the creators of Polymorph, Polymorph+, and similar mods, whose earlier work on choosing between conflicting recipes inspired this one. (PolyCraft uses no code or assets from any other mod.)
+
 ## License
 
 This mod is released under the MIT license. [The full text of the license can be found here.](./LICENSE)
