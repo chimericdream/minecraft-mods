@@ -14,6 +14,7 @@
             "com.chimericdream.polycraft.fabric.test.CommandGameTest",
             "com.chimericdream.polycraft.fabric.test.CraftingGameTest",
             "com.chimericdream.polycraft.fabric.test.FurnaceGameTest",
+            "com.chimericdream.polycraft.fabric.test.RemainderGameTest",
             "com.chimericdream.polycraft.fabric.test.StationsGameTest"
         ]
     },

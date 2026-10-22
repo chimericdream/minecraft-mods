@@ -14,3 +14,6 @@ give @s minecraft:netherite_ingot 8
 give @s minecraft:netherite_upgrade_smithing_template 4
 give @s minecraft:book 16
 give @s minecraft:lapis_lazuli 16
+give @s minecraft:honey_bottle 16
+give @s minecraft:water_bucket 2
+give @s minecraft:lava_bucket 2

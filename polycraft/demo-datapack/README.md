@@ -1,6 +1,6 @@
 # PolyCraft kitchen sink datapack
 
-A test and screenshot pack: 40 recipes that conflict with each other (and with a few vanilla recipes) at every station
+A test and screenshot pack: 48 recipes that conflict with each other (and with a few vanilla recipes) at every station
 PolyCraft handles. Not for real worlds. Every recipe id is in the `polycraft_demo` namespace.
 
 ## Install
@@ -19,6 +19,8 @@ The pack's `rules/demo.json` sets a default for two conflicts and hides one reci
 | Crafting table, 2x2 grid, Crafter | 1 cobblestone | stick, diamond, emerald, stone, coal, lapis, gold ingot, copper ingot, nether star. Nine options, so the list scrolls. A tenth (dragon egg) is hidden by the rules file, so it never shows up. |
 | Crafting table, 2x2 grid, Crafter | 1 sand | 1, 4, or 16 glass. The same item in different amounts counts as a conflict. The rules file defaults it to 4. |
 | 2x2 grid or crafting table | a 2x2 square of dirt | grass block, podzol, mycelium, moss block |
+| 2x2 grid or crafting table | a 2x2 square of honey bottles | honey block (vanilla), stone, blue concrete, diamond, sponge. Each leaves four empty glass bottles in the grid. |
+| Crafting table or Crafter | 1 water bucket + 1 lava bucket | obsidian, cobblestone, basalt, magma block. Each leaves two empty buckets in the grid. |
 | Crafting table or Crafter | 3 feathers in a row | white wool, 8 arrows, phantom membrane |
 | Crafting table | 1 white wool | nothing by default. Turn on **Detect overlapping inputs** and you get paper or 4 string (one recipe wants white wool, the other any wool). |
 | Furnace | 1 oak log (any burnable log) | charcoal (vanilla, 200 ticks), 2 sticks (100), coal (200), diamond (400), netherite ingot (1000). Switch recipes mid-cook to watch the arrow change. |
@@ -39,7 +41,7 @@ Also worth showing:
 
 ## Checked
 
-A temporary GameTest (not kept) loaded the pack on a Fabric server and confirmed all 40 recipes load and that the option
+A temporary GameTest (not kept) loaded the pack on a Fabric server and confirmed all 48 recipes load and that the option
 counts in the table are right for the crafting table, 2x2 grid, furnace, blast furnace, smoker and smithing table. The
 Crafter and campfire use the same lookups as the tests in the main suite, and the overlap row is a config setting that
 was not exercised there.

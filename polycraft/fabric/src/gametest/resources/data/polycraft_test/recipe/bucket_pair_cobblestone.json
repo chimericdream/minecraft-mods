@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:water_bucket",
+        "minecraft:lava_bucket"
+    ],
+    "result": {
+        "id": "minecraft:cobblestone",
+        "count": 4
+    }
+}
