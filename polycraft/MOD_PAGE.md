@@ -1,12 +1,3 @@
-<!--
-Landing page copy for CurseForge / Modrinth.
-- Image paths below are relative to this repo (docs/*.png). Upload each image to the project gallery or
-  description editor and swap in the hosted URL before publishing.
-- The screenshots were taken with the kitchen sink demo datapack (demo-datapack/), which is why they show
-  odd recipes like cobblestone -> diamond. The captions say so.
-- Fill in the dependency links once the project pages exist.
--->
-
 # PolyCraft
 
 **Several recipes, one set of ingredients. You pick what you get.**
@@ -15,7 +6,7 @@ In a big modpack, a lot of mods add recipes that use the same ingredients. Norma
 rest can never be crafted. PolyCraft keeps all of them and lets you choose the result you want, at the station you are
 already standing at.
 
-![Choosing between six results at a crafting table](docs/crafting-table-cobblestone-picker-open.png)
+![Choosing between six results at a crafting table](https://media.forgecdn.net/attachments/2088/651/crafting-table-cobblestone-picker-open-png.png)
 
 <!-- Screenshot note: if this image is not the best opener, use docs/crafting-table-cobblestone-picker-scroll-arrows.png (a wider list with scroll arrows). -->
 
@@ -24,18 +15,18 @@ already standing at.
 Put items in a station. If they could make more than one thing, a small button appears above the result slot, with a
 number showing how many choices you have.
 
-![The choice button above the result slot](docs/crafting-table-sand-glass-button.png)
+![The choice button above the result slot](https://media.forgecdn.net/attachments/2088/653/crafting-table-sand-glass-button-png.png)
 
 Click the button to open a row of every possible result, then click the one you want.
 
-![The result list open at a crafting table](docs/crafting-table-sand-glass-picker-open.png)
+![The result list open at a crafting table](https://media.forgecdn.net/attachments/2088/654/crafting-table-sand-glass-picker-open-png.png)
 
 You only choose once. PolyCraft remembers your pick for each recipe conflict and saves it with the world, so the same
 items give you the same result next time.
 
 Some items are in a lot of recipes. When the options don't fit on screen, the list gets scroll arrows.
 
-![A long list with scroll arrows](docs/crafting-table-cobblestone-picker-scroll-arrows.png)
+![A long list with scroll arrows](https://media.forgecdn.net/attachments/2088/652/crafting-table-cobblestone-picker-scroll-arrows.png)
 
 *Screenshots use PolyCraft's demo datapack, which adds deliberately silly recipes so there is something to choose between.*
 
@@ -57,11 +48,11 @@ Recipes placed from the recipe book count as choosing that recipe.
 
 ### Smithing table
 
-![Choosing between three smithing results](docs/smithing-table-netherite-pickaxe-picker-open.png)
+![Choosing between three smithing results](https://media.forgecdn.net/attachments/2088/657/smithing-table-netherite-pickaxe-picker-open-png.png)
 
 ### Furnaces, blast furnaces and smokers
 
-![Choosing what a log smelts into](docs/furnace-logs-picker-open.png)
+![Choosing what a log smelts into](https://media.forgecdn.net/attachments/2088/655/furnace-logs-picker-open-png.png)
 
 Changed your mind mid-cook? Switch recipes and the current cook becomes the new result. The time already spent carries
 over, and you lose no fuel or ingredients.
@@ -71,12 +62,12 @@ over, and you lose no fuel or ingredients.
 Automation shouldn't depend on who opened the GUI last. Furnaces, blast furnaces, smokers and Crafters have a small lock
 beside the button. Click it to pin the current recipe to that block.
 
-![A furnace pinned to charcoal, with the tooltip showing](docs/furnace-pin-tooltip-pinned-charcoal.png)
+![A furnace pinned to charcoal, with the tooltip showing](https://media.forgecdn.net/attachments/2088/656/furnace-pin-tooltip-pinned-charcoal-png.png)
 
 A pinned block always uses its pinned recipe, even when another player with a different choice opens it. Set up your
 hopper-fed furnaces and redstone-fired Crafters once and leave them alone.
 
-![A pinned Crafter](docs/crafter-picker-open-pinned.png)
+![A pinned Crafter](https://media.forgecdn.net/attachments/2088/650/crafter-picker-open-pinned-png.png)
 
 ## Good to know
 
@@ -89,7 +80,7 @@ hopper-fed furnaces and redstone-fired Crafters once and leave them alone.
 
 | Off | On |
 |---|---|
-| ![Overlap detection off](docs/white-wool-overlapping-disabled.png) | ![Overlap detection on](docs/white-wool-overlapping-enabled.png) |
+| ![Overlap detection off](https://media.forgecdn.net/attachments/2088/658/white-wool-overlapping-disabled-png.png) | ![Overlap detection on](https://media.forgecdn.net/attachments/2088/659/white-wool-overlapping-enabled-png.png) |
 
 ## For modpack makers
 
