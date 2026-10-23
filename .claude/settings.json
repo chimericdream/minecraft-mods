@@ -13,7 +13,21 @@
       "Bash(git ls-files:*)",
       "Bash(git config --local --list)",
       "Bash(python generate_layout.py)",
-      "Bash(python extract_jar_contents.py)"
+      "Bash(python extract_jar_contents.py)",
+      "Bash(bun scripts/lint-repo.ts:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun scripts/lint-repo.ts --hook"
+          }
+        ]
+      }
     ]
   }
 }

@@ -1,6 +1,10 @@
 # Conventions
 
 - **Line endings**: LF everywhere, enforced by the root `.gitattributes` (`* text=auto eol=lf`).
+  `bun run lint` (also the git pre-commit hook and a Claude post-edit hook) additionally rejects CRLF,
+  non-UTF-8 bytes, a BOM, misplaced access wideners, a malformed `mod_version`, and a changelog that
+  doesn't start with `### Unreleased changes`. Enable the hook once per clone:
+  `git config core.hooksPath .githooks`.
 - **demo-world (minekea)**: `minekea/demo-world/` is a deterministic showcase generator. Generated
   files (`demo_build.mcfunction`, manifests) are produced by `generate_layout.py` /
   `extract_jar_contents.py` — **never hand-edit them**; regenerate. See `minekea/demo-world/README.md`.
