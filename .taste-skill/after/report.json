@@ -1,0 +1,2027 @@
+{
+ "url": "http://localhost:4000/",
+ "at": "2026-10-23T23:22:20.549Z",
+ "allow": [
+  "assistant-palette"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.7,
+    0.44,
+    0.33,
+    0.25
+   ],
+   "motion": {
+    "elements": 40,
+    "css": 1,
+    "transitions": 39,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 2914,
+     "screens": 3.2,
+     "words": 603,
+     "img": 27,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 108.2,
+     "vw": 7.5,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.035,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.7,
+     "top": 150,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "lines": 1,
+     "size": 108.2,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "34 mods for Minecraft",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 108.2,
+      "vw": 7.5,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.035,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.7,
+      "top": 150,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Furniture, storage, building blocks and a few things that should not exist, for Fabric and NeoForge.",
+      "words": 16,
+      "chars": 100,
+      "lines": 3,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.35,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 281,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 36.8,
+      "vw": 2.6,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.23,
+      "top": 807,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 36.8,
+      "vw": 2.6,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.23,
+      "top": 807,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 36.8,
+      "vw": 2.6,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.23,
+      "top": 833,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 36.8,
+      "vw": 2.6,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.4,
+      "top": 847,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the catalogue",
+      "words": 5,
+      "chars": 25,
+      "lines": 1,
+      "size": 57.6,
+      "vw": 4,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 1168,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "34",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 2320,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "Everything here is published straight from the repository as it is written: each mod’s README, changelog, in-game guide and feature ideas.",
+      "words": 21,
+      "chars": 138,
+      "lines": 3,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Alegreya",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.54,
+      "top": 2320,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "19",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 2400,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "The roadmap lists the ideas under consideration across every mod. The changelog shows what has shipped and what is on its way.",
+      "words": 22,
+      "chars": 126,
+      "lines": 3,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Alegreya",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.54,
+      "top": 2477,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "216",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 2480,
+      "tag": "b",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 3,
+     "over2Lines": 0,
+     "statements": 6,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      23,
+      28,
+      32,
+      37,
+      58,
+      108
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 16,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10
+     },
+     "measureChars": 43,
+     "max": {
+      "size": 108.2,
+      "vw": 7.5,
+      "font": "Alegreya",
+      "text": "34 mods for Minecraft"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "in-game guides",
+      "above": "216",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 16,
+      "top": 2400
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#bdb6ca",
+       "share": 0.65
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.33
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#2d1050",
+      "hsl": {
+       "h": 267,
+       "s": 0.67,
+       "l": 0.19
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 4,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Browse all 34 mods",
+      "See what is coming"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 2,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 2914,
+    "margins": {
+     "left": 40,
+     "right": 40
+    },
+    "sections": [
+     {
+      "sel": "div.hero",
+      "tag": "div",
+      "top": 64,
+      "height": 463,
+      "words": 28,
+      "media": 1,
+      "middle": 144,
+      "heading": {
+       "text": "34 mods for Minecraft",
+       "size": 108,
+       "tag": "h1"
+      },
+      "left": 40,
+      "right": 38,
+      "textLeft": 40,
+      "textRight": 502,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.row-scroll",
+      "tag": "div",
+      "top": 527,
+      "height": 497,
+      "words": 35,
+      "media": 3,
+      "middle": 142,
+      "heading": {
+       "text": "Minekea",
+       "size": 37,
+       "tag": "h3"
+      },
+      "left": 64,
+      "right": 66,
+      "textLeft": 64,
+      "textRight": 66,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#catalogue.section",
+      "tag": "section",
+      "top": 1024,
+      "height": 1152,
+      "words": 450,
+      "media": 0,
+      "middle": 52,
+      "heading": {
+       "text": "The rest of the catalogue",
+       "size": 58,
+       "tag": "h2"
+      },
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 2176,
+      "height": 560,
+      "words": 62,
+      "media": 0,
+      "middle": 203,
+      "heading": {
+       "text": "34",
+       "size": 32,
+       "tag": "b"
+      },
+      "left": 40,
+      "right": 246,
+      "textLeft": 40,
+      "textRight": 246,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 2736,
+      "height": 179,
+      "words": 9,
+      "media": 0,
+      "middle": 492,
+      "heading": null,
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "34 mods for Minecraft",
+      "size": 108,
+      "top": 150,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 40,
+      "n": 3
+     },
+     {
+      "x": 64,
+      "n": 2
+     },
+     {
+      "x": 410,
+      "n": 2
+     },
+     {
+      "x": 696,
+      "n": 1
+     },
+     {
+      "x": 1088,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.09,
+    "voidBox": {
+     "x": 600,
+     "y": 300,
+     "w": 480,
+     "h": 240
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.65,
+    0.32,
+    0.27,
+    0.41,
+    0.2
+   ],
+   "motion": {
+    "elements": 39,
+    "css": 1,
+    "transitions": 38,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4363,
+     "screens": 4.3,
+     "words": 603,
+     "img": 27,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "chars": 21,
+     "lines": 2,
+     "size": 65.2,
+     "vw": 8.5,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.035,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.68,
+     "top": 110,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "lines": 2,
+     "size": 65.2,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "34 mods for Minecraft",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 65.2,
+      "vw": 8.5,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.035,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.68,
+      "top": 110,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30.1,
+      "vw": 3.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.43,
+      "top": 745,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30.1,
+      "vw": 3.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.43,
+      "top": 771,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30.1,
+      "vw": 3.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.43,
+      "top": 771,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 30.1,
+      "vw": 3.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 785,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the catalogue",
+      "words": 5,
+      "chars": 25,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.5,
+      "top": 1032,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "34",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 3569,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "19",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.46,
+      "top": 3569,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "216",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 3649,
+      "tag": "b",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      23,
+      24,
+      25,
+      30,
+      32,
+      41,
+      65
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 16,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 65.2,
+      "vw": 8.5,
+      "font": "Alegreya",
+      "text": "34 mods for Minecraft"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "mods",
+      "above": "216",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 16,
+      "top": 3569
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1d0c31",
+       "top": 465,
+       "hsl": {
+        "h": 268,
+        "s": 0.61,
+        "l": 0.12
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#bdb6ca",
+       "share": 0.65
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.33
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#2d1050",
+      "hsl": {
+       "h": 267,
+       "s": 0.67,
+       "l": 0.19
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 4,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Browse all 34 mods",
+      "See what is coming"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4363,
+    "margins": {
+     "left": 23,
+     "right": 35
+    },
+    "sections": [
+     {
+      "sel": "div.hero",
+      "tag": "div",
+      "top": 64,
+      "height": 401,
+      "words": 28,
+      "media": 1,
+      "middle": 110,
+      "heading": {
+       "text": "34 mods for Minecraft",
+       "size": 65,
+       "tag": "h1"
+      },
+      "left": 23,
+      "right": 22,
+      "textLeft": 23,
+      "textRight": 314,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.row-scroll",
+      "tag": "div",
+      "top": 465,
+      "height": 490,
+      "words": 24,
+      "media": 2,
+      "middle": 104,
+      "heading": {
+       "text": "Minekea",
+       "size": 30,
+       "tag": "h3"
+      },
+      "left": 47,
+      "right": 0,
+      "textLeft": 47,
+      "textRight": -113,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#catalogue.section",
+      "tag": "section",
+      "top": 955,
+      "height": 2538,
+      "words": 450,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The rest of the catalogue",
+       "size": 41,
+       "tag": "h2"
+      },
+      "left": 23,
+      "right": 35,
+      "textLeft": 23,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 3492,
+      "height": 605,
+      "words": 62,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "34",
+       "size": 32,
+       "tag": "b"
+      },
+      "left": 23,
+      "right": 127,
+      "textLeft": 23,
+      "textRight": 127,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4097,
+      "height": 266,
+      "words": 9,
+      "media": 0,
+      "middle": 24,
+      "heading": null,
+      "left": 23,
+      "right": 460,
+      "textLeft": 23,
+      "textRight": 460,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "34 mods for Minecraft",
+      "size": 65,
+      "top": 110,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 23,
+      "n": 5
+     },
+     {
+      "x": 47,
+      "n": 2
+     },
+     {
+      "x": 679,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.69,
+    0.66,
+    0.46,
+    0.48,
+    0.51,
+    0.54,
+    0.52
+   ],
+   "motion": {
+    "elements": 39,
+    "css": 1,
+    "transitions": 38,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 5136,
+     "screens": 6.1,
+     "words": 603,
+     "img": 27,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "chars": 21,
+     "lines": 2,
+     "size": 44.8,
+     "vw": 11.5,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.035,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 396,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "34 mods for Minecraft",
+     "words": 4,
+     "lines": 2,
+     "size": 44.8,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 23.2,
+      "vw": 5.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.55,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.5,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "34 mods for Minecraft",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 44.8,
+      "vw": 11.5,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.035,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 396,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.7,
+      "top": 1033,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.7,
+      "top": 1059,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.7,
+      "top": 1059,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 1073,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the catalogue",
+      "words": 5,
+      "chars": 25,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.78,
+      "top": 1340,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "34",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 4276,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "19",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.43,
+      "top": 4276,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "216",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 4356,
+      "tag": "b",
+      "kind": "statement"
+     },
+     {
+      "text": "Everything here is published straight from the repository as it is written: each mod’s README, changelog, in-game guide and feature ideas.",
+      "words": 21,
+      "chars": 138,
+      "lines": 4,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4448,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "The roadmap lists the ideas under consideration across every mod. The changelog shows what has shipped and what is on its way.",
+      "words": 22,
+      "chars": 126,
+      "lines": 4,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4587,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 4,
+     "over2Lines": 0,
+     "statements": 5,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      21,
+      22,
+      23,
+      29,
+      32,
+      45
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 16,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10
+     },
+     "measureChars": 33,
+     "max": {
+      "size": 44.8,
+      "vw": 11.5,
+      "font": "Alegreya",
+      "text": "34 mods for Minecraft"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "mods",
+      "above": "216",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 16,
+      "top": 4276
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1d0c31",
+       "top": 753,
+       "hsl": {
+        "h": 268,
+        "s": 0.61,
+        "l": 0.12
+       }
+      },
+      {
+       "color": "#2d1050",
+       "top": 753,
+       "hsl": {
+        "h": 267,
+        "s": 0.67,
+        "l": 0.19
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#bdb6ca",
+       "share": 0.65
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.33
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#2d1050",
+      "hsl": {
+       "h": 267,
+       "s": 0.67,
+       "l": 0.19
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 4,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Browse all 34 mods",
+      "See what is coming"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.1
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 152,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 5136,
+    "margins": {
+     "left": 16,
+     "right": 28
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 152,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "chimericdream",
+       "size": 23,
+       "tag": "a"
+      },
+      "left": 16,
+      "right": 157,
+      "textLeft": 16,
+      "textRight": 157,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.hero",
+      "tag": "div",
+      "top": 152,
+      "height": 603,
+      "words": 28,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "34 mods for Minecraft",
+       "size": 45,
+       "tag": "h1"
+      },
+      "left": 14,
+      "right": 17,
+      "textLeft": 16,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.row-scroll",
+      "tag": "div",
+      "top": 755,
+      "height": 514,
+      "words": 24,
+      "media": 2,
+      "middle": 61,
+      "heading": {
+       "text": "Minekea",
+       "size": 29,
+       "tag": "h3"
+      },
+      "left": 40,
+      "right": 0,
+      "textLeft": 40,
+      "textRight": -191,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#catalogue.section",
+      "tag": "section",
+      "top": 1268,
+      "height": 2936,
+      "words": 450,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The rest of the catalogue",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 28,
+      "textLeft": 16,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 4204,
+      "height": 691,
+      "words": 62,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "34",
+       "size": 32,
+       "tag": "b"
+      },
+      "left": 16,
+      "right": 17,
+      "textLeft": 16,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4896,
+      "height": 241,
+      "words": 9,
+      "media": 0,
+      "middle": 24,
+      "heading": null,
+      "left": 16,
+      "right": 89,
+      "textLeft": 16,
+      "textRight": 89,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "34 mods for Minecraft",
+      "size": 45,
+      "top": 396,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 5
+     },
+     {
+      "x": 40,
+      "n": 2
+     },
+     {
+      "x": 387,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "1 eyebrow/kicker label(s) above headings: \"in-game guides\" above \"216\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "side-scroll",
+   "width": 1440,
+   "message": "1 row(s) scroll sideways with content past their edge.",
+   "fix": "Jurors and most visitors read a row cut at the edge as clipped, not as scrollable. Wrap it onto more lines, or end it inside the grid.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-not-dealt",
+   "width": 1440,
+   "message": "The sheet dealt General Sans and General Sans, but the page renders Alegreya.",
+   "fix": "Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 390,
+   "message": "The margins differ: 16px on the left, 28px on the right, at 390px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,1672 @@
+{
+ "url": "http://localhost:4000/mods/minekea/",
+ "at": "2026-10-23T23:34:32.934Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.65,
+    0.44,
+    0.35,
+    0.38,
+    0.26
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 31,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4373,
+     "screens": 4.9,
+     "words": 593,
+     "img": 10,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 82.6,
+     "vw": 5.7,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.03,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.51,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 82.6,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 82.6,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.51,
+      "top": 120,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Introduction",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 743,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minecraft Versions",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 27.8,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 903,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Current Features",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 27.8,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 1053,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Planned/Possible Features",
+      "words": 2,
+      "chars": 25,
+      "lines": 1,
+      "size": 27.8,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 1972,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Mod Support",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 27.8,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 2122,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Issues & Suggestions",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 2367,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Credits",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 2587,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Textures",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 27.8,
+      "vw": 1.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 2880,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "License",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.5,
+      "top": 3991,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      23,
+      25,
+      28,
+      40,
+      83
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 18.4,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17.1
+     },
+     "measureChars": 75,
+     "max": {
+      "size": 82.6,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#2d1050",
+       "top": 64,
+       "hsl": {
+        "h": 267,
+        "s": 0.67,
+        "l": 0.19
+       }
+      },
+      {
+       "color": "#1d0c31",
+       "top": 441,
+       "hsl": {
+        "h": 268,
+        "s": 0.61,
+        "l": 0.12
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.91
+      },
+      {
+       "color": "#ff9296",
+       "share": 0.05
+      },
+      {
+       "color": "#bdb6ca",
+       "share": 0.02
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#0e0817",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.06
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 7,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Read the in-game guide",
+      "Changelog",
+      "Ideas"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4373,
+    "margins": {
+     "left": 20,
+     "right": 107
+    },
+    "sections": [
+     {
+      "sel": "div.modhero",
+      "tag": "div",
+      "top": 64,
+      "height": 377,
+      "words": 28,
+      "media": 1,
+      "middle": 209,
+      "heading": {
+       "text": "Minekea",
+       "size": 83,
+       "tag": "h1"
+      },
+      "left": 62,
+      "right": 162,
+      "textLeft": 283,
+      "textRight": 162,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 441,
+      "height": 3753,
+      "words": 552,
+      "media": 0,
+      "middle": 361,
+      "heading": {
+       "text": "Introduction",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 246,
+      "textLeft": 20,
+      "textRight": 246,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4194,
+      "height": 179,
+      "words": 9,
+      "media": 0,
+      "middle": 492,
+      "heading": null,
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 83,
+      "top": 120,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 507,
+      "n": 16
+     },
+     {
+      "x": 283,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 18,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.18,
+    "voidBox": {
+     "x": 180,
+     "y": 420,
+     "w": 1260,
+     "h": 180
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.66,
+    0.36,
+    0.31,
+    0.33,
+    0.16
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 31,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4486,
+     "screens": 4.4,
+     "words": 589,
+     "img": 10,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 53,
+     "vw": 6.9,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.03,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "right",
+     "widthRatio": 0.77,
+     "top": 140,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 53,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 53,
+      "vw": 6.9,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.77,
+      "top": 140,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Introduction",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 33.2,
+      "vw": 4.3,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 892,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Issues & Suggestions",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 33.2,
+      "vw": 4.3,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 2455,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Credits",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 33.2,
+      "vw": 4.3,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 2653,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "License",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 33.2,
+      "vw": 4.3,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 4026,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      21,
+      23,
+      24,
+      33,
+      53
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 18.4,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17.1
+     },
+     "measureChars": 75,
+     "max": {
+      "size": 53,
+      "vw": 6.9,
+      "font": "Alegreya",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#2d1050",
+       "top": 109,
+       "hsl": {
+        "h": 267,
+        "s": 0.67,
+        "l": 0.19
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.91
+      },
+      {
+       "color": "#ff9296",
+       "share": 0.05
+      },
+      {
+       "color": "#bdb6ca",
+       "share": 0.02
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#0e0817",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.06
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 6,
+     "inHero": 6,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Read the in-game guide",
+      "Changelog",
+      "Ideas"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 109,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4486,
+    "margins": {
+     "left": 20,
+     "right": 64
+    },
+    "sections": [
+     {
+      "sel": "div.modhero",
+      "tag": "div",
+      "top": 109,
+      "height": 435,
+      "words": 28,
+      "media": 0,
+      "middle": 37,
+      "heading": {
+       "text": "Minekea",
+       "size": 53,
+       "tag": "h1"
+      },
+      "left": 23,
+      "right": 158,
+      "textLeft": 23,
+      "textRight": 158,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 544,
+      "height": 3677,
+      "words": 552,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Introduction",
+       "size": 33,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 58,
+      "textLeft": 20,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4220,
+      "height": 266,
+      "words": 9,
+      "media": 0,
+      "middle": 24,
+      "heading": null,
+      "left": 23,
+      "right": 460,
+      "textLeft": 23,
+      "textRight": 460,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 53,
+      "top": 140,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 23,
+      "n": 16
+     },
+     {
+      "x": 157,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 18,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.88,
+    0.48,
+    0.54,
+    0.59,
+    0.61,
+    0.5,
+    0.34
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 31,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 5346,
+     "screens": 6.3,
+     "words": 589,
+     "img": 10,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 38.4,
+     "vw": 9.8,
+     "font": "Alegreya",
+     "weight": 500,
+     "tracking": -0.03,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 324,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 38.4,
+     "font": "Alegreya"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 23.2,
+      "vw": 5.9,
+      "font": "Alegreya",
+      "weight": 700,
+      "tracking": -0.02,
+      "leading": 1.55,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.5,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 9.8,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 324,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Introduction",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1124,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minecraft Versions",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1292,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Current Features",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1428,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Planned/Possible Features",
+      "words": 2,
+      "chars": 25,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2647,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Mod Support",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2783,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Issues & Suggestions",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3002,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Credits",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3245,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Textures",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3602,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "License",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Alegreya",
+      "weight": 500,
+      "tracking": -0.02,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4887,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Alegreya",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      19,
+      22,
+      23,
+      29,
+      38
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Alegreya",
+      "size": 18.4,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17.1
+     },
+     "measureChars": 39,
+     "max": {
+      "size": 38.4,
+      "vw": 9.8,
+      "font": "Alegreya",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0e0817",
+     "bodyBgHsl": {
+      "h": 264,
+      "s": 0.48,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#2d1050",
+       "top": 152,
+       "hsl": {
+        "h": 267,
+        "s": 0.67,
+        "l": 0.19
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.91
+      },
+      {
+       "color": "#ff9296",
+       "share": 0.05
+      },
+      {
+       "color": "#bdb6ca",
+       "share": 0.02
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#0e0817",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.06
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 7,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Light theme",
+      "Read the in-game guide",
+      "Changelog",
+      "Ideas"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 152,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "alegreya"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 5346,
+    "margins": {
+     "left": 16,
+     "right": 17
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 152,
+      "words": 8,
+      "media": 0,
+      "middle": 40,
+      "heading": null,
+      "left": 16,
+      "right": 61,
+      "textLeft": 16,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.modhero",
+      "tag": "div",
+      "top": 152,
+      "height": 550,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 38,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 38,
+      "textLeft": 16,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 702,
+      "height": 4403,
+      "words": 552,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Introduction",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 5105,
+      "height": 241,
+      "words": 9,
+      "media": 0,
+      "middle": 24,
+      "heading": null,
+      "left": 16,
+      "right": 89,
+      "textLeft": 16,
+      "textRight": 89,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 38,
+      "top": 324,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 18
+     }
+    ],
+    "leftBlocks": 18,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 1 picture(s) on the page (1 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "font-not-dealt",
+   "width": 1440,
+   "message": "The sheet dealt General Sans and General Sans, but the page renders Alegreya.",
+   "fix": "Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look."
+  },
+  {
+   "level": "FAIL",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The page sits off-centre: its content comes to 20px from the left edge but only to 107px from the right, at 1440px.",
+   "fix": "Give the page one pair of equal margins. Check the wrapper for a max-width without margin-inline: auto, a grid with an empty last column, or padding on one side only. If one side is meant to hold air, it must still be closed by something that reaches the margin (a picture, the navigation's last item, a figure).",
+   "alsoAt": [
+    768
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

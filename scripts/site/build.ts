@@ -1,10 +1,10 @@
-import {copyFileSync, rmSync} from 'node:fs';
+import {copyFileSync, readFileSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
-import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
+import {guidePage, LOGO_SOURCE, LOGO_URL, SITE_ASSETS, type ModLinks} from './layout.ts';
 import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
@@ -79,8 +79,10 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     writeFile(path.join(outDir, 'ideas', 'index.html'), ideasPage(ideaRows));
     writeFile(path.join(outDir, 'changelog', 'index.html'), changelogPage(mods, (source, key) =>
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
-    writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
-    writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    const minecraft = /^minecraft_versions*=s*(S+)/m.exec(readFileSync(path.join(REPO_ROOT, 'gradle.properties'), 'utf8'))?.[1] ?? '';
+    writeFile(path.join(outDir, 'index.html'), homePage(mods, links, {guides: guides.size, ideas: ideaRows.length, minecraft}));
+    for (const [name, contents] of Object.entries(SITE_ASSETS)) writeFile(path.join(outDir, name), contents);
+    copyFileSync(path.join(REPO_ROOT, LOGO_SOURCE), path.join(outDir, LOGO_URL));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 
