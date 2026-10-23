@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### New Features
+
+- Added `priorityNamespaces` to the rules file: list a mod or datapack namespace (like `"othermod"`) to prefer all of its recipes.
+
 ### 26.2 - 1.0.0
 
 #### New Features

@@ -192,7 +192,10 @@ flowchart LR
 ```
 
 Each step is skipped (not an error) if its recipe id isn't among the current options. `Rules.packOrder` builds
-step 3 as: group-key default, then per-option-id defaults, then the global `priority` list.
+step 3 as: group-key default, then per-option-id defaults, then the global `priority` list, then
+`priorityNamespaces`. Each namespace expands to the current options whose id starts with `<namespace>:`, in the
+order the options were given, so an exact `priority` id always beats a namespace-wide preference. Namespaces are
+bare (no `:` or `*`) and are validated separately from recipe ids; `Rules.merge` combines the lists like `priority`.
 
 ---
 

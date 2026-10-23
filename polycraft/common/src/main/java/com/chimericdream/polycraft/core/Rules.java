@@ -19,16 +19,18 @@ import java.util.regex.Pattern;
  * <pre>
  * {
  *   "priority": ["minecraft:oak_planks", "othermod:planks_x4"],
+ *   "priorityNamespaces": ["othermod"],
  *   "exclude": ["badmod:duplicate_recipe"],
  *   "groups": { "&lt;group key or recipe id&gt;": { "default": "mod:recipe_id" } }
  * }
  * </pre>
  * Bad entries are reported through the warning callback and skipped; a rules file never stops the game.
  */
-public record Rules(List<String> priority, Set<String> exclude, Map<String, String> groupDefaults) {
-    public static final Rules EMPTY = new Rules(List.of(), Set.of(), Map.of());
+public record Rules(List<String> priority, List<String> priorityNamespaces, Set<String> exclude, Map<String, String> groupDefaults) {
+    public static final Rules EMPTY = new Rules(List.of(), List.of(), Set.of(), Map.of());
 
     private static final Pattern ID = Pattern.compile("[a-z0-9_.-]+:[a-z0-9_./-]+");
+    private static final Pattern NAMESPACE = Pattern.compile("[a-z0-9_.-]+");
 
     public static Rules parse(String json, Consumer<String> warn) {
         JsonObject root;
@@ -46,6 +48,7 @@ public record Rules(List<String> priority, Set<String> exclude, Map<String, Stri
         }
 
         List<String> priority = new ArrayList<>();
+        List<String> priorityNamespaces = new ArrayList<>();
         Set<String> exclude = new LinkedHashSet<>();
         Map<String, String> groups = new LinkedHashMap<>();
 
@@ -53,13 +56,14 @@ public record Rules(List<String> priority, Set<String> exclude, Map<String, Stri
             JsonElement value = root.get(key);
             switch (key) {
                 case "priority" -> readIds(value, "priority", warn, priority::add);
+                case "priorityNamespaces" -> readNamespaces(value, "priorityNamespaces", warn, priorityNamespaces::add);
                 case "exclude" -> readIds(value, "exclude", warn, exclude::add);
                 case "groups" -> readGroups(value, warn, groups);
                 default -> warn.accept("unknown rules key '" + key + "'; ignoring it");
             }
         }
 
-        return new Rules(List.copyOf(priority), Set.copyOf(exclude), Map.copyOf(groups));
+        return new Rules(List.copyOf(priority), List.copyOf(priorityNamespaces), Set.copyOf(exclude), Map.copyOf(groups));
     }
 
     /**
@@ -74,13 +78,20 @@ public record Rules(List<String> priority, Set<String> exclude, Map<String, Stri
             }
         }
 
+        List<String> mergedNamespaces = new ArrayList<>(priorityNamespaces);
+        for (String namespace : other.priorityNamespaces) {
+            if (!mergedNamespaces.contains(namespace)) {
+                mergedNamespaces.add(namespace);
+            }
+        }
+
         Set<String> mergedExclude = new LinkedHashSet<>(exclude);
         mergedExclude.addAll(other.exclude);
 
         Map<String, String> mergedGroups = new LinkedHashMap<>(other.groupDefaults);
         mergedGroups.putAll(groupDefaults);
 
-        return new Rules(List.copyOf(mergedPriority), Set.copyOf(mergedExclude), Map.copyOf(mergedGroups));
+        return new Rules(List.copyOf(mergedPriority), List.copyOf(mergedNamespaces), Set.copyOf(mergedExclude), Map.copyOf(mergedGroups));
     }
 
     public boolean isExcluded(String recipeId) {
@@ -112,7 +123,31 @@ public record Rules(List<String> priority, Set<String> exclude, Map<String, Stri
             }
         }
 
+        for (String namespace : priorityNamespaces) {
+            String prefix = namespace + ":";
+            for (String optionId : optionIds) {
+                if (optionId.startsWith(prefix) && !order.contains(optionId)) {
+                    order.add(optionId);
+                }
+            }
+        }
+
         return order;
+    }
+
+    private static void readNamespaces(JsonElement value, String name, Consumer<String> warn, Consumer<String> sink) {
+        if (!value.isJsonArray()) {
+            warn.accept("'" + name + "' must be a list of namespaces; ignoring it");
+            return;
+        }
+
+        for (JsonElement entry : value.getAsJsonArray()) {
+            if (entry.isJsonPrimitive() && entry.getAsJsonPrimitive().isString() && NAMESPACE.matcher(entry.getAsString()).matches()) {
+                sink.accept(entry.getAsString());
+            } else {
+                warn.accept("'" + name + "' has an entry that is not a namespace: " + entry + "; skipping it");
+            }
+        }
     }
 
     private static void readIds(JsonElement value, String name, Consumer<String> warn, Consumer<String> sink) {

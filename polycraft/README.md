@@ -33,6 +33,7 @@ Everything works with no setup. These are the knobs when you want them.
 ```json
 {
   "priority": ["minecraft:oak_planks", "othermod:planks_x4"],
+  "priorityNamespaces": ["othermod"],
   "exclude": ["badmod:duplicate_recipe"],
   "groups": {
     "<group key or recipe id>": { "default": "mod:recipe_id" }
@@ -41,6 +42,7 @@ Everything works with no setup. These are the knobs when you want them.
 ```
 
 * `priority`: recipes to prefer everywhere, best first.
+* `priorityNamespaces`: mod or datapack namespaces whose recipes are preferred everywhere, after any `priority` ids. Write the bare namespace (`"othermod"`, not `"othermod:*"`).
 * `exclude`: recipes never offered as a choice. If the game would have picked one, another matching recipe is used instead.
 * `groups`: a default for one conflict. Use a group key from the export below, or a recipe id to apply to any conflict that includes it.
 * Edit the config file's rules, then run `/polycraft reload`. Datapack rules reload with `/reload`.

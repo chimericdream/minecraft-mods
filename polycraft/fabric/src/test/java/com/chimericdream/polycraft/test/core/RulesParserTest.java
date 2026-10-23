@@ -80,6 +80,32 @@ class RulesParserTest {
     }
 
     @Test
+    void priorityNamespacesRejectWildcardsAndFullIds() {
+        Rules rules = parse("{\"priorityNamespaces\": [\"create\", \"mod:*\", \"a:b\", 5, \"my_pack\"], \"exclude\": []}");
+
+        assertEquals(List.of("create", "my_pack"), rules.priorityNamespaces());
+        assertEquals(3, warnings.size());
+    }
+
+    @Test
+    void priorityNamespacesRankAfterExactIdsAndKeepOptionOrder() {
+        Rules rules = parse("{\"priority\": [\"b:exact\"], \"priorityNamespaces\": [\"a\", \"c\"]}");
+
+        assertEquals(
+            List.of("b:exact", "a:one", "a:two", "c:one"),
+            rules.packOrder("g", List.of("c:one", "a:one", "b:exact", "a:two", "d:other"))
+        );
+    }
+
+    @Test
+    void mergeCombinesPriorityNamespaces() {
+        Rules config = parse("{\"priorityNamespaces\": [\"a\"]}");
+        Rules datapack = parse("{\"priorityNamespaces\": [\"a\", \"b\"]}");
+
+        assertEquals(List.of("a", "b"), config.merge(datapack).priorityNamespaces());
+    }
+
+    @Test
     void aGroupWithoutADefaultIsSkipped() {
         Rules rules = parse("{\"groups\": {\"g\": {}, \"h\": {\"default\": \"a:b\"}}}");
 
