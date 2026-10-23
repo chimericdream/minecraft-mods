@@ -28,6 +28,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun scripts/hooks/pre-tool-guard.ts"
+          }
+        ]
+      }
     ]
   }
 }

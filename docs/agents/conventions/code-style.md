@@ -1,10 +1,11 @@
 # Conventions
 
-- **Line endings**: LF everywhere, enforced by the root `.gitattributes` (`* text=auto eol=lf`).
-  `bun run lint` (also the git pre-commit hook and a Claude post-edit hook) additionally rejects CRLF,
-  non-UTF-8 bytes, a BOM, misplaced access wideners, a malformed `mod_version`, and a changelog that
-  doesn't start with `### Unreleased changes`. Enable the hook once per clone:
-  `git config core.hooksPath .githooks`.
+- **Enforced mechanically — don't re-check by hand.** LF line endings, valid UTF-8 (no BOM, no stray
+  Windows-1252 bytes), access wideners only under `<mod>/common/src/main/resources/`, `mod_version`
+  format, and the changelog's leading `### Unreleased changes` are checked by `bun run lint` (git
+  pre-commit hook, Claude post-edit hook, CI). Claude pre-tool hooks (`scripts/hooks/pre-tool-guard.ts`)
+  block `python3`, file writes from Windows PowerShell 5.1, and bare multi-mod `git commit`s. Enable the
+  git hook once per clone: `git config core.hooksPath .githooks`.
 - **demo-world (minekea)**: `minekea/demo-world/` is a deterministic showcase generator. Generated
   files (`demo_build.mcfunction`, manifests) are produced by `generate_layout.py` /
   `extract_jar_contents.py` — **never hand-edit them**; regenerate. See `minekea/demo-world/README.md`.
@@ -19,14 +20,11 @@
   - `setItems` must preserve the fixed slot count: copy in place
     (`for i: items.set(i, incoming.get(i))`), never `clear()+addAll` on a fixed-size `NonNullList`
     (that can throw or let the size drift). Same fixed-size rule as `ImplementedInventory.clearContent`.
-- **Writing files programmatically**: LF is required (`core.autocrlf` is `false`, so git stores exactly what
-  you write). Python on Windows translates `\n` to `\r\n` by default and the `csv` module defaults to
-  `\r\n`: pass `newline="\n"` to `open(...)` and `lineterminator="\n"` to `csv.writer` / `DictWriter`, and
-  always `encoding="utf-8"`. Verify at the byte level (`b.count(b"\r\n") == 0`).
-- **Don't write files with Windows PowerShell 5.1** (`Set-Content`, `Out-File`, `>`): it defaults to the ANSI
-  codepage and has written Windows-1252 bytes (lone `0x97` em dashes) into `.md` files, which later fail
-  UTF-8 edits. Use the Write/Edit tools, or Python with explicit `encoding="utf-8"` and `newline="\n"`.
-  PowerShell is fine for read-only tasks.
+- **Writing files programmatically**: when scripting file output, pass `encoding="utf-8"` and
+  `newline="
+"` to Python's `open(...)` (and `lineterminator="
+"` to `csv.writer`); Python on Windows
+  otherwise writes CRLF. The lint rejects the result; this is how to avoid producing it.
 - **Follow an existing naming convention over personal habit.** The maintainer defaults to hyphenated names
   (`{stencil}-candlelit-{count}.png`) but wants strong repo conventions followed instead (e.g. All Hallows
   Steve overlay textures use underscores: `creeper_lit_blue.png`). When asked to name a file or asset, check

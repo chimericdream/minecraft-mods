@@ -6,4 +6,6 @@
   confirm the staged set matches only what was actually asked for — don't assume the index reflects
   just the current task. If unrelated files are already staged, commit by explicit pathspec (`git
   commit <path> <path> ...`) rather than a bare `git commit`, so the unrelated staged changes are left
-  staged/untouched for their own commit later instead of being swept in.
+  staged/untouched for their own commit later instead of being swept in. A Claude pre-tool hook blocks a
+  bare commit when the staged set spans multiple mods; note that a pathspec commit ignores a staged
+  mode change unless that path is listed.
