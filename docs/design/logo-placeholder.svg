@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750" role="img" aria-label="Chimericdream: a dragon coiled across twin snowy mountains under a crescent moon">
+  <!-- Hand trace of the CurseForge/Modrinth avatar. Placeholder until the original vector is found. -->
+  <rect width="750" height="750" fill="#000"/>
+  <path fill="#e2e2e4" d="M158 84C102 96 70 140 74 190c9 46 66 74 131 55-55-10-92-50-90-96 2-30 20-50 43-65z"/>
+  <path fill="#2d1050" d="M85 635 190 365l210 30 120 125 40 115z"/>
+  <path fill="#1d0c31" d="M388 400 520 478l40 157H430z"/>
+  <path fill="#eceff1" d="M190 365 255 195l65 150 65-150 60 135-48 60-8-16-18 33-12-14-14 15-22-30-6 38-18-32-7 28-18-16-17 16-12-24z"/>
+  <g fill="#8b1a1a">
+    <path d="M463 80l58 40 36-2-12 34 32 62-38 34 8 78-62 18-12-28-14-6 20-30-18-22 14-32-6-26 24-30z"/>
+    <path d="M470 352c-4 25 5 45 30 58 30 14 60-12 100-22 45-8 70 25 62 60-4 18-25 40-50 36-20-10-24-32-8-42 14-7 26 2 28 10 8-30-16-48-45-42-40 8-70 38-108 28-30-10-45-45-40-80z"/>
+    <path d="M440 480l-22-8-6 40 20 8zM520 468l12 48 22-6-14-46z"/>
+    <path d="M432 425 330 440 296 478 205 560l60 14 30 32 14-34 70-14 66-52z"/>
+    <path d="M355 338c8-22 30-30 52-18l34 24-22 6-14-12c-14-8-28-4-36 8z"/>
+    <path d="M470 330l78 6-44 72-72 36-12-18 30-20z"/>
+    <path d="M420 322l30 10-6 36-26-24z"/>
+  </g>
+</svg>
