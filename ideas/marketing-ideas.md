@@ -39,7 +39,8 @@ using exactly this).
    `NeoForge logoFile` → the same icon the Fabric build uses. A tiny check in `bun run status` or CI could
    fail the build on `fabric-example-mod` so it never regresses. _(I can do this.)_
 2. **Publish on Modrinth too** (same jars, same changelog). Follow on to the pipeline plan; it's "free".
-   Cross-link the two pages in each description ("Also on Modrinth/CurseForge").
+   Cross-link the two pages in each description ("Also on Modrinth/CurseForge"). **Read §11 first:** Modrinth
+   asks for an AI-assistance notice, and the wording is worth settling before the first upload.
 3. **Page anatomy that works** (both sites):
    - **First line = the hook**, ≤ 15 words, in player language: "Hoppers that go *up*, pull from the sides, and
      filter." Not "Upgrade your hoppers!".
@@ -183,3 +184,68 @@ You don't need analytics to enjoy this, but a little signal tells you what to re
 - Translate lang files for review.
 - Keep a `docs/marketing/<mod>.md` page-copy file per mod so page text lives in the repo and the publishing
   pipeline can push it to both sites.
+
+## 11. AI-assistance disclosure (Modrinth)
+
+_Added 2026-10-23._ Modrinth's community is wary of AI-assisted code, and its rules ask for a notice when a
+"substantial portion" of a project was written with AI help. Check the current rule text before the first
+upload; the summary here is from memory.
+
+**Decision:** publish on Modrinth with a plain, factual disclosure. Reasons:
+
+- The repo already shows the workflow publicly (`AGENTS.md`, `CLAUDE.md`, `docs/agents/`), so hiding it would
+  only invite a report.
+- A notice costs one sentence, and Modrinth reaches many Fabric/NeoForge players and launchers.
+- The disclosure describes the process and points at checkable evidence (CI, lint, GameTests, visual smoke
+  tests). It does not apologize and it does not argue the wider AI debate. Skipping Modrinth entirely is a
+  legitimate choice if the community's attitude is a dealbreaker; the cost is reach, not feasibility.
+
+Don't hide the AI use or word the notice to dodge the rule. Verify each claim below holds for every mod
+before using it; trim anything that doesn't (for example, drop "tested in-game" for a mod that ships on
+automated tests alone).
+
+### Version 1: one line (sidebar / summary)
+
+> Developed by Bill Parrott with Claude as a coding assistant. Source and tests are public on GitHub.
+
+### Version 2: short paragraph (bottom of the project description)
+
+> **AI disclosure:** I write these mods with the help of Claude, an AI coding assistant. I set the design,
+> review the changes, and test each release in-game before publishing. The build, lint, and test setup is in
+> the public repo if you want to see how it works. Bug reports are welcome, and I fix them the same way.
+
+### Version 3: full README section
+
+> ## How this mod is made
+>
+> This project is developed by me with Claude (Anthropic) as a coding assistant, and a substantial part of the
+> code was written that way. I decide what gets built, review what comes back, and test it before it ships.
+>
+> Releases go through automated builds, linting in CI, and game tests, and I check rendering changes in a
+> running client. Design decisions are written down in `docs/` and the per-mod `ideas/` folders, so you can
+> see the reasoning behind a feature as well as the result.
+>
+> If you'd rather not use AI-assisted software, I understand, and this notice is here so you can make that
+> call. If you find a problem, please open an issue.
+
+Notes on the wording:
+
+- Version 3 says "a substantial part" on purpose so it clearly satisfies the Modrinth rule. Versions 1 and 2
+  are vaguer; use the version 3 wording in the Modrinth description if you want to be safe on the rule.
+- The closing "I understand" line in version 3 is optional. It reads as gracious to some and defensive to
+  others; drop it if it feels like too much.
+- "Tested in-game before publishing" must be true for the mod in question.
+
+### Mentioning professional experience
+
+Mentioning 25+ years as a software engineer can read as defensive if it works as a credential ("I know what
+I'm doing, so don't judge me") or sits next to the disclosure as a pre-emptive rebuttal. It reads fine as a
+statement of who is accountable for the code. Options, in order of preference:
+
+1. Put it on an author/about page (GitHub profile, the README's About section), not in the notice.
+2. If it must go in the notice, use one short clause and no adjectives or year count:
+
+   > Developed by Bill Parrott, a professional software engineer, with Claude as a coding assistant.
+
+3. Prefer checkable details (public CI, tests, "tested in-game before each release") over the years of
+   experience; the former can be verified and the latter can't.
