@@ -104,29 +104,27 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
     void onFinish(FinishEvent event) {
     }
 
-    // The forked JVM's children of this Gradle daemon that look like the run for a task, matched by the
-    // mod / sub-project directories on their command line.
-    static List<ProcessHandle> findRunJvms(List<String> needles) {
-        def children = ProcessHandle.current().children().filter { it.isAlive() }.toList()
-        def javas = children.findAll { ph ->
-            def cmd = ph.info().command().orElse('')
-            cmd.toLowerCase().contains('java') && !ph.info().commandLine().orElse('').contains('GradleWorkerMain')
-        }
-        def matched = javas.findAll { ph ->
+    // Each run JVM is tagged with -Dwatchdog.task=<task path> (see install), so the JVM for a task is
+    // recognised by that exact token. Matching by directory or "the only java child" misidentified a
+    // parallel run's JVM and killed the wrong mod's tests.
+    static String taskTag(String taskPath) {
+        return "-Dwatchdog.task=${taskPath}"
+    }
+
+    static List<ProcessHandle> findRunJvms(String taskPath) {
+        def tag = taskTag(taskPath)
+        return ProcessHandle.current().children().filter { it.isAlive() }.toList().findAll { ph ->
             def line = ph.info().commandLine().orElse('') + ' ' + ph.info().arguments().map { it.join(' ') }.orElse('')
-            needles.any { line.contains(it) }
+            def idx = line.indexOf(tag)
+            while (idx >= 0) {
+                def end = idx + tag.length()
+                if (end == line.length() || Character.isWhitespace(line.charAt(end))) {
+                    return true
+                }
+                idx = line.indexOf(tag, idx + 1)
+            }
+            return false
         }
-        if (matched) {
-            return matched
-        }
-        // Only fall back when the single candidate's command line is unreadable. A readable command
-        // line that matched no needle belongs to another (parallel) run task, and killing it would
-        // fail that task; if our own JVM already exited there is simply nothing to kill.
-        if (javas.size() == 1 && javas[0].info().commandLine().orElse('').isEmpty()
-                && javas[0].info().arguments().isEmpty()) {
-            return javas
-        }
-        return []
     }
 
     static void killTree(ProcessHandle root) {
@@ -134,11 +132,12 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
         root.destroyForcibly()
     }
 
-    // Wraps the task's stdout/stderr so a sentinel line arms a kill timer. `needles` are the directories
-    // used to recognise the task's JVM; they are computed at configuration time.
-    void install(JavaExec task, String taskPath, List<String> needles) {
+    // Wraps the task's stdout/stderr so a sentinel line arms a kill timer. The task's JVM is tagged
+    // with its task path so the timer only ever kills its own JVM.
+    void install(JavaExec task, String taskPath) {
         // The watchdog decides pass/fail itself in checkExit (the task's doLast).
         task.ignoreExitValue = true
+        task.jvmArgs(taskTag(taskPath))
 
         long graceMillis = parameters.graceMillis.get()
         Logger logger = task.logger
@@ -156,7 +155,7 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
 
             def watcher = new Thread({
                 Thread.sleep(graceMillis)
-                def jvms = findRunJvms(needles)
+                def jvms = findRunJvms(taskPath)
                 if (jvms.isEmpty()) {
                     return // exited on its own within the grace period
                 }
@@ -230,11 +229,9 @@ allprojects {
 
         def taskPath = task.path
         def taskName = task.name
-        def modDir = (task.project.parent == rootProject ? task.project.projectDir : task.project.parent.projectDir)
-        def needles = [modDir.absolutePath, task.project.projectDir.absolutePath]
 
         task.doFirst { Task t ->
-            runWatchdog.get().install((JavaExec) t, taskPath, needles)
+            runWatchdog.get().install((JavaExec) t, taskPath)
         }
 
         task.doLast { Task t ->

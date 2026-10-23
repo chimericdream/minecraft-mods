@@ -38,6 +38,9 @@ output for `Closing FML Loader` / `Clearing ModLoader` (NeoForge) or `All N requ
 `TransformerRuntime`) and counts the task as successful; a run that exits non-zero on its own, or a test
 run killed without the "tests passed" line, still fails. Opt out with `-Pwatchdog=false`; tune with
 `-Pwatchdog.graceSeconds=N`. Its `[watchdog]` messages go to the Gradle console, not the `logs/` files.
+Each run JVM is tagged with `-Dwatchdog.task=<task path>` and the kill timer finds its JVM by that exact
+token. Don't go back to matching by directory or "the only java child": in a parallel build that killed a
+different mod's `runGameTest`.
 
 ### Slow Gradle startup: configuration-on-demand and the configuration cache
 
