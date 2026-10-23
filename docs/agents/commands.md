@@ -7,4 +7,5 @@ Build, test, datagen, and project-management workflows (all via `bun run <script
 - [Datagen & project-management commands](commands/dev-workflow.md)
 - [Local tooling](commands/local-tooling.md) — which `python`/shell/JDK to use on this machine (not
   `python3`!), and `bun run lint`
+- [Docs site](commands/docs-site.md) — `bun run site`, `--serve`, what is published, the Pages deploy
 - [Testing](../TESTING.md) — JUnit bootstrap, GameTest harness, testFixtures

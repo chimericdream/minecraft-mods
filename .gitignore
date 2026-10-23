@@ -49,6 +49,7 @@ node_modules
 mempalace.yaml
 entities.json
 
-# dashboard output
+# generated docs site (output and local GitHub cache)
 
-/dashboard/
+site/dist/
+site/.cache/

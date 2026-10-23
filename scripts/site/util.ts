@@ -25,3 +25,25 @@ export const ago = (iso: string | null): string => {
     if (days < 730) return `${Math.floor(days / 30)}mo ago`;
     return `${Math.floor(days / 365)}y ago`;
 };
+
+export const REPO_URL = 'https://github.com/chimericdream/minecraft-mods';
+
+/** Relative prefix from a directory-style URL back to the site root: `mods/a/guide/` -> `../../../`. */
+export const rootPrefix = (url: string): string => '../'.repeat(url.split('/').filter(Boolean).length);
+
+/** Relative link from one directory-style URL to another, always ending in a slash. */
+export const relUrl = (from: string, to: string): string => {
+    const r = path.posix.relative(from, to);
+    return r ? `${r}/` : './';
+};
+
+/** GitHub-style heading ids, de-duplicated within a page. */
+export const slugger = () => {
+    const seen = new Map<string, number>();
+    return (text: string) => {
+        const base = text.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, '').trim().replace(/\s+/g, '-') || 'section';
+        const n = seen.get(base) ?? 0;
+        seen.set(base, n + 1);
+        return n === 0 ? base : `${base}-${n}`;
+    };
+};

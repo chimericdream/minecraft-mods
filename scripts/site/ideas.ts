@@ -1,8 +1,8 @@
-import {readdirSync, readFileSync, statSync, existsSync, writeFileSync} from 'node:fs';
+import {existsSync, readdirSync, readFileSync, statSync} from 'node:fs';
 import path from 'node:path';
 
-import {docPageHref} from './docs.ts';
-import {THEME_CSS} from './theme.ts';
+import {docUrl} from './docs.ts';
+import {shell} from './layout.ts';
 import type {ModInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
 
@@ -11,7 +11,7 @@ export type IdeaRow = {
     modName: string;
     theme: string;
     title: string;
-    /** Rendered-page href, relative to dist/. */
+    /** Rendered-page href, relative to the site root. */
     href: string;
     shortlist: number | null;
     tier: number | null;
@@ -63,7 +63,7 @@ const parseIdea = (mod: ModInfo, theme: string, file: string): IdeaRow => {
         modName: mod.name,
         theme,
         title,
-        href: docPageHref(key),
+        href: docUrl(mod.folder, key),
         shortlist: shortlist ? Number(shortlist) : null,
         tier: grab(/Tier\s+(\d)/) ? Number(grab(/Tier\s+(\d)/)) : null,
         effort: grab(/Effort\s+\*\*([^*]+)\*\*/) ?? '—',
@@ -96,12 +96,7 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
     return rows;
 };
 
-const CSS = `${THEME_CSS}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,sans-serif}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.muted{color:var(--muted)}
-header.top{background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
-header.top h1{margin:0;font-size:18px}#count{color:var(--muted)}
-main{padding:12px 16px;max-width:1500px;margin:0 auto}
+const CSS = `
 .filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
 .filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
 input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
@@ -122,6 +117,7 @@ tr:hover td{background:var(--bg)}
 
 const JS = String.raw`
 (()=>{
+const ROOT=document.body.dataset.root;
 const rows=JSON.parse(document.getElementById('data').textContent);
 const $=id=>document.getElementById(id);
 const ORDER={effort:['S','M','L','XL'],vote:['Yes','Maybe','No']};
@@ -182,7 +178,7 @@ function render(){
   $('count').textContent=out.length+' of '+rows.length+' ideas';
   head.querySelectorAll('th').forEach(th=>th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'');
   $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
-    '<td><a href="'+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
+    '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
     '<td class="n stars">'+'★'.repeat(r.value)+'</td><td class="n">'+(r.votes??'—')+'</td>'+
     '<td class="n vote-'+esc(r.vote)+'" title="'+esc(r.voteNote)+'">'+esc(r.vote)+'</td><td class="n">'+esc(r.status)+'</td>'+
@@ -216,13 +212,16 @@ render();
 })();
 `;
 
-export const buildIdeasPage = (rows: IdeaRow[], outDir: string): void => {
+export const ideasPage = (rows: IdeaRow[]): string => {
     const json = JSON.stringify(rows).replace(/</g, '\\u003c');
-    const html = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>All ideas — Chimeric Mods</title><style>${CSS}</style></head>
-<body><header class="top"><a href="index.html">← Dashboard</a><h1>All active ideas</h1><span id="count"></span></header>
-<main><div class="filters">
+    return shell({
+        title: 'Roadmap · Chimeric Mods',
+        url: 'ideas/',
+        wide: true,
+        head: `<style>${CSS}</style>`,
+        body: `<h1>Roadmap</h1>
+<p class="muted">Every active feature idea across the mods. <span id="count"></span></p>
+<div class="filters">
 <input type="search" id="q" placeholder="Search ideas ( / )" aria-label="Search ideas">
 <select id="mod" aria-label="Mod"></select><select id="theme" aria-label="Theme"></select>
 <fieldset><legend>Effort</legend><span id="f-effort" data-key="effort"></span></fieldset>
@@ -232,9 +231,7 @@ export const buildIdeasPage = (rows: IdeaRow[], outDir: string): void => {
 <fieldset><legend>Status</legend><span id="f-status" data-key="status"></span></fieldset>
 <button type="button" id="reset">Reset</button></div>
 <div class="wrap"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
-</main>
 <script type="application/json" id="data">${json}</script>
-<script>${JS}</script></body></html>
-`;
-    writeFileSync(path.join(outDir, 'ideas.html'), html);
+<script>${JS}</script>`,
+    });
 };

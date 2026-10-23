@@ -1,6 +1,6 @@
-import type {DashboardData, GithubItem, IdeasInfo, ModInfo} from './types.ts';
-import {THEME_CSS} from './theme.ts';
-import {ago, esc} from './util.ts';
+import {THEME_CSS} from '../layout.ts';
+import type {DashboardData, GithubItem, IdeasInfo, ModInfo} from '../types.ts';
+import {ago, esc} from '../util.ts';
 
 /**
  * A dashboard section. To drop one that turns out not to be useful, remove it from SECTIONS at the
@@ -8,60 +8,7 @@ import {ago, esc} from './util.ts';
  */
 type Section = {id: string; title: string; render: (d: DashboardData) => string};
 
-const initials = (name: string) =>
-    name.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(w => w[0]!.toUpperCase()).join('');
-
-const hue = (s: string) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
-
-const iconHtml = (m: ModInfo) => m.icon
-    ? `<img class="icon" src="${m.icon}" alt="" width="48" height="48">`
-    : `<div class="icon ph" style="--h:${hue(m.id)}" aria-hidden="true">${esc(initials(m.name))}</div>`;
-
 const STAGE_LABEL = {raw: 'raw answers', combined: 'combined', shortlist: 'shortlisted'} as const;
-
-const ideasLine = (i: IdeasInfo | undefined): string => {
-    if (!i) {
-        return '<span class="muted">no ideas folder</span>';
-    }
-    const bits = [`${i.ideaCount} idea${i.ideaCount === 1 ? '' : 's'}`];
-    if (i.identityDraft) bits.push('identity: draft');
-    if (i.latestBrainstorm) bits.push(`${esc(i.latestBrainstorm.name)}: ${STAGE_LABEL[i.latestBrainstorm.stage]}`);
-    return bits.join(' · ');
-};
-
-const modCard = (m: ModInfo, d: DashboardData): string => {
-    const items = d.github.ok ? d.github.data.items.filter(i => i.mods.includes(m.folder)) : [];
-    const issues = items.filter(i => i.kind === 'issue').length;
-    const prs = items.filter(i => i.kind === 'pr').length;
-    const badges = [
-        m.isNewMod ? '<span class="badge new">new</span>' : '',
-        m.isPrerelease ? '<span class="badge beta">pre-release</span>' : '',
-        m.hasUnreleasedChanges ? '<span class="badge unrel" title="CHANGELOG has unreleased changes">unreleased changes</span>' : '',
-    ].join('');
-    const counts = d.github.ok
-        ? `<span class="counts">${issues} issue${issues === 1 ? '' : 's'} · ${prs} PR${prs === 1 ? '' : 's'}</span>`
-        : '';
-    return `<article class="card" id="mod-${esc(m.folder)}" data-name="${esc((m.name + ' ' + m.folder).toLowerCase())}"
-      data-unrel="${m.hasUnreleasedChanges}" data-beta="${m.isPrerelease}">
-    <header>${iconHtml(m)}<div><h3>${esc(m.name)}</h3>
-      <div class="ver">${esc(m.version)} ${badges}</div></div></header>
-    <p class="desc">${esc(m.description)}</p>
-    <div class="meta">${ideasLine(d.ideas[m.folder])}</div>
-    <div class="meta">${m.latestTag ? `latest tag <code>${esc(m.latestTag.split('/').pop()!)}</code> · ` : 'no tags · '}
-      touched ${ago(m.lastCommit)} ${counts}</div>
-    <nav>${m.links.map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}</nav>
-  </article>`;
-};
-
-const modsSection: Section = {
-    id: 'mods', title: 'Mods',
-    render: d => `<div class="toolbar">
-    <input type="search" id="q" placeholder="Filter mods…" aria-label="Filter mods">
-    <label><input type="checkbox" id="f-unrel"> unreleased changes only</label>
-    <label><input type="checkbox" id="f-beta"> pre-release only</label>
-  </div>
-  <div class="grid" id="grid">${d.mods.map(m => modCard(m, d)).join('')}</div>`,
-};
 
 const modName = (d: DashboardData, folder: string) => d.mods.find(m => m.folder === folder)?.name ?? folder;
 
@@ -106,7 +53,7 @@ const ideasSection: Section = {
         const rows = d.mods.map(m => ({m, i: d.ideas[m.folder]}));
         const attention = rows.filter(({i}) => i && (i.identityDraft || i.latestBrainstorm?.stage === 'shortlist' || i.latestBrainstorm?.stage === 'raw'));
         const noIdeas = rows.filter(({i}) => !i);
-        const li = (m: ModInfo, note: string) => `<li><a href="../../${esc(m.folder)}/ideas/README.md">${esc(m.name)}</a> <span class="muted">${note}</span></li>`;
+        const li = (m: ModInfo, note: string) => `<li><a href="../mods/${esc(m.folder)}/ideas/">${esc(m.name)}</a> <span class="muted">${note}</span></li>`;
         const note = (i: IdeasInfo) => [
             i.identityDraft ? 'identity still draft' : '',
             i.latestBrainstorm?.stage === 'raw' ? `${i.latestBrainstorm.name}: needs combining` : '',
@@ -119,7 +66,6 @@ const ideasSection: Section = {
 };
 
 const SECTIONS: Section[] = [
-    modsSection,
     githubSection('prs', 'Pull requests', 'pr'),
     githubSection('issues', 'Issues', 'issue'),
     ideasSection,
@@ -134,15 +80,6 @@ section{background:var(--card);border:1px solid var(--line);border-radius:10px;m
 section>h2{margin:0;padding:12px 0;font-size:18px;display:flex;justify-content:space-between;align-items:center}
 section.hidden>:not(h2){display:none}
 .hide{font-size:12px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:2px 8px;cursor:pointer}
-.toolbar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-input[type=search],select{padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.card{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--bg)}
-.card header{display:flex;gap:10px;align-items:center}.card h3{margin:0;font-size:16px}
-.icon{width:48px;height:48px;border-radius:8px;image-rendering:pixelated;flex:none}
-.ph{display:grid;place-items:center;font-weight:700;color:#fff;background:hsl(var(--h) 45% 40%);image-rendering:auto}
-.ver{font-size:13px;color:var(--muted)}.desc{margin:8px 0;font-size:13px}.meta{font-size:12px;color:var(--muted);margin:2px 0}
-.card nav{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;font-size:13px}
 .badge{display:inline-block;font-size:11px;padding:0 6px;border-radius:9px;border:1px solid var(--line);margin-left:2px}
 .badge.beta{color:var(--warn)}.badge.unrel{color:var(--accent)}.badge.new{color:var(--good)}
 .chk-passing{color:var(--good)}.chk-failing{color:var(--bad)}.chk-pending{color:var(--warn)}
@@ -163,10 +100,6 @@ document.querySelectorAll('section').forEach(s=>{
   apply(load('hide-'+id)==='1');
   btn.onclick=()=>{const h=!s.classList.contains('hidden');apply(h);store('hide-'+id,h?'1':undefined)};
 });
-const q=document.getElementById('q'),u=document.getElementById('f-unrel'),b=document.getElementById('f-beta');
-const filterMods=()=>document.querySelectorAll('#grid .card').forEach(c=>{
-  c.hidden=!(c.dataset.name.includes(q.value.toLowerCase())&&(!u.checked||c.dataset.unrel==='true')&&(!b.checked||c.dataset.beta==='true'))});
-[q,u,b].forEach(e=>e&&e.addEventListener('input',filterMods));
 document.querySelectorAll('.modfilter').forEach(sel=>sel.addEventListener('change',()=>{
   document.querySelectorAll('#tbl-'+sel.dataset.table+' tbody tr').forEach(r=>{
     const m=r.dataset.mods;r.hidden=sel.value&&!(sel.value==='_none'?m==='':m.split(' ').includes(sel.value))})}));`;
@@ -185,9 +118,9 @@ const statLine = (d: DashboardData): string => {
 
 export const renderDashboard = (d: DashboardData, ideaCount: number): string => `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chimeric Mods Dashboard</title><style>${CSS}</style></head>
-<body><main><h1>Chimeric Mods</h1><p class="sub">${esc(statLine(d))}</p>
-<p class="sub"><a href="ideas.html">Browse all ${ideaCount} active ideas →</a></p>
+<title>Local dashboard · Chimeric Mods</title><style>${CSS}</style></head>
+<body><main><h1>Local dashboard</h1><p class="sub">${esc(statLine(d))}</p>
+<p class="sub"><a href="../">← Back to the site</a> · <a href="../ideas/">Browse all ${ideaCount} active ideas →</a></p>
 ${SECTIONS.map(s => `<section id="${s.id}"><h2>${esc(s.title)}<button class="hide" type="button">hide</button></h2>${s.render(d)}</section>`).join('\n')}
 </main><script>${JS}</script></body></html>
 `;

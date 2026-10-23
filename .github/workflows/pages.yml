@@ -1,0 +1,44 @@
+# Build the documentation site (bun run site) and publish it to GitHub Pages.
+# One-time setup: Settings > Pages > Source: GitHub Actions.
+
+name: pages
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The mod list reads git tags and last-commit dates.
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Install Bun
+        run: npm i -g bun
+      - name: Install npm deps
+        run: bun i
+      - name: build site
+        run: bun run site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site/dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
