@@ -23,10 +23,11 @@
 - [docs/FEATURE-WORK.md](../../FEATURE-WORK.md) — how feature ideas are captured, brainstormed, voted on,
   and refined until ready to build, for every mod.
 - Per-mod `TEST_PLAN.md` (testing plans) and `ideas/` folders (feature ideas; start at `ideas/README.md`).
-- [opus/HANDOFF.md](../../../opus/HANDOFF.md) — status of the new Opus (Markdown in-game books) mod: what is
-  tested, what has never been compiled, and the first steps for the next session. Delete when done.
-  [opus/AGENT-HANDOFF.md](../../../opus/AGENT-HANDOFF.md) is the agent-oriented companion (architecture,
-  invariants, confirmed API sources, sandbox gotchas).
+- [ideas/](../../../ideas/README.md) — repo-level ideas that don't belong to a single mod (e.g. getting more
+  people to find and use the mods).
+- [docs/history/](../../history/) also holds finished plans and one-off research: the CurseForge publishing
+  plan (now implemented, see [versioning](../releases/versioning.md)), decompile research on loot chest
+  generation and the mob spawner flame particles, and a 2026-10 "working with Claude" suggestions list.
 
 ## Where open work is tracked
 

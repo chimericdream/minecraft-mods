@@ -19,7 +19,7 @@ signal (`sponj/26.2-6.1.0`), jar names are deterministic, the changelog has a pa
    tokens in env vars — the fallback, and the way to do a `--dry-run` before trusting CI.
 
 Adding **Modrinth** costs almost nothing extra once this exists (same plugin, one more block) and is also the
-single best marketing move — see [MARKETING-IDEAS.md](MARKETING-IDEAS.md). **None of the mods currently link
+single best marketing move — see [marketing-ideas.md](../../ideas/marketing-ideas.md). **None of the mods currently link
 to a Modrinth page.**
 
 ## What the repo looks like today (relevant facts)

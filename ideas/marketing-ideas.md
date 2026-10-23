@@ -16,7 +16,7 @@ Looking at the repo, the mods themselves are in good shape; **discoverability is
    players (and nearly all modpack tooling like Prism/Modrinth App users) never look at CurseForge.
 2. **Manual releases.** Publishing is a manual step after tagging, so updates reach the site late or
    inconsistently. Fresh uploads and "updated recently" are the main free exposure both sites give you. See
-   [CURSEFORGE-PUBLISHING-PLAN.md](CURSEFORGE-PUBLISHING-PLAN.md).
+   [CURSEFORGE-PUBLISHING-PLAN.md](../docs/history/CURSEFORGE-PUBLISHING-PLAN.md).
 3. **Broken/placeholder metadata.** Of the `fabric.mod.json` files, 16 still say
    `"sources": "https://github.com/FabricMC/fabric-example-mod"` and 19 say `"homepage": "https://fabricmc.net/"`;
    most of the rest point at long-dead per-mod repos (`chimericdream/sponj`, `…/hopper-extreme`, etc.).

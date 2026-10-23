@@ -24,7 +24,9 @@ Agents can draft any of these, recommend, and ask, but never fill them in on the
 
 ## Where ideas live
 
-Each mod keeps all of its feature ideas in its own `ideas/` folder:
+Each mod keeps all of its feature ideas in its own `ideas/` folder. Ideas that span the whole repo and
+belong to no single mod (e.g. marketing) live in the repo-level [`ideas/`](../ideas/README.md) folder.
+Per mod:
 
 ```
 <mod>/ideas/
