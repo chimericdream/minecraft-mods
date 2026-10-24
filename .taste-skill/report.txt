@@ -1,0 +1,110 @@
+Docs site redesign report
+
+Preview: http://localhost:4010/ (port 4000 was already occupied).
+Before: .taste-skill/before/{light,dark}/
+After: .taste-skill/after/{light,dark}/
+Each set includes home, Minekea overview, Hopper X-Treme guide, roadmap and
+combined changelog at 1440, 768 and 390px. Six full home captures accompany each set.
+Final skill inspector: .taste-skill/after/report.json (dark),
+.taste-skill/after/light-inspect/report.json (light).
+
+Direction and decisions
+The sentence is the layout; seed 1550349443, dealt with --keep palette.
+On this page, chimericdream's useful and odd creations become the specimens
+inside a maker's catalogue sentence. The opening is Useful mods. Odd ideas.,
+with actual repository artwork between the two halves. The live thing is a
+small client-side search across all 34 mods, with an ordinary linked catalogue
+as its no-JavaScript fallback.
+
+Redraws: Barlow Condensed/Barlow was rejected for its industrial road-sign voice,
+which conflicts with the fantasy brief. The redraw yielded Hanken Grotesk,
+used for body text; Young Serif supplies the brief's storybook display voice.
+The prompt-tool showcase was redrawn as unequal panels for the four real mods.
+The original 5-14-row list was redrawn as a catalogue menu because there are
+30 other mods. The final direction JSON records the three supported redraws.
+The attempted type=<id> syntax was unsupported and made no change.
+
+Brand defaults: the path-based dragon mark, a Young Serif wordmark, snow-lilac
+paper in light mode, ink violet in dark mode, and crimson/rose actions.
+Dark and light follow the OS. Manual light/dark/system choice persists locally.
+No new infrastructure, runtime framework, library or package dependency.
+No scripts/site/local files changed; THEME_CSS remains re-exported from layout.ts.
+
+Changes
+Four unequal feature entries, then a dense unboxed directory with versions,
+loaders, Minecraft versions and status. Search includes the featured four.
+Mod headers include repository metadata and actual CurseForge project-ID links.
+Minekea's existing jars screenshot supplies a product preview.
+Guide trees retain the existing hierarchy, with a native collapsible container
+on phones. Reading measure, callouts, tables, recipes and code have their own
+styles. Roadmap filters use 44px buttons with aria-pressed; table sorting also
+responds to Enter/Space and announces aria-sort. Its value rating now reads
+as a number out of three, using the same underlying data.
+Native scroll-driven specimen swaps, brief picture/text/list arrivals and
+sticky feature artwork supply motion. Reduced motion skips these enhancements.
+
+Measurements (skill inspector)
+                                Before               After, both themes
+Failures                        10                   0
+Warnings                        9                    1 (no footage)
+Body text                       14px                 17px / 1.6
+Opening heading, desktop        32px system UI       77.8px Young Serif
+Opening heading lines           1                    2 at all three widths
+Moving elements                 0                    56
+Desktop document height         2283px               6148px
+Phone document height           6022px               9728px
+The longer document contains the four substantial featured treatments and
+larger, readable directory copy. The primary action jumps directly to search.
+The initial tablet inspector suffered a file-watcher rebuild race; the later
+both-theme baseline capture verifies loaded pages separately.
+
+Validation
+Build: 34 mods, 19 guides / 205 guide pages, 421 docs and 216 ideas.
+Production output has 629 HTML pages; --serve adds the local-only dashboard.
+Generated-link check: 19,806 internal references across 630 local-build pages;
+zero missing destinations and zero absolute internal paths.
+Twenty browser checks passed: search, featured results, empty state, theme
+persistence, system reset, phone navigation, project download ID, roadmap
+render/filter/keyboard sort/pressed states, active guide tree, no browser
+exceptions, reduced motion, and no-JavaScript home and guide navigation.
+Both-theme captures report no broken images or horizontal document overflow.
+The roadmap table itself deliberately scrolls horizontally on narrow screens.
+Skill source lint: 0 FAIL; one warning counts existing em-dash missing-value
+markers across the roadmap source. Those are data placeholders, not copy habits.
+Repository UTF-8/LF lint and git diff --check pass for the changed sources.
+Six existing content-link warnings remain from the original build; no published
+Markdown was changed to remove or rewrite them.
+
+ROUND 3
+Seen in one second: a pixel-art catalogue book between Useful mods. and Odd ideas.
+Idea (one sentence): the maker's practical and peculiar creations become a
+storybook catalogue assembled around their actual artwork.
+Live thing: a name/description/loader filter over the complete collection.
+Layout words by section: hero=split sentence / showcase=unequal fields /
+catalogue=two-column index / footer=cropped name.
+Scores: design 7.5 / usability 8 / creativity 7.5 / content 8 -> overall 7.7.
+Caps applied: none on the final homepage render.
+Top three remaining limitations, each with screenshot and disposition:
+1. after/light/mod-1440.jpg: the original jars screenshot is low resolution.
+   Use a new in-game screenshot in a future content update; the design already
+   accepts the existing image without invented replacement imagery.
+2. after/light/roadmap-390.jpg: the wide roadmap needs horizontal scrolling.
+   Retained to keep all existing columns/data and readable control targets.
+3. after/desktop-fold.jpg: there is no gameplay footage. The brief forbids stock
+   and invented imagery; no unrelated clip was added to silence the warning.
+
+Imagery and credits
+No found, generated, stock or bundled photographs/video were used. No drawings
+were substituted for photographs. All art is already part of the repository;
+the existing README credits and licensing are still published in full.
+- docs/design/logo-placeholder.svg: existing path-based author avatar trace;
+  copied to brand.svg. Replace this source when the original vector is available.
+- minekea/.../textures/item/minekea_catalogue.png: actual catalogue item, hero.
+- minekea/.../textures/gui/patchouli/jars_on_a_shelf.png: actual in-game screenshot,
+  featured Minekea entry and mod overview. CSS crops it; source remains intact.
+- hopper-xtreme/.../assets/hopperxtreme/icon.png: actual mod art, feature and reel.
+- effective-gear/.../assets/effectivegear/icon.png: actual mod art, feature.
+- camel-nostrils/.../assets/camelnostrils/icon.png: actual mod art, feature and reel.
+Other directory icons retain the generator's original repository icon sources.
+Missing icons use neutral initials. No fabricated sample mods, claims, reviews,
+statistics or screenshots were introduced. Nothing needs sample-copy replacement.

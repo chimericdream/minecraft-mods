@@ -4,6 +4,11 @@ export type ModInfo = {
     name: string;
     description: string;
     version: string;
+    platforms: string[];
+    minecraft: string;
+    curseforgeProjectId: string | null;
+    requiredMods: string[];
+    optionalMods: string[];
     isPrerelease: boolean;
     hasUnreleasedChanges: boolean;
     isNewMod: boolean;

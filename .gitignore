@@ -53,3 +53,6 @@ entities.json
 
 site/dist/
 site/.cache/
+
+# Disposable design inspector browser/cache files
+.taste-skill/tmp/

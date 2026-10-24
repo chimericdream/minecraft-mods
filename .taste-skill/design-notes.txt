@@ -1,0 +1,63 @@
+Inventory: chimericdream's mixed-creature name; crimson mountain dragon and crescent;
+34 mods; Minekea's furniture catalogue; upgradeable hoppers; armor trim bonuses;
+spouse-suggested Camel Nostrils; optional Opus guide books; Fabric and NeoForge;
+generated README/changelog/ideas; actual pixel textures and existing guide screenshots.
+
+Argument / copy deck (before markup)
+Hero: Mods with a mind of their own. -> real Minekea, hopper and camel artwork inside the sentence.
+Supporting sentence: 34 Minecraft mods by chimericdream, for Fabric and NeoForge. Furniture, useful fixes, and a few very strange ideas.
+Action: Browse the mods.
+Showcase: From useful to unusual. -> four requested mods in unequal fields.
+Directory: Find your next mod. -> all remaining mods, version, loaders, status and existing destinations.
+Footer: Still on the workbench. -> roadmap and changelog; chimericdream wordmark.
+Mod: existing name, description, real metadata, download destination, guide, original README.
+Reading surfaces: retain every word, guide tree, recipe, idea filter and route.
+
+Direction: sentence-as-layout, seed 1550349443. Chosen over type-only because the mixed
+creature name can become a sentence assembled around the author's actual creations.
+Idea: On this page, chimericdream's useful and odd creations become the specimens
+inside a maker's catalogue sentence. A catalogue of things that belong together
+because one person dreamed them up, rather than because they do the same thing.
+Live thing: a lightweight name/description filter over the full catalogue.
+
+Redraws: Barlow Condensed/Barlow conflicts with the fantasy brief (industrial road-sign
+voice). The random type redraw yielded Hanken Grotesk. Keep Hanken for readable body
+copy and pair it with Young Serif for the storybook display voice required by the brief.
+Showcase redrawn to unequal panels: four real mods cannot truthfully be a prompt tool.
+List redrawn to menu/photo bullets: the original holds 5-14 rows; we have 30 plus four features.
+Retain the brand violet using inspector allowance, as explicitly requested in the brief.
+Use only repository art. No stock, generated screenshots, invented UI or photography.
+No literal scroll scenes were dealt. Native sticky specimen reel and directory introduction
+carry the pinned story; no scroll interception or extra library.
+
+Before baseline: skill lint 6 FAIL, 6 WARN. Inspector 10 FAIL, 9 WARN (tablet had a
+rebuild race; the subsequent both-theme capture validates loaded pages separately).
+Before critique: card grid repeats every item, 14px grey descriptions, no dominant
+composition, download requires hunting, sidebar overwhelms phone reading.
+Scores: design 4.5 / usability 6.5 / creativity 3 / content 8 -> 5.2.
+
+ROUND 1
+Seen in one second: a giant blue catalogue book between storybook words.
+Idea (one sentence): the maker's useful and strange creations interrupt the sentence.
+Live thing: catalogue search across all 34 mods, including the featured four.
+Layout words by section: hero=split sentence / showcase=unequal panels / catalogue=index / footer=cropped name
+Scores: design 6.5 / usability 7 / creativity 7 / content 8 -> overall 6.9
+Caps applied: headline wraps past two lines; final score capped at 6.0 by inspector failures.
+Top three problems (most visible first), each with screenshot and fix:
+1. desktop-fold and mobile-fold: opening sentence wraps too much. Cut to Useful mods. Odd ideas.
+2. desktop-page-01: Minekea screenshot is tiny in an oversized field. Crop to the useful top and close the field.
+3. desktop-page-02: catalogue holds one narrow list for seven screens. Use two columns of unboxed entries and release the pinned introduction.
+Motion layer then added: once-only text rises, picture settles, list arrivals, scroll-driven specimen swaps; all skipped with reduced motion.
+
+ROUND 2
+Seen in one second: Useful mods. Odd ideas. split around the actual catalogue book.
+Idea (one sentence): the useful and absurd halves of the collection meet around its own artwork.
+Live thing: search reveals any of the 34 mods in the directory, including featured entries.
+Layout words by section: hero=split sentence / showcase=unequal fields / catalogue=two-column index / footer=cropped name
+Scores: design 7.5 / usability 8 / creativity 7.5 / content 8 -> overall 7.7
+Caps applied: inspector flags the unnecessary showcase supporting line as an eyebrow; capped at 6.0 until fixed.
+Top three problems (most visible first), each with screenshot and fix:
+1. desktop-fold: surplus supporting line aligns just above Hopper X-Treme. Remove the filler sentence.
+2. desktop-page-01: featured headings inherit Markdown link accent. Make the specimen titles full ink.
+3. roadmap phone: controls were undersized. Enlarge to 44px, use native buttons, add pressed state and keyboard sorting.
+Final verification follows these corrections. No additional redesign round is planned.

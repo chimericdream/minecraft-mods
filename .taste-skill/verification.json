@@ -1,0 +1,22 @@
+[
+  "30 nonfeatured mods and four feature entries on home",
+  "Featured mod searchable: hopper",
+  "Featured mod searchable: camel",
+  "Featured mod searchable: minekea",
+  "Featured mod searchable: gear",
+  "Search empty state",
+  "Theme persists across navigation",
+  "Phone sidebar starts collapsed",
+  "Phone sidebar opens and exposes guide",
+  "Download uses repository project ID",
+  "System theme removes explicit override",
+  "Roadmap renders all ideas",
+  "Roadmap search filters rows",
+  "Roadmap sort responds to keyboard",
+  "Roadmap filter announces pressed state",
+  "Guide tree has active page",
+  "No uncaught browser errors",
+  "Reduced motion produces no animations",
+  "No-JS home retains 34 mods and primary action",
+  "No-JS guide navigation remains open"
+]

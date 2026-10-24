@@ -67,7 +67,7 @@ const parseIdea = (mod: ModInfo, theme: string, file: string): IdeaRow => {
         shortlist: shortlist ? Number(shortlist) : null,
         tier: grab(/Tier\s+(\d)/) ? Number(grab(/Tier\s+(\d)/)) : null,
         effort: grab(/Effort\s+\*\*([^*]+)\*\*/) ?? '—',
-        value: (grab(/Value\s+(★+)/) ?? '').length,
+        value: (grab(/Value\s+(\u2605+)/) ?? '').length,
         votes: votes ? Number(votes) : null,
         vote: (grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '—').match(/^(Yes|Maybe|No)(?![a-z])/i)?.[1] ?? '—',
         voteNote: grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '',
@@ -98,17 +98,17 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
 
 const CSS = `
 .filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
-.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
-input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
+.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.filters legend{float:left;margin-right:8px;color:var(--muted);font-size:14px}
+.filters input[type=search],.filters select{padding:10px 12px;border:0;border-radius:0;background:var(--card);color:var(--fg);min-height:44px}
 input[type=search]{min-width:240px}
-.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:12px;padding:1px 9px;background:var(--card);font-size:12px}
+.pill{cursor:pointer;user-select:none;border:0;padding:10px 12px;background:var(--card);font-size:14px;min-height:44px}
 .pill.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:3px 10px;cursor:pointer}
-.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.filters>button{font:inherit;font-size:14px;background:var(--card);border:0;color:var(--fg);padding:10px 16px;cursor:pointer;min-height:44px}
+.wrap{overflow:auto;background:var(--card);margin-top:32px;max-height:78vh}
 table{border-collapse:collapse;width:100%}th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px;color:var(--muted)}
+th{position:sticky;top:0;background:var(--field);white-space:nowrap;cursor:pointer;user-select:none;font-size:14px;color:var(--fg)}
 th.asc::after{content:" ↑";color:var(--accent)}th.desc::after{content:" ↓";color:var(--accent)}
-td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:12.5px}
+td.n{white-space:nowrap}td.sum{color:var(--fg);min-width:260px;max-width:420px;font-size:16px}
 td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .vote-Yes{color:var(--good);font-weight:600}.vote-Maybe{color:var(--warn);font-weight:600}.vote-No{color:var(--bad)}
 .stars{color:var(--warn);letter-spacing:1px}
@@ -133,11 +133,11 @@ const mods=[...new Map(rows.map(r=>[r.mod,r.modName]))].sort((a,b)=>a[1].localeC
 $('mod').innerHTML='<option value="">all mods</option>'+mods.map(([f,n])=>'<option value="'+f+'">'+n+'</option>').join('');
 const pills=(id,key,vals,label)=>{
   const el=$(id);
-  vals.forEach(v=>{const b=document.createElement('span');b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;
-    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));render()};el.appendChild(b)});
+  vals.forEach(v=>{const b=document.createElement('button');b.type='button';b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));b.setAttribute('aria-pressed',String(s.has(x)));render()};el.appendChild(b)});
 };
 pills('f-effort','effort',uniq('effort').sort((a,b)=>rank('effort',a)-rank('effort',b)||a.localeCompare(b)));
-pills('f-value','value',[3,2,1],v=>'★'.repeat(v));
+pills('f-value','value',[3,2,1],v=>v+' / 3');
 pills('f-vote','vote',[...ORDER.vote,'—']);
 pills('f-tier','tier',[1,2,3],v=>'T'+v);
 pills('f-status','status',uniq('status').sort());
@@ -151,7 +151,8 @@ fillThemes();
 // --- header
 const head=$('head');
 COLS.forEach(([k,label])=>{const th=document.createElement('th');th.textContent=label;th.dataset.k=k;
-  th.onclick=()=>{if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=1}render()};head.appendChild(th)});
+  th.tabIndex=0;th.setAttribute('scope','col');th.setAttribute('aria-label','Sort by '+label);
+  th.onclick=()=>{if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=1}render()};th.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();th.click()}};head.appendChild(th)});
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const cmp=(a,b)=>{
@@ -176,11 +177,11 @@ const match=r=>{
 function render(){
   const out=rows.filter(match).sort(cmp);
   $('count').textContent=out.length+' of '+rows.length+' ideas';
-  head.querySelectorAll('th').forEach(th=>th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'');
+  head.querySelectorAll('th').forEach(th=>{th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'';th.setAttribute('aria-sort',th.dataset.k===state.sort?(state.dir>0?'ascending':'descending'):'none')});
   $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
     '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
-    '<td class="n stars">'+'★'.repeat(r.value)+'</td><td class="n">'+(r.votes??'—')+'</td>'+
+    '<td class="n stars">'+r.value+' / 3</td><td class="n">'+(r.votes??'—')+'</td>'+
     '<td class="n vote-'+esc(r.vote)+'" title="'+esc(r.voteNote)+'">'+esc(r.vote)+'</td><td class="n">'+esc(r.status)+'</td>'+
     '<td class="n">'+(r.openQuestions||'')+'</td><td class="sum"><div title="'+esc(r.summary)+'">'+esc(r.summary)+'</div></td></tr>').join('');
   save();
@@ -201,7 +202,7 @@ function save(){
     const x=['value','tier'].includes(k)?Number(v):v;state[k].add(x)});
   const s=p.get('sort');if(s){state.dir=s.endsWith('-')?-1:1;state.sort=s.replace(/-$/,'')}
   $('q').value=state.q;$('mod').value=state.mod;$('theme').value=state.theme;
-  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v))});
+  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v));b.setAttribute('aria-pressed',String(state[k].has(v)))});
 })();
 $('q').oninput=e=>{state.q=e.target.value;render()};
 $('mod').onchange=e=>{state.mod=e.target.value;fillThemes();render()};
