@@ -32,7 +32,7 @@ const findIcon = (folder: string, modId: string): string | null => {
 
 export const collectMods = async (): Promise<ModInfo[]> =>
     Promise.all((projectList as string[]).map(async (folder): Promise<ModInfo> => {
-        const props = await loadProperties(folder);
+        const props = await loadProperties(folder) as Awaited<ReturnType<typeof loadProperties>> & {curseforge_project_id?: string};
         const latestTag = (await git('tag', '-l', `${folder}/*`, '--sort=-creatordate')).split('\n')[0] || null;
         const lastCommit = (await git('log', '-1', '--format=%cI', '--', folder)) || null;
 
@@ -42,6 +42,9 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             name: props.mod_name,
             description: props.mod_description ?? '',
             version: props.mod_version,
+            minecraftVersion: props.minecraft_compat,
+            loaders: props.enabled_platforms.split(',').map(loader => loader.trim()),
+            downloadUrl: props.curseforge_project_id ? `https://www.curseforge.com/projects/${props.curseforge_project_id}/files` : null,
             isPrerelease: props.mod_version.includes('-'),
             ...changelogStatus(folder),
             latestTag,

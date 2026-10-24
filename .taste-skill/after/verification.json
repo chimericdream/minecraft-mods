@@ -1,0 +1,26 @@
+{
+  "htmlPages": 629,
+  "localReferencesChecked": 20364,
+  "broken": [],
+  "checks": [
+    "theme persists between pages",
+    "manual dark theme works",
+    "system theme clears saved override",
+    "phone sidebar starts collapsed",
+    "phone sidebar opens",
+    "guide link navigates",
+    "search includes featured mods",
+    "search empty state",
+    "clear restores the other 30 entries",
+    "reduced motion has no running animation",
+    "no-script fallback has all 34 mods",
+    "no-script navigation remains usable",
+    "all 216 roadmap ideas render",
+    "roadmap filter and pressed state work",
+    "roadmap sorting exposes direction",
+    "roadmap filter survives bookmark reload",
+    "roadmap reset restores ideas",
+    "guide textures load",
+    "no client exceptions"
+  ]
+}

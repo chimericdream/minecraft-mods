@@ -53,3 +53,7 @@ entities.json
 
 site/dist/
 site/.cache/
+
+# Local design automation scratch files; screenshots and audit evidence are tracked
+.taste-skill/*.mjs
+.taste-skill/*.py

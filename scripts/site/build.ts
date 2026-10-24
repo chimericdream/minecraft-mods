@@ -81,6 +81,13 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
     writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    copyFileSync(path.join(import.meta.dir, 'site.js'), path.join(outDir, 'site.js'));
+    copyFileSync(path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg'), path.join(outDir, 'logo.svg'));
+    for (const [name, texture] of Object.entries({catalogue: 'minekea_catalogue', wrench: 'tools/wrench', lantern: 'decorations/lighting/ancient_lantern'})) {
+        const dest = path.join(outDir, 'art', `${name}.png`);
+        writeFile(dest, '');
+        copyFileSync(path.join(REPO_ROOT, 'minekea/common/src/main/resources/assets/minekea/textures/item', `${texture}.png`), dest);
+    }
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 

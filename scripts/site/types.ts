@@ -4,6 +4,9 @@ export type ModInfo = {
     name: string;
     description: string;
     version: string;
+    minecraftVersion: string;
+    loaders: string[];
+    downloadUrl: string | null;
     isPrerelease: boolean;
     hasUnreleasedChanges: boolean;
     isNewMod: boolean;
