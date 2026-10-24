@@ -25,7 +25,27 @@ changelog (`/changelog/`).
 `scripts/site/guide.ts` renders the Opus Markdown dialect: frontmatter, `> [!TIP]` callouts,
 `texture:` images (copied from the owning mod's resources), `item:`/`entity:` references (shown as text)
 and ```` ```recipe ```` blocks. Recipes go through a `RecipeFormatter`
-(`scripts/site/recipes/types.ts`); the current one (`ascii.ts`) draws a box-drawing crafting grid with a
-legend. To render real item textures, write another formatter and pass it to `buildGuide`.
+(`scripts/site/recipes/types.ts`); the current one (`grid.ts`) draws a crafting grid of letter cells with
+a legend (`ascii.ts` is the plain-text alternative). To render real item textures, write another
+formatter and pass it to `buildGuide`.
 
 All links are relative, so the site works under any base path.
+
+## Design
+
+The look follows [docs/SITE-DESIGN-BRIEF.md](../../SITE-DESIGN-BRIEF.md): a board of flat tiles, Young Serif
+over Source Serif 4 (Google Fonts), one crimson accent on a violet ground, light and dark themes that follow
+the OS with a remembered manual toggle. Where things live:
+
+- `theme.ts` holds the color tokens (`THEME_CSS`). The local dashboard imports them too, so keep the
+  variable names (`--bg`, `--fg`, `--muted`, `--card`, `--line`, `--accent`, `--good`, `--bad`, `--warn`, `--mark`).
+- `styles.ts` holds the site stylesheet and the font links; `layout.ts` the page shell, header, footer and sidebar.
+- `client.ts` holds the only script (`site.js`): theme toggle, home-page mod finder, sidebar folding and
+  entrance reveals. Every effect has a CSS fail-safe and works without script.
+- `pages.ts` builds the home board, the mod overview header and the combined changelog.
+- The brand mark is copied from `docs/design/logo-placeholder.svg` to `_site/logo.svg` (see `LOGO_SOURCE` in
+  `build.ts`); replace that file with the original vector and every page picks it up.
+- Home-page data that is not in the Markdown comes from the repo: loaders and tagline from each README,
+  the CurseForge link from `curseforge_project_id` in the mod's `gradle.properties`, the Minecraft version
+  from the root `gradle.properties`.
+- The four featured mods are the `FEATURED` list in `pages.ts`.

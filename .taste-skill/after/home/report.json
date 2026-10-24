@@ -1,0 +1,2165 @@
+{
+ "url": "http://localhost:4123/",
+ "at": "2026-10-24T05:55:42.433Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.68,
+    0.75,
+    0.83,
+    0.5,
+    0.56
+   ],
+   "motion": {
+    "elements": 43,
+    "css": 37,
+    "transitions": 6,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 3987,
+     "screens": 4.4,
+     "words": 733,
+     "img": 28,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "chars": 28,
+     "lines": 2,
+     "size": 89.6,
+     "vw": 6.2,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.59,
+     "top": 105,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "lines": 2,
+     "size": 89.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "words": 5,
+      "chars": 28,
+      "lines": 2,
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.59,
+      "top": 105,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "↓",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 2.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.2,
+      "top": 662,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "Four to start with",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 853,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 1336,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.2,
+      "top": 1345,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the workshop",
+      "words": 5,
+      "chars": 24,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 1643,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "What they stand on",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 3027,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectury API",
+      "words": 2,
+      "chars": 16,
+      "lines": 2,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.28,
+      "top": 3203,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ChimericLib",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.28,
+      "top": 3203,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Opus",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.28,
+      "top": 3203,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.83,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.17,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      19,
+      22,
+      24,
+      26,
+      38,
+      51,
+      90
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 16,
+      "leading": 1.35,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 8.7
+     },
+     "measureChars": 68,
+     "max": {
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "text": "A workshop of Minecraft mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#34135e",
+       "top": 70,
+       "hsl": {
+        "h": 266,
+        "s": 0.66,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b8afca",
+       "share": 0.61
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.3
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.1
+      },
+      {
+       "color": "#1d0c31",
+       "share": 0
+      },
+      {
+       "color": "#e2e2e4",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 0,
+     "height": 50,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Mods",
+      "Open"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 30,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1794
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3178
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.15
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 3987,
+    "margins": {
+     "left": 32,
+     "right": 46
+    },
+    "sections": [
+     {
+      "sel": "section.hero.board",
+      "tag": "section",
+      "top": 70,
+      "height": 655,
+      "words": 56,
+      "media": 1,
+      "middle": 68,
+      "heading": {
+       "text": "A workshop of Minecraft mods",
+       "size": 90,
+       "tag": "h1"
+      },
+      "left": 56,
+      "right": 32,
+      "textLeft": 56,
+      "textRight": 176,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#featured.sec",
+      "tag": "section",
+      "top": 853,
+      "height": 704,
+      "words": 90,
+      "media": 4,
+      "middle": 68,
+      "heading": {
+       "text": "Minekea",
+       "size": 51,
+       "tag": "h3"
+      },
+      "left": 32,
+      "right": 56,
+      "textLeft": 32,
+      "textRight": 226,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#mods.sec",
+      "tag": "section",
+      "top": 1643,
+      "height": 1298,
+      "words": 446,
+      "media": 0,
+      "middle": 48,
+      "heading": {
+       "text": "AH",
+       "size": 26,
+       "tag": "div"
+      },
+      "left": 32,
+      "right": 46,
+      "textLeft": 32,
+      "textRight": 136,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.sec",
+      "tag": "section",
+      "top": 3027,
+      "height": 390,
+      "words": 74,
+      "media": 0,
+      "middle": 77,
+      "heading": {
+       "text": "Architectury API",
+       "size": 51,
+       "tag": "h3"
+      },
+      "left": 32,
+      "right": 77,
+      "textLeft": 32,
+      "textRight": 77,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 3618,
+      "height": 369,
+      "words": 29,
+      "media": 1,
+      "middle": 277,
+      "heading": {
+       "text": "chimericdream",
+       "size": 24,
+       "tag": "p"
+      },
+      "left": 32,
+      "right": 58,
+      "textLeft": 403,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "size": 90,
+      "top": 105,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 56,
+      "n": 18
+     },
+     {
+      "x": 403,
+      "n": 13
+     },
+     {
+      "x": 1096,
+      "n": 12
+     },
+     {
+      "x": 749,
+      "n": 10
+     },
+     {
+      "x": 32,
+      "n": 6
+     },
+     {
+      "x": 980,
+      "n": 6
+     },
+     {
+      "x": 67,
+      "n": 2
+     },
+     {
+      "x": 518,
+      "n": 2
+     },
+     {
+      "x": 634,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 70,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 0,
+     "y": 720,
+     "w": 1440,
+     "h": 120
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.88,
+    0.84,
+    0.86,
+    0.93,
+    0.81,
+    0.81
+   ],
+   "motion": {
+    "elements": 43,
+    "css": 33,
+    "transitions": 10,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 5230,
+     "screens": 5.1,
+     "words": 733,
+     "img": 28,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "chars": 28,
+     "lines": 2,
+     "size": 62.2,
+     "vw": 8.1,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.89,
+     "top": 135,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "lines": 2,
+     "size": 62.2,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "words": 5,
+      "chars": 28,
+      "lines": 2,
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 135,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "↓",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 985,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "Four to start with",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 1109,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1390,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 1728,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the workshop",
+      "words": 5,
+      "chars": 24,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 2128,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "What they stand on",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 4203,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectury API",
+      "words": 2,
+      "chars": 16,
+      "lines": 2,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 4341,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ChimericLib",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.44,
+      "top": 4341,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Opus",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4542,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.83,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.17,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      22,
+      26,
+      38,
+      41,
+      62
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 16,
+      "leading": 1.35,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 8.7
+     },
+     "measureChars": 63,
+     "max": {
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "text": "A workshop of Minecraft mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#34135e",
+       "top": 116,
+       "hsl": {
+        "h": 266,
+        "s": 0.66,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b8afca",
+       "share": 0.61
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.3
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.1
+      },
+      {
+       "color": "#1d0c31",
+       "share": 0
+      },
+      {
+       "color": "#e2e2e4",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 0,
+     "height": 49,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Mods",
+      "Open"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 2,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 30,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2252
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.29
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 110,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 5230,
+    "margins": {
+     "left": 18,
+     "right": 32
+    },
+    "sections": [
+     {
+      "sel": "section.hero.board",
+      "tag": "section",
+      "top": 116,
+      "height": 921,
+      "words": 56,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "A workshop of Minecraft mods",
+       "size": 62,
+       "tag": "h1"
+      },
+      "left": 18,
+      "right": 18,
+      "textLeft": 32,
+      "textRight": 54,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#featured.sec",
+      "tag": "section",
+      "top": 1109,
+      "height": 971,
+      "words": 90,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 41,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 32,
+      "textLeft": 18,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#mods.sec",
+      "tag": "section",
+      "top": 2128,
+      "height": 2027,
+      "words": 446,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "AH",
+       "size": 26,
+       "tag": "div"
+      },
+      "left": 18,
+      "right": 32,
+      "textLeft": 18,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.sec",
+      "tag": "section",
+      "top": 4203,
+      "height": 475,
+      "words": 74,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Architectury API",
+       "size": 41,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 34,
+      "textLeft": 18,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4788,
+      "height": 442,
+      "words": 29,
+      "media": 1,
+      "middle": 20,
+      "heading": {
+       "text": "chimericdream",
+       "size": 22,
+       "tag": "p"
+      },
+      "left": 18,
+      "right": 41,
+      "textLeft": 32,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "size": 62,
+      "top": 135,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 35
+     },
+     {
+      "x": 401,
+      "n": 29
+     },
+     {
+      "x": 18,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 70,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.89,
+    0.79,
+    0.83,
+    0.93,
+    0.93,
+    0.93,
+    0.85,
+    0.81,
+    0.74
+   ],
+   "motion": {
+    "elements": 43,
+    "css": 39,
+    "transitions": 4,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 6920,
+     "screens": 8.2,
+     "words": 732,
+     "img": 28,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "chars": 28,
+     "lines": 2,
+     "size": 41.6,
+     "vw": 10.7,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.83,
+     "top": 128,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "A workshop of Minecraft mods",
+     "words": 5,
+     "lines": 2,
+     "size": 41.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "words": 5,
+      "chars": 28,
+      "lines": 2,
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 128,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "↓",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 930,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "Four to start with",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1045,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 1293,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 1597,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The rest of the workshop",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2181,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "AH",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 2367,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "A",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 2589,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "B&",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 2792,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "B",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 3235,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "C",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 3513,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "EN",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 3716,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "FB",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 3716,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "LA",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 4140,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "VT",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 5468,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "What they stand on",
+      "words": 4,
+      "chars": 18,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5701,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectury API",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 5853,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ChimericLib",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 6009,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Opus",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 6165,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 19,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.83,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.17,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      19,
+      20,
+      26,
+      29,
+      32,
+      42
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 16,
+      "leading": 1.35,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 8.7
+     },
+     "measureChars": 32,
+     "max": {
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "text": "A workshop of Minecraft mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#34135e",
+       "top": 110,
+       "hsl": {
+        "h": 266,
+        "s": 0.66,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b8afca",
+       "share": 0.61
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.3
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.1
+      },
+      {
+       "color": "#1d0c31",
+       "share": 0
+      },
+      {
+       "color": "#e2e2e4",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 0,
+     "height": 47,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Open"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 30,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2355
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.24
+     }
+    ],
+    "nav": {
+     "links": 4,
+     "fixed": true,
+     "height": 104,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 6920,
+    "margins": {
+     "left": 16,
+     "right": 23
+    },
+    "sections": [
+     {
+      "sel": "section.hero.board",
+      "tag": "section",
+      "top": 110,
+      "height": 863,
+      "words": 56,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "A workshop of Minecraft mods",
+       "size": 42,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 30,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#featured.sec",
+      "tag": "section",
+      "top": 1045,
+      "height": 1088,
+      "words": 90,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 16,
+      "right": 17,
+      "textLeft": 16,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#mods.sec",
+      "tag": "section",
+      "top": 2181,
+      "height": 3471,
+      "words": 446,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "AH",
+       "size": 26,
+       "tag": "div"
+      },
+      "left": 16,
+      "right": 18,
+      "textLeft": 16,
+      "textRight": 18,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.sec",
+      "tag": "section",
+      "top": 5701,
+      "height": 601,
+      "words": 74,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Architectury API",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 16,
+      "right": 23,
+      "textLeft": 16,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 6405,
+      "height": 515,
+      "words": 29,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 34,
+      "textLeft": 30,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "A workshop of Minecraft mods",
+      "size": 42,
+      "top": 128,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 28,
+      "n": 39
+     },
+     {
+      "x": 210,
+      "n": 25
+     },
+     {
+      "x": 16,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 70,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "card-rows",
+   "width": 1440,
+   "message": "2 rows of identical boxed cards.",
+   "fix": "Vary the composition; not every section is a card grid."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\home\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

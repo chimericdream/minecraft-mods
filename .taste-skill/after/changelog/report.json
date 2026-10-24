@@ -1,0 +1,1382 @@
+{
+ "url": "http://localhost:4123/changelog/",
+ "at": "2026-10-24T06:09:25.398Z",
+ "allow": [
+  "few-pictures",
+  "focal-point",
+  "still-page",
+  "no-footage"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.69,
+    0.57,
+    0.89,
+    0.89,
+    0.89,
+    0.89,
+    0.49,
+    0.59,
+    0.56
+   ],
+   "motion": {
+    "elements": 30,
+    "css": 28,
+    "transitions": 2,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 7269,
+     "screens": 8.1,
+     "words": 1775,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 89.6,
+     "vw": 6.2,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 89.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 339,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 51.2,
+      "vw": 3.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 1292,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      14,
+      16,
+      17,
+      19,
+      22,
+      24,
+      51,
+      90
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 64,
+     "max": {
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 405,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.96
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1a0f2b",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.11
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 28,
+     "inHero": 2,
+     "radius": 0,
+     "height": 36,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 28,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1485
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 7269,
+    "margins": {
+     "left": 44,
+     "right": 62
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 60,
+      "height": 6725,
+      "words": 1719,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 90,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 58,
+      "textLeft": 32,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 6901,
+      "height": 369,
+      "words": 29,
+      "media": 1,
+      "middle": 277,
+      "heading": null,
+      "left": 32,
+      "right": 58,
+      "textLeft": 403,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 90,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 56,
+      "n": 17
+     },
+     {
+      "x": 749,
+      "n": 13
+     },
+     {
+      "x": 248,
+      "n": 3
+     },
+     {
+      "x": 32,
+      "n": 2
+     },
+     {
+      "x": 72,
+      "n": 2
+     },
+     {
+      "x": 218,
+      "n": 2
+     },
+     {
+      "x": 235,
+      "n": 2
+     },
+     {
+      "x": 269,
+      "n": 2
+     },
+     {
+      "x": 824,
+      "n": 2
+     },
+     {
+      "x": 876,
+      "n": 2
+     },
+     {
+      "x": 945,
+      "n": 2
+     },
+     {
+      "x": 1012,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 62,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.2,
+    "voidBox": {
+     "x": 360,
+     "y": 660,
+     "w": 1080,
+     "h": 240
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 10,
+   "filled": [
+    0.89,
+    0.81,
+    0.93,
+    0.87,
+    0.87,
+    0.93,
+    0.93,
+    0.87,
+    0.87,
+    0.87
+   ],
+   "motion": {
+    "elements": 30,
+    "css": 29,
+    "transitions": 1,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 9235,
+     "screens": 9,
+     "words": 1775,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 62.2,
+     "vw": 8.1,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.89,
+     "top": 145,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 62.2,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 145,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 298,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 1279,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      14,
+      16,
+      18,
+      22,
+      41,
+      62
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 76,
+     "max": {
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 349,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.96
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1a0f2b",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.11
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 28,
+     "inHero": 2,
+     "radius": 0,
+     "height": 36,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 110,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 9235,
+    "margins": {
+     "left": 30,
+     "right": 34
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 110,
+      "height": 8621,
+      "words": 1719,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 62,
+       "tag": "h1"
+      },
+      "left": 18,
+      "right": 33,
+      "textLeft": 18,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 8792,
+      "height": 442,
+      "words": 29,
+      "media": 1,
+      "middle": 20,
+      "heading": null,
+      "left": 18,
+      "right": 41,
+      "textLeft": 32,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 62,
+      "top": 145,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 32
+     },
+     {
+      "x": 210,
+      "n": 4
+     },
+     {
+      "x": 149,
+      "n": 3
+     },
+     {
+      "x": 194,
+      "n": 3
+     },
+     {
+      "x": 267,
+      "n": 3
+     },
+     {
+      "x": 18,
+      "n": 2
+     },
+     {
+      "x": 102,
+      "n": 2
+     },
+     {
+      "x": 182,
+      "n": 2
+     },
+     {
+      "x": 220,
+      "n": 2
+     },
+     {
+      "x": 235,
+      "n": 2
+     },
+     {
+      "x": 137,
+      "n": 1
+     },
+     {
+      "x": 171,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 62,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.91,
+    0.84,
+    0.84,
+    0.93,
+    0.87,
+    0.87,
+    0.93,
+    0.93,
+    0.87,
+    0.93,
+    0.93,
+    0.93
+   ],
+   "motion": {
+    "elements": 30,
+    "css": 29,
+    "transitions": 1,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 12279,
+     "screens": 14.5,
+     "words": 1774,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 41.6,
+     "vw": 10.7,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.83,
+     "top": 134,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 41.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 134,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 287,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1322,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      14,
+      15,
+      16,
+      17,
+      19,
+      20,
+      32,
+      42
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 36,
+     "max": {
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 328,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.96
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1a0f2b",
+      "hsl": {
+       "h": 264,
+       "s": 0.48,
+       "l": 0.11
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 28,
+     "inHero": 2,
+     "radius": 0,
+     "height": 36,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": true,
+     "height": 104,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 12279,
+    "margins": {
+     "left": 28,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 104,
+      "height": 11605,
+      "words": 1719,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 42,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 31,
+      "textLeft": 16,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 11765,
+      "height": 515,
+      "words": 29,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 34,
+      "textLeft": 30,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 42,
+      "top": 134,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 30,
+      "n": 32
+     },
+     {
+      "x": 194,
+      "n": 4
+     },
+     {
+      "x": 242,
+      "n": 4
+     },
+     {
+      "x": 136,
+      "n": 3
+     },
+     {
+      "x": 156,
+      "n": 3
+     },
+     {
+      "x": 170,
+      "n": 3
+     },
+     {
+      "x": 208,
+      "n": 3
+     },
+     {
+      "x": 16,
+      "n": 2
+     },
+     {
+      "x": 93,
+      "n": 2
+     },
+     {
+      "x": 117,
+      "n": 2
+     },
+     {
+      "x": 181,
+      "n": 2
+     },
+     {
+      "x": 229,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 62,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (Source Serif 4, Young Serif, ui-monospace).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 44px on the left, 62px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  },
+  {
+   "level": "WARN",
+   "id": "ragged-edges",
+   "width": 1440,
+   "message": "Left-aligned text starts at 12 different lines (56px, 749px, 248px, 32px, 72px, 218px, 235px); the three most used hold only 53% of it.",
+   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\desktop-page-02.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\tablet-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\changelog\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

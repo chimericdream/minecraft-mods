@@ -4,7 +4,7 @@ import path from 'node:path';
 import {Marked} from 'marked';
 
 import {esc, relUrl, REPO_ROOT, slugger} from './util.ts';
-import {asciiFormatter} from './recipes/ascii.ts';
+import {gridFormatter} from './recipes/grid.ts';
 import {displayName} from './recipes/names.ts';
 import {parseRecipe} from './recipes/parse.ts';
 import type {RecipeFormatter} from './recipes/types.ts';
@@ -185,7 +185,7 @@ const renderMarkdown = (source: string, ctx: RenderCtx): string => {
 
 const sortKey = (rel: string) => rel.split('/').map(s => (s === 'index.md' ? '' : s)).join('/');
 
-export const buildGuide = (mod: ModRef, folderOf: Map<string, string>, outDir: string, warn: (m: string) => void, formatRecipe: RecipeFormatter = asciiFormatter): Guide | null => {
+export const buildGuide = (mod: ModRef, folderOf: Map<string, string>, outDir: string, warn: (m: string) => void, formatRecipe: RecipeFormatter = gridFormatter): Guide | null => {
     const found = findGuideDir(mod.folder);
     if (!found) return null;
 

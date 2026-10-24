@@ -11,6 +11,12 @@ export type ModInfo = {
     lastCommit: string | null;
     /** Absolute path of the mod's icon.png, if it has one. */
     iconFile: string | null;
+    /** Mod loaders named by the README's `modloader-*` badges, e.g. `Fabric`, `NeoForge`. */
+    loaders: string[];
+    /** The README's italic one-line tagline, if it has one. */
+    tagline: string | null;
+    /** CurseForge project id from gradle.properties, used for the download link. */
+    curseforgeId: string | null;
 };
 
 export type IdeasInfo = {

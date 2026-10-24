@@ -35,9 +35,9 @@ const box = (text: string): Block => [
     '└' + '─'.repeat(text.length + 2) + '┘',
 ];
 
-const resultText = (r: RecipeResult) => displayName(r.id) + (r.count > 1 ? ` ×${r.count}` : '');
+export const resultText = (r: RecipeResult) => displayName(r.id) + (r.count > 1 ? ` ×${r.count}` : '');
 
-const slotsOf = (r: Recipe): Slot[] => {
+export const slotsOf = (r: Recipe): Slot[] => {
     switch (r.kind) {
         case 'grid': return r.slots.filter((s): s is Slot => s !== null);
         case 'cooking': case 'stonecutting': return [r.input];
@@ -45,13 +45,13 @@ const slotsOf = (r: Recipe): Slot[] => {
     }
 };
 
-const legendText = (i: Ingredient) => {
+export const legendText = (i: Ingredient) => {
     const names = i.options.map(displayName);
     if (i.isTag) return `Any ${names[0]}`;
     return names.length > 1 ? `Any of: ${names.join(', ')}` : names[0]!;
 };
 
-const caption = (r: Recipe): string => {
+export const caption = (r: Recipe): string => {
     switch (r.kind) {
         case 'grid': return r.shaped ? 'Crafting table' : 'Crafting table (shapeless)';
         case 'cooking': return [r.station, r.seconds === null ? '' : `${r.seconds}s`, r.xp === null ? '' : `${r.xp} xp`].filter(Boolean).join(' · ');

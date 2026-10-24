@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import {Marked} from 'marked';
 
-import {modLinksList, shell, type ModLinks} from './layout.ts';
+import {modLinksList, readingPage, shell, sideGroup, type ModLinks} from './layout.ts';
 import type {ModInfo} from './types.ts';
 import {esc, REPO_ROOT, REPO_URL, relUrl, slugger} from './util.ts';
 
@@ -137,7 +137,7 @@ const ideasNav = (docs: Doc[], folder: string): NavNode => {
 
 const renderIdeasNav = (node: NavNode, current: Doc): string => {
     const label = (d: Doc) => path.posix.basename(d.key) === 'README.md' ? 'Overview' : path.posix.basename(d.key, '.md').replace(/-/g, ' ');
-    const link = (d: Doc) => `<a href="${esc(relUrl(current.url, d.url))}"${d === current ? ' class="cur" aria-current="page"' : ''}>${esc(label(d))}</a>`;
+    const link = (d: Doc) => `<a href="${esc(relUrl(current.url, d.url))}"${d === current ? ' aria-current="page"' : ''}>${esc(label(d))}</a>`;
     const files = node.files.map(d => `<li>${link(d)}</li>`).join('');
     const dirs = [...node.dirs].map(([name, child]) => {
         const inner = renderIdeasNav(child, current);
@@ -149,13 +149,13 @@ const renderIdeasNav = (node: NavNode, current: Doc): string => {
 export const docPage = (doc: Doc, body: string, title: string, links: ModLinks, modDocs: Doc[]): string => {
     const isIdeas = doc.key.startsWith(`${doc.mod.folder}/ideas/`);
     const ideaDocs = modDocs.filter(d => d.key.startsWith(`${doc.mod.folder}/ideas/`));
-    const side = modLinksList(links, doc.url) + (isIdeas ? `<h2>Ideas</h2>${renderIdeasNav(ideasNav(ideaDocs, doc.mod.folder), doc)}` : '');
+    const side = modLinksList(links, doc.url, doc.mod) + (isIdeas ? sideGroup('Ideas', renderIdeasNav(ideasNav(ideaDocs, doc.mod.folder), doc)) : '');
     return shell({
         title: `${title} · ${doc.mod.name}`,
         url: doc.url,
         crumbs: [`<a href="${esc(relUrl(doc.url, links.overview))}">${esc(doc.mod.name)}</a>`],
         side,
-        body: `<article>${body}</article><p class="edit-link"><a href="${REPO_URL}/blob/main/${esc(doc.key)}">View source on GitHub</a></p>`,
+        body: readingPage(`${body}<p class="edit-link"><a href="${REPO_URL}/blob/main/${esc(doc.key)}">View source on GitHub</a></p>`),
     });
 };
 

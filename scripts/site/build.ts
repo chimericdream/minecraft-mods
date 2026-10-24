@@ -1,19 +1,23 @@
 import {copyFileSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
+import {SITE_JS} from './client.ts';
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
-import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
+import {guidePage, LOGO_URL, SITE_CSS, type ModLinks} from './layout.ts';
 import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
 import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
-import {collectMods} from './mods.ts';
+import {collectMods, minecraftVersion, opusOptionalCount} from './mods.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
 
 export const OUT_DIR = path.join(REPO_ROOT, 'site', 'dist');
+
+/** The brand mark. The author may swap in the original vector later; pages reference the copy at `LOGO_URL`. */
+export const LOGO_SOURCE = path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg');
 
 export type BuildOptions = {
     /** Also write the local-only page with GitHub issues/PRs and the ideas pipeline. Never deployed. */
@@ -31,6 +35,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     const mods = (await collectMods()).sort((a, b) => a.name.localeCompare(b.name));
     const docs = collectDocs(mods);
     const folderOf = new Map(mods.map(m => [m.id, m.folder]));
+    const modOf = new Map(mods.map(m => [m.folder, m]));
 
     const guides = new Map<string, Guide>();
     for (const mod of mods) {
@@ -59,7 +64,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
 
     for (const [folder, guide] of guides) {
         for (const page of guide.pages) {
-            writeFile(path.join(outDir, page.url, 'index.html'), guidePage(guide, page, links.get(folder)!));
+            writeFile(path.join(outDir, page.url, 'index.html'), guidePage(guide, page, links.get(folder)!, modOf.get(folder)!));
         }
     }
 
@@ -79,8 +84,15 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     writeFile(path.join(outDir, 'ideas', 'index.html'), ideasPage(ideaRows));
     writeFile(path.join(outDir, 'changelog', 'index.html'), changelogPage(mods, (source, key) =>
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
-    writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
+    writeFile(path.join(outDir, 'index.html'), homePage(mods, links, {
+        guidePages: new Map([...guides].map(([folder, g]) => [folder, g.pages.length])),
+        minecraft: minecraftVersion(),
+        opusOptional: opusOptionalCount(mods),
+    }));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    writeFile(path.join(outDir, LOGO_URL), '');
+    copyFileSync(LOGO_SOURCE, path.join(outDir, LOGO_URL));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 

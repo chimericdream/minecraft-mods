@@ -30,12 +30,32 @@ const findIcon = (folder: string, modId: string): string | null => {
     return existsSync(file) ? file : null;
 };
 
+const readme = (folder: string): string => {
+    const file = path.join(REPO_ROOT, folder, 'README.md');
+    return existsSync(file) ? readFileSync(file, 'utf8').replace(/\r\n/g, '\n') : '';
+};
+
+const readmeLoaders = (source: string): string[] =>
+    [...new Set([...source.matchAll(/modloader-(Fabric|NeoForge)/g)].map(m => m[1]!))];
+
+const readmeTagline = (source: string): string | null =>
+    source.match(/^_(.+)_$/m)?.[1]?.trim() ?? null;
+
+/** The Minecraft version the repo currently targets, e.g. `26.2`. */
+export const minecraftVersion = (): string =>
+    readFileSync(path.join(REPO_ROOT, 'gradle.properties'), 'utf8').match(/^minecraft_version\s*=\s*(\S+)/m)?.[1] ?? '';
+
+/** How many mods list Opus (the in-game guide library) as an optional CurseForge dependency. */
+export const opusOptionalCount = (mods: ModInfo[]): number =>
+    mods.filter(m => /^curseforge_optional\s*=.*opus/m.test(readFileSync(path.join(REPO_ROOT, m.folder, 'gradle.properties'), 'utf8'))).length;
+
 export const collectMods = async (): Promise<ModInfo[]> =>
     Promise.all((projectList as string[]).map(async (folder): Promise<ModInfo> => {
         const props = await loadProperties(folder);
         const latestTag = (await git('tag', '-l', `${folder}/*`, '--sort=-creatordate')).split('\n')[0] || null;
         const lastCommit = (await git('log', '-1', '--format=%cI', '--', folder)) || null;
 
+        const source = readme(folder);
         return {
             folder,
             id: props.mod_id,
@@ -47,5 +67,8 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             latestTag,
             lastCommit,
             iconFile: findIcon(folder, props.mod_id),
+            loaders: readmeLoaders(source),
+            tagline: readmeTagline(source),
+            curseforgeId: (props as unknown as Record<string, string | undefined>).curseforge_project_id ?? null,
         };
     }));

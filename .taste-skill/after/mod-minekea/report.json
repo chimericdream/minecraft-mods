@@ -1,0 +1,1184 @@
+{
+ "url": "http://localhost:4123/mods/minekea/",
+ "at": "2026-10-24T06:11:44.169Z",
+ "allow": [
+  "few-pictures",
+  "focal-point",
+  "still-page",
+  "no-footage"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.74,
+    0.79,
+    0.79,
+    0.79,
+    0.74,
+    0.7
+   ],
+   "motion": {
+    "elements": 19,
+    "css": 0,
+    "transitions": 19,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4651,
+     "screens": 5.2,
+     "words": 622,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 89.6,
+     "vw": 6.2,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.41,
+     "top": 131,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 89.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.41,
+      "top": 131,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.98,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      19,
+      22,
+      24,
+      90
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 72,
+     "max": {
+      "size": 89.6,
+      "vw": 6.2,
+      "font": "Young Serif",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 416,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.9
+      },
+      {
+       "color": "#ff9a9a",
+       "share": 0.05
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#2a1646",
+      "hsl": {
+       "h": 265,
+       "s": 0.52,
+       "l": 0.18
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 8,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Mods",
+      "Overview",
+      "Download on CurseForge",
+      "In-game guide"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4651,
+    "margins": {
+     "left": 54,
+     "right": 70
+    },
+    "sections": [
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 60,
+      "height": 4107,
+      "words": 592,
+      "media": 0,
+      "middle": 96,
+      "heading": {
+       "text": "Minekea",
+       "size": 90,
+       "tag": "h1"
+      },
+      "left": 50,
+      "right": 70,
+      "textLeft": 50,
+      "textRight": 70,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4282,
+      "height": 369,
+      "words": 29,
+      "media": 1,
+      "middle": 277,
+      "heading": null,
+      "left": 32,
+      "right": 58,
+      "textLeft": 403,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 90,
+      "top": 131,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 365,
+      "n": 16
+     },
+     {
+      "x": 524,
+      "n": 2
+     },
+     {
+      "x": 50,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.15,
+    "voidBox": {
+     "x": 0,
+     "y": 360,
+     "w": 360,
+     "h": 540
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.93,
+    0.93,
+    0.93,
+    0.93,
+    0.87
+   ],
+   "motion": {
+    "elements": 19,
+    "css": 8,
+    "transitions": 11,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4625,
+     "screens": 4.5,
+     "words": 613,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 62.2,
+     "vw": 8.1,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "right",
+     "widthRatio": 0.6,
+     "top": 167,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 62.2,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.6,
+      "top": 167,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.98,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      22,
+      62
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 76,
+     "max": {
+      "size": 62.2,
+      "vw": 8.1,
+      "font": "Young Serif",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 465,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.9
+      },
+      {
+       "color": "#ff9a9a",
+       "share": 0.05
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#2a1646",
+      "hsl": {
+       "h": 265,
+       "s": 0.52,
+       "l": 0.18
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 7,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Mods",
+      "Download on CurseForge",
+      "In-game guide",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 110,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4625,
+    "margins": {
+     "left": 32,
+     "right": 41
+    },
+    "sections": [
+     {
+      "sel": "aside.side",
+      "tag": "aside",
+      "top": 3947,
+      "height": 174,
+      "words": 8,
+      "media": 0,
+      "middle": 20,
+      "heading": {
+       "text": "In this mod",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 36,
+      "right": 434,
+      "textLeft": 36,
+      "textRight": 434,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "header.board.modhead",
+      "tag": "header",
+      "top": 153,
+      "height": 306,
+      "words": 28,
+      "media": 1,
+      "middle": 8,
+      "heading": {
+       "text": "Minekea",
+       "size": 62,
+       "tag": "h1"
+      },
+      "left": 51,
+      "right": 63,
+      "textLeft": 51,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.page.has-toc",
+      "tag": "article",
+      "top": 465,
+      "height": 3469,
+      "words": 545,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Introduction",
+       "size": 22,
+       "tag": "h2"
+      },
+      "left": 45,
+      "right": 51,
+      "textLeft": 45,
+      "textRight": 51,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4183,
+      "height": 442,
+      "words": 29,
+      "media": 1,
+      "middle": 20,
+      "heading": null,
+      "left": 18,
+      "right": 41,
+      "textLeft": 32,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 62,
+      "top": 167,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 36,
+      "n": 17
+     },
+     {
+      "x": 278,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.81,
+    0.93,
+    0.93,
+    0.93,
+    0.93,
+    0.87,
+    0.81
+   ],
+   "motion": {
+    "elements": 19,
+    "css": 0,
+    "transitions": 19,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 5597,
+     "screens": 6.6,
+     "words": 612,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minekea",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 41.6,
+     "vw": 10.7,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.025,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.85,
+     "top": 278,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minekea",
+     "words": 1,
+     "lines": 1,
+     "size": 41.6,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 278,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.98,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      19,
+      20,
+      42
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 38,
+     "max": {
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Young Serif",
+      "text": "Minekea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0f0818",
+     "bodyBgHsl": {
+      "h": 266,
+      "s": 0.5,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1a0f2b",
+       "top": 592,
+       "hsl": {
+        "h": 264,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.9
+      },
+      {
+       "color": "#ff9a9a",
+       "share": 0.05
+      },
+      {
+       "color": "#b8afca",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#2a1646",
+      "hsl": {
+       "h": 265,
+       "s": 0.52,
+       "l": 0.18
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 6,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Download on CurseForge",
+      "In-game guide",
+      "Changelog",
+      "Ideas"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": true,
+     "height": 104,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 5597,
+    "margins": {
+     "left": 30,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "aside.side",
+      "tag": "aside",
+      "top": 4852,
+      "height": 174,
+      "words": 8,
+      "media": 0,
+      "middle": 20,
+      "heading": {
+       "text": "In this mod",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 34,
+      "right": 59,
+      "textLeft": 34,
+      "textRight": 59,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "header.board.modhead",
+      "tag": "header",
+      "top": 146,
+      "height": 440,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 42,
+       "tag": "h1"
+      },
+      "left": 30,
+      "right": 31,
+      "textLeft": 30,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.page.has-toc",
+      "tag": "article",
+      "top": 592,
+      "height": 4248,
+      "words": 545,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Introduction",
+       "size": 20,
+       "tag": "h2"
+      },
+      "left": 34,
+      "right": 34,
+      "textLeft": 34,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 5082,
+      "height": 515,
+      "words": 29,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 34,
+      "textLeft": 30,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minekea",
+      "size": 42,
+      "top": 278,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 30,
+      "n": 19
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 54px on the left, 70px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\mod-minekea\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

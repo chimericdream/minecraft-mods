@@ -67,7 +67,7 @@ const parseIdea = (mod: ModInfo, theme: string, file: string): IdeaRow => {
         shortlist: shortlist ? Number(shortlist) : null,
         tier: grab(/Tier\s+(\d)/) ? Number(grab(/Tier\s+(\d)/)) : null,
         effort: grab(/Effort\s+\*\*([^*]+)\*\*/) ?? '—',
-        value: (grab(/Value\s+(★+)/) ?? '').length,
+        value: (grab(/Value\s+(★+)/) ?? '').length, // taste-skill-ignore: matches the star rating written in idea files
         votes: votes ? Number(votes) : null,
         vote: (grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '—').match(/^(Yes|Maybe|No)(?![a-z])/i)?.[1] ?? '—',
         voteNote: grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '',
@@ -97,22 +97,24 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
 };
 
 const CSS = `
-.filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
-.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
-input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
-input[type=search]{min-width:240px}
-.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:12px;padding:1px 9px;background:var(--card);font-size:12px}
-.pill.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:3px 10px;cursor:pointer}
-.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-table{border-collapse:collapse;width:100%}th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px;color:var(--muted)}
-th.asc::after{content:" ↑";color:var(--accent)}th.desc::after{content:" ↓";color:var(--accent)}
-td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:12.5px}
+.filters{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:0 0 var(--gap);padding:var(--pad);background:var(--card)}
+.filters fieldset{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center}.filters legend{float:left;margin-right:8px;color:var(--muted);font-size:var(--small);padding:0}
+input[type=search],select{min-height:40px;padding:0 12px;border:0;background:var(--bg);color:var(--fg);font:inherit;font-size:1rem}
+input[type=search]{min-width:min(100%,260px)}
+.pill{cursor:pointer;user-select:none;display:inline-flex;align-items:center;min-height:32px;padding:0 12px;background:var(--bg);color:var(--fg);font-size:var(--small);transition:background-color .15s}
+.pill:hover{background:var(--card2)}
+.pill.on{background:var(--accent-fill);color:var(--on-accent)}
+.filters button{font:inherit;font-size:var(--small);background:var(--card2);border:0;color:var(--fg);min-height:40px;padding:0 16px;cursor:pointer}
+.filters button:hover{background:var(--line)}
+.wrap{overflow:auto;background:var(--card);max-height:calc(100svh - 150px)}
+table{border-collapse:collapse;width:100%;font-size:1rem}th,td{padding:8px 8px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even) td{background:var(--bg)}
+th{position:sticky;top:0;background:var(--violet);color:var(--on-violet);white-space:nowrap;cursor:pointer;user-select:none;font-size:1rem;font-weight:600;z-index:1}
+th.asc::after{content:" ↑"}th.desc::after{content:" ↓"}
+td.n{white-space:nowrap}td.sum{color:var(--muted);min-width:200px;max-width:300px;font-size:1rem}
 td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .vote-Yes{color:var(--good);font-weight:600}.vote-Maybe{color:var(--warn);font-weight:600}.vote-No{color:var(--bad)}
-.stars{color:var(--warn);letter-spacing:1px}
-tr:hover td{background:var(--bg)}
+tbody tr:hover td{background:var(--card2)}
 `;
 
 const JS = String.raw`
@@ -120,6 +122,7 @@ const JS = String.raw`
 const ROOT=document.body.dataset.root;
 const rows=JSON.parse(document.getElementById('data').textContent);
 const $=id=>document.getElementById(id);
+const VALUE=['','Low','Medium','High'];
 const ORDER={effort:['S','M','L','XL'],vote:['Yes','Maybe','No']};
 const COLS=[
   ['modName','Mod'],['theme','Theme'],['title','Idea'],['shortlist','#'],['tier','Tier'],['effort','Effort'],
@@ -137,7 +140,7 @@ const pills=(id,key,vals,label)=>{
     b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));render()};el.appendChild(b)});
 };
 pills('f-effort','effort',uniq('effort').sort((a,b)=>rank('effort',a)-rank('effort',b)||a.localeCompare(b)));
-pills('f-value','value',[3,2,1],v=>'★'.repeat(v));
+pills('f-value','value',[3,2,1],v=>VALUE[v]);
 pills('f-vote','vote',[...ORDER.vote,'—']);
 pills('f-tier','tier',[1,2,3],v=>'T'+v);
 pills('f-status','status',uniq('status').sort());
@@ -180,7 +183,7 @@ function render(){
   $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
     '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
-    '<td class="n stars">'+'★'.repeat(r.value)+'</td><td class="n">'+(r.votes??'—')+'</td>'+
+    '<td class="n">'+(VALUE[r.value]||'')+'</td><td class="n">'+(r.votes??'—')+'</td>'+
     '<td class="n vote-'+esc(r.vote)+'" title="'+esc(r.voteNote)+'">'+esc(r.vote)+'</td><td class="n">'+esc(r.status)+'</td>'+
     '<td class="n">'+(r.openQuestions||'')+'</td><td class="sum"><div title="'+esc(r.summary)+'">'+esc(r.summary)+'</div></td></tr>').join('');
   save();
@@ -215,13 +218,12 @@ render();
 export const ideasPage = (rows: IdeaRow[]): string => {
     const json = JSON.stringify(rows).replace(/</g, '\\u003c');
     return shell({
-        title: 'Roadmap · Chimeric Mods',
+        title: 'Roadmap · chimericdream',
         url: 'ideas/',
         wide: true,
         head: `<style>${CSS}</style>`,
-        body: `<h1>Roadmap</h1>
-<p class="muted">Every active feature idea across the mods. <span id="count"></span></p>
-<div class="filters">
+        body: `<header class="pagehead" data-reveal><h1>Roadmap</h1><p>Every active feature idea across the mods, with its effort, value and status. <span id="count"></span></p></header>
+<div class="filters" data-reveal>
 <input type="search" id="q" placeholder="Search ideas ( / )" aria-label="Search ideas">
 <select id="mod" aria-label="Mod"></select><select id="theme" aria-label="Theme"></select>
 <fieldset><legend>Effort</legend><span id="f-effort" data-key="effort"></span></fieldset>
@@ -230,7 +232,7 @@ export const ideasPage = (rows: IdeaRow[]): string => {
 <fieldset><legend>Tier</legend><span id="f-tier" data-key="tier"></span></fieldset>
 <fieldset><legend>Status</legend><span id="f-status" data-key="status"></span></fieldset>
 <button type="button" id="reset">Reset</button></div>
-<div class="wrap"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+<div class="wrap" data-reveal><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
 <script type="application/json" id="data">${json}</script>
 <script>${JS}</script>`,
     });
