@@ -1,15 +1,16 @@
-import {copyFileSync, rmSync} from 'node:fs';
+import {copyFileSync, mkdirSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
-import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
+import {guidePage, SITE_CSS, SITE_JS, siteVars, type ModLinks} from './layout.ts';
 import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
-import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
+import {changelogPage, FEATURED, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
 import {collectMods} from './mods.ts';
+import {collectTextures, copyModAsset, type Texture} from './textures.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
 
@@ -30,6 +31,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
 
     const mods = (await collectMods()).sort((a, b) => a.name.localeCompare(b.name));
     const docs = collectDocs(mods);
+    siteVars.mc = mods[0]?.mcCompat ?? '';
     const folderOf = new Map(mods.map(m => [m.id, m.folder]));
 
     const guides = new Map<string, Guide>();
@@ -48,6 +50,14 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
             ideas: docs.get(`${f}/ideas/README.md`)?.url ?? null,
         }];
     }));
+
+    const textures = new Map<string, Texture[]>(mods.map(mod => [mod.folder, collectTextures(mod, outDir)]));
+    const pictures = new Map<string, string>();
+    for (const f of FEATURED) {
+        const mod = mods.find(m => m.folder === f.folder);
+        const url = mod && f.picture ? copyModAsset(mod, outDir, f.picture) : null;
+        if (url) pictures.set(f.folder, url);
+    }
 
     for (const mod of mods) {
         if (mod.iconFile) {
@@ -71,7 +81,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         const body = renderDoc(isOverview ? readmeBody(source) : isChangelog ? `# Changelog\n\n${source}` : source,
             {key: doc.key, fromUrl: doc.url, docs, outDir, warn});
         const l = links.get(doc.mod.folder)!;
-        const html = isOverview ? overviewPage(doc, body, l) : docPage(doc, body, isChangelog ? 'Changelog' : title, l, docsOf(doc.mod.folder));
+        const html = isOverview ? overviewPage(doc, body, l, textures.get(doc.mod.folder) ?? [], mods) : docPage(doc, body, isChangelog ? 'Changelog' : title, l, docsOf(doc.mod.folder));
         writeFile(path.join(outDir, doc.url, 'index.html'), html);
     }
 
@@ -79,8 +89,13 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     writeFile(path.join(outDir, 'ideas', 'index.html'), ideasPage(ideaRows));
     writeFile(path.join(outDir, 'changelog', 'index.html'), changelogPage(mods, (source, key) =>
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
-    writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
+    const pageCount = [...guides.values()].reduce((n, g) => n + g.pages.length, 0);
+    writeFile(path.join(outDir, 'index.html'), homePage({mods, links, textures, pictures, guides: guides.size, ideas: ideaRows.length}));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    // The mark is referenced by path so the original vector can replace the placeholder trace.
+    mkdirSync(path.join(outDir, 'brand'), {recursive: true});
+    copyFileSync(path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg'), path.join(outDir, 'brand', 'logo.svg'));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 
@@ -97,6 +112,5 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     }
 
     for (const w of [...new Set(warnings)]) console.warn(`warning: ${w}`);
-    const pageCount = [...guides.values()].reduce((n, g) => n + g.pages.length, 0);
     console.log(`Built ${mods.length} mods, ${guides.size} guides (${pageCount} pages), ${docs.size} docs and ${ideaRows.length} ideas into ${outDir}`);
 };

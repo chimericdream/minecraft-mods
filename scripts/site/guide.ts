@@ -4,7 +4,7 @@ import path from 'node:path';
 import {Marked} from 'marked';
 
 import {esc, relUrl, REPO_ROOT, slugger} from './util.ts';
-import {asciiFormatter} from './recipes/ascii.ts';
+import {gridFormatter} from './recipes/grid.ts';
 import {displayName} from './recipes/names.ts';
 import {parseRecipe} from './recipes/parse.ts';
 import type {RecipeFormatter} from './recipes/types.ts';
@@ -66,7 +66,8 @@ type RenderCtx = {
     /** Namespace -> mod folder, so `texture:opus:...` finds the right resources. */
     folderOf: Map<string, string>;
     outDir: string;
-    formatRecipe: RecipeFormatter;
+    /** Defaults to crafting grids that use the mods' own textures. */
+    formatRecipe?: RecipeFormatter;
     warn: (msg: string) => void;
 };
 
@@ -86,6 +87,11 @@ const renderMarkdown = (source: string, ctx: RenderCtx): string => {
         return path.posix.relative(ctx.pageUrl, siteRel);
     };
 
+    const formatRecipe = ctx.formatRecipe ?? gridFormatter(id => {
+        const [ns, item] = id.includes(':') ? id.split(':') as [string, string] : ['minecraft', id];
+        return copyTexture(ns, `item/${item}`) ?? copyTexture(ns, `block/${item}`);
+    });
+
     const slug = slugger();
     const marked = new Marked({gfm: true});
     marked.use({
@@ -98,7 +104,7 @@ const renderMarkdown = (source: string, ctx: RenderCtx): string => {
                         if (raw.recipe && !raw.result) {
                             return `<p class="recipe-ref">Recipe: <code>${esc(String(raw.recipe))}</code> (shown in game)</p>\n`;
                         }
-                        return ctx.formatRecipe(parseRecipe(raw));
+                        return formatRecipe(parseRecipe(raw));
                     } catch (e) {
                         ctx.warn(`${where}: ${(e as Error).message}`);
                         return `<pre class="error">${esc(text)}</pre>`;
@@ -185,7 +191,7 @@ const renderMarkdown = (source: string, ctx: RenderCtx): string => {
 
 const sortKey = (rel: string) => rel.split('/').map(s => (s === 'index.md' ? '' : s)).join('/');
 
-export const buildGuide = (mod: ModRef, folderOf: Map<string, string>, outDir: string, warn: (m: string) => void, formatRecipe: RecipeFormatter = asciiFormatter): Guide | null => {
+export const buildGuide = (mod: ModRef, folderOf: Map<string, string>, outDir: string, warn: (m: string) => void, formatRecipe?: RecipeFormatter): Guide | null => {
     const found = findGuideDir(mod.folder);
     if (!found) return null;
 

@@ -30,6 +30,24 @@ const findIcon = (folder: string, modId: string): string | null => {
     return existsSync(file) ? file : null;
 };
 
+/** Mod ids worth naming to a player; loader, game and Java requirements are implied. */
+const DEP_NAMES: Record<string, string> = {
+    'fabric-api': 'Fabric API',
+    architectury: 'Architectury API',
+    chimericlib: 'ChimericLib',
+    yet_another_config_lib_v3: 'YACL',
+    opus: 'Opus',
+    modmenu: 'Mod Menu',
+};
+
+const dependencies = (folder: string): {requires: string[]; recommends: string[]} => {
+    const file = path.join(REPO_ROOT, folder, 'fabric', 'src', 'main', 'resources', 'fabric.mod.json');
+    if (!existsSync(file)) return {requires: [], recommends: []};
+    const json = JSON.parse(readFileSync(file, 'utf8')) as Record<string, Record<string, string> | undefined>;
+    const names = (deps: Record<string, string> | undefined) => Object.keys(deps ?? {}).flatMap(id => DEP_NAMES[id] ? [DEP_NAMES[id]] : []);
+    return {requires: names(json.depends), recommends: names({...json.recommends, ...json.suggests})};
+};
+
 export const collectMods = async (): Promise<ModInfo[]> =>
     Promise.all((projectList as string[]).map(async (folder): Promise<ModInfo> => {
         const props = await loadProperties(folder);
@@ -47,5 +65,7 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             latestTag,
             lastCommit,
             iconFile: findIcon(folder, props.mod_id),
+            mcCompat: props.minecraft_compat ?? '',
+            ...dependencies(folder),
         };
     }));

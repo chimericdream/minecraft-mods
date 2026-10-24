@@ -1,0 +1,1263 @@
+{
+ "url": "http://127.0.0.1:4000/ideas/",
+ "at": "2026-10-24T00:53:21.421Z",
+ "allow": [
+  "focal-point",
+  "few-pictures",
+  "still-page",
+  "no-footage",
+  "name-only-title",
+  "font-count",
+  "eyebrow",
+  "off-centre",
+  "edge-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "timeout",
+   "screens": 1,
+   "filled": [
+    0.38
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 35,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Roadmap",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 64,
+     "vw": 4.4,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.91,
+     "top": 112,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Roadmap",
+     "words": 1,
+     "lines": 1,
+     "size": 64,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Roadmap",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.91,
+      "top": 112,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      16,
+      19,
+      28,
+      64
+     ],
+     "sizeCount": 4,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 61,
+     "max": {
+      "size": 64,
+      "vw": 4.4,
+      "font": "Grenze",
+      "text": "Roadmap"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.08,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 69,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.86
+      },
+      {
+       "color": "#b3aeb8",
+       "share": 0.14
+      }
+     ],
+     "button": {
+      "bg": "#2a262e",
+      "hsl": {
+       "h": 270,
+       "s": 0.1,
+       "l": 0.16
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 0,
+     "height": 41,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto",
+      "Reset"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 61,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 63,
+     "right": 20
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Roadmap",
+      "size": 64,
+      "top": 112,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 63,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.6,
+    "voidBox": {
+     "x": 0,
+     "y": 360,
+     "w": 1440,
+     "h": 540
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.52,
+    0.74,
+    0.75
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 2164,
+     "screens": 2.1,
+     "words": 16709,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Roadmap",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 45.4,
+     "vw": 5.9,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 91,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Roadmap",
+     "words": 1,
+     "lines": 1,
+     "size": 45.4,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Roadmap",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 91,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Made by chimericdream",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 4.3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.91,
+      "top": 1331,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 69.1,
+      "vw": 9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.035,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 1800,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Report a bug or suggest an idea",
+      "words": 7,
+      "chars": 31,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 4.3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 1978,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 1,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      15,
+      18,
+      24,
+      28,
+      33,
+      45,
+      69
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 78,
+     "max": {
+      "size": 69.1,
+      "vw": 9,
+      "font": "Grenze",
+      "text": "chimericdream"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 68,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#08070a",
+       "top": 435,
+       "hsl": {
+        "h": 260,
+        "s": 0.18,
+        "l": 0.03
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b3aeb8",
+       "share": 0.84
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.1
+      },
+      {
+       "color": "#f0898b",
+       "share": 0.05
+      },
+      {
+       "color": "#e8c46a",
+       "share": 0
+      },
+      {
+       "color": "#7bd88f",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1f1c23",
+      "hsl": {
+       "h": 266,
+       "s": 0.11,
+       "l": 0.12
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 7,
+     "radius": 0,
+     "height": 33,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto",
+      "Medium",
+      "Maybe",
+      "Building",
+      "Exploring"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 2164,
+    "margins": {
+     "left": 51,
+     "right": 126
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 60,
+      "height": 1205,
+      "words": 374,
+      "media": 0,
+      "middle": 408,
+      "heading": {
+       "text": "Roadmap",
+       "size": 45,
+       "tag": "h1"
+      },
+      "left": 39,
+      "right": 0,
+      "textLeft": 39,
+      "textRight": -665,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 1305,
+      "height": 859,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Made by chimericdream",
+       "size": 33,
+       "tag": "p"
+      },
+      "left": 34,
+      "right": 34,
+      "textLeft": 34,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Roadmap",
+      "size": 45,
+      "top": 91,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 39,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 15,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.77,
+    0.48,
+    0.86
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 2434,
+     "screens": 2.9,
+     "words": 16709,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Roadmap",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 33.3,
+     "vw": 8.5,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.82,
+     "top": 163,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Roadmap",
+     "words": 1,
+     "lines": 1,
+     "size": 33.3,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.52,
+      "top": 10,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Roadmap",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 163,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Made by chimericdream",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 1494,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 48.8,
+      "vw": 12.5,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.035,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2072,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Report a bug or suggest an idea",
+      "words": 7,
+      "chars": 31,
+      "lines": 2,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2248,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 1,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      15,
+      17,
+      20,
+      28,
+      33,
+      49
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 38,
+     "max": {
+      "size": 48.8,
+      "vw": 12.5,
+      "font": "Grenze",
+      "text": "chimericdream"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 143,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#08070a",
+       "top": 742,
+       "hsl": {
+        "h": 260,
+        "s": 0.18,
+        "l": 0.03
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b3aeb8",
+       "share": 0.84
+      },
+      {
+       "color": "#eceff1",
+       "share": 0.1
+      },
+      {
+       "color": "#f0898b",
+       "share": 0.05
+      },
+      {
+       "color": "#e8c46a",
+       "share": 0
+      },
+      {
+       "color": "#7bd88f",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1f1c23",
+      "hsl": {
+       "h": 266,
+       "s": 0.11,
+       "l": 0.12
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 7,
+     "radius": 0,
+     "height": 33,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto",
+      "Medium",
+      "Maybe",
+      "Building",
+      "Exploring"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 135,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 2434,
+    "margins": {
+     "left": 34,
+     "right": 21
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 135,
+      "words": 7,
+      "media": 0,
+      "middle": 20,
+      "heading": {
+       "text": "chimericdream",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 16,
+      "right": 83,
+      "textLeft": 16,
+      "textRight": 83,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 135,
+      "height": 1293,
+      "words": 348,
+      "media": 0,
+      "middle": 775,
+      "heading": {
+       "text": "Roadmap",
+       "size": 33,
+       "tag": "h1"
+      },
+      "left": 36,
+      "right": 0,
+      "textLeft": 36,
+      "textRight": -1030,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 1468,
+      "height": 966,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Made by chimericdream",
+       "size": 28,
+       "tag": "p"
+      },
+      "left": 34,
+      "right": 34,
+      "textLeft": 34,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Roadmap",
+      "size": 33,
+      "top": 163,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 36,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 15,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "60% of the first screen is one empty block (1440×540px at 0,360).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-roadmap\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

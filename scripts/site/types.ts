@@ -11,6 +11,11 @@ export type ModInfo = {
     lastCommit: string | null;
     /** Absolute path of the mod's icon.png, if it has one. */
     iconFile: string | null;
+    /** `minecraft_compat` from the mod's gradle.properties, e.g. `26.2`. */
+    mcCompat: string;
+    /** Other mods it needs or recommends, by display name, from fabric.mod.json. */
+    requires: string[];
+    recommends: string[];
 };
 
 export type IdeasInfo = {

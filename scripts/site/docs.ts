@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import {Marked} from 'marked';
 
-import {modLinksList, shell, type ModLinks} from './layout.ts';
+import {modLinksList, reading, shell, type ModLinks} from './layout.ts';
 import type {ModInfo} from './types.ts';
 import {esc, REPO_ROOT, REPO_URL, relUrl, slugger} from './util.ts';
 
@@ -155,7 +155,7 @@ export const docPage = (doc: Doc, body: string, title: string, links: ModLinks, 
         url: doc.url,
         crumbs: [`<a href="${esc(relUrl(doc.url, links.overview))}">${esc(doc.mod.name)}</a>`],
         side,
-        body: `<article>${body}</article><p class="edit-link"><a href="${REPO_URL}/blob/main/${esc(doc.key)}">View source on GitHub</a></p>`,
+        body: `${reading(`<article class="prose">${body}</article>`)}<p class="edit-link"><a href="${REPO_URL}/blob/main/${esc(doc.key)}">View source on GitHub</a></p>`,
     });
 };
 

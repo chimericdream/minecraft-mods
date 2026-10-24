@@ -1,0 +1,1870 @@
+{
+ "url": "http://127.0.0.1:4000/mods/minekea/changelog/",
+ "at": "2026-10-24T00:54:30.361Z",
+ "allow": [
+  "focal-point",
+  "few-pictures",
+  "still-page",
+  "no-footage",
+  "name-only-title",
+  "font-count",
+  "eyebrow",
+  "off-centre",
+  "edge-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.85,
+    0.83,
+    0.81,
+    0.83,
+    0.83,
+    0.83,
+    0.71,
+    0.82,
+    0.83,
+    0.83,
+    0.81,
+    0.92
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 10412,
+     "screens": 11.6,
+     "words": 1881,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 64,
+     "vw": 4.4,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.47,
+     "top": 154,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 64,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "This mod",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.16,
+      "top": 91,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 154,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Unreleased changes",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 259,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.3.1",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 330,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.3.0",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 537,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.2.0",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 913,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.1.0",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 1339,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.0.1",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 2688,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.2 - 10.0.0",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 2971,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "26.1.2 - 9.0.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 3346,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.21.x - 7.0.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 5333,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.21.x - 6.1.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 5621,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.21.x - 6.0.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 6204,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.21.x - 5.2.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 6897,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.21.x - 5.1.0",
+      "words": 3,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 7392,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19.1-2 - 4.0.2",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 7675,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19.1-2 - 4.0.1",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 7823,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19.1-2 - 4.0.0",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 8000,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19 - 3.4.0",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 8113,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19 - 3.3.3",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 8584,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19 - 3.3.2",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 8795,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19 - 3.3.1",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 8976,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "1.19 - 3.3.0",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 9154,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Made by chimericdream",
+      "words": 3,
+      "chars": 21,
+      "lines": 2,
+      "size": 43.8,
+      "vw": 3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 9830,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Source on GitHub",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Source Serif 4",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 10024,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 129.6,
+      "vw": 9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.035,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.65,
+      "top": 10092,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Report a bug or suggest an idea",
+      "words": 7,
+      "chars": 31,
+      "lines": 2,
+      "size": 43.8,
+      "vw": 3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.32,
+      "top": 10092,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 28,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0.06,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      16,
+      17,
+      19,
+      28,
+      30,
+      44,
+      64,
+      130
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 129.6,
+      "vw": 9,
+      "font": "Grenze",
+      "text": "chimericdream"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 69,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.99
+      },
+      {
+       "color": "#f0898b",
+       "share": 0.01
+      },
+      {
+       "color": "#b3aeb8",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#2a262e",
+      "hsl": {
+       "h": 270,
+       "s": 0.1,
+       "l": 0.16
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 41,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 61,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 10412,
+    "margins": {
+     "left": 40,
+     "right": 108
+    },
+    "sections": [
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 61,
+      "height": 9698,
+      "words": 1908,
+      "media": 0,
+      "middle": 196,
+      "heading": {
+       "text": "Changelog",
+       "size": 64,
+       "tag": "h1"
+      },
+      "left": 40,
+      "right": 428,
+      "textLeft": 40,
+      "textRight": 428,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 9798,
+      "height": 614,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "chimericdream",
+       "size": 130,
+       "tag": "span"
+      },
+      "left": 44,
+      "right": 44,
+      "textLeft": 44,
+      "textRight": 50,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 64,
+      "top": 154,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 341,
+      "n": 24
+     },
+     {
+      "x": 40,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 25,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.25,
+    "voidBox": {
+     "x": 1020,
+     "y": 120,
+     "w": 420,
+     "h": 780
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 10,
+   "filled": [
+    0.96,
+    0.94,
+    0.94,
+    0.96,
+    0.96,
+    0.85,
+    0.94,
+    0.96,
+    0.96,
+    0.74
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 9958,
+     "screens": 9.7,
+     "words": 1876,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 45.4,
+     "vw": 5.9,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.83,
+     "top": 208,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 45.4,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 12,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 208,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Made by chimericdream",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 4.3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.91,
+      "top": 9125,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 69.1,
+      "vw": 9,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.035,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 9594,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Report a bug or suggest an idea",
+      "words": 7,
+      "chars": 31,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 4.3,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 9772,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0.06,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      15,
+      16,
+      18,
+      24,
+      28,
+      33,
+      45,
+      69
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 67,
+     "max": {
+      "size": 69.1,
+      "vw": 9,
+      "font": "Grenze",
+      "text": "chimericdream"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 144,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.99
+      },
+      {
+       "color": "#f0898b",
+       "share": 0.01
+      },
+      {
+       "color": "#b3aeb8",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#2a262e",
+      "hsl": {
+       "h": 270,
+       "s": 0.1,
+       "l": 0.16
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 40,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 9958,
+    "margins": {
+     "left": 34,
+     "right": 89
+    },
+    "sections": [
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 60,
+      "height": 8999,
+      "words": 1903,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 45,
+       "tag": "h1"
+      },
+      "left": 36,
+      "right": 89,
+      "textLeft": 36,
+      "textRight": 89,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 9099,
+      "height": 859,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Made by chimericdream",
+       "size": 33,
+       "tag": "p"
+      },
+      "left": 34,
+      "right": 34,
+      "textLeft": 34,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 45,
+      "top": 208,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 39,
+      "n": 24
+     }
+    ],
+    "leftBlocks": 24,
+    "bodySize": 18,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.87,
+    0.92,
+    0.92,
+    0.81,
+    0.85,
+    0.92,
+    0.92,
+    0.92,
+    0.92,
+    0.91,
+    0.83,
+    0.86
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 14051,
+     "screens": 16.6,
+     "words": 1876,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 33.3,
+     "vw": 8.5,
+     "font": "Grenze",
+     "weight": 800,
+     "tracking": -0.015,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.82,
+     "top": 277,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 33.3,
+     "font": "Grenze"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.52,
+      "top": 10,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 277,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Made by chimericdream",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 13111,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 48.8,
+      "vw": 12.5,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": -0.035,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 13689,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Report a bug or suggest an idea",
+      "words": 7,
+      "chars": 31,
+      "lines": 2,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Grenze",
+      "weight": 800,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 13865,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "Grenze",
+       "share": 0.06,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      15,
+      17,
+      20,
+      28,
+      33,
+      49
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.1
+     },
+     "measureChars": 33,
+     "max": {
+      "size": 48.8,
+      "vw": 12.5,
+      "font": "Grenze",
+      "text": "chimericdream"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#08070a",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.18,
+      "l": 0.03
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#141217",
+       "top": 215,
+       "hsl": {
+        "h": 264,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.99
+      },
+      {
+       "color": "#f0898b",
+       "share": 0.01
+      },
+      {
+       "color": "#b3aeb8",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#2a262e",
+      "hsl": {
+       "h": 270,
+       "s": 0.1,
+       "l": 0.16
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 40,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Theme: Auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 135,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "grenze",
+     "source serif 4"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 14051,
+    "margins": {
+     "left": 34,
+     "right": 36
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 135,
+      "words": 7,
+      "media": 0,
+      "middle": 20,
+      "heading": {
+       "text": "chimericdream",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 16,
+      "right": 83,
+      "textLeft": 16,
+      "textRight": 83,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout",
+      "tag": "div",
+      "top": 135,
+      "height": 12909,
+      "words": 1903,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 33,
+       "tag": "h1"
+      },
+      "left": 36,
+      "right": 36,
+      "textLeft": 36,
+      "textRight": 36,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 13085,
+      "height": 966,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Made by chimericdream",
+       "size": 28,
+       "tag": "p"
+      },
+      "left": 34,
+      "right": 34,
+      "textLeft": 34,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 33,
+      "top": 277,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 36,
+      "n": 24
+     }
+    ],
+    "leftBlocks": 24,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\desktop-page-02.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\tablet-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\inspect-modchangelog\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
