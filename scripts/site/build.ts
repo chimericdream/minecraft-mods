@@ -1,4 +1,4 @@
-import {copyFileSync, rmSync} from 'node:fs';
+import {copyFileSync, cpSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
@@ -8,6 +8,7 @@ import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
 import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
+import {ASSET_DIR} from './media.ts';
 import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
 import {collectMods} from './mods.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
@@ -56,6 +57,9 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
             copyFileSync(mod.iconFile, dest);
         }
     }
+
+    // Pictures, footage, fonts and the logo the design uses. The credits manifests stay out of the output.
+    cpSync(ASSET_DIR, path.join(outDir, 'assets'), {recursive: true, filter: src => !src.endsWith('.json')});
 
     for (const [folder, guide] of guides) {
         for (const page of guide.pages) {

@@ -98,17 +98,17 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
 
 const CSS = `
 .filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
-.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
-input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
+.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:14px}
+input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:0;background:var(--card);color:var(--fg)}
 input[type=search]{min-width:240px}
-.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:12px;padding:1px 9px;background:var(--card);font-size:12px}
+.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:0;padding:1px 9px;background:var(--card);font-size:14px}
 .pill.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:3px 10px;cursor:pointer}
-.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+button{font:inherit;font-size:14px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:0;padding:3px 10px;cursor:pointer}
+.wrap{overflow:auto;border:1px solid var(--line);border-radius:0;background:var(--card)}
 table{border-collapse:collapse;width:100%}th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px;color:var(--muted)}
+th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:14px;color:var(--muted)}
 th.asc::after{content:" ↑";color:var(--accent)}th.desc::after{content:" ↓";color:var(--accent)}
-td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:12.5px}
+td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:15px}
 td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .vote-Yes{color:var(--good);font-weight:600}.vote-Maybe{color:var(--warn);font-weight:600}.vote-No{color:var(--bad)}
 .stars{color:var(--warn);letter-spacing:1px}

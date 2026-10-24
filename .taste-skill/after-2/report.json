@@ -1,0 +1,1950 @@
+{
+ "url": "http://localhost:4000/",
+ "at": "2026-10-24T03:38:52.182Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.44,
+    0.17,
+    0.15,
+    0.17,
+    0.14,
+    0.29,
+    0.33,
+    0.34,
+    0.13,
+    0.37,
+    0.92
+   ],
+   "motion": {
+    "elements": 14,
+    "css": 2,
+    "transitions": 12,
+    "scripted": 0,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 9604,
+     "screens": 10.7,
+     "words": 514,
+     "img": 15,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 8,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "the-alchemist-s-laboratory-from-heinrich-khunrat",
+      "distillatio-scene-in-an-alchemist-laboratory.jpg",
+      "chest-met-sf57-144-3s4.jpg",
+      "woodwork-a-mechanical-band-saw-engraving-after.j",
+      "cassone-chest-pair-with-1975-1-1947.jpg",
+      "rotulum-hieroglyphicum-g-riplaei-equitis-aurati.",
+      "mountain-ridge-in-mist.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "chars": 33,
+     "lines": 2,
+     "size": 64,
+     "vw": 4.4,
+     "font": "Sentient",
+     "weight": 300,
+     "tracking": -0.015,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.51,
+     "top": 504,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "lines": 2,
+     "size": 64,
+     "font": "Sentient"
+    },
+    "headings": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "words": 6,
+      "chars": 33,
+      "lines": 2,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.51,
+      "top": 504,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 1313,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 2243,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.18,
+      "top": 3113,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.18,
+      "top": 4013,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "The other 30 mods",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.28,
+      "top": 4730,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Where the pages come from",
+      "words": 5,
+      "chars": 25,
+      "lines": 2,
+      "size": 56,
+      "vw": 3.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 7345,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Chimeric Mods",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 178.6,
+      "vw": 12.4,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.03,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 9063,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Sentient",
+       "share": 1,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      13,
+      15,
+      17,
+      19,
+      26,
+      56,
+      64,
+      179
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Sentient",
+      "size": 19.2,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17
+     },
+     "measureChars": 91,
+     "max": {
+      "size": 178.6,
+      "vw": 12.4,
+      "font": "Sentient",
+      "text": "Chimeric Mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0a10",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.23,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#161220",
+       "top": 155,
+       "hsl": {
+        "h": 257,
+        "s": 0.28,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#8b1a1a",
+       "top": 8704,
+       "hsl": {
+        "h": 0,
+        "s": 0.68,
+        "l": 0.32
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.73
+      },
+      {
+       "color": "#e26b6b",
+       "share": 0.17
+      },
+      {
+       "color": "#b9b2c4",
+       "share": 0.09
+      },
+      {
+       "color": "#e3b341",
+       "share": 0.01
+      },
+      {
+       "color": "#56d364",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Find a mod"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 7,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 5217
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.32
+     },
+     {
+      "type": "img",
+      "ratio": 0.32
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 80,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "sentient"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 9604,
+    "margins": {
+     "left": 60,
+     "right": 122
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 80,
+      "height": 830,
+      "words": 35,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Minecraft mods, each with a guide",
+       "size": 64,
+       "tag": "h1"
+      },
+      "left": 100,
+      "right": 144,
+      "textLeft": 100,
+      "textRight": 706,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.frames",
+      "tag": "section",
+      "top": 910,
+      "height": 3600,
+      "words": 77,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 56,
+       "tag": "h2"
+      },
+      "left": 60,
+      "right": 515,
+      "textLeft": 130,
+      "textRight": 515,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#mods.lineup-section",
+      "tag": "section",
+      "top": 4510,
+      "height": 2615,
+      "words": 219,
+      "media": 0,
+      "middle": 142,
+      "heading": {
+       "text": "The other 30 mods",
+       "size": 56,
+       "tag": "h2"
+      },
+      "left": 100,
+      "right": 126,
+      "textLeft": 100,
+      "textRight": 126,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.how",
+      "tag": "section",
+      "top": 7125,
+      "height": 1579,
+      "words": 84,
+      "media": 0,
+      "middle": 157,
+      "heading": {
+       "text": "Where the pages come from",
+       "size": 56,
+       "tag": "h2"
+      },
+      "left": 100,
+      "right": 126,
+      "textLeft": 220,
+      "textRight": 126,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.site-end",
+      "tag": "section",
+      "top": 8704,
+      "height": 900,
+      "words": 148,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Chimeric Mods",
+       "size": 179,
+       "tag": "h2"
+      },
+      "left": 60,
+      "right": 60,
+      "textLeft": 100,
+      "textRight": 120,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "size": 64,
+      "top": 504,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 100,
+      "n": 5
+     },
+     {
+      "x": 130,
+      "n": 2
+     },
+     {
+      "x": 220,
+      "n": 2
+     },
+     {
+      "x": 335,
+      "n": 2
+     },
+     {
+      "x": 421,
+      "n": 2
+     },
+     {
+      "x": 501,
+      "n": 2
+     },
+     {
+      "x": 686,
+      "n": 2
+     },
+     {
+      "x": 315,
+      "n": 1
+     },
+     {
+      "x": 732,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.2,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 720,
+     "h": 360
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.14,
+    0.49,
+    0.49,
+    0.49,
+    0.49,
+    0.31,
+    0.39,
+    0.74,
+    0.65,
+    0.6,
+    1
+   ],
+   "motion": {
+    "elements": 14,
+    "css": 2,
+    "transitions": 12,
+    "scripted": 0,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 11006,
+     "screens": 10.7,
+     "words": 514,
+     "img": 15,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 11,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "the-alchemist-s-laboratory-from-heinrich-khunrat",
+      "distillatio-scene-in-an-alchemist-laboratory.jpg",
+      "chest-met-sf57-144-3s4.jpg",
+      "woodwork-a-mechanical-band-saw-engraving-after.j",
+      "cassone-chest-pair-with-1975-1-1947.jpg",
+      "rotulum-hieroglyphicum-g-riplaei-equitis-aurati.",
+      "distillatio-scene-in-an-alchemist-laboratory.jpg",
+      "blacksmith-at-the-anvil.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "chars": 33,
+     "lines": 1,
+     "size": 45.3,
+     "vw": 5.9,
+     "font": "Sentient",
+     "weight": 300,
+     "tracking": -0.015,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.94,
+     "top": 623,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "lines": 1,
+     "size": 45.3,
+     "font": "Sentient"
+    },
+    "headings": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "words": 6,
+      "chars": 33,
+      "lines": 1,
+      "size": 45.3,
+      "vw": 5.9,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 623,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 1631,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 2683,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 3707,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 4731,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "The other 30 mods",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 5131,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Where the pages come from",
+      "words": 5,
+      "chars": 25,
+      "lines": 1,
+      "size": 40.8,
+      "vw": 5.3,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 7482,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Chimeric Mods",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 95.2,
+      "vw": 12.4,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.03,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 10544,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Sentient",
+       "share": 1,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      13,
+      15,
+      16,
+      17,
+      18,
+      22,
+      41,
+      45,
+      95
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Sentient",
+      "size": 17.9,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17
+     },
+     "measureChars": 91,
+     "max": {
+      "size": 95.2,
+      "vw": 12.4,
+      "font": "Sentient",
+      "text": "Chimeric Mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0a10",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.23,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#161220",
+       "top": 103,
+       "hsl": {
+        "h": 257,
+        "s": 0.28,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#8b1a1a",
+       "top": 9982,
+       "hsl": {
+        "h": 0,
+        "s": 0.68,
+        "l": 0.32
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.73
+      },
+      {
+       "color": "#e26b6b",
+       "share": 0.17
+      },
+      {
+       "color": "#b9b2c4",
+       "share": 0.09
+      },
+      {
+       "color": "#e3b341",
+       "share": 0.01
+      },
+      {
+       "color": "#56d364",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Find a mod"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 11,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.49
+     },
+     {
+      "type": "img",
+      "ratio": 0.49
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 80,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "sentient"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 11006,
+    "margins": {
+     "left": 23,
+     "right": 33
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 80,
+      "height": 832,
+      "words": 35,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 23,
+      "right": 33,
+      "textLeft": 23,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "article.frame",
+      "tag": "article",
+      "top": 912,
+      "height": 1024,
+      "words": 24,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 43,
+      "right": 76,
+      "textLeft": 43,
+      "textRight": 76,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.frame",
+      "tag": "article",
+      "top": 1936,
+      "height": 1024,
+      "words": 13,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 43,
+      "right": 305,
+      "textLeft": 43,
+      "textRight": 305,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.frame",
+      "tag": "article",
+      "top": 2960,
+      "height": 1024,
+      "words": 22,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 43,
+      "right": 59,
+      "textLeft": 43,
+      "textRight": 59,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.frame",
+      "tag": "article",
+      "top": 3984,
+      "height": 1024,
+      "words": 18,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 43,
+      "right": 167,
+      "textLeft": 43,
+      "textRight": 167,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.lineup-head.reveal",
+      "tag": "div",
+      "top": 5131,
+      "height": 247,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 23,
+      "right": 74,
+      "textLeft": 23,
+      "textRight": 74,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "table.lineup-table",
+      "tag": "table",
+      "top": 5378,
+      "height": 1981,
+      "words": 193,
+      "media": 0,
+      "middle": 28,
+      "heading": null,
+      "left": 23,
+      "right": 49,
+      "textLeft": 23,
+      "textRight": 49,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.stage.stage-1",
+      "tag": "div",
+      "top": 7572,
+      "height": 1082,
+      "words": 28,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 23,
+      "right": 23,
+      "textLeft": 23,
+      "textRight": 112,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.stage.stage-2",
+      "tag": "div",
+      "top": 8751,
+      "height": 567,
+      "words": 27,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Built on every change",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 23,
+      "right": 23,
+      "textLeft": 23,
+      "textRight": 129,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.stage.stage-3",
+      "tag": "div",
+      "top": 9414,
+      "height": 472,
+      "words": 24,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Read before you install",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 23,
+      "right": 70,
+      "textLeft": 23,
+      "textRight": 70,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.site-end",
+      "tag": "section",
+      "top": 9982,
+      "height": 1024,
+      "words": 148,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 23,
+      "right": 94,
+      "textLeft": 23,
+      "textRight": 94,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "size": 45,
+      "top": 623,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 23,
+      "n": 12
+     },
+     {
+      "x": 43,
+      "n": 7
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 18,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.13,
+    0.34,
+    0.33,
+    0.38,
+    0.33,
+    0.46,
+    0.59,
+    0.55,
+    0.38,
+    0.38,
+    0.59,
+    0.59
+   ],
+   "motion": {
+    "elements": 14,
+    "css": 2,
+    "transitions": 12,
+    "scripted": 0,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 551,
+     "h": 1193
+    },
+    "page": {
+     "height": 9573,
+     "screens": 8,
+     "words": 483,
+     "img": 15,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 10,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "the-alchemist-s-laboratory-from-heinrich-khunrat",
+      "distillatio-scene-in-an-alchemist-laboratory.jpg",
+      "woodwork-a-mechanical-band-saw-engraving-after.j",
+      "cassone-chest-pair-with-1975-1-1947.jpg",
+      "rotulum-hieroglyphicum-g-riplaei-equitis-aurati.",
+      "distillatio-scene-in-an-alchemist-laboratory.jpg",
+      "blacksmith-at-the-anvil.jpg",
+      "rotulum-hieroglyphicum-g-riplaei-equitis-aurati."
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "chars": 33,
+     "lines": 2,
+     "size": 36,
+     "vw": 6.5,
+     "font": "Sentient",
+     "weight": 300,
+     "tracking": -0.015,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.64,
+     "top": 702,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft mods, each with a guide",
+     "words": 6,
+     "lines": 2,
+     "size": 36,
+     "font": "Sentient"
+    },
+    "headings": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "words": 6,
+      "chars": 33,
+      "lines": 2,
+      "size": 36,
+      "vw": 6.5,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 702,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 1586,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 2483,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 3274,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 4144,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "The other 30 mods",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 4548,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Where the pages come from",
+      "words": 5,
+      "chars": 25,
+      "lines": 2,
+      "size": 32,
+      "vw": 5.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.015,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 7002,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Chimeric Mods",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 48.4,
+      "vw": 8.8,
+      "font": "Sentient",
+      "weight": 300,
+      "tracking": -0.03,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.71,
+      "top": 9012,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Sentient",
+       "share": 1,
+       "mono": false
+      },
+      {
+       "family": "monospace",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      13,
+      14,
+      15,
+      17,
+      20,
+      32,
+      36,
+      48
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Sentient",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 48.4,
+      "vw": 8.8,
+      "font": "Sentient",
+      "text": "Chimeric Mods"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0a10",
+     "bodyBgHsl": {
+      "h": 260,
+      "s": 0.23,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#8b1a1a",
+       "top": 8729,
+       "hsl": {
+        "h": 0,
+        "s": 0.68,
+        "l": 0.32
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.77
+      },
+      {
+       "color": "#e26b6b",
+       "share": 0.18
+      },
+      {
+       "color": "#b9b2c4",
+       "share": 0.04
+      },
+      {
+       "color": "#e3b341",
+       "share": 0.01
+      },
+      {
+       "color": "#56d364",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#eceff1"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Find a mod"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 10,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.15
+     },
+     {
+      "type": "img",
+      "ratio": 0.15
+     }
+    ],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 162,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "sentient"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 551,
+     "h": 1193
+    },
+    "pageH": 9573,
+    "margins": {
+     "left": 0,
+     "right": 26
+    },
+    "sections": [
+     {
+      "sel": "header.site-bar",
+      "tag": "header",
+      "top": 0,
+      "height": 162,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 335,
+      "textLeft": 20,
+      "textRight": 335,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 162,
+      "height": 9411,
+      "words": 532,
+      "media": 9,
+      "middle": 0,
+      "heading": {
+       "text": "Minecraft mods, each with a guide",
+       "size": 36,
+       "tag": "h1"
+      },
+      "left": 0,
+      "right": 16,
+      "textLeft": 20,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft mods, each with a guide",
+      "size": 36,
+      "top": 702,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Every mod has an overview, a changelog and, where ",
+      "side": "right",
+      "px": 16
+     }
+    ],
+    "edges": [
+     {
+      "x": 20,
+      "n": 12
+     },
+     {
+      "x": 40,
+      "n": 7
+     }
+    ],
+    "leftBlocks": 19,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "measure",
+   "width": 1440,
+   "message": "Longest paragraph runs about 91 characters per line.",
+   "fix": "Cap paragraphs at 45–75 characters (max-width: 60ch).",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 60px on the left, 122px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "ragged-edges",
+   "width": 1440,
+   "message": "Left-aligned text starts at 9 different lines (100px, 130px, 220px, 335px, 421px, 501px, 686px); the three most used hold only 47% of it.",
+   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them."
+  },
+  {
+   "level": "FAIL",
+   "id": "empty-screens",
+   "width": 1440,
+   "message": "5 of 11 desktop screens are almost empty ground (under 20% of the screen holds text, a picture or a colour field): screens 2, 3, 4, 5, 9.",
+   "fix": "An empty screen is a rest only once per page. Elsewhere it means the section is underbuilt: set its content larger, give it the full information, put it on a colour field, or cut it."
+  },
+  {
+   "level": "WARN",
+   "id": "edge-text",
+   "width": 390,
+   "message": "1 text block(s) sit 12–15px from the phone's edge: \"Every mod has an overview, a c\" (16px)",
+   "fix": "The page margin is 16–20px on a phone; the header and the corner labels sit on it too."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\desktop-page-02.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\tablet-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after-2\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
