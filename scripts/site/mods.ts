@@ -33,6 +33,8 @@ const findIcon = (folder: string, modId: string): string | null => {
 export const collectMods = async (): Promise<ModInfo[]> =>
     Promise.all((projectList as string[]).map(async (folder): Promise<ModInfo> => {
         const props = await loadProperties(folder);
+        const projectId = readFileSync(path.join(REPO_ROOT, folder, 'gradle.properties'), 'utf8')
+            .match(/^curseforge_project_id\s*=\s*(\d+)/m)?.[1];
         const latestTag = (await git('tag', '-l', `${folder}/*`, '--sort=-creatordate')).split('\n')[0] || null;
         const lastCommit = (await git('log', '-1', '--format=%cI', '--', folder)) || null;
 
@@ -47,5 +49,9 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             latestTag,
             lastCommit,
             iconFile: findIcon(folder, props.mod_id),
+            loaders: props.enabled_platforms.split(',').map(p => p.trim()).filter(Boolean)
+                .map(p => p === 'neoforge' ? 'NeoForge' : p === 'fabric' ? 'Fabric' : p),
+            minecraft: props.minecraft_compat,
+            downloadUrl: projectId ? `https://www.curseforge.com/projects/${projectId}/files` : null,
         };
     }));

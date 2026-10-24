@@ -1,0 +1,30 @@
+{
+  "pages": 630,
+  "internalReferences": 20479,
+  "broken": [],
+  "checks": [
+    "34 mods, four features, and 30 initial index entries",
+    "Name search ranks Minekea first, including featured mods",
+    "Feature search finds upward hoppers from README content",
+    "No-results feedback and live count",
+    "Pre-release filter and reset to the alphabetical 30-mod index",
+    "Slash shortcut can focus the search field",
+    "Dark theme changes the rendered ground",
+    "Theme persists across navigation and download is generated from project metadata",
+    "System theme returns to the OS preference",
+    "Phone guide navigation collapses, opens by its native summary, and marks the current chapter",
+    "Guide tree remains open when resized to desktop",
+    "All 216 ideas render",
+    "Roadmap mod filtering works",
+    "Roadmap filter buttons expose their pressed state",
+    "Roadmap sort buttons expose the active sort",
+    "Phone advanced filters open natively and the idea table begins on the first screen",
+    "The full roadmap scrolls inside its region without overflowing the phone page",
+    "Reduced motion leaves the complete page visible without active animations",
+    "No browser JavaScript exceptions",
+    "No-JavaScript fallback retains the four features and 30-mod index"
+  ],
+  "cssBytes": 19140,
+  "jsBytes": 3906,
+  "homeBytes": 153192
+}

@@ -12,6 +12,7 @@ import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './page
 import {collectMods} from './mods.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
+import {SITE_JS} from './client.ts';
 
 export const OUT_DIR = path.join(REPO_ROOT, 'site', 'dist');
 
@@ -81,6 +82,12 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
     writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    const logo = path.join(outDir, 'brand', 'logo.svg');
+    writeFile(logo, '');
+    copyFileSync(path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg'), logo);
+    copyFileSync(path.join(REPO_ROOT, 'minekea', 'common', 'src', 'main', 'resources', 'assets', 'minekea', 'textures', 'item', 'minekea_catalogue.png'),
+        path.join(outDir, 'brand', 'minekea-catalogue.png'));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 

@@ -67,7 +67,7 @@ const parseIdea = (mod: ModInfo, theme: string, file: string): IdeaRow => {
         shortlist: shortlist ? Number(shortlist) : null,
         tier: grab(/Tier\s+(\d)/) ? Number(grab(/Tier\s+(\d)/)) : null,
         effort: grab(/Effort\s+\*\*([^*]+)\*\*/) ?? '—',
-        value: (grab(/Value\s+(★+)/) ?? '').length,
+        value: (grab(/Value\s+(\u2605+)/) ?? '').length,
         votes: votes ? Number(votes) : null,
         vote: (grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '—').match(/^(Yes|Maybe|No)(?![a-z])/i)?.[1] ?? '—',
         voteNote: grab(/My vote\s+\*\*([^*]+)\*\*/) ?? '',
@@ -97,22 +97,27 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
 };
 
 const CSS = `
-.filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
-.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
-input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
-input[type=search]{min-width:240px}
-.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:12px;padding:1px 9px;background:var(--card);font-size:12px}
-.pill.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:3px 10px;cursor:pointer}
-.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-table{border-collapse:collapse;width:100%}th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px;color:var(--muted)}
-th.asc::after{content:" ↑";color:var(--accent)}th.desc::after{content:" ↓";color:var(--accent)}
-td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:12.5px}
-td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.filters{display:flex;flex-wrap:wrap;gap:20px 24px;align-items:center;margin:32px 0;font:14px/1.5 'Work Sans',sans-serif;padding:24px;background:var(--soft)}
+.filters fieldset{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-width:0}.filters legend{float:left;margin-right:10px;color:var(--muted);font-size:14px}
+.filters fieldset>span{display:flex;flex-wrap:wrap;gap:5px}
+.extra-filters{flex-basis:100%;min-width:0}.extra-filters>summary{display:none}.filter-groups{display:flex;flex-wrap:wrap;gap:20px 24px;align-items:center}
+.filters input[type=search],.filters select{padding:10px 14px;border:0;border-radius:0;background:var(--paper);color:var(--fg);min-height:44px;font-size:15px;max-width:100%}
+.filters input[type=search]{flex:1;min-width:200px}
+.filters button{font:14px/1.5 'Work Sans',sans-serif;background:var(--paper);border:0;color:var(--fg);padding:9px 12px;min-height:40px;cursor:pointer}
+.filters .pill.on{background:var(--action);color:var(--action-ink)}
+.wrap{overflow:auto;background:var(--paper);max-width:100%;scrollbar-width:thin}
+.wrap table{border-collapse:collapse;width:100%;font:14px/1.5 'Work Sans',sans-serif}
+.wrap th,.wrap td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.wrap th{position:sticky;top:0;background:var(--soft);white-space:nowrap;font-weight:500}
+.wrap th button{border:0;padding:0;background:none;font:inherit;color:var(--fg);cursor:pointer;min-height:32px;text-align:left}
+.wrap th.asc button::after{content:' ↑';color:var(--accent)}.wrap th.desc button::after{content:' ↓';color:var(--accent)}
+.wrap td.n{white-space:nowrap}.wrap td:first-child{min-width:220px}.wrap td.sum{min-width:280px;max-width:420px;font-size:14px}
+.wrap td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .vote-Yes{color:var(--good);font-weight:600}.vote-Maybe{color:var(--warn);font-weight:600}.vote-No{color:var(--bad)}
-.stars{color:var(--warn);letter-spacing:1px}
-tr:hover td{background:var(--bg)}
+.stars{color:var(--warn);font-variant-numeric:tabular-nums}
+.wrap tr:hover td{background:var(--soft)}
+.table-hint{font:14px/1.6 'Work Sans',sans-serif;color:var(--muted)}
+@media(max-width:760px){.filters{padding:18px;gap:20px}.filters input[type=search]{flex-basis:100%}.filters>select{flex:1;min-width:0}.filters fieldset{flex-basis:100%}.filters button{min-height:44px}.extra-filters>summary{display:list-item;cursor:pointer;padding:10px 0;min-height:44px}.filter-groups{padding-top:20px}.wrap th,.wrap td{padding:12px}.wrap td:first-child{min-width:190px}}
 `;
 
 const JS = String.raw`
@@ -122,7 +127,7 @@ const rows=JSON.parse(document.getElementById('data').textContent);
 const $=id=>document.getElementById(id);
 const ORDER={effort:['S','M','L','XL'],vote:['Yes','Maybe','No']};
 const COLS=[
-  ['modName','Mod'],['theme','Theme'],['title','Idea'],['shortlist','#'],['tier','Tier'],['effort','Effort'],
+  ['title','Idea'],['modName','Mod'],['theme','Theme'],['shortlist','#'],['tier','Tier'],['effort','Effort'],
   ['value','Value'],['votes','Votes'],['vote','My vote'],['status','Status'],['openQuestions','Open Qs'],['summary','Summary']];
 const state={q:'',mod:'',theme:'',effort:new Set(),value:new Set(),vote:new Set(),status:new Set(),tier:new Set(),sort:'modName',dir:1};
 const uniq=k=>[...new Set(rows.map(r=>r[k]))];
@@ -133,11 +138,11 @@ const mods=[...new Map(rows.map(r=>[r.mod,r.modName]))].sort((a,b)=>a[1].localeC
 $('mod').innerHTML='<option value="">all mods</option>'+mods.map(([f,n])=>'<option value="'+f+'">'+n+'</option>').join('');
 const pills=(id,key,vals,label)=>{
   const el=$(id);
-  vals.forEach(v=>{const b=document.createElement('span');b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;
-    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));render()};el.appendChild(b)});
+  vals.forEach(v=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed','false');b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;
+    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));b.setAttribute('aria-pressed',String(s.has(x)));render()};el.appendChild(b)});
 };
 pills('f-effort','effort',uniq('effort').sort((a,b)=>rank('effort',a)-rank('effort',b)||a.localeCompare(b)));
-pills('f-value','value',[3,2,1],v=>'★'.repeat(v));
+pills('f-value','value',[3,2,1],v=>v+'/3');
 pills('f-vote','vote',[...ORDER.vote,'—']);
 pills('f-tier','tier',[1,2,3],v=>'T'+v);
 pills('f-status','status',uniq('status').sort());
@@ -150,8 +155,8 @@ fillThemes();
 
 // --- header
 const head=$('head');
-COLS.forEach(([k,label])=>{const th=document.createElement('th');th.textContent=label;th.dataset.k=k;
-  th.onclick=()=>{if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=1}render()};head.appendChild(th)});
+COLS.forEach(([k,label])=>{const th=document.createElement('th');th.scope='col';th.dataset.k=k;const button=document.createElement('button');button.type='button';button.textContent=label;button.setAttribute('aria-label','Sort by '+label);th.appendChild(button);
+  button.onclick=()=>{if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=1}render()};head.appendChild(th)});
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const cmp=(a,b)=>{
@@ -176,11 +181,11 @@ const match=r=>{
 function render(){
   const out=rows.filter(match).sort(cmp);
   $('count').textContent=out.length+' of '+rows.length+' ideas';
-  head.querySelectorAll('th').forEach(th=>th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'');
-  $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
-    '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
+  head.querySelectorAll('th').forEach(th=>{const selected=th.dataset.k===state.sort;th.className=selected?(state.dir>0?'asc':'desc'):'';th.setAttribute('aria-sort',selected?(state.dir>0?'ascending':'descending'):'none')});
+  $('body').innerHTML=out.map(r=>'<tr><td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td>'+
+    '<td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
-    '<td class="n stars">'+'★'.repeat(r.value)+'</td><td class="n">'+(r.votes??'—')+'</td>'+
+    '<td class="n stars">'+(r.value+'/3')+'</td><td class="n">'+(r.votes??'—')+'</td>'+
     '<td class="n vote-'+esc(r.vote)+'" title="'+esc(r.voteNote)+'">'+esc(r.vote)+'</td><td class="n">'+esc(r.status)+'</td>'+
     '<td class="n">'+(r.openQuestions||'')+'</td><td class="sum"><div title="'+esc(r.summary)+'">'+esc(r.summary)+'</div></td></tr>').join('');
   save();
@@ -201,13 +206,16 @@ function save(){
     const x=['value','tier'].includes(k)?Number(v):v;state[k].add(x)});
   const s=p.get('sort');if(s){state.dir=s.endsWith('-')?-1:1;state.sort=s.replace(/-$/,'')}
   $('q').value=state.q;$('mod').value=state.mod;$('theme').value=state.theme;
-  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v))});
+  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v));b.setAttribute('aria-pressed',String(state[k].has(v)))});
 })();
 $('q').oninput=e=>{state.q=e.target.value;render()};
 $('mod').onchange=e=>{state.mod=e.target.value;fillThemes();render()};
 $('theme').onchange=e=>{state.theme=e.target.value;render()};
 $('reset').onclick=()=>{location.hash='';location.reload()};
-document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();$('q').focus()}});
+const narrow=matchMedia('(max-width:760px)');
+$('advanced-filters').open=!narrow.matches;
+narrow.addEventListener('change',e=>{$('advanced-filters').open=!e.matches});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('q').focus()}});
 render();
 })();
 `;
@@ -220,17 +228,19 @@ export const ideasPage = (rows: IdeaRow[]): string => {
         wide: true,
         head: `<style>${CSS}</style>`,
         body: `<h1>Roadmap</h1>
-<p class="muted">Every active feature idea across the mods. <span id="count"></span></p>
+<p class="muted">Every active feature idea across the mods. <span id="count" role="status" aria-live="polite"></span></p>
 <div class="filters">
 <input type="search" id="q" placeholder="Search ideas ( / )" aria-label="Search ideas">
 <select id="mod" aria-label="Mod"></select><select id="theme" aria-label="Theme"></select>
+<details class="extra-filters" id="advanced-filters" open><summary>More filters</summary><div class="filter-groups">
 <fieldset><legend>Effort</legend><span id="f-effort" data-key="effort"></span></fieldset>
 <fieldset><legend>Value</legend><span id="f-value" data-key="value"></span></fieldset>
 <fieldset><legend>My vote</legend><span id="f-vote" data-key="vote"></span></fieldset>
 <fieldset><legend>Tier</legend><span id="f-tier" data-key="tier"></span></fieldset>
 <fieldset><legend>Status</legend><span id="f-status" data-key="status"></span></fieldset>
-<button type="button" id="reset">Reset</button></div>
-<div class="wrap"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+<button type="button" id="reset">Reset</button></div></details></div>
+<p class="table-hint">Choose a column heading to sort. Scroll the table sideways for votes, status, and summaries.</p>
+<div class="wrap" role="region" aria-label="Feature ideas" tabindex="0"><table aria-label="Active feature ideas"><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
 <script type="application/json" id="data">${json}</script>
 <script>${JS}</script>`,
     });

@@ -7,6 +7,7 @@ README, CHANGELOG, `ideas/` or in-game guide and rebuild.
 - `bun run site` builds static HTML into `site/dist/` (gitignored).
 - `bun run site --serve` builds, serves at `http://localhost:4000/` (`--port N`, `--open`), and rebuilds
   when a `.md`, `.yml`, `.png` or `gradle.properties` file changes. Generator code changes need a restart.
+  Add `--no-watch` for a fixed preview during screenshot capture; use `--port N` to isolate worktrees.
   It also writes the **local-only** dashboard at `/local/` (open GitHub issues and PRs via `gh`, ideas
   pipeline status; `--refresh` bypasses the 5-minute GitHub cache). `/local/` is never built without
   `--serve`, so it is never deployed.

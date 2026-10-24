@@ -1,0 +1,2384 @@
+{
+ "url": "http://localhost:6101/",
+ "at": "2026-10-24T15:25:38.472Z",
+ "allow": [
+  "violet"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.52,
+    0.73,
+    0.86,
+    0.92,
+    0.92,
+    0.83
+   ],
+   "motion": {
+    "elements": 66,
+    "css": 66,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 5344,
+     "screens": 5.9,
+     "words": 841,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "minekea-catalogue.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "chars": 25,
+     "lines": 1,
+     "size": 108,
+     "vw": 7.5,
+     "font": "STIX Two Text",
+     "weight": 400,
+     "tracking": -0.055,
+     "leading": 1,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.76,
+     "top": 150,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "lines": 1,
+     "size": 108,
+     "font": "STIX Two Text"
+    },
+    "headings": [
+     {
+      "text": "Minecraft, with character",
+      "words": 3,
+      "chars": 25,
+      "lines": 1,
+      "size": 108,
+      "vw": 7.5,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.76,
+      "top": 150,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Four ways to play",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 577,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.17,
+      "top": 601,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 917,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.17,
+      "top": 940,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.41,
+      "top": 1221,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The collection",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 108,
+      "vw": 7.5,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 1655,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Still being made",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 4981,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 164,
+      "vw": 11.4,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.06,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 5143,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "STIX Two Text",
+       "share": 0.64,
+       "mono": false
+      },
+      {
+       "family": "Work Sans",
+       "share": 0.36,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      18,
+      24,
+      40,
+      108,
+      164
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "STIX Two Text",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 12.2
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 164,
+      "vw": 11.4,
+      "font": "STIX Two Text",
+      "text": "chimericdream"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#17121e",
+     "bodyBgHsl": {
+      "h": 265,
+      "s": 0.25,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#392345",
+       "top": 537,
+       "hsl": {
+        "h": 279,
+        "s": 0.33,
+        "l": 0.2
+       }
+      },
+      {
+       "color": "#241b2d",
+       "top": 1909,
+       "hsl": {
+        "h": 270,
+        "s": 0.25,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#211929",
+       "top": 4931,
+       "hsl": {
+        "h": 270,
+        "s": 0.24,
+        "l": 0.13
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.63
+      },
+      {
+       "color": "#f0a3b4",
+       "share": 0.18
+      },
+      {
+       "color": "#bdb1c4",
+       "share": 0.13
+      },
+      {
+       "color": "#f3eef5",
+       "share": 0.04
+      },
+      {
+       "color": "#fff5f0",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a92e48",
+      "hsl": {
+       "h": 347,
+       "s": 0.57,
+       "l": 0.42
+      },
+      "fg": "#fff5f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 5,
+     "radius": 0,
+     "height": 50,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Find a mod",
+      "The collection",
+      "Roadmap",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "stix two text",
+     "work sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 5344,
+    "margins": {
+     "left": 40,
+     "right": 40
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 96,
+      "height": 4755,
+      "words": 815,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "Minecraft, with character",
+       "size": 108,
+       "tag": "h1"
+      },
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 4931,
+      "height": 413,
+      "words": 21,
+      "media": 0,
+      "middle": 186,
+      "heading": {
+       "text": "chimericdream",
+       "size": 164,
+       "tag": "p"
+      },
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft, with character",
+      "size": 108,
+      "top": 150,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 336,
+      "n": 4
+     },
+     {
+      "x": 896,
+      "n": 4
+     },
+     {
+      "x": 80,
+      "n": 2
+     },
+     {
+      "x": 40,
+      "n": 1
+     },
+     {
+      "x": 312,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 480,
+     "y": 420,
+     "w": 960,
+     "h": 180
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.61,
+    0.76,
+    0.92,
+    0.92,
+    0.92,
+    0.82
+   ],
+   "motion": {
+    "elements": 66,
+    "css": 66,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 5965,
+     "screens": 5.8,
+     "words": 840,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "minekea-catalogue.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "chars": 25,
+     "lines": 1,
+     "size": 59.9,
+     "vw": 7.8,
+     "font": "STIX Two Text",
+     "weight": 400,
+     "tracking": -0.055,
+     "leading": 1,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.94,
+     "top": 150,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "lines": 1,
+     "size": 59.9,
+     "font": "STIX Two Text"
+    },
+    "headings": [
+     {
+      "text": "Minecraft, with character",
+      "words": 3,
+      "chars": 25,
+      "lines": 1,
+      "size": 59.9,
+      "vw": 7.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 150,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Four ways to play",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 517,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 801,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 905,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 2,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 1328,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 1407,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The collection",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 59.9,
+      "vw": 7.8,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 1863,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Still being made",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 5685,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 88.3,
+      "vw": 11.5,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.06,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 5847,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "STIX Two Text",
+       "share": 0.64,
+       "mono": false
+      },
+      {
+       "family": "Work Sans",
+       "share": 0.36,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      18,
+      24,
+      40,
+      60,
+      88
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "STIX Two Text",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 12.2
+     },
+     "measureChars": 31,
+     "max": {
+      "size": 88.3,
+      "vw": 11.5,
+      "font": "STIX Two Text",
+      "text": "chimericdream"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#17121e",
+     "bodyBgHsl": {
+      "h": 265,
+      "s": 0.25,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#392345",
+       "top": 489,
+       "hsl": {
+        "h": 279,
+        "s": 0.33,
+        "l": 0.2
+       }
+      },
+      {
+       "color": "#241b2d",
+       "top": 2069,
+       "hsl": {
+        "h": 270,
+        "s": 0.25,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#211929",
+       "top": 5635,
+       "hsl": {
+        "h": 270,
+        "s": 0.24,
+        "l": 0.13
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.63
+      },
+      {
+       "color": "#f0a3b4",
+       "share": 0.18
+      },
+      {
+       "color": "#bdb1c4",
+       "share": 0.13
+      },
+      {
+       "color": "#f3eef5",
+       "share": 0.04
+      },
+      {
+       "color": "#fff5f0",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a92e48",
+      "hsl": {
+       "h": 347,
+       "s": 0.57,
+       "l": 0.42
+      },
+      "fg": "#fff5f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 5,
+     "radius": 0,
+     "height": 50,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Find a mod",
+      "The collection",
+      "Roadmap",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "stix two text",
+     "work sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 5965,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 96,
+      "height": 5459,
+      "words": 815,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Minecraft, with character",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 5635,
+      "height": 330,
+      "words": 21,
+      "media": 0,
+      "middle": 32,
+      "heading": {
+       "text": "chimericdream",
+       "size": 88,
+       "tag": "p"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft, with character",
+      "size": 60,
+      "top": 150,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 74,
+      "n": 4
+     },
+     {
+      "x": 464,
+      "n": 4
+     },
+     {
+      "x": 52,
+      "n": 2
+     },
+     {
+      "x": 24,
+      "n": 1
+     },
+     {
+      "x": 413,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.64,
+    0.92,
+    0.92,
+    0.72,
+    0.92,
+    0.92,
+    0.92,
+    0.92,
+    0.92,
+    0.92,
+    0.92,
+    0.89
+   ],
+   "motion": {
+    "elements": 66,
+    "css": 66,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 9702,
+     "screens": 11.5,
+     "words": 840,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "minekea-catalogue.png",
+      "icon.png",
+      "icon.png",
+      "icon.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "chars": 25,
+     "lines": 2,
+     "size": 48,
+     "vw": 12.3,
+     "font": "STIX Two Text",
+     "weight": 400,
+     "tracking": -0.055,
+     "leading": 1.03,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Minecraft, with character",
+     "words": 3,
+     "lines": 2,
+     "size": 48,
+     "font": "STIX Two Text"
+    },
+    "headings": [
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.04,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.63,
+      "top": 17,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Minecraft, with character",
+      "words": 3,
+      "chars": 25,
+      "lines": 2,
+      "size": 48,
+      "vw": 12.3,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.055,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 156,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Four ways to play",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 556,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Minekea",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.69,
+      "top": 921,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Hopper X-Treme",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.69,
+      "top": 1376,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Effective Gear",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.69,
+      "top": 1832,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Camel Nostrils",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.69,
+      "top": 2261,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "The collection",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 48,
+      "vw": 12.3,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2658,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "All Hallows Steve",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 3001,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Archaeology Tweaks",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 3200,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Artificial Heart",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 3398,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Athenaeum",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 3596,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Banner Tweaks",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 3819,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Beacon & Conduit Tweaks",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 4017,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Better Portal Linking",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 4190,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Better Target Dummies",
+      "words": 3,
+      "chars": 21,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 4414,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Blacklight",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 4687,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "But What About...?",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 4912,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ChimericLib",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 5171,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Cobblicious",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 5369,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Enchantment Numbers Fix",
+      "words": 3,
+      "chars": 23,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 5544,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Flat Bedrock",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 5792,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Hang from Slabs",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 5965,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Houdini Block",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 6190,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "JD Crafte",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 6388,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Log All the Things!",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 6612,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Miniblock Merchants",
+      "words": 2,
+      "chars": 19,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 6810,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Next Update Now",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 7058,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Opus",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 7256,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Pannotia Companion",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 7455,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Playgrounds",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 7653,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "PolyCraft",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 7852,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Shulker Stuff",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 8110,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Sneaky Tweaks",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 8308,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Sponj",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 8531,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "StackItUp",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 8704,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Toy Box",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 8903,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Villager Tweaks",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 9127,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Still being made",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.03,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 9429,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "chimericdream",
+      "words": 1,
+      "chars": 13,
+      "lines": 1,
+      "size": 45.2,
+      "vw": 11.6,
+      "font": "STIX Two Text",
+      "weight": 400,
+      "tracking": -0.06,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 9628,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 40,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "STIX Two Text",
+       "share": 0.64,
+       "mono": false
+      },
+      {
+       "family": "Work Sans",
+       "share": 0.36,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      18,
+      24,
+      32,
+      45,
+      48
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "STIX Two Text",
+      "size": 18,
+      "leading": 1.45,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.9
+     },
+     "measureChars": 32,
+     "max": {
+      "size": 48,
+      "vw": 12.3,
+      "font": "STIX Two Text",
+      "text": "Minecraft, with character"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#17121e",
+     "bodyBgHsl": {
+      "h": 265,
+      "s": 0.25,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#392345",
+       "top": 532,
+       "hsl": {
+        "h": 279,
+        "s": 0.33,
+        "l": 0.2
+       }
+      },
+      {
+       "color": "#241b2d",
+       "top": 687,
+       "hsl": {
+        "h": 270,
+        "s": 0.25,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#30213c",
+       "top": 1178,
+       "hsl": {
+        "h": 273,
+        "s": 0.29,
+        "l": 0.18
+       }
+      },
+      {
+       "color": "#211929",
+       "top": 9393,
+       "hsl": {
+        "h": 270,
+        "s": 0.24,
+        "l": 0.13
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.63
+      },
+      {
+       "color": "#f0a3b4",
+       "share": 0.18
+      },
+      {
+       "color": "#bdb1c4",
+       "share": 0.13
+      },
+      {
+       "color": "#f3eef5",
+       "share": 0.04
+      },
+      {
+       "color": "#fff5f0",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a92e48",
+      "hsl": {
+       "h": 347,
+       "s": 0.57,
+       "l": 0.42
+      },
+      "fg": "#fff5f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 5,
+     "radius": 0,
+     "height": 50,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Find a mod",
+      "The collection",
+      "Roadmap",
+      "Changelog"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 687
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 116,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "stix two text",
+     "work sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 9702,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 116,
+      "height": 9227,
+      "words": 815,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "Minecraft, with character",
+       "size": 48,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 9393,
+      "height": 309,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "chimericdream",
+       "size": 45,
+       "tag": "p"
+      },
+      "left": 20,
+      "right": 92,
+      "textLeft": 20,
+      "textRight": 92,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Minecraft, with character",
+      "size": 48,
+      "top": 156,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 60,
+      "n": 8
+     },
+     {
+      "x": 36,
+      "n": 3
+     },
+     {
+      "x": 20,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\gpt\\luna\\.taste-skill\\after\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

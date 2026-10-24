@@ -52,7 +52,7 @@ if (flag('open')) {
 }
 
 // Rebuild when sources change. Generator code changes need a restart.
-const IGNORED = /(^|[\\/])(node_modules|build|\.gradle|\.git|dist|\.cache|run|logs|\.sources)([\\/]|$)/;
+const IGNORED = /(^|[\\/])(node_modules|build|\.gradle|\.git|dist|\.cache|\.taste-skill|run|logs|\.sources)([\\/]|$)/;
 const WATCHED = /\.(md|yml|png)$|gradle\.properties$/;
 let timer: ReturnType<typeof setTimeout> | undefined;
 let building = false;
@@ -76,7 +76,8 @@ const rebuild = async () => {
     }
 };
 
-watch(REPO_ROOT, {recursive: true}, (_event, filename) => {
+// A fixed preview is useful for screenshot runs while other repository files are being edited.
+if (!flag('no-watch')) watch(REPO_ROOT, {recursive: true}, (_event, filename) => {
     if (!filename || IGNORED.test(filename) || !WATCHED.test(filename)) return;
     clearTimeout(timer);
     timer = setTimeout(() => void rebuild(), 300);
