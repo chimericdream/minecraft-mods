@@ -11,6 +11,9 @@ export type ModInfo = {
     lastCommit: string | null;
     /** Absolute path of the mod's icon.png, if it has one. */
     iconFile: string | null;
+    minecraft?: string;
+    loaders?: string[];
+    downloadUrl?: string;
 };
 
 export type IdeasInfo = {

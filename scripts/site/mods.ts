@@ -47,5 +47,9 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             latestTag,
             lastCommit,
             iconFile: findIcon(folder, props.mod_id),
+            minecraft: props.minecraft_compat,
+            loaders: (props.enabled_platforms ?? 'fabric,neoforge').split(',').map(s => s.trim()),
+            downloadUrl: /^\d+$/.test(props.curseforge_project_id ?? '')
+                ? `https://www.curseforge.com/projects/${props.curseforge_project_id}` : undefined,
         };
     }));

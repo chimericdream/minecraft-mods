@@ -17,6 +17,7 @@ export type ModProperties = {
     chimericlib_compat: string;
     fabric_compat?: string;
     minecraft_compat: string;
+    curseforge_project_id?: string;
 };
 
 export const getProjectFolder = (project: string) => path.join(__dirname, '..', '..', project);

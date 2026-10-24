@@ -133,8 +133,8 @@ const mods=[...new Map(rows.map(r=>[r.mod,r.modName]))].sort((a,b)=>a[1].localeC
 $('mod').innerHTML='<option value="">all mods</option>'+mods.map(([f,n])=>'<option value="'+f+'">'+n+'</option>').join('');
 const pills=(id,key,vals,label)=>{
   const el=$(id);
-  vals.forEach(v=>{const b=document.createElement('span');b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;
-    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));render()};el.appendChild(b)});
+  vals.forEach(v=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed','false');b.className='pill';b.textContent=label?label(v):v;b.dataset.v=v;
+    b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));b.setAttribute('aria-pressed',String(s.has(x)));render()};el.appendChild(b)});
 };
 pills('f-effort','effort',uniq('effort').sort((a,b)=>rank('effort',a)-rank('effort',b)||a.localeCompare(b)));
 pills('f-value','value',[3,2,1],v=>'★'.repeat(v));
@@ -150,7 +150,7 @@ fillThemes();
 
 // --- header
 const head=$('head');
-COLS.forEach(([k,label])=>{const th=document.createElement('th');th.textContent=label;th.dataset.k=k;
+COLS.forEach(([k,label])=>{const th=document.createElement('th');th.textContent=label;th.dataset.k=k;th.tabIndex=0;th.scope='col';th.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();th.click()}};
   th.onclick=()=>{if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=1}render()};head.appendChild(th)});
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -176,7 +176,7 @@ const match=r=>{
 function render(){
   const out=rows.filter(match).sort(cmp);
   $('count').textContent=out.length+' of '+rows.length+' ideas';
-  head.querySelectorAll('th').forEach(th=>th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'');
+  head.querySelectorAll('th').forEach(th=>{th.className=th.dataset.k===state.sort?(state.dir>0?'asc':'desc'):'';th.setAttribute('aria-sort',th.dataset.k===state.sort?(state.dir>0?'ascending':'descending'):'none')});
   $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
     '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
@@ -201,7 +201,7 @@ function save(){
     const x=['value','tier'].includes(k)?Number(v):v;state[k].add(x)});
   const s=p.get('sort');if(s){state.dir=s.endsWith('-')?-1:1;state.sort=s.replace(/-$/,'')}
   $('q').value=state.q;$('mod').value=state.mod;$('theme').value=state.theme;
-  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v))});
+  document.querySelectorAll('.pill').forEach(b=>{const k=b.parentElement.dataset.key;const v=['value','tier'].includes(k)?Number(b.dataset.v):b.dataset.v;b.classList.toggle('on',state[k].has(v));b.setAttribute('aria-pressed',String(state[k].has(v)))});
 })();
 $('q').oninput=e=>{state.q=e.target.value;render()};
 $('mod').onchange=e=>{state.mod=e.target.value;fillThemes();render()};
@@ -230,7 +230,7 @@ export const ideasPage = (rows: IdeaRow[]): string => {
 <fieldset><legend>Tier</legend><span id="f-tier" data-key="tier"></span></fieldset>
 <fieldset><legend>Status</legend><span id="f-status" data-key="status"></span></fieldset>
 <button type="button" id="reset">Reset</button></div>
-<div class="wrap"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+<div class="wrap" tabindex="0" role="region" aria-label="Ideas table, scroll for more columns"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
 <script type="application/json" id="data">${json}</script>
 <script>${JS}</script>`,
     });

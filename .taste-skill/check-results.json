@@ -1,0 +1,8 @@
+[
+  "Catalogue: 30 default rows, featured search, empty state, clear",
+  "Theme persists across routes; phone navigation expands; download uses configured project",
+  "Roadmap filters work independently of color theme; filter buttons expose pressed state",
+  "System theme follows OS; reduced motion disables all animations",
+  "No-JavaScript catalogue retains all 34 mods across masthead and directory",
+  "No runtime exceptions across exercised pages"
+]

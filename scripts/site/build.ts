@@ -2,6 +2,7 @@ import {copyFileSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
+import {SITE_JS} from './client.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
 import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
@@ -81,6 +82,8 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
     writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    copyFileSync(path.join(REPO_ROOT, 'docs/design/logo-placeholder.svg'), path.join(outDir, 'logo.svg'));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 

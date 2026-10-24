@@ -9,14 +9,14 @@ import {esc, relUrl, REPO_ROOT, REPO_URL} from './util.ts';
 const initials = (name: string) =>
     name.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(w => w[0]!.toUpperCase()).join('');
 
-const hue = (s: string) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
+const loaderNames = (mod: ModInfo) => (mod.loaders ?? ['fabric', 'neoforge']).map(loader => loader === 'fabric' ? 'Fabric' : loader === 'neoforge' ? 'NeoForge' : loader).join(' / ');
 
 /** Site-relative location of a mod's copied icon. */
 export const iconUrl = (mod: ModInfo) => `mods/${mod.folder}/icon.png`;
 
 const iconHtml = (mod: ModInfo, from: string) => mod.iconFile
     ? `<img class="icon" src="${esc(path.posix.relative(from, iconUrl(mod)))}" alt="" width="48" height="48">`
-    : `<div class="icon ph" style="--h:${hue(mod.id)}" aria-hidden="true">${esc(initials(mod.name))}</div>`;
+    : `<div class="icon ph" aria-hidden="true">${esc(initials(mod.name))}</div>`;
 
 const badges = (mod: ModInfo) => [
     mod.isNewMod ? '<span class="badge new">new</span>' : '',
@@ -24,28 +24,45 @@ const badges = (mod: ModInfo) => [
     mod.hasUnreleasedChanges ? '<span class="badge unrel" title="The changelog has unreleased changes">unreleased changes</span>' : '',
 ].join('');
 
+const FEATURED = [
+    ['minekea', 'Furniture, storage & building blocks.'],
+    ['hopper-xtreme', 'A practical upgrade to the humble hopper.'],
+    ['effective-gear', 'Small bonuses for the gear you already use.'],
+    ['camel-nostrils', 'This mod is weird. Really weird.'],
+] as const;
+
 export const homePage = (mods: ModInfo[], links: Map<string, ModLinks>): string => {
-    const cards = mods.map(mod => {
+    const featured = new Set<string>(FEATURED.map(([folder]) => folder));
+    const plates = FEATURED.flatMap(([folder, description]) => {
+        const mod = mods.find(m => m.folder === folder);
+        if (!mod) return [];
+        const l = links.get(folder)!;
+        return [`<li class="plate">${iconHtml(mod, '')}<h2><a href="${esc(l.overview)}">${esc(mod.name)}</a></h2><p>${esc(description)}</p><div class="ver">${esc(mod.version)} &middot; ${esc(loaderNames(mod))} ${badges(mod)}</div></li>`];
+    }).join('');
+    const rows = mods.map(mod => {
         const l = links.get(mod.folder)!;
-        const nav = [
-            ['Overview', l.overview], ['Guide', l.guide], ['Changelog', l.changelog], ['Ideas', l.ideas],
-        ].filter(([, url]) => url).map(([label, url]) => `<a href="${esc(url!)}">${label}</a>`).join('');
-        return `<li class="card"><header>${iconHtml(mod, '')}<div><h2><a href="${esc(l.overview)}">${esc(mod.name)}</a></h2>
-<div class="ver">${esc(mod.version)}${badges(mod)}</div></div></header>
-<p>${esc(mod.description)}</p><nav>${nav}</nav></li>`;
+        const nav = [['Guide', l.guide], ['Changelog', l.changelog], ['Ideas', l.ideas]]
+            .filter(([, url]) => url).map(([label, url]) => `<a href="${esc(url!)}">${label}</a>`).join('');
+        const isFeatured = featured.has(mod.folder);
+        return `<li class="mod-row" data-featured="${isFeatured}" data-search="${esc(`${mod.name} ${mod.description}`.toLocaleLowerCase())}"${isFeatured ? ' hidden' : ''}>
+${iconHtml(mod, '')}<div><h3><a href="${esc(l.overview)}">${esc(mod.name)}</a></h3><p>${esc(mod.description)}</p>
+<div class="ver">${esc(mod.version)} &middot; ${esc(loaderNames(mod))} ${badges(mod)}</div><nav aria-label="${esc(mod.name)} resources">${nav}</nav></div></li>`;
     }).join('');
     return shell({
-        title: 'Chimeric Mods',
-        url: '',
-        body: `<h1>Chimeric Mods</h1>
-<p>Minecraft mods for Fabric and NeoForge. Every mod's README, changelog, in-game guide and feature ideas are published here as they are written. The <a href="ideas/">roadmap</a> lists the ideas under consideration, and the <a href="changelog/">changelog</a> shows what has shipped and what is coming.</p>
-<ul class="cards">${cards}</ul>`,
+        title: 'Minecraft mods by chimericdream', url: '', home: true,
+        body: `<ul class="masthead" aria-label="Four mods from the collection">${plates}</ul>
+<section class="hero-copy" aria-labelledby="home-title"><h1 id="home-title"><span class="title-line"><span>Minecraft,</span></span><span class="title-line"><span>with character</span></span></h1>
+<div class="intro"><p>Furniture, useful little fixes, and the occasional camel nose. ${mods.length} Minecraft mods by chimericdream, for Fabric and NeoForge.</p><a class="button" href="#catalogue">Browse the mods</a></div></section>
+<section class="catalogue" id="catalogue" aria-labelledby="catalogue-title"><div class="catalogue-head"><div><h2 id="catalogue-title">The mod catalogue</h2><p>Find something for your next world.</p></div>
+<div class="catalogue-search" hidden><label for="mod-search">Find a mod<input type="search" id="mod-search" placeholder="Name or description" autocomplete="off"></label><button id="clear-search" type="button">Clear</button></div></div>
+<p id="catalogue-count" class="catalogue-count" role="status">${mods.length - FEATURED.length} more mods. The four featured mods are above.</p><ul class="mod-list">${rows}</ul><p id="catalogue-empty" hidden>No mods match that search. Try a different name or clear the search.</p></section>`,
     });
 };
 
 export const overviewPage = (doc: Doc, body: string, links: ModLinks): string => {
     const mod = doc.mod;
     const actions = [
+        mod.downloadUrl ? `<a href="${esc(mod.downloadUrl)}">Download on CurseForge</a>` : '',
         links.guide ? `<a href="${esc(relUrl(doc.url, links.guide))}">In-game guide</a>` : '',
         links.changelog ? `<a href="${esc(relUrl(doc.url, links.changelog))}">Changelog</a>` : '',
         links.ideas ? `<a href="${esc(relUrl(doc.url, links.ideas))}">Ideas</a>` : '',
@@ -56,8 +73,8 @@ export const overviewPage = (doc: Doc, body: string, links: ModLinks): string =>
         url: doc.url,
         crumbs: [esc(mod.name)],
         side: modLinksList(links, doc.url),
-        body: `<div class="modhead">${iconHtml(mod, doc.url)}<div><h1>${esc(mod.name)} <small class="ver">${esc(mod.version)}</small>${badges(mod)}</h1>
-<p>${esc(mod.description)}</p></div></div><div class="actions">${actions}</div>
+        body: `<div class="modhead">${iconHtml(mod, doc.url)}<div><h1>${esc(mod.name)}</h1><div class="ver">${esc(mod.version)} &middot; ${esc(loaderNames(mod))} ${badges(mod)}</div>
+<p>${esc(mod.description)}</p>${mod.minecraft ? `<p class="compatibility">Minecraft ${esc(mod.minecraft)}</p>` : ''}</div></div><div class="actions">${actions}</div>
 <article>${body}</article><p class="edit-link"><a href="${REPO_URL}/blob/main/${esc(doc.key)}">View source on GitHub</a></p>`,
     });
 };
