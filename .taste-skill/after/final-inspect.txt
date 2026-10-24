@@ -1,0 +1,40 @@
+=== /
+FINDINGS  none. Measurements are clean — now judge the pictures.
+RESULT: 0 FAIL, 0 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.
+=== /mods/minekea/
+  [empty-screens] @1440px  2 of 6 desktop screens are almost empty ground (under 20% of the screen holds text, a picture or a colour field): screens 2, 3.
+RESULT: 1 FAIL, 0 WARN — not done.
+=== /mods/camel-nostrils/
+  [still-page] @1440px  Little motion: 15 element(s) moved while the page loaded and scrolled.
+RESULT: 0 FAIL, 1 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.
+=== /mods/hopper-xtreme/
+  [name-only-title] @1440px (+768, 390)  The h1 is a bare name ("Hopper X-Treme") and nothing else on the first screen says what this is.
+  [still-page] @1440px  Little motion: 14 element(s) moved while the page loaded and scrolled.
+RESULT: 0 FAIL, 2 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.
+=== /mods/effective-gear/
+  [emoji] @1440px (+768, 390)  Emoji in the page: ⚡
+  [still-page] @1440px  Little motion: 12 element(s) moved while the page loaded and scrolled.
+RESULT: 1 FAIL, 1 WARN — not done.
+=== /mods/blacklight/
+  [hero-void] @1440px  43% of the first screen is one empty block (840×660px at 600,120).
+  [still-page] @1440px  Little motion: 12 element(s) moved while the page loaded and scrolled.
+RESULT: 0 FAIL, 2 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.
+=== /mods/all-hallows-steve/guide/01-pumpkins/02-stencils/
+  [focal-point] @1440px  The first screen has no dominant element: the largest type is 64px (4.4vw) and no single picture holds a third of the viewport.
+  [still-page] @1440px  Only 7 element(s) moved while the page loaded and scrolled.
+  [name-only-title] @768px (+390)  The h1 is a bare name ("Stencils") and nothing else on the first screen says what this is.
+RESULT: 2 FAIL, 1 WARN — not done.
+=== /changelog/
+  [focal-point] @1440px  The first screen has no dominant element: the largest type is 64px (4.4vw) and no single picture holds a third of the viewport.
+  [still-page] @1440px  Only 6 element(s) moved while the page loaded and scrolled.
+  [font-count] @1440px (+768, 390)  3 typefaces in use (Source Serif 4, Young Serif, ui-monospace).
+  [off-centre] @1440px  The margins differ: 32px on the left, 87px on the right, at 1440px.
+  [name-only-title] @768px (+390)  The h1 is a bare name ("Changelog") and nothing else on the first screen says what this is.
+RESULT: 2 FAIL, 3 WARN — not done.
+=== /ideas/
+  [focal-point] @1440px  The first screen has no dominant element: the largest type is 38px (2.6vw) and no single picture holds a third of the viewport.
+  [still-page] @1440px  Only 0 element(s) moved while the page loaded and scrolled.
+  [off-centre] @768px  The page sits off-centre: its content comes to 30px from the left edge but only to 241px from the right, at 768px.
+  [side-scroll] @768px (+390)  1 row(s) scroll sideways with content past their edge.
+  [off-centre] @390px  The margins differ: 16px on the left, 3px on the right, at 390px.
+RESULT: 3 FAIL, 2 WARN — not done.

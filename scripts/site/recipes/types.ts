@@ -13,7 +13,7 @@ export type Recipe =
     | {kind: 'stonecutting'; input: Slot; result: RecipeResult};
 
 /**
- * Turns a parsed recipe into an HTML fragment. The ASCII formatter is the first implementation; a
+ * Turns a parsed recipe into an HTML fragment. The grid formatter draws lettered slots; a
  * formatter that renders real item textures can replace it without touching the guide renderer.
  */
 export type RecipeFormatter = (recipe: Recipe) => string;

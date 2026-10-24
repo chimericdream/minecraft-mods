@@ -11,6 +11,12 @@ export type ModInfo = {
     lastCommit: string | null;
     /** Absolute path of the mod's icon.png, if it has one. */
     iconFile: string | null;
+    /** Loaders it is built for (`enabled_platforms`), e.g. `['fabric', 'neoforge']`. */
+    platforms: string[];
+    /** Minecraft versions it is built for (`minecraft_compat`). */
+    minecraft: string;
+    /** CurseForge project id, once the mod has been published there. */
+    curseforgeId: string | null;
 };
 
 export type IdeasInfo = {

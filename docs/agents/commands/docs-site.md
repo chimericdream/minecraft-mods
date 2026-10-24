@@ -25,7 +25,19 @@ changelog (`/changelog/`).
 `scripts/site/guide.ts` renders the Opus Markdown dialect: frontmatter, `> [!TIP]` callouts,
 `texture:` images (copied from the owning mod's resources), `item:`/`entity:` references (shown as text)
 and ```` ```recipe ```` blocks. Recipes go through a `RecipeFormatter`
-(`scripts/site/recipes/types.ts`); the current one (`ascii.ts`) draws a box-drawing crafting grid with a
-legend. To render real item textures, write another formatter and pass it to `buildGuide`.
+(`scripts/site/recipes/types.ts`); the current one (`grid.ts`) draws an HTML crafting grid of lettered
+slots with a legend. To render real item textures, write another formatter and pass it to `buildGuide`.
+
+## Design
+
+`scripts/site/layout.ts` holds the shell, the colour tokens (`THEME_CSS`, shared with `/local/`) and all
+the CSS; `site.js` (also in `layout.ts`) is the only script: the theme switch and the home page's
+catalogue filter. Light and dark follow the OS, and the theme button cycles auto/light/dark and
+remembers the choice. Fonts are Young Serif (display) and Source Serif 4 (text) from Google Fonts.
+Each mod's contact-sheet frames are up to eight of its own item (or block) textures, picked by
+`scripts/site/sheet.ts`; mods without textures show their icon. The brand mark is copied from
+`docs/design/logo-placeholder.svg` (replace that file to swap it). The four mods featured on the home
+page are the `FEATURED` list in `scripts/site/pages.ts`. Mod pages link to CurseForge through
+`curseforge_project_id` in each mod's `gradle.properties`.
 
 All links are relative, so the site works under any base path.

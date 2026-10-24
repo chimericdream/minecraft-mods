@@ -47,5 +47,8 @@ export const collectMods = async (): Promise<ModInfo[]> =>
             latestTag,
             lastCommit,
             iconFile: findIcon(folder, props.mod_id),
+            platforms: (props.enabled_platforms ?? '').split(',').map(p => p.trim()).filter(Boolean),
+            minecraft: props.minecraft_compat ?? '',
+            curseforgeId: (props as Record<string, string>).curseforge_project_id || null,
         };
     }));

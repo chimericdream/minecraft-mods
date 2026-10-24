@@ -97,22 +97,31 @@ export const collectIdeaRows = (mods: ModInfo[]): IdeaRow[] => {
 };
 
 const CSS = `
-.filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
-.filters fieldset{border:0;padding:0;margin:0;display:flex;gap:4px;align-items:center}.filters legend{float:left;margin-right:6px;color:var(--muted);font-size:12px}
-input[type=search],select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
-input[type=search]{min-width:240px}
-.pill{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:12px;padding:1px 9px;background:var(--card);font-size:12px}
-.pill.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:3px 10px;cursor:pointer}
-.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-table{border-collapse:collapse;width:100%}th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{position:sticky;top:0;background:var(--card);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px;color:var(--muted)}
-th.asc::after{content:" ↑";color:var(--accent)}th.desc::after{content:" ↓";color:var(--accent)}
-td.n{white-space:nowrap}td.sum{color:var(--muted);max-width:420px;font-size:12.5px}
+.road-intro{font-size:var(--step-lead);line-height:1.38;max-width:44ch;margin:0 0 28px}
+.filters{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end;margin-bottom:20px;font-size:1rem}
+.filters fieldset{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.filters legend{float:left;margin-right:8px;color:var(--muted)}
+input[type=search],select{font:inherit;font-size:1rem;min-height:44px;padding:0 12px;border:0;border-radius:0;background:var(--surface);color:var(--fg)}
+input[type=search]{min-width:min(300px,100%)}
+input[type=search]:focus,select:focus{background:var(--surface-2)}
+.pill{cursor:pointer;user-select:none;padding:6px 11px;background:var(--surface);font-size:var(--step-small);transition:background-color var(--t)}
+.pill:hover{background:var(--surface-2)}
+.pill.on{background:var(--action);color:var(--action-ink)}
+button{font:inherit;font-size:1rem;background:var(--surface-2);border:0;color:var(--fg);min-height:44px;padding:0 16px;cursor:pointer}
+button:hover{background:var(--line)}
+#count{color:var(--muted)}
+.wrap{overflow:auto;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:var(--surface);white-space:nowrap;cursor:pointer;user-select:none;font-weight:600}
+th.asc::after{content:" ↑";color:var(--accent-line)}th.desc::after{content:" ↓";color:var(--accent-line)}
+td.n{white-space:nowrap}td.n:nth-child(-n+2){white-space:normal;min-width:110px}td:nth-child(3){min-width:170px}td.sum{color:var(--muted);min-width:260px;max-width:440px}
 td.sum div{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+td a{font-weight:600}
 .vote-Yes{color:var(--good);font-weight:600}.vote-Maybe{color:var(--warn);font-weight:600}.vote-No{color:var(--bad)}
-.stars{color:var(--warn);letter-spacing:1px}
-tr:hover td{background:var(--bg)}
+.val{display:inline-flex;gap:3px;vertical-align:middle}.val i{width:9px;height:9px;background:var(--warn)}.val i.off{background:var(--line)}
+tbody tr{transition:background-color var(--t)}
+tr:hover td{background:var(--surface)}
 `;
 
 const JS = String.raw`
@@ -137,7 +146,7 @@ const pills=(id,key,vals,label)=>{
     b.onclick=()=>{const s=state[key];const x=typeof v==='number'?v:String(v);s.has(x)?s.delete(x):s.add(x);b.classList.toggle('on',s.has(x));render()};el.appendChild(b)});
 };
 pills('f-effort','effort',uniq('effort').sort((a,b)=>rank('effort',a)-rank('effort',b)||a.localeCompare(b)));
-pills('f-value','value',[3,2,1],v=>'★'.repeat(v));
+pills('f-value','value',[3,2,1],v=>['','Low','Medium','High'][v]);
 pills('f-vote','vote',[...ORDER.vote,'—']);
 pills('f-tier','tier',[1,2,3],v=>'T'+v);
 pills('f-status','status',uniq('status').sort());
@@ -180,7 +189,7 @@ function render(){
   $('body').innerHTML=out.map(r=>'<tr><td class="n">'+esc(r.modName)+'</td><td class="n">'+esc(r.theme)+'</td>'+
     '<td><a href="'+ROOT+esc(r.href)+'">'+esc(r.title)+'</a></td><td class="n">'+(r.shortlist??'')+'</td>'+
     '<td class="n">'+(r.tier?'T'+r.tier:'')+'</td><td class="n">'+esc(r.effort)+'</td>'+
-    '<td class="n stars">'+'★'.repeat(r.value)+'</td><td class="n">'+(r.votes??'—')+'</td>'+
+    '<td class="n"><span class="val" role="img" aria-label="Value '+r.value+' of 3">'+[1,2,3].map(i=>'<i'+(i>r.value?' class="off"':'')+'></i>').join('')+'</span></td><td class="n">'+(r.votes??'—')+'</td>'+
     '<td class="n vote-'+esc(r.vote)+'" title="'+esc(r.voteNote)+'">'+esc(r.vote)+'</td><td class="n">'+esc(r.status)+'</td>'+
     '<td class="n">'+(r.openQuestions||'')+'</td><td class="sum"><div title="'+esc(r.summary)+'">'+esc(r.summary)+'</div></td></tr>').join('');
   save();
@@ -215,14 +224,14 @@ render();
 export const ideasPage = (rows: IdeaRow[]): string => {
     const json = JSON.stringify(rows).replace(/</g, '\\u003c');
     return shell({
-        title: 'Roadmap · Chimeric Mods',
+        title: 'Roadmap · chimericdream',
         url: 'ideas/',
         wide: true,
         head: `<style>${CSS}</style>`,
         body: `<h1>Roadmap</h1>
-<p class="muted">Every active feature idea across the mods. <span id="count"></span></p>
+<p class="road-intro">Every feature idea still in play, across all the mods: how big it is, how much it would add, and how the vote went. <span id="count"></span></p>
 <div class="filters">
-<input type="search" id="q" placeholder="Search ideas ( / )" aria-label="Search ideas">
+<input type="search" id="q" placeholder="Search ideas (press /)" aria-label="Search ideas">
 <select id="mod" aria-label="Mod"></select><select id="theme" aria-label="Theme"></select>
 <fieldset><legend>Effort</legend><span id="f-effort" data-key="effort"></span></fieldset>
 <fieldset><legend>Value</legend><span id="f-value" data-key="value"></span></fieldset>

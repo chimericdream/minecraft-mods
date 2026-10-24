@@ -4,16 +4,20 @@ import path from 'node:path';
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
-import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
+import {guidePage, MARK_URL, SITE_CSS, SITE_JS, type ModLinks} from './layout.ts';
 import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
 import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
 import {collectMods} from './mods.ts';
+import {collectFrames} from './sheet.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
 
 export const OUT_DIR = path.join(REPO_ROOT, 'site', 'dist');
+
+/** The brand mark. A placeholder trace for now; swap the file when the original vector turns up. */
+const MARK_FILE = path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg');
 
 export type BuildOptions = {
     /** Also write the local-only page with GitHub issues/PRs and the ideas pipeline. Never deployed. */
@@ -49,6 +53,8 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         }];
     }));
 
+    const frames = new Map(mods.map(mod => [mod.folder, collectFrames(mod, outDir)]));
+
     for (const mod of mods) {
         if (mod.iconFile) {
             const dest = path.join(outDir, iconUrl(mod));
@@ -71,7 +77,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         const body = renderDoc(isOverview ? readmeBody(source) : isChangelog ? `# Changelog\n\n${source}` : source,
             {key: doc.key, fromUrl: doc.url, docs, outDir, warn});
         const l = links.get(doc.mod.folder)!;
-        const html = isOverview ? overviewPage(doc, body, l) : docPage(doc, body, isChangelog ? 'Changelog' : title, l, docsOf(doc.mod.folder));
+        const html = isOverview ? overviewPage(doc, body, l, frames.get(doc.mod.folder) ?? []) : docPage(doc, body, isChangelog ? 'Changelog' : title, l, docsOf(doc.mod.folder));
         writeFile(path.join(outDir, doc.url, 'index.html'), html);
     }
 
@@ -79,8 +85,12 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     writeFile(path.join(outDir, 'ideas', 'index.html'), ideasPage(ideaRows));
     writeFile(path.join(outDir, 'changelog', 'index.html'), changelogPage(mods, (source, key) =>
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
-    writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
+    const guidePages = [...guides.values()].reduce((n, g) => n + g.pages.length, 0);
+    writeFile(path.join(outDir, 'index.html'), homePage(mods, links, frames, {guides: guides.size, guidePages, ideas: ideaRows.length}));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    writeFile(path.join(outDir, MARK_URL), '');
+    copyFileSync(MARK_FILE, path.join(outDir, MARK_URL));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 
@@ -97,6 +107,5 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
     }
 
     for (const w of [...new Set(warnings)]) console.warn(`warning: ${w}`);
-    const pageCount = [...guides.values()].reduce((n, g) => n + g.pages.length, 0);
-    console.log(`Built ${mods.length} mods, ${guides.size} guides (${pageCount} pages), ${docs.size} docs and ${ideaRows.length} ideas into ${outDir}`);
+    console.log(`Built ${mods.length} mods, ${guides.size} guides (${guidePages} pages), ${docs.size} docs and ${ideaRows.length} ideas into ${outDir}`);
 };

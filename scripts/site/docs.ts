@@ -58,6 +58,19 @@ export type RenderOpts = {
     warn: (msg: string) => void;
 };
 
+/**
+ * README status badges are shields.io images. Draw them as text in the site's own type and colours instead,
+ * so they follow the theme and read as part of the page: `badge/modloader-Fabric-1976d2` -> "modloader | Fabric".
+ */
+const shieldsBadge = (href: string): string | null => {
+    const m = href.match(/^https:\/\/img\.shields\.io\/badge\/([^?#]+)/);
+    if (!m) return null;
+    const parts = decodeURIComponent(m[1]!).replace(/--/g, '\0').split('-')
+        .map(p => p.replace(/\0/g, '-').replace(/__/g, '\0').replace(/_/g, ' ').replace(/\0/g, '_'));
+    const [label, message] = parts.length >= 3 ? parts : ['', parts[0] ?? ''];
+    return `<span class="chip">${label ? `<span>${esc(label)}</span>` : ''}<b>${esc(message!)}</b></span>`;
+};
+
 /** Render one repo markdown file. Links to other rendered docs become site links; other files link to GitHub. */
 export const renderDoc = (source: string, opts: RenderOpts): string => {
     const {key, fromUrl, docs, outDir, warn} = opts;
@@ -99,6 +112,8 @@ export const renderDoc = (source: string, opts: RenderOpts): string => {
             },
             image({href, title, text}) {
                 const t = title ? ` title="${esc(title)}"` : '';
+                const badge = shieldsBadge(href);
+                if (badge) return badge;
                 if (isExternal(href)) return `<img src="${esc(href)}" alt="${esc(text)}"${t}>`;
                 const target = resolve(href.split('#')[0]!);
                 const abs = path.join(REPO_ROOT, target);
@@ -113,7 +128,29 @@ export const renderDoc = (source: string, opts: RenderOpts): string => {
             },
         },
     });
-    return marked.parse(source, {async: false}) as string;
+    return denseLists(marked.parse(source, {async: false}) as string);
+};
+
+/** Long lists of short items (feature lists, credits, block lists) read better in two columns on wide screens. */
+const denseLists = (html: string): string => {
+    let out = '';
+    let at = 0;
+    for (;;) {
+        const start = html.indexOf('<ul>', at);
+        if (start === -1) return out + html.slice(at);
+        // Find the matching </ul>, stepping over nested lists.
+        const tags = /<\/?ul>/g;
+        tags.lastIndex = start + 4;
+        let depth = 1;
+        let m: RegExpExecArray | null = null;
+        while (depth > 0 && (m = tags.exec(html))) depth += m[0] === '<ul>' ? 1 : -1;
+        const end = m ? m.index + 5 : html.length;
+        const inner = html.slice(start + 4, end - 5);
+        const items = inner.replace(/<ul>[\s\S]*?<\/ul>/g, '').match(/<li>[\s\S]*?<\/li>/g) ?? [];
+        const short = items.every(li => li.replace(/<[^>]+>/g, '').trim().length <= 70);
+        out += html.slice(at, start) + (items.length >= 10 && short ? `<ul class="dense">${inner}</ul>` : html.slice(start, end));
+        at = end;
+    }
 };
 
 const firstHeading = (source: string): string | undefined => source.match(/^# (.+)$/m)?.[1]?.replace(/[*_`]/g, '').trim();

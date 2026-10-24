@@ -1,0 +1,1914 @@
+{
+ "url": "http://localhost:4100/changelog/",
+ "at": "2026-10-24T04:45:28.414Z",
+ "allow": [
+  "few-pictures",
+  "no-footage"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.22,
+    0.24,
+    0.23,
+    0.22,
+    0.24,
+    0.31,
+    0.37,
+    0.17,
+    0.21,
+    0.35,
+    0.35,
+    0.22
+   ],
+   "motion": {
+    "elements": 6,
+    "css": 6,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 11394,
+     "screens": 12.7,
+     "words": 1789,
+     "img": 24,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 64,
+     "vw": 4.4,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 1.08,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.45,
+     "top": 113,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 64,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 113,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 38,
+      "vw": 2.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 346,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 38,
+      "vw": 2.6,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 1544,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      16,
+      19,
+      24,
+      26,
+      38,
+      64
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.8
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 64,
+      "vw": 4.4,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#110a19",
+     "bodyBgHsl": {
+      "h": 268,
+      "s": 0.43,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.92
+      },
+      {
+       "color": "#bdb5c9",
+       "share": 0.08
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 0,
+     "height": 49,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Theme: auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 73,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 11394,
+    "margins": {
+     "left": 32,
+     "right": 87
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 64,
+      "top": 113,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 82,
+      "n": 30
+     },
+     {
+      "x": 32,
+      "n": 10
+     },
+     {
+      "x": 271,
+      "n": 4
+     },
+     {
+      "x": 207,
+      "n": 3
+     },
+     {
+      "x": 254,
+      "n": 3
+     },
+     {
+      "x": 332,
+      "n": 3
+     },
+     {
+      "x": 157,
+      "n": 2
+     },
+     {
+      "x": 242,
+      "n": 2
+     },
+     {
+      "x": 282,
+      "n": 2
+     },
+     {
+      "x": 298,
+      "n": 2
+     },
+     {
+      "x": 194,
+      "n": 1
+     },
+     {
+      "x": 230,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 68,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.25,
+    "voidBox": {
+     "x": 720,
+     "y": 120,
+     "w": 420,
+     "h": 780
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 10,
+   "filled": [
+    0.37,
+    0.35,
+    0.43,
+    0.3,
+    0.66,
+    0.18,
+    0.38,
+    0.6,
+    0.36,
+    0.41
+   ],
+   "motion": {
+    "elements": 5,
+    "css": 5,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 9377,
+     "screens": 9.2,
+     "words": 1720,
+     "img": 24,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 45.4,
+     "vw": 5.9,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 1.08,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.95,
+     "top": 95,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 45.4,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 95,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 279,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 1375,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      15,
+      18,
+      22,
+      23,
+      30,
+      45
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.8
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#110a19",
+     "bodyBgHsl": {
+      "h": 268,
+      "s": 0.43,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.96
+      },
+      {
+       "color": "#bdb5c9",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Theme: auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 72,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 9377,
+    "margins": {
+     "left": 18,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 349,
+      "height": 782,
+      "words": 68,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "But What About...?",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 145,
+      "textLeft": 18,
+      "textRight": 145,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 1171,
+      "height": 147,
+      "words": 24,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "PolyCraft",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 44,
+      "textLeft": 18,
+      "textRight": 44,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 1445,
+      "height": 147,
+      "words": 35,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "AH",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 1632,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Archaeology Tweaks",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 1819,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Artificial Heart",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2006,
+      "height": 147,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Athenaeum",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2194,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Banner Tweaks",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2381,
+      "height": 147,
+      "words": 36,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "B&",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2568,
+      "height": 147,
+      "words": 34,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Better Portal Linking",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2755,
+      "height": 147,
+      "words": 34,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Better Target Dummies",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 2942,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Camel Nostrils",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 3129,
+      "height": 147,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "ChimericLib",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 3475,
+      "height": 318,
+      "words": 69,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "EN",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 20,
+      "textLeft": 18,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 3834,
+      "height": 147,
+      "words": 34,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "FB",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 4021,
+      "height": 203,
+      "words": 50,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Hopper X-Treme",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 38,
+      "textLeft": 18,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 4263,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Houdini Block",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 4450,
+      "height": 1515,
+      "words": 279,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "JD Crafte",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 24,
+      "textLeft": 18,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6005,
+      "height": 147,
+      "words": 36,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "LA",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6192,
+      "height": 147,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Minekea",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6379,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Miniblock Merchants",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6566,
+      "height": 184,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Next Update Now",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 80,
+      "textLeft": 18,
+      "textRight": 80,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6790,
+      "height": 147,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Opus",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 71,
+      "textLeft": 18,
+      "textRight": 71,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 6977,
+      "height": 469,
+      "words": 148,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Pannotia Companion",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 42,
+      "right": 19,
+      "textLeft": 42,
+      "textRight": 19,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 7486,
+      "height": 535,
+      "words": 166,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "PolyCraft",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 19,
+      "textLeft": 18,
+      "textRight": 19,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 8062,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Shulker Stuff",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 8249,
+      "height": 147,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Sneaky Tweaks",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 8436,
+      "height": 147,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Sponj",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 40,
+      "textLeft": 18,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.feed-section",
+      "tag": "section",
+      "top": 8782,
+      "height": 401,
+      "words": 145,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "VT",
+       "size": 22,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 21,
+      "textLeft": 18,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 45,
+      "top": 95,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 68,
+      "n": 30
+     },
+     {
+      "x": 18,
+      "n": 10
+     },
+     {
+      "x": 245,
+      "n": 5
+     },
+     {
+      "x": 301,
+      "n": 4
+     },
+     {
+      "x": 185,
+      "n": 3
+     },
+     {
+      "x": 229,
+      "n": 3
+     },
+     {
+      "x": 264,
+      "n": 3
+     },
+     {
+      "x": 139,
+      "n": 2
+     },
+     {
+      "x": 217,
+      "n": 2
+     },
+     {
+      "x": 173,
+      "n": 1
+     },
+     {
+      "x": 207,
+      "n": 1
+     },
+     {
+      "x": 286,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 68,
+    "bodySize": 18,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.53,
+    0.44,
+    0.41,
+    0.6,
+    0.42,
+    0.6,
+    0.54,
+    0.51,
+    0.32,
+    0.49,
+    0.66,
+    0.67
+   ],
+   "motion": {
+    "elements": 5,
+    "css": 5,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 11959,
+     "screens": 14.2,
+     "words": 1720,
+     "img": 24,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 30,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Changelog",
+     "words": 1,
+     "chars": 9,
+     "lines": 1,
+     "size": 33.3,
+     "vw": 8.5,
+     "font": "Young Serif",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 1.08,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 134,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Changelog",
+     "words": 1,
+     "lines": 1,
+     "size": 33.3,
+     "font": "Young Serif"
+    },
+    "headings": [
+     {
+      "text": "Changelog",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 134,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "In development",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 315,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Latest releases",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Young Serif",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1431,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Young Serif",
+       "share": 0.05,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      14,
+      15,
+      17,
+      20,
+      26,
+      33
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.8
+     },
+     "measureChars": 40,
+     "max": {
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Young Serif",
+      "text": "Changelog"
+     },
+     "monoShare": 0.02,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#110a19",
+     "bodyBgHsl": {
+      "h": 268,
+      "s": 0.43,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#eceff1",
+       "share": 0.96
+      },
+      {
+       "color": "#bdb5c9",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#8b1a1a",
+      "hsl": {
+       "h": 0,
+       "s": 0.68,
+       "l": 0.32
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 0,
+     "height": 46,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Theme: auto"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": false,
+     "height": 118,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source serif 4",
+     "young serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 11959,
+    "margins": {
+     "left": 16,
+     "right": 18
+    },
+    "sections": [
+     {
+      "sel": "div.layout.no-side",
+      "tag": "div",
+      "top": 118,
+      "height": 11700,
+      "words": 1679,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Changelog",
+       "size": 33,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 11818,
+      "height": 141,
+      "words": 11,
+      "media": 0,
+      "middle": 23,
+      "heading": null,
+      "left": 16,
+      "right": 87,
+      "textLeft": 16,
+      "textRight": 87,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Changelog",
+      "size": 33,
+      "top": 134,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 66,
+      "n": 30
+     },
+     {
+      "x": 16,
+      "n": 13
+     },
+     {
+      "x": 226,
+      "n": 5
+     },
+     {
+      "x": 277,
+      "n": 4
+     },
+     {
+      "x": 172,
+      "n": 3
+     },
+     {
+      "x": 192,
+      "n": 3
+     },
+     {
+      "x": 212,
+      "n": 3
+     },
+     {
+      "x": 243,
+      "n": 3
+     },
+     {
+      "x": 131,
+      "n": 2
+     },
+     {
+      "x": 162,
+      "n": 1
+     },
+     {
+      "x": 263,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 68,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (Source Serif 4, Young Serif, ui-monospace).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "focal-point",
+   "width": 1440,
+   "message": "The first screen has no dominant element: the largest type is 64px (4.4vw) and no single picture holds a third of the viewport.",
+   "fix": "Make one thing lead: the headline at display size, or one large picture. A grid of many small pictures is not one thing; in blind tests jurors marked a first screen without a headline down every time. On the strongest studied sites the largest type has a median of 8.4vw."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 32px on the left, 87px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  },
+  {
+   "level": "FAIL",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Only 6 element(s) moved while the page loaded and scrolled.",
+   "fix": "Build the motion layer (SKILL.md step 9, references/motion.md): the signature move, an entrance for the parts of every section, feedback on every control, and one moving picture. Transform and opacity only, with a reduced-motion fallback."
+  },
+  {
+   "level": "WARN",
+   "id": "name-only-title",
+   "width": 768,
+   "message": "The h1 is a bare name (\"Changelog\") and nothing else on the first screen says what this is.",
+   "fix": "Keep the name if it leads, and give the line under it (18px or more) the plain words: what it is, for whom, where or when. In the study of 97 Sites of the Day, first screens that named nothing lost usability and content points.",
+   "alsoAt": [
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\desktop-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\desktop-page-02.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\tablet-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\mobile-page-01.jpg",
+    "C:\\Users\\bill\\code\\minecraft-mods-site-design\\.taste-skill\\after\\p_changelog_\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
