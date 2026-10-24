@@ -2,6 +2,7 @@ import {copyFileSync, rmSync} from 'node:fs';
 import path from 'node:path';
 
 import {collectDocs, docPage, readDoc, renderDoc, type Doc} from './docs.ts';
+import {SITE_JS} from './client.ts';
 import {buildGuide, writeFile, type Guide} from './guide.ts';
 import {collectIdeaRows, ideasPage} from './ideas.ts';
 import {guidePage, SITE_CSS, type ModLinks} from './layout.ts';
@@ -10,6 +11,7 @@ import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
 import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
 import {collectMods} from './mods.ts';
+import {htmlFormatter} from './recipes/html.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
 
@@ -34,7 +36,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
 
     const guides = new Map<string, Guide>();
     for (const mod of mods) {
-        const guide = buildGuide(mod, folderOf, outDir, warn);
+        const guide = buildGuide(mod, folderOf, outDir, warn, htmlFormatter);
         if (guide) guides.set(mod.folder, guide);
     }
 
@@ -81,6 +83,10 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         renderDoc(source, {key, fromUrl: 'changelog/', docs, outDir, warn})));
     writeFile(path.join(outDir, 'index.html'), homePage(mods, links));
     writeFile(path.join(outDir, 'site.css'), SITE_CSS);
+    writeFile(path.join(outDir, 'site.js'), SITE_JS);
+    copyFileSync(path.join(REPO_ROOT, 'docs', 'design', 'logo-placeholder.svg'), path.join(outDir, 'brand.svg'));
+    const catalogue = 'minekea/common/src/main/resources/assets/minekea/textures/item/minekea_catalogue.png';
+    copyFileSync(path.join(REPO_ROOT, catalogue), path.join(outDir, 'catalogue.png'));
     // Keep GitHub Pages from running Jekyll, which would drop the `_img` and `_assets` folders.
     writeFile(path.join(outDir, '.nojekyll'), '');
 

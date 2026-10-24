@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chimericdream: before and after</title>
+<style>
+*{box-sizing:border-box}body{margin:24px;font:17px/1.5 system-ui,sans-serif;background:#efefec;color:#201c24}h1{font-size:28px;margin:0 0 16px}form{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px}label{display:flex;gap:12px;align-items:center}select{font:inherit;padding:8px}main{display:grid;grid-template-columns:1fr 1fr;gap:24px}figure{margin:0}figcaption{font-weight:600;margin-bottom:12px}img{width:100%;height:auto;display:block;object-fit:contain;object-position:top}a{color:#8b1a35}p{max-width:85ch}body.phone img{width:390px;max-width:100%;margin:auto}body.tablet img{width:768px;max-width:100%;margin:auto}@media(max-width:700px){main{grid-template-columns:1fr}body{margin:16px}}
+</style>
+<h1>Chimericdream: before and after</h1>
+<p>Recorded at 1440, 768, and 390 pixels in both themes. Images open at their original size. The home page's full-page contact sheets are linked below each image.</p>
+<form>
+<label>Page <select id="page"><option value="home">Home</option><option value="mod">Minekea</option><option value="guide">Guide</option><option value="roadmap">Roadmap</option><option value="changelog">Changelog</option></select></label>
+<label>Width <select id="width"><option value="1440">1440</option><option value="768">768</option><option value="390">390</option></select></label>
+<label>Theme <select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+</form>
+<main><figure><figcaption>Before</figcaption><a id="before-link"><img id="before" alt="Before redesign"></a><p id="before-pages"></p></figure><figure><figcaption>After</figcaption><a id="after-link"><img id="after" alt="After redesign"></a><p id="after-pages"></p></figure></main>
+<p>The original dark tablet home capture caught the development server rebuilding. Its repaired baseline was generated from the unchanged HEAD versions of the original generator, with the same repository content and assets. The original raw capture remains in <code>before/dark</code>.</p>
+<script>
+const show=()=>{
+    const width=document.querySelector('#width').value;
+    const theme=document.querySelector('#theme').value;
+    const page=document.querySelector('#page').value;
+    const viewport=width==='1440'?'desktop':width==='768'?'tablet':'mobile';
+    document.body.className=width==='390'?'phone':width==='768'?'tablet':'';
+    for(const phase of ['before','after']){
+        const folder=phase==='before'&&theme==='dark'?'recovered-dark':theme;
+        const url=page==='home'?`${phase}/${folder}/${viewport}-fold.jpg`:`${phase}/surfaces/${page}-${theme}-${width}.jpg`;
+        document.querySelector('#'+phase).src=url;
+        document.querySelector('#'+phase+'-link').href=url;
+        const pages=document.querySelector('#'+phase+'-pages');
+        pages.replaceChildren();
+        if(page==='home'){
+            const count=phase==='before'?1:(width==='390'?2:2);
+            for(let i=1;i<=count;i++){
+                const a=document.createElement('a');a.href=`${phase}/${folder}/${viewport}-page-0${i}.jpg`;a.textContent=`Full-page sheet ${i}`;a.style.marginRight='20px';pages.appendChild(a);
+            }
+        }
+    }
+};
+document.querySelector('form').addEventListener('change',show);show();
+</script>
+</html>

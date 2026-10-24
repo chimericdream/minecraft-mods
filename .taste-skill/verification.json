@@ -1,0 +1,30 @@
+{
+  "htmlPages": 629,
+  "brokenLinks": [],
+  "checks": [
+    "Home contains exactly 34 mods and 30 directory entries",
+    "Search finds a featured mod",
+    "Empty results are announced and visible",
+    "Clear restores all mods and returns focus to search",
+    "Featured link works below the deployment base path",
+    "Saved dark theme survives navigation",
+    "Phone navigation is collapsed and keyboard operable",
+    "Enter opens the mod navigation",
+    "Mod page exposes download and compatibility",
+    "Guide works below the deployment base path",
+    "Roadmap and global theme controls have distinct IDs",
+    "Roadmap begins with all 216 ideas and closed advanced filters on phone",
+    "Roadmap search filters real data",
+    "Roadmap sorting exposes the current direction",
+    "Bookmarked roadmap view restores query",
+    "Roadmap reset restores all rows",
+    "Manual light overrides a dark OS",
+    "System mode follows the OS again",
+    "Recipes render semantic cells with ingredient labels",
+    "Recipe page fits a phone width",
+    "Without JavaScript, all mods remain readable",
+    "Without JavaScript, the complete roadmap remains readable",
+    "Reduced motion leaves all content visible with no running animation",
+    "No browser exceptions"
+  ]
+}
