@@ -214,6 +214,8 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
 
 - [`docs/BLOCK-MIGRATION.md`](../docs/BLOCK-MIGRATION.md) — the current per-mod approach this would generalize. Update it to point at the mod once built.
 - [But What About...? ideas](../but-what-about/ideas/README.md) — the Minekea boundary plan is the first cross-mod consumer. Its plan has Minekea depend on the destination mod; with Forwarding Address, only the mod that declares the migration depends on this one, and the two mods don't need to know about each other.
+- [Namespace-preserving registration](../chimeric-lib/ideas/datagen/namespace-preserving-registration.md)
+  — the ChimericLib prerequisite for stub registration.
 - [ChimericLib ideas](../chimeric-lib/ideas/README.md) — this idea used to live there. The related
   [Component/NBT compatibility helpers](../chimeric-lib/ideas/infrastructure/component-nbt-compat-helpers.md)
   and [GameTest harness helpers](../chimeric-lib/ideas/testing/gametest-harness-helpers.md) remain

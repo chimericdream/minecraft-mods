@@ -30,6 +30,9 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 - [Block family generator](datagen/block-family-generator.md) — Declare a base block once and generate its
   stairs, slabs, walls, and variants with all their data.
+- [Namespace-preserving registration](datagen/namespace-preserving-registration.md) — New
+  `ModRegistryHelper` methods that register under any namespace on both loaders, which the Forwarding
+  Address mod needs for its stub blocks.
 - [Creative tab builder](datagen/creative-tab-builder.md) — Ordering, icons, and per-mod tab conventions in
   one helper.
 - [Tag-first behavior registry](datagen/tag-first-behavior-registry.md) — Register behavior against tags so
@@ -72,11 +75,6 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 - Add more helpers for Fabric datagen.
 - Add carpets to the `c:shears_mineable` tag.
-- Add namespace-preserving register methods to `ModRegistryHelper` (blocks, block+item, items) that keep
-  a foreign namespace on both loaders. The existing `Identifier` overloads strip it on NeoForge
-  (`id.getPath()`), for a reason not recorded in the 2024-11 commits, and are left as they are. Needed by
-  the Forwarding Address mod's stub registration. See
-  [Block migration framework](../../ideas/block-migration-framework.md).
 
 ## Archive
 
