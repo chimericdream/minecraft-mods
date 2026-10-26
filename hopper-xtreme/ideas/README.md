@@ -41,7 +41,9 @@ has been voted on; side I/O control (#11) was not promoted.
 
 ## Inbox
 
-_Empty._
+- Migrate the `filtered_*` hopper deprecation (`HopperDeprecation`, the canonical map in `ModBlocks`, and
+  the per-loader tooltip hooks) onto the standalone block migration mod, once it exists. It would add a
+  required dependency to Hopper X-Treme. See [Block migration framework](../../ideas/block-migration-framework.md).
 
 ## Archive
 

@@ -29,8 +29,11 @@ Moving a block between mods is a breaking change, so it follows
    counterpart here via `level.setBlock`. Stairs, slabs, and walls have no block entity, so the
    block-entity trap in the doc doesn't apply, but any block that does have one needs the
    snapshot/clear/swap/restore steps.
-4. **Minekea therefore gains a required dependency on this mod**, since the conversion target must
-   be registered. Check that before moving anything.
+4. **Until Forwarding Address exists, Minekea gains a required dependency on this mod**, since the
+   conversion target must be registered. Check that before moving anything. Once Forwarding Address
+   exists (see [its idea](../../ideas/block-migration-framework.md)), Minekea declares the migration by
+   block ID and depends on Forwarding Address instead. This mod needs no dependency on it, and if this
+   mod isn't installed, the migration is skipped and the old block is left as it is.
 5. **A GameTest covers each move**: the placed block converts, with the same facing, waterlogging, and
    so on.
 

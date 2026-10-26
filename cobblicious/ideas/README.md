@@ -21,7 +21,8 @@ Feature ideas for this mod, from first thought to ready to build. The process is
   and Minekea is being pared down over the next few major versions. The migration plan is in
   [But What About...?'s identity section](../../but-what-about/ideas/README.md#boundary-with-minekea):
   the new mod adds the block, Minekea keeps the old one registered and converts it on first tick, and
-  Minekea gains a required dependency on the new mod.
+  Minekea gains a required dependency on the new mod. Once Forwarding Address exists, Minekea depends on
+  that instead, and declares the migration by block ID.
 
 ## Active ideas
 

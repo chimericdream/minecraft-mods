@@ -17,9 +17,6 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 ### Suite patterns
 
-- [Block migration framework](suite-patterns/block-migration-framework.md) — A general "deprecated block
-  converts itself on placement or load" system, so any mod can rename or merge blocks without
-  DataFixerUpper.
 - [Shared Wrench API](suite-patterns/shared-wrench-api.md) — One wrench capability and default item that
   works across Minekea, Hopper X-Treme, and future mods.
 - [Item Filter API](suite-patterns/item-filter-api.md) — Hopper X-Treme's include/exclude filter logic and
@@ -75,7 +72,13 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 - Add more helpers for Fabric datagen.
 - Add carpets to the `c:shears_mineable` tag.
+- Add namespace-preserving register methods to `ModRegistryHelper` (blocks, block+item, items) that keep
+  a foreign namespace on both loaders. The existing `Identifier` overloads strip it on NeoForge
+  (`id.getPath()`), for a reason not recorded in the 2024-11 commits, and are left as they are. Needed by
+  the Forwarding Address mod's stub registration. See
+  [Block migration framework](../../ideas/block-migration-framework.md).
 
 ## Archive
 
-_Empty._
+- Block migration framework — moved out on 2026-10-26 to become a standalone mod, so it no longer
+  belongs to ChimericLib. Now at [`ideas/block-migration-framework.md`](../../ideas/block-migration-framework.md).
