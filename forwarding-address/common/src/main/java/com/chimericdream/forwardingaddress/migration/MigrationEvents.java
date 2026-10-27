@@ -73,9 +73,18 @@ public final class MigrationEvents {
             return;
         }
 
-        QUEUE.drain(
+        drain(level, ForwardingSettings.get().maxConversionsPerTick);
+    }
+
+    /**
+     * Scans reported chunks and converts up to {@code budget} positions in one level.
+     *
+     * @return how many positions were handled
+     */
+    public static int drain(ServerLevel level, int budget) {
+        return QUEUE.drain(
             level.dimension(),
-            ForwardingSettings.get().maxConversionsPerTick,
+            budget,
             (key, chunk) -> SCANNER.scan(level, chunk),
             (key, pos) -> convertAt(level, pos)
         );
@@ -96,6 +105,13 @@ public final class MigrationEvents {
     }
 
     private static void onPlayerJoin(ServerPlayer player) {
+        convertPlayerItems(player);
+    }
+
+    /**
+     * Converts the player's inventory (armor and offhand included) and ender chest.
+     */
+    public static void convertPlayerItems(ServerPlayer player) {
         if (!REGISTRY.hasItemMigrations()) {
             return;
         }
