@@ -1,6 +1,5 @@
 package com.chimericdream.lib.registries;
 
-import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -148,10 +147,6 @@ public class ModRegistryHelper {
     }
 
     public <T extends Block> RegistrySupplier<T> registerBlock(Identifier id, Supplier<T> block) {
-        if (Platform.isNeoForge()) {
-            return BLOCKS.register(id.getPath(), block);
-        }
-
         return BLOCKS.register(id, block);
     }
 
@@ -168,10 +163,6 @@ public class ModRegistryHelper {
     }
 
     public <T extends Item> RegistrySupplier<T> registerItem(Identifier id, Supplier<T> itemSupplier) {
-        if (Platform.isNeoForge()) {
-            return ITEMS.register(id.getPath(), itemSupplier);
-        }
-
         return ITEMS.register(id, itemSupplier);
     }
 
@@ -190,10 +181,6 @@ public class ModRegistryHelper {
     }
 
     public <T extends EntityType<?>> RegistrySupplier<T> registerEntityType(Identifier id, Supplier<T> entitySupplier) {
-        if (Platform.isNeoForge()) {
-            return ENTITY_TYPES.register(id.getPath(), entitySupplier);
-        }
-
         return ENTITY_TYPES.register(id, entitySupplier);
     }
 
@@ -202,10 +189,6 @@ public class ModRegistryHelper {
     }
 
     public <T extends MenuType<?>> RegistrySupplier<T> registerScreenHandler(Identifier id, Supplier<T> screenHandlerSupplier) {
-        if (Platform.isNeoForge()) {
-            return SCREEN_HANDLERS.register(id.getPath(), screenHandlerSupplier);
-        }
-
         return SCREEN_HANDLERS.register(id, screenHandlerSupplier);
     }
 
@@ -214,10 +197,6 @@ public class ModRegistryHelper {
     }
 
     public <T extends VillagerProfession> RegistrySupplier<T> registerVillagerProfession(Identifier id, Supplier<T> professionSupplier) {
-        if (Platform.isNeoForge()) {
-            return VILLAGER_PROFESSIONS.register(id.getPath(), professionSupplier);
-        }
-
         return VILLAGER_PROFESSIONS.register(id, professionSupplier);
     }
 
@@ -226,11 +205,6 @@ public class ModRegistryHelper {
     }
 
     public void registerCustomStat(Identifier id) {
-        if (Platform.isNeoForge()) {
-            CUSTOM_STATS.register(id.getPath(), () -> id);
-            return;
-        }
-
         CUSTOM_STATS.register(id, () -> id);
     }
 }
