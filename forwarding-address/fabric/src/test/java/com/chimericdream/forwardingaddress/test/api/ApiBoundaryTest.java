@@ -79,4 +79,44 @@ public class ApiBoundaryTest {
         assertEquals(1, items.size());
         assertNotNull(items.get(0).mapper());
     }
+
+    /**
+     * Mod load order isn't guaranteed, so a consumer can declare before Forwarding Address starts.
+     * That has to work, and the declarations must arrive in order once the backend appears.
+     */
+    @Test
+    void declarationsMadeBeforeTheBackendExistsAreDeliveredInOrder() {
+        Migrations.reset();
+        try {
+            Identifier first = Identifier.fromNamespaceAndPath("early", "first");
+            Identifier second = Identifier.fromNamespaceAndPath("early", "second");
+            Identifier third = Identifier.fromNamespaceAndPath("late", "third");
+            Identifier target = Identifier.fromNamespaceAndPath("newmod", "target");
+
+            Migrations.block(first).to(target).register();
+            Migrations.item(second).to(target).register();
+            assertEquals(2, Migrations.waitingCount());
+
+            List<Identifier> received = new ArrayList<>();
+            Migrations.installBackend(new MigrationBackend() {
+                @Override
+                public void register(BlockMigration migration) {
+                    received.add(migration.from());
+                }
+
+                @Override
+                public void register(ItemMigration migration) {
+                    received.add(migration.from());
+                }
+            });
+
+            assertEquals(List.of(first, second), received);
+            assertEquals(0, Migrations.waitingCount());
+
+            Migrations.block(third).to(target).register();
+            assertEquals(List.of(first, second, third), received);
+        } finally {
+            Migrations.reset();
+        }
+    }
 }

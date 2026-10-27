@@ -202,6 +202,23 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   The repo's GameTest source set is Fabric-only, so conversion logic is GameTested on Fabric with thin
   per-loader hooks, and NeoForge is covered by a manual pass in `TEST_PLAN.md`. The stub-registration
   prototype spike runs at the start of Stage 2.
+- 2026-10-27 — **Stage 1 (core) built.** Differences from the plan, all small: (1) Placed blocks are
+  detected by each loader's *post-load* chunk event (Fabric `ServerChunkEvents.CHUNK_LOAD`, NeoForge
+  `ChunkEvent.Load`), not Architectury's `ChunkEvent.LOAD_DATA`, which fires before the chunk is usable.
+  The event only reports the chunk position; the palette check happens in the drain, on the server thread,
+  so the event is safe off-thread. (2) The cap is per level per server tick (default 256), and at most 32
+  chunks are palette-scanned per drain; scanning costs no budget. (3) A block migration also migrates the
+  block's item automatically, and an explicit item migration for the same ID wins. (4) Duplicate
+  declarations are logged and ignored, not thrown, so one conflict can't stop a pack from loading. (5) If
+  a block-entity mapper throws after the swap, the original block and its contents are put back and the
+  block is skipped. (6) The tooltip key is `item.forwardingaddress.retired.tooltip`; retired items are
+  removed from creative tabs by Fabric's `CreativeModeTabEvents.MODIFY_OUTPUT_ALL` and NeoForge's
+  `BuildCreativeModeTabContentsEvent`. An item whose target isn't installed is *not* hidden or tooltipped.
+  (7) The settings file is `config/forwardingaddress/settings.json` with one key,
+  `maxConversionsPerTick`; an unreadable file keeps the defaults and is never overwritten.
+  (8) **Declaring is order-independent.** Mod initialization order isn't guaranteed on either loader (a
+  GameTest failed intermittently on exactly this), so `Migrations` holds declarations made before
+  Forwarding Address starts and hands them over, in order, when its backend installs. Nothing throws.
 
 ## Related
 
@@ -236,5 +253,3 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
     added later on NeoForge are missed); sort the stub list so registration order, and so network IDs, is
     deterministic; fail loudly if the stub config can't be read, because a partly registered set causes
     registry-sync mismatches.
-- `BLOCK-MIGRATION.md` says conversion uses per-loader tick wiring, but Hopper X-Treme actually converts
-  from the block entity's `serverTick`. Fix the doc when this ships (not a design question).

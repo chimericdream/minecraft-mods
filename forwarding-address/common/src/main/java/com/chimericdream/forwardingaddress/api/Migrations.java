@@ -5,7 +5,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
 
 /**
@@ -21,6 +24,9 @@ import java.util.function.ToIntFunction;
  * <p>The old block (or item) has to stay registered, so worlds and inventories can still load it. A
  * block migration also converts the block's item. A migration whose target isn't installed is skipped
  * and logged, so declaring one never makes your mod depend on the target's mod.
+ *
+ * <p>Declaring doesn't depend on load order: if your mod initializes before Forwarding Address, the
+ * migration is held and handed over as soon as Forwarding Address starts.
  */
 public final class Migrations {
     /**
@@ -31,12 +37,39 @@ public final class Migrations {
     @Nullable
     private static volatile MigrationBackend backend;
 
+    // Declarations made before the backend exists, in the order they were made.
+    private static final List<Consumer<MigrationBackend>> WAITING = new CopyOnWriteArrayList<>();
+
     private Migrations() {
     }
 
     @ApiStatus.Internal
     public static void installBackend(MigrationBackend newBackend) {
-        backend = Objects.requireNonNull(newBackend);
+        Objects.requireNonNull(newBackend);
+
+        synchronized (WAITING) {
+            backend = newBackend;
+            for (Consumer<MigrationBackend> declaration : WAITING) {
+                declaration.accept(newBackend);
+            }
+            WAITING.clear();
+        }
+    }
+
+    @ApiStatus.Internal
+    public static int waitingCount() {
+        return WAITING.size();
+    }
+
+    /**
+     * Forgets the installed backend and any waiting declarations. For tests only.
+     */
+    @ApiStatus.Internal
+    public static void reset() {
+        synchronized (WAITING) {
+            backend = null;
+            WAITING.clear();
+        }
     }
 
     public static BlockBuilder block(Identifier from) {
@@ -47,13 +80,15 @@ public final class Migrations {
         return new ItemBuilder(from);
     }
 
-    private static MigrationBackend requireBackend() {
-        MigrationBackend current = backend;
-        if (current == null) {
-            throw new IllegalStateException("Forwarding Address is not initialized yet; declare migrations after your mod's own init starts");
+    private static void declare(Consumer<MigrationBackend> declaration) {
+        synchronized (WAITING) {
+            MigrationBackend current = backend;
+            if (current == null) {
+                WAITING.add(declaration);
+            } else {
+                declaration.accept(current);
+            }
         }
-
-        return current;
     }
 
     public static final class BlockBuilder {
@@ -106,7 +141,8 @@ public final class Migrations {
         }
 
         public void register() {
-            requireBackend().register(new BlockMigration(from, to, propertyMapper, entityMapper, hiddenSlots, itemMapper));
+            BlockMigration migration = new BlockMigration(from, to, propertyMapper, entityMapper, hiddenSlots, itemMapper);
+            declare(target -> target.register(migration));
         }
     }
 
@@ -139,7 +175,8 @@ public final class Migrations {
         }
 
         public void register() {
-            requireBackend().register(new ItemMigration(from, to, mapper));
+            ItemMigration migration = new ItemMigration(from, to, mapper);
+            declare(target -> target.register(migration));
         }
     }
 }
