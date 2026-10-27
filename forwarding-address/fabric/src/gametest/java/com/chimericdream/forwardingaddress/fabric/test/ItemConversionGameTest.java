@@ -3,6 +3,7 @@ package com.chimericdream.forwardingaddress.fabric.test;
 import com.chimericdream.forwardingaddress.fabric.test.fixture.FixtureContainerEntity;
 import com.chimericdream.forwardingaddress.fabric.test.fixture.TestFixtures;
 import com.chimericdream.forwardingaddress.migration.MigrationEvents;
+import com.chimericdream.forwardingaddress.migration.RetiredItems;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -12,6 +13,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Item conversion: stacks directly, then through the places items live (containers in the world, the
@@ -121,6 +125,34 @@ public class ItemConversionGameTest {
 
         context.assertItemEntityCountIs(TestFixtures.OLD_ITEM.get(), POS, SEARCH_RANGE, 0);
         context.assertItemEntityCountIs(TestFixtures.NEW_ITEM.get(), POS, SEARCH_RANGE, 1);
+        context.succeed();
+    }
+
+    @GameTest
+    public void aRetiredItemGetsATooltipAndIsHiddenFromCreativeTabs(GameTestHelper context) {
+        ItemStack retired = new ItemStack(TestFixtures.OLD_ITEM.get());
+        List<Component> lines = new ArrayList<>();
+        RetiredItems.appendTooltip(retired, lines);
+
+        if (lines.size() != 1) {
+            context.fail("a retired item should get one tooltip line, but got " + lines);
+        }
+        if (!RetiredItems.isRetired(retired)) {
+            context.fail("the old item should count as retired");
+        }
+
+        ItemStack current = new ItemStack(TestFixtures.NEW_ITEM.get());
+        List<Component> none = new ArrayList<>();
+        RetiredItems.appendTooltip(current, none);
+        if (!none.isEmpty() || RetiredItems.isRetired(current)) {
+            context.fail("the replacement item is not retired and should get no tooltip");
+        }
+
+        ItemStack orphan = new ItemStack(TestFixtures.ORPHAN_ITEM.get());
+        if (RetiredItems.isRetired(orphan)) {
+            context.fail("an item whose target is not installed is not retired, so it stays visible");
+        }
+
         context.succeed();
     }
 }

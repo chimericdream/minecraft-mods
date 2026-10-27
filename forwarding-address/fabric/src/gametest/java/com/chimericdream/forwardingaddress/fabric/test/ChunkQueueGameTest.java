@@ -31,11 +31,11 @@ public class ChunkQueueGameTest {
     public void aDrainNeverConvertsMoreThanItsBudget(GameTestHelper context) {
         ServerLevel level = context.getLevel();
         for (int x = 0; x < ROW; x++) {
-            context.setBlock(new BlockPos(x % 8, 2 + x / 8, 3), TestFixtures.OLD_BLOCK.get().defaultBlockState());
+            BlockPos pos = new BlockPos(x % 8, 2 + x / 8, 3);
+            context.setBlock(pos, TestFixtures.OLD_BLOCK.get().defaultBlockState());
+            // The test area isn't chunk-aligned, so the row can straddle two chunks.
+            MigrationEvents.queue().enqueueChunk(level.dimension(), ChunkPos.containing(context.absolutePos(pos)));
         }
-
-        ChunkPos chunk = ChunkPos.containing(context.absolutePos(new BlockPos(0, 2, 3)));
-        MigrationEvents.queue().enqueueChunk(level.dimension(), chunk);
 
         int handled = MigrationEvents.drain(level, 4);
 
@@ -47,7 +47,7 @@ public class ChunkQueueGameTest {
         }
 
         // Let the rest through, in budget-sized steps, the way later ticks would.
-        for (int i = 0; i < 1000 && MigrationEvents.queue().pendingPositions(level.dimension()) > 0; i++) {
+        for (int i = 0; i < 1000 && (MigrationEvents.queue().pendingPositions(level.dimension()) > 0 || MigrationEvents.queue().pendingChunks(level.dimension()) > 0); i++) {
             MigrationEvents.drain(level, 4);
         }
 
@@ -71,5 +71,19 @@ public class ChunkQueueGameTest {
 
         context.assertBlockPresent(TestFixtures.NEW_BLOCK.get(), new BlockPos(1, 2, 1));
         context.succeed();
+    }
+
+    /**
+     * No manual drain here: the chunk is reported the way each loader's chunk-load event does, and the
+     * server's own tick has to find and convert the block.
+     */
+    @GameTest
+    public void theServerTickConvertsABlockInAReportedChunk(GameTestHelper context) {
+        BlockPos pos = new BlockPos(4, 2, 4);
+        context.setBlock(pos, TestFixtures.OLD_BLOCK.get().defaultBlockState());
+
+        MigrationEvents.onChunkLoaded(context.getLevel(), ChunkPos.containing(context.absolutePos(pos)));
+
+        context.succeedWhen(() -> context.assertBlockPresent(TestFixtures.NEW_BLOCK.get(), pos));
     }
 }
