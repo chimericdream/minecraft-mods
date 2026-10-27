@@ -10,6 +10,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -151,6 +152,24 @@ public class ItemConversionGameTest {
         ItemStack orphan = new ItemStack(TestFixtures.ORPHAN_ITEM.get());
         if (RetiredItems.isRetired(orphan)) {
             context.fail("an item whose target is not installed is not retired, so it stays visible");
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void armorAndOffhandConvertOnLogin(GameTestHelper context) {
+        ServerPlayer player = (ServerPlayer) context.makeMockServerPlayer(GameType.SURVIVAL);
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(TestFixtures.OLD_ITEM.get()));
+        player.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(TestFixtures.OLD_ITEM.get(), 2));
+
+        MigrationEvents.convertPlayerItems(player);
+
+        if (!player.getItemBySlot(EquipmentSlot.HEAD).is(TestFixtures.NEW_ITEM.get())) {
+            context.fail("the helmet slot should convert, but it holds " + player.getItemBySlot(EquipmentSlot.HEAD));
+        }
+        if (!player.getItemBySlot(EquipmentSlot.OFFHAND).is(TestFixtures.NEW_ITEM.get())) {
+            context.fail("the offhand should convert, but it holds " + player.getItemBySlot(EquipmentSlot.OFFHAND));
         }
 
         context.succeed();

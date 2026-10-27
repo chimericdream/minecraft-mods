@@ -32,7 +32,7 @@ Run: `./gradlew :forwarding-address:fabric:test` and `./gradlew :forwarding-addr
   whose target has none is skipped with contents intact.
 * **`ItemConversionGameTest`** — stacks keep count and components; unmigrated and missing-target stacks
   are untouched; a block's item converts with the block; containers in the world convert; a player's
-  inventory and ender chest convert; a dropped item converts when added; retired items get a tooltip and
+  inventory, armor, offhand, and ender chest convert; a dropped item converts when added; retired items get a tooltip and
   are flagged for creative-tab hiding.
 * **`ChunkQueueGameTest`** — a drain never exceeds its budget and every block converts eventually; a
   chunk with nothing to convert is harmless; the real server tick converts a block in a reported chunk.
