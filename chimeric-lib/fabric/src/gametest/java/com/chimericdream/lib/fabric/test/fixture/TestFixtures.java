@@ -7,6 +7,7 @@ import com.chimericdream.lib.screen.SimpleInventoryScreenHandler;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -50,6 +51,17 @@ public final class TestFixtures {
     public static final RegistrySupplier<BlockEntityType<TestContainerBlockEntity>> TEST_CONTAINER_BE = REGISTRY_HELPER.registerBlockEntity(
         "test_container",
         () -> new BlockEntityType<>(TestContainerBlockEntity::new, Set.of(TEST_CONTAINER_BLOCK.get()))
+    );
+
+    /** Namespace the foreign-id probe below registers under; deliberately not {@link #MOD_ID}. */
+    public static final String FOREIGN_NAMESPACE = "chimericlib_foreign";
+
+    /** A block+item registered under a namespace that is not the helper's own mod id. */
+    public static final RegistrySupplier<Block> FOREIGN_BLOCK = REGISTRY_HELPER.registerWithItem(
+        Identifier.fromNamespaceAndPath(FOREIGN_NAMESPACE, "foreign_block"),
+        () -> new Block(BlockBehaviour.Properties.of().setId(
+            REGISTRY_HELPER.makeBlockRegistryKey(Identifier.fromNamespaceAndPath(FOREIGN_NAMESPACE, "foreign_block"))
+        ))
     );
 
     public static final RegistrySupplier<EntityType<SimpleSeatEntity>> SEAT_ENTITY = REGISTRY_HELPER.registerEntityType(

@@ -111,13 +111,17 @@ wiring the other mods copy (enchantment-numbers-fix next).
 
 ### GameTests — world-coupled pieces (against fixture content)
 
-**Status: implemented.** Nine GameTests across five classes, all green via
+**Status: implemented.** Eleven GameTests across five classes, all green via
 `./gradlew :chimeric-lib:fabric:runGameTest` (see "Test conventions" for the isolated `gametest`
 source set + published-`testFixtures` structure).
 
 * **`RegisterableBlockGameTest`** — ✅ done. Registers a plain block+item and a block+item+block-entity
   through `ModRegistryHelper`, then asserts each resolves under the expected id (`BuiltInRegistries`
   lookups by identity, `hasBlockEntity()` for the trio).
+* **`RegisterableBlockGameTest` (foreign namespace)** — ✅ done. `registerWithItemKeepsForeignNamespace`
+  registers a probe block+item under `chimericlib_foreign` and asserts both resolve there and neither
+  appears under the helper's own namespace — a regression guard for the old NeoForge `getPath()` rewrite.
+  Fabric only; the NeoForge side was verified once by booting archaeology-tweaks through `runData`.
 * **`ImplementedInventoryGameTest`** — ✅ done. Fixture container BE: fill via code + slot assertions,
   a `saveWithFullMetadata`→`loadStatic` NBT round-trip preserving contents, and a **vanilla hopper**
   inserting into it (proves the `Container` contract behaves for real game systems).

@@ -30,9 +30,6 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 - [Block family generator](datagen/block-family-generator.md) — Declare a base block once and generate its
   stairs, slabs, walls, and variants with all their data.
-- [Namespace-preserving registration](datagen/namespace-preserving-registration.md) — New
-  `ModRegistryHelper` methods that register under any namespace on both loaders, which the Forwarding
-  Address mod needs for its stub blocks.
 - [Creative tab builder](datagen/creative-tab-builder.md) — Ordering, icons, and per-mod tab conventions in
   one helper.
 - [Tag-first behavior registry](datagen/tag-first-behavior-registry.md) — Register behavior against tags so
@@ -80,3 +77,6 @@ adds nothing a player would install it for, and what it does add exists to be us
 
 - Block migration framework — moved out on 2026-10-26 to become a standalone mod, so it no longer
   belongs to ChimericLib. Now at [`ideas/block-migration-framework.md`](../../ideas/block-migration-framework.md).
+- Namespace-preserving registration — dropped on 2026-10-27. The NeoForge `getPath()` branches in
+  `ModRegistryHelper` were removed, so the existing `Identifier` overloads already keep any namespace.
+  See [`archive/namespace-preserving-registration.md`](archive/namespace-preserving-registration.md).

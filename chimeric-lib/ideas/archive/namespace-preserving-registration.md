@@ -1,6 +1,6 @@
 # Namespace-preserving registration
 
-> Source: ChimericLib inbox, raised while fleshing out the [Block migration framework](../../../ideas/block-migration-framework.md) · Effort **S** · Status: **Ready**
+> Source: ChimericLib inbox, raised while fleshing out the [Block migration framework](../../../ideas/block-migration-framework.md) · Effort **S** · Status: **Dropped** (not needed: the NeoForge `getPath()` branches were removed in `7cbe38ca6`, so the existing overloads already keep any namespace)
 
 ## Description
 
@@ -58,6 +58,16 @@ Minekea, all in their own namespace and so unaffected), and any `String`-name va
 - 2026-10-26 — Effort estimated at **S**: seven small methods, Javadoc on six overloads, a probe
   registration, one GameTest, and a test-plan step.
 
+- 2026-10-27 — **Dropped.** Commit `7cbe38ca6` removed the `Platform.isNeoForge()` branches from the six
+  `Identifier` overloads, after booting archaeology-tweaks through NeoForge `runData` showed Architectury
+  21.0.4's `DeferredRegister` registers the full `Identifier` there. The existing overloads now keep a
+  foreign namespace on both loaders, so none of the `WithNamespace` methods are needed and none were
+  built. The Javadoc notes are moot too. The first open question below is answered by that commit. A
+  regression GameTest, `RegisterableBlockGameTest.registerWithItemKeepsForeignNamespace`, registers a
+  block and item under a foreign namespace through `registerWithItem` and asserts neither lands under the
+  helper's own namespace. It runs on Fabric only, because ChimericLib's GameTest source set is
+  Fabric-only.
+
 ## Brainstorm variants
 
 _None; this did not come from a brainstorm._
@@ -66,14 +76,14 @@ _None; this did not come from a brainstorm._
 
 - [Block migration framework](../../../ideas/block-migration-framework.md) — the Forwarding Address mod
   needs these methods before its stub registration can be built.
-- [Creative tab builder](creative-tab-builder.md) and
-  [Block family generator](block-family-generator.md) — other registration helpers in the same area.
+- [Creative tab builder](../datagen/creative-tab-builder.md) and
+  [Block family generator](../datagen/block-family-generator.md) — other registration helpers in the same area.
 - [GameTest harness helpers](../testing/gametest-harness-helpers.md) — the probe GameTest lives in the
   same source set.
 
 ## Open questions
 
-- Should the NeoForge `getPath()` branch be investigated, and possibly removed from the existing overloads
-  later, once every consumer mod has been tested? Not needed for this idea, so it can stay open.
+- ~~Should the NeoForge `getPath()` branch be investigated, and possibly removed from the existing overloads
+  later, once every consumer mod has been tested? Not needed for this idea, so it can stay open.~~ Answered: removed in `7cbe38ca6`.
 - Can the probe registration be added to ChimericLib's GameTest source set at initialization time on both
   loaders? Can be worked out during implementation.

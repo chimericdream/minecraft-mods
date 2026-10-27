@@ -47,4 +47,28 @@ public class RegisterableBlockGameTest {
 
         context.succeed();
     }
+
+    /**
+     * Regression guard: the {@code Identifier} overloads used to rewrite a foreign namespace to the
+     * helper's own mod id on NeoForge. They must keep the namespace they were given.
+     */
+    @GameTest
+    public void registerWithItemKeepsForeignNamespace(GameTestHelper context) {
+        Identifier id = Identifier.fromNamespaceAndPath(TestFixtures.FOREIGN_NAMESPACE, "foreign_block");
+        Identifier rewritten = TestFixtures.REGISTRY_HELPER.makeId("foreign_block");
+
+        Block block = BuiltInRegistries.BLOCK.getValue(id);
+        context.assertTrue(block == TestFixtures.FOREIGN_BLOCK.get(), "block should resolve at " + id);
+
+        Item item = BuiltInRegistries.ITEM.getValue(id);
+        context.assertTrue(item instanceof BlockItem blockItem && blockItem.getBlock() == block,
+            "a BlockItem pointing at the block should resolve at " + id);
+
+        context.assertTrue(!BuiltInRegistries.BLOCK.containsKey(rewritten),
+            "block must not be registered under the helper's own namespace at " + rewritten);
+        context.assertTrue(!BuiltInRegistries.ITEM.containsKey(rewritten),
+            "item must not be registered under the helper's own namespace at " + rewritten);
+
+        context.succeed();
+    }
 }

@@ -168,7 +168,8 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   `publish:lib` and used as an in-build `project()` dependency inside this repo.
 - 2026-10-26 — **ChimericLib surface.** Forwarding Address uses ChimericLib's `ChimericCommands` (the dump
   command), `TextHelpers` (the deprecated tooltip), `ModRegistryHelper` (registration, with stub
-  registration under a foreign namespace still to be proved), and its GameTest test fixtures for the
+  registration under a foreign namespace, which the existing `Identifier` overloads now keep on both
+  loaders), and its GameTest test fixtures for the
   conversion tests. It gets the loader hooks, installed-mod list, and config folder from Architectury
   API. ChimericLib needs no new helpers first. ChimericLib's only runtime requirement is Architectury
   API, so requiring it costs a pack one extra jar. Forwarding Address does **not** use `YaclConfig`,
@@ -176,12 +177,13 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   JSON file beside the migration JSON, and an optional config screen can come later. The dump command
   stays separate from ChimericLib's `/chimericlib dump` registry-report idea; the two are cross-linked.
 - 2026-10-26 — **Namespace-preserving registration.** `ModRegistryHelper`'s `Identifier` overloads for
-  blocks and items strip the namespace on NeoForge (a branch added 2024-11-09/10, with no recorded
-  reason). Rather than bypass them or change their behavior, ChimericLib gets **new explicit methods**
-  that preserve any namespace on both loaders, and Forwarding Address registers stubs through them. The
-  existing overloads are left as they are, and the quirk is noted on them. This **amends** the earlier
-  "ChimericLib needs no new helpers first": the new methods must exist in ChimericLib before stub
-  registration can be built. Names and signatures are decided when they are written.
+  blocks and items stripped the namespace on NeoForge (a branch added 2024-11-09/10, with no recorded
+  reason), so a plan was made to add new explicit methods that preserve any namespace.
+  **Superseded 2026-10-27:** the NeoForge branches were removed (`7cbe38ca6`), and Forwarding Address
+  registers stubs through the existing `registerBlock`/`registerItem`/`registerWithItem` overloads. No new
+  ChimericLib methods are needed, which also reverts the earlier amendment to "ChimericLib needs no new
+  helpers first". A ChimericLib GameTest (`registerWithItemKeepsForeignNamespace`, Fabric only) guards the
+  foreign-namespace behavior.
 - 2026-10-26 — **Mismatched stub configs** are handled by the loaders' own registry-mismatch disconnect,
   which names the differing entries (the stub IDs), with no custom join-time check in v1. The docs and mod
   page say the stub config in `config/forwardingaddress/` must be identical on client and server, and the
@@ -214,8 +216,8 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
 
 - [`docs/BLOCK-MIGRATION.md`](../docs/BLOCK-MIGRATION.md) — the current per-mod approach this would generalize. Update it to point at the mod once built.
 - [But What About...? ideas](../but-what-about/ideas/README.md) — the Minekea boundary plan is the first cross-mod consumer. Its plan has Minekea depend on the destination mod; with Forwarding Address, only the mod that declares the migration depends on this one, and the two mods don't need to know about each other.
-- [Namespace-preserving registration](../chimeric-lib/ideas/datagen/namespace-preserving-registration.md)
-  — the ChimericLib prerequisite for stub registration.
+- [Namespace-preserving registration](../chimeric-lib/ideas/archive/namespace-preserving-registration.md)
+  — dropped; the existing `ModRegistryHelper` overloads already do what stub registration needs.
 - [ChimericLib ideas](../chimeric-lib/ideas/README.md) — this idea used to live there. The related
   [Component/NBT compatibility helpers](../chimeric-lib/ideas/infrastructure/component-nbt-compat-helpers.md)
   and [GameTest harness helpers](../chimeric-lib/ideas/testing/gametest-harness-helpers.md) remain
