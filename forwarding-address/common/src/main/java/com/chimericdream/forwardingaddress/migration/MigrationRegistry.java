@@ -35,7 +35,7 @@ public final class MigrationRegistry implements MigrationBackend {
         this(new MigrationLog(ForwardingAddressMod.LOGGER));
     }
 
-    MigrationRegistry(MigrationLog log) {
+    public MigrationRegistry(MigrationLog log) {
         this.log = log;
     }
 
