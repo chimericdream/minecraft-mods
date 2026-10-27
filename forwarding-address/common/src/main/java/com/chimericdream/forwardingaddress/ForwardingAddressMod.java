@@ -1,5 +1,8 @@
 package com.chimericdream.forwardingaddress;
 
+import com.chimericdream.forwardingaddress.api.Migrations;
+import com.chimericdream.forwardingaddress.migration.MigrationEvents;
+import com.chimericdream.forwardingaddress.migration.MigrationRegistry;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -16,6 +19,10 @@ public final class ForwardingAddressMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+
+        ForwardingSettings.load();
+        Migrations.installBackend(MigrationRegistry.INSTANCE);
+        MigrationEvents.init();
 
         REGISTRY_HELPER.init();
     }
