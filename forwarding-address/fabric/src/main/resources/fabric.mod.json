@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "authors": [
+        "chimericdream"
+    ],
+    "contact": {
+        "sources": "https://github.com/chimericdream/minecraft-mods"
+    },
+    "license": "MIT",
+    "icon": "assets/forwardingaddress/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.forwardingaddress.fabric.ForwardingAddressFabric"
+        ],
+        "client": [
+            "com.chimericdream.forwardingaddress.fabric.client.ForwardingAddressFabricClient"
+        ]
+    },
+    "mixins": [
+        "forwardingaddress.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_compat}",
+        "minecraft": "~${minecraft_compat}",
+        "java": ">=25",
+        "fabric-api": "*",
+        "architectury": ">=${architectury_compat}",
+        "chimericlib": ">=${chimericlib_compat}"
+    }
+}

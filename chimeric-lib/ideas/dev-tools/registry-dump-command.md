@@ -13,7 +13,7 @@ _None yet._
 
 ## Related
 
-- [Block migration framework](../../../ideas/block-migration-framework.md) — the standalone Forwarding
+- [Block migration framework](../../../forwarding-address/ideas/core/block-migration-framework.md) — the standalone Forwarding
   Address mod has its own `/forwardingaddress dump <namespace>` command, which writes a starter
   migration file. It is separate from this one; they share only the "write a report to disk" step.
 

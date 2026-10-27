@@ -1,6 +1,6 @@
 # Namespace-preserving registration
 
-> Source: ChimericLib inbox, raised while fleshing out the [Block migration framework](../../../ideas/block-migration-framework.md) · Effort **S** · Status: **Dropped** (not needed: the NeoForge `getPath()` branches were removed in `7cbe38ca6`, so the existing overloads already keep any namespace)
+> Source: ChimericLib inbox, raised while fleshing out the [Block migration framework](../../../forwarding-address/ideas/core/block-migration-framework.md) · Effort **S** · Status: **Dropped** (not needed: the NeoForge `getPath()` branches were removed in `7cbe38ca6`, so the existing overloads already keep any namespace)
 
 ## Description
 
@@ -74,7 +74,7 @@ _None; this did not come from a brainstorm._
 
 ## Related
 
-- [Block migration framework](../../../ideas/block-migration-framework.md) — the Forwarding Address mod
+- [Block migration framework](../../../forwarding-address/ideas/core/block-migration-framework.md) — the Forwarding Address mod
   needs these methods before its stub registration can be built.
 - [Creative tab builder](../datagen/creative-tab-builder.md) and
   [Block family generator](../datagen/block-family-generator.md) — other registration helpers in the same area.
