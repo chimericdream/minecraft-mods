@@ -2,8 +2,6 @@ package com.chimericdream.forwardingaddress.migration;
 
 import com.chimericdream.forwardingaddress.ForwardingAddressMod;
 import com.chimericdream.forwardingaddress.ForwardingSettings;
-import dev.architectury.event.EventResult;
-import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
@@ -23,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 /**
  * Hooks conversion into the game. Placed blocks are found on chunk load (the loader-specific chunk
  * events call {@link #onChunkLoaded}), reported to a {@link ConversionQueue}, and converted a few at a
- * time each server tick. Held items convert on login, and dropped items and item frames when they load.
+ * time each server tick. Held items convert on login, and dropped items and item frames when they load (the loader-specific entity events call {@link #onEntityLoaded}).
  */
 public final class MigrationEvents {
     private static final MigrationLog LOG = new MigrationLog(ForwardingAddressMod.LOGGER);
@@ -53,7 +51,6 @@ public final class MigrationEvents {
         LifecycleEvent.SERVER_LEVEL_UNLOAD.register(level -> QUEUE.clear(level.dimension()));
         LifecycleEvent.SERVER_STOPPED.register(server -> QUEUE.clear());
         PlayerEvent.PLAYER_JOIN.register(MigrationEvents::onPlayerJoin);
-        EntityEvent.ADD.register(MigrationEvents::onEntityAdd);
     }
 
     /**
@@ -120,9 +117,13 @@ public final class MigrationEvents {
         ITEMS.convertContainer(player.getEnderChestInventory());
     }
 
-    private static EventResult onEntityAdd(Entity entity, Level level) {
+    /**
+     * Called by each loader's entity-load event, which must fire for entities read from disk as well as
+     * freshly spawned ones (Architectury's {@code EntityEvent.ADD} does not on Fabric).
+     */
+    public static void onEntityLoaded(Entity entity, Level level) {
         if (level.isClientSide() || !REGISTRY.hasItemMigrations()) {
-            return EventResult.pass();
+            return;
         }
 
         if (entity instanceof ItemEntity itemEntity) {
@@ -138,7 +139,5 @@ public final class MigrationEvents {
                 frame.setItem(converted);
             }
         }
-
-        return EventResult.pass();
     }
 }

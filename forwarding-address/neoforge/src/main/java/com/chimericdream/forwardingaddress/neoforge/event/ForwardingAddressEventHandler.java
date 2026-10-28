@@ -8,6 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 
@@ -18,6 +19,11 @@ public class ForwardingAddressEventHandler {
         if (event.getLevel() instanceof ServerLevel level) {
             MigrationEvents.onChunkLoaded(level, event.getChunk().getPos());
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        MigrationEvents.onEntityLoaded(event.getEntity(), event.getLevel());
     }
 
     @SubscribeEvent

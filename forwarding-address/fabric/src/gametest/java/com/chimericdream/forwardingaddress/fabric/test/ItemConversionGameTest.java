@@ -6,17 +6,20 @@ import com.chimericdream.forwardingaddress.migration.MigrationEvents;
 import com.chimericdream.forwardingaddress.migration.RetiredItems;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Item conversion: stacks directly, then through the places items live (containers in the world, the
@@ -126,6 +129,39 @@ public class ItemConversionGameTest {
 
         context.assertItemEntityCountIs(TestFixtures.OLD_ITEM.get(), POS, SEARCH_RANGE, 0);
         context.assertItemEntityCountIs(TestFixtures.NEW_ITEM.get(), POS, SEARCH_RANGE, 1);
+        context.succeed();
+    }
+
+    /**
+     * Entities read from chunk storage reach the level through {@code addLegacyChunkEntities}, not the
+     * spawn path, and some loader events (Architectury's Fabric {@code EntityEvent.ADD}) miss it.
+     */
+    @GameTest
+    public void aDroppedItemConvertsWhenLoadedFromDisk(GameTestHelper context) {
+        BlockPos pos = context.absolutePos(POS);
+        ItemEntity dropped = new ItemEntity(context.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(TestFixtures.OLD_ITEM.get(), 3));
+
+        context.getLevel().addLegacyChunkEntities(Stream.of(dropped));
+
+        if (!dropped.getItem().is(TestFixtures.NEW_ITEM.get()) || dropped.getItem().getCount() != 3) {
+            context.fail("a dropped item loaded from disk should convert, but it holds " + dropped.getItem());
+        }
+
+        context.succeed();
+    }
+
+    @GameTest
+    public void anItemFrameConvertsWhenLoadedFromDisk(GameTestHelper context) {
+        BlockPos pos = context.absolutePos(POS);
+        ItemFrame frame = new ItemFrame(context.getLevel(), pos, Direction.NORTH);
+        frame.setItem(new ItemStack(TestFixtures.OLD_ITEM.get()), false);
+
+        context.getLevel().addLegacyChunkEntities(Stream.of(frame));
+
+        if (!frame.getItem().is(TestFixtures.NEW_ITEM.get())) {
+            context.fail("an item frame loaded from disk should convert, but it holds " + frame.getItem());
+        }
+
         context.succeed();
     }
 
