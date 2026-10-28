@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Spike: do retired IDs that are no longer registered survive a real chunk load?
+ * Do retired IDs that are no longer registered survive a real chunk load?
  * <p>
  * Each scenario serializes a real chunk, swaps a registered fixture ID for one that is not registered,
  * files the result under a chunk that has never been loaded, and loads it through the game's own

@@ -87,7 +87,7 @@ public final class MigrationRegistry implements MigrationBackend {
                     id -> BuiltInRegistries.BLOCK.getOptional(id).isPresent(),
                     id -> BuiltInRegistries.ITEM.getOptional(id).isPresent()
                 );
-                ForwardingAddressMod.LOGGER.info("[spike] built {} from {} block and {} item migration(s)", rewriter, blocks.size(), allItems.size());
+                ForwardingAddressMod.LOGGER.info("Built {} from {} block and {} item migration(s)", rewriter, blocks.size(), allItems.size());
             }
 
             return rewriter;

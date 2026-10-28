@@ -8,3 +8,4 @@
 * Items convert in a player's inventory and ender chest on login, in containers placed in the world, and as dropped items and item frames when they load.
 * A block that can't be converted exactly, such as a container whose new block has nowhere to put its contents, is left alone with an error in the log, and is tried again the next time its chunk loads.
 * Retired items get a tooltip saying what they will become and no longer appear in the creative inventory.
+* A migration that only renames a block or item (no mappers) also works after the old mod is removed. The old ID is renamed in saved chunks, entities, and player data as they load, so nothing is lost even though the old block or item is no longer registered.

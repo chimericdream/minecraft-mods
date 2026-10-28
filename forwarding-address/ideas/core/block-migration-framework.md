@@ -232,6 +232,15 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   ChimericLib ideas; the conversion GameTest (contents kept, nothing dropped) is a candidate shared fixture.
   The [Registry dump command](../../../chimeric-lib/ideas/dev-tools/registry-dump-command.md) is a separate
   ChimericLib idea with a similar "write a report to disk" step; this mod's dump command stays separate.
+- 2026-10-28 — **Saved-data ID rewriting added to Stage 1.** Two mixins (`SimpleRegionStorage.upgradeChunkTag`
+  for chunk, entity and POI data; `DataFixTypes.update` for player data) rename retired IDs in NBT before
+  the game decodes it. Region data is hooked at `upgradeChunkTag` because it returns early, skipping the
+  data fixer, when the data is already current, which is what a mod update leaves behind. Only
+  rename-only migrations qualify (no mappers), the old ID must be unregistered, and the target registered.
+  A GameTest proves it against a real chunk load, with a control showing vanilla drops an unknown block.
+  Consequence: a rename-only migration needs no stub, so stubs are only for migrations with mappers and
+  for block-entity blocks. Block entity type IDs are not renamed yet. The mixins target Minecraft
+  internals and may need attention on each Minecraft update.
 
 ## Open questions
 
