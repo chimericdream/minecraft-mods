@@ -30,7 +30,7 @@ inventories.
 
 - [Block migration framework](core/block-migration-framework.md) — The whole mod: declare old → new
   block and item migrations, convert placed blocks and held items with contents intact, register stubs
-  for retired IDs, and dump a mod's blocks for pack makers. Effort XL. Ready. Stage 1 (core) is built; Stage 2 (JSON, stubs, dump command) is next.
+  for retired IDs, and dump a mod's blocks for pack makers. Effort XL. Ready. Stage 1 (core) and Stage 2 (JSON, stubs, dump command) are built.
 
 ## Inbox
 

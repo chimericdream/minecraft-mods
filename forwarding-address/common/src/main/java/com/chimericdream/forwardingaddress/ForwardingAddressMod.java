@@ -1,8 +1,11 @@
 package com.chimericdream.forwardingaddress;
 
 import com.chimericdream.forwardingaddress.api.Migrations;
+import com.chimericdream.forwardingaddress.config.ConfigLoader;
+import com.chimericdream.forwardingaddress.config.DumpCommand;
 import com.chimericdream.forwardingaddress.migration.MigrationEvents;
 import com.chimericdream.forwardingaddress.migration.MigrationRegistry;
+import com.chimericdream.lib.commands.ChimericCommands;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
@@ -23,6 +26,10 @@ public final class ForwardingAddressMod {
         ForwardingSettings.load();
         Migrations.installBackend(MigrationRegistry.INSTANCE);
         MigrationEvents.init();
+
+        // Stubs are registry entries, so the JSON files are read before the registries are filled.
+        ConfigLoader.load(REGISTRY_HELPER);
+        ChimericCommands.register(new DumpCommand());
 
         REGISTRY_HELPER.init();
     }

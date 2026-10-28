@@ -60,7 +60,27 @@ Needs a real world and a person. Do it on **both Fabric and NeoForge**, since th
 * [ ] **Bad settings file.** Put invalid JSON in `settings.json`: the game starts, logs an error, uses the
       default, and leaves the file as it was.
 
-## Not covered yet (Stage 2)
+### Stage 2 and the saved-data rewrite (automated)
 
-JSON-declared migrations, stub registration for retired IDs, the duplicate guard, and the
-`/forwardingaddress dump` command. Their tests are planned with the work.
+* **`MigrationFileTest`**, **`StubTest`** (`fabric/src/test`) — JSON parsing and validation, property and value
+  mapping, stub property types, the stub duplicate guard, and stub-to-target property copying.
+* **`StubGameTest`** — stubs register under a removed mod's namespace, keep state and convert (explicit
+  properties, a vanilla template, and a property rename), drop their item (which converts), count as retired,
+  are not registered for an installed mod or without a target, and the dump lists properties and flags block entities.
+* **`SavedDataRewriteGameTest`** — a retired ID that is no longer registered is renamed in a real chunk load,
+  with a control showing vanilla drops an unknown block untouched.
+* **`ItemConversionGameTest`** — a dropped item and an item frame convert when loaded from disk.
+
+### Manual checklist, continued (Stage 2)
+
+* [ ] **Stubs on NeoForge.** NeoForge was only compiled for stubs. With a JSON stub for an uninstalled mod,
+      start a dev world, place the stub with `/setblock`, reload the world: it converts to its target.
+* [ ] **Removed-mod flow (both loaders).** Install a test mod, build something with it, run
+      `/forwardingaddress dump <namespace>`, fill in targets, remove the mod, add a stub file, load the world:
+      the blocks are converted and nothing is lost.
+* [ ] **Client and server stub config.** Join a server whose stub files differ from the client's: the join fails
+      with the loader's registry mismatch naming the stubs, and the two logs show different `stub config` hashes.
+* [ ] **Rename-only without a stub.** Remove an old mod whose blocks have a rename-only migration and no stub:
+      the world loads and the blocks convert (this is the saved-data rewrite).
+* [ ] **Dump permissions.** `/forwardingaddress dump` is refused for a non-operator, and refuses a bad
+      namespace and a namespace with no blocks.

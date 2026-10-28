@@ -1,10 +1,11 @@
 package com.chimericdream.forwardingaddress.migration;
 
+import com.chimericdream.forwardingaddress.stub.StubProperty;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 /**
- * Copies block-state properties between two blocks by name and type.
+ * Copies block-state properties between two blocks by name and type. A stub's properties, which only know their values by name, match by value name instead.
  */
 public final class PropertyCopier {
     private PropertyCopier() {
@@ -26,8 +27,15 @@ public final class PropertyCopier {
 
     private static <T extends Comparable<T>> BlockState copyProperty(BlockState from, BlockState to, Property<T> property) {
         Property<?> match = findByName(to, property.getName());
-        if (match == null || match.getValueClass() != property.getValueClass()) {
+        if (match == null) {
             return to;
+        }
+
+        if (match.getValueClass() != property.getValueClass()) {
+            // A stub's properties only know their values by name, so match them to the target by name.
+            return property instanceof StubProperty || match instanceof StubProperty
+                ? copyByValueName(from, to, property, match)
+                : to;
         }
 
         @SuppressWarnings("unchecked")
@@ -38,6 +46,12 @@ public final class PropertyCopier {
         }
 
         return to.setValue(typed, value);
+    }
+
+    private static <T extends Comparable<T>, U extends Comparable<U>> BlockState copyByValueName(BlockState from, BlockState to, Property<T> source, Property<U> match) {
+        return match.getValue(source.getName(from.getValue(source)))
+            .map(value -> to.setValue(match, value))
+            .orElse(to);
     }
 
     private static Property<?> findByName(BlockState state, String name) {

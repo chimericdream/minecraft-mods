@@ -30,6 +30,14 @@ public class ChunkQueueGameTest {
     @GameTest
     public void aDrainNeverConvertsMoreThanItsBudget(GameTestHelper context) {
         ServerLevel level = context.getLevel();
+
+        // The queue is shared, and a drain scans at most ConversionQueue.MAX_SCANS_PER_DRAIN chunks, so
+        // chunks reported by the other tests' structures could push this test's chunk out of the first
+        // drain. Scan those first.
+        for (int i = 0; i < 100 && MigrationEvents.queue().pendingChunks(level.dimension()) > 0; i++) {
+            MigrationEvents.drain(level, 1000);
+        }
+
         for (int x = 0; x < ROW; x++) {
             BlockPos pos = new BlockPos(x % 8, 2 + x / 8, 3);
             context.setBlock(pos, TestFixtures.OLD_BLOCK.get().defaultBlockState());

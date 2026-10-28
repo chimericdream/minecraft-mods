@@ -241,6 +241,18 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   Consequence: a rename-only migration needs no stub, so stubs are only for migrations with mappers and
   for block-entity blocks. Block entity type IDs are not renamed yet. The mixins target Minecraft
   internals and may need attention on each Minecraft update.
+- 2026-10-28 — **Stage 2 built.** JSON loader (`config/forwardingaddress/migrations/*.json`, read in name
+  order at init, before the registries fill), stub registration with the installed-mod duplicate guard, and
+  `/forwardingaddress dump <namespace>`. Differences from the plan: (1) a stub property list is typed by its
+  values: `true`/`false` becomes a real `BooleanProperty`, consecutive non-negative integers an
+  `IntegerProperty`, anything else a name-only `StubProperty`, which `PropertyCopier` matches to the target by
+  value name; (2) a JSON entry may carry `renameProperties` and `mapValues`, built into a `PropertyMapper`;
+  (3) a stub's drop is `getDrops` returning its own item rather than a loot table, and the dropped item
+  converts as it enters the world; (4) entries with a blank `to` are ignored with a log line, and block-entity
+  blocks in a dump are flagged `unsupported` and get no stub; (5) a stub whose ID is already registered by
+  something that isn't an installed mod stops startup with a message naming the ID and the file; (6) the
+  startup log prints a short hash of the stub declarations. The stub prototype question is answered for
+  Fabric by `StubGameTest`; NeoForge is a manual check in `TEST_PLAN.md`.
 
 ## Open questions
 

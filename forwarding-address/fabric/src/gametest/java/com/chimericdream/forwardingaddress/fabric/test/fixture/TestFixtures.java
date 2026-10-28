@@ -1,6 +1,8 @@
 package com.chimericdream.forwardingaddress.fabric.test.fixture;
 
 import com.chimericdream.forwardingaddress.api.Migrations;
+import com.chimericdream.forwardingaddress.config.ConfigLoader;
+import com.chimericdream.forwardingaddress.config.MigrationFile;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.resources.Identifier;
@@ -79,6 +81,21 @@ public final class TestFixtures {
     public static final RegistrySupplier<Item> NEW_ITEM = item("new_item");
     public static final RegistrySupplier<Item> ORPHAN_ITEM = item("orphan_item");
 
+    private static final String STUB_JSON = """
+        {
+          "blocks": [
+            {"from": "removedmod:stairs", "to": "forwardingaddress_test:new_block",
+             "stub": {"properties": {"facing": ["north", "south", "west", "east"], "waterlogged": ["true", "false"]}}},
+            {"from": "removedmod:oak_like", "to": "minecraft:birch_stairs", "stub": {"template": "minecraft:oak_stairs"}},
+            {"from": "removedmod:renamed", "to": "forwardingaddress_test:new_block",
+             "stub": {"properties": {"dir": ["north", "south", "west", "east"]}}, "renameProperties": {"dir": "facing"}},
+            {"from": "installedmod:real", "to": "forwardingaddress_test:new_block", "stub": {"template": "minecraft:oak_stairs"}},
+            {"from": "removedmod:unfinished", "to": "", "stub": {"properties": {"a": ["x", "y"]}}}
+          ],
+          "items": [{"from": "removedmod:wrench", "to": "forwardingaddress_test:new_item"}]
+        }
+        """;
+
     private TestFixtures() {
     }
 
@@ -111,6 +128,10 @@ public final class TestFixtures {
      * Registers the fixtures, then declares the migrations between them.
      */
     public static void register() {
+        // Stubs for a mod that isn't installed ("removedmod"), declared the way a pack maker's JSON would.
+        // "installedmod" pretends to be installed, so its stub must not be registered.
+        ConfigLoader.apply(MigrationFile.parse(STUB_JSON), "test stubs", REGISTRY_HELPER, namespace -> namespace.equals("installedmod"));
+
         REGISTRY_HELPER.init();
 
         Migrations.block(id("old_block")).to(id("new_block")).register();
