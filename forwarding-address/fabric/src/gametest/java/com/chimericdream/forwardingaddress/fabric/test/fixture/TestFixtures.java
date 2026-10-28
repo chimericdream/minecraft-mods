@@ -130,5 +130,10 @@ public final class TestFixtures {
 
         Migrations.item(id("old_item")).to(id("new_item")).register();
         Migrations.item(id("orphan_item")).to(Identifier.fromNamespaceAndPath("not_installed", "nowhere")).register();
+
+        // Retired and never registered, as a mod that deleted its old classes would leave them. Only the
+        // saved-data rewrite can reach these; "unmigrated_ghost" has no migration at all, as a control.
+        Migrations.block(id("ghost_block")).to(id("new_block")).register();
+        Migrations.item(id("ghost_item")).to(id("new_item")).register();
     }
 }

@@ -30,6 +30,8 @@ public final class MigrationRegistry implements MigrationBackend {
 
     @Nullable
     private volatile Resolved resolved;
+    @Nullable
+    private volatile IdRewriter rewriter;
 
     public MigrationRegistry() {
         this(new MigrationLog(ForwardingAddressMod.LOGGER));
@@ -49,6 +51,7 @@ public final class MigrationRegistry implements MigrationBackend {
         blocks.put(migration.from(), migration);
         impliedItems.putIfAbsent(migration.from(), new ItemMigration(migration.from(), migration.to(), migration.itemMapper()));
         resolved = null;
+        rewriter = null;
     }
 
     @Override
@@ -60,6 +63,35 @@ public final class MigrationRegistry implements MigrationBackend {
 
         items.put(migration.from(), migration);
         resolved = null;
+        rewriter = null;
+    }
+
+    /**
+     * @return the renames that can be applied to saved data before the game resolves its IDs; built on
+     * first use, once the game registries are populated
+     */
+    public IdRewriter rewriter() {
+        IdRewriter current = rewriter;
+        if (current != null) {
+            return current;
+        }
+
+        synchronized (this) {
+            if (rewriter == null) {
+                Map<Identifier, ItemMigration> allItems = new LinkedHashMap<>(impliedItems);
+                allItems.putAll(items);
+
+                rewriter = IdRewriter.from(
+                    blocks.values(),
+                    allItems.values(),
+                    id -> BuiltInRegistries.BLOCK.getOptional(id).isPresent(),
+                    id -> BuiltInRegistries.ITEM.getOptional(id).isPresent()
+                );
+                ForwardingAddressMod.LOGGER.info("[spike] built {} from {} block and {} item migration(s)", rewriter, blocks.size(), allItems.size());
+            }
+
+            return rewriter;
+        }
     }
 
     public synchronized boolean isEmpty() {

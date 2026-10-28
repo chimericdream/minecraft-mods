@@ -6,6 +6,8 @@
     "client": [
     ],
     "mixins": [
+        "DataFixTypesMixin",
+        "SimpleRegionStorageMixin"
     ],
     "injectors": {
         "defaultRequire": 1

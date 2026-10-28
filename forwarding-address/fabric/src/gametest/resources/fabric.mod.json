@@ -16,7 +16,8 @@
         "fabric-gametest": [
             "com.chimericdream.forwardingaddress.fabric.test.BlockConversionGameTest",
             "com.chimericdream.forwardingaddress.fabric.test.ItemConversionGameTest",
-            "com.chimericdream.forwardingaddress.fabric.test.ChunkQueueGameTest"
+            "com.chimericdream.forwardingaddress.fabric.test.ChunkQueueGameTest",
+            "com.chimericdream.forwardingaddress.fabric.test.SavedDataRewriteGameTest"
         ]
     },
     "depends": {
