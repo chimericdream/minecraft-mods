@@ -41,6 +41,7 @@ logs/
 node_modules
 
 .claude/settings.local.json
+.claude/worktrees
 
 # decompiled source cache (see .claude/skills/mc-source-decompile)
 .sources/
