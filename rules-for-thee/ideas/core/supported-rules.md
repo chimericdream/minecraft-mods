@@ -16,6 +16,26 @@ player in question" decision.
 Rule values are typed. The data model, storage, and commands support **boolean and integer** values from
 v1.
 
+### Built (2026-10-29)
+
+Every rule in the two v1 tables below is implemented, with GameTests for the hooks and manual steps in
+`rules-for-thee/TEST_PLAN.md` for what a mock player can't exercise. How the build differed from the notes in
+the tables:
+
+- **Client-synced rules** (`IMMEDIATE_RESPAWN`, `REDUCED_DEBUG_INFO`) are not wrapped in the login packet.
+  The player is sent their own value as packets right after they join, when their effective rules change, and
+  after `MinecraftServer.onGameRuleChanged` has broadcast a changed world rule (read: it sends the world's
+  value to every online player). The client keeps both flags across a respawn, so nothing is needed on death.
+  `LIMITED_CRAFTING` uses the same mechanism and is a small addition if wanted.
+- **`SPAWN_PHANTOMS`** needed two hooks: the level-wide rule read opens if the world or any online player's
+  override allows phantoms, and the per-player `isSpectator` check also skips players the rule doesn't allow.
+  The filter inside the vanilla loop (night, sky, random roll) isn't covered by a GameTest.
+- **`SEND_COMMAND_FEEDBACK`** is hooked through `ServerPlayer$3`, the anonymous command source, via its
+  synthetic `this$0` field. That class name is the same in the NeoForge jar.
+- **`RESPAWN_RADIUS`** uses a thread-local `SubjectScope` opened in `ServerPlayer.adjustSpawnLocation`.
+- Messages are literal text, not translation keys, because the mod is server-side only.
+- **Not yet done:** the "maybe" tier, `UNIVERSAL_ANGER`, and grave-mod compatibility.
+
 ### v1 — definitely
 
 | Rule | Type | Subject and hook |

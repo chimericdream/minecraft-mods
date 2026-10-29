@@ -1,6 +1,6 @@
 # Per-player game rule overrides
 
-> Source: user's original request, 2026-10-28 · Effort **L** · Status: **Ready**
+> Source: user's original request, 2026-10-28 · Effort **L** · Status: **Building** (branch `rules-for-thee-ideas`; v1 implemented, pending manual verification in `rules-for-thee/TEST_PLAN.md`)
 
 ## Description
 
