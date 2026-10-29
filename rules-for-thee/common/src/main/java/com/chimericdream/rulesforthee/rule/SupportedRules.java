@@ -25,6 +25,7 @@ public final class SupportedRules {
         register(GameRules.FREEZE_DAMAGE);
         register(GameRules.SHOW_DEATH_MESSAGES);
         register(GameRules.SHOW_ADVANCEMENT_MESSAGES);
+        register(GameRules.SPAWN_PHANTOMS);
     }
 
     private SupportedRules() {
