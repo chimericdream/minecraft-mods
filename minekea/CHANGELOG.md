@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* The milk cauldron now has a proper name instead of showing its raw translation key.
+
 
 ### 26.2 - 10.3.1
 

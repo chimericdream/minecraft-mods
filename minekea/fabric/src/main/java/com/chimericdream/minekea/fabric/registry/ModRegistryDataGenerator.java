@@ -19,7 +19,7 @@ public class ModRegistryDataGenerator {
         translationBuilder.add(HONEY_BUCKET.get(), "Honey Bucket");
         translationBuilder.add(HONEY_SOURCE_BLOCK.get(), "Honey");
         translationBuilder.add(HONEY_CAULDRON.get(), "Honey Cauldron");
-//        translationBuilder.add(MILK_CAULDRON.get(), "Milk Cauldron");
+        translationBuilder.add(MILK_CAULDRON.get(), "Milk Cauldron");
         translationBuilder.add(MILK_SOURCE_BLOCK.get(), "Milk");
     }
 }
