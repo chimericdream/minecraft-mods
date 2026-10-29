@@ -20,7 +20,7 @@ import java.util.TreeMap;
  */
 public final class RuleOverrides {
     public static final Codec<RuleOverrides> CODEC = Codec.unboundedMap(Codec.STRING, Codec.STRING)
-        .xmap(RuleOverrides::new, RuleOverrides::raw);
+        .xmap(RuleOverrides::new, RuleOverrides::entries);
 
     // Sorted so `canonical()` is stable no matter the order rules were set in.
     private final Map<String, String> values = new TreeMap<>();
@@ -80,7 +80,7 @@ public final class RuleOverrides {
         return out.toString();
     }
 
-    Map<String, String> raw() {
+    public Map<String, String> entries() {
         return Collections.unmodifiableMap(values);
     }
 }

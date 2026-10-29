@@ -102,6 +102,13 @@ public class RulesData extends SavedData {
         return players.computeIfAbsent(player, id -> new PlayerEntry());
     }
 
+    /** Forgets everything stored about a player. */
+    public void removePlayer(UUID player) {
+        if (players.remove(player) != null) {
+            setDirty();
+        }
+    }
+
     /** Every player the mod holds anything for, mostly for the phantom spawner's "does anyone override this" check. */
     public Map<UUID, PlayerEntry> players() {
         return Collections.unmodifiableMap(players);
