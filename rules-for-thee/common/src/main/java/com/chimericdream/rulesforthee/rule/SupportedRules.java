@@ -19,6 +19,12 @@ public final class SupportedRules {
 
     static {
         register(GameRules.KEEP_INVENTORY);
+        register(GameRules.DROWNING_DAMAGE);
+        register(GameRules.FALL_DAMAGE);
+        register(GameRules.FIRE_DAMAGE);
+        register(GameRules.FREEZE_DAMAGE);
+        register(GameRules.SHOW_DEATH_MESSAGES);
+        register(GameRules.SHOW_ADVANCEMENT_MESSAGES);
     }
 
     private SupportedRules() {

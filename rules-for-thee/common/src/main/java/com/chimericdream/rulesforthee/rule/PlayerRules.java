@@ -32,6 +32,15 @@ public final class PlayerRules {
         return resolve(entity, rule, worldRules.get(rule));
     }
 
+    /**
+     * For mixin handlers, which see a wrapped call's rule and value only as {@code GameRule<?>} and
+     * {@code Object}. The value comes from that same rule, so the types always agree.
+     */
+    @SuppressWarnings("unchecked")
+    public static Object resolveUnchecked(Entity entity, GameRule<?> rule, Object worldValue) {
+        return resolve(entity, (GameRule<Object>) rule, worldValue);
+    }
+
     public static <T> T resolve(MinecraftServer server, ServerPlayer player, GameRule<T> rule, T worldValue) {
         if (server == null) {
             return worldValue;

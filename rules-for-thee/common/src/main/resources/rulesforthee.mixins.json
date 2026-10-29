@@ -6,6 +6,10 @@
     "client": [
     ],
     "mixins": [
+        "RFT$PlayerMixin",
+        "RFT$ServerPlayerMixin",
+        "RFT$PlayerAdvancementsMixin",
+        "RFT$TamableAnimalMixin"
     ],
     "injectors": {
         "defaultRequire": 1
