@@ -1,0 +1,7 @@
+architectury {
+    common project(':rules-for-thee').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/rulesforthee.accesswidener")
+}

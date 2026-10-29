@@ -1,0 +1,16 @@
+architectury {
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":rules-for-thee:common").loom.accessWidenerPath
+}
+
+configurations {
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':rules-for-thee:common')) { transitive false }
+    shadowBundle project(path: ':rules-for-thee:common', configuration: 'transformProductionFabric')
+}

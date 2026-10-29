@@ -1,0 +1,26 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":rules-for-thee:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "rulesforthee.accesswidener")
+    }
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':rules-for-thee:common')) { transitive false }
+    shadowBundle project(path: ':rules-for-thee:common', configuration: 'transformProductionNeoForge')
+}
