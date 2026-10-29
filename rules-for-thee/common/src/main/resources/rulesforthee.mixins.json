@@ -11,7 +11,10 @@
         "RFT$PlayerAdvancementsMixin",
         "RFT$TamableAnimalMixin",
         "RFT$PhantomSpawnerMixin",
-        "RFT$MinecraftServerMixin"
+        "RFT$MinecraftServerMixin",
+        "RFT$NetherPortalBlockMixin",
+        "RFT$PlayerSpawnFinderMixin",
+        "RFT$PlayerCommandSourceMixin"
     ],
     "injectors": {
         "defaultRequire": 1

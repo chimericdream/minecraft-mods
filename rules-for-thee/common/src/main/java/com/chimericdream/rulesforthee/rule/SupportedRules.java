@@ -28,6 +28,10 @@ public final class SupportedRules {
         register(GameRules.SPAWN_PHANTOMS);
         register(GameRules.IMMEDIATE_RESPAWN);
         register(GameRules.REDUCED_DEBUG_INFO);
+        register(GameRules.PLAYERS_NETHER_PORTAL_DEFAULT_DELAY);
+        register(GameRules.PLAYERS_NETHER_PORTAL_CREATIVE_DELAY);
+        register(GameRules.RESPAWN_RADIUS);
+        register(GameRules.SEND_COMMAND_FEEDBACK);
     }
 
     private SupportedRules() {
