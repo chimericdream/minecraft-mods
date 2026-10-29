@@ -10,3 +10,5 @@ something you just hit is a new bug — it may already be documented with a root
 - [NeoForge gotchas](../NEOFORGE.md) / [Fabric gotchas](../FABRIC.md) — confirmed loader-specific runtime/build issues
 - [MC 26.2 rendering notes](../MC-26.2-RENDERING.md) — `submitMovingBlock`, AO, custom geometry, beds
 - [Rendering: z-fighting on coplanar surfaces](gotchas/rendering.md)
+- [Forwarding Address saved-data mixins](gotchas/forwarding-address-mixins.md) — mixins into Minecraft's
+  save loading; what to re-check on each Minecraft update

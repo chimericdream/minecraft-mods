@@ -1,30 +1,10 @@
 # Block migration framework
 
-> Source: legacy backlog, [§ Extract & generalize existing suite patterns](../chimeric-lib/ideas/brainstorms/2026-08-27-legacy/potential-features.md#extract--generalize-existing-suite-patterns) · Effort **XL** · Status: **Ready**
+> Source: legacy backlog, [§ Extract & generalize existing suite patterns](../../../chimeric-lib/ideas/brainstorms/2026-08-27-legacy/potential-features.md#extract--generalize-existing-suite-patterns) · Effort **XL** · Status: **Ready**
 
 ## Identity
 
-_Approved 2026-10-26. Mod name: **Forwarding Address** (`forwardingaddress`). When the mod is scaffolded,
-this section moves into its `ideas/README.md`._
-
-> **Forwarding Address makes block and item changes safe for existing worlds.** When a mod renames,
-> merges, moves, or drops a block or item, the old ones keep working: placed blocks and held items
-> convert to their new form with their contents intact, without DataFixerUpper. It serves mod authors,
-> through a small versioned API, and modpack makers, through config files, equally. It never guesses: a
-> conversion that can't be done exactly leaves the block alone, logs why, and tries again later. It is
-> not a world editor or a general data fixer, and it adds no blocks of its own beyond the stand-ins that
-> retired IDs need.
-
-### Boundary with the suite
-
-Forwarding Address owns the conversion machinery. The mods being migrated own their blocks and declare
-the migrations: Minekea is the first source, and But What About...? and Cobblicious are the first
-destinations. A migration names the old and new blocks by ID, so the two mods don't need to know about
-each other. Only the mod that declares a migration depends on Forwarding Address, and a migration whose
-target isn't installed is skipped and logged. Forwarding Address requires ChimericLib.
-
-Not decided: entity and biome migrations, and items nested in shulker boxes, bundles, and entity
-inventories.
+Approved 2026-10-26; now lives in the mod's [`ideas/README.md`](../README.md#identity).
 
 ## Description
 
@@ -32,7 +12,7 @@ A **standalone mod** (its own mod, not part of ChimericLib, though it requires i
 and modpack makers retire, rename, merge, or move blocks and items without DataFixerUpper and without
 breaking existing worlds or inventories. A migration says "old block → new block", and the mod converts placed blocks and held items
 to the new one with their contents intact. It generalizes the pattern Hopper X-Treme built for its
-`filtered_*` hoppers ([`docs/BLOCK-MIGRATION.md`](../docs/BLOCK-MIGRATION.md)), and the suite's own mods
+`filtered_*` hoppers ([`docs/BLOCK-MIGRATION.md`](../../../docs/BLOCK-MIGRATION.md)), and the suite's own mods
 (Minekea, Hopper X-Treme) become its first consumers.
 
 **Who it's for**
@@ -211,19 +191,68 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
   conversion, the per-tick cap, and skipped-and-logged cases); a visual smoke test for stub rendering; and
   manual steps in the mod's `TEST_PLAN.md` for the removed-mod flow (dump, remove the mod, load the
   world), which a GameTest can't easily cover.
+- 2026-10-27 — **Build plan decided.** Delivery is staged: **Stage 1 (core)** is the code builder, chunk scan
+  and queue, block swap with block-entity re-attach, property mapping, item conversion, and the deprecated
+  tooltip; **Stage 2 (pack-maker layer)** is the JSON loader, stubs, duplicate guard, and dump command.
+  The **public API is a package inside `common`** (`com.chimericdream.forwardingaddress.api`), not a
+  separate Gradle module, so splitting it out later stays cheap. Rules: `api` never imports from the rest of
+  the mod; the builder reaches the implementation through a backend interface installed at init; API
+  types are plain data and functional interfaces; a JUnit test fails if `api` imports from outside
+  itself. This supersedes the "separate, semver-versioned API package" wording in the ChimericLib decision.
+  The repo's GameTest source set is Fabric-only, so conversion logic is GameTested on Fabric with thin
+  per-loader hooks, and NeoForge is covered by a manual pass in `TEST_PLAN.md`. The stub-registration
+  prototype spike runs at the start of Stage 2.
+- 2026-10-27 — **Stage 1 (core) built.** Differences from the plan, all small: (1) Placed blocks are
+  detected by each loader's *post-load* chunk event (Fabric `ServerChunkEvents.CHUNK_LOAD`, NeoForge
+  `ChunkEvent.Load`), not Architectury's `ChunkEvent.LOAD_DATA`, which fires before the chunk is usable.
+  The event only reports the chunk position; the palette check happens in the drain, on the server thread,
+  so the event is safe off-thread. (2) The cap is per level per server tick (default 256), and at most 32
+  chunks are palette-scanned per drain; scanning costs no budget. (3) A block migration also migrates the
+  block's item automatically, and an explicit item migration for the same ID wins. (4) Duplicate
+  declarations are logged and ignored, not thrown, so one conflict can't stop a pack from loading. (5) If
+  a block-entity mapper throws after the swap, the original block and its contents are put back and the
+  block is skipped. (6) The tooltip key is `item.forwardingaddress.retired.tooltip`; retired items are
+  removed from creative tabs by Fabric's `CreativeModeTabEvents.MODIFY_OUTPUT_ALL` and NeoForge's
+  `BuildCreativeModeTabContentsEvent`. An item whose target isn't installed is *not* hidden or tooltipped.
+  (7) The settings file is `config/forwardingaddress/settings.json` with one key,
+  `maxConversionsPerTick`; an unreadable file keeps the defaults and is never overwritten.
+  (8) **Declaring is order-independent.** Mod initialization order isn't guaranteed on either loader (a
+  GameTest failed intermittently on exactly this), so `Migrations` holds declarations made before
+  Forwarding Address starts and hands them over, in order, when its backend installs. Nothing throws.
 
 ## Related
 
-- [`docs/BLOCK-MIGRATION.md`](../docs/BLOCK-MIGRATION.md) — the current per-mod approach this would generalize. Update it to point at the mod once built.
-- [But What About...? ideas](../but-what-about/ideas/README.md) — the Minekea boundary plan is the first cross-mod consumer. Its plan has Minekea depend on the destination mod; with Forwarding Address, only the mod that declares the migration depends on this one, and the two mods don't need to know about each other.
-- [Namespace-preserving registration](../chimeric-lib/ideas/archive/namespace-preserving-registration.md)
+- [`docs/BLOCK-MIGRATION.md`](../../../docs/BLOCK-MIGRATION.md) — the current per-mod approach this would generalize. Update it to point at the mod once built.
+- [But What About...? ideas](../../../but-what-about/ideas/README.md) — the Minekea boundary plan is the first cross-mod consumer. Its plan has Minekea depend on the destination mod; with Forwarding Address, only the mod that declares the migration depends on this one, and the two mods don't need to know about each other.
+- [Namespace-preserving registration](../../../chimeric-lib/ideas/archive/namespace-preserving-registration.md)
   — dropped; the existing `ModRegistryHelper` overloads already do what stub registration needs.
-- [ChimericLib ideas](../chimeric-lib/ideas/README.md) — this idea used to live there. The related
-  [Component/NBT compatibility helpers](../chimeric-lib/ideas/infrastructure/component-nbt-compat-helpers.md)
-  and [GameTest harness helpers](../chimeric-lib/ideas/testing/gametest-harness-helpers.md) remain
+- [ChimericLib ideas](../../../chimeric-lib/ideas/README.md) — this idea used to live there. The related
+  [Component/NBT compatibility helpers](../../../chimeric-lib/ideas/infrastructure/component-nbt-compat-helpers.md)
+  and [GameTest harness helpers](../../../chimeric-lib/ideas/testing/gametest-harness-helpers.md) remain
   ChimericLib ideas; the conversion GameTest (contents kept, nothing dropped) is a candidate shared fixture.
-  The [Registry dump command](../chimeric-lib/ideas/dev-tools/registry-dump-command.md) is a separate
+  The [Registry dump command](../../../chimeric-lib/ideas/dev-tools/registry-dump-command.md) is a separate
   ChimericLib idea with a similar "write a report to disk" step; this mod's dump command stays separate.
+- 2026-10-28 — **Saved-data ID rewriting added to Stage 1.** Two mixins (`SimpleRegionStorage.upgradeChunkTag`
+  for chunk, entity and POI data; `DataFixTypes.update` for player data) rename retired IDs in NBT before
+  the game decodes it. Region data is hooked at `upgradeChunkTag` because it returns early, skipping the
+  data fixer, when the data is already current, which is what a mod update leaves behind. Only
+  rename-only migrations qualify (no mappers), the old ID must be unregistered, and the target registered.
+  A GameTest proves it against a real chunk load, with a control showing vanilla drops an unknown block.
+  Consequence: a rename-only migration needs no stub, so stubs are only for migrations with mappers and
+  for block-entity blocks. Block entity type IDs are not renamed yet. The mixins target Minecraft
+  internals and may need attention on each Minecraft update.
+- 2026-10-28 — **Stage 2 built.** JSON loader (`config/forwardingaddress/migrations/*.json`, read in name
+  order at init, before the registries fill), stub registration with the installed-mod duplicate guard, and
+  `/forwardingaddress dump <namespace>`. Differences from the plan: (1) a stub property list is typed by its
+  values: `true`/`false` becomes a real `BooleanProperty`, consecutive non-negative integers an
+  `IntegerProperty`, anything else a name-only `StubProperty`, which `PropertyCopier` matches to the target by
+  value name; (2) a JSON entry may carry `renameProperties` and `mapValues`, built into a `PropertyMapper`;
+  (3) a stub's drop is `getDrops` returning its own item rather than a loot table, and the dropped item
+  converts as it enters the world; (4) entries with a blank `to` are ignored with a log line, and block-entity
+  blocks in a dump are flagged `unsupported` and get no stub; (5) a stub whose ID is already registered by
+  something that isn't an installed mod stops startup with a message naming the ID and the file; (6) the
+  startup log prints a short hash of the stub declarations. The stub prototype question is answered for
+  Fabric by `StubGameTest`; NeoForge is a manual check in `TEST_PLAN.md`.
 
 ## Open questions
 
@@ -245,8 +274,3 @@ block entities of an uninstalled mod, and rewriting save data outside loaded chu
     added later on NeoForge are missed); sort the stub list so registration order, and so network IDs, is
     deterministic; fail loudly if the stub config can't be read, because a partly registered set causes
     registry-sync mismatches.
-- `BLOCK-MIGRATION.md` says conversion uses per-loader tick wiring, but Hopper X-Treme actually converts
-  from the block entity's `serverTick`. Fix the doc when this ships (not a design question).
-- Delivery staging: build in two stages, **core** (code builder, chunk scan and queue, block swap with
-  block-entity re-attach, property mapping, item conversion) then the **pack-maker layer** (JSON loader,
-  stubs, duplicate guard, dump command), or all at once? Can be decided when planning the build.

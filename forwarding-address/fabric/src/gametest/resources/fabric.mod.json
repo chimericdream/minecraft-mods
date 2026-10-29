@@ -1,0 +1,32 @@
+{
+    "schemaVersion": 1,
+    "id": "forwardingaddress_test",
+    "version": "1.0.0",
+    "name": "Forwarding Address GameTest Fixtures",
+    "description": "Test-only fixture content and GameTests for Forwarding Address. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.forwardingaddress.fabric.test.fixture.ForwardingAddressTestEntrypoint"
+        ],
+        "fabric-gametest": [
+            "com.chimericdream.forwardingaddress.fabric.test.BlockConversionGameTest",
+            "com.chimericdream.forwardingaddress.fabric.test.ItemConversionGameTest",
+            "com.chimericdream.forwardingaddress.fabric.test.ChunkQueueGameTest",
+            "com.chimericdream.forwardingaddress.fabric.test.SavedDataRewriteGameTest",
+            "com.chimericdream.forwardingaddress.fabric.test.StubGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "forwardingaddress": "*"
+    }
+}

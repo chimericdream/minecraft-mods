@@ -76,7 +76,7 @@ adds nothing a player would install it for, and what it does add exists to be us
 ## Archive
 
 - Block migration framework — moved out on 2026-10-26 to become a standalone mod, so it no longer
-  belongs to ChimericLib. Now at [`ideas/block-migration-framework.md`](../../ideas/block-migration-framework.md).
+  belongs to ChimericLib. Now at [`forwarding-address/ideas/core/block-migration-framework.md`](../../forwarding-address/ideas/core/block-migration-framework.md).
 - Namespace-preserving registration — dropped on 2026-10-27. The NeoForge `getPath()` branches in
   `ModRegistryHelper` were removed, so the existing `Identifier` overloads already keep any namespace.
   See [`archive/namespace-preserving-registration.md`](archive/namespace-preserving-registration.md).

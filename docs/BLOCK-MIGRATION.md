@@ -3,6 +3,12 @@
 How to deprecate or rename a block/item in these Architectury mods without breaking existing worlds and
 without vanilla DataFixerUpper.
 
+> **Prefer [Forwarding Address](../forwarding-address/README.md) for new migrations.** It does everything
+> below (chunk-load detection, per-tick conversion cap, block-entity preservation, item conversion) for
+> any block or item, from a few lines of code: `Migrations.block(old).to(new).register()`. This page
+> describes the hand-rolled pattern Hopper X-Treme still uses and the reasoning behind it, which the
+> mod follows.
+
 ## Why not DataFixerUpper
 
 DFU is not portable here: Fabric API ships no data-fixer registration API (migration there means mixins
@@ -46,7 +52,8 @@ Hopper X-Treme's deprecation, which made every hopper filter-capable and retired
 blocks:
 - `hopper-xtreme/common/.../block/HopperDeprecation.java` — the snapshot/clear/swap/re-attach/restore logic.
 - `hopper-xtreme/common/.../block/ModBlocks.java` — the `getCanonicalForDeprecated` deprecated→canonical map.
-- Per-loader tick wiring: `hopper-xtreme/neoforge/.../event/HopperXtremeEventHandler.java`,
+- Hopper X-Treme converts from the block entity's `serverTick`. Only the deprecated-item tooltip has
+  per-loader wiring: `hopper-xtreme/neoforge/.../event/HopperXtremeEventHandler.java`,
   `hopper-xtreme/fabric/.../client/HopperXtremeFabricClient.java`.
 - `hopper-xtreme/fabric/src/main/.../test/DeprecatedBlockConversionTest.java` — the conversion GameTest.
 
