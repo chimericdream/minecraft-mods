@@ -10,7 +10,8 @@
         "RFT$ServerPlayerMixin",
         "RFT$PlayerAdvancementsMixin",
         "RFT$TamableAnimalMixin",
-        "RFT$PhantomSpawnerMixin"
+        "RFT$PhantomSpawnerMixin",
+        "RFT$MinecraftServerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

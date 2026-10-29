@@ -4,6 +4,7 @@ import com.chimericdream.lib.commands.ChimericCommands;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.rulesforthee.command.RulesForTheeCommand;
 import com.chimericdream.rulesforthee.notify.RuleNotifier;
+import com.chimericdream.rulesforthee.rule.ClientSync;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -26,5 +27,6 @@ public final class RulesForTheeMod {
         ChimericCommands.register(new RulesForTheeCommand("rulesforthee"));
         ChimericCommands.register(new RulesForTheeCommand("rft"));
         RuleNotifier.init();
+        ClientSync.init();
     }
 }

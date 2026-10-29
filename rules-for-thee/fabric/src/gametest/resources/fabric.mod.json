@@ -13,7 +13,8 @@
         "fabric-gametest": [
             "com.chimericdream.rulesforthee.fabric.test.RulesCommandGameTest",
             "com.chimericdream.rulesforthee.fabric.test.PlayerRuleHooksGameTest",
-            "com.chimericdream.rulesforthee.fabric.test.PhantomRulesGameTest"
+            "com.chimericdream.rulesforthee.fabric.test.PhantomRulesGameTest",
+            "com.chimericdream.rulesforthee.fabric.test.ClientSyncGameTest"
         ]
     },
     "depends": {

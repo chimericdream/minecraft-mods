@@ -1,6 +1,7 @@
 package com.chimericdream.rulesforthee.notify;
 
 import com.chimericdream.rulesforthee.data.RulesData;
+import com.chimericdream.rulesforthee.rule.ClientSync;
 import dev.architectury.event.events.common.PlayerEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -25,6 +26,8 @@ public final class RuleNotifier {
     public static void refresh(MinecraftServer server, UUID player) {
         ServerPlayer online = server.getPlayerList().getPlayer(player);
         if (online != null) {
+            // The client caches a few rules, so it has to be told even when the player needs no message.
+            ClientSync.sync(online);
             notifyIfChanged(online);
         }
     }

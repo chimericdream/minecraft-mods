@@ -26,6 +26,8 @@ public final class SupportedRules {
         register(GameRules.SHOW_DEATH_MESSAGES);
         register(GameRules.SHOW_ADVANCEMENT_MESSAGES);
         register(GameRules.SPAWN_PHANTOMS);
+        register(GameRules.IMMEDIATE_RESPAWN);
+        register(GameRules.REDUCED_DEBUG_INFO);
     }
 
     private SupportedRules() {
