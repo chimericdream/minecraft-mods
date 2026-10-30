@@ -67,6 +67,16 @@ Fabric full pass, NeoForge smoke pass (items 1, 2 and 9).
 9. **Persistence.** Restart the server: profiles, memberships, overrides, and the "already told" state all
    survive, and no one is told their rules again.
 10. **Permissions.** As a non-operator, everything but `/rulesforthee mine` is refused.
-11. **Death-handling mods.** With *Your Items Are Safe* installed, die as `Kid`: today it still builds a grave
-    chest, because it reads the world's `keepInventory` itself. This is the known gap tracked in
-    `ideas/core/grave-mod-compatibility.md`. Record what actually happens.
+11. **Death-handling mods (*Your Items Are Safe*).** Needs YIAS and Natamus Collective; run on Fabric (full)
+    and NeoForge (items a and b). The server log should say `enabling compatibility with
+    com.serilum.youritemsaresafe.events.DeathEvent` at startup.
+    a. World `keepInventory` off, `Kid` overridden to `true`: die as `Kid`. No chest or armor stand is built
+       and `Kid` respawns with everything. Die as `Adult`: YIAS builds its chest and armor stand as usual.
+    b. World `keepInventory` on (`/gamerule keep_inventory true`), `Kid` overridden to `false`: die as `Kid`.
+       YIAS builds its chest and armor stand holding `Kid`'s items and nothing drops loose. `Adult` keeps
+       their inventory.
+    c. Remove the override and repeat a and b: both players follow the world rule.
+    d. Remove YIAS (and Collective) from the mods folder: the server starts with no mixin errors and item 2
+       still passes.
+    e. Compare with the log after a YIAS update: a `WrapOperation`/injection warning means its
+       `onPlayerDeath` changed and `RFT$YourItemsAreSafeMixin` needs revisiting.

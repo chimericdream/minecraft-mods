@@ -1,6 +1,6 @@
 # Grave-mod compatibility
 
-> Source: user's request, 2026-10-28 · Status: **Exploring** (research)
+> Source: user's request, 2026-10-28 · Status: **Building** (YIAS done, other mods open)
 
 ## Description
 
@@ -41,7 +41,15 @@ Read from the public source, 2026-10-28:
 
 ## Decisions
 
-_None yet._
+- **YIAS: wrap its one `keepInventory` read (2026-10-30).** It reads the rule once, at the top of
+  `DeathEvent.onPlayerDeath`, and not again in its delayed task. A `@Pseudo` mixin wraps that call and resolves
+  it for the dying player (`RFT$YourItemsAreSafeMixin`). This replaces the subject-scoped `GameRules#get`
+  approach above: no event ordering, no thread-local, same code on both loaders.
+- **Optional by plugin.** `CompatMixinPlugin` guards `rulesforthee.compat.mixins.json` and applies a mixin only
+  when its target class file exists (checked without loading it). A new mod is one mixin class plus one row in
+  its `TARGETS` map.
+- **Fail soft.** The compat injectors use `require = 0`, so a changed YIAS logs a warning instead of crashing.
+- **Testing is manual** (`TEST_PLAN.md` item 11).
 
 ## Related
 

@@ -43,3 +43,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "rulesforthee.mixins.json"
+
+[[mixins]]
+config = "rulesforthee.compat.mixins.json"

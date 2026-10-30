@@ -1,0 +1,13 @@
+{
+    "required": false,
+    "package": "com.chimericdream.rulesforthee.mixin.compat",
+    "plugin": "com.chimericdream.rulesforthee.compat.CompatMixinPlugin",
+    "compatibilityLevel": "JAVA_25",
+    "minVersion": "0.8",
+    "mixins": [
+        "RFT$YourItemsAreSafeMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 0
+    }
+}

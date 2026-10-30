@@ -68,7 +68,7 @@ Example, for the motivating case:
 ## Notes for Documentation
 
 * Server-side only; a vanilla client can join. Messages from the mod are plain text for that reason.
-* **Grave and death-handling mods** that read the world's `keepInventory` value themselves don't know about per-player overrides yet. Rules for Thee changes how vanilla handles death for the player, but a mod that replaces that with its own chest or grave may still act on the world's value. Compatibility with *Your Items Are Safe* is planned.
+* **Grave and death-handling mods** that read the world's `keepInventory` value themselves don't know about per-player overrides yet. Rules for Thee changes how vanilla handles death for the player, but a mod that replaces that with its own chest or grave may still act on the world's value. *Your Items Are Safe* is supported: when it's installed, Rules for Thee makes its death handler use the dying player's `keepInventory` value. It is optional and does nothing when that mod is absent.
 * A player can be in one profile at a time. Multiple profiles are a possible later addition.
 * Not covered: per-player difficulty, and rules that only make sense for the whole world.
 

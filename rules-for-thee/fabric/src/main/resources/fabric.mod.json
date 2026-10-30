@@ -23,7 +23,8 @@
         ]
     },
     "mixins": [
-        "rulesforthee.mixins.json"
+        "rulesforthee.mixins.json",
+        "rulesforthee.compat.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_compat}",
