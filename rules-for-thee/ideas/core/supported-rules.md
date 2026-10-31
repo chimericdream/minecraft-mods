@@ -61,6 +61,12 @@ Controlling what they receive would be a different (chat filtering) feature.
 | `PLAYERS_NETHER_PORTAL_DEFAULT_DELAY`, `PLAYERS_NETHER_PORTAL_CREATIVE_DELAY` | int | `NetherPortalBlock.getPortalTransitionTime` already has the `Player` in hand. Easy. |
 | `REDUCED_DEBUG_INFO` | bool | Login-packet rule like `IMMEDIATE_RESPAWN`, so it comes nearly free with that mechanism. |
 
+### Added after v1
+
+| Rule | Type | Subject and hook |
+|---|---|---|
+| `PVP` | bool | Pairwise, so it's read for **both** players in a hit: `ServerPlayer.isPvpAllowed` for the victim, and a check at the top of `ServerPlayer.hurtServer` for the attacker (the damage source's entity, or an arrow's owner). A player with PVP off can neither hurt nor be hurt by other players. Self-damage is not blocked. |
+
 ### Maybe
 
 | Rule | Type | Subject and hook |
@@ -108,7 +114,7 @@ These three share one mechanism, which is why they're grouped.
 
 ### Out of scope
 
-Per-player difficulty (a possible later enhancement). `RAIDS` (dropped: not player-specific). `PVP` (pairwise; deferred). `SPAWN_PATROLS`,
+Per-player difficulty (a possible later enhancement). `RAIDS` (dropped: not player-specific). `SPAWN_PATROLS`,
 `SPAWN_WANDERING_TRADERS`, `SPAWN_WARDENS`: not checked, and likely affect other players. Everything
 else (time and weather advancing, random tick speed, spawn caps, TNT and explosion rules, fluid
 conversion, command-block and spawner rules, minecart speed, block and mob drops, `MOB_GRIEFING`,
@@ -130,6 +136,10 @@ conversion, command-block and spawner rules, minecart speed, block and mob drops
 - 2026-10-28 — The rule-change broadcast in `MinecraftServer` is read when the client-synced rules are
   built, not before.
 - 2026-10-28 — The data model supports integer values as well as booleans in v1.
+
+- 2026-10-31 — `PVP` is supported. Decided semantics: with PVP off for a player, they can't hurt other players
+  and can't be hurt by them. Damage needs the effective value to be on for both attacker and victim, so
+  `PVP = true` on a player in a PVP-off world only matters if the other player has it on too.
 
 ## Brainstorm variants
 

@@ -64,10 +64,14 @@ Fabric full pass, NeoForge smoke pass (items 1, 2 and 9).
    value: `Kid` respawns exactly at the spawn point.
 8. **Command feedback.** Set `send_command_feedback false` for `Kid`: `Kid` gets no "set the time" style
    feedback for commands they run; `Adult` does.
-9. **Persistence.** Restart the server: profiles, memberships, overrides, and the "already told" state all
+9. **PVP.** Needs three players: `Kid`, `Adult`, and `Other`. World `pvp` on, `Kid` overridden to `false`:
+   `Kid` and `Adult` can't hurt each other (melee and arrows); `Adult` and `Other` still can. `Kid` can still
+   take fall damage and mob damage. World `pvp` off, `Kid` and `Adult` both overridden to `true`: they can
+   hurt each other; `Other` can't hurt either of them.
+10. **Persistence.** Restart the server: profiles, memberships, overrides, and the "already told" state all
    survive, and no one is told their rules again.
-10. **Permissions.** As a non-operator, everything but `/rulesforthee mine` is refused.
-11. **Death-handling mods (*Your Items Are Safe*).** Needs YIAS and Natamus Collective; run on Fabric (full)
+11. **Permissions.** As a non-operator, everything but `/rulesforthee mine` is refused.
+12. **Death-handling mods (*Your Items Are Safe*).** Needs YIAS and Natamus Collective; run on Fabric (full)
     and NeoForge (items a and b). The server log should say `enabling compatibility with
     com.serilum.youritemsaresafe.events.DeathEvent` at startup.
     a. World `keepInventory` off, `Kid` overridden to `true`: die as `Kid`. No chest or armor stand is built

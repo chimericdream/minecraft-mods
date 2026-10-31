@@ -32,6 +32,7 @@ public final class SupportedRules {
         register(GameRules.PLAYERS_NETHER_PORTAL_CREATIVE_DELAY);
         register(GameRules.RESPAWN_RADIUS);
         register(GameRules.SEND_COMMAND_FEEDBACK);
+        register(GameRules.PVP);
     }
 
     private SupportedRules() {

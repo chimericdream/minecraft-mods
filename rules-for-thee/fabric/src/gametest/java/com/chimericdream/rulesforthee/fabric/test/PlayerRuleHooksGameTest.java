@@ -231,6 +231,67 @@ public class PlayerRuleHooksGameTest {
         }
     }
 
+    /**
+     * Whether a hit gets past the PVP checks. The victim's half is {@code ServerPlayer#isPvpAllowed}, called
+     * directly: in {@code hurtServer} it comes after {@code isInvulnerableTo}, which reads the network
+     * connection a mock player doesn't have. The attacker's half is checked at the top of {@code hurtServer},
+     * which returns false when it blocks. A hit that isn't blocked carries on into vanilla damage code that
+     * also needs the connection and throws, which counts as "not blocked".
+     */
+    private static boolean hitIsNotBlocked(ServerPlayer victim, ServerLevel level, DamageSource source) {
+        try {
+            Method method = ServerPlayer.class.getDeclaredMethod("isPvpAllowed");
+            method.setAccessible(true);
+            if (!(boolean) method.invoke(victim)) {
+                return false;
+            }
+
+            return victim.hurtServer(level, source, 1.0F);
+        } catch (NullPointerException e) {
+            return true;
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @GameTest
+    public void pvpNeedsBothPlayersToHaveItOn(GameTestHelper context) {
+        ServerLevel level = context.getLevel();
+        MinecraftServer server = level.getServer();
+        RulesData data = RulesData.get(server);
+        ServerPlayer victim = mockPlayer(context);
+        ServerPlayer attacker = mockPlayer(context);
+        DamageSource hit = level.damageSources().playerAttack(attacker);
+
+        try {
+            withWorld(server, GameRules.PVP, true, () -> {
+                context.assertTrue(hitIsNotBlocked(victim, level, hit), "no overrides: the hit lands");
+
+                data.entry(victim.getUUID()).overrides().set(GameRules.PVP, false);
+                context.assertTrue(!hitIsNotBlocked(victim, level, hit), "victim has PVP off: the hit is blocked");
+
+                data.removePlayer(victim.getUUID());
+                data.entry(attacker.getUUID()).overrides().set(GameRules.PVP, false);
+                context.assertTrue(!hitIsNotBlocked(victim, level, hit), "attacker has PVP off: the hit is blocked");
+            });
+
+            data.removePlayer(attacker.getUUID());
+            withWorld(server, GameRules.PVP, false, () -> {
+                context.assertTrue(!hitIsNotBlocked(victim, level, hit), "world PVP off: the hit is blocked");
+
+                data.entry(victim.getUUID()).overrides().set(GameRules.PVP, true);
+                context.assertTrue(!hitIsNotBlocked(victim, level, hit), "only the victim has PVP on: still blocked");
+
+                data.entry(attacker.getUUID()).overrides().set(GameRules.PVP, true);
+                context.assertTrue(hitIsNotBlocked(victim, level, hit), "both have PVP on in a PVP-off world: the hit lands");
+            });
+            context.succeed();
+        } finally {
+            data.removePlayer(victim.getUUID());
+            data.removePlayer(attacker.getUUID());
+        }
+    }
+
     @GameTest
     public void everyMixinTargetLoads(GameTestHelper context) throws ClassNotFoundException {
         // A mixin that fails to apply fails when its target class loads. Some targets aren't loaded until

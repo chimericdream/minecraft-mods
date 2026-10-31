@@ -112,7 +112,8 @@ class RuleNoticesTest extends BootstrapMinecraft {
         assertEquals("keep_inventory", SupportedRules.nameOf(GameRules.KEEP_INVENTORY));
         assertTrue(SupportedRules.find("keep_inventory").isPresent());
         assertTrue(SupportedRules.isSupported(GameRules.KEEP_INVENTORY));
-        assertFalse(SupportedRules.isSupported(GameRules.PVP));
+        assertTrue(SupportedRules.isSupported(GameRules.PVP));
+        assertFalse(SupportedRules.isSupported(GameRules.RAIDS));
         assertTrue(SupportedRules.find("nope").isEmpty());
     }
 }

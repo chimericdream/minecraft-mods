@@ -40,6 +40,7 @@ An override only changes what happens to or for the player it's set on, never ot
 | `players_nether_portal_default_delay`, `players_nether_portal_creative_delay` | number | How long they stand in a Nether portal before travelling |
 | `respawn_radius` | number | How far from the spawn point they can respawn |
 | `send_command_feedback` | on/off | Whether they are sent feedback for commands they run |
+| `pvp` | on/off | Whether they can hurt other players and be hurt by them. Turned off, neither works, so damage between two players needs PVP on for both |
 
 Rules that are about the whole world (time, weather, mob spawning caps, explosions, and so on) can't be overridden per player.
 
