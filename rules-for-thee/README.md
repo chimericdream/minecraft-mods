@@ -2,13 +2,13 @@
 
 ![Version: 1.0.0-beta.0](https://img.shields.io/badge/version-1.0.0--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: optional](https://img.shields.io/badge/client-optional-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
-_Per-player game rules for shared servers: give individual players or named profiles their own value for a game rule wherever the rule is about that player._
+_Per-player game rules for shared servers. Give a player or a named profile their own value for a game rule that applies to that player._
 
 ## Introduction
 
 Game rules apply to everyone. If a server is on hard with `keepInventory` off, all players get that setting. Rules for Thee lets an operator give single players their own value for the rules that apply to *that player*. Everyone else keeps the world setting.
 
-Example: a friends' server is on hard difficulty with `keepInventory` off. Only the kids keep their inventory when they die. The game does not change for anyone else.
+Example: a friends' server is on hard difficulty with `keepInventory` off. Only the kids keep their inventory when they die. Nothing changes for anyone else.
 
 This is a **server-side mod**. Vanilla clients can join a server that has it. There is no config screen. You manage everything with commands, and the mod saves it with the world.
 
@@ -32,14 +32,14 @@ An override changes only what happens to or for the player it is set on. It neve
 |---|---|---|
 | `keep_inventory` | on/off | Whether their inventory and XP are kept on death |
 | `fall_damage`, `drowning_damage`, `fire_damage`, `freeze_damage` | on/off | Whether they take that kind of damage |
-| `show_death_messages` | on/off | Whether *their* death is announced in chat. Also covers their tamed animals' deaths |
+| `show_death_messages` | on/off | Whether *their* death is announced in chat. Also covers the deaths of their tamed animals |
 | `show_advancement_messages` | on/off | Whether *their* advancements are announced in chat |
 | `spawn_phantoms` | on/off | Whether phantoms spawn for them |
 | `immediate_respawn` | on/off | Whether they skip the death screen |
 | `reduced_debug_info` | on/off | Whether their F3 screen is reduced |
 | `players_nether_portal_default_delay`, `players_nether_portal_creative_delay` | number | How long they stand in a Nether portal before travelling |
 | `respawn_radius` | number | How far from the spawn point they can respawn |
-| `send_command_feedback` | on/off | Whether they are sent feedback for commands they run |
+| `send_command_feedback` | on/off | Whether they get feedback for the commands they run |
 | `pvp` | on/off | Whether they can hurt other players and other players can hurt them. If it is off, neither works. For damage between two players, PVP must be on for both |
 
 You cannot override rules that apply to the whole world (time, weather, mob spawning caps, explosions, and so on) for a single player.
@@ -53,12 +53,12 @@ You cannot override rules that apply to the whole world (time, weather, mob spaw
 | `/rulesforthee mine` | Show the rules that differ for you (any player) |
 | `/rulesforthee rules` | List the rules that can be overridden |
 | `/rulesforthee profile create <name>` / `delete <name>` / `list` / `show <name>` | Manage profiles |
-| `/rulesforthee profile edit <name> set <rule> <value>` / `clear <rule>` | Change a profile's rules |
-| `/rulesforthee player <player> show` | Show a player's profile and effective rules |
+| `/rulesforthee profile edit <name> set <rule> <value>` / `clear <rule>` | Change the rules of a profile |
+| `/rulesforthee player <player> show` | Show the profile and effective rules of a player |
 | `/rulesforthee player <player> profile set <name>` / `profile clear` | Put a player in a profile, or take them out |
-| `/rulesforthee player <player> set <rule> <value>` / `clear <rule>` | Change a player's own overrides |
+| `/rulesforthee player <player> set <rule> <value>` / `clear <rule>` | Change the overrides set on a player |
 
-Example, for the motivating case:
+Example for the `kids` case:
 
 ```
 /rulesforthee profile create kids
@@ -75,11 +75,11 @@ Example, for the motivating case:
 
 ## Issues & Suggestions
 
-Please use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report any bugs you find or suggest new features.
+Use the [GitHub issue tracker](https://github.com/chimericdream/minecraft-mods/issues) to report bugs or suggest features.
 
 ## Credits
 
-Obviously this mod would not be possible if not for the people at Mojang making an awesome game. Thanks also go to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
+Thanks to Mojang for Minecraft. Thanks also to the developers of the Fabric and NeoForge mod loaders and the Architectury API.
 
 ## License
 
