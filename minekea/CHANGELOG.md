@@ -2,7 +2,7 @@
 
 #### Bug Fixes
 
-* The milk cauldron now has a proper name instead of showing its raw translation key.
+* The milk cauldron now shows a proper name, not its raw translation key.
 
 
 ### 26.2 - 10.3.1

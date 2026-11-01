@@ -4,7 +4,7 @@
 
 * Added stairs, slabs, and walls for
   * Calcite
-  * Chiseled Copper (Exposed, Weathered, Oxidized, and waxed of each)
+  * Chiseled Copper (Exposed, Weathered, Oxidized, and the waxed version of each)
   * Chiseled Deepslate
   * Chiseled Nether Bricks
   * Chiseled Polished Blackstone
