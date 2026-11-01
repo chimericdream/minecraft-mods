@@ -25,6 +25,23 @@
 "` to Python's `open(...)` (and `lineterminator="
 "` to `csv.writer`); Python on Windows
   otherwise writes CRLF. The lint rejects the result; this is how to avoid producing it.
+- **Write all non-code text in ASD-STE100 (Simplified Technical English).** This applies to every
+  text that an agent writes: changelog entries, documentation (README, `docs/`, ideas, test plans),
+  code comments, KDoc/Javadoc, and commit and PR messages. Keep the text short. Don't add words that
+  give no information.
+  - Write short sentences: 20 words maximum in an instruction, 25 words maximum in a description.
+    Put one topic in each paragraph.
+  - Use the active voice and the present tense. Use the imperative for instructions
+    ("Run `bun run lint`.").
+  - Use one word for one meaning. Use simple, common words ("use", not "utilize"). Do not use
+    idioms, slang, or humor. Keep contractions to a minimum. Use one only when it helps the flow of the
+    text.
+  - Keep the articles ("the", "a"). Do not use a noun string of more than three nouns.
+  - Do not write a comment that repeats what the code says. Write a comment only to explain why.
+  - Exempt: code identifiers, Minecraft and mod names, loader and library names, and the
+    conventional-commit prefix (`feat(scope):`). Keep their exact spelling.
+  - When you edit existing text, put the new or changed lines in STE. Don't rewrite unrelated text
+    unless the user asks.
 - **Follow an existing naming convention over personal habit.** The maintainer defaults to hyphenated names
   (`{stencil}-candlelit-{count}.png`) but wants strong repo conventions followed instead (e.g. All Hallows
   Steve overlay textures use underscores: `creeper_lit_blue.png`). When asked to name a file or asset, check

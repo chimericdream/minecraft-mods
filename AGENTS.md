@@ -26,7 +26,7 @@ it; each category links one level deeper to the specific doc for that topic.
 - [Gotchas & troubleshooting](docs/agents/gotchas.md) — build failures, MC 26.2 port issues,
   platform-specific (Fabric/NeoForge) bugs, rendering quirks ([MC 26.2 rendering](docs/MC-26.2-RENDERING.md))
 - [Conventions](docs/agents/conventions.md) — code style, container-inventory pattern, scaffolding new
-  mods
+  mods, **ASD-STE100 rule for all agent-written non-code text** (changelogs, docs, comments, commits)
 - [Releases](docs/agents/releases.md) — versioning/changelog rules, git commit hygiene
 - [Reference](docs/agents/reference.md) — planning docs index, external Minecraft asset reference
 - [Design notes](docs/DESIGN-NOTES.md) — per-mod design invariants (hopper filter slot, glass jar, villager
