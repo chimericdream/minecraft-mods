@@ -12,15 +12,15 @@ _Keeps existing worlds working when blocks and items are renamed, merged, moved,
 
 ### Current Features
 
-Forwarding Address is a library: on its own it changes nothing. Install it when another mod or modpack asks for it.
+Forwarding Address is a library. By itself it changes nothing. Install it when another mod or modpack needs it.
 
-* Converts retired blocks and items to their replacements, keeping facing, waterlogging, and other matching block state, and keeping container contents.
-* Converts items in player inventories, ender chests, containers in the world, dropped items, and item frames.
+* Converts retired blocks and items to their replacements. Facing, waterlogging, other matching block state, and container contents stay.
+* Converts items in player inventories, ender chests, placed containers, dropped items, and item frames.
 * Spreads block conversion over several ticks (`config/forwardingaddress/settings.json`, `maxConversionsPerTick`).
-* Works after the old mod is gone: a migration that only renames a block or item is applied to saved chunks, entities, and player data as they load.
-* Modpack makers can declare migrations in JSON files, and can register plain stand-in "stub" blocks for the blocks of a mod they removed (see below).
-* Never guesses: a conversion that can't be done exactly leaves the block alone, logs why, and tries again when the chunk next loads.
-* Needs to be installed on both the client and the server.
+* Works after the old mod is gone. A migration that only renames a block or item is applied to saved chunks, entities, and player data as they load.
+* Modpack makers can declare migrations in JSON files. They can also register plain stand-in "stub" blocks for the blocks of a removed mod (see below).
+* Never guesses. If a conversion cannot be exact, the mod leaves the block alone, logs why, and tries again when the chunk next loads.
+* Install it on both the client and the server.
 
 ### For Mod Authors
 
@@ -32,11 +32,11 @@ Migrations.block(Identifier.fromNamespaceAndPath("oldmod", "oak_trim"))
     .register();
 ```
 
-A block migration converts the block's item too. A migration that only renames can be dropped from your mod entirely: the old ID is renamed in saved data as it loads. If you use a mapper (properties, block entity, or item components), keep the old block and item registered so there is something to map from. See the `com.chimericdream.forwardingaddress.api` package for the mappers.
+A block migration also converts the item of the block. You can remove a migration that only renames from your mod. The mod renames the old ID in saved data as it loads. If you use a mapper (properties, block entity, or item components), keep the old block and item registered. The mapper needs them as a source. See the `com.chimericdream.forwardingaddress.api` package for the mappers.
 
 ### For Modpack Makers
 
-Put migration files in `config/forwardingaddress/migrations/` (any `*.json` file; they are read in name order at startup):
+Put migration files in `config/forwardingaddress/migrations/`. Any `*.json` file works. The mod reads them in name order at startup.
 
 ```json
 {
@@ -53,15 +53,15 @@ Put migration files in `config/forwardingaddress/migrations/` (any `*.json` file
 }
 ```
 
-* `from` and `to` are block (or item) IDs. An entry with a blank or missing `to` is ignored.
-* `renameProperties` and `mapValues` are optional; properties with the same name and value are copied on their own.
-* `stub` is optional. Add it when the old mod has been **removed**: it registers a plain stand-in block and item under the old ID, so a world that still contains them loads and converts. A stub is either `"template"` (a block that exists, whose properties are copied) or `"properties"` (a map of property name to its value names, for example `"facing": ["north", "south", "west", "east"]`). Booleans and consecutive whole numbers are matched to the real property types automatically.
-* A stub is only registered if no installed mod has that namespace, so putting the mod back never causes a duplicate. Stubs under `minecraft:` are refused.
-* An unconverted stub shows the missing-model look, has a "Retired block" name and tooltip, breaks by hand, and drops its item, which converts too.
-* Stubs are registry entries, so **the stub files must be identical on the client and the server**. The log prints a short fingerprint at startup (`stub config xxxxxxxx`) to compare them.
-* Block entities can't be stubbed: a removed mod's block entity data can't be saved.
+* `from` and `to` are block (or item) IDs. The mod ignores an entry with a blank or missing `to`.
+* `renameProperties` and `mapValues` are optional. The mod copies properties with the same name and value on its own.
+* `stub` is optional. Add it when the old mod is **removed**. It registers a plain stand-in block and item under the old ID. A world that still has them can then load and convert. A stub is either `"template"` or `"properties"`. `"template"` is an existing block, and the stub copies its properties. `"properties"` is a map of property name to value names, for example `"facing": ["north", "south", "west", "east"]`. The mod matches booleans and consecutive whole numbers to the real property types automatically.
+* The mod registers a stub only if no installed mod has that namespace. If you put the old mod back, there is no duplicate. The mod refuses stubs under `minecraft:`.
+* An unconverted stub shows the missing-model look and has a "Retired block" name and tooltip. You can break it by hand. It drops its item, which also converts.
+* Stubs are registry entries, so **the stub files must be identical on the client and the server**. At startup the log prints a short fingerprint (`stub config xxxxxxxx`). Use it to compare them.
+* You cannot stub block entities. The game cannot save the block entity data of a removed mod.
 
-**Before removing a mod**, run `/forwardingaddress dump <namespace>` (operators only) while it is still installed. It writes `config/forwardingaddress/dumps/<namespace>.json`: every block of that mod with its properties and a blank `to`. Fill in the targets, delete what you don't need, and move the entries into the migrations folder. The dumps folder is never loaded, so a half-finished file can't change a world.
+**Before you remove a mod**, run `/forwardingaddress dump <namespace>` (operators only) while the mod is still installed. It writes `config/forwardingaddress/dumps/<namespace>.json`. The file lists every block of that mod with its properties and a blank `to`. Fill in the targets, delete the entries you do not need, and move the rest into the migrations folder. The mod never loads the dumps folder, so a half-finished file cannot change a world.
 
 ## Notes for Documentation
 

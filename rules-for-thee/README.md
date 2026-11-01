@@ -6,11 +6,11 @@ _Per-player game rules for shared servers: give individual players or named prof
 
 ## Introduction
 
-Game rules are all-or-nothing: a server is on hard with `keepInventory` off, and that applies to everyone. Rules for Thee lets an operator give individual players their own value for the rules that are about *that player*, while everyone else keeps the world's setting.
+Game rules apply to everyone. If a server is on hard with `keepInventory` off, all players get that setting. Rules for Thee lets an operator give single players their own value for the rules that apply to *that player*. Everyone else keeps the world setting.
 
-The motivating case: a friends' server on hard difficulty with `keepInventory` off, where only the kids keep their inventory when they die. Nobody else's game changes.
+Example: a friends' server is on hard difficulty with `keepInventory` off. Only the kids keep their inventory when they die. The game does not change for anyone else.
 
-This is a **server-side mod**. Vanilla clients can join a server that has it, and there is no config screen: everything is managed with commands and saved with the world.
+This is a **server-side mod**. Vanilla clients can join a server that has it. There is no config screen. You manage everything with commands, and the mod saves it with the world.
 
 ### Minecraft Versions
 
@@ -18,15 +18,15 @@ This is a **server-side mod**. Vanilla clients can join a server that has it, an
 
 ### Current Features
 
-* **Per-player overrides.** Set a game rule's value for one player. They get it; everyone else gets the world's value. An override can be more lenient *or* stricter than the world.
-* **Profiles.** A profile is a named set of overrides, such as `kids`. Put a player in a profile (one profile per player for now) and change the profile once to change everyone in it. A player's own overrides beat their profile's, and their profile beats the world.
-* **Works for offline players.** Target a player by name; the override is stored by UUID, so you can set up a player who isn't online and they are told the next time they log in.
-* **Players are told.** When a player's rules change they get a chat message right away if they are online, or at their next login. `/rulesforthee mine` shows their current overrides next to the world's values.
-* **Pinned.** Overrides don't follow `/gamerule`. Changing the world's value later leaves them as they are.
+* **Per-player overrides.** Set a game rule value for one player. That player gets the value. Everyone else gets the world value. An override can be more lenient *or* stricter than the world.
+* **Profiles.** A profile is a named set of overrides, such as `kids`. Put a player in a profile (one profile for each player for now). Change the profile once to change all players in it. The overrides of a player have priority over their profile. The profile has priority over the world.
+* **Works for offline players.** Select a player by name. The mod stores the override by UUID. You can set up a player who is not online. The player gets a message at the next login.
+* **Players get messages.** When the rules of a player change, the player gets a chat message. An online player gets it right away. Other players get it at the next login. `/rulesforthee mine` shows the current overrides of the player next to the world values.
+* **Pinned.** Overrides do not follow `/gamerule`. If you change the world value later, the overrides stay the same.
 
 ### Supported rules
 
-An override only changes what happens to or for the player it's set on, never other players nearby.
+An override changes only what happens to or for the player it is set on. It never changes anything for other players nearby.
 
 | Rule | Type | What it changes for that player |
 |---|---|---|
@@ -40,13 +40,13 @@ An override only changes what happens to or for the player it's set on, never ot
 | `players_nether_portal_default_delay`, `players_nether_portal_creative_delay` | number | How long they stand in a Nether portal before travelling |
 | `respawn_radius` | number | How far from the spawn point they can respawn |
 | `send_command_feedback` | on/off | Whether they are sent feedback for commands they run |
-| `pvp` | on/off | Whether they can hurt other players and be hurt by them. Turned off, neither works, so damage between two players needs PVP on for both |
+| `pvp` | on/off | Whether they can hurt other players and other players can hurt them. If it is off, neither works. For damage between two players, PVP must be on for both |
 
-Rules that are about the whole world (time, weather, mob spawning caps, explosions, and so on) can't be overridden per player.
+You cannot override rules that apply to the whole world (time, weather, mob spawning caps, explosions, and so on) for a single player.
 
 ### Commands
 
-`/rulesforthee` (also `/rft`). Everything except `mine` needs operator permission, like `/gamerule`.
+`/rulesforthee` (also `/rft`). All commands except `mine` need operator permission, like `/gamerule`.
 
 | Command | What it does |
 |---|---|
@@ -68,10 +68,10 @@ Example, for the motivating case:
 
 ## Notes for Documentation
 
-* Server-side only; a vanilla client can join. Messages from the mod are plain text for that reason.
-* **Grave and death-handling mods** that read the world's `keepInventory` value themselves don't know about per-player overrides yet. Rules for Thee changes how vanilla handles death for the player, but a mod that replaces that with its own chest or grave may still act on the world's value. *Your Items Are Safe* is supported: when it's installed, Rules for Thee makes its death handler use the dying player's `keepInventory` value. It is optional and does nothing when that mod is absent.
-* A player can be in one profile at a time. Multiple profiles are a possible later addition.
-* Not covered: per-player difficulty, and rules that only make sense for the whole world.
+* The mod is server-side only. A vanilla client can join. For this reason, messages from the mod are plain text.
+* **Grave and death-handling mods** that read the world `keepInventory` value themselves do not know about per-player overrides. Rules for Thee changes how vanilla handles death for the player. A mod that replaces this with its own chest or grave can still use the world value. *Your Items Are Safe* is supported. When it is installed, its death handler uses the `keepInventory` value of the player that dies. The support is optional. It does nothing when that mod is not installed.
+* A player can be in one profile at a time. Multiple profiles can be added later.
+* Not included: per-player difficulty, and rules that apply only to the whole world.
 
 ## Issues & Suggestions
 
