@@ -70,7 +70,7 @@ public class WindowedBlock extends Block implements EntityBlock, LiquidBlockCont
                 .strength(2.0F)
                 .setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "windowed_block")))
         );
-        registerDefaultState(defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, false));
+        registerDefaultState(LavaLogProperties.withLavaLogged(defaultBlockState(), false));
     }
 
     @Override
@@ -168,7 +168,7 @@ public class WindowedBlock extends Block implements EntityBlock, LiquidBlockCont
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.getValue(LavaLogProperties.LAVALOGGED) ? Fluids.LAVA.getSource(false) : super.getFluidState(state);
+        return LavaLogProperties.isLavaLogged(state) ? Fluids.LAVA.getSource(false) : super.getFluidState(state);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class WindowedBlock extends Block implements EntityBlock, LiquidBlockCont
         BlockState neighbourState,
         RandomSource random
     ) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
         }
 

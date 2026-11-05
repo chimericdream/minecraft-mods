@@ -55,7 +55,7 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void latt$setDefaultLavaLogged(Properties properties, CallbackInfo ci) {
         Block self = (Block) (Object) this;
-        self.registerDefaultState(self.defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, false));
+        self.registerDefaultState(LavaLogProperties.withLavaLogged(self.defaultBlockState(), false));
     }
 
     @Inject(method = "canPlaceLiquid", at = @At("HEAD"), cancellable = true)
@@ -64,7 +64,7 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
     ) {
         if (type == Fluids.LAVA) {
             cir.setReturnValue(state.getValue(SlabBlock.TYPE) != SlabType.DOUBLE && LavaLogHelper.canLavaLog(level, pos, state));
-        } else if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        } else if (LavaLogProperties.isLavaLogged(state)) {
             cir.setReturnValue(false);
         }
     }
@@ -73,14 +73,14 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
     private void latt$placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState, CallbackInfoReturnable<Boolean> cir) {
         if (fluidState.is(Fluids.LAVA)) {
             cir.setReturnValue(state.getValue(SlabBlock.TYPE) != SlabType.DOUBLE && LavaLogHelper.placeLava(level, pos, state, fluidState));
-        } else if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        } else if (LavaLogProperties.isLavaLogged(state)) {
             cir.setReturnValue(false);
         }
     }
 
     @Override
     public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
-        latt$lastPickupWasLava = state.getValue(LavaLogProperties.LAVALOGGED);
+        latt$lastPickupWasLava = LavaLogProperties.isLavaLogged(state);
         if (latt$lastPickupWasLava) {
             return LavaLogHelper.pickupLava(level, pos, state);
         }
@@ -95,7 +95,7 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void latt$getFluidState(BlockState state, CallbackInfoReturnable<FluidState> cir) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             cir.setReturnValue(Fluids.LAVA.getSource(false));
         }
     }
@@ -112,7 +112,7 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
         RandomSource random,
         CallbackInfoReturnable<BlockState> cir
     ) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
         }
     }
@@ -126,7 +126,7 @@ public abstract class LATT$SlabBlockMixin implements SimpleWaterloggedBlock {
         }
 
         if (result.getValue(SlabBlock.TYPE) == SlabType.DOUBLE) {
-            result = result.setValue(LavaLogProperties.LAVALOGGED, false);
+            result = LavaLogProperties.withLavaLogged(result, false);
             cir.setReturnValue(result);
             return;
         }

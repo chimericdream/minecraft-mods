@@ -143,6 +143,28 @@ covers the exact 26.2 API calls and the cleanup checklist.
   `saveAdditional(ValueOutput)` / `loadAdditional(ValueInput)`.
 - `GameTestHelper.getEntities(EntityType)` is region-scoped, which makes it good for leak checks.
   `makeMockServerPlayerInLevel()` works but is deprecated for removal.
+- **Gotcha: do not create a `Block` inside a test method.** The block registry is frozen when a
+  GameTest runs. A `new SomeBlock(...)` then fails with `This registry can't create intrusive holders`.
+  The same rule applies to items and other registry-held objects. If a test needs a fixture block (for
+  example, a subclass that vanilla or a mixin treats in a special way), do this:
+  1. Put the block class in the `gametest` source set.
+  2. Register it from a `ModInitializer` that you list under the `main` entrypoint of the test mod's
+     `fabric.mod.json`. A `main` entrypoint runs before the registries freeze. Use `Properties#setId` with
+     a `ResourceKey` that matches the registered id. An unset id also fails.
+  3. Keep the registered block in a static field, and read it in the test.
+
+  Registering the block also runs vanilla's state-cache build (it calls `getFluidState` and similar
+  methods). A bug in that path crashes the game at startup, not in the test. That is correct for a
+  load-time regression.
+
+  A fixture that extends an abstract vanilla block must also declare the state properties that class
+  expects its subclasses to add. If it does not, vanilla code that reads those properties throws an error
+  that says nothing about the code under test. Example: `CrossCollisionBlock` declares `WATERLOGGED` and
+  the four side properties, but it does not add them. Each concrete subclass adds them in its own
+  `createBlockStateDefinition`, and `getFluidState` reads `WATERLOGGED` without a check. To find what a
+  parent expects, read its `getFluidState`, `getShape`, and `updateShape` and see which properties they
+  read. Example fixture: `LattTestBlocks` in `log-all-the-things`, which reproduces issue #141
+  (a `CrossCollisionBlock` subclass that does not have the mixin-added `lavalogged` property).
 - **Test-count sanity check.** After adding a `@GameTest` class, compare the run log's `"N tests are now
   running"` to what you expect. A count that didn't change means the class isn't in the `fabric-gametest`
   entrypoint array (see "Registration is mandatory" above). `log-all-the-things` once had a 7-test class that

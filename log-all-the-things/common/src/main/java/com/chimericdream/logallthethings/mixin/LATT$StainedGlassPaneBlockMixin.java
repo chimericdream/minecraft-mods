@@ -29,6 +29,6 @@ public abstract class LATT$StainedGlassPaneBlockMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void latt$restoreDefaultLavaLogged(DyeColor color, Properties properties, CallbackInfo ci) {
         Block self = (Block) (Object) this;
-        self.registerDefaultState(self.defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, false));
+        self.registerDefaultState(LavaLogProperties.withLavaLogged(self.defaultBlockState(), false));
     }
 }

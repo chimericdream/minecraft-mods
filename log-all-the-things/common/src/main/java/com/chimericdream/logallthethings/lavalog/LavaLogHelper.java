@@ -32,7 +32,7 @@ public final class LavaLogHelper {
     public static Pair<Boolean, BlockState> tryLavaLogOnPlace(BlockGetter level, BlockPos pos, BlockState state) {
         BlockState currentState = level.getBlockState(pos);
         if (currentState.getFluidState().isSourceOfType(Fluids.LAVA) && state.hasProperty(LavaLogProperties.LAVALOGGED)) {
-            return Pair.of(true, state.setValue(LavaLogProperties.LAVALOGGED, true));
+            return Pair.of(true, LavaLogProperties.withLavaLogged(state, true));
         }
 
         return Pair.of(false, state);
@@ -55,7 +55,7 @@ public final class LavaLogHelper {
         if (carrierState.hasProperty(BlockStateProperties.WATERLOGGED) && carrierState.getValue(BlockStateProperties.WATERLOGGED)) {
             return false;
         }
-        if (carrierState.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (!carrierState.hasProperty(LavaLogProperties.LAVALOGGED) || LavaLogProperties.isLavaLogged(carrierState)) {
             return false;
         }
 
@@ -63,12 +63,12 @@ public final class LavaLogHelper {
     }
 
     public static boolean placeLava(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED) || !fluidState.isSourceOfType(Fluids.LAVA)) {
+        if (!state.hasProperty(LavaLogProperties.LAVALOGGED) || LavaLogProperties.isLavaLogged(state) || !fluidState.isSourceOfType(Fluids.LAVA)) {
             return false;
         }
 
         if (!level.isClientSide()) {
-            level.setBlock(pos, state.setValue(LavaLogProperties.LAVALOGGED, true), 3);
+            level.setBlock(pos, LavaLogProperties.withLavaLogged(state, true), 3);
             level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
         }
 
@@ -76,11 +76,11 @@ public final class LavaLogHelper {
     }
 
     public static ItemStack pickupLava(LevelAccessor level, BlockPos pos, BlockState state) {
-        if (!state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (!LavaLogProperties.isLavaLogged(state)) {
             return ItemStack.EMPTY;
         }
 
-        level.setBlock(pos, state.setValue(LavaLogProperties.LAVALOGGED, false), 3);
+        level.setBlock(pos, LavaLogProperties.withLavaLogged(state, false), 3);
         if (!state.canSurvive(level, pos)) {
             level.destroyBlock(pos, true);
         }

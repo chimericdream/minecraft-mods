@@ -371,4 +371,37 @@ public class LavaLoggingGameTest {
 
         context.succeed();
     }
+
+    /**
+     * Regression for issue #141: {@link LattTestBlocks.BareCrossCollisionBlock} extends
+     * {@code CrossCollisionBlock} directly and never receives {@code lavalogged}. Registering it (in
+     * {@link LattTestBlocks}) already runs vanilla's state-cache build, which calls
+     * {@code getFluidState} - that crashed before the guarded reads. The checks here cover the
+     * remaining guarded entry points.
+     */
+    @GameTest
+    public void crossCollisionBlockWithoutLavaloggedPropertyDoesNotCrash(GameTestHelper context) {
+        BlockState state = LattTestBlocks.bareCrossCollision.defaultBlockState();
+
+        if (state.hasProperty(LavaLogProperties.LAVALOGGED)) {
+            context.fail("Test fixture should not have the lavalogged property");
+        }
+        if (!state.getFluidState().isEmpty()) {
+            context.fail("A block without lavalogged should have an empty fluid state, got " + state.getFluidState());
+        }
+        if (LavaLogProperties.isLavaLogged(state)) {
+            context.fail("A state without lavalogged should read as not lava-logged");
+        }
+        if (LavaLogProperties.withLavaLogged(state, true) != state) {
+            context.fail("withLavaLogged should leave a state without the property unchanged");
+        }
+        if (LavaLogHelper.canLavaLog(context.getLevel(), TARGET, state)) {
+            context.fail("A block without lavalogged should not be lava-loggable");
+        }
+        if (LavaLogHelper.placeLava(context.getLevel(), TARGET, state, Fluids.LAVA.getSource(false))) {
+            context.fail("placeLava should refuse a block without lavalogged");
+        }
+
+        context.succeed();
+    }
 }

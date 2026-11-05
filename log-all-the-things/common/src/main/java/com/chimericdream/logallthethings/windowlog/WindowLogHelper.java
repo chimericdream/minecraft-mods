@@ -77,8 +77,8 @@ public final class WindowLogHelper {
             // that flag (see WindowedBlock#createBlockStateDefinition) so a lava-logged stair/slab stays
             // lava-logged once window-logged, instead of silently losing its lava.
             BlockState windowedState = WindowLogBlocks.WINDOWED_BLOCK.get().defaultBlockState();
-            if (targetState.hasProperty(LavaLogProperties.LAVALOGGED) && targetState.getValue(LavaLogProperties.LAVALOGGED)) {
-                windowedState = windowedState.setValue(LavaLogProperties.LAVALOGGED, true);
+            if (LavaLogProperties.isLavaLogged(targetState)) {
+                windowedState = LavaLogProperties.withLavaLogged(windowedState, true);
             }
 
             level.setBlock(pos, windowedState, Block.UPDATE_CLIENTS);

@@ -47,7 +47,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void latt$setDefaultLavaLogged(Properties properties, CallbackInfo ci) {
         Block self = (Block) (Object) this;
-        self.registerDefaultState(self.defaultBlockState().setValue(LavaLogProperties.LAVALOGGED, false));
+        self.registerDefaultState(LavaLogProperties.withLavaLogged(self.defaultBlockState(), false));
     }
 
     @Override
@@ -56,7 +56,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
             return LavaLogHelper.canLavaLog(level, pos, state);
         }
 
-        return !state.getValue(LavaLogProperties.LAVALOGGED) && SimpleWaterloggedBlock.super.canPlaceLiquid(user, level, pos, state, type);
+        return !LavaLogProperties.isLavaLogged(state) && SimpleWaterloggedBlock.super.canPlaceLiquid(user, level, pos, state, type);
     }
 
     @Override
@@ -65,12 +65,12 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
             return LavaLogHelper.placeLava(level, pos, state, fluidState);
         }
 
-        return !state.getValue(LavaLogProperties.LAVALOGGED) && SimpleWaterloggedBlock.super.placeLiquid(level, pos, state, fluidState);
+        return !LavaLogProperties.isLavaLogged(state) && SimpleWaterloggedBlock.super.placeLiquid(level, pos, state, fluidState);
     }
 
     @Override
     public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
-        latt$lastPickupWasLava = state.getValue(LavaLogProperties.LAVALOGGED);
+        latt$lastPickupWasLava = LavaLogProperties.isLavaLogged(state);
         if (latt$lastPickupWasLava) {
             return LavaLogHelper.pickupLava(level, pos, state);
         }
@@ -85,7 +85,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void latt$getFluidState(BlockState state, CallbackInfoReturnable<FluidState> cir) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             cir.setReturnValue(Fluids.LAVA.getSource(false));
         }
     }
@@ -102,7 +102,7 @@ public abstract class LATT$ChainBlockMixin implements SimpleWaterloggedBlock {
         RandomSource random,
         CallbackInfoReturnable<BlockState> cir
     ) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             ticks.scheduleTick(pos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
         }
     }

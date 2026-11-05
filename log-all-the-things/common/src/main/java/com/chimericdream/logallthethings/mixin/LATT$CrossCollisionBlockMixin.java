@@ -21,7 +21,7 @@ import com.chimericdream.logallthethings.lavalog.LavaLogProperties;
 public abstract class LATT$CrossCollisionBlockMixin {
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void latt$getFluidState(BlockState state, CallbackInfoReturnable<FluidState> cir) {
-        if (state.getValue(LavaLogProperties.LAVALOGGED)) {
+        if (LavaLogProperties.isLavaLogged(state)) {
             cir.setReturnValue(Fluids.LAVA.getSource(false));
         }
     }

@@ -1,5 +1,8 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Fixed a crash on startup when another mod adds a fence-like block that does not extend the vanilla fence, such as the lattice fences in MrCrayfish's Furniture Mod: Refurbished. Those blocks cannot be lava-logged.
 
 ### 26.2 - 1.1.1
 
