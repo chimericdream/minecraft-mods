@@ -53,3 +53,7 @@ entities.json
 # dashboard output
 
 /dashboard/
+
+# compat repro scaffold: generated modpack zips
+
+/.compat/

@@ -6,6 +6,7 @@
         "build:gradle": "bun ./scripts/build-gradle.ts",
         "build:modpacks": "bun ./scripts/create-modpacks.ts",
         "clean": "bun ./scripts/clean.ts",
+        "compat:scaffold": "bun ./scripts/compat/scaffold.ts",
         "lint": "bun ./scripts/lint-repo.ts",
         "dashboard": "bun ./scripts/dashboard/index.ts",
         "datagen": "bun ./scripts/run-datagen.ts",

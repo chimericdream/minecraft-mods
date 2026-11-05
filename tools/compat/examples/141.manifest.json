@@ -1,0 +1,43 @@
+{
+    "issue": 141,
+    "minecraft": "26.2",
+    "loader": "neoforge",
+    "loaderVersion": "26.2.0.93",
+    "mods": [
+        {
+            "name": "Log All the Things!",
+            "version": "26.2-1.1.0",
+            "curseforge": {"projectId": 1677146, "fileId": 9217823},
+            "note": "The reporter's version. The file page was not opened when this was written."
+        },
+        {
+            "name": "MrCrayfish's Furniture Mod: Refurbished",
+            "version": "1.0.25",
+            "curseforge": {"projectId": 897116, "fileId": 8403607}
+        },
+        {
+            "name": "Framework",
+            "version": "0.13.26",
+            "curseforge": {"projectId": 549225, "fileId": 8403586},
+            "note": "Required by Furniture Mod: Refurbished."
+        },
+        {
+            "name": "ChimericLib",
+            "version": "26.2-6.6.0",
+            "curseforge": {"projectId": 1107232, "fileId": 9044119},
+            "note": "Required by Log All the Things!. File page not opened when this was written."
+        },
+        {
+            "name": "Architectury API",
+            "version": "21.1.12",
+            "curseforge": {"projectId": 419699, "fileId": 9111233},
+            "note": "Required by Log All the Things! and ChimericLib. File page not opened when this was written."
+        },
+        {
+            "name": "YetAnotherConfigLib",
+            "version": "3.9.7",
+            "curseforge": {"projectId": 667299, "fileId": 8935499},
+            "note": "Required by Log All the Things!."
+        }
+    ]
+}
