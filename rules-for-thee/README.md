@@ -10,7 +10,7 @@ Game rules apply to everyone. If a server is on hard with `keepInventory` off, a
 
 Example: a friends' server is on hard difficulty with `keepInventory` off. Only the kids keep their inventory when they die. Nothing changes for anyone else.
 
-This is a **server-side mod**. Vanilla clients can join a server that has it. There is no config screen. You manage everything with commands, and the mod saves it with the world.
+This is a **server-side mod**. There is no config screen. You manage everything with commands, and the mod saves it with the world.
 
 ### Minecraft Versions
 
@@ -68,7 +68,6 @@ Example for the `kids` case:
 
 ## Notes for Documentation
 
-* The mod is server-side only. A vanilla client can join. For this reason, messages from the mod are plain text.
 * **Grave and death-handling mods** that read the world `keepInventory` value themselves do not know about per-player overrides. Rules for Thee changes how vanilla handles death for the player. A mod that replaces this with its own chest or grave can still use the world value. *Your Items Are Safe* is supported. When it is installed, its death handler uses the `keepInventory` value of the player that dies. The support is optional. It does nothing when that mod is not installed.
 * A player can be in one profile at a time. Multiple profiles can be added later.
 * Not included: per-player difficulty, and rules that apply only to the whole world.
