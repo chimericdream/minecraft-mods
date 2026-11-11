@@ -9,8 +9,8 @@ export type ModInfo = {
     isNewMod: boolean;
     latestTag: string | null;
     lastCommit: string | null;
-    icon: string | null;
-    links: {label: string; href: string}[];
+    /** Absolute path of the mod's icon.png, if it has one. */
+    iconFile: string | null;
 };
 
 export type IdeasInfo = {

@@ -4,7 +4,7 @@ import path from 'node:path';
 import type {GithubData, GithubItem, GithubResult, ModInfo} from '../types.ts';
 import {looseKey, REPO_ROOT} from '../util.ts';
 
-const CACHE = path.join(REPO_ROOT, 'dashboard', '.cache', 'github.json');
+const CACHE = path.join(REPO_ROOT, 'site', '.cache', 'github.json');
 const TTL_MS = 5 * 60_000;
 
 const gh = async (...args: string[]): Promise<any> => {
