@@ -1,0 +1,942 @@
+{
+  "capturedAt": "2026-11-11T17:47:15.905Z",
+  "browser": "158.0.8127.18",
+  "baseUrl": "http://127.0.0.1:4180/",
+  "scope": "Public site only; viewport screenshots, not full-page captures. Mobile is viewport sizing, not touch-device emulation.",
+  "captures": [
+    {
+      "file": "screenshots/01-home-desktop.png",
+      "route": "/",
+      "scheme": "light",
+      "title": "Chimeric Mods",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 2283
+      },
+      "article": null,
+      "sidebar": null,
+      "table": null,
+      "headings": [],
+      "images": [
+        {
+          "src": "mods/archaeology-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/artificial-heart/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/banner-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-portal-linking/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-target-dummies/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/but-what-about/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/camel-nostrils/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/chimeric-lib/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/effective-gear/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hang-from-slabs/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hopper-xtreme/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/houdini-block/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/jdcrafte/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/minekea/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/miniblock-merchants/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/next-update-now/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/opus/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/pannotia-companion/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/playgrounds/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/polycraft/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/shulker-stuff/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sneaky-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sponj/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/stack-it-up/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/toy-box/icon.png",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/02-mod-overview-desktop.png",
+      "route": "/mods/minekea/",
+      "scheme": "light",
+      "title": "Minekea · Chimeric Mods",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 2976
+      },
+      "article": {
+        "top": 204,
+        "width": 892,
+        "height": 2659
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 2930
+      },
+      "table": null,
+      "headings": [
+        "Introduction",
+        "Issues & Suggestions",
+        "Credits",
+        "License"
+      ],
+      "images": [
+        {
+          "src": "icon.png",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/version-10.3.0--beta.0-blueviolet?style=flat-square",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&labelColor=565656",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square&labelColor=565656",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/client-required-4caf50?style=flat-square&labelColor=565656",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/server-required-4caf50?style=flat-square&labelColor=565656",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/Architectury%20API-required-565656?style=flat-square&labelColor=fa5f1f",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/ChimericLib-required-565656?style=flat-square&labelColor=2f0e48",
+          "loaded": true
+        },
+        {
+          "src": "https://img.shields.io/badge/Opus-optional-565656?style=flat-square&labelColor=7a1f2b",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/03-guide-index-desktop.png",
+      "route": "/mods/minekea/guide/",
+      "scheme": "light",
+      "title": "Minekea Catalogue · Minekea Catalogue",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 1000
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 534
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 622
+      },
+      "table": null,
+      "headings": [
+        "Minekea Catalogue",
+        "Where to start"
+      ],
+      "images": [],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/04-guide-callouts-desktop.png",
+      "route": "/mods/opus/guide/99-appendices/kitchen-sink/#callouts",
+      "scheme": "light",
+      "title": "Kitchen sink · Opus Guide",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 2606
+      },
+      "document": {
+        "width": 1440,
+        "height": 13100
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 12965
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 13053
+      },
+      "table": null,
+      "headings": [
+        "Kitchen sink",
+        "Text",
+        "Lists",
+        "Blocks",
+        "Links",
+        "Images",
+        "Recipes",
+        "Items and mobs",
+        "Frontmatter"
+      ],
+      "images": [
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": false
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": false
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": false
+        },
+        {
+          "src": "../../_img/opus/item/opus_guide.png",
+          "loaded": false
+        },
+        {
+          "src": "../../_img/opus/item/book_invalid.png",
+          "loaded": false
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/05-guide-recipes-desktop.png",
+      "route": "/mods/opus/guide/99-appendices/kitchen-sink/#recipes",
+      "scheme": "light",
+      "title": "Kitchen sink · Opus Guide",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 7306
+      },
+      "document": {
+        "width": 1440,
+        "height": 13100
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 12965
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 13053
+      },
+      "table": null,
+      "headings": [
+        "Kitchen sink",
+        "Text",
+        "Lists",
+        "Blocks",
+        "Links",
+        "Images",
+        "Recipes",
+        "Items and mobs",
+        "Frontmatter"
+      ],
+      "images": [
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/opus_guide.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/opus/item/book_invalid.png",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/06-guide-images-desktop.png",
+      "route": "/mods/all-hallows-steve/guide/01-pumpkins/01-carving-station/",
+      "scheme": "light",
+      "title": "Carving Station · All Hallows Steve Guide",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 1830
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 1696
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 1784
+      },
+      "table": null,
+      "headings": [
+        "Carving Station",
+        "Dyeing",
+        "Carving",
+        "Inspecting"
+      ],
+      "images": [
+        {
+          "src": "../../_img/allhallowssteve/gui/guide/carving_station_dyeing.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/allhallowssteve/gui/guide/rainbow.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/allhallowssteve/gui/guide/carving_station_carving.png",
+          "loaded": true
+        },
+        {
+          "src": "../../_img/allhallowssteve/gui/guide/four_sides.png",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/07-ideas-index-desktop.png",
+      "route": "/mods/minekea/ideas/",
+      "scheme": "light",
+      "title": "Minekea — Ideas · Minekea",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 2051
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 1867
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 2005
+      },
+      "table": null,
+      "headings": [
+        "Minekea — Ideas",
+        "Identity",
+        "Active ideas",
+        "Inbox",
+        "Archive"
+      ],
+      "images": [],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/08-idea-detail-desktop.png",
+      "route": "/mods/all-hallows-steve/ideas/carving/carving-seeds/",
+      "scheme": "light",
+      "title": "Carving yields seeds, roasted pumpkin seeds · All Hallows Steve",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 1000
+      },
+      "article": {
+        "top": 71,
+        "width": 892,
+        "height": 787
+      },
+      "sidebar": {
+        "top": 47,
+        "width": 260,
+        "height": 925
+      },
+      "table": null,
+      "headings": [
+        "Carving yields seeds, roasted pumpkin seeds",
+        "Description",
+        "Decisions",
+        "Brainstorm variants",
+        "Related",
+        "Open questions"
+      ],
+      "images": [],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/09-roadmap-desktop.png",
+      "route": "/ideas/",
+      "scheme": "light",
+      "title": "Roadmap · Chimeric Mods",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 15649
+      },
+      "article": null,
+      "sidebar": null,
+      "table": {
+        "top": 272,
+        "width": 1392,
+        "height": 15328
+      },
+      "headings": [],
+      "images": [],
+      "count": "216 of 216 ideas",
+      "nonKeyboardPills": 19
+    },
+    {
+      "file": "screenshots/10-changelog-desktop.png",
+      "route": "/changelog/",
+      "scheme": "light",
+      "title": "Changelog · Chimeric Mods",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 7378
+      },
+      "article": {
+        "top": 71,
+        "width": 1152,
+        "height": 7231
+      },
+      "sidebar": null,
+      "table": null,
+      "headings": [
+        "Changelog",
+        "In development",
+        "But What About...?",
+        "PolyCraft",
+        "Latest releases",
+        "All Hallows Steve 26.2 - 1.1.2",
+        "Archaeology Tweaks 26.2 - 4.4.1",
+        "Artificial Heart 26.2 - 3.2.1",
+        "Athenaeum 26.2 - 4.0.2",
+        "Banner Tweaks 26.2 - 5.1.2",
+        "Beacon & Conduit Tweaks 26.2 - 4.2.1",
+        "Better Portal Linking 26.2 - 1.1.1",
+        "Better Target Dummies 26.2 - 1.1.1",
+        "Camel Nostrils 26.2 - 1.2.1",
+        "ChimericLib 26.2 - 6.6.1",
+        "Effective Gear 26.2 - 1.6.0",
+        "Enchantment Numbers Fix 26.2 - 4.0.0",
+        "Flat Bedrock 26.2 - 4.1.2",
+        "Hopper X-Treme 26.2 - 4.2.2",
+        "Houdini Block 26.2 - 3.1.1",
+        "JD Crafte 26.2 - 1.0.0",
+        "Log All the Things! 26.2 - 1.1.1",
+        "Minekea 26.2 - 10.3.1",
+        "Miniblock Merchants 26.2 - 7.1.1",
+        "Next Update Now 26.2 - 1.0.1",
+        "Opus 26.2 - 1.4.0",
+        "Pannotia Companion 26.2 - 1.0.0",
+        "PolyCraft 26.2 - 1.0.0",
+        "Shulker Stuff 26.2 - 4.1.1",
+        "Sneaky Tweaks 26.2 - 1.2.1",
+        "Sponj 26.2 - 6.2.1",
+        "StackItUp 26.2 - 1.0.2",
+        "Villager Tweaks 26.2 - 6.4.0"
+      ],
+      "images": [],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/11-home-mobile.png",
+      "route": "/",
+      "scheme": "light",
+      "title": "Chimeric Mods",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 390,
+        "height": 6022
+      },
+      "article": null,
+      "sidebar": null,
+      "table": null,
+      "headings": [],
+      "images": [
+        {
+          "src": "mods/archaeology-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/artificial-heart/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/banner-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-portal-linking/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-target-dummies/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/but-what-about/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/camel-nostrils/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/chimeric-lib/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/effective-gear/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hang-from-slabs/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hopper-xtreme/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/houdini-block/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/jdcrafte/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/minekea/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/miniblock-merchants/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/next-update-now/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/opus/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/pannotia-companion/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/playgrounds/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/polycraft/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/shulker-stuff/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sneaky-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sponj/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/stack-it-up/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/toy-box/icon.png",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/12-guide-mobile.png",
+      "route": "/mods/minekea/guide/01-building-blocks/09-framed-planks/",
+      "scheme": "light",
+      "title": "Framed planks · Minekea Catalogue",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 390,
+        "height": 1109
+      },
+      "article": {
+        "top": 697,
+        "width": 342,
+        "height": 348
+      },
+      "sidebar": {
+        "top": 92,
+        "width": 390,
+        "height": 581
+      },
+      "table": null,
+      "headings": [
+        "Framed planks"
+      ],
+      "images": [],
+      "count": null,
+      "nonKeyboardPills": 0
+    },
+    {
+      "file": "screenshots/13-roadmap-mobile.png",
+      "route": "/ideas/",
+      "scheme": "light",
+      "title": "Roadmap · Chimeric Mods",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 390,
+        "height": 17406
+      },
+      "article": null,
+      "sidebar": null,
+      "table": {
+        "top": 550,
+        "width": 342,
+        "height": 16808
+      },
+      "headings": [],
+      "images": [],
+      "count": "216 of 216 ideas",
+      "nonKeyboardPills": 19
+    },
+    {
+      "file": "screenshots/14-home-dark-desktop.png",
+      "route": "/",
+      "scheme": "dark",
+      "title": "Chimeric Mods",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document": {
+        "width": 1440,
+        "height": 2283
+      },
+      "article": null,
+      "sidebar": null,
+      "table": null,
+      "headings": [],
+      "images": [
+        {
+          "src": "mods/archaeology-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/artificial-heart/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/banner-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-portal-linking/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/better-target-dummies/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/but-what-about/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/camel-nostrils/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/chimeric-lib/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/effective-gear/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hang-from-slabs/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/hopper-xtreme/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/houdini-block/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/jdcrafte/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/minekea/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/miniblock-merchants/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/next-update-now/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/opus/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/pannotia-companion/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/playgrounds/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/polycraft/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/shulker-stuff/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sneaky-tweaks/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/sponj/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/stack-it-up/icon.png",
+          "loaded": true
+        },
+        {
+          "src": "mods/toy-box/icon.png",
+          "loaded": true
+        }
+      ],
+      "count": null,
+      "nonKeyboardPills": 0
+    }
+  ],
+  "checks": {
+    "totalIdeas": 216,
+    "minekeaIdeas": 19,
+    "emptyStateText": "0 of 216 ideas",
+    "filteredUrl": "http://127.0.0.1:4180/ideas/#q=unmatchable-audit-query-9238&mod=minekea",
+    "hashRestored": true,
+    "resetRestored": true,
+    "ascendingAndDescendingSortVerified": true,
+    "slashFocusVerified": true,
+    "pageErrors": []
+  }
+}
