@@ -9,6 +9,7 @@ import {collectGithub} from './local/github.ts';
 import {collectIdeas} from './local/ideas-status.ts';
 import {renderDashboard} from './local/render.ts';
 import {changelogPage, homePage, iconUrl, overviewPage, readmeBody} from './pages.ts';
+import {htmlFormatter} from './recipes/html.ts';
 import {collectMods} from './mods.ts';
 import type {DashboardData, IdeasInfo} from './types.ts';
 import {REPO_ROOT} from './util.ts';
@@ -34,7 +35,7 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
 
     const guides = new Map<string, Guide>();
     for (const mod of mods) {
-        const guide = buildGuide(mod, folderOf, outDir, warn);
+        const guide = buildGuide(mod, folderOf, outDir, warn, htmlFormatter);
         if (guide) guides.set(mod.folder, guide);
     }
 
@@ -68,8 +69,8 @@ export const buildSite = async (opts: BuildOptions): Promise<void> => {
         const {source, title} = readDoc(doc.key);
         const isOverview = doc.key === `${doc.mod.folder}/README.md`;
         const isChangelog = doc.key === `${doc.mod.folder}/CHANGELOG.md`;
-        const body = renderDoc(isOverview ? readmeBody(source) : isChangelog ? `# Changelog\n\n${source}` : source,
-            {key: doc.key, fromUrl: doc.url, docs, outDir, warn});
+        const body = renderDoc(isOverview ? readmeBody(source, doc.mod.description) : isChangelog ? `# Changelog\n\n${source}` : source,
+            {key: doc.key, fromUrl: doc.url, docs, outDir, warn, overview: isOverview});
         const l = links.get(doc.mod.folder)!;
         const html = isOverview ? overviewPage(doc, body, l) : docPage(doc, body, isChangelog ? 'Changelog' : title, l, docsOf(doc.mod.folder));
         writeFile(path.join(outDir, doc.url, 'index.html'), html);

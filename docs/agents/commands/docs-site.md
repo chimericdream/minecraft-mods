@@ -17,7 +17,7 @@ README, CHANGELOG, `ideas/` or in-game guide and rebuild.
 
 Per mod: README (overview page), CHANGELOG, everything under `ideas/` (brainstorms included), and the
 in-game guide at `<mod>/common/src/main/resources/assets/<id>/opus-books/guide/en_us/`. `TEST_PLAN.md`,
-`docs/` and the design notes are not published. Site-wide: the roadmap table (`/ideas/`) and the combined
+`docs/` and the design notes are not published. Site-wide: the roadmap (`/ideas/`) and the combined
 changelog (`/changelog/`).
 
 ## Guides and recipes
@@ -25,7 +25,7 @@ changelog (`/changelog/`).
 `scripts/site/guide.ts` renders the Opus Markdown dialect: frontmatter, `> [!TIP]` callouts,
 `texture:` images (copied from the owning mod's resources), `item:`/`entity:` references (shown as text)
 and ```` ```recipe ```` blocks. Recipes go through a `RecipeFormatter`
-(`scripts/site/recipes/types.ts`); the current one (`ascii.ts`) draws a box-drawing crafting grid with a
-legend. To render real item textures, write another formatter and pass it to `buildGuide`.
+(`scripts/site/recipes/types.ts`). The public site uses `html.ts` to display slots, ingredient names, and
+the result. The recipe parser is shared with the ASCII formatter.
 
 All links are relative, so the site works under any base path.

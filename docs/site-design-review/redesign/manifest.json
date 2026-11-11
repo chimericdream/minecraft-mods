@@ -1,0 +1,209 @@
+{
+  "chromium": "158.0.8127.18",
+  "captures": [
+    {
+      "file": "01-home-desktop.png",
+      "url": "/minecraft-mods/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": null
+    },
+    {
+      "file": "02-mod-overview-desktop.png",
+      "url": "/minecraft-mods/mods/minekea/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": 405.671875
+    },
+    {
+      "file": "03-guide-index-desktop.png",
+      "url": "/minecraft-mods/mods/minekea/guide/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": 156.390625
+    },
+    {
+      "file": "04-guide-callouts-desktop.png",
+      "url": "/minecraft-mods/mods/opus/guide/99-appendices/kitchen-sink/#callouts",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 2788,
+      "articleTop": 156.390625
+    },
+    {
+      "file": "05-guide-recipes-desktop.png",
+      "url": "/minecraft-mods/mods/opus/guide/99-appendices/kitchen-sink/#recipes",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 7872,
+      "articleTop": 156.390625
+    },
+    {
+      "file": "06-guide-images-desktop.png",
+      "url": "/minecraft-mods/mods/all-hallows-steve/guide/01-pumpkins/01-carving-station/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 300,
+      "articleTop": 156.390625
+    },
+    {
+      "file": "07-ideas-index-desktop.png",
+      "url": "/minecraft-mods/mods/minekea/ideas/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": 213.328125
+    },
+    {
+      "file": "08-idea-detail-desktop.png",
+      "url": "/minecraft-mods/mods/all-hallows-steve/ideas/carving/carving-seeds/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": 213.328125
+    },
+    {
+      "file": "09-roadmap-desktop.png",
+      "url": "/minecraft-mods/ideas/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": null
+    },
+    {
+      "file": "10-changelog-desktop.png",
+      "url": "/minecraft-mods/changelog/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": 299.6875
+    },
+    {
+      "file": "11-home-mobile.png",
+      "url": "/minecraft-mods/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "width": 390,
+      "scrollY": 0,
+      "articleTop": null
+    },
+    {
+      "file": "12-guide-mobile.png",
+      "url": "/minecraft-mods/mods/minekea/guide/01-building-blocks/09-framed-planks/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "width": 390,
+      "scrollY": 0,
+      "articleTop": 237.171875
+    },
+    {
+      "file": "13-roadmap-mobile.png",
+      "url": "/minecraft-mods/ideas/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "width": 390,
+      "scrollY": 0,
+      "articleTop": null
+    },
+    {
+      "file": "14-home-dark-desktop.png",
+      "url": "/minecraft-mods/",
+      "colorScheme": "dark",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "width": 1440,
+      "scrollY": 0,
+      "articleTop": null
+    },
+    {
+      "file": "15-guide-tablet.png",
+      "url": "/minecraft-mods/mods/opus/guide/99-appendices/kitchen-sink/",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "width": 768,
+      "scrollY": 4806,
+      "articleTop": 293.328125
+    },
+    {
+      "file": "16-roadmap-mobile-filters.png",
+      "url": "/minecraft-mods/ideas/#status=Building",
+      "colorScheme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "width": 390,
+      "scrollY": 323,
+      "articleTop": null
+    }
+  ],
+  "browserErrors": [],
+  "missingLocalResponses": [],
+  "checks": [
+    "catalog",
+    "navigation",
+    "theme",
+    "guide anchor and image",
+    "roadmap",
+    "no-JS links",
+    "mobile overflow",
+    "public output"
+  ]
+}
