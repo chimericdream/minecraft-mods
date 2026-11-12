@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "cobblicious:block/chiseled_basalt_bricks"
+  }
+}

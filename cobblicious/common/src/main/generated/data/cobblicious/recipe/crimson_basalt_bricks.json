@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "cobblicious:basalt_bricks",
+    "minecraft:weeping_vines"
+  ],
+  "result": {
+    "id": "cobblicious:crimson_basalt_bricks"
+  }
+}

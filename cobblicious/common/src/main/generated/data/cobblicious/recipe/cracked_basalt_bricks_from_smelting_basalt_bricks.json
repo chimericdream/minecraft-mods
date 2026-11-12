@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "experience": 0.1,
+  "group": "cobblicious",
+  "ingredient": "cobblicious:basalt_bricks",
+  "result": {
+    "id": "cobblicious:cracked_basalt_bricks"
+  }
+}

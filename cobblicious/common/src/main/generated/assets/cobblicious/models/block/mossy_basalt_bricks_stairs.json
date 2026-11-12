@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "cobblicious:block/mossy_basalt_bricks",
+    "side": "cobblicious:block/mossy_basalt_bricks",
+    "top": "cobblicious:block/mossy_basalt_bricks"
+  }
+}

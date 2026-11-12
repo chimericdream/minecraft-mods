@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "cobblicious:basalt_bricks",
+    "minecraft:vine"
+  ],
+  "result": {
+    "id": "cobblicious:mossy_basalt_bricks"
+  }
+}
