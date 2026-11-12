@@ -11,9 +11,11 @@ import com.chimericdream.minekea.block.building.general.CrimsonBasaltBricksBlock
 import com.chimericdream.minekea.block.building.general.MossyBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.WarpedBasaltBricksBlock;
 import com.chimericdream.minekea.block.building.general.WarpedNetherBricksBlock;
+import com.chimericdream.minekea.compat.CobbliciousCompat;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -39,16 +41,28 @@ public class BasaltBrickFamilies implements ModThingGroup {
     public static final BlockFamily WARPED_BASALT_BRICKS = family("warped_basalt_bricks", "Warped Basalt Brick", BuildingBlocks.WARPED_BASALT_BRICKS, TextureUtils.block(WarpedBasaltBricksBlock.BLOCK_ID));
     public static final BlockFamily WARPED_NETHER_BRICKS = family("warped_nether_bricks", "Warped Nether Brick", BuildingBlocks.WARPED_NETHER_BRICKS, TextureUtils.block(WarpedNetherBricksBlock.BLOCK_ID));
 
-    public static final List<BlockFamily> ALL = List.of(
-        BASALT_BRICKS,
-        CRACKED_BASALT_BRICKS,
-        CRIMSON_BASALT_BRICKS,
-        MOSSY_BASALT_BRICKS,
-        WARPED_BASALT_BRICKS,
-        WARPED_NETHER_BRICKS
-    );
+    /**
+     * Empty when Cobblicious is loaded: Cobblicious registers these families, so Minekea does not.
+     */
+    public static final List<BlockFamily> ALL = CobbliciousCompat.isActive()
+        ? List.of()
+        : List.of(
+            BASALT_BRICKS,
+            CRACKED_BASALT_BRICKS,
+            CRIMSON_BASALT_BRICKS,
+            MOSSY_BASALT_BRICKS,
+            WARPED_BASALT_BRICKS,
+            WARPED_NETHER_BRICKS
+        );
 
-    private static BlockFamily family(String material, String materialName, RegistrySupplier<Block> ingredient, Identifier texture) {
+    /**
+     * Returns null when Cobblicious is loaded, so that nothing is registered.
+     */
+    private static @Nullable BlockFamily family(String material, String materialName, RegistrySupplier<Block> ingredient, Identifier texture) {
+        if (CobbliciousCompat.isActive()) {
+            return null;
+        }
+
         return BlockFamily.builder(REGISTRY_HELPER, material, new BlockConfig()
                 .materialName(materialName)
                 .ingredient(ingredient)

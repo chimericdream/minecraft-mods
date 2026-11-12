@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": "minekea:building/general/basalt_bricks"
+    "#": "#minekea:cobblicious_swap/building/general/basalt_bricks"
   },
   "pattern": [
     "# #",

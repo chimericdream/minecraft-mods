@@ -55,6 +55,14 @@ versionRange = "[${opus_compat},)"
 ordering = "AFTER"
 side = "BOTH"
 
+# Cobblicious provides some blocks that Minekea used to add. Minekea loads after it so it can see them.
+[[dependencies.${mod_id}]]
+modId = "cobblicious"
+type = "optional"
+versionRange = "[1.0.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "minekea.mixins.json"
 

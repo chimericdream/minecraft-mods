@@ -16,12 +16,15 @@ import com.chimericdream.minekea.block.building.general.WaxBlock;
 import com.chimericdream.minekea.block.building.slabs.Slabs;
 import com.chimericdream.minekea.block.building.stairs.Stairs;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
+import com.chimericdream.minekea.compat.CobbliciousCompat;
 import com.chimericdream.minekea.util.ModThingGroup;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -33,16 +36,19 @@ public class BuildingBlocks implements ModThingGroup {
     public static final List<RegistrySupplier<Block>> BLOCKS = new ArrayList<>();
     public static final Map<String, RegistrySupplier<Block>> WAX_BLOCKS = new LinkedHashMap<>();
 
+    // The basalt and warped nether brick blocks that Minekea registers itself. Empty when Cobblicious provides them.
+    private static final List<RegistrySupplier<Block>> BRICK_BLOCKS = new ArrayList<>();
+
     public static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
     public static final Item.Properties WAX_BLOCK_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
-    public static final RegistrySupplier<Block> BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(BasaltBricksBlock.BLOCK_ID, BasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CHISELED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(ChiseledBasaltBricksBlock.BLOCK_ID, ChiseledBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CRACKED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(CrackedBasaltBricksBlock.BLOCK_ID, CrackedBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> CRIMSON_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(CrimsonBasaltBricksBlock.BLOCK_ID, CrimsonBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> MOSSY_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(MossyBasaltBricksBlock.BLOCK_ID, MossyBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> WARPED_BASALT_BRICKS = REGISTRY_HELPER.registerWithItem(WarpedBasaltBricksBlock.BLOCK_ID, WarpedBasaltBricksBlock::new, DEFAULT_SETTINGS);
-    public static final RegistrySupplier<Block> WARPED_NETHER_BRICKS = REGISTRY_HELPER.registerWithItem(WarpedNetherBricksBlock.BLOCK_ID, WarpedNetherBricksBlock::new, DEFAULT_SETTINGS);
+    public static final RegistrySupplier<Block> BASALT_BRICKS = brick(BasaltBricksBlock.BLOCK_ID, BasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> CHISELED_BASALT_BRICKS = brick(ChiseledBasaltBricksBlock.BLOCK_ID, ChiseledBasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> CRACKED_BASALT_BRICKS = brick(CrackedBasaltBricksBlock.BLOCK_ID, CrackedBasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> CRIMSON_BASALT_BRICKS = brick(CrimsonBasaltBricksBlock.BLOCK_ID, CrimsonBasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> MOSSY_BASALT_BRICKS = brick(MossyBasaltBricksBlock.BLOCK_ID, MossyBasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> WARPED_BASALT_BRICKS = brick(WarpedBasaltBricksBlock.BLOCK_ID, WarpedBasaltBricksBlock::new);
+    public static final RegistrySupplier<Block> WARPED_NETHER_BRICKS = brick(WarpedNetherBricksBlock.BLOCK_ID, WarpedNetherBricksBlock::new);
 
     public static final RegistrySupplier<Block> PLAIN_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("plain"), () -> new WaxBlock("plain"), WAX_BLOCK_SETTINGS);
     public static final RegistrySupplier<Block> WHITE_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("white"), () -> new WaxBlock("white"), WAX_BLOCK_SETTINGS);
@@ -62,14 +68,23 @@ public class BuildingBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> MAGENTA_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("magenta"), () -> new WaxBlock("magenta"), WAX_BLOCK_SETTINGS);
     public static final RegistrySupplier<Block> PINK_WAX_BLOCK = REGISTRY_HELPER.registerWithItem(WaxBlock.makeId("pink"), () -> new WaxBlock("pink"), WAX_BLOCK_SETTINGS);
 
+    /**
+     * Registers one of the brick blocks. When Cobblicious is loaded, this registers nothing and returns a
+     * reference to the Cobblicious block, so blocks that use it as an ingredient keep working.
+     */
+    private static RegistrySupplier<Block> brick(Identifier id, Supplier<Block> factory) {
+        if (CobbliciousCompat.isActive()) {
+            return CobbliciousCompat.block(id);
+        }
+
+        RegistrySupplier<Block> block = REGISTRY_HELPER.registerWithItem(id, factory, DEFAULT_SETTINGS);
+        BRICK_BLOCKS.add(block);
+
+        return block;
+    }
+
     static {
-        BLOCKS.add(BASALT_BRICKS);
-        BLOCKS.add(CHISELED_BASALT_BRICKS);
-        BLOCKS.add(CRACKED_BASALT_BRICKS);
-        BLOCKS.add(CRIMSON_BASALT_BRICKS);
-        BLOCKS.add(MOSSY_BASALT_BRICKS);
-        BLOCKS.add(WARPED_BASALT_BRICKS);
-        BLOCKS.add(WARPED_NETHER_BRICKS);
+        BLOCKS.addAll(BRICK_BLOCKS);
 
         WAX_BLOCKS.put("plain", PLAIN_WAX_BLOCK);
         WAX_BLOCKS.put("white", WHITE_WAX_BLOCK);

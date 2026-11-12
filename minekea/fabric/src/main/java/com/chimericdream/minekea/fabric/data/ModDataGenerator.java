@@ -3,6 +3,7 @@ package com.chimericdream.minekea.fabric.data;
 import com.chimericdream.lib.fabric.data.JarAccess;
 import com.chimericdream.lib.fabric.data.TextureGenerator;
 import com.chimericdream.minekea.ModInfo;
+import com.chimericdream.minekea.compat.CobbliciousCompat;
 import com.chimericdream.minekea.fabric.block.ModBlockDataGenerators;
 import com.chimericdream.minekea.fabric.item.ModItemDataGenerators;
 import com.chimericdream.minekea.fabric.registry.ModRegistryDataGenerator;
@@ -17,8 +18,11 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -28,12 +32,15 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
         FabricDataGenerator.Pack pack = generator.createPack();
 
-        pack.addProvider(MinekeaModelGenerator::new);
-        pack.addProvider(MinekeaBlockLootTables::new);
-        pack.addProvider(MinekeaRecipeProvider::new);
-        pack.addProvider(MinekeaEnglishLangProvider::new);
-        pack.addProvider(MinekeaBlockTagGenerator::new);
-        pack.addProvider(MinekeaItemTagGenerator::new);
+        // Each provider is wrapped so its recipes, loot tables, advancements, and tags work with and without
+        // Cobblicious. See CobbliciousDataCompat.
+        pack.addProvider((FabricPackOutput output) -> new CobbliciousDataCompat(new MinekeaModelGenerator(output)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new MinekeaBlockLootTables(output, registries)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new MinekeaRecipeProvider(output, registries)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new MinekeaEnglishLangProvider(output, registries)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new MinekeaBlockTagGenerator(output, registries)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new MinekeaItemTagGenerator(output, registries)));
+        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> new CobbliciousDataCompat(new CobbliciousSwapTagGenerator(output, registries)));
 
         if (JarAccess.canLoad()) {
             new TextureGenerator(pack, ModInfo.MOD_ID);
@@ -110,6 +117,37 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
             }
 
 //            MinekeaMod.ITEMS.configureItemTags(arg, this::getOrCreateTagBuilder);
+        }
+    }
+
+    /**
+     * One item tag for each item that Cobblicious replaces. The tag holds the Minekea item and the
+     * Cobblicious item, and recipes that need the item use the tag. One of the two items is never
+     * registered, so both are optional.
+     */
+    private static class CobbliciousSwapTagGenerator extends FabricTagsProvider.ItemTagsProvider {
+        public CobbliciousSwapTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider arg) {
+            CobbliciousCompat.replacements().forEach((minekeaId, cobbliciousId) -> {
+                // The warped wart plant block has no item.
+                if (minekeaId.getPath().equals("crops/warped_wart/block")) {
+                    return;
+                }
+
+                this.builder(TagKey.create(Registries.ITEM, CobbliciousDataCompat.swapTag(minekeaId)))
+                    .setReplace(false)
+                    .addOptional(ResourceKey.create(Registries.ITEM, minekeaId))
+                    .addOptional(ResourceKey.create(Registries.ITEM, cobbliciousId));
+            });
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "CobbliciousSwapTagGenerator";
         }
     }
 

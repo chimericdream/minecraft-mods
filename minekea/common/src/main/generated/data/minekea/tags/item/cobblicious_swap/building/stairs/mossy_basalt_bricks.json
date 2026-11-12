@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minekea:building/stairs/mossy_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "cobblicious:mossy_basalt_bricks_stairs",
+      "required": false
+    }
+  ]
+}

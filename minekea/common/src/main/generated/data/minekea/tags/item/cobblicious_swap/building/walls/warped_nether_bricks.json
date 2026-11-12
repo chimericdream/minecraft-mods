@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minekea:building/walls/warped_nether_bricks",
+      "required": false
+    },
+    {
+      "id": "cobblicious:warped_nether_bricks_wall",
+      "required": false
+    }
+  ]
+}

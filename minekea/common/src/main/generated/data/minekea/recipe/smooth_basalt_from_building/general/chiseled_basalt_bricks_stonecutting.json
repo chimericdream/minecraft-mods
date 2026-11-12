@@ -1,6 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": "minekea:building/general/chiseled_basalt_bricks",
+  "ingredient": "#minekea:cobblicious_swap/building/general/chiseled_basalt_bricks",
   "result": {
     "id": "minecraft:smooth_basalt"
   }

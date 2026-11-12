@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "cobblicious"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minekea:building/compressed/warped_nether_brick/1x"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cobblicious"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "cobblicious:warped_nether_bricks"
+  }
+}

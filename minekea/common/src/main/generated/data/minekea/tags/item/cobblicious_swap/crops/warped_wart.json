@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minekea:crops/warped_wart",
+      "required": false
+    },
+    {
+      "id": "cobblicious:warped_wart",
+      "required": false
+    }
+  ]
+}

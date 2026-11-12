@@ -1,12 +1,33 @@
 {
   "values": [
-    "minekea:building/general/basalt_bricks",
-    "minekea:building/general/chiseled_basalt_bricks",
-    "minekea:building/general/cracked_basalt_bricks",
-    "minekea:building/general/crimson_basalt_bricks",
-    "minekea:building/general/mossy_basalt_bricks",
-    "minekea:building/general/warped_basalt_bricks",
-    "minekea:building/general/warped_nether_bricks",
+    {
+      "id": "minekea:building/general/basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/chiseled_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/cracked_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/crimson_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/mossy_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/warped_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/general/warped_nether_bricks",
+      "required": false
+    },
     "minekea:building/beams/amethyst",
     "minekea:building/beams/andesite",
     "minekea:building/beams/basalt",
@@ -1853,24 +1874,78 @@
     "minekea:storage/compressed/iron_nugget",
     "minekea:storage/compressed/nether_star",
     "minekea:storage/compressed/totem_of_undying",
-    "minekea:building/stairs/basalt_bricks",
-    "minekea:building/slabs/basalt_bricks",
-    "minekea:building/walls/basalt_bricks",
-    "minekea:building/stairs/cracked_basalt_bricks",
-    "minekea:building/slabs/cracked_basalt_bricks",
-    "minekea:building/walls/cracked_basalt_bricks",
-    "minekea:building/stairs/crimson_basalt_bricks",
-    "minekea:building/slabs/crimson_basalt_bricks",
-    "minekea:building/walls/crimson_basalt_bricks",
-    "minekea:building/stairs/mossy_basalt_bricks",
-    "minekea:building/slabs/mossy_basalt_bricks",
-    "minekea:building/walls/mossy_basalt_bricks",
-    "minekea:building/stairs/warped_basalt_bricks",
-    "minekea:building/slabs/warped_basalt_bricks",
-    "minekea:building/walls/warped_basalt_bricks",
-    "minekea:building/stairs/warped_nether_bricks",
-    "minekea:building/slabs/warped_nether_bricks",
-    "minekea:building/walls/warped_nether_bricks",
+    {
+      "id": "minekea:building/stairs/basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/stairs/cracked_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/cracked_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/cracked_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/stairs/crimson_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/crimson_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/crimson_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/stairs/mossy_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/mossy_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/mossy_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/stairs/warped_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/warped_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/warped_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/stairs/warped_nether_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/slabs/warped_nether_bricks",
+      "required": false
+    },
+    {
+      "id": "minekea:building/walls/warped_nether_bricks",
+      "required": false
+    },
     "minekea:furniture/bookshelves/bone",
     "minekea:furniture/bookshelves/chiseled_cinnabar",
     "minekea:furniture/bookshelves/chiseled_sulfur",

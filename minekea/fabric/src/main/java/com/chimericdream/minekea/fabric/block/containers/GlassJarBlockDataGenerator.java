@@ -1,13 +1,17 @@
 package com.chimericdream.minekea.fabric.block.containers;
 
+import com.chimericdream.minekea.compat.CobbliciousCompat;
+import com.chimericdream.minekea.crop.WarpedWartItem;
 import com.chimericdream.minekea.fabric.data.ChimericLibBlockDataGenerator;
 import com.chimericdream.minekea.tag.MinekeaItemTags;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -24,6 +28,9 @@ public class GlassJarBlockDataGenerator extends ChimericLibBlockDataGenerator {
         TagAppender<Item> builder = getBuilder.apply(MinekeaItemTags.GLASS_JAR_STORABLE).setReplace(false);
 
         ALLOWED_ITEMS.forEach(item -> builder.add(item.builtInRegistryHolder().key()));
+
+        // Cobblicious's Warped Wart replaces Minekea's, and it goes in jars too. Optional, because Cobblicious may be absent.
+        builder.addOptional(ResourceKey.create(Registries.ITEM, CobbliciousCompat.counterpart(WarpedWartItem.ITEM_ID)));
     }
 
     @Override

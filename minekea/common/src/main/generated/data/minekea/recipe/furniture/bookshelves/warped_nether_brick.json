@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": "minekea:building/general/warped_nether_bricks",
+    "#": "#minekea:cobblicious_swap/building/general/warped_nether_bricks",
     "X": "minecraft:book"
   },
   "pattern": [

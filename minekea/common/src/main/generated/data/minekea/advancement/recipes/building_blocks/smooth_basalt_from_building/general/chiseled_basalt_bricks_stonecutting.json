@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:building/general/chiseled_basalt_bricks"
+            "items": "#minekea:cobblicious_swap/building/general/chiseled_basalt_bricks"
           }
         ]
       },

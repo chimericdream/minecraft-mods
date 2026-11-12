@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minekea:building/slabs/basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "cobblicious:basalt_bricks_slab",
+      "required": false
+    }
+  ]
+}

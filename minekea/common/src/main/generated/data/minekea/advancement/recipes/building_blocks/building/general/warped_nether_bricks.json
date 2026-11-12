@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minekea:crops/warped_wart"
+            "items": "#minekea:cobblicious_swap/crops/warped_wart"
           }
         ]
       },

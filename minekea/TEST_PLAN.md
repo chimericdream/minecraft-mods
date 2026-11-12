@@ -60,6 +60,13 @@ Too large for a full per-block pass; do a **per-family** pass on Fabric plus a N
     to start (the version range is still enforced).
 15. **Network packets** — whatever the two `network` classes carry (likely tool/GUI sync):
     exercise the corresponding feature on a **dedicated server**, not just single-player.
+16. **With Cobblicious loaded** (Fabric and NeoForge) — the basalt bricks (plain, cracked, crimson, mossy, warped, and chiseled), the
+    warped nether bricks, their stairs/slabs/walls, and Warped Wart are not in the creative tabs, `/give`, or JEI/REI
+    as `minekea:` items. The log has no recipe, loot table, or tag parse errors. Beams, covers, vertical stairs and
+    slabs, compressed blocks, and the warped nether brick bookshelf still exist. Craft a vertical stairs from
+    `cobblicious:` warped nether bricks, craft a beam from `cobblicious:` basalt bricks, and decompress a compressed
+    basalt brick block: it gives `cobblicious:basalt_bricks`. Hold `cobblicious:warped_wart` in a glass jar. Without
+    Cobblicious, all of the `minekea:` blocks and recipes work as before.
 
 ## Recommended automated tests
 

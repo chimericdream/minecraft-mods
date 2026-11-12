@@ -81,7 +81,10 @@
     "minecraft:purple_concrete_powder",
     "minecraft:magenta_concrete_powder",
     "minecraft:pink_concrete_powder",
-    "minekea:crops/warped_wart",
+    {
+      "id": "minekea:crops/warped_wart",
+      "required": false
+    },
     "minekea:ingredients/wax/plain",
     "minekea:ingredients/wax/white",
     "minekea:ingredients/wax/light_gray",
@@ -98,6 +101,10 @@
     "minekea:ingredients/wax/blue",
     "minekea:ingredients/wax/purple",
     "minekea:ingredients/wax/magenta",
-    "minekea:ingredients/wax/pink"
+    "minekea:ingredients/wax/pink",
+    {
+      "id": "cobblicious:warped_wart",
+      "required": false
+    }
   ]
 }

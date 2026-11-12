@@ -7,6 +7,7 @@ import com.chimericdream.minekea.block.building.general.WaxBlock;
 import com.chimericdream.minekea.block.building.storage.BlueEggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.BrownEggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.DyeBlock;
+import com.chimericdream.minekea.compat.CobbliciousCompat;
 import com.chimericdream.minekea.block.building.storage.EggCrateBlock;
 import com.chimericdream.minekea.block.building.storage.StorageBlocks;
 import com.chimericdream.minekea.crop.WarpedWartItem;
@@ -232,7 +233,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put("minecraft:sugar", StorageBlocks.SUGAR_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:sugar_cane", StorageBlocks.SUGAR_CANE_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:totem_of_undying", StorageBlocks.TOTEM_BLOCK.getId().toString());
-        ALLOWED_ITEM_IDS.put(WarpedWartItem.ITEM_ID.toString(), "minecraft:warped_wart_block");
+        ALLOWED_ITEM_IDS.put(CobbliciousCompat.resolve(WarpedWartItem.ITEM_ID).toString(), "minecraft:warped_wart_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat", "minecraft:hay_block");
         ALLOWED_ITEM_IDS.put("minecraft:wheat_seeds", StorageBlocks.WHEAT_SEEDS_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:wildflowers", StorageBlocks.WILDFLOWER_BLOCK.getId().toString());

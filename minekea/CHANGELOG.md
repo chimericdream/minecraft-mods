@@ -1,5 +1,15 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added support for Cobblicious. When Cobblicious is loaded, Minekea does not add these blocks. Cobblicious adds them:
+  * Basalt Bricks, Chiseled Basalt Bricks, Cracked Basalt Bricks, Crimson Basalt Bricks, Mossy Basalt Bricks, Warped Basalt Bricks, and Warped Nether Bricks
+  * The stairs, slabs, and walls of these blocks, except Chiseled Basalt Bricks
+  * Warped Wart (the item, the block, and the crop)
+* When Cobblicious is loaded, Minekea does not load the recipes and loot tables of these blocks.
+* Minekea blocks made from these blocks stay when Cobblicious is loaded. They are the beams, covers, vertical stairs, vertical slabs, compressed blocks, and Warped Nether Brick bookshelves. Their recipes use the Cobblicious blocks. The recipes that convert a compressed block to bricks give the Cobblicious bricks.
+* Glass jars hold the Cobblicious Warped Wart.
+
 #### Bug Fixes
 
 * The milk cauldron now shows a proper name, not its raw translation key.

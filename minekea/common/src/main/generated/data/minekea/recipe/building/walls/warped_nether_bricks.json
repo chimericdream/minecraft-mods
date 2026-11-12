@@ -1,9 +1,29 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:not",
+      "value": {
+        "condition": "fabric:all_mods_loaded",
+        "values": [
+          "cobblicious"
+        ]
+      }
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
     "#": "minekea:building/general/warped_nether_bricks"
   },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "cobblicious"
+      }
+    }
+  ],
   "pattern": [
     "###",
     "###"

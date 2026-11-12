@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minekea:building/stairs/warped_nether_bricks",
+      "required": false
+    },
+    {
+      "id": "cobblicious:warped_nether_bricks_stairs",
+      "required": false
+    }
+  ]
+}
