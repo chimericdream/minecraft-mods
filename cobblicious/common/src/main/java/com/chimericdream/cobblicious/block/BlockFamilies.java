@@ -8,7 +8,6 @@ import com.chimericdream.lib.util.Tool;
 import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.List;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -19,8 +18,8 @@ import static com.chimericdream.cobblicious.CobbliciousMod.REGISTRY_HELPER;
  * no family.
  */
 public class BlockFamilies {
-    @SuppressWarnings("UnstableApiUsage")
-    private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
+    // No tab here: CreativeTabs places these items at specific points in the vanilla tabs.
+    private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties();
 
     public static final BlockFamily BASALT_BRICKS = family("basalt_bricks", "Basalt Brick", ModBlocks.BASALT_BRICKS, ModBlocks.BASALT_BRICKS_ID);
     public static final BlockFamily CRACKED_BASALT_BRICKS = family("cracked_basalt_bricks", "Cracked Basalt Brick", ModBlocks.CRACKED_BASALT_BRICKS, ModBlocks.CRACKED_BASALT_BRICKS_ID);

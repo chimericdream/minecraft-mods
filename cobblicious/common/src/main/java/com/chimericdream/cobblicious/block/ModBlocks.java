@@ -5,7 +5,6 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -17,8 +16,8 @@ import static com.chimericdream.cobblicious.CobbliciousMod.REGISTRY_HELPER;
  * The full blocks of this mod. {@link BlockFamilies} adds the stairs, slab, and wall of each block.
  */
 public class ModBlocks {
-    @SuppressWarnings("UnstableApiUsage")
-    private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.BUILDING_BLOCKS);
+    // No tab here: CreativeTabs places these items at specific points in the vanilla tabs.
+    private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties();
 
     public static final Identifier BASALT_BRICKS_ID = id("basalt_bricks");
     public static final Identifier CHISELED_BASALT_BRICKS_ID = id("chiseled_basalt_bricks");

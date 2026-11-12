@@ -17,6 +17,8 @@ public final class CobbliciousMod {
         ModBlocks.init();
         BlockFamilies.init();
 
+        CreativeTabs.init();
+
         REGISTRY_HELPER.init();
     }
 }
