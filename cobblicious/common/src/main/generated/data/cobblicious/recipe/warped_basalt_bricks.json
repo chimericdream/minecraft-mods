@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "cobblicious:basalt_bricks",
+    "minecraft:twisting_vines"
+  ],
+  "result": {
+    "id": "cobblicious:warped_basalt_bricks"
+  }
+}

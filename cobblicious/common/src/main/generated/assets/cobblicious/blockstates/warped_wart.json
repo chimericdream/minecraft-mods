@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "cobblicious:block/warped_wart_stage0"
+    },
+    "age=1": {
+      "model": "cobblicious:block/warped_wart_stage1"
+    },
+    "age=2": {
+      "model": "cobblicious:block/warped_wart_stage1"
+    },
+    "age=3": {
+      "model": "cobblicious:block/warped_wart_stage2"
+    }
+  }
+}

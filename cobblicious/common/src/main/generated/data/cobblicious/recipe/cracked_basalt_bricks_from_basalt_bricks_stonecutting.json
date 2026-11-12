@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:basalt_bricks",
+  "result": {
+    "id": "cobblicious:cracked_basalt_bricks"
+  }
+}

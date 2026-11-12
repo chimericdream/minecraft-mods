@@ -1,0 +1,29 @@
+{
+  "values": [
+    "cobblicious:basalt_bricks",
+    "cobblicious:chiseled_basalt_bricks",
+    "cobblicious:cracked_basalt_bricks",
+    "cobblicious:crimson_basalt_bricks",
+    "cobblicious:mossy_basalt_bricks",
+    "cobblicious:warped_basalt_bricks",
+    "cobblicious:warped_nether_bricks",
+    "cobblicious:basalt_bricks_stairs",
+    "cobblicious:basalt_bricks_slab",
+    "cobblicious:basalt_bricks_wall",
+    "cobblicious:cracked_basalt_bricks_stairs",
+    "cobblicious:cracked_basalt_bricks_slab",
+    "cobblicious:cracked_basalt_bricks_wall",
+    "cobblicious:crimson_basalt_bricks_stairs",
+    "cobblicious:crimson_basalt_bricks_slab",
+    "cobblicious:crimson_basalt_bricks_wall",
+    "cobblicious:mossy_basalt_bricks_stairs",
+    "cobblicious:mossy_basalt_bricks_slab",
+    "cobblicious:mossy_basalt_bricks_wall",
+    "cobblicious:warped_basalt_bricks_stairs",
+    "cobblicious:warped_basalt_bricks_slab",
+    "cobblicious:warped_basalt_bricks_wall",
+    "cobblicious:warped_nether_bricks_stairs",
+    "cobblicious:warped_nether_bricks_slab",
+    "cobblicious:warped_nether_bricks_wall"
+  ]
+}

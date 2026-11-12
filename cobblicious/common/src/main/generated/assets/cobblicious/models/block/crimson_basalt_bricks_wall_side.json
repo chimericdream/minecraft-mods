@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "cobblicious:block/crimson_basalt_bricks"
+  }
+}

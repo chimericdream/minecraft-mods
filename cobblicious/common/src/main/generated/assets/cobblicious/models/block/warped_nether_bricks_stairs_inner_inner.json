@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "cobblicious:block/warped_nether_bricks",
+    "side": "cobblicious:block/warped_nether_bricks",
+    "top": "cobblicious:block/warped_nether_bricks"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "cobblicious:block/crimson_basalt_bricks_slab"
+    },
+    "type=double": {
+      "model": "cobblicious:block/crimson_basalt_bricks_slab_double"
+    },
+    "type=top": {
+      "model": "cobblicious:block/crimson_basalt_bricks_slab_top_top"
+    }
+  }
+}

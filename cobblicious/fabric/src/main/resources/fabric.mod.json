@@ -20,6 +20,9 @@
         ],
         "client": [
             "com.chimericdream.cobblicious.fabric.client.CobbliciousModFabricClient"
+        ],
+        "fabric-datagen": [
+            "com.chimericdream.cobblicious.fabric.data.ModDataGenerator"
         ]
     },
     "mixins": [

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "cobblicious:block/crimson_basalt_bricks",
+    "side": "cobblicious:block/crimson_basalt_bricks",
+    "top": "cobblicious:block/crimson_basalt_bricks"
+  }
+}
