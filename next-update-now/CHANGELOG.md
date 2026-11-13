@@ -1,5 +1,16 @@
 ### Unreleased changes
 
+#### New Features
+
+- Added calcite pillars, slabs, stairs, and walls.
+- Added polished calcite and polished calcite bricks, each with slabs, stairs, and walls.
+- Added snow bricks, with slabs, stairs, and walls. Snow bricks drop only when you mine them with a shovel.
+- Added packed ice bricks, with slabs, stairs, and walls. Added chiseled packed ice.
+- Added brittle ice. It cracks and breaks after an entity steps on it. Mine it with Silk Touch to get it.
+- Added ice crystals. They give light and break when you remove their support block.
+- Added icicles. They grow and fall like pointed dripstone. They break near strong light and in the Nether.
+- Added ice balls. Throw them to deal up to 4 damage with knockback. Less speed means less damage. Craft 8 ice balls from 8 snowballs around 1 packed ice.
+
 ### 26.2 - 1.0.1
 
 #### Bug Fixes

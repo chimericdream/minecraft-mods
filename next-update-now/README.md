@@ -8,11 +8,11 @@ _Get content from the next update on the current version!_
 
 ### Minecraft Versions
 
-* 26.2: Supported (26.3 content only)
+* 26.2: Supported (26.3 and 26.4 snapshot content)
 
 ### What does this mod do?
 
-This mod brings early access to upcoming Minecraft content — pulled from snapshots and/or the latest release — to players who haven't upgraded yet (or can't). If you're stuck on an older version for modpack, server, or compatibility reasons, this mod lets you try out new blocks and other "easy" additions from the next version without leaving your current one.
+This mod brings early access to new Minecraft blocks and simple items, taken from snapshots and the latest release, to players who have not upgraded. If you stay on an older version for modpack, server, or compatibility reasons, this mod lets you use the new content without a version change.
 
 ### How does version support work?
 
@@ -30,16 +30,19 @@ No. Once a snapshot cycle ends and the mod moves on to the next one, the previou
 
 ### Is this a "backport everything" mod?
 
-No. There are already other mods dedicated to fully backporting new content to old versions — this isn't one of them. This mod's goal is early access to *some* new content, not full parity with the upcoming release.
+No. Other mods backport all new content to old versions. This mod gives early access to some of the new content, not full parity with the upcoming release.
 
 ### What content can I expect to get?
 
-At minimum, new **blocks** and other "easy" additions land every cycle. Beyond that:
+This mod adds **blocks**, their block-level behavior, and a few simple items and entities. Examples are slabs, stairs, walls, blocks that crack or fall, and the ice ball projectile.
 
-* **Entities, mobs, and world generation** are added *only* when they can be implemented without significant effort.
-* Some features from a given snapshot cycle may not be included at all, if they'd require substantial work to replicate on the older version.
+This mod does **not** add:
 
-There's no guarantee of full feature parity with any given snapshot or release.
+* Mobs and other complex entities.
+* World generation, such as new biomes or cave features.
+* Changes to how other systems use the new content, such as mob archetypes.
+
+Some blocks cannot match the snapshot exactly on the older version. The mod does not give full feature parity with any snapshot or release.
 
 ### Why not just wait for the official update?
 

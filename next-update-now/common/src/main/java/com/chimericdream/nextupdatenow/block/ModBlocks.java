@@ -12,6 +12,7 @@ import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTypes;
@@ -88,6 +90,8 @@ public class ModBlocks {
     public static void init() {
         registerConcreteAndWoolSlabsAndStairs();
         registerPoplarWoodSet();
+        registerCalciteSet();
+        registerSnowAndIceBlocks();
     }
 
     private static void registerConcreteAndWoolSlabsAndStairs() {
@@ -215,6 +219,98 @@ public class ModBlocks {
         );
         ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, hangingSign);
         ModBlockEntityValidBlocks.register(BlockEntityTypes.HANGING_SIGN, wallHangingSign);
+    }
+
+    private static void registerCalciteSet() {
+        registerBlockWithItem(
+            "calcite_pillar",
+            () -> new RotatedPillarBlock(blockSettings(Blocks.CALCITE, "calcite_pillar")),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockFamily(Blocks.CALCITE, null, "calcite_slab", "calcite_stairs", "calcite_wall");
+
+        RegistrySupplier<Block> polished = registerBlockWithItem(
+            "polished_calcite",
+            () -> new Block(blockSettings(Blocks.CALCITE, "polished_calcite")),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockFamily(Blocks.CALCITE, polished, "polished_calcite_slab", "polished_calcite_stairs", "polished_calcite_wall");
+
+        RegistrySupplier<Block> bricks = registerBlockWithItem(
+            "polished_calcite_bricks",
+            () -> new Block(blockSettings(Blocks.CALCITE, "polished_calcite_bricks")),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockFamily(
+            Blocks.CALCITE,
+            bricks,
+            "polished_calcite_brick_slab",
+            "polished_calcite_brick_stairs",
+            "polished_calcite_brick_wall"
+        );
+    }
+
+    private static void registerSnowAndIceBlocks() {
+        RegistrySupplier<Block> snowBricks = registerBlockWithItem(
+            "snow_bricks",
+            () -> new Block(blockSettings(Blocks.SNOW_BLOCK, "snow_bricks").requiresCorrectToolForDrops()),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockFamily(Blocks.SNOW_BLOCK, snowBricks, "snow_brick_slab", "snow_brick_stairs", "snow_brick_wall");
+
+        RegistrySupplier<Block> iceBricks = registerBlockWithItem(
+            "packed_ice_bricks",
+            () -> new Block(blockSettings(Blocks.PACKED_ICE, "packed_ice_bricks")),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockFamily(
+            Blocks.PACKED_ICE,
+            iceBricks,
+            "packed_ice_brick_slab",
+            "packed_ice_brick_stairs",
+            "packed_ice_brick_wall"
+        );
+        registerBlockWithItem(
+            "chiseled_packed_ice",
+            () -> new Block(blockSettings(Blocks.PACKED_ICE, "chiseled_packed_ice")),
+            BUILDING_BLOCK_SETTINGS
+        );
+
+        registerBlockWithItem(
+            "brittle_ice",
+            () -> new BrittleIceBlock(blockSettings(Blocks.ICE, "brittle_ice")),
+            NATURAL_BLOCK_SETTINGS
+        );
+        registerBlockWithItem(
+            "ice_crystal",
+            () -> new AmethystClusterBlock(7.0F, 3.0F, blockSettings(Blocks.LARGE_AMETHYST_BUD, "ice_crystal").lightLevel(state -> 5)),
+            NATURAL_BLOCK_SETTINGS
+        );
+        registerBlockWithItem(
+            "icicle",
+            () -> new IcicleBlock(Blocks.PACKED_ICE.defaultBlockState(), blockSettings(Blocks.POINTED_DRIPSTONE, "icicle")),
+            NATURAL_BLOCK_SETTINGS
+        );
+    }
+
+    /**
+     * Registers the slab, stairs, and wall of one block. When {@code base} is {@code null}, the stairs
+     * use {@code template} as their base state.
+     */
+    private static void registerBlockFamily(
+        Block template,
+        RegistrySupplier<Block> base,
+        String slabPath,
+        String stairsPath,
+        String wallPath
+    ) {
+        registerBlockWithItem(slabPath, () -> new SlabBlock(blockSettings(template, slabPath)), BUILDING_BLOCK_SETTINGS);
+        registerBlockWithItem(
+            stairsPath,
+            () -> new ModStairsBlock((base == null ? template : base.get()).defaultBlockState(), blockSettings(template, stairsPath)),
+            BUILDING_BLOCK_SETTINGS
+        );
+        registerBlockWithItem(wallPath, () -> new WallBlock(blockSettings(template, wallPath)), BUILDING_BLOCK_SETTINGS);
     }
 
     /**

@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:stray",
+    {
+      "id": "minecraft:frostbite",
+      "required": false
+    }
+  ]
+}
