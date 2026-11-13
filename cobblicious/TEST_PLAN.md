@@ -28,3 +28,7 @@ Conventions: Fabric GameTest classes in
 **block-family datagen/testing helpers** (see `chimeric-lib/ideas/datagen/block-family-generator.md`) — this mod is
 exactly the "declare a base block, generate the family" case, and a shared "assert family is
 complete" GameTest helper should be built there, not here.
+
+## Minekea migration (Forwarding Address)
+
+Make a world on the previous Minekea without Cobblicious. Place basalt brick stairs (facing, waterlogged), a basalt brick wall, and Warped Wart on soul sand. Put Minekea basalt bricks and Warped Wart in a chest and in the inventory. Load the world with the new Minekea, Cobblicious, and Forwarding Address (Fabric and NeoForge). Check that all blocks and items convert, with the same facing, waterlogging, and crop age. Check that the log has no migration errors. Load it again without Forwarding Address and check that the game does not crash.

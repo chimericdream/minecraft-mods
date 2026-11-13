@@ -9,7 +9,6 @@
 * When Cobblicious is loaded, Minekea does not load the recipes and loot tables of these blocks.
 * Minekea blocks made from these blocks stay when Cobblicious is loaded. They are the beams, covers, vertical stairs, vertical slabs, compressed blocks, and Warped Nether Brick bookshelves. Their recipes use the Cobblicious blocks. The recipes that convert a compressed block to bricks give the Cobblicious bricks.
 * Glass jars hold the Cobblicious Warped Wart.
-* When Cobblicious and Forwarding Address are both loaded, existing worlds convert the old Minekea blocks and items to the Cobblicious ones. Forwarding Address is an optional dependency.
 
 #### Bug Fixes
 

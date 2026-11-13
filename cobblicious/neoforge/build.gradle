@@ -22,5 +22,9 @@ configurations {
 
 dependencies {
     common(project(path: ':cobblicious:common')) { transitive false }
+
+    // Forwarding Address is an optional dependency. Its migrations apply only when it is installed.
+    common(project(path: ':forwarding-address:common')) { transitive false }
+    implementation(project(path: ':forwarding-address:neoforge')) { transitive false }
     shadowBundle project(path: ':cobblicious:common', configuration: 'transformProductionNeoForge')
 }

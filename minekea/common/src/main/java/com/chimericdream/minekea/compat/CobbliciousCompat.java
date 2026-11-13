@@ -34,11 +34,6 @@ public final class CobbliciousCompat {
      */
     private static final Map<Identifier, Identifier> REPLACEMENTS = new LinkedHashMap<>();
 
-    /**
-     * The Minekea Warped Wart item. Its block has a different id, and both map to one Cobblicious id.
-     */
-    public static final Identifier WARPED_WART_ITEM_ID = Identifier.fromNamespaceAndPath(MOD_ID, "crops/warped_wart");
-
     private static Boolean active = null;
 
     static {

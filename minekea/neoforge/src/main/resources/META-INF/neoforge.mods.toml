@@ -63,14 +63,6 @@ versionRange = "[1.0.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-# Forwarding Address converts old Minekea blocks and items to the Cobblicious ones in existing worlds.
-[[dependencies.${mod_id}]]
-modId = "forwardingaddress"
-type = "optional"
-versionRange = "[1.0.0,)"
-ordering = "NONE"
-side = "BOTH"
-
 [[mixins]]
 config = "minekea.mixins.json"
 

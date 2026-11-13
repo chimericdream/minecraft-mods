@@ -2,7 +2,6 @@ package com.chimericdream.minekea;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.minekea.block.ModBlocks;
-import com.chimericdream.minekea.compat.ForwardingAddressCompat;
 import com.chimericdream.minekea.crop.ModCrops;
 import com.chimericdream.minekea.fluid.ModFluids;
 import com.chimericdream.minekea.item.ModItems;
@@ -37,10 +36,6 @@ public final class MinekeaMod {
         ColoredBlocksRegistry.init();
 
         REGISTRY_HELPER.init();
-
-        if (ForwardingAddressCompat.isAvailable()) {
-            ForwardingAddressCompat.registerMigrations();
-        }
     }
 
     /**

@@ -2,6 +2,7 @@ package com.chimericdream.cobblicious;
 
 import com.chimericdream.cobblicious.block.BlockFamilies;
 import com.chimericdream.cobblicious.block.ModBlocks;
+import com.chimericdream.cobblicious.compat.MinekeaMigrations;
 import com.chimericdream.cobblicious.crop.ModCrops;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import org.apache.logging.log4j.LogManager;
@@ -20,5 +21,9 @@ public final class CobbliciousMod {
         CreativeTabs.init();
 
         REGISTRY_HELPER.init();
+
+        if (MinekeaMigrations.isAvailable()) {
+            MinekeaMigrations.register();
+        }
     }
 }
