@@ -42,6 +42,12 @@ Each run JVM is tagged with `-Dwatchdog.task=<task path>` and the kill timer fin
 token. Don't go back to matching by directory or "the only java child": in a parallel build that killed a
 different mod's `runGameTest`.
 
+The watchdog finds the run JVM with `jps -v`, not with `ProcessHandle.info().commandLine()`. On Windows,
+`commandLine()` is empty for other processes. A match on it finds nothing, and the watchdog then does nothing
+and prints nothing (this caused a hang on every NeoForge run on 2026-11-12). If the watchdog stays silent
+after the sentinel line, check that `jps -v` shows `-Dwatchdog.task=<task path>` for the run JVM. The cause of
+the hang itself is two non-daemon thread pools (`pool-1-thread-*`, `pool-2-thread-*`) that nothing shuts down.
+
 ### Slow Gradle startup: configuration-on-demand and the configuration cache
 
 Loom's per-project `afterEvaluate` costs ~1-2s x ~130 projects, so configuring everything took 2-2.5 min
