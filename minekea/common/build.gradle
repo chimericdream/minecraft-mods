@@ -2,6 +2,10 @@ architectury {
     common project(':minekea').enabled_platforms.split(',')
 }
 
+dependencies {
+    compileOnly(project(path: ':forwarding-address:common')) { transitive = false }
+}
+
 loom {
     accessWidenerPath = file("src/main/resources/minekea.accesswidener")
 }

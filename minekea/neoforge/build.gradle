@@ -27,6 +27,10 @@ def opusVersion = "${rootProject.minecraft_compatibility}-${opusProps.getPropert
 dependencies {
     common(project(path: ':minekea:common')) { transitive false }
 
+    // Forwarding Address is an optional dependency. Its migrations apply only when it is installed.
+    common(project(path: ':forwarding-address:common')) { transitive false }
+    implementation(project(path: ':forwarding-address:neoforge')) { transitive false }
+
     // The guide book is Opus data and Opus is an optional dependency, so it is only on the dev runtime classpath. It is
     // wired as a built jar rather than project(): referencing :opus:common from here evaluates it too early.
     runtimeOnly files("${rootDir}/opus/neoforge/build/libs/opus-neoforge-${opusVersion}.jar") {

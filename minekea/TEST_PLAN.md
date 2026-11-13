@@ -150,3 +150,4 @@ Minekea is the volume consumer of nearly every helper proposed elsewhere; specif
 * Which blocks are intentionally recipe-less or item-less (for the exclusion lists)?
 * What exactly do the network packets sync (needed to write a wire-format round-trip test like the
   one planned for Banner Tweaks)?
+17. **Forwarding Address migration** (Fabric and NeoForge) — make a world on the previous Minekea without Cobblicious. Place basalt brick stairs (facing, waterlogged), a basalt brick wall, Warped Wart on soil, and a glass jar that holds Warped Wart. Put Minekea basalt bricks in a chest and in the inventory. Load the world with the new Minekea, Cobblicious, and Forwarding Address. Check that all blocks and items convert, with the same facing, waterlogging, crop age, and jar contents. Check that the log has no migration errors. Load it again without Forwarding Address and check that the game does not crash.
