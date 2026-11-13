@@ -30,7 +30,6 @@ public class BlockFamilies {
     @SuppressWarnings("UnstableApiUsage")
     private static final Item.Properties COLORED_BLOCKS_SETTINGS = new Item.Properties().arch$tab(CreativeModeTabs.COLORED_BLOCKS);
 
-    public static final BlockFamily CALCITE = family("calcite", "Calcite", Blocks.CALCITE);
     public static final BlockFamily CHISELED_COPPER = family("chiseled_copper", "Chiseled Copper", Blocks.CHISELED_COPPER.weathering().unaffected());
     public static final BlockFamily EXPOSED_CHISELED_COPPER = family("exposed_chiseled_copper", "Exposed Chiseled Copper", Blocks.CHISELED_COPPER.weathering().exposed());
     public static final BlockFamily WEATHERED_CHISELED_COPPER = family("weathered_chiseled_copper", "Weathered Chiseled Copper", Blocks.CHISELED_COPPER.weathering().weathered());
@@ -81,7 +80,6 @@ public class BlockFamilies {
 
     public static final List<BlockFamily> ALL = Stream.of(
             List.of(
-                CALCITE,
                 CHISELED_COPPER,
                 EXPOSED_CHISELED_COPPER,
                 WEATHERED_CHISELED_COPPER,
