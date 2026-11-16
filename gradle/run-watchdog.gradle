@@ -111,19 +111,64 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
         return "-Dwatchdog.task=${taskPath}"
     }
 
+    static boolean hasTag(String line, String tag) {
+        def idx = line.indexOf(tag)
+        while (idx >= 0) {
+            def end = idx + tag.length()
+            if (end == line.length() || Character.isWhitespace(line.charAt(end))) {
+                return true
+            }
+            idx = line.indexOf(tag, idx + 1)
+        }
+        return false
+    }
+
+    // PIDs of JVMs whose JVM arguments contain `tag`, read with `jps -v`. On Windows,
+    // ProcessHandle.info().commandLine() is empty for other processes, so the command-line match in
+    // findRunJvms finds nothing and the watchdog silently never kills anything (the 2026-11-12 hang).
+    // jps reads the JVM arguments through the attach mechanism instead.
+    // Returns null when jps could not be run or failed, so callers can tell "no match" from "cannot look".
+    static Set<Long> jpsPidsWithTag(String tag) {
+        def pids = new HashSet<Long>()
+        try {
+            def exe = System.getProperty('os.name').toLowerCase().contains('win') ? 'jps.exe' : 'jps'
+            def candidate = new File(new File(System.getProperty('java.home'), 'bin'), exe)
+            def proc = new ProcessBuilder(candidate.exists() ? candidate.path : exe, '-v')
+                .redirectErrorStream(true).start()
+            proc.inputStream.eachLine { String line ->
+                def sp = line.indexOf(' ')
+                if (sp > 0 && hasTag(line.substring(sp + 1), tag)) {
+                    pids << Long.parseLong(line.substring(0, sp).trim())
+                }
+            }
+            if (proc.waitFor() != 0) {
+                return null
+            }
+        } catch (Throwable ignored) {
+            return null
+        }
+        return pids
+    }
+
+    // Both mechanisms are tried: the command-line match covers platforms where ProcessHandle can read it;
+    // jps covers Windows. Only descendants of this Gradle daemon are ever returned.
+    // Set when the last findRunJvms call could not run jps. Read by the watchdog thread to warn loudly.
+    static volatile boolean jpsUnavailable = false
+
     static List<ProcessHandle> findRunJvms(String taskPath) {
         def tag = taskTag(taskPath)
-        return ProcessHandle.current().children().filter { it.isAlive() }.toList().findAll { ph ->
-            def line = ph.info().commandLine().orElse('') + ' ' + ph.info().arguments().map { it.join(' ') }.orElse('')
-            def idx = line.indexOf(tag)
-            while (idx >= 0) {
-                def end = idx + tag.length()
-                if (end == line.length() || Character.isWhitespace(line.charAt(end))) {
-                    return true
-                }
-                idx = line.indexOf(tag, idx + 1)
+        def descendants = ProcessHandle.current().descendants().filter { it.isAlive() }.toList()
+        def jpsPids = jpsPidsWithTag(tag)
+        if (jpsPids == null) {
+            jpsUnavailable = true
+            jpsPids = new HashSet<Long>()
+        }
+        return descendants.findAll { ph ->
+            if (jpsPids.contains(ph.pid())) {
+                return true
             }
-            return false
+            def line = ph.info().commandLine().orElse('') + ' ' + ph.info().arguments().map { it.join(' ') }.orElse('')
+            return hasTag(line, tag)
         }
     }
 
@@ -157,6 +202,11 @@ abstract class RunWatchdogService implements BuildService<RunWatchdogParameters>
                 Thread.sleep(graceMillis)
                 def jvms = findRunJvms(taskPath)
                 if (jvms.isEmpty()) {
+                    if (jpsUnavailable) {
+                        logger.warn("[watchdog] ${taskPath}: found no run JVM after '${hit}', but 'jps' could not be run, " +
+                            "so the JVM may still be alive and hung. Run Gradle on a full JDK (it needs bin/jps), " +
+                            "or check for a stuck java.exe by hand.")
+                    }
                     return // exited on its own within the grace period
                 }
                 synchronized (this) { killedTasks[taskPath] = true }

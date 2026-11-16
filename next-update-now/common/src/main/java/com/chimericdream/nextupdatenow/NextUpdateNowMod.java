@@ -2,6 +2,9 @@ package com.chimericdream.nextupdatenow;
 
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.chimericdream.nextupdatenow.block.ModBlocks;
+import com.chimericdream.nextupdatenow.entity.ModEntities;
+import com.chimericdream.nextupdatenow.item.ModItems;
+import com.chimericdream.nextupdatenow.sound.ModSounds;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +21,9 @@ public final class NextUpdateNowMod {
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
 
+        ModSounds.init();
+        ModItems.init();
+        ModEntities.init();
         ModBlocks.init();
 
         REGISTRY_HELPER.init();

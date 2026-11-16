@@ -1,0 +1,24 @@
+{
+  "values": [
+    "minecraft:calcite_pillar",
+    "minecraft:calcite_slab",
+    "minecraft:calcite_stairs",
+    "minecraft:calcite_wall",
+    "minecraft:polished_calcite",
+    "minecraft:polished_calcite_slab",
+    "minecraft:polished_calcite_stairs",
+    "minecraft:polished_calcite_wall",
+    "minecraft:polished_calcite_bricks",
+    "minecraft:polished_calcite_brick_slab",
+    "minecraft:polished_calcite_brick_stairs",
+    "minecraft:polished_calcite_brick_wall",
+    "minecraft:packed_ice_bricks",
+    "minecraft:packed_ice_brick_slab",
+    "minecraft:packed_ice_brick_stairs",
+    "minecraft:packed_ice_brick_wall",
+    "minecraft:chiseled_packed_ice",
+    "minecraft:brittle_ice",
+    "minecraft:ice_crystal",
+    "minecraft:icicle"
+  ]
+}

@@ -92,6 +92,10 @@
   `curseforge_optional` (the commented lines in `.bun-create/mod/gradle.properties.tpl`); an empty value
   means none. chimeric-lib never lists itself as a dependency and overrides `curseforge_requires` to
   `architectury-api` (it has no YACL dependency).
+- **Keep each README's version badge equal to `mod_version`.** The badge is static text near the top of
+  the mod's `README.md`. In the badge URL, write `-` in the version as `--` (for example
+  `version-1.1.0--beta.0`). When you see a badge that does not match, fix it in the same commit. Do this
+  even when your task is not about the version.
 - **Always tag the release commit** (`<folder>/<mc_compat>-<mod_version>`) right after the release commit,
   without asking. Pushing tags is separate and still needs an explicit go-ahead.
 - **No changelog entry for dev-only bugs.** Before adding a bug-fix bullet, ask whether the bug could ever

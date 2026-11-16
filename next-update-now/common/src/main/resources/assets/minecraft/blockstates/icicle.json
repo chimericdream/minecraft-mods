@@ -1,0 +1,39 @@
+{
+  "variants": {
+    "thickness=base,vertical_direction=down": {
+      "model": "minecraft:block/icicle_base"
+    },
+    "thickness=base,vertical_direction=up": {
+      "model": "minecraft:block/icicle_base",
+      "z": 180
+    },
+    "thickness=frustum,vertical_direction=down": {
+      "model": "minecraft:block/icicle_frustum"
+    },
+    "thickness=frustum,vertical_direction=up": {
+      "model": "minecraft:block/icicle_frustum",
+      "z": 180
+    },
+    "thickness=middle,vertical_direction=down": {
+      "model": "minecraft:block/icicle_middle"
+    },
+    "thickness=middle,vertical_direction=up": {
+      "model": "minecraft:block/icicle_middle",
+      "z": 180
+    },
+    "thickness=tip,vertical_direction=down": {
+      "model": "minecraft:block/icicle_tip"
+    },
+    "thickness=tip,vertical_direction=up": {
+      "model": "minecraft:block/icicle_tip",
+      "z": 180
+    },
+    "thickness=tip_merge,vertical_direction=down": {
+      "model": "minecraft:block/icicle_tip_merge"
+    },
+    "thickness=tip_merge,vertical_direction=up": {
+      "model": "minecraft:block/icicle_tip_merge",
+      "z": 180
+    }
+  }
+}
