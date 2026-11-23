@@ -20,6 +20,6 @@
   * End Stone
   * Netherrack
   * Smooth Basalt
-  * All 16 concrete colors
+* Added walls for all 16 concrete colors
 
 #### Changes

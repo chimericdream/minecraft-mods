@@ -73,7 +73,7 @@ public class BlockFamilies {
     public static final BlockFamily SMOOTH_BASALT = family("smooth_basalt", "Smooth Basalt", Blocks.SMOOTH_BASALT);
 
     /**
-     * Vanilla concrete gets the full stairs/slab/wall trio, like any other solid stone-like block.
+     * Vanilla concrete gets walls only, because Minecraft now ships concrete stairs and slabs.
      * Placed in the Colored Blocks tab (like vanilla concrete itself) instead of Building Blocks.
      */
     public static final List<BlockFamily> CONCRETE = concreteFamilies();
@@ -120,7 +120,7 @@ public class BlockFamilies {
                 Blocks.CONCRETE.pick(color),
                 Tool.PICKAXE,
                 COLORED_BLOCKS_SETTINGS,
-                BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL
+                BlockFamilyVariant.WALL
             ));
         }
 
