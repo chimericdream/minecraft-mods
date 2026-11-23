@@ -6,6 +6,7 @@ import com.chimericdream.pannotiacompanion.config.PannotiaCompanionConfig;
 import com.chimericdream.pannotiacompanion.home.PcBackCommand;
 import com.chimericdream.pannotiacompanion.home.PcHomeCommand;
 import com.chimericdream.pannotiacompanion.home.TeleportManager;
+import com.chimericdream.pannotiacompanion.villager.PcFixHeadsCommand;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +27,7 @@ public final class PannotiaCompanionMod {
         TeleportManager.init();
         ChimericCommands.register(new PcHomeCommand());
         ChimericCommands.register(new PcBackCommand());
+        ChimericCommands.register(new PcFixHeadsCommand());
 
         REGISTRY_HELPER.init();
     }

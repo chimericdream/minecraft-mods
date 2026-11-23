@@ -1,10 +1,6 @@
 package com.chimericdream.pannotiacompanion.villager;
 
 import com.chimericdream.pannotiacompanion.ModInfo;
-import com.google.common.collect.ImmutableMultimap;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,15 +12,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class ModVillagerTrades {
     private static final int MINI_BLOCK_USES = 1;
@@ -69,18 +61,10 @@ public class ModVillagerTrades {
     }
 
     private static DataComponentPatch headComponents(WanderingTraderHeadData.HeadTrade head) {
-        // A stable UUID per texture keeps identical heads stackable across trades and trader refreshes.
-        UUID uuid = UUID.nameUUIDFromBytes(head.texture().getBytes(StandardCharsets.UTF_8));
-        PropertyMap properties = new PropertyMap(
-            ImmutableMultimap.<String, Property>builder()
-                .put("textures", new Property("textures", head.texture()))
-                .build()
-        );
-
+        // The same components as a head from a loot table, so it stacks with those and shows its own name.
         return DataComponentPatch.builder()
             .set(DataComponents.ITEM_NAME, Component.literal(head.name()))
-            .set(DataComponents.RARITY, Rarity.UNCOMMON)
-            .set(DataComponents.PROFILE, ResolvableProfile.createResolved(new GameProfile(uuid, "pannotia", properties)))
+            .set(DataComponents.PROFILE, PannotiaHeads.textureOnlyProfile(head.texture()))
             .build();
     }
 }

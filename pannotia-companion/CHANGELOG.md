@@ -1,5 +1,14 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* Wandering trader heads now show their own name, not "pannotia's Head".
+* Stonecutter mini blocks now stack with wandering trader mini blocks.
+
+#### New Features
+
+* Added `/pc fixheads`. It repairs heads in your inventory that lost their name or do not stack with new heads.
+
 ### 26.2 - 1.0.0
 
 * Added `/pc home`, `/pc homes`, `/pc spawn` and `/pc back` commands, replacing the Homes, Spawn and Back datapacks.

@@ -13,8 +13,7 @@
           }
         ]
       },
-      "minecraft:item_name": "Mini Crafting Table",
-      "minecraft:rarity": "common"
+      "minecraft:item_name": "Mini Crafting Table"
     }
   }
 }

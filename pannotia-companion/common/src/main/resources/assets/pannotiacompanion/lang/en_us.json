@@ -43,5 +43,8 @@
   "message.pannotiacompanion.spawn.teleported": "Teleported to world spawn.",
 
   "message.pannotiacompanion.back.none": "You have nowhere to go back to.",
-  "message.pannotiacompanion.back.teleported": "Teleported back."
+  "message.pannotiacompanion.back.teleported": "Teleported back.",
+
+  "message.pannotiacompanion.fixheads.fixed": "Fixed the names of %s head(s) in your inventory.",
+  "message.pannotiacompanion.fixheads.none": "No heads in your inventory need fixing."
 }
