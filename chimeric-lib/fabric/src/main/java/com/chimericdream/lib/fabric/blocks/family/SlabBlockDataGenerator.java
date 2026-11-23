@@ -61,10 +61,11 @@ public class SlabBlockDataGenerator implements FabricBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Identifier textureId = config.getTexture();
+        Identifier topTextureId = config.getTextureOrDefault("top");
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, new Material(textureId))
-            .put(TextureSlot.TOP, new Material(textureId))
+            .put(TextureSlot.BOTTOM, new Material(topTextureId))
+            .put(TextureSlot.TOP, new Material(topTextureId))
             .put(TextureSlot.ALL, new Material(textureId));
 
         FamilyBlockModels.registerSlabBlock(
@@ -73,7 +74,8 @@ public class SlabBlockDataGenerator implements FabricBlockDataGenerator {
             textures,
             ModelTemplates.SLAB_BOTTOM,
             ModelTemplates.SLAB_TOP,
-            ModelTemplates.CUBE_ALL
+            // A block with its own top texture also shows it on a double slab, like the full block does.
+            topTextureId.equals(textureId) ? ModelTemplates.CUBE_ALL : ModelTemplates.CUBE_BOTTOM_TOP
         );
     }
 }

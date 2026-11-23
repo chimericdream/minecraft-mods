@@ -177,6 +177,7 @@ public class BlockFamily {
                 .materialName(template.getMaterialName())
                 .ingredient(template.getIngredient())
                 .texture(template.getTexture())
+                .texture("top", template.getTextureOrDefault("top"))
                 .tool(template.getTool())
                 .flammable(template.isFlammable())
                 .translucent(template.isTranslucent())

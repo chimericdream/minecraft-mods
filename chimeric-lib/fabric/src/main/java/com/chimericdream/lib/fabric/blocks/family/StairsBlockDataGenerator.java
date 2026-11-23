@@ -63,10 +63,11 @@ public class StairsBlockDataGenerator implements FabricBlockDataGenerator {
     @Override
     public void configureBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         Identifier textureId = config.getTexture();
+        Identifier topTextureId = config.getTextureOrDefault("top");
 
         TextureMapping textures = new TextureMapping()
-            .put(TextureSlot.BOTTOM, new Material(textureId))
-            .put(TextureSlot.TOP, new Material(textureId))
+            .put(TextureSlot.BOTTOM, new Material(topTextureId))
+            .put(TextureSlot.TOP, new Material(topTextureId))
             .put(TextureSlot.SIDE, new Material(textureId));
 
         FamilyBlockModels.registerStairsBlock(

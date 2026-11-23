@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### New Features
+
+* Added an optional `top` texture to block families. Used by stairs, slabs, and double slabs.
+
 
 ### 26.2 - 6.6.1
 
