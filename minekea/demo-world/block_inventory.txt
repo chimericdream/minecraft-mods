@@ -26,6 +26,7 @@ building/beams/chiseled_sulfur
 building/beams/chiseled_tuff
 building/beams/chiseled_tuff_bricks
 building/beams/cinnabar
+building/beams/cinnabar_brick
 building/beams/cobbled_deepslate
 building/beams/cobblestone
 building/beams/copper_block
@@ -2841,10 +2842,12 @@ storage/compressed/charcoal
 storage/compressed/chorus_fruit
 storage/compressed/copper_nugget
 storage/compressed/ender_pearl
+storage/compressed/feathers
 storage/compressed/flint
 storage/compressed/gold_nugget
 storage/compressed/golden_apple
 storage/compressed/iron_nugget
+storage/compressed/lead
 storage/compressed/leaf_litter
 storage/compressed/leather
 storage/compressed/melon_seeds
@@ -2853,6 +2856,7 @@ storage/compressed/paper
 storage/compressed/phantom_membrane
 storage/compressed/potato
 storage/compressed/pumpkin_seeds
+storage/compressed/rotten_flesh
 storage/compressed/stick
 storage/compressed/sugar
 storage/compressed/sugar_cane

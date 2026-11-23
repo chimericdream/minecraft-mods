@@ -19,12 +19,14 @@ item,minecraft:coal,Coal
 item,minecraft:dried_kelp,Dried Kelp
 item,minecraft:egg,Egg
 item,minecraft:ender_pearl,Ender Pearl
+item,minecraft:feather,Feather
 item,minecraft:flint,Flint
 item,minecraft:glowstone_dust,Glowstone Dust
 item,minecraft:golden_apple,Golden Apple
 item,minecraft:gravel,Gravel
 item,minecraft:honeycomb,Honeycomb
 item,minecraft:leaf_litter,Leaf Litter
+item,minecraft:lead,Lead
 item,minecraft:leather,Leather
 item,minecraft:melon_seeds,Melon Seeds
 item,minecraft:melon_slice,Melon Slice
@@ -38,6 +40,7 @@ item,minecraft:red_mushroom,Red Mushroom
 item,minecraft:red_sand,Red Sand
 item,minecraft:redstone,Redstone
 item,minecraft:resin_clump,Resin Clump
+item,minecraft:rotten_flesh,Rotten Flesh
 item,minecraft:sand,Sand
 item,minecraft:sculk_vein,Sculk Vein
 item,minecraft:slime_ball,Slime Ball

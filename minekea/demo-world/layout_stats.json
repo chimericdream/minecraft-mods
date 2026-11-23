@@ -17,9 +17,9 @@
     "width": 125,
     "depth": 98,
     "regions": 57,
-    "display_blocks": 2988,
-    "tier_platforms": 308,
-    "jars_filled": 112,
+    "display_blocks": 2995,
+    "tier_platforms": 309,
+    "jars_filled": 115,
     "command_blocks": 57,
     "tool_showcase": {
       "items": 8,
@@ -527,7 +527,7 @@
     },
     {
       "region": "cinnabar",
-      "label": "Cinnabar (71)",
+      "label": "Cinnabar (72)",
       "front_left": [
         -149,
         55,
@@ -659,15 +659,15 @@
     },
     {
       "region": "food",
-      "label": "Compressed Food (46)",
+      "label": "Compressed Food (49)",
       "front_left": [
         -173,
         55,
         104
       ],
       "w": 12,
-      "d": 5,
-      "tall": 4
+      "d": 6,
+      "tall": 5
     },
     {
       "region": "lighting",
@@ -695,7 +695,7 @@
     },
     {
       "region": "jars_items",
-      "label": "Glass Jars - Items (99)",
+      "label": "Glass Jars - Items (102)",
       "front_left": [
         -145,
         55,

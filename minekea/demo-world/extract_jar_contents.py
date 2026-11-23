@@ -30,7 +30,7 @@ for m in re.finditer(r'ALLOWED_ITEM_IDS\.put\(\s*(.+?)\s*,', src):
     if wax:
         items.append(f"minekea:ingredients/wax/{wax.group(1)}")
         continue
-    if key.startswith("WarpedWartItem.ITEM_ID"):
+    if "WarpedWartItem.ITEM_ID" in key:
         items.append("minekea:crops/warped_wart")
         continue
     raise SystemExit(f"unrecognised ALLOWED_ITEM_IDS key, update the extractor: {key}")
