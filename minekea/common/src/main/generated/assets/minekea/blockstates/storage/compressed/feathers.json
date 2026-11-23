@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "minekea:block/storage/compressed/feathers",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "minekea:block/storage/compressed/feathers"
+    },
+    "axis=z": {
+      "model": "minekea:block/storage/compressed/feathers",
+      "x": 90
+    }
+  }
+}

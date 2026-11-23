@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_storage/compressed/lead": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minekea:storage/compressed/lead"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minekea:lead_from_compressed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_storage/compressed/lead"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minekea:lead_from_compressed"
+    ]
+  }
+}

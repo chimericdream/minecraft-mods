@@ -59,17 +59,20 @@ public class StorageBlocks implements ModThingGroup {
     public static final RegistrySupplier<Block> COPPER_NUGGET_SACK;
     public static final RegistrySupplier<Block> EGG_CRATE_BLOCK;
     public static final RegistrySupplier<Block> ENDER_PEARL_BLOCK;
+    public static final RegistrySupplier<Block> FEATHER_BLOCK;
     public static final RegistrySupplier<Block> FLINT_BLOCK;
     public static final RegistrySupplier<Block> GOLD_NUGGET_SACK;
     public static final RegistrySupplier<Block> GOLDEN_APPLE_BLOCK;
     public static final RegistrySupplier<Block> IRON_NUGGET_SACK;
     public static final RegistrySupplier<Block> LEAF_LITTER_BLOCK;
+    public static final RegistrySupplier<Block> LEAD_BLOCK;
     public static final RegistrySupplier<Block> LEATHER_BLOCK;
     public static final RegistrySupplier<Block> MELON_SEEDS_BLOCK;
     public static final RegistrySupplier<Block> NETHER_STAR_BLOCK;
     public static final RegistrySupplier<Block> PHANTOM_MEMBRANE_BLOCK;
     public static final RegistrySupplier<Block> POTATO_BLOCK;
     public static final RegistrySupplier<Block> PUMPKIN_SEEDS_BLOCK;
+    public static final RegistrySupplier<Block> ROTTEN_FLESH_BLOCK;
     public static final RegistrySupplier<Block> STICK_BLOCK;
     public static final RegistrySupplier<Block> SUGAR_BLOCK;
     public static final RegistrySupplier<Block> SUGAR_CANE_BLOCK;
@@ -133,17 +136,20 @@ public class StorageBlocks implements ModThingGroup {
         CHORUS_FRUIT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("chorus_fruit"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.PURPUR_BLOCK).sound(SoundType.WOOD)).item(Items.CHORUS_FRUIT).material("chorus_fruit").materialName("Chorus Fruit").tool(Tool.AXE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         COPPER_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("copper_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK.weathering().unaffected()).sound(SoundType.METAL)).item(NuggetBags.COPPER_NUGGET_BAG).material("copper_nugget").name("Copper Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/copper_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/copper_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
         ENDER_PEARL_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("ender_pearl"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.PURPUR_BLOCK).sound(SoundType.SHROOMLIGHT)).item(Items.ENDER_PEARL).material("ender_pearl").materialName("Ender Pearl").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        FEATHER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("feathers"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.WOOL)).item(Items.FEATHER).material("feathers").name("Feather Bundle").tool(Tool.SHEARS), false, ItemStorageBlock.StorageModel.AXIS), DEFAULT_STORAGE_BLOCK_SETTINGS);
         FLINT_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("flint"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE).sound(SoundType.STONE)).material("flint").item(Items.FLINT).materialName("Flint").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         GOLD_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("gold_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.METAL)).item(NuggetBags.GOLD_NUGGET_BAG).material("gold_nugget").name("Gold Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/gold_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
         GOLDEN_APPLE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("golden_apple"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.MELON).sound(SoundType.WOOD)).item(Items.GOLDEN_APPLE).material("golden_apple").materialName("Golden Apple").tool(Tool.HOE), false, ItemStorageBlock.StorageModel.FACING), DEFAULT_STORAGE_BLOCK_SETTINGS);
         IRON_NUGGET_SACK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("iron_nugget"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.METAL)).item(NuggetBags.IRON_NUGGET_BAG).material("iron_nugget").name("Iron Nugget Sack").tool(Tool.PICKAXE).texture("contents", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/iron_nugget_bag")).texture("all", Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "block/storage/compressed/currency/iron_nugget_bag")), true, ItemStorageBlock.StorageModel.CUSTOM), DEFAULT_STORAGE_BLOCK_SETTINGS);
         LEAF_LITTER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("leaf_litter"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).sound(SoundType.LEAF_LITTER)).item(Items.LEAF_LITTER).material("leaf_litter").materialName("Leaf Litter").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        LEAD_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("lead"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()).sound(SoundType.WOOL)).item(Items.LEAD).material("lead").name("Bundle of Leads").tool(Tool.SHEARS)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         LEATHER_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("leather"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()).sound(SoundType.WOOL)).item(Items.LEATHER).material("leather").materialName("Leather").tool(Tool.SHEARS)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         MELON_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("melon_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.MELON_SEEDS).material("melon_seeds").materialName("Melon Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         NETHER_STAR_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("nether_star"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.METAL)).item(Items.NETHER_STAR).material("nether_star").materialName("Nether Star").tool(Tool.PICKAXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         PHANTOM_MEMBRANE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("phantom_membrane"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_WART_BLOCK).sound(SoundType.NETHER_WART)).item(Items.PHANTOM_MEMBRANE).material("phantom_membrane").materialName("Phantom Membrane").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         POTATO_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("potato"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.CROP)).item(Items.POTATO).material("potato").materialName("Potato").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         PUMPKIN_SEEDS_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("pumpkin_seeds"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.CROP)).item(Items.PUMPKIN_SEEDS).material("pumpkin_seeds").materialName("Pumpkin Seeds").tool(Tool.HOE), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
+        ROTTEN_FLESH_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("rotten_flesh"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.MUD)).item(Items.ROTTEN_FLESH).material("rotten_flesh").materialName("Rotten Flesh").tool(Tool.HOE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         STICK_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("stick"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)).item(Items.STICK).material("stick").materialName("Stick").tool(Tool.AXE)), DEFAULT_STORAGE_BLOCK_SETTINGS);
         SUGAR_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("sugar"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).sound(SoundType.SAND)).item(Items.SUGAR).material("sugar").materialName("Sugar").tool(Tool.SHOVEL), true), DEFAULT_STORAGE_BLOCK_SETTINGS);
         SUGAR_CANE_BLOCK = REGISTRY_HELPER.registerWithItem(ItemStorageBlock.makeId("sugar_cane"), () -> new ItemStorageBlock(new BlockConfig().settings(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK).noOcclusion().sound(SoundType.GRASS)).item(Items.SUGAR_CANE).material("sugar_cane").materialName("Sugar Cane").tool(Tool.AXE).renderType(BlockConfig.RenderType.TRANSLUCENT)), DEFAULT_STORAGE_BLOCK_SETTINGS);
@@ -170,17 +176,20 @@ public class StorageBlocks implements ModThingGroup {
             CHORUS_FRUIT_BLOCK,
             COPPER_NUGGET_SACK,
             ENDER_PEARL_BLOCK,
+            FEATHER_BLOCK,
             FLINT_BLOCK,
             GOLD_NUGGET_SACK,
             GOLDEN_APPLE_BLOCK,
             IRON_NUGGET_SACK,
             LEAF_LITTER_BLOCK,
+            LEAD_BLOCK,
             LEATHER_BLOCK,
             MELON_SEEDS_BLOCK,
             NETHER_STAR_BLOCK,
             PHANTOM_MEMBRANE_BLOCK,
             POTATO_BLOCK,
             PUMPKIN_SEEDS_BLOCK,
+            ROTTEN_FLESH_BLOCK,
             STICK_BLOCK,
             SUGAR_BLOCK,
             SUGAR_CANE_BLOCK,

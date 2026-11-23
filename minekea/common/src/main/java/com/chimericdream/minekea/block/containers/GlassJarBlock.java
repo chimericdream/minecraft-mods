@@ -111,12 +111,14 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEMS.add(Items.DRIED_KELP);
         ALLOWED_ITEMS.add(Items.EGG);
         ALLOWED_ITEMS.add(Items.ENDER_PEARL);
+        ALLOWED_ITEMS.add(Items.FEATHER);
         ALLOWED_ITEMS.add(Items.FLINT);
         ALLOWED_ITEMS.add(Items.GLOWSTONE_DUST);
         ALLOWED_ITEMS.add(Items.GOLDEN_APPLE);
         ALLOWED_ITEMS.add(Items.GRAVEL);
         ALLOWED_ITEMS.add(Items.HONEYCOMB);
         ALLOWED_ITEMS.add(Items.LEAF_LITTER);
+        ALLOWED_ITEMS.add(Items.LEAD);
         ALLOWED_ITEMS.add(Items.LEATHER);
         ALLOWED_ITEMS.add(Items.MELON_SEEDS);
         ALLOWED_ITEMS.add(Items.MELON_SLICE);
@@ -130,6 +132,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEMS.add(Items.RED_SAND);
         ALLOWED_ITEMS.add(Items.REDSTONE);
         ALLOWED_ITEMS.add(Items.RESIN_CLUMP);
+        ALLOWED_ITEMS.add(Items.ROTTEN_FLESH);
         ALLOWED_ITEMS.add(Items.SAND);
         ALLOWED_ITEMS.add(Items.SCULK_VEIN);
         ALLOWED_ITEMS.add(Items.SLIME_BALL);
@@ -207,13 +210,15 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put("minecraft:dried_kelp", "minecraft:dried_kelp_block");
         ALLOWED_ITEM_IDS.put("minecraft:egg", EggCrateBlock.BLOCK_ID.toString());
         ALLOWED_ITEM_IDS.put("minecraft:ender_pearl", StorageBlocks.ENDER_PEARL_BLOCK.getId().toString());
-        ALLOWED_ITEM_IDS.put("minecraft:flint", StorageBlocks.FLINT_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:feather", StorageBlocks.FEATHER_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:flint",StorageBlocks.FLINT_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:glowstone_dust", "minecraft:glowstone");
         ALLOWED_ITEM_IDS.put("minecraft:golden_apple", StorageBlocks.GOLDEN_APPLE_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:gravel", "minecraft:gravel");
         ALLOWED_ITEM_IDS.put("minecraft:honeycomb", "minecraft:honeycomb_block");
         ALLOWED_ITEM_IDS.put("minecraft:leaf_litter", StorageBlocks.LEAF_LITTER_BLOCK.getId().toString());
-        ALLOWED_ITEM_IDS.put("minecraft:leather", StorageBlocks.LEATHER_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:lead", StorageBlocks.LEAD_BLOCK.getId().toString());
+        ALLOWED_ITEM_IDS.put("minecraft:leather",StorageBlocks.LEATHER_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:melon_seeds", StorageBlocks.MELON_SEEDS_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:melon_slice", "minecraft:melon");
         ALLOWED_ITEM_IDS.put("minecraft:nether_star", StorageBlocks.NETHER_STAR_BLOCK.getId().toString());
@@ -226,6 +231,7 @@ public class GlassJarBlock extends BaseEntityBlock implements SimpleWaterloggedB
         ALLOWED_ITEM_IDS.put("minecraft:red_sand", "minecraft:red_sand");
         ALLOWED_ITEM_IDS.put("minecraft:redstone", "minecraft:redstone_block");
         ALLOWED_ITEM_IDS.put("minecraft:resin_clump", "minecraft:resin_block");
+        ALLOWED_ITEM_IDS.put("minecraft:rotten_flesh", StorageBlocks.ROTTEN_FLESH_BLOCK.getId().toString());
         ALLOWED_ITEM_IDS.put("minecraft:sand", "minecraft:sand");
         ALLOWED_ITEM_IDS.put("minecraft:sculk_vein", "minecraft:sculk");
         ALLOWED_ITEM_IDS.put("minecraft:slime_ball", "minecraft:slime_block");

@@ -81,6 +81,9 @@ repository on GitHub and were created by user malcomriley. They are licensed und
 according to the permissions outlined by the artist and the license.
 
 * Wrench ([tool_spanner_iron.png](https://github.com/malcolmriley/unused-textures/blob/master/items/tool_spanner_iron.png); updated in 3.1.0)
+* Compressed rotten flesh block ([block_rotten_flesh.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/block_rotten_flesh.png))
+* Compressed lead block ([device_rope_knot.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/device_rope_knot.png))
+* Compressed feathers block, ends ([packed_feathers_end.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/packed_feathers_end.png)) and sides ([packed_feathers_side.png](https://github.com/malcolmriley/unused-textures/blob/master/blocks/packed_feathers_side.png))
 
 The following textures and icons were created by [cesar_zorak](https://www.curseforge.com/members/cesar_zorak/projects) and are used with permission from the artist.
 

@@ -1,5 +1,7 @@
 {
   "values": [
+    "minekea:storage/compressed/feathers",
+    "minekea:storage/compressed/lead",
     "minekea:storage/compressed/leather",
     "minekea:storage/compressed/wind_charge",
     "minekea:decorations/misc/fake_cake",
