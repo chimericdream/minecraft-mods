@@ -2,6 +2,7 @@ package com.chimericdream.cobblicious;
 
 import com.chimericdream.cobblicious.block.BlockFamilies;
 import com.chimericdream.cobblicious.block.ModBlocks;
+import com.chimericdream.cobblicious.block.StoneVariants;
 import com.chimericdream.cobblicious.compat.MinekeaMigrations;
 import com.chimericdream.cobblicious.crop.ModCrops;
 import com.chimericdream.lib.registries.ModRegistryHelper;
@@ -17,6 +18,7 @@ public final class CobbliciousMod {
         ModCrops.init();
         ModBlocks.init();
         BlockFamilies.init();
+        StoneVariants.init();
 
         CreativeTabs.init();
 

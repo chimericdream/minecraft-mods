@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:mossy_andesite",
+  "result": {
+    "id": "minecraft:andesite"
+  }
+}

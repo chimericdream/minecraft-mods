@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "cobblicious:block/crimson_cracked_polished_blackstone_bricks",
+    "side": "cobblicious:block/crimson_cracked_polished_blackstone_bricks",
+    "top": "cobblicious:block/crimson_cracked_polished_blackstone_bricks"
+  }
+}

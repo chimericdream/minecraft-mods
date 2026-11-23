@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:mossy_cracked_stone_bricks",
+  "result": {
+    "id": "minecraft:cracked_stone_bricks"
+  }
+}

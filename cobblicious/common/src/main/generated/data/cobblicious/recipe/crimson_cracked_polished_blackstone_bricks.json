@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:cracked_polished_blackstone_bricks",
+    "minecraft:weeping_vines"
+  ],
+  "result": {
+    "id": "cobblicious:crimson_cracked_polished_blackstone_bricks"
+  }
+}

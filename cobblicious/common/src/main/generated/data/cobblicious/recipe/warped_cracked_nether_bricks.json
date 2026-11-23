@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:cracked_nether_bricks",
+    "minecraft:twisting_vines"
+  ],
+  "result": {
+    "id": "cobblicious:warped_cracked_nether_bricks"
+  }
+}

@@ -1,6 +1,7 @@
 package com.chimericdream.cobblicious.fabric.data;
 
 import com.chimericdream.cobblicious.block.BlockFamilies;
+import com.chimericdream.cobblicious.block.StoneVariants;
 import com.chimericdream.lib.fabric.blocks.FabricBlockDataGenerator;
 import com.chimericdream.lib.fabric.blocks.family.BlockFamilyDataGenerators;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -28,8 +29,10 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 
     static {
         BLOCK_GENERATORS.add(new BasaltBlocksDataGenerator());
+        BLOCK_GENERATORS.add(new StoneVariantsDataGenerator());
         BLOCK_GENERATORS.add(new WarpedWartDataGenerator());
         BlockFamilies.ALL.forEach(family -> BLOCK_GENERATORS.addAll(BlockFamilyDataGenerators.of(family)));
+        StoneVariants.ALL.forEach(variant -> BLOCK_GENERATORS.addAll(BlockFamilyDataGenerators.of(variant.family())));
     }
 
     @Override

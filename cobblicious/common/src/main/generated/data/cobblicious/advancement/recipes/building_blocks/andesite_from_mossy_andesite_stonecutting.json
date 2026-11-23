@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mossy_andesite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cobblicious:mossy_andesite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "cobblicious:andesite_from_mossy_andesite_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mossy_andesite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "cobblicious:andesite_from_mossy_andesite_stonecutting"
+    ]
+  }
+}

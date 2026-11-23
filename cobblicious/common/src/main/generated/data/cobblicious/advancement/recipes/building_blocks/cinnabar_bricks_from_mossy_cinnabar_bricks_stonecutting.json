@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mossy_cinnabar_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cobblicious:mossy_cinnabar_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "cobblicious:cinnabar_bricks_from_mossy_cinnabar_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mossy_cinnabar_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "cobblicious:cinnabar_bricks_from_mossy_cinnabar_bricks_stonecutting"
+    ]
+  }
+}

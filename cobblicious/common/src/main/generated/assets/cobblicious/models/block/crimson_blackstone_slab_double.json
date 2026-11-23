@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "cobblicious:block/crimson_blackstone_top",
+    "side": "cobblicious:block/crimson_blackstone",
+    "top": "cobblicious:block/crimson_blackstone_top"
+  }
+}

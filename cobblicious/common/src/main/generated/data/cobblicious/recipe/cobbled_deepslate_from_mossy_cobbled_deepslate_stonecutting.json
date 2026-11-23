@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:mossy_cobbled_deepslate",
+  "result": {
+    "id": "minecraft:cobbled_deepslate"
+  }
+}

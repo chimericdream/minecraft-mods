@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "cobblicious:block/warped_blackstone_top",
+    "side": "cobblicious:block/warped_blackstone"
+  }
+}

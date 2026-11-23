@@ -2,14 +2,19 @@ package com.chimericdream.cobblicious;
 
 import com.chimericdream.cobblicious.block.BlockFamilies;
 import com.chimericdream.cobblicious.block.ModBlocks;
+import com.chimericdream.cobblicious.block.StoneVariants;
+import com.chimericdream.cobblicious.block.StoneVariants.StoneVariant;
 import com.chimericdream.cobblicious.crop.ModCrops;
 import com.chimericdream.lib.blocks.family.BlockFamily;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.CreativeTabOutput;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -36,6 +41,14 @@ public final class CreativeTabs {
             List<ItemLike> netherBricks = new ArrayList<>();
             addFamily(netherBricks, ModBlocks.WARPED_NETHER_BRICKS, BlockFamilies.WARPED_NETHER_BRICKS);
             insertChain(output, Items.RED_NETHER_BRICK_WALL, netherBricks);
+
+            // Each variant goes after the vanilla item that its base block ends with. Variants of the
+            // same base block go after it in the order that StoneVariants lists them.
+            Map<Item, List<ItemLike>> byAnchor = new LinkedHashMap<>();
+            for (StoneVariant variant : StoneVariants.ALL) {
+                addFamily(byAnchor.computeIfAbsent(variant.anchor(), anchor -> new ArrayList<>()), variant.block(), variant.family());
+            }
+            byAnchor.forEach((anchor, items) -> insertChain(output, anchor, items));
         });
 
         CreativeTabRegistry.modify(CreativeTabRegistry.defer(CreativeModeTabs.NATURAL_BLOCKS), (flags, output, op) ->

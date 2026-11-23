@@ -5,6 +5,24 @@
     "cobblicious:crimson_basalt_bricks_wall",
     "cobblicious:mossy_basalt_bricks_wall",
     "cobblicious:warped_basalt_bricks_wall",
-    "cobblicious:warped_nether_bricks_wall"
+    "cobblicious:warped_nether_bricks_wall",
+    "cobblicious:mossy_andesite_wall",
+    "cobblicious:crimson_blackstone_wall",
+    "cobblicious:warped_blackstone_wall",
+    "cobblicious:crimson_polished_blackstone_bricks_wall",
+    "cobblicious:warped_polished_blackstone_bricks_wall",
+    "cobblicious:crimson_cracked_polished_blackstone_bricks_wall",
+    "cobblicious:warped_cracked_polished_blackstone_bricks_wall",
+    "cobblicious:crimson_cracked_nether_bricks_wall",
+    "cobblicious:warped_cracked_nether_bricks_wall",
+    "cobblicious:mossy_bricks_wall",
+    "cobblicious:mossy_cinnabar_bricks_wall",
+    "cobblicious:mossy_tuff_bricks_wall",
+    "cobblicious:mossy_cracked_stone_bricks_wall",
+    "cobblicious:mossy_cobbled_deepslate_wall",
+    "cobblicious:mossy_deepslate_bricks_wall",
+    "cobblicious:mossy_cracked_deepslate_bricks_wall",
+    "cobblicious:mossy_deepslate_tiles_wall",
+    "cobblicious:mossy_cracked_deepslate_tiles_wall"
   ]
 }

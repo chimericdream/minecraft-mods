@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:mossy_deepslate_tiles",
+  "result": {
+    "id": "minecraft:deepslate_tiles"
+  }
+}

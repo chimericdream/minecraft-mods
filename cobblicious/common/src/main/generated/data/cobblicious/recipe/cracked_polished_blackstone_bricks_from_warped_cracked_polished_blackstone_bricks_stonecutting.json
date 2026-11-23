@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:warped_cracked_polished_blackstone_bricks",
+  "result": {
+    "id": "minecraft:cracked_polished_blackstone_bricks"
+  }
+}

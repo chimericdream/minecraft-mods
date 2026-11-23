@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:crimson_cracked_nether_bricks",
+  "result": {
+    "id": "minecraft:cracked_nether_bricks"
+  }
+}

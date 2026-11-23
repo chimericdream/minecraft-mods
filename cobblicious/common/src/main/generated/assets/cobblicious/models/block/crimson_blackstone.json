@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "cobblicious:block/crimson_blackstone_top",
+    "side": "cobblicious:block/crimson_blackstone"
+  }
+}

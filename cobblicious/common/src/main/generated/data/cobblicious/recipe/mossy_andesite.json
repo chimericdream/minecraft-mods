@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:andesite",
+    "minecraft:vine"
+  ],
+  "result": {
+    "id": "cobblicious:mossy_andesite"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "cobblicious:crimson_blackstone",
+  "result": {
+    "id": "minecraft:blackstone"
+  }
+}

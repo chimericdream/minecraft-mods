@@ -21,12 +21,12 @@ public class BlockFamilies {
     // No tab here: CreativeTabs places these items at specific points in the vanilla tabs.
     private static final Item.Properties DEFAULT_SETTINGS = new Item.Properties();
 
-    public static final BlockFamily BASALT_BRICKS = family("basalt_bricks", "Basalt Brick", ModBlocks.BASALT_BRICKS, ModBlocks.BASALT_BRICKS_ID);
-    public static final BlockFamily CRACKED_BASALT_BRICKS = family("cracked_basalt_bricks", "Cracked Basalt Brick", ModBlocks.CRACKED_BASALT_BRICKS, ModBlocks.CRACKED_BASALT_BRICKS_ID);
-    public static final BlockFamily CRIMSON_BASALT_BRICKS = family("crimson_basalt_bricks", "Crimson Basalt Brick", ModBlocks.CRIMSON_BASALT_BRICKS, ModBlocks.CRIMSON_BASALT_BRICKS_ID);
-    public static final BlockFamily MOSSY_BASALT_BRICKS = family("mossy_basalt_bricks", "Mossy Basalt Brick", ModBlocks.MOSSY_BASALT_BRICKS, ModBlocks.MOSSY_BASALT_BRICKS_ID);
-    public static final BlockFamily WARPED_BASALT_BRICKS = family("warped_basalt_bricks", "Warped Basalt Brick", ModBlocks.WARPED_BASALT_BRICKS, ModBlocks.WARPED_BASALT_BRICKS_ID);
-    public static final BlockFamily WARPED_NETHER_BRICKS = family("warped_nether_bricks", "Warped Nether Brick", ModBlocks.WARPED_NETHER_BRICKS, ModBlocks.WARPED_NETHER_BRICKS_ID);
+    public static final BlockFamily BASALT_BRICKS = family("basalt_bricks", "Basalt Brick", ModBlocks.BASALT_BRICKS, false);
+    public static final BlockFamily CRACKED_BASALT_BRICKS = family("cracked_basalt_bricks", "Cracked Basalt Brick", ModBlocks.CRACKED_BASALT_BRICKS, false);
+    public static final BlockFamily CRIMSON_BASALT_BRICKS = family("crimson_basalt_bricks", "Crimson Basalt Brick", ModBlocks.CRIMSON_BASALT_BRICKS, false);
+    public static final BlockFamily MOSSY_BASALT_BRICKS = family("mossy_basalt_bricks", "Mossy Basalt Brick", ModBlocks.MOSSY_BASALT_BRICKS, false);
+    public static final BlockFamily WARPED_BASALT_BRICKS = family("warped_basalt_bricks", "Warped Basalt Brick", ModBlocks.WARPED_BASALT_BRICKS, false);
+    public static final BlockFamily WARPED_NETHER_BRICKS = family("warped_nether_bricks", "Warped Nether Brick", ModBlocks.WARPED_NETHER_BRICKS, false);
 
     public static final List<BlockFamily> ALL = List.of(
         BASALT_BRICKS,
@@ -37,12 +37,23 @@ public class BlockFamilies {
         WARPED_NETHER_BRICKS
     );
 
-    private static BlockFamily family(String material, String materialName, RegistrySupplier<Block> ingredient, Identifier blockId) {
-        return BlockFamily.builder(REGISTRY_HELPER, material, new BlockConfig()
-                .materialName(materialName)
-                .ingredient(ingredient)
-                .tool(Tool.PICKAXE)
-                .texture(TextureUtils.block(blockId)))
+    /**
+     * @param topTexture true if the block has a {@code _top} texture. The stairs and slab use it for
+     *                   their top and bottom faces.
+     */
+    static BlockFamily family(String material, String materialName, RegistrySupplier<Block> ingredient, boolean topTexture) {
+        Identifier blockId = ingredient.getId();
+        BlockConfig config = new BlockConfig()
+            .materialName(materialName)
+            .ingredient(ingredient)
+            .tool(Tool.PICKAXE)
+            .texture(TextureUtils.block(blockId));
+
+        if (topTexture) {
+            config.texture("top", TextureUtils.block(blockId, "_top"));
+        }
+
+        return BlockFamily.builder(REGISTRY_HELPER, material, config)
             .variants(BlockFamilyVariant.STAIRS, BlockFamilyVariant.SLAB, BlockFamilyVariant.WALL)
             .itemSettings(DEFAULT_SETTINGS)
             .build();
