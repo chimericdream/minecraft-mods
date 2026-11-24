@@ -39,6 +39,6 @@
     },
     "recommends": {
         "modmenu": ">=${modmenu_compat}",
-        "forwardingaddress": "*"
+        "forwardingaddress": ">=1.0.0"
     }
 }
