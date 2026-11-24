@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 10.4.0
+
 #### New Features
 
 * Added support for Cobblicious. When Cobblicious is loaded, Minekea does not add these blocks. Cobblicious adds them:

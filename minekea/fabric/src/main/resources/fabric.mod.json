@@ -40,6 +40,6 @@
     "recommends": {
         "modmenu": ">=${modmenu_compat}",
         "opus": ">=${opus_compat}",
-        "cobblicious": "*"
+        "cobblicious": ">=1.0.0"
     }
 }

@@ -1,10 +1,10 @@
 # Minekea (Fabric/NeoForge)
 
-![Version: 10.3.0-beta.0](https://img.shields.io/badge/version-10.3.0--beta.0-blueviolet?style=flat-square)
+![Version: 10.4.0](https://img.shields.io/badge/version-10.4.0-blueviolet?style=flat-square)
 
 ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square&labelColor=565656) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square&labelColor=565656) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square&labelColor=565656) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square&labelColor=565656)
 
-[![Architectury required](https://img.shields.io/badge/Architectury%20API-required-565656?style=flat-square&labelColor=fa5f1f)](https://www.curseforge.com/minecraft/mc-mods/architectury-api) [![ChimericLib required](https://img.shields.io/badge/ChimericLib-required-565656?style=flat-square&labelColor=2f0e48)](https://www.curseforge.com/minecraft/mc-mods/chimericlib) ![Opus optional](https://img.shields.io/badge/Opus-optional-565656?style=flat-square&labelColor=7a1f2b)
+[![Architectury required](https://img.shields.io/badge/Architectury%20API-required-565656?style=flat-square&labelColor=fa5f1f)](https://www.curseforge.com/minecraft/mc-mods/architectury-api) [![ChimericLib required](https://img.shields.io/badge/ChimericLib-required-565656?style=flat-square&labelColor=2f0e48)](https://www.curseforge.com/minecraft/mc-mods/chimericlib) ![Opus optional](https://img.shields.io/badge/Opus-optional-565656?style=flat-square&labelColor=7a1f2b) ![Cobblicious optional](https://img.shields.io/badge/Cobblicious-optional-565656?style=flat-square&labelColor=4a5d3a)
 
 _Simple, functional, decorative blocks for all your building and storage needs (some assembly required)_
 
@@ -30,15 +30,15 @@ This mod contains a wide variety of functional and decorative furniture blocks f
 * Foot stools
 * Glass jars for storing food, liquids, dusts, etc
 * Wrench item
-* Storage blocks (i.e. compressed) for all dyes and a number of other items
+* Storage blocks (i.e. compressed) for all dyes and a number of other items, including rotten flesh, leads, and feathers
 * Vertical stairs and slabs
 * Endless end rod
 * More lamp variants
-* Warped wart item and crop
+* Warped wart item and crop (from Cobblicious when it is installed)
 * Beams for most building blocks (think somewhere between a wall and fence post)
     * Beam connections can be enabled and disabled by right-clicking with a wrench
 * Covers for most building blocks (somewhat like carpets)
-* New basalt brick block and variants
+* New basalt brick block and variants (from Cobblicious when it is installed)
 * Compressed blocks (1x-9x) for nearly all building blocks, even where it's absurd
 * Dyed blocks
 * Wooden window shutters
@@ -52,6 +52,7 @@ This mod contains a wide variety of functional and decorative furniture blocks f
 
 ### Mod Support
 
+* Cobblicious (optional): it takes over the basalt brick blocks, Warped Nether Bricks, and Warped Wart. Minekea blocks made from them keep working.
 * Oh, the Biomes You'll Go (1.18-1.19 only)
 * Better End (1.19 only)
 * Better Nether (1.19 only)
