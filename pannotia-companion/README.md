@@ -1,6 +1,6 @@
 # Pannotia Companion (Fabric)
 
-![Version: 1.0.1-beta.0](https://img.shields.io/badge/version-1.0.1--beta.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/version-1.1.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _Companion mod for the World of Pannotia modpack_
 
@@ -25,6 +25,7 @@ and isn't meant to be used or supported on its own.
   shells with Looting. These are added on top of existing loot, so other mods' loot changes keep working.
 * **Pannotia guide book**: the in-game World of Pannotia guide (an Opus book). Every player gets one on first join, and it can be crafted from a book and a compass. Requires Opus.
 * **Beacon bases**: copper, emerald, quartz, amethyst and other storage blocks work as beacon bases.
+* **Head repair**: `/pc fixheads` repairs heads in your inventory that lost their name or do not stack with new heads.
 * **Ancient debris** drops netherite scrap instead of itself, unless mined with Silk Touch.
 * **Recipes**: mini block stonecutting, stair/slab/dye/coral/glass/concrete conveniences, and a few other pack recipes. Some give the same result as a vanilla recipe from the same ingredients, so the pack needs a mod like Polymorph to choose between them.
 

@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.1.0
+
 #### Bug Fixes
 
 * Wandering trader heads now show their own name, not "pannotia's Head".
