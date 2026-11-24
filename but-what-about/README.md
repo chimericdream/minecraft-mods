@@ -1,6 +1,6 @@
 # But What About...? (Fabric/NeoForge)
 
-![Version: 1.0.0](https://img.shields.io/badge/version-4.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blueviolet?style=flat-square) ![Modloader: Fabric](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square) ![Modloader: NeoForge](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square) ![Client: required](https://img.shields.io/badge/client-required-4caf50?style=flat-square) ![Server: required](https://img.shields.io/badge/server-required-4caf50?style=flat-square)
 
 _When Mojang adds new blocks to the game, but leaves some out, this mod fills in the gaps._
 
@@ -13,6 +13,15 @@ _When Mojang adds new blocks to the game, but leaves some out, this mod fills in
 ### Current Features
 
 * Stairs, slabs, and walls for:
+  * Chiseled Copper (Exposed, Weathered, Oxidized, and the waxed version of each)
+  * Chiseled Deepslate
+  * Chiseled Nether Bricks
+  * Chiseled Polished Blackstone
+  * Chiseled Sandstone
+  * Chiseled Red Sandstone
+  * Chiseled Resin Bricks
+  * Chiseled Stone Bricks
+  * Chiseled Sulfur
   * Cracked Deepslate Bricks
   * Cracked Deepslate Tiles
   * Cracked Nether Bricks
@@ -21,6 +30,7 @@ _When Mojang adds new blocks to the game, but leaves some out, this mod fills in
   * End Stone
   * Netherrack
   * Smooth Basalt
+* Walls for all 16 concrete colors
 
 ## Notes for Documentation
 

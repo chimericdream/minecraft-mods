@@ -11,7 +11,7 @@ authors = "chimericdream"
 description = '''
 ${mod_description}
 '''
-#logoFile = ""
+logoFile = "/assets/butwhatabout/icon.png"
 
 [[dependencies.${mod_id}]]
 modId = "neoforge"

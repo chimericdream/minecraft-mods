@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0
+
 #### New Features
 
 * Added stairs, slabs, and walls for
@@ -21,5 +23,3 @@
   * Netherrack
   * Smooth Basalt
 * Added walls for all 16 concrete colors
-
-#### Changes
