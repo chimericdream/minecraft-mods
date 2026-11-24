@@ -1,5 +1,7 @@
 ### Unreleased changes
 
+### 26.2 - 1.0.0
+
 #### New Features
 
 * Added Forwarding Address. This library mod keeps existing worlds working when a mod renames, merges, moves, or removes a block or item. Placed blocks and held items change to their new form, and their contents stay.
