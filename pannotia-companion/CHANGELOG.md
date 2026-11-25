@@ -1,5 +1,9 @@
 ### Unreleased changes
 
+#### Bug Fixes
+
+* `/pc fixheads` now also repairs Brown, White, Black, Gold, and Salt and Pepper rabbit heads that use an old texture.
+
 ### 26.2 - 1.1.0
 
 #### Bug Fixes
