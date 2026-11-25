@@ -1,6 +1,6 @@
 # Miniblock Merchants (Fabric/NeoForge)
 
-![Version: 7.1.0-beta.0](https://img.shields.io/badge/version-7.1.0--beta.0-blueviolet?style=flat-square)
+![Version: 7.1.2](https://img.shields.io/badge/version-7.1.2-blueviolet?style=flat-square)
 ![](https://img.shields.io/badge/modloader-Fabric-1976d2?style=flat-square)
 ![](https://img.shields.io/badge/modloader-NeoForge-1976d2?style=flat-square)
 ![](https://img.shields.io/badge/client-required-4caf50?style=flat-square)

@@ -314,7 +314,7 @@ public class MobHeadLootTables {
     }
 
     public static LootPoolEntryContainer.Builder<?> getZombieHorticulturistHeadLootTable() {
-        return getZombieHeadLootTable("Zombie Gorticulturist", "miniblockmerchants:mm_horticulturist", HORTICULTURIST_ZOMBIE_VILLAGER);
+        return getZombieHeadLootTable("Zombie Horticulturist", "miniblockmerchants:mm_horticulturist", HORTICULTURIST_ZOMBIE_VILLAGER);
     }
 
     public static LootPoolEntryContainer.Builder<?> getMineralogistHeadLootTable() {

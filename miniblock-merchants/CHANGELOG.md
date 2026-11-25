@@ -1,5 +1,10 @@
 ### Unreleased changes
 
+### 26.2 - 7.1.2
+
+#### Bug Fixes
+
+* Fixed typo in Zombie Horticulturist head name
 
 ### 26.2 - 7.1.1
 
