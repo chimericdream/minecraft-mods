@@ -21,6 +21,9 @@ public final class ScalingEnchantments {
     /**
      * The enchantment registry loads only when the server starts. A {@code /reload} that turns the pack on
      * or off does not change the enchantments, so this value also changes only when the server starts.
+     *
+     * <p>In single player, the client and the integrated server use the same value. A client that is
+     * connected to another server gets the value from that server (see {@code SettingsSync}).
      */
     private static volatile boolean active = false;
 
@@ -30,6 +33,11 @@ public final class ScalingEnchantments {
     public static void init() {
         LifecycleEvent.SERVER_STARTING.register(server -> active = server.getResourceManager().getResource(MARKER).isPresent());
         LifecycleEvent.SERVER_STOPPED.register(server -> active = false);
+    }
+
+    /** For the client only: sets the value that the server sent, or resets it when the player leaves. */
+    public static void setActiveFromServer(boolean value) {
+        active = value;
     }
 
     public static boolean isActive() {

@@ -18,6 +18,6 @@ Open the settings from the mods list. The mod saves them in the file `enchanting
 Each level must be from 1 to 255. The [hard caps](02-max-levels.md) also apply. When you save, the mod removes each
 line in the list that is not in the correct form.
 
-> [!IMPORTANT]
-> Use the same settings on the server and on your game. The server settings control the anvil, the enchanting
-> table, and loot. Your settings control the tooltips and the creative inventory.
+> [!NOTE]
+> On a server, the server settings apply. When you join, the server sends its settings to your game.
+> The tooltips and the creative inventory then show the server's levels.

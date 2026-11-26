@@ -54,7 +54,7 @@ Most single-level enchantments have the same effect at all levels. Aqua Affinity
 
 Minecraft has level numerals only up to X. Use [Enchantment Numbers Fix](../enchantment-numbers-fix) to show higher levels correctly.
 
-Use the same config on the server and the client. The server config controls the anvil, the enchanting table, and loot. The client config controls the tooltips and the creative inventory.
+On a server, the server config applies. When you join, the server sends its settings to your game. The tooltips and the creative inventory then show the server's levels.
 
 ### Scaling Enchantments data pack
 
@@ -71,7 +71,7 @@ From level I to the usual maximum level, each enchantment works as in vanilla. A
 | Thorns | Above III, the activation chance gets closer to 100%, but does not reach it. The damage increases with each level and has no limit. Each activation costs 1 durability, not 2. | none |
 | Unbreaking (armor only) | Above III, the chance to prevent durability damage gets closer to 100%, the same as on tools. In vanilla, it stops near 40%. For example, X gives 63%. | none |
 
-The other caps in the table above do not change. On a dedicated server, the client does not know that the pack is on. The creative inventory then uses the caps without the pack. The anvil, loot, and `/enchant` use the server caps.
+The other caps in the table above do not change.
 
 ## Notes for Documentation
 

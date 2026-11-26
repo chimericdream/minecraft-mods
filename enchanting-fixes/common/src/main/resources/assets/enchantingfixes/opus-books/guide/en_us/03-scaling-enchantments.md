@@ -28,7 +28,3 @@ the formula.
 | Unbreaking (armor only) | Above III, the chance to prevent durability damage gets closer to 100%, the same as on tools. For example, X gives 63%. | none |
 
 The other [hard caps](02-max-levels.md) do not change.
-
-> [!NOTE]
-> On a dedicated server, your game does not know that the pack is on. The creative inventory then uses the caps
-> without the pack. The anvil, loot, and `/enchant` use the server caps.

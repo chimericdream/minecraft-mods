@@ -3,6 +3,7 @@ package com.chimericdream.enchantingfixes;
 import com.chimericdream.enchantingfixes.book.FixBooksCommand;
 import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
 import com.chimericdream.enchantingfixes.enchantment.ScalingEnchantments;
+import com.chimericdream.enchantingfixes.network.SettingsSync;
 import com.chimericdream.lib.commands.ChimericCommands;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
@@ -23,6 +24,7 @@ public final class EnchantingFixesMod {
 
         EnchantingFixesConfig.CONFIG.init();
         ScalingEnchantments.init();
+        SettingsSync.init();
 
         ChimericCommands.register(new FixBooksCommand());
 

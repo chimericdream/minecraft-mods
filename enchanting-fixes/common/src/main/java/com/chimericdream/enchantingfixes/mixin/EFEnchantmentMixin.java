@@ -1,6 +1,6 @@
 package com.chimericdream.enchantingfixes.mixin;
 
-import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
+import com.chimericdream.enchantingfixes.config.SyncedConfig;
 import com.chimericdream.enchantingfixes.enchantment.EnchantmentIds;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevels;
 import com.chimericdream.enchantingfixes.enchantment.ScalingEnchantments;
@@ -19,6 +19,6 @@ public abstract class EFEnchantmentMixin {
     @ModifyReturnValue(method = "getMaxLevel()I", at = @At("RETURN"))
     private int enchantingfixes$configuredMaxLevel(int original) {
         String id = EnchantmentIds.get((Enchantment) (Object) this);
-        return MaxLevels.resolve(original, id, EnchantingFixesConfig.CONFIG.instance(), ScalingEnchantments.isActive());
+        return MaxLevels.resolve(original, id, SyncedConfig.effective(), ScalingEnchantments.isActive());
     }
 }

@@ -1,10 +1,11 @@
 package com.chimericdream.enchantingfixes.fabric.client;
 
+import com.chimericdream.enchantingfixes.client.EnchantingFixesClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class EnchantingFixesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+        EnchantingFixesClient.init();
     }
 }

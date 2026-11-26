@@ -1,6 +1,6 @@
 package com.chimericdream.enchantingfixes.mixin;
 
-import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
+import com.chimericdream.enchantingfixes.config.SyncedConfig;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.world.inventory.AnvilMenu;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +22,7 @@ public abstract class EFAnvilMenuMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;hasInfiniteMaterials()Z", ordinal = 1)
     )
     private boolean enchantingfixes$removeCostLimit(boolean original) {
-        if (original || !EnchantingFixesConfig.CONFIG.instance().removeAnvilLimit) {
+        if (original || !SyncedConfig.effective().removeAnvilLimit) {
             return original;
         }
 
