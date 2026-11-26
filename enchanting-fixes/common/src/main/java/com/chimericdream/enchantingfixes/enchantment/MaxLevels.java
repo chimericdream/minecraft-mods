@@ -34,6 +34,9 @@ public final class MaxLevels {
         Map.entry("minecraft:quick_charge", 5),
         // Armor blocks at most 0.8 of the damage. Breach removes 0.15 a level.
         Map.entry("minecraft:breach", 6),
+        // Knockback has no limit: each level adds 0.5 blocks/tick. At level 50, the target flies about 200
+        // blocks. Farther than that, it leaves the simulation distance and stops in mid-air.
+        Map.entry("minecraft:knockback", 50),
         // The chance is 15% a level. The damage does not change with the level.
         Map.entry("minecraft:thorns", 7),
         // The radius is 3 + 1 a level, clamped to 16.

@@ -90,6 +90,7 @@ public class MaxLevelsTest extends BootstrapMinecraft {
         assertEquals(5, MaxLevels.resolve(3, "minecraft:lure", config, false));
         assertEquals(3, MaxLevels.resolve(3, "minecraft:depth_strider", config, false));
         assertEquals(25, MaxLevels.resolve(1, "minecraft:aqua_affinity", config, false));
+        assertEquals(50, MaxLevels.resolve(2, "minecraft:knockback", config(Map.of("minecraft:knockback", 100), false, 10, false), false));
         assertEquals(50, MaxLevels.resolve(5, "minecraft:sharpness", config, false));
     }
 

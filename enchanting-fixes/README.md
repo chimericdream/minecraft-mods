@@ -37,6 +37,7 @@ Some enchantments have a hard cap. Above the cap, a higher level gives no furthe
 | Swift Sneak | V | At V, you sneak at the same speed as you walk. |
 | Quick Charge | V | At V, the crossbow loads immediately. |
 | Breach | VI | At VI, armor gives no protection. |
+| Knockback | L | At L, a hit sends the target about 200 blocks. Above L, the target goes so far that it stops moving. |
 | Thorns | VII | At VII, Thorns activates on each hit. |
 | Frost Walker | XIV | At XIV, the radius is at its limit of 16 blocks. |
 | Efficiency | XXXII | At XXXII, the mining speed is at its limit. |
