@@ -1,0 +1,62 @@
+{
+    "parent": "enchantingfixes:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:enchanting_table"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.overpowered.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.overpowered.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "enchanted_item": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 10
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "enchanted_book": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:stored_enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 10
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "enchanted_item",
+            "enchanted_book"
+        ]
+    ]
+}

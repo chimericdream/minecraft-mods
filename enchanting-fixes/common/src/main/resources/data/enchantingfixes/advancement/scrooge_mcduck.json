@@ -1,0 +1,39 @@
+{
+    "parent": "enchantingfixes:overpowered",
+    "display": {
+        "icon": {
+            "id": "minecraft:gold_block"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.scrooge_mcduck.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.scrooge_mcduck.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "fortune": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:enchantments": [
+                                {
+                                    "enchantments": "minecraft:fortune",
+                                    "levels": {
+                                        "min": 50
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

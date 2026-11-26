@@ -1,0 +1,63 @@
+{
+    "parent": "enchantingfixes:overpowered",
+    "display": {
+        "icon": {
+            "id": "minecraft:experience_bottle"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.but_why.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.but_why.desc",
+            "color": "green"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "enchanted_item": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 100
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "enchanted_book": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:stored_enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 100
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "enchanted_item",
+            "enchanted_book"
+        ]
+    ]
+}

@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,10 +39,26 @@ public class MaxLevelsTest extends BootstrapMinecraft {
     }
 
     @Test
-    void defaultsKeepVanillaLevels() {
+    void defaultsUseLevel10OrTheHardCap() {
         EnchantingFixesConfig config = new EnchantingFixesConfig();
-        assertEquals(5, MaxLevels.resolve(5, "minecraft:sharpness", config, false));
+        assertEquals(10, MaxLevels.resolve(5, "minecraft:sharpness", config, false));
         assertEquals(1, MaxLevels.resolve(1, "minecraft:silk_touch", config, false));
+        assertEquals(7, MaxLevels.resolve(3, "minecraft:thorns", config, false));
+        assertEquals(3, MaxLevels.resolve(3, "minecraft:depth_strider", config, false));
+        assertEquals(7, MaxLevels.resolve(3, "minecraft:thorns", config, true));
+        assertEquals(5, MaxLevels.resolve(5, "mymod:zap", config, false));
+    }
+
+    @Test
+    void theDefaultListHasEachMultiLevelVanillaEnchantment() {
+        // definition().maxLevel() is the level in the data. getMaxLevel() would apply the config.
+        Set<String> registered = VanillaRegistries.createLookup().lookupOrThrow(Registries.ENCHANTMENT).listElements()
+            .filter(holder -> holder.value().definition().maxLevel() > 1)
+            .map(holder -> holder.key().identifier().toString())
+            .collect(Collectors.toSet());
+
+        assertEquals(registered, Set.copyOf(MaxLevels.VANILLA_MULTI_LEVEL_ENCHANTMENTS));
+        assertEquals(registered, EnchantingFixesConfig.Defaults.MAX_LEVELS.keySet());
     }
 
     @Test
@@ -139,12 +157,13 @@ public class MaxLevelsTest extends BootstrapMinecraft {
         Enchantment sharpness = enchantments.getOrThrow(Enchantments.SHARPNESS).value();
 
         assertEquals(1, silkTouch.getMaxLevel());
-        assertEquals(5, sharpness.getMaxLevel());
+        assertEquals(10, sharpness.getMaxLevel());
 
         EnchantingFixesConfig live = EnchantingFixesConfig.CONFIG.instance();
         Enchantment lure = enchantments.getOrThrow(Enchantments.LURE).value();
 
         live.maxLevels = Map.of("minecraft:silk_touch", 2);
+        live.defaultAppliesToSingleLevel = false;
         live.useDefaultMaxLevel = true;
         live.defaultMaxLevel = 7;
 

@@ -4,6 +4,8 @@ import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
 import net.minecraft.util.Mth;
 import org.jspecify.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Calculates the maximum level of an enchantment from the config. */
@@ -71,7 +73,36 @@ public final class MaxLevels {
         Map.entry("minecraft:lure", MAX_LEVEL)
     );
 
+    /**
+     * The vanilla 26.2 enchantments with a maximum level above 1. Used for the default config. Single-level
+     * enchantments are not in the list, so they stay at level 1 unless the player changes the config.
+     */
+    public static final List<String> VANILLA_MULTI_LEVEL_ENCHANTMENTS = List.of(
+        "minecraft:bane_of_arthropods", "minecraft:blast_protection", "minecraft:breach", "minecraft:density",
+        "minecraft:depth_strider", "minecraft:efficiency", "minecraft:feather_falling", "minecraft:fire_aspect",
+        "minecraft:fire_protection", "minecraft:fortune", "minecraft:frost_walker", "minecraft:impaling",
+        "minecraft:knockback", "minecraft:looting", "minecraft:loyalty", "minecraft:luck_of_the_sea",
+        "minecraft:lunge", "minecraft:lure", "minecraft:piercing", "minecraft:power",
+        "minecraft:projectile_protection", "minecraft:protection", "minecraft:punch", "minecraft:quick_charge",
+        "minecraft:respiration", "minecraft:riptide", "minecraft:sharpness", "minecraft:smite",
+        "minecraft:soul_speed", "minecraft:sweeping_edge", "minecraft:swift_sneak", "minecraft:thorns",
+        "minecraft:unbreaking", "minecraft:wind_burst"
+    );
+
+    /** The default level in the config list: {@value #DEFAULT_CONFIG_LEVEL}, or the hard cap if it is lower. */
+    public static final int DEFAULT_CONFIG_LEVEL = 10;
+
     private MaxLevels() {
+    }
+
+    /** A config list with each multi-level vanilla enchantment at {@link #DEFAULT_CONFIG_LEVEL} or its hard cap, whichever is lower. */
+    public static Map<String, Integer> defaultConfigLevels() {
+        Map<String, Integer> levels = new HashMap<>();
+        for (String id : VANILLA_MULTI_LEVEL_ENCHANTMENTS) {
+            levels.put(id, Math.min(DEFAULT_CONFIG_LEVEL, HARD_CAPS.getOrDefault(id, MAX_LEVEL)));
+        }
+
+        return Map.copyOf(levels);
     }
 
     public static int clamp(int level) {

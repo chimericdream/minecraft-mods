@@ -13,14 +13,17 @@ _Fixes for enchanting and enchanted books._
 ### Current Features
 
 * **Book repair**: `/enchfix fixbooks` removes the repair cost from the enchanted books in your inventory. An anvil or a grindstone can add a repair cost to a book. Books with the same enchantments but a different repair cost do not stack. The command changes only plain books: books that store known enchantments and have no other changes, such as a name, lore, or custom data. Mods and data packs can use enchanted books for other purposes. The command does not change those books.
-* **Maximum enchantment levels**: set the maximum level of each enchantment in the config. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
+* **Maximum enchantment levels**: set the maximum level of each enchantment in the config. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
+* **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
+* **Advancements**: a tab of advancements for very high enchantment levels.
 * **Scaling Enchantments data pack**: an optional data pack. With it, high levels of some enchantments continue to give more benefit, up to a limit. The pack is off by default.
+* **In-game guide**: craft a book and an enchanted book to get a guide to each feature and setting. Any enchanted book works. The recipe uses the enchanted book. You can also use `/opus give enchantingfixes:guide`. The guide is optional and needs the [Opus](../opus) mod, version 1.2.0 or newer.
 
 ### Maximum levels
 
 The maximum level changes these parts of the game:
 
-* The anvil: combining two items at the same level can produce a result above the usual maximum.
+* The anvil: two items with the same enchantment at the same level can give a result above the usual maximum. Without the anvil limit, you can make high levels in survival.
 * `/enchant` accepts levels up to the new maximum.
 * Randomly enchanted loot, such as enchanted books in chests, can have the higher levels.
 * The creative inventory shows an enchanted book for each level, up to the new maximum.

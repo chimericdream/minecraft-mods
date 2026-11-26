@@ -1,0 +1,26 @@
+{
+    "schemaVersion": 1,
+    "id": "enchantingfixes_test",
+    "version": "1.0.0",
+    "name": "Enchanting Fixes GameTest",
+    "description": "Test-only GameTests for Enchanting Fixes. Never shipped.",
+    "authors": [
+        "chimericdream"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "fabric-gametest": [
+            "com.chimericdream.enchantingfixes.fabric.test.AdvancementGameTest",
+            "com.chimericdream.enchantingfixes.fabric.test.AnvilGameTest"
+        ]
+    },
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": "*",
+        "fabric-api": "*",
+        "architectury": "*",
+        "chimericlib": "*",
+        "enchantingfixes": "*"
+    }
+}

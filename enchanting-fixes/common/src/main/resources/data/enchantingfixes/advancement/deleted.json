@@ -1,0 +1,47 @@
+{
+    "parent": "enchantingfixes:root",
+    "display": {
+        "icon": {
+            "id": "minecraft:barrier"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.deleted.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.deleted.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "hit": {
+            "trigger": "minecraft:player_hurt_entity",
+            "conditions": {
+                "player": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "equipment": {
+                                "mainhand": {
+                                    "predicates": {
+                                        "minecraft:enchantments": [
+                                            {
+                                                "enchantments": "minecraft:knockback",
+                                                "levels": {
+                                                    "min": 32
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

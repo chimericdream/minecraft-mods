@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "id": "minecraft:enchanted_book"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.root.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.root.desc",
+            "color": "green"
+        },
+        "background": "minecraft:block/bookshelf",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "tick": {
+            "trigger": "minecraft:tick"
+        }
+    }
+}

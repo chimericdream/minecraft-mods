@@ -1,0 +1,51 @@
+{
+    "parent": "enchantingfixes:deleted",
+    "display": {
+        "icon": {
+            "id": "minecraft:firework_rocket"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.into_orbit.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.into_orbit.desc",
+            "color": "green"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "hit": {
+            "trigger": "minecraft:player_hurt_entity",
+            "conditions": {
+                "player": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "equipment": {
+                                "mainhand": {
+                                    "predicates": {
+                                        "minecraft:enchantments": [
+                                            {
+                                                "enchantments": "minecraft:knockback",
+                                                "levels": {
+                                                    "min": 50
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "experience": 100
+    }
+}

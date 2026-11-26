@@ -1,0 +1,66 @@
+{
+    "parent": "enchantingfixes:but_why",
+    "display": {
+        "icon": {
+            "id": "minecraft:damaged_anvil"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.waste_of_xp.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.waste_of_xp.desc",
+            "color": "green"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "enchanted_item": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 255
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "enchanted_book": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:stored_enchantments": [
+                                {
+                                    "levels": {
+                                        "min": 255
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "enchanted_item",
+            "enchanted_book"
+        ]
+    ],
+    "rewards": {
+        "experience": 100
+    }
+}

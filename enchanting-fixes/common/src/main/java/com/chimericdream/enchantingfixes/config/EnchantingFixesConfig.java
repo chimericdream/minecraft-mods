@@ -35,6 +35,9 @@ public class EnchantingFixesConfig {
     /** The damage reduction that protection gets closer to above 20 points. Used only while the Scaling Enchantments pack is on. */
     @SerialEntry
     public int protectionLimitPercent = Defaults.PROTECTION_LIMIT_PERCENT;
+    /** If true, the anvil has no "Too Expensive!" limit of 40 levels. */
+    @SerialEntry
+    public boolean removeAnvilLimit = Defaults.REMOVE_ANVIL_LIMIT;
 
     public static final YaclConfig<EnchantingFixesConfig> CONFIG = YaclConfig.builder(EnchantingFixesConfig.class, ModInfo.MOD_ID)
         .screen((defaults, config, builder) -> builder
@@ -73,6 +76,15 @@ public class EnchantingFixesConfig {
                     .build())
                 .build())
             .category(ConfigCategory.createBuilder()
+                .name(Component.translatable("text.config.enchantingfixes.section.anvil"))
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.enchantingfixes.option.removeAnvilLimit"))
+                    .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.removeAnvilLimit.desc")))
+                    .binding(Defaults.REMOVE_ANVIL_LIMIT, () -> config.removeAnvilLimit, newVal -> config.removeAnvilLimit = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .build())
+            .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.enchantingfixes.section.scaling"))
                 .option(Option.<Integer>createBuilder()
                     .name(Component.translatable("text.config.enchantingfixes.option.protectionLimitPercent"))
@@ -91,10 +103,11 @@ public class EnchantingFixesConfig {
     }
 
     public static class Defaults {
-        public static Map<String, Integer> MAX_LEVELS = Map.of();
+        public static Map<String, Integer> MAX_LEVELS = MaxLevels.defaultConfigLevels();
         public static boolean USE_DEFAULT_MAX_LEVEL = false;
         public static int DEFAULT_MAX_LEVEL = 10;
         public static boolean DEFAULT_APPLIES_TO_SINGLE_LEVEL = false;
         public static int PROTECTION_LIMIT_PERCENT = 95;
+        public static boolean REMOVE_ANVIL_LIMIT = true;
     }
 }

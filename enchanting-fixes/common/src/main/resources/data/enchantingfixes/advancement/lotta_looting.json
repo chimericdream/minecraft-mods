@@ -1,0 +1,39 @@
+{
+    "parent": "enchantingfixes:overpowered",
+    "display": {
+        "icon": {
+            "id": "minecraft:diamond_sword"
+        },
+        "title": {
+            "translate": "advancements.enchantingfixes.lotta_looting.title"
+        },
+        "description": {
+            "translate": "advancements.enchantingfixes.lotta_looting.desc",
+            "color": "green"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "looting": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "predicates": {
+                            "minecraft:enchantments": [
+                                {
+                                    "enchantments": "minecraft:looting",
+                                    "levels": {
+                                        "min": 50
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
