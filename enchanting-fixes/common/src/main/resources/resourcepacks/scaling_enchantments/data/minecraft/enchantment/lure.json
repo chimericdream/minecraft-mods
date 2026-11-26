@@ -1,0 +1,46 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.minecraft.lure"
+  },
+  "effects": {
+    "minecraft:fishing_time_reduction": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:lookup",
+            "values": [5.0, 10.0, 15.0, 20.0, 25.0],
+            "fallback": {
+              "type": "minecraft:fraction",
+              "numerator": {
+                "type": "minecraft:linear",
+                "base": -96.0,
+                "per_level_above_first": 29.0
+              },
+              "denominator": {
+                "type": "minecraft:linear",
+                "base": -3.2,
+                "per_level_above_first": 1.0
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 65,
+    "per_level_above_first": 9
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 9
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/fishing",
+  "weight": 2
+}

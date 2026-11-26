@@ -1,4 +1,18 @@
 {
   "message.enchantingfixes.fixbooks.fixed": "Fixed %s enchanted book(s) in your inventory.",
-  "message.enchantingfixes.fixbooks.none": "No enchanted books in your inventory need fixing."
+  "message.enchantingfixes.fixbooks.none": "No enchanted books in your inventory need fixing.",
+  "pack.enchantingfixes.scaling_enchantments": "Enchanting Fixes: Scaling Enchantments",
+  "text.config.enchantingfixes.title": "Enchanting Fixes Config",
+  "text.config.enchantingfixes.section.scaling": "Scaling Enchantments Pack",
+  "text.config.enchantingfixes.option.protectionLimitPercent": "Protection Limit % (default 95)",
+  "text.config.enchantingfixes.option.protectionLimitPercent.desc": "Applies only when the Scaling Enchantments data pack is on. In vanilla, protection enchantments decrease damage by a maximum of 80%. With the pack, protection above that point decreases damage more, but each level adds less. The decrease gets closer to this limit, but does not reach it. 80 keeps the vanilla limit. The server config controls this value.",
+  "text.config.enchantingfixes.section.maxLevels": "Maximum Levels",
+  "text.config.enchantingfixes.option.maxLevels": "Maximum Level / Enchantment",
+  "text.config.enchantingfixes.option.maxLevels.desc": "The maximum level of each enchantment in the list. Write one entry on each line as enchantment_id=level, for example minecraft:sharpness=10. The level must be from 1 to 255. These entries always apply, also to single-level enchantments. Some enchantments have a hard cap, for example Lure V. Above the cap, a higher level gives no more benefit or breaks the enchantment. Lines that are not in this form are removed when you save.",
+  "text.config.enchantingfixes.option.useDefaultMaxLevel": "Use Default Maximum Level",
+  "text.config.enchantingfixes.option.useDefaultMaxLevel.desc": "Off: enchantments that are not in the list keep their usual maximum level. On: they use the default maximum level.",
+  "text.config.enchantingfixes.option.defaultMaxLevel": "Default Maximum Level (default 10)",
+  "text.config.enchantingfixes.option.defaultMaxLevel.desc": "The maximum level of the enchantments that are not in the list. Applies only when Use Default Maximum Level is on. A value lower than the usual maximum level decreases the maximum level.",
+  "text.config.enchantingfixes.option.defaultAppliesToSingleLevel": "Default Applies to Single-Level Enchantments",
+  "text.config.enchantingfixes.option.defaultAppliesToSingleLevel.desc": "Single-level enchantments have a usual maximum level of 1, for example Silk Touch and Mending. Off: they stay at level 1. On: they also use the default maximum level. Most of them do the same thing at all levels. Aqua Affinity and Multishot become stronger at higher levels."
 }

@@ -1,6 +1,8 @@
 package com.chimericdream.enchantingfixes;
 
 import com.chimericdream.enchantingfixes.book.FixBooksCommand;
+import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
+import com.chimericdream.enchantingfixes.enchantment.ScalingEnchantments;
 import com.chimericdream.lib.commands.ChimericCommands;
 import com.chimericdream.lib.registries.ModRegistryHelper;
 import com.google.common.base.Suppliers;
@@ -18,6 +20,9 @@ public final class EnchantingFixesMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+
+        EnchantingFixesConfig.CONFIG.init();
+        ScalingEnchantments.init();
 
         ChimericCommands.register(new FixBooksCommand());
 

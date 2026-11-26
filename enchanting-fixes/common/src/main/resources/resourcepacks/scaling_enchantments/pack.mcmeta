@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "Higher levels of some enchantments keep giving more benefit, up to a limit.",
+    "max_format": 107,
+    "min_format": [
+      107,
+      1
+    ]
+  }
+}

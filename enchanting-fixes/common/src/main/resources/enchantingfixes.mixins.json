@@ -6,6 +6,9 @@
     "client": [
     ],
     "mixins": [
+        "EFCombatRulesMixin",
+        "EFEnchantmentMixin",
+        "EFHolderReferenceMixin"
     ],
     "injectors": {
         "defaultRequire": 1
