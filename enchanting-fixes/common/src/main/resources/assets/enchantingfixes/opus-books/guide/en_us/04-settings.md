@@ -11,6 +11,7 @@ Open the settings from the mods list. The mod saves them in the file `enchanting
 | Maximum Level / Enchantment | Each vanilla enchantment with more than one level: 10, or its hard cap if lower | The maximum level of each enchantment in the list. Write one entry on each line, for example `minecraft:sharpness=10`. |
 | Use Default Maximum Level | Off | On: the enchantments that are not in the list use the default maximum level. |
 | Default Maximum Level | 10 | The maximum level of the enchantments that are not in the list. A value lower than the usual maximum decreases the maximum. |
+| Random Enchantment Levels | Balanced | The maximum level of random enchantments, such as those from chest loot, villager trades, and the enchanting table. Off: the vanilla maximum. Balanced: 2 levels above the vanilla maximum. Insane: the maximum level from the config. See [Maximum levels](02-max-levels.md). |
 | Default Applies to Single-Level Enchantments | Off | On: single-level enchantments, such as Silk Touch, also use the default maximum level. |
 | Remove "Too Expensive!" Limit | On | The anvil does not refuse a change that costs 40 levels or more. A stack of more than one item keeps the limit. |
 | Remove Incompatibilities | Off | On: you can put enchantments that work correctly together on the same item, for example all the protection enchantments. See [Compatible enchantments](06-compatibility.md). |

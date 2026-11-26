@@ -4,6 +4,7 @@
 
 * Added `/enchfix fixbooks`. It removes the repair cost from the enchanted books in your inventory, so books with the same enchantments stack again.
 * Added a config for the maximum level of each enchantment, and an optional default maximum for the others. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments that stop giving a benefit at a level, such as Lure V, have a hard cap.
+* Added the Random Enchantment Levels setting. It sets the maximum level of random enchantments from loot, villager trades, piglin bartering, the enchanting table, and mob equipment. Off uses the vanilla maximum. Balanced (the default) allows 2 levels above the vanilla maximum. Insane uses the maximum level from the config.
 * Removed the anvil limit of 40 levels ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the limit.
 * Added the Remove Incompatibilities setting. When it is on, you can combine enchantments that work correctly together, for example all the protection enchantments on one piece of armor. Silk Touch and Fortune stay incompatible. Riptide stays incompatible with Loyalty and Channeling. The setting is off by default.
 * Added advancements for very high enchantment levels.

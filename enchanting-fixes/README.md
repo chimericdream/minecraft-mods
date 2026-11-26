@@ -13,7 +13,7 @@ _Fixes for enchanting and enchanted books._
 ### Current Features
 
 * **Book repair**: `/enchfix fixbooks` removes the repair cost from the enchanted books in your inventory. An anvil or a grindstone can add a repair cost to a book. Books with the same enchantments but a different repair cost do not stack. The command changes only plain books: books that store known enchantments and have no other changes, such as a name, lore, or custom data. Mods and data packs can use enchanted books for other purposes. The command does not change those books.
-* **Maximum enchantment levels**: set the maximum level of each enchantment in the config. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
+* **Maximum enchantment levels**: set the maximum level of each enchantment in the config. A separate setting keeps random enchantments, such as those from chest loot and villager trades, near vanilla levels. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
 * **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
 * **Compatible enchantments**: a setting that lets you put enchantments that work correctly together on the same item, for example all the protection enchantments. The setting is off by default. See [Compatible enchantments](#compatible-enchantments).
 * **Advancements**: a tab of advancements for very high enchantment levels.
@@ -26,9 +26,20 @@ The maximum level changes these parts of the game:
 
 * The anvil: two items with the same enchantment at the same level can give a result above the usual maximum. Without the anvil limit, you can make high levels in survival.
 * `/enchant` accepts levels up to the new maximum.
-* Randomly enchanted loot, such as enchanted books in chests, can have the higher levels.
 * The creative inventory shows an enchanted book for each level, up to the new maximum.
-* The enchanting table can offer higher levels only when the level cost is in its range. For most enchantments, this does not occur.
+* Random enchantments can have higher levels. The Random Enchantment Levels setting controls how much higher (see below).
+
+#### Random enchantment levels
+
+Random enchantments come from chest loot, villager trades, piglin bartering, the enchanting table, and mob equipment. The Random Enchantment Levels setting sets their maximum level:
+
+| Mode | Maximum level of random enchantments |
+|---|---|
+| Off | The vanilla maximum level, for example Sharpness V. |
+| Balanced (default) | 2 levels above the vanilla maximum level, for example Sharpness VII. |
+| Insane | The maximum level from the config. Each level has the same chance. If Looting has a maximum of L, a chest can have a Looting L book. |
+
+The maximum level from the config applies in all modes. The enchanting table and some loot pick the level from the enchanting power. For these, the level does not go much above the vanilla maximum, even in Insane mode.
 
 Some enchantments have a hard cap. Above the cap, a higher level gives no further benefit or breaks the enchantment. The config cannot set a maximum level above the cap:
 

@@ -9,7 +9,9 @@
     "mixins": [
         "EFAnvilMenuMixin",
         "EFCombatRulesMixin",
+        "EFEnchantmentHelperMixin",
         "EFEnchantmentMixin",
+        "EFEnchantRandomlyFunctionMixin",
         "EFHolderReferenceMixin"
     ],
     "injectors": {

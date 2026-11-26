@@ -14,10 +14,23 @@ such as those from other mods, keep their usual maximum level. You can set a def
   The anvil has no limit of 40 levels, so you can make high levels in survival. You must still have the levels to
   pay the cost.
 * **Commands:** `/enchant` accepts levels up to the new maximum.
-* **Loot:** randomly enchanted loot, such as enchanted books in chests, can have the higher levels.
 * **Creative inventory:** it shows an enchanted book for each level, up to the new maximum.
-* **Enchanting table:** it offers higher levels only when the level cost is in its range. For most enchantments,
-  this does not occur.
+* **Random enchantments:** they can have higher levels. The Random Enchantment Levels setting controls how much
+  higher.
+
+## Random enchantments
+
+Random enchantments come from chest loot, villager trades, piglin bartering, the enchanting table, and mob
+equipment. The Random Enchantment Levels [setting](04-settings.md) sets their maximum level:
+
+| Mode | Maximum level |
+| --- | --- |
+| Off | The vanilla maximum, for example Sharpness V. |
+| Balanced (default) | 2 levels above the vanilla maximum, for example Sharpness VII. |
+| Insane | The maximum level from the config. If Looting has a maximum of L, a chest can have a Looting L book. |
+
+The enchanting table picks the level from the enchanting power. At the table, the level does not go much above the
+vanilla maximum, even in Insane mode.
 
 ## Single-level enchantments
 

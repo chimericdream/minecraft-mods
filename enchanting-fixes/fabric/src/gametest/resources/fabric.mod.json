@@ -13,7 +13,8 @@
         "fabric-gametest": [
             "com.chimericdream.enchantingfixes.fabric.test.AdvancementGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.AnvilGameTest",
-            "com.chimericdream.enchantingfixes.fabric.test.CompatibilityGameTest"
+            "com.chimericdream.enchantingfixes.fabric.test.CompatibilityGameTest",
+            "com.chimericdream.enchantingfixes.fabric.test.RandomLevelsGameTest"
         ]
     },
     "depends": {

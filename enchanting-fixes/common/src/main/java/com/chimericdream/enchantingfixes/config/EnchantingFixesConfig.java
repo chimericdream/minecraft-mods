@@ -3,11 +3,13 @@ package com.chimericdream.enchantingfixes.config;
 import com.chimericdream.enchantingfixes.ModInfo;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevelEntries;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevels;
+import com.chimericdream.enchantingfixes.enchantment.RandomLevels;
 import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.ListOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
@@ -41,6 +43,9 @@ public class EnchantingFixesConfig {
     /** If true, enchantments that work correctly together are compatible. See {@code Incompatibilities}. */
     @SerialEntry
     public boolean removeIncompatibilities = Defaults.REMOVE_INCOMPATIBILITIES;
+    /** The maximum level of random enchantments, such as loot and the enchanting table. See {@link RandomLevels}. */
+    @SerialEntry
+    public RandomLevels.Mode randomLevels = Defaults.RANDOM_LEVELS;
 
     public static final YaclConfig<EnchantingFixesConfig> CONFIG = YaclConfig.builder(EnchantingFixesConfig.class, ModInfo.MOD_ID)
         .screen((defaults, config, builder) -> builder
@@ -70,6 +75,12 @@ public class EnchantingFixesConfig {
                     .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.defaultMaxLevel.desc")))
                     .binding(Defaults.DEFAULT_MAX_LEVEL, () -> config.defaultMaxLevel, newVal -> config.defaultMaxLevel = newVal)
                     .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(MaxLevels.MIN_LEVEL, MaxLevels.MAX_LEVEL))
+                    .build())
+                .option(Option.<RandomLevels.Mode>createBuilder()
+                    .name(Component.translatable("text.config.enchantingfixes.option.randomLevels"))
+                    .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.randomLevels.desc")))
+                    .binding(Defaults.RANDOM_LEVELS, () -> config.randomLevels, newVal -> config.randomLevels = newVal)
+                    .controller(opt -> EnumControllerBuilder.create(opt).enumClass(RandomLevels.Mode.class))
                     .build())
                 .option(Option.<Boolean>createBuilder()
                     .name(Component.translatable("text.config.enchantingfixes.option.defaultAppliesToSingleLevel"))
@@ -112,6 +123,10 @@ public class EnchantingFixesConfig {
     /** The config file can contain values that the screen does not allow. */
     private static void clampValues(EnchantingFixesConfig config) {
         config.protectionLimitPercent = Math.clamp(config.protectionLimitPercent, PROTECTION_LIMIT_MIN, PROTECTION_LIMIT_MAX);
+        // Gson reads a value that is not a mode name as null.
+        if (config.randomLevels == null) {
+            config.randomLevels = Defaults.RANDOM_LEVELS;
+        }
     }
 
     public static class Defaults {
@@ -122,5 +137,6 @@ public class EnchantingFixesConfig {
         public static int PROTECTION_LIMIT_PERCENT = 95;
         public static boolean REMOVE_ANVIL_LIMIT = true;
         public static boolean REMOVE_INCOMPATIBILITIES = false;
+        public static RandomLevels.Mode RANDOM_LEVELS = RandomLevels.Mode.BALANCED;
     }
 }
