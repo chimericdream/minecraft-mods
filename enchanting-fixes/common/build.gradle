@@ -1,0 +1,7 @@
+architectury {
+    common project(':enchanting-fixes').enabled_platforms.split(',')
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/enchantingfixes.accesswidener")
+}

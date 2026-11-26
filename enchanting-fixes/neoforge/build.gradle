@@ -1,0 +1,26 @@
+import org.gradle.jvm.tasks.Jar
+
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
+
+loom {
+    accessWidenerPath = project(":enchanting-fixes:common").loom.accessWidenerPath
+
+    neoForge {
+        convertAccessWideners(tasks.named("shadowJar", Jar), "enchantingfixes.accesswidener")
+    }
+}
+
+configurations {
+    developmentNeoForge.extendsFrom common
+}
+
+dependencies {
+    common(project(path: ':enchanting-fixes:common')) { transitive false }
+    shadowBundle project(path: ':enchanting-fixes:common', configuration: 'transformProductionNeoForge')
+}
