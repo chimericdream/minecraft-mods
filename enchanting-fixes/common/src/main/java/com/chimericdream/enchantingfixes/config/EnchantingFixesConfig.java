@@ -38,6 +38,9 @@ public class EnchantingFixesConfig {
     /** If true, the anvil has no "Too Expensive!" limit of 40 levels. */
     @SerialEntry
     public boolean removeAnvilLimit = Defaults.REMOVE_ANVIL_LIMIT;
+    /** If true, enchantments that work correctly together are compatible. See {@code Incompatibilities}. */
+    @SerialEntry
+    public boolean removeIncompatibilities = Defaults.REMOVE_INCOMPATIBILITIES;
 
     public static final YaclConfig<EnchantingFixesConfig> CONFIG = YaclConfig.builder(EnchantingFixesConfig.class, ModInfo.MOD_ID)
         .screen((defaults, config, builder) -> builder
@@ -85,6 +88,15 @@ public class EnchantingFixesConfig {
                     .build())
                 .build())
             .category(ConfigCategory.createBuilder()
+                .name(Component.translatable("text.config.enchantingfixes.section.compatibility"))
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.enchantingfixes.option.removeIncompatibilities"))
+                    .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.removeIncompatibilities.desc")))
+                    .binding(Defaults.REMOVE_INCOMPATIBILITIES, () -> config.removeIncompatibilities, newVal -> config.removeIncompatibilities = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .build())
+            .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.enchantingfixes.section.scaling"))
                 .option(Option.<Integer>createBuilder()
                     .name(Component.translatable("text.config.enchantingfixes.option.protectionLimitPercent"))
@@ -109,5 +121,6 @@ public class EnchantingFixesConfig {
         public static boolean DEFAULT_APPLIES_TO_SINGLE_LEVEL = false;
         public static int PROTECTION_LIMIT_PERCENT = 95;
         public static boolean REMOVE_ANVIL_LIMIT = true;
+        public static boolean REMOVE_INCOMPATIBILITIES = false;
     }
 }

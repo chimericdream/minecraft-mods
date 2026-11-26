@@ -22,7 +22,8 @@ public record ServerSettingsPayload(
     boolean useDefaultMaxLevel,
     int defaultMaxLevel,
     boolean defaultAppliesToSingleLevel,
-    boolean removeAnvilLimit
+    boolean removeAnvilLimit,
+    boolean removeIncompatibilities
 ) implements CustomPacketPayload {
     public static final Type<ServerSettingsPayload> ID = new Type<>(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "server_settings"));
     public static final StreamCodec<RegistryFriendlyByteBuf, ServerSettingsPayload> CODEC = StreamCodec.composite(
@@ -32,6 +33,7 @@ public record ServerSettingsPayload(
         ByteBufCodecs.VAR_INT, ServerSettingsPayload::defaultMaxLevel,
         ByteBufCodecs.BOOL, ServerSettingsPayload::defaultAppliesToSingleLevel,
         ByteBufCodecs.BOOL, ServerSettingsPayload::removeAnvilLimit,
+        ByteBufCodecs.BOOL, ServerSettingsPayload::removeIncompatibilities,
         ServerSettingsPayload::new
     );
 
@@ -42,7 +44,8 @@ public record ServerSettingsPayload(
             config.useDefaultMaxLevel,
             config.defaultMaxLevel,
             config.defaultAppliesToSingleLevel,
-            config.removeAnvilLimit
+            config.removeAnvilLimit,
+            config.removeIncompatibilities
         );
     }
 
@@ -54,6 +57,7 @@ public record ServerSettingsPayload(
         config.defaultMaxLevel = defaultMaxLevel;
         config.defaultAppliesToSingleLevel = defaultAppliesToSingleLevel;
         config.removeAnvilLimit = removeAnvilLimit;
+        config.removeIncompatibilities = removeIncompatibilities;
         return config;
     }
 

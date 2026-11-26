@@ -15,6 +15,7 @@ _Fixes for enchanting and enchanted books._
 * **Book repair**: `/enchfix fixbooks` removes the repair cost from the enchanted books in your inventory. An anvil or a grindstone can add a repair cost to a book. Books with the same enchantments but a different repair cost do not stack. The command changes only plain books: books that store known enchantments and have no other changes, such as a name, lore, or custom data. Mods and data packs can use enchanted books for other purposes. The command does not change those books.
 * **Maximum enchantment levels**: set the maximum level of each enchantment in the config. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
 * **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
+* **Compatible enchantments**: a setting that lets you put enchantments that work correctly together on the same item, for example all the protection enchantments. The setting is off by default. See [Compatible enchantments](#compatible-enchantments).
 * **Advancements**: a tab of advancements for very high enchantment levels.
 * **Scaling Enchantments data pack**: an optional data pack. With it, high levels of some enchantments continue to give more benefit, up to a limit. The pack is off by default.
 * **In-game guide**: craft a book and an enchanted book to get a guide to each feature and setting. Any enchanted book works. The recipe uses the enchanted book. You can also use `/opus give enchantingfixes:guide`. The guide is optional and needs the [Opus](../opus) mod, version 1.2.0 or newer.
@@ -55,6 +56,30 @@ Most single-level enchantments have the same effect at all levels. Aqua Affinity
 Minecraft has level numerals only up to X. Use [Enchantment Numbers Fix](../enchantment-numbers-fix) to show higher levels correctly.
 
 On a server, the server config applies. When you join, the server sends its settings to your game. The tooltips and the creative inventory then show the server's levels.
+
+### Compatible enchantments
+
+Turn on Remove Incompatibilities to combine these enchantments on the same item:
+
+| Enchantments | Item |
+|---|---|
+| Protection, Fire Protection, Blast Protection, Projectile Protection | Armor |
+| Depth Strider, Frost Walker | Boots |
+| Sharpness, Smite, Bane of Arthropods | Weapons |
+| Smite, Bane of Arthropods, Density, Breach | Maces |
+| Infinity, Mending | Bows |
+| Multishot, Piercing | Crossbows |
+
+These enchantments stay incompatible, because one stops the other from working:
+
+* Silk Touch and Fortune: with Silk Touch, the block drops itself, so Fortune has no effect.
+* Riptide with Loyalty or Channeling: you cannot throw a trident that has Riptide.
+
+The setting changes the anvil, the enchanting table, `/enchant`, and enchanted loot. The setting removes the vanilla exclusive sets `armor`, `boots`, `bow`, `crossbow`, and `damage`. An enchantment from another mod in one of these sets also becomes compatible. Other incompatibilities from mods and data packs do not change.
+
+All protection enchantments share a limit of 20 points. More protection enchantments on one piece of armor do not increase that limit. The Scaling Enchantments data pack changes the limit.
+
+On a server, the server config applies.
 
 ### Scaling Enchantments data pack
 

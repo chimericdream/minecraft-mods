@@ -11,6 +11,7 @@ enchantment.
 * [Scaling Enchantments](03-scaling-enchantments.md): an optional data pack for high-level enchantments.
 * [Settings](04-settings.md): all the settings and where to change them.
 * [Advancements](05-advancements.md): goals for very high levels.
+* [Compatible enchantments](06-compatibility.md): put more enchantments on the same item.
 
 ## Get a new guide
 

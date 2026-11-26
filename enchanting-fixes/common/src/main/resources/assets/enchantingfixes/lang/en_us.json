@@ -33,5 +33,8 @@
   "advancements.enchantingfixes.into_orbit.desc": "Hit a mob with a weapon that has Knockback L",
   "text.config.enchantingfixes.section.anvil": "Anvil",
   "text.config.enchantingfixes.option.removeAnvilLimit": "Remove \"Too Expensive!\" Limit",
-  "text.config.enchantingfixes.option.removeAnvilLimit.desc": "In vanilla, the anvil refuses each change that costs 40 levels or more, except in creative mode. On: the anvil has no limit. You must still have the levels to pay the cost. A stack of more than one item keeps the limit. The server config controls this value."
+  "text.config.enchantingfixes.option.removeAnvilLimit.desc": "In vanilla, the anvil refuses each change that costs 40 levels or more, except in creative mode. On: the anvil has no limit. You must still have the levels to pay the cost. A stack of more than one item keeps the limit. The server config controls this value.",
+  "text.config.enchantingfixes.section.compatibility": "Compatibility",
+  "text.config.enchantingfixes.option.removeIncompatibilities": "Remove Incompatibilities",
+  "text.config.enchantingfixes.option.removeIncompatibilities.desc": "On: you can put enchantments that work correctly together on the same item. Examples: all the protection enchantments, Sharpness with Smite, Infinity with Mending, Multishot with Piercing, and Depth Strider with Frost Walker. Silk Touch and Fortune stay incompatible. Riptide stays incompatible with Loyalty and Channeling. Incompatibilities from other mods and data packs do not change. The server config controls this value."
 }
