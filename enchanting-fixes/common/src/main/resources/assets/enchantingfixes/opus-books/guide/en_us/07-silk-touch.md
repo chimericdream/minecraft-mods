@@ -35,7 +35,8 @@ With Advanced Silk Touch XXX, you can break bedrock. It takes about 80 seconds.
 
 The enchanting table, librarians, loot, and mob equipment can all give it at low levels. A master librarian has a
 small chance to sell a book at a level from X to XV. To get a higher level, combine two books or tools with the same
-level in an anvil.
+level in an anvil. With the Linear Upgrades [setting](04-settings.md), each book at level III or higher adds one
+level.
 
 On a server, a player who is not an operator can place a spawner from Advanced Silk Touch X. The spawner gets only
 the mob type, as with a spawn egg.

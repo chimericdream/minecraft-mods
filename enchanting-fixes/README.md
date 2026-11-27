@@ -15,6 +15,7 @@ _Fixes for enchanting and enchanted books._
 * **Book repair**: `/enchfix fixbooks` removes the repair cost from the enchanted books in your inventory. An anvil or a grindstone can add a repair cost to a book. Books with the same enchantments but a different repair cost do not stack. The command changes only plain books: books that store known enchantments and have no other changes, such as a name, lore, or custom data. Mods and data packs can use enchanted books for other purposes. The command does not change those books.
 * **Maximum enchantment levels**: set the maximum level of each enchantment in a list in the config. The Random Enchantment Levels setting keeps random enchantments, such as those from chest loot and villager trades, near vanilla levels. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Advanced Silk Touch has a maximum of XXX. Enchantments not in the list keep their usual maximum, or use the default maximum level. Another setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
 * **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
+* **Linear anvil upgrades**: a setting that makes high levels cost less in the anvil. The repair cost stops at 31 levels. Above the vanilla maximum, each book adds one level. The setting is off by default. See [Linear anvil upgrades](#linear-anvil-upgrades).
 * **Compatible enchantments**: a setting that lets you put enchantments that work correctly together on the same item, for example all the protection enchantments. The setting is off by default. See [Compatible enchantments](#compatible-enchantments).
 * **Advanced Silk Touch data pack**: an optional data pack that adds the Advanced Silk Touch enchantment. Its levels collect blocks that Silk Touch does not collect, up to bedrock at level XXX. The pack is off by default. See [Advanced Silk Touch data pack](#advanced-silk-touch-data-pack).
 * **Advancements**: a tab of advancements for very high enchantment levels.
@@ -25,7 +26,7 @@ _Fixes for enchanting and enchanted books._
 
 The maximum level changes these parts of the game:
 
-* The anvil: two items with the same enchantment at the same level can give a result above the usual maximum. Without the anvil limit, you can make high levels in survival.
+* The anvil: two items with the same enchantment at the same level can give a result above the usual maximum. Without the anvil limit, you can make high levels in survival. The Linear Upgrades setting makes high levels cost less (see below).
 * `/enchant` accepts levels up to the new maximum.
 * The creative inventory shows an enchanted book for each level, up to the new maximum.
 * Random enchantments can have higher levels. The Random Enchantment Levels setting controls how much higher (see below).
@@ -68,6 +69,25 @@ Most single-level enchantments have the same effect at all levels. Aqua Affinity
 Minecraft has level numerals only up to X. Use [Enchantment Numbers Fix](../enchantment-numbers-fix) to show higher levels correctly.
 
 On a server, the server config applies. When you join, the server sends its settings to your game. The tooltips and the creative inventory then show the server's levels.
+
+#### Linear anvil upgrades
+
+In vanilla, two items give a higher level only if they have the same level. Each level above the vanilla maximum needs twice the books of the level before it. Each anvil use also doubles the repair cost of an item. The anvil adds the repair cost of both items to the price.
+
+The Linear Upgrades setting changes two things:
+
+* The repair cost stops at 31 levels, after 5 anvil uses. An item with a higher repair cost from before also costs 31 levels.
+* If both items have an enchantment at or above its vanilla maximum level, the result is one level above the higher level. For example, Sharpness 40 and a Sharpness V book give Sharpness 41.
+
+Below the vanilla maximum, the anvil works as in vanilla. The price of each enchantment is still its anvil cost multiplied by the new level. High levels still cost more:
+
+| Sharpness | Sharpness V books after Sharpness V | Vanilla cost of the last step | Linear cost of each step |
+|---|---|---|---|
+| X | 32 (vanilla), 5 (linear) | about 40 levels | about 41 levels |
+| XV | 1,024 (vanilla), 10 (linear) | about 1,000 levels | about 46 levels |
+| 100 | too many (vanilla), 95 (linear) | not possible | about 131 levels |
+
+The setting is off by default.
 
 ### Compatible enchantments
 
@@ -115,7 +135,7 @@ With Advanced Silk Touch XXX, you can break bedrock. It takes about 80 seconds, 
 
 The enchantment has a maximum level of III in its data. Random enchantments use that level as the vanilla maximum for the Random Enchantment Levels setting. For example, in Balanced mode, random Advanced Silk Touch is at most level V. The enchanting table, librarian trades, loot, and mob equipment can all give it. A master librarian also has a 5% chance to sell an Advanced Silk Touch book at a level from X to XV. The book costs 64 emeralds and a book.
 
-The default list of maximum levels has Advanced Silk Touch at XXX. Combine two books or tools at the same level in an anvil to get higher levels.
+The default list of maximum levels has Advanced Silk Touch at XXX. To get higher levels, combine two books or tools at the same level in an anvil. With the [Linear Upgrades](#linear-anvil-upgrades) setting, each book at level III or higher adds one level.
 
 A player who is not an operator can place a spawner from Advanced Silk Touch X. The placed spawner gets only the mob type, as with a spawn egg. Other spawner data, such as the spawn delay, applies only for operators.
 

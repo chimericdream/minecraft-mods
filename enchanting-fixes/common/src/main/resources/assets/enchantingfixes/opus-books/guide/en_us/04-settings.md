@@ -14,6 +14,7 @@ Open the settings from the mods list. The mod saves them in the file `enchanting
 | Random Enchantment Levels | Balanced | The maximum level of random enchantments, such as those from chest loot, villager trades, and the enchanting table. Off: the vanilla maximum. Balanced: 2 levels above the vanilla maximum. Insane: the maximum level from the config. See [Maximum levels](02-max-levels.md). |
 | Default Applies to Single-Level Enchantments | Off | On: single-level enchantments, such as Silk Touch, also use the default maximum level. |
 | Remove "Too Expensive!" Limit | On | The anvil does not refuse a change that costs 40 levels or more. A stack of more than one item keeps the limit. |
+| Linear Upgrades | Off | On: the repair cost stops at 31 levels. Above the vanilla maximum level, each item adds one level. For example, Sharpness 40 and a Sharpness V book give Sharpness 41. |
 | Remove Incompatibilities | Off | On: you can put enchantments that work correctly together on the same item, for example all the protection enchantments. See [Compatible enchantments](06-compatibility.md). |
 | Protection Limit % | 95 | The limit of the damage decrease from protection enchantments, from 80 to 100. Applies only with the [Scaling Enchantments](03-scaling-enchantments.md) data pack. 80 keeps the vanilla limit. |
 

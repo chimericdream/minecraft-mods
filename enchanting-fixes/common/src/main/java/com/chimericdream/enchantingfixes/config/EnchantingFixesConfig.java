@@ -1,6 +1,7 @@
 package com.chimericdream.enchantingfixes.config;
 
 import com.chimericdream.enchantingfixes.ModInfo;
+import com.chimericdream.enchantingfixes.enchantment.AnvilUpgrades;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevelEntries;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevels;
 import com.chimericdream.enchantingfixes.enchantment.RandomLevels;
@@ -40,6 +41,9 @@ public class EnchantingFixesConfig {
     /** If true, the anvil has no "Too Expensive!" limit of 40 levels. */
     @SerialEntry
     public boolean removeAnvilLimit = Defaults.REMOVE_ANVIL_LIMIT;
+    /** If true, anvil costs grow linearly. See {@link AnvilUpgrades}. */
+    @SerialEntry
+    public boolean linearAnvilUpgrades = Defaults.LINEAR_ANVIL_UPGRADES;
     /** If true, enchantments that work correctly together are compatible. See {@code Incompatibilities}. */
     @SerialEntry
     public boolean removeIncompatibilities = Defaults.REMOVE_INCOMPATIBILITIES;
@@ -97,6 +101,12 @@ public class EnchantingFixesConfig {
                     .binding(Defaults.REMOVE_ANVIL_LIMIT, () -> config.removeAnvilLimit, newVal -> config.removeAnvilLimit = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build())
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.enchantingfixes.option.linearAnvilUpgrades"))
+                    .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.linearAnvilUpgrades.desc")))
+                    .binding(Defaults.LINEAR_ANVIL_UPGRADES, () -> config.linearAnvilUpgrades, newVal -> config.linearAnvilUpgrades = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
                 .build())
             .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.enchantingfixes.section.compatibility"))
@@ -136,6 +146,7 @@ public class EnchantingFixesConfig {
         public static boolean DEFAULT_APPLIES_TO_SINGLE_LEVEL = false;
         public static int PROTECTION_LIMIT_PERCENT = 95;
         public static boolean REMOVE_ANVIL_LIMIT = true;
+        public static boolean LINEAR_ANVIL_UPGRADES = false;
         public static boolean REMOVE_INCOMPATIBILITIES = false;
         public static RandomLevels.Mode RANDOM_LEVELS = RandomLevels.Mode.BALANCED;
     }

@@ -13,7 +13,7 @@ such as those from other mods, keep their usual maximum level. You can set a def
 
 * **Anvil:** two items with the same enchantment at the same level can give a level above the usual maximum.
   The anvil has no limit of 40 levels, so you can make high levels in survival. You must still have the levels to
-  pay the cost.
+  pay the cost. The Linear Upgrades [setting](04-settings.md) makes high levels cost less.
 * **Commands:** `/enchant` accepts levels up to the new maximum.
 * **Creative inventory:** it shows an enchanted book for each level, up to the new maximum.
 * **Random enchantments:** they can have higher levels. The Random Enchantment Levels setting controls how much
