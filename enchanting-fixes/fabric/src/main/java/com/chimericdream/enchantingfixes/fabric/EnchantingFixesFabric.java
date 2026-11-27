@@ -2,6 +2,7 @@ package com.chimericdream.enchantingfixes.fabric;
 
 import com.chimericdream.enchantingfixes.EnchantingFixesMod;
 import com.chimericdream.enchantingfixes.ModInfo;
+import com.chimericdream.enchantingfixes.enchantment.AdvancedSilkTouch;
 import com.chimericdream.enchantingfixes.enchantment.ScalingEnchantments;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
@@ -15,12 +16,18 @@ public final class EnchantingFixesFabric implements ModInitializer {
     public void onInitialize() {
         EnchantingFixesMod.init();
 
+        registerPack(ScalingEnchantments.PACK_PATH, "pack.enchantingfixes.scaling_enchantments");
+        registerPack(AdvancedSilkTouch.PACK_PATH, "pack.enchantingfixes.advanced_silk_touch");
+    }
+
+    /** NORMAL: the pack is off until the player turns it on. */
+    private static void registerPack(String path, String nameKey) {
         // Fabric adds "resourcepacks/" to the path itself.
-        String packName = ScalingEnchantments.PACK_PATH.substring("resourcepacks/".length());
+        String packName = path.substring("resourcepacks/".length());
         ResourceLoader.registerBuiltinPack(
             Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, packName),
             FabricLoader.getInstance().getModContainer(ModInfo.MOD_ID).orElseThrow(),
-            Component.translatable("pack.enchantingfixes.scaling_enchantments"),
+            Component.translatable(nameKey),
             PackActivationType.NORMAL
         );
     }

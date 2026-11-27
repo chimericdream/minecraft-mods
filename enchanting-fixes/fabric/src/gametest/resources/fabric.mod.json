@@ -11,6 +11,7 @@
     "environment": "*",
     "entrypoints": {
         "fabric-gametest": [
+            "com.chimericdream.enchantingfixes.fabric.test.AdvancedSilkTouchGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.AdvancementGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.AnvilGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.CompatibilityGameTest",

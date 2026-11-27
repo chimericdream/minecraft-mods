@@ -13,9 +13,10 @@ _Fixes for enchanting and enchanted books._
 ### Current Features
 
 * **Book repair**: `/enchfix fixbooks` removes the repair cost from the enchanted books in your inventory. An anvil or a grindstone can add a repair cost to a book. Books with the same enchantments but a different repair cost do not stack. The command changes only plain books: books that store known enchantments and have no other changes, such as a name, lore, or custom data. Mods and data packs can use enchanted books for other purposes. The command does not change those books.
-* **Maximum enchantment levels**: set the maximum level of each enchantment in the config. A separate setting keeps random enchantments, such as those from chest loot and villager trades, near vanilla levels. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Enchantments not in the list keep their usual maximum, or use the default maximum level. A separate setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
+* **Maximum enchantment levels**: set the maximum level of each enchantment in a list in the config. The Random Enchantment Levels setting keeps random enchantments, such as those from chest loot and villager trades, near vanilla levels. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Advanced Silk Touch has a maximum of XXX. Enchantments not in the list keep their usual maximum, or use the default maximum level. Another setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
 * **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
 * **Compatible enchantments**: a setting that lets you put enchantments that work correctly together on the same item, for example all the protection enchantments. The setting is off by default. See [Compatible enchantments](#compatible-enchantments).
+* **Advanced Silk Touch data pack**: an optional data pack that adds the Advanced Silk Touch enchantment. Its levels collect blocks that Silk Touch does not collect, up to bedrock at level XXX. The pack is off by default. See [Advanced Silk Touch data pack](#advanced-silk-touch-data-pack).
 * **Advancements**: a tab of advancements for very high enchantment levels.
 * **Scaling Enchantments data pack**: an optional data pack. With it, high levels of some enchantments continue to give more benefit, up to a limit. The pack is off by default.
 * **In-game guide**: craft a book and an enchanted book to get a guide to each feature and setting. Any enchanted book works. The recipe uses the enchanted book. You can also use `/opus give enchantingfixes:guide`. The guide is optional and needs the [Opus](../opus) mod, version 1.2.0 or newer.
@@ -91,6 +92,35 @@ The setting changes the anvil, the enchanting table, `/enchant`, and enchanted l
 All protection enchantments share a limit of 20 points. More protection enchantments on one piece of armor do not increase that limit. The Scaling Enchantments data pack changes the limit.
 
 On a server, the server config applies.
+
+### Advanced Silk Touch data pack
+
+The mod includes the "Enchanting Fixes: Advanced Silk Touch" data pack. The pack is off by default. Turn it on in the same way as the Scaling Enchantments data pack (see below).
+
+The pack adds the Advanced Silk Touch enchantment for pickaxes, shovels, axes, and hoes. Each level collects the blocks of the lower levels, and these blocks:
+
+| Level | Blocks |
+|---|---|
+| I | Dirt paths and farmland. With Silk Touch, they drop dirt. |
+| III | Suspicious sand and suspicious gravel. The block keeps its loot. |
+| V | Budding amethyst |
+| VII | Infested blocks. The block keeps its silverfish. With Silk Touch, they drop the normal block. |
+| X | Spawners. The spawner keeps its mob. |
+| XV | Reinforced deepslate |
+| XXX | Bedrock |
+
+Advanced Silk Touch does not include the effect of Silk Touch. Put both on one tool to collect all these blocks. Advanced Silk Touch is incompatible with Fortune. Blocks broken with it drop no experience, as with Silk Touch.
+
+With Advanced Silk Touch XXX, you can break bedrock. It takes about 80 seconds, the same as reinforced deepslate.
+
+The enchantment has a maximum level of III in its data. Random enchantments use that level as the vanilla maximum for the Random Enchantment Levels setting. For example, in Balanced mode, random Advanced Silk Touch is at most level V. The enchanting table, librarian trades, loot, and mob equipment can all give it. A master librarian also has a 5% chance to sell an Advanced Silk Touch book at a level from X to XV. The book costs 64 emeralds and a book.
+
+The default list of maximum levels has Advanced Silk Touch at XXX. Combine two books or tools at the same level in an anvil to get higher levels.
+
+A player who is not an operator can place a spawner from Advanced Silk Touch X. The placed spawner gets only the mob type, as with a spawn egg. Other spawner data, such as the spawn delay, applies only for operators.
+
+> [!WARNING]
+> Bedrock is the floor of the Overworld and the Nether, and the roof of the Nether. Below the floor is the void. If you fall into the void, you lose your items.
 
 ### Scaling Enchantments data pack
 

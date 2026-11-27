@@ -1,6 +1,7 @@
 package com.chimericdream.enchantingfixes.fabric.test;
 
 import com.chimericdream.enchantingfixes.config.EnchantingFixesConfig;
+import com.chimericdream.enchantingfixes.enchantment.AdvancedSilkTouch;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevelEntries;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevels;
 import com.chimericdream.lib.testkit.BootstrapMinecraft;
@@ -58,7 +59,9 @@ public class MaxLevelsTest extends BootstrapMinecraft {
             .collect(Collectors.toSet());
 
         assertEquals(registered, Set.copyOf(MaxLevels.VANILLA_MULTI_LEVEL_ENCHANTMENTS));
-        assertEquals(registered, EnchantingFixesConfig.Defaults.MAX_LEVELS.keySet());
+        Set<String> listed = new java.util.HashSet<>(EnchantingFixesConfig.Defaults.MAX_LEVELS.keySet());
+        listed.remove(AdvancedSilkTouch.ID);
+        assertEquals(registered, listed);
     }
 
     @Test

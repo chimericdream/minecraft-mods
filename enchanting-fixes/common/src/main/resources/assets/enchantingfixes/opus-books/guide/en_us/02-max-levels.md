@@ -5,7 +5,8 @@ tags: [features, settings]
 summary: Set the maximum level of each enchantment.
 ---
 Use the [settings](04-settings.md) to set the maximum level of each enchantment, from 1 to 255. By default, the list
-sets each vanilla enchantment with more than one level to level X. If its hard cap is lower, the list uses the cap. Enchantments not in the list,
+sets each vanilla enchantment with more than one level to level X. If its hard cap is lower, the list uses the cap. The list also sets
+[Advanced Silk Touch](07-silk-touch.md) to level XXX. Enchantments not in the list,
 such as those from other mods, keep their usual maximum level. You can set a default maximum level for them.
 
 ## What changes

@@ -51,7 +51,9 @@ public final class MaxLevels {
         Map.entry("minecraft:luck_of_the_sea", 85),
         // Each level removes 100 ticks from a 100-600 tick wait. FishingHook picks a new wait while the
         // wait is 0 or less, so at level 6 and higher no fish bites.
-        Map.entry("minecraft:lure", 5)
+        Map.entry("minecraft:lure", 5),
+        // Level XXX collects bedrock, the last block.
+        Map.entry(AdvancedSilkTouch.ID, AdvancedSilkTouch.MAX_LEVEL)
     );
 
     /**
@@ -95,12 +97,17 @@ public final class MaxLevels {
     private MaxLevels() {
     }
 
-    /** A config list with each multi-level vanilla enchantment at {@link #DEFAULT_CONFIG_LEVEL} or its hard cap, whichever is lower. */
+    /**
+     * A config list with each multi-level vanilla enchantment at {@link #DEFAULT_CONFIG_LEVEL} or its hard cap,
+     * whichever is lower, and Advanced Silk Touch at {@value AdvancedSilkTouch#MAX_LEVEL}.
+     */
     public static Map<String, Integer> defaultConfigLevels() {
         Map<String, Integer> levels = new HashMap<>();
         for (String id : VANILLA_MULTI_LEVEL_ENCHANTMENTS) {
             levels.put(id, Math.min(DEFAULT_CONFIG_LEVEL, HARD_CAPS.getOrDefault(id, MAX_LEVEL)));
         }
+        // Applies only while the Advanced Silk Touch data pack is on.
+        levels.put(AdvancedSilkTouch.ID, AdvancedSilkTouch.MAX_LEVEL);
 
         return Map.copyOf(levels);
     }

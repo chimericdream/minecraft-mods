@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "Adds the Advanced Silk Touch enchantment. Its levels collect blocks that drop nothing with Silk Touch.",
+    "max_format": 107,
+    "min_format": [
+      107,
+      1
+    ]
+  }
+}

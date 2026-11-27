@@ -8,6 +8,9 @@
     ],
     "mixins": [
         "EFAnvilMenuMixin",
+        "EFBlockBehaviourMixin",
+        "EFBlockItemMixin",
+        "EFBlockMixin",
         "EFCombatRulesMixin",
         "EFEnchantmentHelperMixin",
         "EFEnchantmentMixin",

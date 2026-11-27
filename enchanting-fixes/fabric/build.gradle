@@ -23,3 +23,11 @@ dependencies {
     }
     shadowBundle project(path: ':enchanting-fixes:common', configuration: 'transformProductionFabric')
 }
+
+// The Advanced Silk Touch data pack is off by default, and the GameTest server has no way to turn it on. The test mod
+// ships the pack data instead, so the enchantment is always in the GameTest registries.
+tasks.named('processGametestResources') {
+    from(project(':enchanting-fixes:common').file('src/main/resources/resourcepacks/advanced_silk_touch')) {
+        include 'data/**'
+    }
+}

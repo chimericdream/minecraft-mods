@@ -12,6 +12,7 @@ enchantment.
 * [Settings](04-settings.md): all the settings and where to change them.
 * [Advancements](05-advancements.md): goals for very high levels.
 * [Compatible enchantments](06-compatibility.md): put more enchantments on the same item.
+* [Advanced Silk Touch](07-silk-touch.md): an optional data pack with an enchantment that collects spawners and bedrock.
 
 ## Get a new guide
 
