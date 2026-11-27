@@ -5,6 +5,7 @@ import com.chimericdream.enchantingfixes.enchantment.AnvilUpgrades;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevelEntries;
 import com.chimericdream.enchantingfixes.enchantment.MaxLevels;
 import com.chimericdream.enchantingfixes.enchantment.RandomLevels;
+import com.chimericdream.enchantingfixes.enchantment.XpCosts;
 import com.chimericdream.lib.config.YaclConfig;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.ListOption;
@@ -44,6 +45,9 @@ public class EnchantingFixesConfig {
     /** If true, anvil costs grow linearly. See {@link AnvilUpgrades}. */
     @SerialEntry
     public boolean linearAnvilUpgrades = Defaults.LINEAR_ANVIL_UPGRADES;
+    /** If true, a cost of N levels takes the XP from level 0 to level N. See {@link XpCosts}. */
+    @SerialEntry
+    public boolean fixedXpCosts = Defaults.FIXED_XP_COSTS;
     /** If true, enchantments that work correctly together are compatible. See {@code Incompatibilities}. */
     @SerialEntry
     public boolean removeIncompatibilities = Defaults.REMOVE_INCOMPATIBILITIES;
@@ -109,6 +113,15 @@ public class EnchantingFixesConfig {
                     .build())
                 .build())
             .category(ConfigCategory.createBuilder()
+                .name(Component.translatable("text.config.enchantingfixes.section.xpCosts"))
+                .option(Option.<Boolean>createBuilder()
+                    .name(Component.translatable("text.config.enchantingfixes.option.fixedXpCosts"))
+                    .description(OptionDescription.of(Component.translatable("text.config.enchantingfixes.option.fixedXpCosts.desc")))
+                    .binding(Defaults.FIXED_XP_COSTS, () -> config.fixedXpCosts, newVal -> config.fixedXpCosts = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build())
+                .build())
+            .category(ConfigCategory.createBuilder()
                 .name(Component.translatable("text.config.enchantingfixes.section.compatibility"))
                 .option(Option.<Boolean>createBuilder()
                     .name(Component.translatable("text.config.enchantingfixes.option.removeIncompatibilities"))
@@ -147,6 +160,7 @@ public class EnchantingFixesConfig {
         public static int PROTECTION_LIMIT_PERCENT = 95;
         public static boolean REMOVE_ANVIL_LIMIT = true;
         public static boolean LINEAR_ANVIL_UPGRADES = false;
+        public static boolean FIXED_XP_COSTS = true;
         public static boolean REMOVE_INCOMPATIBILITIES = false;
         public static RandomLevels.Mode RANDOM_LEVELS = RandomLevels.Mode.BALANCED;
     }

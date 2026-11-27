@@ -2,12 +2,14 @@ package com.chimericdream.enchantingfixes.mixin;
 
 import com.chimericdream.enchantingfixes.config.SyncedConfig;
 import com.chimericdream.enchantingfixes.enchantment.AnvilUpgrades;
+import com.chimericdream.enchantingfixes.enchantment.XpCosts;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.Slice;
  * Removes the "Too Expensive!" limit. {@code createResult} empties the result when the cost is 40 or more
  * and the player is not in creative mode. This mixin treats that check as if the player were in creative.
  *
- * <p>Also applies {@link AnvilUpgrades} while the linear upgrades setting is on.
+ * <p>Also applies {@link AnvilUpgrades} while the linear upgrades setting is on, and {@link XpCosts} while the
+ * fixed XP costs setting is on.
  *
  * <p>NeoForge moves the body of {@code createResult} to {@code createResultInternal}, so each injector targets
  * both methods. NeoForge's {@code createResult} calls none of the targets.
@@ -89,5 +92,19 @@ public abstract class EFAnvilMenuMixin {
         }
 
         return AnvilUpgrades.combinedLevel(higher, Math.min(level, current), enchantment.value().definition().maxLevel());
+    }
+
+    /** The cost when the player takes the result. With the fixed XP costs setting, it takes XP points, not levels. */
+    @WrapOperation(
+        method = "onTake(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;giveExperienceLevels(I)V")
+    )
+    private void enchantingfixes$payInXpPoints(Player player, int amount, Operation<Void> original) {
+        if (amount >= 0 || !SyncedConfig.effective().fixedXpCosts) {
+            original.call(player, amount);
+            return;
+        }
+
+        XpCosts.pay(player, -amount);
     }
 }

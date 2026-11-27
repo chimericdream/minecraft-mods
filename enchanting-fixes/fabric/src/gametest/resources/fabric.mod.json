@@ -16,6 +16,7 @@
             "com.chimericdream.enchantingfixes.fabric.test.AnvilGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.LinearAnvilGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.CompatibilityGameTest",
+            "com.chimericdream.enchantingfixes.fabric.test.FixedXpCostsGameTest",
             "com.chimericdream.enchantingfixes.fabric.test.RandomLevelsGameTest"
         ]
     },

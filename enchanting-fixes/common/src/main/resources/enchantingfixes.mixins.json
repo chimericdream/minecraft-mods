@@ -15,7 +15,8 @@
         "EFEnchantmentHelperMixin",
         "EFEnchantmentMixin",
         "EFEnchantRandomlyFunctionMixin",
-        "EFHolderReferenceMixin"
+        "EFHolderReferenceMixin",
+        "EFPlayerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

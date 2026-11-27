@@ -16,6 +16,7 @@ _Fixes for enchanting and enchanted books._
 * **Maximum enchantment levels**: set the maximum level of each enchantment in a list in the config. The Random Enchantment Levels setting keeps random enchantments, such as those from chest loot and villager trades, near vanilla levels. By default, each vanilla enchantment with more than one level has a maximum of X, or its hard cap if that is lower. Advanced Silk Touch has a maximum of XXX. Enchantments not in the list keep their usual maximum, or use the default maximum level. Another setting controls whether the default also applies to single-level enchantments, such as Silk Touch and Mending.
 * **No anvil limit**: the anvil does not refuse a change that costs 40 levels or more ("Too Expensive!"). You must still have the levels to pay the cost. A setting restores the vanilla limit.
 * **Linear anvil upgrades**: a setting that makes high levels cost less in the anvil. The repair cost stops at 31 levels. Above the vanilla maximum, each book adds one level. The setting is off by default. See [Linear anvil upgrades](#linear-anvil-upgrades).
+* **Fixed XP costs**: a setting that makes a cost of N levels take the same XP at each level. The anvil and the enchanting table take the XP from level 0 to level N, not your top N levels. The setting is on by default. See [Fixed XP costs](#fixed-xp-costs).
 * **Compatible enchantments**: a setting that lets you put enchantments that work correctly together on the same item, for example all the protection enchantments. The setting is off by default. See [Compatible enchantments](#compatible-enchantments).
 * **Advanced Silk Touch data pack**: an optional data pack that adds the Advanced Silk Touch enchantment. Its levels collect blocks that Silk Touch does not collect, up to bedrock at level XXX. The pack is off by default. See [Advanced Silk Touch data pack](#advanced-silk-touch-data-pack).
 * **Advancements**: a tab of advancements for very high enchantment levels.
@@ -88,6 +89,19 @@ Below the vanilla maximum, the anvil works as in vanilla. The price of each ench
 | 100 | too many (vanilla), 95 (linear) | not possible | about 131 levels |
 
 The setting is off by default.
+
+### Fixed XP costs
+
+In vanilla, a cost of N levels removes your top N levels. Each level needs more XP than the level before it. The same cost takes more XP at a higher level.
+
+Fixed XP Costs makes a cost of N levels take the XP from level 0 to level N. This applies to the anvil and the enchanting table. The screens still show the cost in levels. You must still have that number of levels.
+
+| Cost | Vanilla, at level 30 | Vanilla, at level 100 | Fixed XP Costs, at each level |
+|---|---|---|---|
+| 3 levels | 306 XP | 2,172 XP | 27 XP |
+| 40 levels | not possible | 22,300 XP | 2,920 XP |
+
+The setting is on by default. Turn it off to use the vanilla costs.
 
 ### Compatible enchantments
 

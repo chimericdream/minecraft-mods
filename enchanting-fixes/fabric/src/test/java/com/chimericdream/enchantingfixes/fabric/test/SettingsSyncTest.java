@@ -40,6 +40,7 @@ public class SettingsSyncTest extends BootstrapMinecraft {
         server.defaultAppliesToSingleLevel = true;
         server.removeAnvilLimit = false;
         server.linearAnvilUpgrades = true;
+        server.fixedXpCosts = true;
         server.removeIncompatibilities = true;
 
         ServerSettingsPayload received = roundTrip(ServerSettingsPayload.of(server, true));
@@ -52,6 +53,7 @@ public class SettingsSyncTest extends BootstrapMinecraft {
         assertEquals(true, client.defaultAppliesToSingleLevel);
         assertEquals(false, client.removeAnvilLimit);
         assertEquals(true, client.linearAnvilUpgrades);
+        assertEquals(true, client.fixedXpCosts);
         assertEquals(true, client.removeIncompatibilities);
     }
 

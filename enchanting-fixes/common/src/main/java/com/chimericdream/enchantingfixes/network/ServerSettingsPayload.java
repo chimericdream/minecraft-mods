@@ -24,6 +24,7 @@ public record ServerSettingsPayload(
     boolean defaultAppliesToSingleLevel,
     boolean removeAnvilLimit,
     boolean linearAnvilUpgrades,
+    boolean fixedXpCosts,
     boolean removeIncompatibilities
 ) implements CustomPacketPayload {
     public static final Type<ServerSettingsPayload> ID = new Type<>(Identifier.fromNamespaceAndPath(ModInfo.MOD_ID, "server_settings"));
@@ -35,6 +36,7 @@ public record ServerSettingsPayload(
         ByteBufCodecs.BOOL, ServerSettingsPayload::defaultAppliesToSingleLevel,
         ByteBufCodecs.BOOL, ServerSettingsPayload::removeAnvilLimit,
         ByteBufCodecs.BOOL, ServerSettingsPayload::linearAnvilUpgrades,
+        ByteBufCodecs.BOOL, ServerSettingsPayload::fixedXpCosts,
         ByteBufCodecs.BOOL, ServerSettingsPayload::removeIncompatibilities,
         ServerSettingsPayload::new
     );
@@ -48,6 +50,7 @@ public record ServerSettingsPayload(
             config.defaultAppliesToSingleLevel,
             config.removeAnvilLimit,
             config.linearAnvilUpgrades,
+            config.fixedXpCosts,
             config.removeIncompatibilities
         );
     }
@@ -61,6 +64,7 @@ public record ServerSettingsPayload(
         config.defaultAppliesToSingleLevel = defaultAppliesToSingleLevel;
         config.removeAnvilLimit = removeAnvilLimit;
         config.linearAnvilUpgrades = linearAnvilUpgrades;
+        config.fixedXpCosts = fixedXpCosts;
         config.removeIncompatibilities = removeIncompatibilities;
         return config;
     }
